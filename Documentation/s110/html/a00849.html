@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Read Request without Authorization</title>
+<title>nRF51 SDK - S110 SoftDevice: Events encoder in the connectivity chip</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -96,20 +96,68 @@ $(document).ready(function(){initNavTree('a00849.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Read Request without Authorization<div class="ingroups"><a class="el" href="a00847.html">Message Sequence Charts</a></div></div>  </div>
+<div class="title">Events encoder in the connectivity chip<div class="ingroups"><a class="el" href="a00944.html">Connectivity application code</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<div align="center">
-<img src="msc_inline_mscgraph_34.png" alt="msc_inline_mscgraph_34" border="0" usemap="#msc_inline_mscgraph_34.map"/>
-<map name="msc_inline_mscgraph_34.map" id="msc_inline_mscgraph_34.map"></map>
+
+<p>Events encoder for BLE SoftDevice.  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaa5e926f38b8fe9d407948c3325bf2749"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00849.html#gaa5e926f38b8fe9d407948c3325bf2749">ser_conn_ble_event_encoder</a> (void *p_event_data, uint16_t event_size)</td></tr>
+<tr class="memdesc:gaa5e926f38b8fe9d407948c3325bf2749"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for encoding a <a class="el" href="a00178.html">ble_evt_t</a>. The function passes the serialized byte stream to the transport layer after encoding.  <a href="#gaa5e926f38b8fe9d407948c3325bf2749">More...</a><br/></td></tr>
+<tr class="separator:gaa5e926f38b8fe9d407948c3325bf2749"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Events encoder for BLE SoftDevice. </p>
+<p>This file contains declaration of common function used for serializing BLE SoftDevice events. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gaa5e926f38b8fe9d407948c3325bf2749"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ser_conn_ble_event_encoder </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_event_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>event_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A function for encoding a <a class="el" href="a00178.html">ble_evt_t</a>. The function passes the serialized byte stream to the transport layer after encoding. </p>
+<p>The function is called by the application scheduler to process an event previously pulled from BLE SoftDevice. The function creates a new packet, calls an appropriate event encoder and sends the packet to an Application Chip.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_event_data</td><td>Pointer to event data of type <a class="el" href="a00178.html">ble_evt_t</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event_size</td><td>Event data size. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
- </div><!-- contents -->
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:43 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:36 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

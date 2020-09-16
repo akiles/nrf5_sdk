@@ -1,8 +1,5 @@
 var a00175 =
 [
-    [ "conn_handle", "a00175.html#ad7c997d8d0c6e0d3d24de3ecad426645", null ],
-    [ "params", "a00175.html#aa3bf138e5e86c00c38983ffc94fcc618", null ],
-    [ "tx_complete", "a00175.html#a0550e7a2c8b61ab27ea5a691b3f1fac4", null ],
-    [ "user_mem_release", "a00175.html#a21a25a889c763bceb2891d506331f484", null ],
-    [ "user_mem_request", "a00175.html#a4d36c1c20a1ff24a62abba8ea73c74c8", null ]
+    [ "manufacturer_id", "a00175.html#ae1f58152dab08532bc52edd976c2f51c", null ],
+    [ "organizationally_unique_id", "a00175.html#a452099e99c407f16e24299e57e53af46", null ]
 ];

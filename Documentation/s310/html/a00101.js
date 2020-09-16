@@ -1,9 +1,11 @@
 var a00101 =
 [
-    [ "alert", "a00101.html#a1516abb33b9dfe3d7ea721f893f3cc7e", null ],
-    [ "data", "a00101.html#ab4c7989c6bab1d99266802c47b376c5f", null ],
-    [ "error_code", "a00101.html#ab6e81a948852e8f1c27d25166815c9eb", null ],
-    [ "evt_type", "a00101.html#a933154cfde918e82cccf331250f23251", null ],
-    [ "settings", "a00101.html#af0183eb636b54d11dedd0b44471ecf68", null ],
-    [ "uuid", "a00101.html#a5291a39d334459d01eb8c359ce40eaf6", null ]
+    [ "error_handler", "a00101.html#a5840a1605a5459c4e82ef773ac9d2e24", null ],
+    [ "evt_handler", "a00101.html#a96de686937df25c7bdc23206170ae50a", null ],
+    [ "list_supported_locations", "a00101.html#a43e3dbaf04322020621f80634fb4ab11", null ],
+    [ "sc_ctrlpt_attr_md", "a00101.html#ace531100dc9ba6f0ff3f62d27fd220f8", null ],
+    [ "sensor_location_handle", "a00101.html#aff182ef403314ac9e5fb3d6964d4e862", null ],
+    [ "service_handle", "a00101.html#a14e10c317dd498dc5ac6d17f162cb01e", null ],
+    [ "size_list_supported_locations", "a00101.html#accef6d6a6a4d4a5365c2a6043850c22a", null ],
+    [ "supported_functions", "a00101.html#a64788d2708103f5bbc852e2e1835182c", null ]
 ];

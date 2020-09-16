@@ -31,6 +31,8 @@
 #include "nordic_common.h"
 #include "softdevice_handler.h"
 
+#define IS_SRVC_CHANGED_CHARACT_PRESENT     0       /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
+
 #define DTM_INIT_BUTTON_PIN_NO      BUTTON_0        /**< Button to initializing DTM mode on connectivity chip. */
 
 #define READY_LED_PIN_NO            LED_0           /**< LED indicating that the example is ready. */
@@ -49,7 +51,7 @@
 #define APP_BUTTON_DETECTION_DELAY  100             /**< Delay of detecting button events. */
 
 #define APP_TIMER_PRESCALER         0               /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS        3               /**< Maximum number of simultaneously created timers. */
+#define APP_TIMER_MAX_TIMERS        4               /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE     4               /**< Size of timer operation queues. */
 
 #define DEAD_BEEF                   0xDEADBEEF      /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
@@ -263,6 +265,13 @@ int main(void)
     APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
     SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
 
+		// Enable BLE stack 
+    ble_enable_params_t ble_enable_params;
+    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
+    ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
+    err_code = sd_ble_enable(&ble_enable_params);
+    APP_ERROR_CHECK(err_code);
+	
     buttons_init();
     advertising_init();
 

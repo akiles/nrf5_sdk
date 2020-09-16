@@ -1,15 +1,16 @@
 var a00914 =
 [
-    [ "ble_sensorsim_cfg_t", "a00315.html", [
-      [ "incr", "a00315.html#a62eecf0076b6555dd1cd98c22e9323e3", null ],
-      [ "max", "a00315.html#a706f772aefa1ba388ffa4d89182ed66c", null ],
-      [ "min", "a00315.html#a68d5bf12a9ad90af16abd75b5d2b63d3", null ],
-      [ "start_at_max", "a00315.html#ac1dc36256413535c9190580f7e263171", null ]
+    [ "ble_gatt_char_props_t", "a00214.html", [
+      [ "auth_signed_wr", "a00214.html#ad021e4c1c66a2595cb430d1e0598bc0d", null ],
+      [ "broadcast", "a00214.html#a66788f87aed20bf98b81af57051e9795", null ],
+      [ "indicate", "a00214.html#a256d8d59b59f7f1a079e962196e026dd", null ],
+      [ "notify", "a00214.html#a9dd91c1e55995665ef09ec4c5bd5eaf7", null ],
+      [ "read", "a00214.html#a1da688e4cfacf724ee7636dbf534716f", null ],
+      [ "write", "a00214.html#ae0ef9c3f220f06e735b534d232cb9108", null ],
+      [ "write_wo_resp", "a00214.html#a61fdb334c11f2a62accb48f297fb46ef", null ]
     ] ],
-    [ "ble_sensorsim_state_t", "a00316.html", [
-      [ "current_val", "a00316.html#a607fd7c8e6f2f3e7bbe8dc5d5b44b54e", null ],
-      [ "is_increasing", "a00316.html#a21bddc380a89ed66e20f88dfd4da4c8a", null ]
-    ] ],
-    [ "ble_sensorsim_init", "a00914.html#ga87dbeaec725800b329897a89763da807", null ],
-    [ "ble_sensorsim_measure", "a00914.html#gae73b8f0f956e0708e16d160605318ba8", null ]
+    [ "ble_gatt_char_ext_props_t", "a00213.html", [
+      [ "reliable_wr", "a00213.html#a8b4bb4c79bed8c8a6d75ca0dd08b7591", null ],
+      [ "wr_aux", "a00213.html#a0f36b2c312c08c22853231a3bc8b950c", null ]
+    ] ]
 ];

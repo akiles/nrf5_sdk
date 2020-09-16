@@ -148,7 +148,7 @@
             <UsePdscDebugDescription>1</UsePdscDebugDescription>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>7</TargetSelection>
+          <TargetSelection>6</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -235,7 +235,7 @@
             <NoZi1>0</NoZi1>
             <NoZi2>0</NoZi2>
             <NoZi3>0</NoZi3>
-            <NoZi4>1</NoZi4>
+            <NoZi4>0</NoZi4>
             <NoZi5>0</NoZi5>
             <Ro1Chk>0</Ro1Chk>
             <Ro2Chk>0</Ro2Chk>
@@ -286,7 +286,7 @@
               <IROM>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x4000</Size>
+                <Size>0x40000</Size>
               </IROM>
               <XRAM>
                 <Type>0</Type>
@@ -310,8 +310,8 @@
               </OCR_RVCT3>
               <OCR_RVCT4>
                 <Type>1</Type>
-                <StartAddress>0x00016000</StartAddress>
-                <Size>0x00029000</Size>
+                <StartAddress>0x16000</StartAddress>
+                <Size>0x29000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -336,7 +336,7 @@
               <OCR_RVCT9>
                 <Type>0</Type>
                 <StartAddress>0x20002000</StartAddress>
-                <Size>0x00002000</Size>
+                <Size>0x2000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
@@ -364,9 +364,9 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>NRF51 DEBUG_NRF_USER BLE_STACK_SUPPORT_REQD BOARD_NRF6310</Define>
+              <Define>NRF51 DEBUG_NRF_USER BLE_STACK_SUPPORT_REQD BOARD_NRF6310 SER_PHY_HCI_DEBUG_ENABLE</Define>
               <Undefine></Undefine>
-              <IncludePath>..;..\..\..\..\..\Include;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\device_manager;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\s110;..\..\..\..\..\Include\sd_common;..\..\..\..\..\Include\sdk</IncludePath>
+              <IncludePath>..;..\..\..\..\..\Include;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\device_manager;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\s110;..\..\..\..\..\Include\sd_common;..\..\..\..\..\Include\sdk;..\..\..\..\..\Include\serialization\common\transport</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -407,12 +407,22 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>::DEVICE</GroupName>
+          <GroupName>::Device</GroupName>
           <Files>
             <File>
               <FileName>arm_startup_nrf51.s</FileName>
               <FileType>2</FileType>
               <FilePath>RTE\Device\nRF51822_xxAA\arm_startup_nrf51.s</FilePath>
+            </File>
+            <File>
+              <FileName>system_nrf51.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>RTE\Device\nRF51822_xxAA\system_nrf51.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_startup_nrf51.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>RTE\Device\nRF51822_xxAB\arm_startup_nrf51.s</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -454,7 +464,7 @@
             <File>
               <FileName>system_nrf51.c</FileName>
               <FileType>1</FileType>
-              <FilePath>RTE\Device\nRF51822_xxAA\system_nrf51.c</FilePath>
+              <FilePath>RTE\Device\nRF51822_xxAB\system_nrf51.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -473,15 +483,21 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArmAds>
-                  <Aads>
+                  <Cads>
                     <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
                     <Ropi>2</Ropi>
                     <Rwpi>2</Rwpi>
-                    <thumb>2</thumb>
-                    <SplitLS>2</SplitLS>
-                    <SwStkChk>2</SwStkChk>
-                    <NoWarn>2</NoWarn>
+                    <wLevel>2</wLevel>
+                    <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
+                    <uC99>2</uC99>
                     <useXO>2</useXO>
                     <VariousControls>
                       <MiscControls></MiscControls>
@@ -489,7 +505,7 @@
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aads>
+                  </Cads>
                 </FileArmAds>
               </FileOption>
             </File>
@@ -502,6 +518,11 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>debug_hci_nrf6310.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\serialization\common\transport\debug\debug_hci_nrf6310.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -617,8 +638,6 @@
         </Group>
         <Group>
           <GroupName>::CMSIS</GroupName>
-          <Files>
-          </Files>
         </Group>
       </Groups>
     </Target>
@@ -851,7 +870,7 @@
             <NoZi1>0</NoZi1>
             <NoZi2>0</NoZi2>
             <NoZi3>0</NoZi3>
-            <NoZi4>1</NoZi4>
+            <NoZi4>0</NoZi4>
             <NoZi5>0</NoZi5>
             <Ro1Chk>0</Ro1Chk>
             <Ro2Chk>0</Ro2Chk>
@@ -902,7 +921,7 @@
               <IROM>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x4000</Size>
+                <Size>0x40000</Size>
               </IROM>
               <XRAM>
                 <Type>0</Type>
@@ -926,8 +945,8 @@
               </OCR_RVCT3>
               <OCR_RVCT4>
                 <Type>1</Type>
-                <StartAddress>0x00016000</StartAddress>
-                <Size>0x00009000</Size>
+                <StartAddress>0x16000</StartAddress>
+                <Size>0x9000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -952,7 +971,7 @@
               <OCR_RVCT9>
                 <Type>0</Type>
                 <StartAddress>0x20002000</StartAddress>
-                <Size>0x00002000</Size>
+                <Size>0x2000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
@@ -1023,12 +1042,12 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>::DEVICE</GroupName>
+          <GroupName>::Device</GroupName>
           <Files>
             <File>
               <FileName>arm_startup_nrf51.s</FileName>
               <FileType>2</FileType>
-              <FilePath>RTE\Device\nRF51822_xxAB\arm_startup_nrf51.s</FilePath>
+              <FilePath>RTE\Device\nRF51822_xxAA\arm_startup_nrf51.s</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -1070,7 +1089,7 @@
             <File>
               <FileName>system_nrf51.c</FileName>
               <FileType>1</FileType>
-              <FilePath>RTE\Device\nRF51822_xxAB\system_nrf51.c</FilePath>
+              <FilePath>RTE\Device\nRF51822_xxAA\system_nrf51.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>0</UseCPPCompiler>
@@ -1089,15 +1108,21 @@
                   <ComprImg>1</ComprImg>
                 </CommonProperty>
                 <FileArmAds>
-                  <Aads>
+                  <Cads>
                     <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
                     <Ropi>2</Ropi>
                     <Rwpi>2</Rwpi>
-                    <thumb>2</thumb>
-                    <SplitLS>2</SplitLS>
-                    <SwStkChk>2</SwStkChk>
-                    <NoWarn>2</NoWarn>
+                    <wLevel>2</wLevel>
+                    <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
+                    <uC99>2</uC99>
                     <useXO>2</useXO>
                     <VariousControls>
                       <MiscControls></MiscControls>
@@ -1105,9 +1130,19 @@
                       <Undefine></Undefine>
                       <IncludePath></IncludePath>
                     </VariousControls>
-                  </Aads>
+                  </Cads>
                 </FileArmAds>
               </FileOption>
+            </File>
+            <File>
+              <FileName>arm_startup_nrf51.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>RTE\Device\nRF51822_xxAB\arm_startup_nrf51.s</FilePath>
+            </File>
+            <File>
+              <FileName>system_nrf51.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>RTE\Device\nRF51822_xxAB\system_nrf51.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1118,6 +1153,11 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>debug_hci_nrf6310.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\serialization\common\transport\debug\debug_hci_nrf6310.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1233,8 +1273,6 @@
         </Group>
         <Group>
           <GroupName>::CMSIS</GroupName>
-          <Files>
-          </Files>
         </Group>
       </Groups>
     </Target>
@@ -1260,18 +1298,16 @@
     </components>
     <files>
       <file attr="config" category="source" condition="ARM Compiler" name="Device\Source\arm\arm_startup_nrf51.s">
-        <instance index="0">RTE\Device\nRF51422_xxAA\arm_startup_nrf51.s</instance>
+        <instance index="0" removed="1">RTE\Device\nRF51422_xxAA\arm_startup_nrf51.s</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="1.0.0" condition="nRF51 Series CMSIS Device"/>
         <package license="License\license.txt" name="nRF_DeviceFamilyPack" schemaVersion="1.0" url="http://www.keil.com/pack/" vendor="NordicSemiconductor" version="1.1.0"/>
-        <targetInfos>
-        </targetInfos>
+        <targetInfos/>
       </file>
       <file attr="config" category="source" name="Device\Source\system_nrf51.c">
-        <instance index="0">RTE\Device\nRF51422_xxAA\system_nrf51.c</instance>
+        <instance index="0" removed="1">RTE\Device\nRF51422_xxAA\system_nrf51.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="1.0.0" condition="nRF51 Series CMSIS Device"/>
         <package license="License\license.txt" name="nRF_DeviceFamilyPack" schemaVersion="1.0" url="http://www.keil.com/pack/" vendor="NordicSemiconductor" version="1.1.0"/>
-        <targetInfos>
-        </targetInfos>
+        <targetInfos/>
       </file>
       <file attr="config" category="source" condition="ARM Compiler" name="Device\Source\arm\arm_startup_nrf51.s">
         <instance index="0">RTE\Device\nRF51822_xxAA\arm_startup_nrf51.s</instance>
@@ -1279,7 +1315,6 @@
         <package license="License\license.txt" name="nRF_DeviceFamilyPack" schemaVersion="1.0" url="http://www.keil.com/pack/" vendor="NordicSemiconductor" version="1.1.0"/>
         <targetInfos>
           <targetInfo name="nrf51822_xxaa_s110 (256K)"/>
-          <targetInfo name="nrf51822_xxab_s110 (128K)"/>
         </targetInfos>
       </file>
       <file attr="config" category="source" name="Device\Source\system_nrf51.c">
@@ -1288,6 +1323,21 @@
         <package license="License\license.txt" name="nRF_DeviceFamilyPack" schemaVersion="1.0" url="http://www.keil.com/pack/" vendor="NordicSemiconductor" version="1.1.0"/>
         <targetInfos>
           <targetInfo name="nrf51822_xxaa_s110 (256K)"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="source" condition="ARM Compiler" name="Device\Source\arm\arm_startup_nrf51.s">
+        <instance index="0">RTE\Device\nRF51822_xxAB\arm_startup_nrf51.s</instance>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="1.0.0" condition="nRF51 Series CMSIS Device"/>
+        <package license="License\license.txt" name="nRF_DeviceFamilyPack" schemaVersion="1.0" url="http://www.keil.com/pack/" vendor="NordicSemiconductor" version="1.1.0"/>
+        <targetInfos>
+          <targetInfo name="nrf51822_xxab_s110 (128K)"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="source" name="Device\Source\system_nrf51.c">
+        <instance index="0">RTE\Device\nRF51822_xxAB\system_nrf51.c</instance>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="1.0.0" condition="nRF51 Series CMSIS Device"/>
+        <package license="License\license.txt" name="nRF_DeviceFamilyPack" schemaVersion="1.0" url="http://www.keil.com/pack/" vendor="NordicSemiconductor" version="1.1.0"/>
+        <targetInfos>
           <targetInfo name="nrf51822_xxab_s110 (128K)"/>
         </targetInfos>
       </file>

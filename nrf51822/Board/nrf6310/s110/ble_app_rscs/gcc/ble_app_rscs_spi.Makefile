@@ -175,6 +175,7 @@ C_SOURCE_FILES += ser_softdevice_handler.c
 C_SOURCE_FILES += ser_sd_transport.c
 C_SOURCE_FILES += ser_hal_transport.c
 C_SOURCE_FILES += app_mailbox.c
+C_SOURCE_FILES += app_util_platform.c
 
 # ser_hal
 C_SOURCE_FILES += nrf_delay.c

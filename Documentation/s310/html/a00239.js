@@ -1,7 +1,6 @@
 var a00239 =
 [
-    [ "evt_handler", "a00239.html#ac8b3f40aba291bb2528c6e3d278e66bd", null ],
-    [ "feature", "a00239.html#afea901cdde73cddc72eb4cfe2f337c78", null ],
-    [ "rsc_feature_attr_md", "a00239.html#ada9c9294592f640a27a344965b22bc76", null ],
-    [ "rsc_meas_attr_md", "a00239.html#a4f33f2c4256a25ac20cdbb2b8fbc8538", null ]
+    [ "evt_type", "a00239.html#ac7e76a07c099aed4eb9d8180a15368d8", null ],
+    [ "packet", "a00239.html#a005a67172eb3d6a4645d536db7fbb98f", null ],
+    [ "packet_length", "a00239.html#ac31d16ccc1a5fc4bd8852c58d710f821", null ]
 ];

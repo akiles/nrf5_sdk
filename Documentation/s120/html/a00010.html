@@ -107,7 +107,7 @@ $(document).ready(function(){initNavTree('a00010.html','');});
 <li>Disabling the SoftDevice.</li>
 <li>Receiving events from the SoftDevice and forwarding them to the application using interface functions that must be defined by the application. This module works with SoftDevices that have BLE, ANT, or BLE and ANT functionalities.</li>
 </ul>
-<p>Depending on the type of SoftDevice, the APIs used to fetch events from it will vary. For example, the S110 SoftDevice exposes 2 APIs - <a class="el" href="a00522.html#ga412b12b43c253dd744bcf574d6e86f43">sd_ble_evt_get</a> for fetching BLE events and <a class="el" href="a00551.html#ga8bb3db4bb663fe6deb65f92f1f0cbbcc">sd_evt_get</a> for fetching System (SOC) events. But the S210 SoftDevice does not have an API named sd_ble_evt_get. Instead it exposes sd_ant_event_get for fetching ANT events and <a class="el" href="a00551.html#ga8bb3db4bb663fe6deb65f92f1f0cbbcc">sd_evt_get</a> for fetching System (SOC) events. Depending on the type of SoftDevice, <a class="el" href="a00010.html">SoftDevice Handler Library</a> helps the application use the correct APIs for fetching SoftDevice events.</p>
+<p>Depending on the type of SoftDevice, the APIs used to fetch events from it will vary. For example, the S110 SoftDevice exposes 2 APIs - <a class="el" href="a00538.html#ga412b12b43c253dd744bcf574d6e86f43">sd_ble_evt_get</a> for fetching BLE events and <a class="el" href="a00567.html#ga8bb3db4bb663fe6deb65f92f1f0cbbcc">sd_evt_get</a> for fetching System (SOC) events. But the S210 SoftDevice does not have an API named sd_ble_evt_get. Instead it exposes sd_ant_event_get for fetching ANT events and <a class="el" href="a00567.html#ga8bb3db4bb663fe6deb65f92f1f0cbbcc">sd_evt_get</a> for fetching System (SOC) events. Depending on the type of SoftDevice, <a class="el" href="a00010.html">SoftDevice Handler Library</a> helps the application use the correct APIs for fetching SoftDevice events.</p>
 <p>The API exposed by this module is present in softdevice_handler.h, ant_stack_handler_types.h, and ble_stack_handler_types.h.</p>
 <h1><a class="anchor" id="expectations"></a>
 Expectations from the application/developer using this library</h1>
@@ -126,15 +126,15 @@ Subscription to events</h2>
 <p>The application should subscribe for events using the function <em>softdevice_xxx_evt_handler_set</em>, where xxx can be ble (for BLE events), ant (for ANT events), or sys (for system (SOC) events).</p>
 <h2><a class="anchor" id="api_usage"></a>
 No direct calls to sd_softdevice_disable and sd_softdevice_enable</h2>
-<p>When the application needs to disable the SoftDevice, it must use the function <a class="el" href="a00422.html#gabbec783a89f93617d3661a819597d79c">softdevice_handler_sd_disable</a> and not directly call the function <a class="el" href="a00548.html#ga45900ecbe6d5ebf9ae78894fe6c75b23">sd_softdevice_disable</a> that is provided by the SoftDevice. If this is not done, this module will not be aware that the SoftDevice was disabled. This will result in the SoftDevice returning the error code <a class="el" href="a00381.html#ga9a2af1a322a5dfb3bdb69e2aacd3bc27">NRF_ERROR_SOFTDEVICE_NOT_ENABLED</a> when this module tries to fetch BLE or ANT events. This in turn will result in a call to <a class="el" href="a00402.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> function defined by the application.</p>
-<p>Similarly, if the application needs to enable the SoftDevice, it must do so using the function <a class="el" href="a00422.html#ga53c8f6b5556622cc42f717ddf756ca8e">softdevice_handler_init</a> function. If this is not done, this module will never fetch the BLE or ANT events. </p>
+<p>When the application needs to disable the SoftDevice, it must use the function <a class="el" href="a00426.html#gabbec783a89f93617d3661a819597d79c">softdevice_handler_sd_disable</a> and not directly call the function <a class="el" href="a00564.html#ga45900ecbe6d5ebf9ae78894fe6c75b23">sd_softdevice_disable</a> that is provided by the SoftDevice. If this is not done, this module will not be aware that the SoftDevice was disabled. This will result in the SoftDevice returning the error code <a class="el" href="a00385.html#ga9a2af1a322a5dfb3bdb69e2aacd3bc27">NRF_ERROR_SOFTDEVICE_NOT_ENABLED</a> when this module tries to fetch BLE or ANT events. This in turn will result in a call to <a class="el" href="a00406.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> function defined by the application.</p>
+<p>Similarly, if the application needs to enable the SoftDevice, it must do so using the function <a class="el" href="a00426.html#ga53c8f6b5556622cc42f717ddf756ca8e">softdevice_handler_init</a> function. If this is not done, this module will never fetch the BLE or ANT events. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:05 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

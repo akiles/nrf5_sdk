@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Device/Host example</title>
+<title>nRF51 SDK - S110 SoftDevice: BLE libraries</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,24 +97,25 @@ $(document).ready(function(){initNavTree('a00116.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Device/Host example </div>  </div>
+<div class="title">BLE libraries </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="Host"></a>
-Host</h1>
-<p>This project requires that a Device running the gzll_device_ack_payload_example be used as a counterpart for receiving the data. This can be on either nRF51 device or a nRF24Lxx device running the <b>gzll_device_ack_payload</b> example in the nRFgo SDK.</p>
-<p>This example listens for a packet and sends an ACK when a packet is received. The contents of the first payload byte of the received packet is output on the GPIO Port BUTTONS. The contents of GPIO Port LEDS are sent in the first payload byte (byte 0) of the ACK packet.</p>
-<h1><a class="anchor" id="Device"></a>
-Device</h1>
-<p>This project requires that a Host running the gzll_host_ack_payload_example example be used as a counterpart for receiving the data. This can be on either nRF51 device or a nRF24Lxx device running the <b>gzll_host_ack_payload</b> example in the nRFgo SDK.</p>
-<p>This example sends a packet and adds a new packet to the TX queue every time it receives an ACK. Before adding a packet to the TX queue, the contents of the GPIO Port BUTTONS is copied to the first payload byte (byte 0). When an ACK is received, the contents of the first payload byte of the ACK are output on GPIO Port LEDS. </p>
+<div class="textblock"><p><a class="el" href="a00118.html">Advertising Data Encoder</a></p>
+<p><a class="el" href="a00119.html">Debug Assert Handler</a></p>
+<p><a class="el" href="a00126.html">BLE Device Manager</a></p>
+<p><a class="el" href="a00120.html">Connection Parameters Negotiation</a></p>
+<p><a class="el" href="a00121.html">DTM - Direct Test Mode</a></p>
+<p><a class="el" href="a00122.html">Error Log</a></p>
+<p><a class="el" href="a00123.html">Record Access Control Point</a></p>
+<p><a class="el" href="a00124.html">Radio Notification Event Handler</a></p>
+<p><a class="el" href="a00125.html">Sensor Data Simulator</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00122.html">Nordic proprietary protocols</a></li><li class="navelem"><a class="el" href="a00114.html">Gazell</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:34 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

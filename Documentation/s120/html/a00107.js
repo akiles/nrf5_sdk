@@ -1,5 +1,5 @@
 var a00107 =
 [
-    [ "id_addr_info", "a00107.html#a1bd1659b09527f11f048c6e26cc7dfbe", null ],
-    [ "id_info", "a00107.html#afacb110ee8e9be828954f516a04008ad", null ]
+    [ "ch_map", "a00107.html#a71bb5ea1d8eecc86f819a1f5a3807818", null ],
+    [ "conn_handle", "a00107.html#adbf93719ab5531a19758504bdeb6c469", null ]
 ];

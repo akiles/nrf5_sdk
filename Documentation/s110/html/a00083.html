@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Running Speed and Cadence Application</title>
+<title>nRF51 SDK - S110 SoftDevice: S110 Serialization</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,59 +97,44 @@ $(document).ready(function(){initNavTree('a00083.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Running Speed and Cadence Application </div>  </div>
+<div class="title">S110 Serialization </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="project_rsc_intro"></a>
-Running Speed and Cadence Application</h1>
-<p>The Running Speed and Cadence Application is a firmware example that implements the Running Speed and Cadence profile using the hardware delivered in the nRF51822 Development Kit.</p>
-<p>The source code and project file can be found in the <code>&lt;InstallFolder&gt;\Nordic\nrf51822\Board\nrf6310\s110\ble_app_rscs</code> folder.</p>
-<p>The application includes the two services in the Running Speed and Cadence profile:</p>
-<ul>
-<li><a class="el" href="a00930.html">Running Speed and Cadence Service</a></li>
-<li><a class="el" href="a00921.html">Device Information Service</a></li>
-</ul>
-<p>In addition, use of the <a class="el" href="a00916.html">Battery Service</a> is also demonstrated.</p>
-<p>When the application starts, it starts a timer to simulate Running Speed and Cadence Measurements.</p>
-<p>Also, a timer for generating battery measurements is started.</p>
-<p>The sensor measurements are simulated the following way:</p>
-<ul>
-<li>Instantaneous speed and instantaneous cadence: See <a class="el" href="a00914.html">Sensor Data Simulator</a>.</li>
-<li>Battery Level: See <a class="el" href="a00914.html">Sensor Data Simulator</a>.</li>
-</ul>
-<p>When notification of Running Speed and Cadence Measurement characteristic is enabled, the Running Speed and Cadence Measurement, containing the current value for all the components of the Running Speed and Cadence Measurement characteristic, is notified each time the Running Speed and Cadence measurement timer expires. When notification of Battery Level characteristic is enabled, the Battery Level is notified each time the Battery Level measurement timer expires.</p>
-<dl class="section note"><dt>Note</dt><dd>This application is not power optimised! </dd>
-<dd>
-The application will stop advertising after 3 minutes and go to system-off mode. Push the button 0 restart advertising.</dd></dl>
-<h1><a class="anchor" id="project_rscs_setup"></a>
-Setup</h1>
-<p>Instructions on how to set up the nRFgo Motherboard: <a class="el" href="a00009.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a>.</p>
-<p>LED assignments:</p>
-<ul>
-<li>LED 0: Advertising</li>
-<li>LED 1: Connected</li>
-<li>LED 7: Asserted (i.e. an assert check in the application has failed)</li>
-</ul>
-<p>Buttons assignments:</p>
-<ul>
-<li>Button 0: Wake-up from system-off and restart advertising.</li>
-<li>Button 1: Wake-up from system-off, erase all bonds, and restart advertising.</li>
-</ul>
-<h1><a class="anchor" id="project_rscs_test"></a>
-Testing</h1>
-<p>The Running Speed and Cadence Application can be tested using the Master Control Panel as follows:</p>
-<ol type="1">
-<li>Compile and program the application. Observe that the Advertising LED is lit.</li>
-<li>Connect to the device from Master Control Panel (the device will be advertising as 'Nordic_RSC'), then perform service discovery. Observe that the Connected LED is lit, and the Advertising LED is off.</li>
-<li>Click the 'Enable services' button on the Master Control Panel. Observe that Running Speed and Cadence notifications are received every second, and Battery Level notifications are received every two seconds. </li>
-</ol>
+<div class="textblock"><h1><a class="anchor" id="nrf51_arch_serialization"></a>
+Architecture</h1>
+<p>The BLE S110 Serialization makes it possible to place a <em>Bluetooth</em> application on an <b>Application chip</b> and connect it to a <b>Connectivity chip</b> running the BLE <a class="el" href="a00938.html">S110 SoftDevice</a>.</p>
+<p><b>Connectivity Chip</b>: <a class="el" href="a00084.html">BLE S110 Connectivity Chip</a><br/>
+</p>
+<p><b><em>Bluetooth</em> Application Chip:</b> The nRF51822 chip is used merely as a demonstration device running a serialized application, where the <b>BLE S110 SoftDevice</b> is replaced by the Commands Encoder and Events Decoder (<a class="el" href="a00086.html">BLE Serialization Codecs</a>). The <b>nRF51822</b> used as <b>Application chip does not use the BLE S110 SoftDevice</b>. After porting hardware driver for selected <b>PHY</b> layer (<a class="el" href="a00103.html">Serialization PHY</a>), <b>nRF51822</b> at application side is supposed to be replaced by user's device . <br/>
+</p>
+<div class="image">
+<img src="architecture_overview_serialization.png" alt="architecture_overview_serialization.png"/>
+<div class="caption">
+Architectural overview of Serialized Bluetooth Application.</div></div>
+<p> In the <b><em>Bluetooth</em> Application chip</b>, the <b>BLE S110 SoftDevice</b> is replaced by a codec implementing the <b>S110 SoftDevice API</b>. <br/>
+ All function calls to the codec will be serialized and transmitted to the <b>BLE S110 Connectivity Chip</b> using the transport layer drivers. <br/>
+ This design makes it possible to substitute an existing <b>PHY</b> layer, such as <b>UART</b> or <b>SPI</b>, without affecting the codecs. <br/>
+</p>
+<p>The <b>BLE S110 Connectivity chip</b> will decode the serialized commands from the <b><em>Bluetooth</em> Application Board</b> and execute the corresponding function in the <b>S110 SoftDevice </b>.<br/>
+ Any event from the S110 SoftDevice is encoded by the codec and transmitted to the <b><em>Bluetooth</em> Application chip </b> using the the transport layer. <br/>
+ In the <b><em>Bluetooth</em> Application chip </b> the event is decoded and passed to the application. <br/>
+</p>
+<p><b>BLE S110 Serialization</b> simplifies the serialization of an existing <em>Bluetooth</em> application, since limited modifications are needed in the application itself. <br/>
+</p>
+<p>See <a class="el" href="a00085.html">Serialization Setup</a> on how to flash and wire a <b><em>Bluetooth</em> Application Board</b> with a <b>BLE S110 Connectivity Board</b>. <br/>
+</p>
+<p><a class="el" href="a00085.html">Serialization Setup</a></p>
+<p><a class="el" href="a00084.html">BLE S110 Connectivity Chip</a></p>
+<p><a class="el" href="a00086.html">BLE Serialization Codecs</a></p>
+<p><a class="el" href="a00103.html">Serialization PHY</a></p>
+<p><a class="el" href="a00104.html">Serialization HAL Transport</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00091.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:33 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

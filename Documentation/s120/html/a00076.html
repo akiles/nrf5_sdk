@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_db_discovery_evt_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_common_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,82 +106,82 @@ $(document).ready(function(){initNavTree('a00076.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_db_discovery_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00516.html">Structures</a></div></div>  </div>
+<div class="title">ble_common_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00537.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure containing the event from the DB discovery module to the application.  
+<p>Event structure for events not associated with a specific function module.  
  <a href="a00076.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_db_discovery.h&gt;</code></p>
+<p><code>#include &lt;ble.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:accba73434b8696cbafbe758022bb45ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00515.html#gaa16075c6c77a4f3f32fb567d5ce45462">ble_db_discovery_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#accba73434b8696cbafbe758022bb45ec">evt_type</a></td></tr>
-<tr class="separator:accba73434b8696cbafbe758022bb45ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38b408b3785dce063725d6fcc194b1c8"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a38b408b3785dce063725d6fcc194b1c8">conn_handle</a></td></tr>
-<tr class="separator:a38b408b3785dce063725d6fcc194b1c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7cd53486e111829c3f6000dc54ddc7c"><td class="memItemLeft" ><a class="anchor" id="aa7cd53486e111829c3f6000dc54ddc7c"></a>
+<tr class="memitem:ad7c997d8d0c6e0d3d24de3ecad426645"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#ad7c997d8d0c6e0d3d24de3ecad426645">conn_handle</a></td></tr>
+<tr class="separator:ad7c997d8d0c6e0d3d24de3ecad426645"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68370cb595b720c6b0b25eefdb3ea5dd"><td class="memItemLeft" ><a class="anchor" id="a68370cb595b720c6b0b25eefdb3ea5dd"></a>
 union {</td></tr>
-<tr class="memitem:a47e49404c37e06af57f0e60146a83e13"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00078.html">ble_db_discovery_srv_t</a>&#160;&#160;&#160;<a class="el" href="a00076.html#a551f5595d71fa2887fa74dff31eb5f40">discovered_db</a></td></tr>
-<tr class="separator:a47e49404c37e06af57f0e60146a83e13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f72f2d84b5d3ceba70c90b037c46ad6"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="a00076.html#aade9f798ada6b7c0f601cb7dfac3d85f">err_code</a></td></tr>
-<tr class="separator:a1f72f2d84b5d3ceba70c90b037c46ad6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7cd53486e111829c3f6000dc54ddc7c"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:aa7cd53486e111829c3f6000dc54ddc7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7ac67df7a99a4c29c32fbf865ffea05"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00079.html">ble_evt_tx_complete_t</a>&#160;&#160;&#160;<a class="el" href="a00076.html#a0550e7a2c8b61ab27ea5a691b3f1fac4">tx_complete</a></td></tr>
+<tr class="separator:af7ac67df7a99a4c29c32fbf865ffea05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ac0eaffeaef0e76b385dbe896f4cdd5"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00081.html">ble_evt_user_mem_request_t</a>&#160;&#160;&#160;<a class="el" href="a00076.html#a4d36c1c20a1ff24a62abba8ea73c74c8">user_mem_request</a></td></tr>
+<tr class="separator:a3ac0eaffeaef0e76b385dbe896f4cdd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a435bc8b8cd47e8645a1123c51a5a3a01"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00080.html">ble_evt_user_mem_release_t</a>&#160;&#160;&#160;<a class="el" href="a00076.html#a21a25a889c763bceb2891d506331f484">user_mem_release</a></td></tr>
+<tr class="separator:a435bc8b8cd47e8645a1123c51a5a3a01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68370cb595b720c6b0b25eefdb3ea5dd"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
+<tr class="separator:a68370cb595b720c6b0b25eefdb3ea5dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure containing the event from the DB discovery module to the application. </p>
+<div class="textblock"><p>Event structure for events not associated with a specific function module. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a38b408b3785dce063725d6fcc194b1c8"></a>
+<a class="anchor" id="ad7c997d8d0c6e0d3d24de3ecad426645"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_db_discovery_evt_t::conn_handle</td>
+          <td class="memname">uint16_t ble_common_evt_t::conn_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of the connection for which this event has occurred. </p>
+<p>Connection Handle on which this event occurred. </p>
 
 </div>
 </div>
-<a class="anchor" id="a551f5595d71fa2887fa74dff31eb5f40"></a>
+<a class="anchor" id="a0550e7a2c8b61ab27ea5a691b3f1fac4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00078.html">ble_db_discovery_srv_t</a> ble_db_discovery_evt_t::discovered_db</td>
+          <td class="memname"><a class="el" href="a00079.html">ble_evt_tx_complete_t</a> ble_common_evt_t::tx_complete</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Structure containing the information about the GATT Database at the server. This will be filled when the event type is <a class="el" href="a00515.html#ggaa16075c6c77a4f3f32fb567d5ce45462ad6925ee73dada1191de4934d7891dc1f">BLE_DB_DISCOVERY_COMPLETE</a>. </p>
+<p>Transmission Complete. </p>
 
 </div>
 </div>
-<a class="anchor" id="aade9f798ada6b7c0f601cb7dfac3d85f"></a>
+<a class="anchor" id="a21a25a889c763bceb2891d506331f484"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_db_discovery_evt_t::err_code</td>
+          <td class="memname"><a class="el" href="a00080.html">ble_evt_user_mem_release_t</a> ble_common_evt_t::user_mem_release</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>nRF Error code indicating the type of error occurred in the DB Discovery module. This will be filled when the event type is <a class="el" href="a00515.html#ggaa16075c6c77a4f3f32fb567d5ce45462aca629cd78939015c22a44c9e3797043b">BLE_DB_DISCOVERY_ERROR</a>. </p>
+<p>User Memory Release Event Parameters. </p>
 
 </div>
 </div>
-<a class="anchor" id="accba73434b8696cbafbe758022bb45ec"></a>
+<a class="anchor" id="a4d36c1c20a1ff24a62abba8ea73c74c8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00515.html#gaa16075c6c77a4f3f32fb567d5ce45462">ble_db_discovery_evt_type_t</a> ble_db_discovery_evt_t::evt_type</td>
+          <td class="memname"><a class="el" href="a00081.html">ble_evt_user_mem_request_t</a> ble_common_evt_t::user_mem_request</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of event. </p>
+<p>User Memory Request Event Parameters. </p>
 
 </div>
 </div>
@@ -190,8 +190,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00076.html">ble_db_discovery_evt_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:28 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00076.html">ble_common_evt_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:40 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

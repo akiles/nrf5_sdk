@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Defines</title>
+<title>nRF51 SDK - S120 SoftDevice: Structures</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,139 +97,76 @@ $(document).ready(function(){initNavTree('a00549.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
-<div class="title">Defines<div class="ingroups"><a class="el" href="a00385.html">SoC Library API</a></div></div>  </div>
+<div class="title">Structures<div class="ingroups"><a class="el" href="a00461.html">Generic Attribute Profile (GATT) Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga5907cc7ce1f01bd6113de826ed7d26bb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5907cc7ce1f01bd6113de826ed7d26bb"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00549.html#ga5907cc7ce1f01bd6113de826ed7d26bb">SOC_SVC_BASE</a>&#160;&#160;&#160;0x20</td></tr>
-<tr class="memdesc:ga5907cc7ce1f01bd6113de826ed7d26bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of the lowest SVC number reserved for the SoC library. <br/></td></tr>
-<tr class="separator:ga5907cc7ce1f01bd6113de826ed7d26bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga79be6121daabbacc30dd9787c8c837be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga79be6121daabbacc30dd9787c8c837be"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>SOC_SVC_BASE_NOT_AVAILABLE</b>&#160;&#160;&#160;0x23</td></tr>
-<tr class="separator:ga79be6121daabbacc30dd9787c8c837be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadd071bf670a2cecff60e432f9c715e9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadd071bf670a2cecff60e432f9c715e9d"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00549.html#gadd071bf670a2cecff60e432f9c715e9d">NRF_RADIO_NOTIFICATION_INACTIVE_GUARANTEED_TIME_US</a>&#160;&#160;&#160;(62)</td></tr>
-<tr class="memdesc:gadd071bf670a2cecff60e432f9c715e9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Guranteed time for application to process radio inactive notification. <br/></td></tr>
-<tr class="separator:gadd071bf670a2cecff60e432f9c715e9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab1aea03ca9f54e2fc9b43734f5d40e82"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00549.html#gab1aea03ca9f54e2fc9b43734f5d40e82">SOC_ECB_KEY_LENGTH</a>&#160;&#160;&#160;(16)</td></tr>
-<tr class="separator:gab1aea03ca9f54e2fc9b43734f5d40e82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7c1e2a1d66aa73d72f4f97cda84d60bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00549.html#ga7c1e2a1d66aa73d72f4f97cda84d60bb">SOC_ECB_CLEARTEXT_LENGTH</a>&#160;&#160;&#160;(16)</td></tr>
-<tr class="separator:ga7c1e2a1d66aa73d72f4f97cda84d60bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8101d58f6f2699fc2f2b70fc995968f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00549.html#ga8101d58f6f2699fc2f2b70fc995968f3">SOC_ECB_CIPHERTEXT_LENGTH</a>&#160;&#160;&#160;(<a class="el" href="a00549.html#ga7c1e2a1d66aa73d72f4f97cda84d60bb">SOC_ECB_CLEARTEXT_LENGTH</a>)</td></tr>
-<tr class="separator:ga8101d58f6f2699fc2f2b70fc995968f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaee08151dcab1d4c9e4d9e08d7cdfadb6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00549.html#gaee08151dcab1d4c9e4d9e08d7cdfadb6">SD_EVT_IRQn</a>&#160;&#160;&#160;(SWI2_IRQn)</td></tr>
-<tr class="separator:gaee08151dcab1d4c9e4d9e08d7cdfadb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9db40f61f23b1f085d329121819657bf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00549.html#ga9db40f61f23b1f085d329121819657bf">SD_EVT_IRQHandler</a>&#160;&#160;&#160;(SWI2_IRQHandler)</td></tr>
-<tr class="separator:ga9db40f61f23b1f085d329121819657bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabf055e0c080d12802fc5b4383d72e806"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00549.html#gabf055e0c080d12802fc5b4383d72e806">RADIO_NOTIFICATION_IRQn</a>&#160;&#160;&#160;(SWI1_IRQn)</td></tr>
-<tr class="separator:gabf055e0c080d12802fc5b4383d72e806"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga456d5bd7eb8192fa3a0828646994587d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00549.html#ga456d5bd7eb8192fa3a0828646994587d">RADIO_NOTIFICATION_IRQHandler</a>&#160;&#160;&#160;(SWI1_IRQHandler)</td></tr>
-<tr class="separator:ga456d5bd7eb8192fa3a0828646994587d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00132.html">ble_gattc_handle_range_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operation Handle Range.  <a href="a00132.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00135.html">ble_gattc_service_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GATT service.  <a href="a00135.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00134.html">ble_gattc_include_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GATT include.  <a href="a00134.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00119.html">ble_gattc_char_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GATT characteristic.  <a href="a00119.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00120.html">ble_gattc_desc_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GATT descriptor.  <a href="a00120.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00136.html">ble_gattc_write_params_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write Parameters.  <a href="a00136.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00126.html">ble_gattc_evt_prim_srvc_disc_rsp_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event structure for BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP.  <a href="a00126.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00128.html">ble_gattc_evt_rel_disc_rsp_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event structure for BLE_GATTC_EVT_REL_DISC_RSP.  <a href="a00128.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00121.html">ble_gattc_evt_char_disc_rsp_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event structure for BLE_GATTC_EVT_CHAR_DISC_RSP.  <a href="a00121.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00124.html">ble_gattc_evt_desc_disc_rsp_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event structure for BLE_GATTC_EVT_DESC_DISC_RSP.  <a href="a00124.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00133.html">ble_gattc_handle_value_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GATT read by UUID handle value pair.  <a href="a00133.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00122.html">ble_gattc_evt_char_val_by_uuid_read_rsp_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event structure for BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP.  <a href="a00122.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00127.html">ble_gattc_evt_read_rsp_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event structure for BLE_GATTC_EVT_READ_RSP.  <a href="a00127.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00123.html">ble_gattc_evt_char_vals_read_rsp_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event structure for BLE_GATTC_EVT_CHAR_VALS_READ_RSP.  <a href="a00123.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00131.html">ble_gattc_evt_write_rsp_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event structure for BLE_GATTC_EVT_WRITE_RSP.  <a href="a00131.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00125.html">ble_gattc_evt_hvx_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event structure for BLE_GATTC_EVT_HVX.  <a href="a00125.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00130.html">ble_gattc_evt_timeout_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event structure for BLE_GATTC_EVT_TIMEOUT.  <a href="a00130.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00129.html">ble_gattc_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GATTC event type.  <a href="a00129.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga456d5bd7eb8192fa3a0828646994587d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define RADIO_NOTIFICATION_IRQHandler&#160;&#160;&#160;(SWI1_IRQHandler)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The radio notification IRQ handler. </p>
-
-</div>
-</div>
-<a class="anchor" id="gabf055e0c080d12802fc5b4383d72e806"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define RADIO_NOTIFICATION_IRQn&#160;&#160;&#160;(SWI1_IRQn)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The radio notification IRQ number. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga9db40f61f23b1f085d329121819657bf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SD_EVT_IRQHandler&#160;&#160;&#160;(SWI2_IRQHandler)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>SoftDevice Event IRQ handler. Used for both protocol events and SoC events. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaee08151dcab1d4c9e4d9e08d7cdfadb6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SD_EVT_IRQn&#160;&#160;&#160;(SWI2_IRQn)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>SoftDevice Event IRQ number. Used for both protocol events and SoC events. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga8101d58f6f2699fc2f2b70fc995968f3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SOC_ECB_CIPHERTEXT_LENGTH&#160;&#160;&#160;(<a class="el" href="a00549.html#ga7c1e2a1d66aa73d72f4f97cda84d60bb">SOC_ECB_CLEARTEXT_LENGTH</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>ECB ciphertext length. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga7c1e2a1d66aa73d72f4f97cda84d60bb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SOC_ECB_CLEARTEXT_LENGTH&#160;&#160;&#160;(16)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>ECB cleartext length. </p>
-
-</div>
-</div>
-<a class="anchor" id="gab1aea03ca9f54e2fc9b43734f5d40e82"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SOC_ECB_KEY_LENGTH&#160;&#160;&#160;(16)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>ECB key length. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:27 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:40 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

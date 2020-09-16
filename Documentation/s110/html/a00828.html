@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: GAP Failed Pairing: Pairing aborted by the application</title>
+<title>nRF51 SDK - S110 SoftDevice: L2CAP Application event decoders</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -96,22 +96,91 @@ $(document).ready(function(){initNavTree('a00828.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">GAP Failed Pairing: Pairing aborted by the application<div class="ingroups"><a class="el" href="a00814.html">Message Sequence Charts</a></div></div>  </div>
+<div class="title">L2CAP Application event decoders<div class="ingroups"><a class="el" href="a00942.html">Application s110 codecs</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>When the application detects that the pairing should not be performed, for example an insufficient IO combination, it can use <a class="el" href="a00978.html#ga42a874a285560a4323b9a13cfa61e461" title="Reply with GAP security parameters.">sd_ble_gap_sec_params_reply()</a> to send SMP Pairing failed to the peer.</p>
-<p>When the stack handles the response from the application it will also validate the passkey (SMP_STC_PASSKEY_ENTRY_FAILED). If any error is detected it will be reported when <a class="el" href="a00978.html#ga42a874a285560a4323b9a13cfa61e461" title="Reply with GAP security parameters.">sd_ble_gap_sec_params_reply()</a> is called. </p>
-<div align="center">
-<img src="msc_inline_mscgraph_17.png" alt="msc_inline_mscgraph_17" border="0" usemap="#msc_inline_mscgraph_17.map"/>
-<map name="msc_inline_mscgraph_17.map" id="msc_inline_mscgraph_17.map"></map>
+
+<p>L2CAP Application event decoders.  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga01fadfae59ffbf5b43b5ef8d028d9a54"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00828.html#ga01fadfae59ffbf5b43b5ef8d028d9a54">ble_l2cap_evt_rx_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00178.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
+<tr class="memdesc:ga01fadfae59ffbf5b43b5ef8d028d9a54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_l2cap_evt_rx event.  <a href="#ga01fadfae59ffbf5b43b5ef8d028d9a54">More...</a><br/></td></tr>
+<tr class="separator:ga01fadfae59ffbf5b43b5ef8d028d9a54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>L2CAP Application event decoders. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga01fadfae59ffbf5b43b5ef8d028d9a54"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_l2cap_evt_rx_dec </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>packet_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00178.html">ble_evt_t</a> *const&#160;</td>
+          <td class="paramname"><em>p_event</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_event_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decodes ble_l2cap_evt_rx event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00092.html#nrf51_l2cap_evt_rx_encoding">0x70 - BLE_L2CAP_EVT_RX</a> for packet format.</dd></dl>
+<p>If <code>p_event</code> is null, the required length of <code>p_event</code> is returned in <code>p_event_len</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of an event packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of the event packet. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00178.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event_len</td><td><code>in:</code> Size (in bytes) of <code>p_event</code> buffer. <code>out:</code> Length of decoded contents of <code>p_event</code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_DATA_SIZE</td><td>Decoding failure. Length of <code>p_event</code> is too small to hold decoded event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
- </div><!-- contents -->
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:40 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:36 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

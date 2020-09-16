@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gap_opt_t Union Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_sec_keys_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,63 @@ $(document).ready(function(){initNavTree('a00111.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_opt_t Union Reference<div class="ingroups"><a class="el" href="a00526.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_sec_keys_t Struct Reference<div class="ingroups"><a class="el" href="a00542.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Option structure for GAP options.  
+<p>Security Keys.  
  <a href="a00111.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac467d9642d6caa41dd4fdf8a4a3909d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00110.html">ble_gap_opt_ch_map_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00111.html#ac467d9642d6caa41dd4fdf8a4a3909d5">ch_map</a></td></tr>
-<tr class="separator:ac467d9642d6caa41dd4fdf8a4a3909d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c48b42106b674368173ab786aec58aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00088.html">ble_gap_enc_key_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00111.html#a6c48b42106b674368173ab786aec58aa">p_enc_key</a></td></tr>
+<tr class="separator:a6c48b42106b674368173ab786aec58aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bfad815de8c3ac2d2c40de30efee5e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00104.html">ble_gap_id_key_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00111.html#a9bfad815de8c3ac2d2c40de30efee5e3">p_id_key</a></td></tr>
+<tr class="separator:a9bfad815de8c3ac2d2c40de30efee5e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a750c704413d4c6e622e83741d7b83e98"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00115.html">ble_gap_sign_info_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00111.html#a750c704413d4c6e622e83741d7b83e98">p_sign_key</a></td></tr>
+<tr class="separator:a750c704413d4c6e622e83741d7b83e98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Option structure for GAP options. </p>
+<div class="textblock"><p>Security Keys. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ac467d9642d6caa41dd4fdf8a4a3909d5"></a>
+<a class="anchor" id="a6c48b42106b674368173ab786aec58aa"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00110.html">ble_gap_opt_ch_map_t</a> ble_gap_opt_t::ch_map</td>
+          <td class="memname"><a class="el" href="a00088.html">ble_gap_enc_key_t</a>* ble_gap_sec_keys_t::p_enc_key</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Channel Map. </p>
+<p>Encryption Key, or NULL. </p>
+
+</div>
+</div>
+<a class="anchor" id="a9bfad815de8c3ac2d2c40de30efee5e3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00104.html">ble_gap_id_key_t</a>* ble_gap_sec_keys_t::p_id_key</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Identity Key, or NULL. </p>
+
+</div>
+</div>
+<a class="anchor" id="a750c704413d4c6e622e83741d7b83e98"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00115.html">ble_gap_sign_info_t</a>* ble_gap_sec_keys_t::p_sign_key</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Signing Key, or NULL. </p>
 
 </div>
 </div>
@@ -141,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00111.html">ble_gap_opt_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:28 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00111.html">ble_gap_sec_keys_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:40 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

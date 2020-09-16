@@ -1,5 +1,5 @@
 var a00186 =
 [
-    [ "len", "a00186.html#ac28ec8c8ca6292b7987cf6b49a07da4f", null ],
-    [ "p_data", "a00186.html#a6e52a5c33d9b8e7f3f605f60f906652c", null ]
+    [ "encr_key_size", "a00186.html#abca3beb1304d60fd03f5ae098495dd6f", null ],
+    [ "sec_mode", "a00186.html#ada618e26f99059e7ccbe5be9f5d1049d", null ]
 ];

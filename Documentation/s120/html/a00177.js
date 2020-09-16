@@ -1,6 +1,5 @@
 var a00177 =
 [
-    [ "block_count", "a00177.html#a7bb96f4e9d1b68cb94fd5c75570e5a99", null ],
-    [ "block_size", "a00177.html#a95b58714824957d4c930a5da78d7109a", null ],
-    [ "cb", "a00177.html#a3495db72b9ff587f0c9ea0ab38d5e9f8", null ]
+    [ "high_to_low", "a00177.html#ae5b08a4f0525b94727edf87267f57c0b", null ],
+    [ "low_to_high", "a00177.html#ab74530adb87a0c8728839d2bbdc0f8f0", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: ble_bas_init_t Struct Reference</title>
+<title>nRF51 SDK - S310 SoftDevice: ble_dfu_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,108 +106,68 @@ $(document).ready(function(){initNavTree('a00106.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_bas_init_t Struct Reference<div class="ingroups"><a class="el" href="a00665.html">Battery Service</a></div></div>  </div>
+<div class="title">ble_dfu_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00599.html">Device Firmware Update Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Battery Service init structure. This contains all options and data needed for initialization of the service.  
+<p>DFU Event structure.  
  <a href="a00106.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_bas.h&gt;</code></p>
+<p><code>#include &lt;ble_dfu.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a84932ecefd721efa23840b01ca3ce7eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00665.html#ga07fd95f8afa679110161bb8391496abd">ble_bas_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00106.html#a84932ecefd721efa23840b01ca3ce7eb">evt_handler</a></td></tr>
-<tr class="separator:a84932ecefd721efa23840b01ca3ce7eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4f3272ae66ece4ee5a4b8c3ff7fba88"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00106.html#ad4f3272ae66ece4ee5a4b8c3ff7fba88">support_notification</a></td></tr>
-<tr class="separator:ad4f3272ae66ece4ee5a4b8c3ff7fba88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcbdf538aff06891b6f0057015b5c6e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00250.html">ble_srv_report_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00106.html#afcbdf538aff06891b6f0057015b5c6e0">p_report_ref</a></td></tr>
-<tr class="separator:afcbdf538aff06891b6f0057015b5c6e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22993ab4d63fdbd764624856605d1b7f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00106.html#a22993ab4d63fdbd764624856605d1b7f">initial_batt_level</a></td></tr>
-<tr class="separator:a22993ab4d63fdbd764624856605d1b7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba436d52b264fb93a74de510a9e7ef07"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00249.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00106.html#aba436d52b264fb93a74de510a9e7ef07">battery_level_char_attr_md</a></td></tr>
-<tr class="separator:aba436d52b264fb93a74de510a9e7ef07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07135d9b12640710f520ef87d7a4f1be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00140.html">ble_gap_conn_sec_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00106.html#a07135d9b12640710f520ef87d7a4f1be">battery_level_report_read_perm</a></td></tr>
-<tr class="separator:a07135d9b12640710f520ef87d7a4f1be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48f6c7cc051e012565ba9b05dd55e05a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00599.html#gae3254bda56bfd26221277e8a1696a4b5">ble_dfu_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00106.html#a48f6c7cc051e012565ba9b05dd55e05a">ble_dfu_evt_type</a></td></tr>
+<tr class="separator:a48f6c7cc051e012565ba9b05dd55e05a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbe4eeeac8c716e42319999fa1c2e616"><td class="memItemLeft" ><a class="anchor" id="abbe4eeeac8c716e42319999fa1c2e616"></a>
+union {</td></tr>
+<tr class="memitem:ad6aa5455a1c434a34f88f9093f7e0b0b"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00108.html">ble_dfu_pkt_write_t</a>&#160;&#160;&#160;<a class="el" href="a00106.html#acc15bfa51d868c165e8dcb85f0c89f3d">ble_dfu_pkt_write</a></td></tr>
+<tr class="separator:ad6aa5455a1c434a34f88f9093f7e0b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81c77524165712c29b5f25b4996baef9"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00218.html">ble_pkt_rcpt_notif_req_t</a>&#160;&#160;&#160;<a class="el" href="a00106.html#ac8054aef37b49a028cfee3dd3007becf">pkt_rcpt_notif_req</a></td></tr>
+<tr class="separator:a81c77524165712c29b5f25b4996baef9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbe4eeeac8c716e42319999fa1c2e616"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>evt</b></td></tr>
+<tr class="separator:abbe4eeeac8c716e42319999fa1c2e616"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Battery Service init structure. This contains all options and data needed for initialization of the service. </p>
+<div class="textblock"><p>DFU Event structure. </p>
+<p>This structure contains the event generated by the DFU Service based on the data received from the peer. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aba436d52b264fb93a74de510a9e7ef07"></a>
+<a class="anchor" id="a48f6c7cc051e012565ba9b05dd55e05a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00249.html">ble_srv_cccd_security_mode_t</a> ble_bas_init_t::battery_level_char_attr_md</td>
+          <td class="memname"><a class="el" href="a00599.html#gae3254bda56bfd26221277e8a1696a4b5">ble_dfu_evt_type_t</a> ble_dfu_evt_t::ble_dfu_evt_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial security level for battery characteristics attribute </p>
+<p>Type of the event. </p>
 
 </div>
 </div>
-<a class="anchor" id="a07135d9b12640710f520ef87d7a4f1be"></a>
+<a class="anchor" id="acc15bfa51d868c165e8dcb85f0c89f3d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00140.html">ble_gap_conn_sec_mode_t</a> ble_bas_init_t::battery_level_report_read_perm</td>
+          <td class="memname"><a class="el" href="a00108.html">ble_dfu_pkt_write_t</a> ble_dfu_evt_t::ble_dfu_pkt_write</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial security level for battery report read attribute </p>
+<p>The DFU packet received. This field is when the <a class="el" href="a00106.html#a48f6c7cc051e012565ba9b05dd55e05a">ble_dfu_evt_type</a> field is set to <a class="el" href="a00599.html#ggae3254bda56bfd26221277e8a1696a4b5aedcdcc2fa4f3f0209fdbf3805fff2865">BLE_DFU_PACKET_WRITE</a>. </p>
 
 </div>
 </div>
-<a class="anchor" id="a84932ecefd721efa23840b01ca3ce7eb"></a>
+<a class="anchor" id="ac8054aef37b49a028cfee3dd3007becf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00665.html#ga07fd95f8afa679110161bb8391496abd">ble_bas_evt_handler_t</a> ble_bas_init_t::evt_handler</td>
+          <td class="memname"><a class="el" href="a00218.html">ble_pkt_rcpt_notif_req_t</a> ble_dfu_evt_t::pkt_rcpt_notif_req</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Event handler to be called for handling events in the Battery Service. </p>
-
-</div>
-</div>
-<a class="anchor" id="a22993ab4d63fdbd764624856605d1b7f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_bas_init_t::initial_batt_level</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Initial battery level </p>
-
-</div>
-</div>
-<a class="anchor" id="afcbdf538aff06891b6f0057015b5c6e0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00250.html">ble_srv_report_ref_t</a>* ble_bas_init_t::p_report_ref</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>If not NULL, a Report Reference descriptor with the specified value will be added to the Battery Level characteristic </p>
-
-</div>
-</div>
-<a class="anchor" id="ad4f3272ae66ece4ee5a4b8c3ff7fba88"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_bas_init_t::support_notification</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>TRUE if notification of Battery Level measurement is supported. </p>
+<p>Packet receipt notification request. This field is when the <a class="el" href="a00106.html#a48f6c7cc051e012565ba9b05dd55e05a">ble_dfu_evt_type</a> field is set to <a class="el" href="a00599.html#ggae3254bda56bfd26221277e8a1696a4b5a3e439ee06700ce37e86c9d2300e84421">BLE_DFU_PKT_RCPT_NOTIF_ENABLED</a>. </p>
 
 </div>
 </div>
@@ -216,8 +176,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00106.html">ble_bas_init_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:17 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00106.html">ble_dfu_evt_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Direct Test Mode</title>
+<title>nRF51 SDK - S110 SoftDevice: Multiprotocol Application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,100 +97,53 @@ $(document).ready(function(){initNavTree('a00063.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Direct Test Mode </div>  </div>
+<div class="title">Multiprotocol Application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="project_dtm_intro"></a>
-Direct Test Mode</h1>
-<p>The DTM application enables the DTM test functions described in <em>Bluetooth</em> Specification Version 4.0, Vol. 6, Part F.</p>
-<p>The purpose of DTM is to test the operation of the radio at the physical level, such as</p>
+<div class="textblock"><h1><a class="anchor" id="project_gzll_intro"></a>
+Multiprotocol Application</h1>
+<p>The Multiprotocol Application is a firmware example that implements the Heart Rate profile in <em>Bluetooth</em> mode and the Gazell 'device' mode.</p>
+<p>The source code and project file can be found in the <code>&lt;InstallFolder&gt;\Nordic\nrf51822\Board\nrf6310\s110\ble_app_gzll</code> folder.</p>
+<p>When the application starts, it is in <em>Bluetooth</em> mode and behaves as the <a class="el" href="a00066.html">Heart Rate Application</a> application. If button 1 is pressed, the application switches to Gazell device mode. In this mode, it attempts to send packets to a host. If the packets are successfully sent, LED2 is lit. If it fails, LED3 is lit. If button 0 is pressed, the application switches back to <em>Bluetooth</em> mode.</p>
+<dl class="section note"><dt>Note</dt><dd>This application is not power optimised! </dd>
+<dd>
+In <em>Bluetooth</em> mode, the application goes to system-off after 3 minutes of advertising if no connections is initiated. Press button 0 to restart in <em>Bluetooth</em> mode or button 1 to restart in Gazell mode. </dd>
+<dd>
+This application uses a local copy of <a class="el" href="a00682.html">Application Timer</a> using SWI1 instead of SWI0.</dd></dl>
+<h1><a class="anchor" id="project_ble_gzll_setup"></a>
+Setup</h1>
+<p>Instructions on how to set up the nRFgo Motherboard: <a class="el" href="a00009.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a>.</p>
+<p>LED assignments:</p>
 <ul>
-<li>transmission power and receiver sensitivity,</li>
-<li>frequency offset and drift,</li>
-<li>modulation characteristics,</li>
-<li>packet error rate, and</li>
-<li>intermodulation performance.</li>
+<li>LED 0: <em>Bluetooth</em> Advertising</li>
+<li>LED 1: <em>Bluetooth</em> Connected</li>
+<li>LED 2: Successful Gazell transmit</li>
+<li>LED 3: Failed Gazell transmit</li>
+<li>LED 7: Asserted (i.e. an assert check in the application has failed)</li>
 </ul>
-<p>Test procedures are defined the document "&lt;i&gt;Bluetooth&lt;/i&gt; Low Energy RF PHY Test Specification", Document no RF-PHY.TS/4.0.0. Conformance tests are carried out by dedicated test equipment (such as the Anritsu MT8852 or similar), the nRF51 with the DTM application as the DUT.</p>
-<p>The nRF51 DTM application includes two parts:</p>
+<p>Buttons assignments:</p>
 <ul>
-<li><a class="el" href="a00909.html">DTM - Direct Test Mode</a> library - Which manages the nRF radio and controlling the standard DTM procedures,</li>
-<li>an application providing an external interface to the library.</li>
+<li>Button 0: Wake-up from system-off, switches to <em>Bluetooth</em> mode</li>
+<li>Button 1: Wake-up from system-off, switches to Gazell mode</li>
 </ul>
-<p>The DTM application contains a driver for a 2-wire UART interface, mapping two-octet commands and events as specified by the BLE DTM specification to the dtmlib.</p>
-<p>Source code and project file for the DTM application can be found in the <code>&lt;InstallFolder&gt;\Nordic\nrf51\Board\nrf6310\direct_test_mode</code> folder.</p>
-<p>Source code and project file for the <code>ble_dtm.c</code> module can be found in the <code>&lt;InstallFolder&gt;\Nordic\nrf51\Source\ble</code> folder. The header file <code>ble_dtm.h</code> is found in the <code>&lt;InstallFolder&gt;\Nordic\nrf51\Include\ble</code> folder.</p>
-<div class="image">
-<img src="DTM_DUT.png" alt="DTM_DUT.png"/>
-<div class="caption">
-nRF51 with DTM as a DUT</div></div>
-<p>The implementation is self contained, and requires no BLE protocol stack for its operation. The MPU is initialized in the standard way (files <code>startup_nRF51502.s</code> and <code>system_nRF51502.c</code>. The <code>dtmlib</code> fuction <code><a class="el" href="a00909.html#ga45f73017a4ba401da34571bcc741b564" title="Function for initializing or re-initializing DTM module.">dtm_init()</a></code> will do all configuration of interrupts, timers and radio. Initialization of the UART is done by the <code>dtm_serial2w</code> code.</p>
-<p><code>main.c</code> may be replaced with other interface implementations, such as an HCI interface, USB or other interface required by the Upper Tester.</p>
-<p>The interface to the Lower Tester uses the antenna connector of the nRF51. While in principle an aerial may be used, conformance tests cover reading the transmission power delivered by the DUT; hence a coax connection between the DUT and the Lower Tester is employed for all conformance testing.</p>
-<dl class="section note"><dt>Note</dt><dd>The DTM application is stand-alone. Therefore the S110 SoftDevice must be erased in the nRF51822 device. Please refer to the the nRF51822 DK User Guide for information on how to program and erase using the nRFgo Studio.</dd></dl>
-<h1><a class="anchor" id="ble_sdk_dtm_lib_interface"></a>
-BLE DTM module interface</h1>
-<p><code>ble_dtm.c</code>, function <code><a class="el" href="a00909.html#gacfd7e507740ae8f6d296e77306d89a3a" title="Function for calling when a complete command has been prepared by the Tester.">dtm_cmd()</a></code>, implements the four commands defined by the BLE standard</p>
-<ul>
-<li>RESET</li>
-<li>RECEIVER_TEST</li>
-<li>TRANSMITTER_TEST</li>
-<li>TEST_END</li>
-</ul>
-<p>In the <code><a class="el" href="a00909.html#gacfd7e507740ae8f6d296e77306d89a3a" title="Function for calling when a complete command has been prepared by the Tester.">dtm_cmd()</a></code> interface, each of the parameters (<code>cmd</code>, <code>freq</code>, <code>length</code>, <code>payload</code>) is a word size value. Note that parameter values currently supported is limited to those defined for BLE. (HCI allows a greater value range for use with BR/EDR.)</p>
-<p>DTM events,</p>
-<ul>
-<li>PACKET_REPORTING_EVENT</li>
-<li>TEST_STATUS_EVENT [SUCCESS|FAIL]</li>
-</ul>
-<p>are polled using the <code><a class="el" href="a00909.html#ga574ceb36cc9cee237a6e9f77e3c32b36" title="Function for reading the result of a DTM command.">dtm_event_get()</a></code> function.</p>
-<div class="image">
-<img src="dtm_engine.jpg" alt="dtm_engine.jpg"/>
-<div class="caption">
-State machine overview of the dtm engine.</div></div>
-<h1><a class="anchor" id="ble_sdk_dtm_proprietary"></a>
-Vendor Specific Packet Payload</h1>
-<p>The BLE 2-wire UART DTM interface standard reserves Packet Type (<code>payload</code> parameter) binary value '11' for a <em>Vendor Specific</em> Packet Payload. The <code>dtm_serial2w</code> adaptation layer maps this to value 0xFFF..FFF in the <code><a class="el" href="a00909.html#gacfd7e507740ae8f6d296e77306d89a3a" title="Function for calling when a complete command has been prepared by the Tester.">dtm_cmd()</a></code> interface. The rationale for this mapping is to allow later extensions to a 4-bit Packet Type field, as specified in the HCI interface and in the DTM PDU layout.</p>
-<p>The <em>Vendor Specific</em> <code>payload</code> (parameter 4) is interpreted as follows:</p>
-<p>If <code>Command</code>, parameter 1, is set to Transmitter Test (binary '10') and parameter 4, <code>payload</code>, to <em>Vendor Specific</em> (binary '11' in the 2wire physical interface, all bits set to 1 in the <code>dtmlib</code> interface):</p>
-<ul>
-<li>If parameter 3 (<code>length</code>) is set to 0 (symbol <code>CARRIER_TEST</code>), an unmodulated carrier is turned on atthe channel indicated by parameter 2 (<code>freq</code>). It remains turned on until a <code>TEST_END</code> or <code>RESET</code> command is issued.</li>
-</ul>
-<ul>
-<li>Parameter 3 (<code>length</code>) equal to 1 (symbol <code>CARRIER_TEST_STUDIO</code>), is used by the nRFgo studio to indicate an unmodulated carrier is turned on at the channel. It remains turned on until a <code>TEST_END</code> or <code>RESET</code> command is issued.</li>
-</ul>
-<ul>
-<li>If parameter 3 (<code>length</code>) is set to 2 (symbol <code>SET_TX_POWER</code>), parameter 2 (<code>length</code>) sets the tx power in dBm, ranging from -40 to +4 in steps of 4, 0 dBm being the reset value. The tx power can only be modified while no Transmitter Test or Receiver Test is running.</li>
-</ul>
-<ul>
-<li>If parameter 3 (<code>freq</code>) is set to 3 (symbol <code>SELECT_TIMER</code>), parameter 2 (<code>length</code>) selects the timer to be used by dtmlib for Transmitter Test timing. Valid timer identifiers are 0, 1 and 2. Configuring the timer to be used allows dtmlib to be integrated in a larger test environment where other modules may be occupying the default timer (timer 0).</li>
-</ul>
-<ul>
-<li>All other values of parameter 2 (<code>freq</code>) and 4 (<code>length</code>) are reserved.</li>
-</ul>
-<h1><a class="anchor" id="ble_sdk_dtm_serial2w"></a>
-The DTM to Serial adaptation layer</h1>
-<p><code>main.c</code> is a sample adaptation layer, implementing the UART interface as specified in Volume 6, part F, chapter 3 of the <em>Bluetooth</em> specification.</p>
-<p>The default selection of GPIO pins are pin 16 for RX and pin 17 for TX which corresponds to the pin usage in the <a class="el" href="a00009.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a> and are defined in <code>boards/nrf6310.h</code> and can be changed by editing the values of the symbols <code>RX_PIN_NUMBER</code> and <code>TX_PIN_NUMBER</code>.</p>
-<h1><a class="anchor" id="ble_sdk_dtm_testing"></a>
-Running DTM tests</h1>
-<p>Conformance testing is done using a certified tester. The setup depends on the actual tester, and details about the test operation must be found from the tester documentation.</p>
-<p>The BLE DTM UART interface standard specifies</p>
-<ul>
-<li>8 data bits,</li>
-<li>No parity,</li>
-<li>1 stop bit,</li>
-<li>No flow control,</li>
-<li>A selection of bit rates from 1200 to 115200, one of which must be supported by the DUT.</li>
-</ul>
-<p>The default bit rate of the DTM UART driver is 19200 bps, which is supported by most certified testers. </p>
+<h1><a class="anchor" id="project_ble_gzll_test"></a>
+Testing</h1>
+<p>The Multiprotocol Application <em>Bluetooth</em> part can be tested using the "nRF Toolbox" app, available on both iOS (Apple Store) and Android (Google Play).</p>
+<p>It can also be tested using the Master Control Panel as follows:</p>
+<ol type="1">
+<li>Compile and program the application. Observe that the Advertising LED is lit.</li>
+<li>Connect to the device from Master Control Panel (the device will be advertising as 'Nordic_BLE_GZL'), then perform service discovery. Observe that the Connected LED is lit, and the Advertising LED is off.</li>
+<li>Click the 'Enable services' button on the Master Control Panel. Observe that Heart Rate notifications are received every second, and Battery Level notifications are received every two seconds.</li>
+<li>Click on the Disconnect button on the Master Control Panel. Observe that the Advertising LED is on and that the Connected LED is off.</li>
+<li>Press the Gazell button (Button 1) and observe LED3 is lit (if a Gazell host device is running, then you should observe that the LED2 is lit and that the LEDs on the host device are lit in a running sequence). </li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:33 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00082.html">BLE Peripheral</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

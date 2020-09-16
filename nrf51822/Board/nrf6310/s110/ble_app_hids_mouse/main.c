@@ -75,7 +75,7 @@
 #define MANUFACTURER_NAME               "NordicSemiconductor"                       /**< Manufacturer. Will be passed to Device Information Service. */
 
 #define APP_TIMER_PRESCALER             0                                           /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            3                                           /**< Maximum number of simultaneously created timers. */
+#define APP_TIMER_MAX_TIMERS            4                                           /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE         4                                           /**< Size of timer operation queues. */
 
 #define BATTERY_LEVEL_MEAS_INTERVAL     APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER)  /**< Battery level measurement interval (ticks). */
@@ -189,7 +189,7 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
     // ble_debug_assert_handler(error_code, line_num, p_file_name);
 
     // On assert, the system can only recover with a reset.
-    NVIC_SystemReset();
+		for (;;);
 }
 
 

@@ -1,7 +1,6 @@
 var searchData=
 [
   ['error_20_2f_20status_20codes_20specific_20to_20device_20manager_2e',['Error / status codes specific to device manager.',['../group__dm__specific__errors.html',1,'']]],
-  ['empty_5fflash_5fmask',['EMPTY_FLASH_MASK',['../group__nrf__dfu__types.html#ga2bc37a969778bef19412ae6f71222b77',1,'dfu_types.h']]],
   ['encryption_5fbasic_5frequest_5fmode',['ENCRYPTION_BASIC_REQUEST_MODE',['../group__t__s210__ant__parameters.html#ga9b3c311487b035a879bc1bf717772c85',1,'ant_parameters.h']]],
   ['encryption_5fdisabled_5fmode',['ENCRYPTION_DISABLED_MODE',['../group__t__s210__ant__parameters.html#ga8df33686bce0393089c8b55ff29121ed',1,'ant_parameters.h']]],
   ['encryption_5finfo_5fget_5fcrypto_5fid',['ENCRYPTION_INFO_GET_CRYPTO_ID',['../group__t__s210__ant__parameters.html#ga2da9e00dce267a0e584119f6aa3921fc',1,'ant_parameters.h']]],

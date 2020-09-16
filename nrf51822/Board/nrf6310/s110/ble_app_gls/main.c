@@ -62,11 +62,15 @@
 
 #define DEVICE_NAME                     "Nordic_Glucose"                            /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME               "NordicSemiconductor"                       /**< Manufacturer. Will be passed to Device Information Service. */
+#define MODEL_NUMBER                    "nRF51"                                     /**< Model Number string. Will be passed to Device Information Service. */
+#define MANUFACTURER_ID                 0x55AA55AA55                                /**< DUMMY Manufacturer ID. Will be passed to Device Information Service. You shall use the ID for your Company*/
+#define ORG_UNIQUE_ID                   0xEEBBEE                                    /**< DUMMY Organisation Unique ID. Will be passed to Device Information Service. You shall use the Organisation Unique ID relevant for your Company */
+
 #define APP_ADV_INTERVAL                40                                          /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
 #define APP_ADV_TIMEOUT_IN_SECONDS      180                                         /**< The advertising timeout in units of seconds. */
 
 #define APP_TIMER_PRESCALER             0                                           /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            4                                           /**< Maximum number of simultaneously created timers. */
+#define APP_TIMER_MAX_TIMERS            5                                           /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE         4                                           /**< Size of timer operation queues. */
 
 #define SECURITY_REQUEST_DELAY          APP_TIMER_TICKS(4000, APP_TIMER_PRESCALER)  /**< Delay after connection until Security Request is sent, if necessary (ticks). */
@@ -452,8 +456,16 @@ static void services_init(void)
 
     ble_srv_ascii_to_utf8(&dis_init.manufact_name_str, MANUFACTURER_NAME);
 
+    ble_srv_ascii_to_utf8(&dis_init.serial_num_str, MODEL_NUMBER);
+
+    ble_dis_sys_id_t system_id;
+    system_id.manufacturer_id            = MANUFACTURER_ID;
+    system_id.organizationally_unique_id = ORG_UNIQUE_ID;
+    dis_init.p_sys_id                    = &system_id;
+    
     BLE_GAP_CONN_SEC_MODE_SET_OPEN(&dis_init.dis_attr_md.read_perm);
     BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&dis_init.dis_attr_md.write_perm);
+
 
     err_code = ble_dis_init(&dis_init);
     APP_ERROR_CHECK(err_code);
@@ -765,8 +777,6 @@ static uint32_t device_manager_evt_handler(dm_handle_t const    * p_handle,
                 err_code = app_timer_start(m_sec_req_timer_id, SECURITY_REQUEST_DELAY, NULL);
                 APP_ERROR_CHECK(err_code);
             }
-            err_code = app_timer_start(m_sec_req_timer_id, SECURITY_REQUEST_DELAY, NULL);
-            APP_ERROR_CHECK(err_code);
             break;
         default:
             break;

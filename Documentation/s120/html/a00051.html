@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: TWI Master Example</title>
+<title>nRF51 SDK - S120 SoftDevice: UART Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,50 +97,42 @@ $(document).ready(function(){initNavTree('a00051.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">TWI Master Example </div>  </div>
+<div class="title">UART Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The TWI Master Example project demonstrates the initialization and reading of sensors using the a Two Wire Interface (TWI) driver.</p>
-<dl class="section note"><dt>Note</dt><dd>By default this example uses a bit-banged software TWI driver. The API is exactly the same for the hardware TWI driver. Therefore, twi_sw_master.c can be swapped out for the twi_hw_master.c to use on-chip hardware to achieve the same results.</dd></dl>
-<p>Temperature sensor ds1624:</p>
-<ul>
-<li>This example initializes the sensor <a class="el" href="a00389.html#ga0ea8c0c4d140fde9b5b575caed79de6a">ds1624_init</a>. After initialization succeeds the temperature is read from the sensor register <a class="el" href="a00389.html#ga554dc82a94c2878635c336b0fb691144">ds1624_temp_read</a>. The read value is written to GPIO pins 14 to 8, where pin 8 is the lsb value of the temperature.</li>
-</ul>
-<p>Touchpad sensor:<br/>
-</p>
-<ul>
-<li>This example initializes the sensor <a class="el" href="a00392.html#ga56d2b2da22fd614a12dead51b86f5be8">touchpad_init</a>. After initialization succeeded then we read the button status from sensor register. The read value is written to GPIO pin 15 (which can be connected to LED) when a button is pressed on the touch sensor.</li>
-</ul>
-<h1><a class="anchor" id="spi_master_example_setup"></a>
+<div class="textblock"><p>The UART Example demonstrates basic UART usage for communicating with a PC terminal. It transmits and receives data through the configured pins as a serial device. The configure pins needs to be redirected to a COM port (terminal programs like putty can listen to this COM port through a terminal session). When the program starts it will transmit "START: " through this serial device using <a class="el" href="a00401.html#ga76e6bde269950e02affbff121c79d408">simple_uart_putstring</a> and this should be visible on the terminal. All typed characters on this terminal will be transmitted to the program through <a class="el" href="a00401.html#gabae30008064ce450ab819949a692c511">simple_uart_get</a> and when an exit character 'q' or 'Q' is typed the program will end into an infinite loop after transmitting "EXIT!" on a new line of the terminal. </p>
+<dl class="section note"><dt>Note</dt><dd>This example is not just for COM ports but can be used for any UART connection, COM port redirection is for visual verification. </dd>
+<dd>
+Setting the define ENABLE_LOOPBACK_TEST will assume that the TX_PIN_NUMBER is connected to RX_PIN_NUMBER, used to test in loopback. In this case no com port can be used as the data flows from TX to RX and ERROR_PIN is set high if data is lost. </dd>
+<dd>
+Settings: Baud: 38400, data bits: 8 , Stop Bits: 1.</dd></dl>
+<p>The source code and project file are available for both development and evaluation boards and is located in the following folders: <br/>
+ <code>&lt;InstallFolder&gt;\Nordic\nrf51822\Board\nrf6310\uart_example</code> <br/>
+ <code>&lt;InstallFolder&gt;\Nordic\nrf51822\Board\pca10000\uart_example</code> <br/>
+ <code>&lt;InstallFolder&gt;\Nordic\nrf51822\Board\pca10001\uart_example</code> <br/>
+ <code>&lt;InstallFolder&gt;\Nordic\nrf51422\Board\pca10003\uart_example</code> </p>
+<h1><a class="anchor" id="uart_example_setup"></a>
 Setup</h1>
 <p>Instructions on how to set up the nRFgo Motherboard: <a class="el" href="a00008.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a>. <br/>
 </p>
-<p>The touchpad pin setup:</p>
-<ul>
-<li>SCL should be connected to PIN 24 (P3.0)</li>
-<li>SDA should be connected to PIN 25 (P3.1)</li>
-</ul>
-<p>LED assignments:</p>
-<ul>
-<li>LED 0-7 shows error messages if initialization fails.</li>
-<li>LED 0-6 shows the temperature value.</li>
-<li>LED 7 shows is turned on when a button is pressed on the touch sensor.</li>
-</ul>
-<h1><a class="anchor" id="spi_master_example_testing"></a>
+<p>Writing 'Q' or 'q' to the PUTTY terminal ends the program.</p>
+<h1><a class="anchor" id="uart_example_testing"></a>
 Testing</h1>
-<p>TWI Master Example Application can be tested as follows:</p>
+<p>The UART Example Application can be tested as follows:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>LED 0 to LED 6 should show the binary value of the temperature read from the ds1624 temperature sensor.</li>
-<li>LED 7 should be turned on if a touchpad button (Behind the touchpad) is pressed. </li>
+<li>Start a COM listener like PUTTY and connect to the used COM port at 38400 baud rate.</li>
+<li>The text "Start:" should appear at the top of the terminal.</li>
+<li>Type 'Q' or 'q' in the terminal.</li>
+<li>The response should be 'Exit!'. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00023.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:05 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00022.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

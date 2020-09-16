@@ -30,6 +30,7 @@ INCLUDEPATHS += -I"$(SDK_PATH)Include/app_common"
 INCLUDEPATHS += -I"$(SDK_PATH)Include/sdk_soc"
 INCLUDEPATHS += -I"$(SDK_PATH)Include/sd_common"
 INCLUDEPATHS += -I"$(SDK_PATH)Include/sdk"
+INCLUDEPATHS += -I"$(SDK_PATH)Include/bootloader_dfu"
 INCLUDEPATHS += -I"$(SDK_PATH)Include/serialization/application/codecs/s110/serializers"
 INCLUDEPATHS += -I"$(SDK_PATH)Include/serialization/application/transport"
 INCLUDEPATHS += -I"$(SDK_PATH)Include/serialization/common"
@@ -176,6 +177,7 @@ C_SOURCE_FILES += ser_softdevice_handler.c
 C_SOURCE_FILES += ser_sd_transport.c
 C_SOURCE_FILES += ser_hal_transport.c
 C_SOURCE_FILES += app_mailbox.c
+C_SOURCE_FILES += app_util_platform.c
 
 # ser_hal
 C_SOURCE_FILES += nrf_delay.c

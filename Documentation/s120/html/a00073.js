@@ -1,7 +1,6 @@
 var a00073 =
 [
-    [ "bl_cccd_handle", "a00073.html#a2ea89dfa950963404b32410a8e42a04f", null ],
-    [ "bl_handle", "a00073.html#a58c7f1553ce38426e3656bd61bd21748", null ],
-    [ "conn_handle", "a00073.html#a97ef9e28546757bc5c42fc566e331380", null ],
-    [ "evt_handler", "a00073.html#a13ed1988cc9320c7eaad37ec21272201", null ]
+    [ "battery_level", "a00073.html#aa06f57fc8285fed61a3c0dd89671f6d3", null ],
+    [ "evt_type", "a00073.html#a19f2646a4734d1fc7cb27fdd7055fa55", null ],
+    [ "params", "a00073.html#a2a9e96ffe65807362908ee9d27076361", null ]
 ];

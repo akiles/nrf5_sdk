@@ -1,4 +1,6 @@
 var a00159 =
 [
-    [ "evt_handler", "a00159.html#a223e36fe74ad9b01944bad0289393ed5", null ]
+    [ "conn_handle", "a00159.html#ab843f6e96efbaf3d2bffee8c92c62f1a", null ],
+    [ "params", "a00159.html#af7e5f4832b2f4735635aff660eb66787", null ],
+    [ "rx", "a00159.html#afc4cbc758b308e6698b16650310cc52b", null ]
 ];

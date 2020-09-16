@@ -1,8 +1,10 @@
 var a00221 =
 [
-    [ "evt_handler", "a00221.html#ac6fbae8371e9336d3acb46b8903a8947", null ],
-    [ "hts_meas_attr_md", "a00221.html#a5c4a4bc737442da34f2b9cfd367bb5e8", null ],
-    [ "hts_temp_type_attr_md", "a00221.html#a1f216c81224e94f40db0d5b4aaa1898b", null ],
-    [ "temp_type", "a00221.html#a7d233be4574d7bdd2f28c9afa8d0efc2", null ],
-    [ "temp_type_as_characteristic", "a00221.html#a6ac11fedc2f4a022e482c6342880e30f", null ]
+    [ "inst_cadence", "a00221.html#ae0184379a72ca968be31624693859296", null ],
+    [ "inst_speed", "a00221.html#a2c67fcdf6c045252f8f2c19410ce93ce", null ],
+    [ "inst_stride_length", "a00221.html#a80d5e5ebfb6d4e01cf5a3716af83bf6f", null ],
+    [ "is_inst_stride_len_present", "a00221.html#ae051edb606a9de9cebc7ab7a6eef2ae0", null ],
+    [ "is_running", "a00221.html#a1b8f312b31cdc3a4b06f092ce7e2bd8e", null ],
+    [ "is_total_distance_present", "a00221.html#abd1ef1791fd6291c82c5b2f5d9bd289f", null ],
+    [ "total_distance", "a00221.html#a446576bd70deec710453a5e09ff1f7c2", null ]
 ];

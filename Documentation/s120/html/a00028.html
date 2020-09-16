@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Flash Write Example</title>
+<title>nRF51 SDK - S120 SoftDevice: GPIOTE Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,38 +97,47 @@ $(document).ready(function(){initNavTree('a00028.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Flash Write Example </div>  </div>
+<div class="title">GPIOTE Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Flash Write Example erases a page in flash and then reads a pattern from pins 0-7 (Buttons), writes it to flash if a new pattern is detected, reads it back and writes it to pins 8-15 (LEDs). Each time a new pattern is detected, the address in flash is incremented. It uses the hardware delivered in the nRF51822 Development Kit.</p>
-<p>The application starts with setting pins 0-7 as input (Buttons) and pins 8-15 as output (LEDs). The flash start address is set to the last page in flash, and the page is erased. The main loop first reads the button pattern and writes the value to flash. After the write to flash, the same flash address is read and set to the LEDs. Note that by erasing flash, each bit is set to logic one, so by pressing a button, the corresponding LED will be turned off.</p>
-<p>The source code and project file can be found in the <code>&lt;InstallFolder&gt;\Nordic\nrf51822\Board\nrf6310\flashwrite_example</code> folder.</p>
-<h1><a class="anchor" id="flashwrite_example_setup"></a>
+<div class="textblock"><p>The GPIOTE Example shows the usage of GPIOTE peripheral by toggling a LED. We use TIMER0 to generate 'EVENT_COMPARE0' event every 200 milliseconds. This will also clear the TIMER0 internal clock. This event is passed through PPI peripheral to generate a task. This task is used by GPIOTE (task mode) to toggle the pin. This means that every time we have EVENT_COMPARE event, the GPIO pin toggles automatically, which can only be achieved using the GPIOTE peripheral. It uses the hardware delivered in the nRF51822 Development Kit.</p>
+<p>[TIMER0]-&gt;EVENT_COMPARE-&gt;[PPI]-&gt;GPIOTE_TASK_OUT-&gt;[GPIOTE]-&gt;toggle_pin</p>
+<pre class="fragment">*          ----------------                       --------------------------
+*  -Start-|    Timer0      |                     |   EEP |    PPI    |  TEP |-------
+*  ------&gt;|  CC[0] = 200ms |-----Timer0_Event---&gt;|       | Channel 0 |      |       |
+* |        ----------------                       --------------------------        |
+* |                                                                                 |
+* |    -----------------------------------------------------------------------------
+* |   |
+* |   |                 -----------------                      ---------------
+* |    ---------TASK--&gt;|     GPIO_TE     |--&gt;Toggled_Output--&gt;|  LED toggling |--
+* |                     -----------------                     |  every 200ms  |  |
+* |                                                            ---------------   |
+*  ------------------------------------------------------------------------------
+*
+* </pre><p>The application starts with configuring the GPIOTE output pin to toggle on a GPIOTE task. Timer0 is configured to generate events every 200ms, and the PPI channel is configured to connect the timer event to the GPIOTE task.</p>
+<h1><a class="anchor" id="gpiote_example_setup"></a>
 Setup</h1>
 <p>Instructions on how to set up the nRFgo Motherboard: <a class="el" href="a00008.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a>. <br/>
 </p>
 <p>LED assignments:</p>
 <ul>
-<li>LED 0-7 is used to show the value read from flash.</li>
-</ul>
-<p>Button assignment:</p>
-<ul>
-<li>Button 0-7 is used to write a new value to flash.</li>
+<li>LED 0 is used to show the toggling done by the GPIOTE task.</li>
 </ul>
 <h1><a class="anchor" id="flashwrite_example_testing"></a>
 Testing</h1>
-<p>The Flash Write Example Application can be tested as follows:</p>
+<p>The GPIOTE Example Application can be tested as follows:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Press any buttons and the corresponding LEDs should be turned off. </li>
+<li>Observe that LED 0 toggles at the rate of 200ms. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00023.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:05 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00022.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

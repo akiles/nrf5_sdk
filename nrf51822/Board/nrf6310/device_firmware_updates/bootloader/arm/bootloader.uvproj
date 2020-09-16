@@ -14,12 +14,14 @@
         <TargetCommonOption>
           <Device>nRF51822_xxAA</Device>
           <Vendor>Nordic Semiconductor</Vendor>
-          <Cpu>IRAM(0x20000000-0x20003FFF) IROM(0-0x3FFFF) CLOCK(16000000) CPUTYPE("Cortex-M0") ESEL ELITTLE</Cpu>
+          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.1.1.1</PackID>
+          <PackURL>http://www.keil.com/pack/</PackURL>
+          <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x4000) CPUTYPE("Cortex-M0") CLOCK(16000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
-          <StartupFile>"Device\Nordic\nRF51822\Source\templates\arm\arm_startup_nrf51.s"("Nordic Semiconductor nRF51822_xxAA Startup Code")</StartupFile>
-          <FlashDriverDll>UL2CM3(-UM0364FCE -O78 -S0 -C0 -TO18 -TC16000000 -TP21 -TDS800D -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC2000 -FN1 -FF0nRF51xxx -FS00 -FL0200000)</FlashDriverDll>
+          <StartupFile></StartupFile>
+          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0nrf51xxx -FS00 -FL0200000 -FP0($$Device:nRF51822_xxAA$Flash\nrf51xxx.flm))</FlashDriverDll>
           <DeviceId>0</DeviceId>
-          <RegisterFile>nrf.h</RegisterFile>
+          <RegisterFile>$$Device:nRF51822_xxAA$Device\Include\nrf.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -35,8 +37,8 @@
           <BinPath></BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath>..\Device\Nordic\nRF51822\Include\</RegisterFilePath>
-          <DBRegisterFilePath>..\Device\Nordic\nRF51822\Include\</DBRegisterFilePath>
+          <RegisterFilePath></RegisterFilePath>
+          <DBRegisterFilePath></DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -72,6 +74,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopB1X>0</nStopB1X>
+            <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
@@ -101,12 +105,12 @@
           <ComprImg>1</ComprImg>
         </CommonProperty>
         <DllOption>
-          <SimDllName></SimDllName>
-          <SimDllArguments></SimDllArguments>
-          <SimDlgDll></SimDlgDll>
-          <SimDlgDllArguments></SimDlgDllArguments>
+          <SimDllName>SARMCM3.DLL</SimDllName>
+          <SimDllArguments> </SimDllArguments>
+          <SimDlgDll>DARMCM1.DLL</SimDlgDll>
+          <SimDlgDllArguments>-pCM0</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
-          <TargetDllArguments></TargetDllArguments>
+          <TargetDllArguments> </TargetDllArguments>
           <TargetDlgDll>TARMCM1.DLL</TargetDlgDll>
           <TargetDlgDllArguments>-pCM0</TargetDlgDllArguments>
         </DllOption>
@@ -128,17 +132,19 @@
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
             <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>0</RunToMain>
+            <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <RestoreTracepoints>0</RestoreTracepoints>
+            <RestoreTracepoints>1</RestoreTracepoints>
+            <RestoreTracepoints>1</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>6</TargetSelection>
@@ -160,15 +166,15 @@
         </DebugOption>
         <Utilities>
           <Flash1>
-            <UseTargetDll>0</UseTargetDll>
+            <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>1</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4099</DriverSelection>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
-          <Flash2>Segger\JL2CM3.dll</Flash2>
+          <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"nrfjprog.exe" (--reset --program "#H")</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
@@ -219,7 +225,7 @@
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
             <useUlib>0</useUlib>
-            <EndSel>1</EndSel>
+            <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <RoSelD>3</RoSelD>
             <RwSelD>3</RwSelD>
@@ -353,11 +359,13 @@
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
+            <uC99>0</uC99>
+            <useXO>0</useXO>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
               <Define>NRF51,DEBUG_NRF_USER,BOARD_NRF6310, BOOTLOADER_BANKED BLE_STACK_SUPPORT_REQD</Define>
               <Undefine></Undefine>
-              <IncludePath>..\;..\include;..\include\hci_transport;..\..\..\..\..\Include;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\s110;..\..\..\..\..\Include\sd_common</IncludePath>
+              <IncludePath>..;..\include;..\..\..\..\..\Include\bootloader_dfu;..\..\..\..\..\Include\bootloader_dfu\hci_transport;..\..\..\..\..\Include;..\..\..\..\..\Include\sd_common;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\s110</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -369,6 +377,7 @@
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
+            <useXO>0</useXO>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -385,6 +394,7 @@
             <useFile>0</useFile>
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
+            <pXoBase></pXoBase>
             <ScatterFile>.\scatter.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
@@ -421,7 +431,7 @@
             <File>
               <FileName>dfu_dual_bank.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\dfu_dual_bank.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\dfu_dual_bank.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -451,9 +461,11 @@
                     <PlainCh>2</PlainCh>
                     <Ropi>2</Ropi>
                     <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
+                    <wLevel>2</wLevel>
                     <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
+                    <uC99>2</uC99>
+                    <useXO>2</useXO>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -467,17 +479,17 @@
             <File>
               <FileName>dfu_single_bank.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\dfu_single_bank.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\dfu_single_bank.c</FilePath>
             </File>
             <File>
               <FileName>bootloader.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\bootloader.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\bootloader.c</FilePath>
             </File>
             <File>
               <FileName>bootloader_util_arm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\bootloader_util_arm.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\bootloader_util_arm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -517,9 +529,11 @@
                     <PlainCh>2</PlainCh>
                     <Ropi>2</Ropi>
                     <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
+                    <wLevel>2</wLevel>
                     <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
+                    <uC99>2</uC99>
+                    <useXO>2</useXO>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -535,6 +549,11 @@
         <Group>
           <GroupName>Libraries</GroupName>
           <Files>
+            <File>
+              <FileName>hci_mem_pool.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\app_common\hci_mem_pool.c</FilePath>
+            </File>
             <File>
               <FileName>app_timer.c</FileName>
               <FileType>1</FileType>
@@ -565,6 +584,101 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\app_common\pstorage.c</FilePath>
             </File>
+            <File>
+              <FileName>app_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\app_common\app_button.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrf_delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\nrf_delay\nrf_delay.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>BLE Transport</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>2</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <useXO>2</useXO>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+          <Files>
+            <File>
+              <FileName>dfu_transport_ble.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\dfu_transport_ble.c</FilePath>
+            </File>
+            <File>
+              <FileName>ble_conn_params.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\ble\ble_conn_params.c</FilePath>
+            </File>
+            <File>
+              <FileName>ble_advdata.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\ble\ble_advdata.c</FilePath>
+            </File>
+            <File>
+              <FileName>ble_srv_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\ble\ble_services\ble_srv_common.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -573,7 +687,7 @@
             <File>
               <FileName>dfu_transport_serial.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\dfu_transport_serial.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\dfu_transport_serial.c</FilePath>
             </File>
             <File>
               <FileName>hci_transport.c</FileName>
@@ -586,203 +700,9 @@
               <FilePath>..\..\..\..\..\Source\app_common\hci_slip.c</FilePath>
             </File>
             <File>
-              <FileName>hci_mem_pool.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\hci_mem_pool.c</FilePath>
-            </File>
-            <File>
               <FileName>app_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\app_common\app_uart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>BLE Transport</GroupName>
-          <Files>
-            <File>
-              <FileName>dfu_transport_ble.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\dfu_transport_ble.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>ble_conn_params.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_conn_params.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>ble_advdata.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_advdata.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>ble_srv_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_services\ble_srv_common.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
             </File>
           </Files>
         </Group>
@@ -797,12 +717,14 @@
         <TargetCommonOption>
           <Device>nRF51822_xxAA</Device>
           <Vendor>Nordic Semiconductor</Vendor>
-          <Cpu>IRAM(0x20000000-0x20003FFF) IROM(0-0x3FFFF) CLOCK(16000000) CPUTYPE("Cortex-M0") ESEL ELITTLE</Cpu>
+          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.1.1.1</PackID>
+          <PackURL>http://www.keil.com/pack/</PackURL>
+          <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x4000) CPUTYPE("Cortex-M0") CLOCK(16000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
-          <StartupFile>"Device\Nordic\nRF51822\Source\templates\arm\arm_startup_nrf51.s"("Nordic Semiconductor nRF51822_xxAA Startup Code")</StartupFile>
-          <FlashDriverDll>UL2CM3(-UM0364FCE -O78 -S0 -C0 -TO18 -TC16000000 -TP21 -TDS800D -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC2000 -FN1 -FF0nRF51xxx -FS00 -FL0200000)</FlashDriverDll>
+          <StartupFile></StartupFile>
+          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0nrf51xxx -FS00 -FL0200000 -FP0($$Device:nRF51822_xxAA$Flash\nrf51xxx.flm))</FlashDriverDll>
           <DeviceId>0</DeviceId>
-          <RegisterFile>nrf.h</RegisterFile>
+          <RegisterFile>$$Device:nRF51822_xxAA$Device\Include\nrf.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -818,8 +740,8 @@
           <BinPath></BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath>..\Device\Nordic\nRF51822\Include\</RegisterFilePath>
-          <DBRegisterFilePath>..\Device\Nordic\nRF51822\Include\</DBRegisterFilePath>
+          <RegisterFilePath></RegisterFilePath>
+          <DBRegisterFilePath></DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -855,6 +777,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopB1X>0</nStopB1X>
+            <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
@@ -884,12 +808,12 @@
           <ComprImg>1</ComprImg>
         </CommonProperty>
         <DllOption>
-          <SimDllName></SimDllName>
-          <SimDllArguments></SimDllArguments>
-          <SimDlgDll></SimDlgDll>
-          <SimDlgDllArguments></SimDlgDllArguments>
+          <SimDllName>SARMCM3.DLL</SimDllName>
+          <SimDllArguments> </SimDllArguments>
+          <SimDlgDll>DARMCM1.DLL</SimDlgDll>
+          <SimDlgDllArguments>-pCM0</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
-          <TargetDllArguments></TargetDllArguments>
+          <TargetDllArguments> </TargetDllArguments>
           <TargetDlgDll>TARMCM1.DLL</TargetDlgDll>
           <TargetDlgDllArguments>-pCM0</TargetDlgDllArguments>
         </DllOption>
@@ -911,17 +835,20 @@
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
             <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>0</RunToMain>
+            <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <RestoreTracepoints>0</RestoreTracepoints>
+            <RestoreTracepoints>1</RestoreTracepoints>
+            <RestoreSysVw>1</RestoreSysVw>
+            <UsePdscDebugDescription>1</UsePdscDebugDescription>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>6</TargetSelection>
@@ -948,10 +875,10 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4099</DriverSelection>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
-          <Flash2>Segger\JL2CM3.dll</Flash2>
+          <Flash2>BIN\UL2CM3.DLL</Flash2>
           <Flash3>"nrfjprog.exe" (--reset --program "#H")</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
@@ -1002,7 +929,7 @@
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
             <useUlib>0</useUlib>
-            <EndSel>1</EndSel>
+            <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <RoSelD>3</RoSelD>
             <RwSelD>3</RwSelD>
@@ -1136,11 +1063,13 @@
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
+            <uC99>0</uC99>
+            <useXO>0</useXO>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
               <Define>NRF51,DEBUG_NRF_USER,BOARD_NRF6310, BOOTLOADER_BANKED BLE_STACK_SUPPORT_REQD</Define>
               <Undefine></Undefine>
-              <IncludePath>..\;..\include;..\include\hci_transport;..\..\..\..\..\Include;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\s110;..\..\..\..\..\Include\sd_common</IncludePath>
+              <IncludePath>..;..\include;..\..\..\..\..\Include\bootloader_dfu;..\..\..\..\..\Include\bootloader_dfu\hci_transport;..\..\..\..\..\Include;..\..\..\..\..\Include\sd_common;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\s110</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1152,6 +1081,7 @@
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
+            <useXO>0</useXO>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -1168,6 +1098,7 @@
             <useFile>0</useFile>
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
+            <pXoBase></pXoBase>
             <ScatterFile>.\scatter.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
@@ -1204,12 +1135,12 @@
             <File>
               <FileName>dfu_dual_bank.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\dfu_dual_bank.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\dfu_dual_bank.c</FilePath>
             </File>
             <File>
               <FileName>dfu_single_bank.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\dfu_single_bank.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\dfu_single_bank.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -1239,9 +1170,11 @@
                     <PlainCh>2</PlainCh>
                     <Ropi>2</Ropi>
                     <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
+                    <wLevel>2</wLevel>
                     <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
+                    <uC99>2</uC99>
+                    <useXO>2</useXO>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -1255,12 +1188,12 @@
             <File>
               <FileName>bootloader.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\bootloader.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\bootloader.c</FilePath>
             </File>
             <File>
               <FileName>bootloader_util_arm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\bootloader_util_arm.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\bootloader_util_arm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1300,9 +1233,11 @@
                     <PlainCh>2</PlainCh>
                     <Ropi>2</Ropi>
                     <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
+                    <wLevel>2</wLevel>
                     <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
+                    <uC99>2</uC99>
+                    <useXO>2</useXO>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -1318,6 +1253,11 @@
         <Group>
           <GroupName>Libraries</GroupName>
           <Files>
+            <File>
+              <FileName>hci_mem_pool.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\app_common\hci_mem_pool.c</FilePath>
+            </File>
             <File>
               <FileName>app_timer.c</FileName>
               <FileType>1</FileType>
@@ -1348,6 +1288,101 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\app_common\pstorage.c</FilePath>
             </File>
+            <File>
+              <FileName>app_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\app_common\app_button.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrf_delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\nrf_delay\nrf_delay.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>BLE Transport</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>2</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <useXO>2</useXO>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+          <Files>
+            <File>
+              <FileName>dfu_transport_ble.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\dfu_transport_ble.c</FilePath>
+            </File>
+            <File>
+              <FileName>ble_conn_params.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\ble\ble_conn_params.c</FilePath>
+            </File>
+            <File>
+              <FileName>ble_advdata.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\ble\ble_advdata.c</FilePath>
+            </File>
+            <File>
+              <FileName>ble_srv_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\ble\ble_services\ble_srv_common.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1356,7 +1391,7 @@
             <File>
               <FileName>dfu_transport_serial.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\dfu_transport_serial.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\dfu_transport_serial.c</FilePath>
             </File>
             <File>
               <FileName>hci_transport.c</FileName>
@@ -1369,203 +1404,9 @@
               <FilePath>..\..\..\..\..\Source\app_common\hci_slip.c</FilePath>
             </File>
             <File>
-              <FileName>hci_mem_pool.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\hci_mem_pool.c</FilePath>
-            </File>
-            <File>
               <FileName>app_uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\app_common\app_uart.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>BLE Transport</GroupName>
-          <Files>
-            <File>
-              <FileName>dfu_transport_ble.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\dfu_transport_ble.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>ble_conn_params.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_conn_params.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>ble_advdata.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_advdata.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>ble_srv_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_services\ble_srv_common.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
             </File>
           </Files>
         </Group>
@@ -1580,12 +1421,14 @@
         <TargetCommonOption>
           <Device>nRF51822_xxAA</Device>
           <Vendor>Nordic Semiconductor</Vendor>
-          <Cpu>IRAM(0x20000000-0x20003FFF) IROM(0-0x3FFFF) CLOCK(16000000) CPUTYPE("Cortex-M0") ESEL ELITTLE</Cpu>
+          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.1.1.1</PackID>
+          <PackURL>http://www.keil.com/pack/</PackURL>
+          <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x4000) CPUTYPE("Cortex-M0") CLOCK(16000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
-          <StartupFile>"Device\Nordic\nRF51822\Source\templates\arm\arm_startup_nrf51.s"("Nordic Semiconductor nRF51822_xxAA Startup Code")</StartupFile>
-          <FlashDriverDll>UL2CM3(-UM0364FCE -O78 -S0 -C0 -TO18 -TC16000000 -TP21 -TDS800D -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC2000 -FN1 -FF0nRF51xxx -FS00 -FL0200000)</FlashDriverDll>
+          <StartupFile></StartupFile>
+          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0nrf51xxx -FS00 -FL0200000 -FP0($$Device:nRF51822_xxAA$Flash\nrf51xxx.flm))</FlashDriverDll>
           <DeviceId>0</DeviceId>
-          <RegisterFile>nrf.h</RegisterFile>
+          <RegisterFile>$$Device:nRF51822_xxAA$Device\Include\nrf.h</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -1601,8 +1444,8 @@
           <BinPath></BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath>..\Device\Nordic\nRF51822\Include\</RegisterFilePath>
-          <DBRegisterFilePath>..\Device\Nordic\nRF51822\Include\</DBRegisterFilePath>
+          <RegisterFilePath></RegisterFilePath>
+          <DBRegisterFilePath></DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -1638,6 +1481,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopB1X>0</nStopB1X>
+            <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
@@ -1667,12 +1512,12 @@
           <ComprImg>1</ComprImg>
         </CommonProperty>
         <DllOption>
-          <SimDllName></SimDllName>
-          <SimDllArguments></SimDllArguments>
-          <SimDlgDll></SimDlgDll>
-          <SimDlgDllArguments></SimDlgDllArguments>
+          <SimDllName>SARMCM3.DLL</SimDllName>
+          <SimDllArguments> </SimDllArguments>
+          <SimDlgDll>DARMCM1.DLL</SimDlgDll>
+          <SimDlgDllArguments>-pCM0</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
-          <TargetDllArguments></TargetDllArguments>
+          <TargetDllArguments> </TargetDllArguments>
           <TargetDlgDll>TARMCM1.DLL</TargetDlgDll>
           <TargetDlgDllArguments>-pCM0</TargetDlgDllArguments>
         </DllOption>
@@ -1694,17 +1539,20 @@
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
             <UseTarget>1</UseTarget>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>0</RunToMain>
+            <LoadApplicationAtStartup>0</LoadApplicationAtStartup>
+            <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <RestoreTracepoints>0</RestoreTracepoints>
+            <RestoreTracepoints>1</RestoreTracepoints>
+            <RestoreSysVw>1</RestoreSysVw>
+            <UsePdscDebugDescription>1</UsePdscDebugDescription>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>6</TargetSelection>
@@ -1731,11 +1579,11 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4099</DriverSelection>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
-          <Flash2>Segger\JL2CM3.dll</Flash2>
-          <Flash3>"nrfjprog.exe" (--reset --program "#H" )</Flash3>
+          <Flash2>BIN\UL2CM3.DLL</Flash2>
+          <Flash3>"nrfjprog.exe" (--reset --program "#H")</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -1785,7 +1633,7 @@
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
             <useUlib>0</useUlib>
-            <EndSel>1</EndSel>
+            <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <RoSelD>3</RoSelD>
             <RwSelD>3</RwSelD>
@@ -1919,11 +1767,13 @@
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
+            <uC99>0</uC99>
+            <useXO>0</useXO>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
               <Define>NRF51,DEBUG_NRF_USER,BOARD_NRF6310, BOOTLOADER_BANKED BLE_STACK_SUPPORT_REQD</Define>
               <Undefine></Undefine>
-              <IncludePath>..;..\include;..\include\ble_transport;..\..\..\..\..\Include;..\..\..\..\..\Include\sd_common;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\s110</IncludePath>
+              <IncludePath>..;..\include;..\..\..\..\..\Include\bootloader_dfu;..\..\..\..\..\Include\bootloader_dfu\ble_transport;..\..\..\..\..\Include;..\..\..\..\..\Include\sd_common;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\s110</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1935,6 +1785,7 @@
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
+            <useXO>0</useXO>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -1951,6 +1802,7 @@
             <useFile>0</useFile>
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
+            <pXoBase></pXoBase>
             <ScatterFile>.\scatter.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
@@ -1987,12 +1839,12 @@
             <File>
               <FileName>dfu_dual_bank.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\dfu_dual_bank.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\dfu_dual_bank.c</FilePath>
             </File>
             <File>
               <FileName>dfu_single_bank.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\dfu_single_bank.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\dfu_single_bank.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -2022,9 +1874,11 @@
                     <PlainCh>2</PlainCh>
                     <Ropi>2</Ropi>
                     <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
+                    <wLevel>2</wLevel>
                     <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
+                    <uC99>2</uC99>
+                    <useXO>2</useXO>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -2038,12 +1892,17 @@
             <File>
               <FileName>bootloader.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\bootloader.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\bootloader.c</FilePath>
             </File>
             <File>
               <FileName>bootloader_util_arm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\bootloader_util_arm.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\bootloader_util_arm.c</FilePath>
+            </File>
+            <File>
+              <FileName>bootloader_settings_arm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\bootloader_settings_arm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2060,6 +1919,11 @@
         <Group>
           <GroupName>Libraries</GroupName>
           <Files>
+            <File>
+              <FileName>hci_mem_pool.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\app_common\hci_mem_pool.c</FilePath>
+            </File>
             <File>
               <FileName>app_timer.c</FileName>
               <FileType>1</FileType>
@@ -2090,199 +1954,15 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\app_common\pstorage.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>HCI Transport</GroupName>
-          <Files>
             <File>
-              <FileName>dfu_transport_serial.c</FileName>
+              <FileName>app_button.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\dfu_transport_serial.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
+              <FilePath>..\..\..\..\..\Source\app_common\app_button.c</FilePath>
             </File>
             <File>
-              <FileName>hci_transport.c</FileName>
+              <FileName>nrf_delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\hci_transport.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>hci_slip.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\hci_slip.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>hci_mem_pool.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\hci_mem_pool.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\app_uart.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>0</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                </CommonProperty>
-                <FileArmAds>
-                  <Cads>
-                    <interw>2</interw>
-                    <Optim>0</Optim>
-                    <oTime>2</oTime>
-                    <SplitLS>2</SplitLS>
-                    <OneElfS>2</OneElfS>
-                    <Strict>2</Strict>
-                    <EnumInt>2</EnumInt>
-                    <PlainCh>2</PlainCh>
-                    <Ropi>2</Ropi>
-                    <Rwpi>2</Rwpi>
-                    <wLevel>0</wLevel>
-                    <uThumb>2</uThumb>
-                    <uSurpInc>2</uSurpInc>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </Cads>
-                </FileArmAds>
-              </FileOption>
+              <FilePath>..\..\..\..\..\Source\nrf_delay\nrf_delay.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2292,7 +1972,7 @@
             <File>
               <FileName>dfu_transport_ble.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\dfu_transport_ble.c</FilePath>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\dfu_transport_ble.c</FilePath>
             </File>
             <File>
               <FileName>ble_conn_params.c</FileName>
@@ -2308,6 +1988,91 @@
               <FileName>ble_srv_common.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\ble\ble_services\ble_srv_common.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>HCI Transport</GroupName>
+          <GroupOption>
+            <CommonProperty>
+              <UseCPPCompiler>0</UseCPPCompiler>
+              <RVCTCodeConst>0</RVCTCodeConst>
+              <RVCTZI>0</RVCTZI>
+              <RVCTOtherData>0</RVCTOtherData>
+              <ModuleSelection>0</ModuleSelection>
+              <IncludeInBuild>0</IncludeInBuild>
+              <AlwaysBuild>2</AlwaysBuild>
+              <GenerateAssemblyFile>2</GenerateAssemblyFile>
+              <AssembleAssemblyFile>2</AssembleAssemblyFile>
+              <PublicsOnly>2</PublicsOnly>
+              <StopOnExitCode>11</StopOnExitCode>
+              <CustomArgument></CustomArgument>
+              <IncludeLibraryModules></IncludeLibraryModules>
+              <ComprImg>1</ComprImg>
+            </CommonProperty>
+            <GroupArmAds>
+              <Cads>
+                <interw>2</interw>
+                <Optim>0</Optim>
+                <oTime>2</oTime>
+                <SplitLS>2</SplitLS>
+                <OneElfS>2</OneElfS>
+                <Strict>2</Strict>
+                <EnumInt>2</EnumInt>
+                <PlainCh>2</PlainCh>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <wLevel>2</wLevel>
+                <uThumb>2</uThumb>
+                <uSurpInc>2</uSurpInc>
+                <uC99>2</uC99>
+                <useXO>2</useXO>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Cads>
+              <Aads>
+                <interw>2</interw>
+                <Ropi>2</Ropi>
+                <Rwpi>2</Rwpi>
+                <thumb>2</thumb>
+                <SplitLS>2</SplitLS>
+                <SwStkChk>2</SwStkChk>
+                <NoWarn>2</NoWarn>
+                <uSurpInc>2</uSurpInc>
+                <useXO>2</useXO>
+                <VariousControls>
+                  <MiscControls></MiscControls>
+                  <Define></Define>
+                  <Undefine></Undefine>
+                  <IncludePath></IncludePath>
+                </VariousControls>
+              </Aads>
+            </GroupArmAds>
+          </GroupOption>
+          <Files>
+            <File>
+              <FileName>dfu_transport_serial.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\bootloader_dfu\dfu_transport_serial.c</FilePath>
+            </File>
+            <File>
+              <FileName>hci_transport.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\app_common\hci_transport.c</FilePath>
+            </File>
+            <File>
+              <FileName>hci_slip.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\app_common\hci_slip.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\app_common\app_uart.c</FilePath>
             </File>
           </Files>
         </Group>

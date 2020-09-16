@@ -142,13 +142,13 @@ uint32_t app_button_disable(void);
 
 /**@brief Function for checking if a button is currently being pushed.
  *
- * @param[in]  pin_no        Button pin to be checked.
+ * @param[in]  button_id     Button index (in the app_button_cfg_t array given to app_button_init) to be checked.
  * @param[out] p_is_pushed   Button state.
  *
  * @retval     NRF_SUCCESS               State successfully read.
- * @retval     NRF_ERROR_INVALID_PARAM   Invalid pin_no.
+ * @retval     NRF_ERROR_INVALID_PARAM   Invalid button index.
  */
-uint32_t app_button_is_pushed(uint8_t pin_no, bool * p_is_pushed);
+uint32_t app_button_is_pushed(uint8_t button_id, bool * p_is_pushed);
 
 
 // Type and functions for connecting the Buttons module to the scheduler:

@@ -1,6 +1,7 @@
 var a00393 =
 [
-    [ "nrf_ecb_crypt", "a00393.html#gaaa8745b5d94900452e525ba60f783cd0", null ],
-    [ "nrf_ecb_init", "a00393.html#gae9609bc1e796e528ca2f4ad3311662e4", null ],
-    [ "nrf_ecb_set_key", "a00393.html#ga69e4fcd00a7c2249c5c94210c1c21c90", null ]
+    [ "ds1624_init", "a00393.html#ga0ea8c0c4d140fde9b5b575caed79de6a", null ],
+    [ "ds1624_is_temp_conversion_done", "a00393.html#ga9ac065c4738652386d500c9b35447ada", null ],
+    [ "ds1624_start_temp_conversion", "a00393.html#gace297981d492fc044ba97a1954f98c83", null ],
+    [ "ds1624_temp_read", "a00393.html#ga554dc82a94c2878635c336b0fb691144", null ]
 ];

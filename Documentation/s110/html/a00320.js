@@ -1,5 +1,4 @@
 var a00320 =
 [
-    [ "length", "a00320.html#a9238252fa096ecc458994d19aaf034d8", null ],
-    [ "p_str", "a00320.html#a8b6d6d426c6ec244d1136b7ccf5deb30", null ]
+    [ "enc_info", "a00320.html#a84afd1648add6b2d3dbcfd34dcc72435", null ]
 ];

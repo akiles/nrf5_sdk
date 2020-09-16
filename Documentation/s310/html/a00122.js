@@ -1,9 +1,5 @@
 var a00122 =
 [
-    [ "day", "a00122.html#a94bdc52cbceff5f14951b6f7e8c02263", null ],
-    [ "hours", "a00122.html#a5288a98f74703cf1c5f9d0b9b1119461", null ],
-    [ "minutes", "a00122.html#a1328373bafcaa7e7ed28e2a3f52ec6e4", null ],
-    [ "month", "a00122.html#a49262472d4a8f721997adc626ae4f693", null ],
-    [ "seconds", "a00122.html#a20bab791a65115383e5e355e97078e27", null ],
-    [ "year", "a00122.html#a469839121af0c966717424b7649e0532", null ]
+    [ "lv", "a00122.html#a3c0b55f3c9f8c589ca46e85d2c8f235c", null ],
+    [ "sm", "a00122.html#ab1014e45933756f4e790ef8181730f7f", null ]
 ];

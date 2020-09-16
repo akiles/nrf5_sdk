@@ -1,5 +1,6 @@
 var a00325 =
 [
-    [ "type", "a00325.html#ae233c47cdd5f63de456f413a158bb16f", null ],
-    [ "uuid", "a00325.html#ac9ccd46e82b1b51d561f17d49282348c", null ]
+    [ "dst", "a00325.html#ae8afbb5ddb539bf7d5aa63102313210a", null ],
+    [ "len", "a00325.html#a36ada23cb97fb5ec6873d262689cbfdb", null ],
+    [ "src", "a00325.html#a7fab268f5a8db5b0ccc3a4b85d47c0b7", null ]
 ];

@@ -1,13 +1,7 @@
 var a00208 =
 [
-    [ "char_auth_read", "a00208.html#ac89744a033b1d9a9840d54b61aa39802", null ],
-    [ "char_id", "a00208.html#a778ecea962888dfc1e026fc52526a9a4", null ],
-    [ "char_write", "a00208.html#a433dfc87601596971f7a30daee5955b1", null ],
-    [ "data", "a00208.html#a8c305e6a62b2c26934d5be6e84dec0f5", null ],
-    [ "evt_type", "a00208.html#a51d0ccfb2582557e1863bb12d77e71dc", null ],
-    [ "len", "a00208.html#ae218ffb7a01687ebe2557a2ab2d48bba", null ],
-    [ "notification", "a00208.html#a924a0f674d2bcca198e8016813dcf411", null ],
-    [ "offset", "a00208.html#ab8048550dc2672f019c4e6278977efbc", null ],
-    [ "p_ble_evt", "a00208.html#a43346ee583a9d322a18716f188630a89", null ],
-    [ "params", "a00208.html#af237843eb10af4a0276e151412ec48f8", null ]
+    [ "alert_level_handle", "a00607.html#gad136ca554bce057fd4cd38ba0f796ea6", null ],
+    [ "conn_handle", "a00607.html#gad18ae38bccb88d086eedbc1647ce2386", null ],
+    [ "error_handler", "a00607.html#ga6cecf3d78ec7d72912dd4215455720ed", null ],
+    [ "evt_handler", "a00607.html#gac306d48fcd140ddbffb4d4c64ca4d007", null ]
 ];

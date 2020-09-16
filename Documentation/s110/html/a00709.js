@@ -1,7 +1,6 @@
 var a00709 =
 [
-    [ "ds1624_init", "a00709.html#ga0ea8c0c4d140fde9b5b575caed79de6a", null ],
-    [ "ds1624_is_temp_conversion_done", "a00709.html#ga9ac065c4738652386d500c9b35447ada", null ],
-    [ "ds1624_start_temp_conversion", "a00709.html#gace297981d492fc044ba97a1954f98c83", null ],
-    [ "ds1624_temp_read", "a00709.html#ga554dc82a94c2878635c336b0fb691144", null ]
+    [ "BLE_ERROR_GAP_DISCOVERABLE_WITH_WHITELIST", "a00709.html#gaa65c2f6a6eba52654e2b6febc5c3ba8c", null ],
+    [ "BLE_ERROR_GAP_INVALID_BLE_ADDR", "a00709.html#ga3eda228736d6c1dcbcf9aba2bd059068", null ],
+    [ "BLE_ERROR_GAP_UUID_LIST_MISMATCH", "a00709.html#ga996146eb2c3b244f044b5cd121f8b826", null ]
 ];

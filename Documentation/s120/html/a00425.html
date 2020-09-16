@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Codes reserved as identification for module where the error occurred.</title>
+<title>nRF51 SDK - S120 SoftDevice: Types definitions for BLE support in SoftDevice handler.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,25 +97,105 @@ $(document).ready(function(){initNavTree('a00425.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Codes reserved as identification for module where the error occurred.<div class="ingroups"><a class="el" href="a00423.html">SDK Error codes</a></div></div>  </div>
+<div class="title">Types definitions for BLE support in SoftDevice handler.<div class="ingroups"><a class="el" href="a00426.html">SoftDevice Event Handler</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>This file contains the declarations of types required for BLE stack support. These types will be defined when the preprocessor define BLE_STACK_SUPPORT_REQD is defined.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga6aff12892a34b315afb1a97a879ab98d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6aff12892a34b315afb1a97a879ab98d"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DEVICE_MANAGER_ERR_BASE</b>&#160;&#160;&#160;(0x8000)</td></tr>
-<tr class="separator:ga6aff12892a34b315afb1a97a879ab98d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab11d82da68bcf71c064b936f8398fb26"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00425.html#gab11d82da68bcf71c064b936f8398fb26">BLE_STACK_EVT_MSG_BUF_SIZE</a>&#160;&#160;&#160;(sizeof(<a class="el" href="a00078.html">ble_evt_t</a>) + (<a class="el" href="a00545.html#gaf0a71c5d9dd3b12235312bd40fd2175e">GATT_MTU_SIZE_DEFAULT</a>))</td></tr>
+<tr class="separator:gab11d82da68bcf71c064b936f8398fb26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5cdd71430c9268465e479ababfa08dc3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00425.html#ga5cdd71430c9268465e479ababfa08dc3">BLE_STACK_HANDLER_SCHED_EVT_SIZE</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ga5cdd71430c9268465e479ababfa08dc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga2363934d42202759e09f9039ab5b60a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2363934d42202759e09f9039ab5b60a5"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00425.html#ga2363934d42202759e09f9039ab5b60a5">ble_evt_handler_t</a> )(<a class="el" href="a00078.html">ble_evt_t</a> *p_ble_evt)</td></tr>
+<tr class="memdesc:ga2363934d42202759e09f9039ab5b60a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application stack event handler type. <br/></td></tr>
+<tr class="separator:ga2363934d42202759e09f9039ab5b60a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gae54951e939156d5f05fa4d27fed1dc65"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00425.html#gae54951e939156d5f05fa4d27fed1dc65">softdevice_ble_evt_handler_set</a> (<a class="el" href="a00425.html#ga2363934d42202759e09f9039ab5b60a5">ble_evt_handler_t</a> ble_evt_handler)</td></tr>
+<tr class="memdesc:gae54951e939156d5f05fa4d27fed1dc65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering for BLE events.  <a href="#gae54951e939156d5f05fa4d27fed1dc65">More...</a><br/></td></tr>
+<tr class="separator:gae54951e939156d5f05fa4d27fed1dc65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>This file contains the declarations of types required for BLE stack support. These types will be defined when the preprocessor define BLE_STACK_SUPPORT_REQD is defined. </p>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gab11d82da68bcf71c064b936f8398fb26"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_STACK_EVT_MSG_BUF_SIZE&#160;&#160;&#160;(sizeof(<a class="el" href="a00078.html">ble_evt_t</a>) + (<a class="el" href="a00545.html#gaf0a71c5d9dd3b12235312bd40fd2175e">GATT_MTU_SIZE_DEFAULT</a>))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size of BLE event message buffer. This will be provided to the SoftDevice while fetching an event. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga5cdd71430c9268465e479ababfa08dc3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_STACK_HANDLER_SCHED_EVT_SIZE&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The size of the scheduler event used by SoftDevice handler when passing BLE events using the <a class="el" href="a00409.html">Scheduler</a>. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gae54951e939156d5f05fa4d27fed1dc65"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t softdevice_ble_evt_handler_set </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00425.html#ga2363934d42202759e09f9039ab5b60a5">ble_evt_handler_t</a>&#160;</td>
+          <td class="paramname"><em>ble_evt_handler</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for registering for BLE events. </p>
+<p>The application should use this function to register for receiving BLE events from the SoftDevice. If the application does not call this function, then any BLE event that may be generated by the SoftDevice will NOT be fetched. Once the application has registered for the events, it is not possible to possible to cancel the registration. However, it is possible to register a different function for handling the events at any point of time.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ble_evt_handler</td><td>Function to be called for each received BLE event.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Successful registration. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Null pointer provided as input. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:06 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

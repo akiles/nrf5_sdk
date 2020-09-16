@@ -1,7 +1,7 @@
 var a00003 =
 [
-    [ "BLE libraries", "a00064.html", "a00064" ],
-    [ "BLE Services", "a00065.html", "a00065" ],
+    [ "BLE libraries", "a00056.html", "a00056" ],
+    [ "BLE Services", "a00057.html", "a00057" ],
     [ "Transport Services", "a00009.html", "a00009" ],
     [ "SoftDevice Handler Library", "a00010.html", [
       [ "Expectations from the application/developer using this library", "a00010.html#expectations", [

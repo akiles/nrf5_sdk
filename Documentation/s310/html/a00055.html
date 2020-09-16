@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Bootloader/DFU Architecture</title>
+<title>nRF51 SDK - S310 SoftDevice: ANT Slave &amp; BLE Peripheral</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,74 +97,17 @@ $(document).ready(function(){initNavTree('a00055.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Bootloader/DFU Architecture </div>  </div>
+<div class="title">ANT Slave &amp; BLE Peripheral </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="dfu_bootloader_arch_sec"></a>
-Bootloader/DFU Architectural Overview</h1>
-<p>The Bootloader/DFU example makes it possible to receive an application image and write it to the internal flash of the nRF51.</p>
-<p>The image can be transferred using serial wire (UART) or over BLE.</p>
-<p>During system start-up, the Bootloader/DFU will be started and during start-up it will determine if a valid application is present in bank 0 at Address <code>0x00016000</code> (see also Single Bank Flash Layout or Dual Bank Flash Layout for detailed description). If a valid application is present in Bank 0 the Bootloader will start the application, otherwise the Bootloader will be in DFU mode expecting a Device Firmware Update. If it is desired to put a device with an existing application, restart with device with Button 7 pressed. Note that SoftDevice S110 uses bank 0 at Address <code>0x00016000</code> and SoftDevice S310 uses bank 0 at Address <code>0x00020000</code>.</p>
-<p>A schematic overview of the blocks in Bootloader/DFU is seen in <b>Figure 1.</b></p>
-<div class="image">
-<img src="dfu_bootloader_overview.png" alt="dfu_bootloader_overview.png"/>
-<div class="caption">
-Figure 1: Architectural overview of Bootloader/DFU.</div></div>
-<h1><a class="anchor" id="dfu_bootloader_ble_transport_sec"></a>
-Bootloader/DFU BLE Transfer</h1>
-<p>The Bootloader/DFU supports transferring of an image using BLE.</p>
-<p>The DFU BLE Transport uses a BLE Service for data transfer (see DFU Service). The BLE DFU Service relies on S110/S310 SoftDevice for data transfer. The DFU Bank Handling will ensure the writing of received data packets to flash.</p>
-<p><b>Figure 2</b> shows a schematic overview of the Bootloader/DFU project with BLE Support.</p>
-<div class="image">
-<img src="dfu_transfer_ble_overview.png" alt="dfu_transfer_ble_overview.png"/>
-<div class="caption">
-Figure 2: Architectural overview of Bootloader/DFU supporting BLE transfer.</div></div>
-<h1><a class="anchor" id="dfu_bootloader_serial_transport_sec"></a>
-Bootloader/DFU Serial (HCI) Transfer</h1>
-<p>The Bootloader/DFU supports transferring of an image using UART. The UART will use HCI Transport layer for increased robustness of the transfer. A detailed description of HCI is found in <a class="el" href="a00522.html">HCI Transport</a>.</p>
-<p>The DFU Bank Handling will ensure the writing of received data packets to flash.</p>
-<p><b>Figure 3</b> shows a schematic overview of the Bootloader/DFU project with UART Support.</p>
-<div class="image">
-<img src="dfu_transfer_serial_overview.png" alt="dfu_transfer_serial_overview.png"/>
-<div class="caption">
-Figure 3: Architectural overview of Bootloader/DFU supporting Serial transfer.</div></div>
-<h1><a class="anchor" id="dfu_bootloader_state_machine_sec"></a>
-The DFU State Machine</h1>
-<p>The DFU bootloader has an internal state machine independent of the transport layer used. All initializing and writing to non-volatile memory is controlled by the DFU module.</p>
-<p><b>Figure 1</b> illustrates the transitions in the state machine: </p>
-<div class="image">
-<img src="DFU_state_machine.png" alt="DFU_state_machine.png"/>
-<div class="caption">
-Figure 4: State machine transitions in the DFU.</div></div>
-<p><b>Entry point</b> indicates that the bootloader is started up, and would initialize the DFU. In this initialization the DFU would prepare the non-volatile memory region for the new application. Either using all available memory overwriting the old image, or using banked memory where the old application is retained until a new application is uploaded and validated. Also the selected transport layer would be initialized in this phase.</p>
-<h2><a class="anchor" id="dfu_bootloader_event_message_subsec"></a>
-DFU Event Message Types</h2>
-<table class="doxtable">
-<tr>
-<th>Message type </th><th>Description</th></tr>
-<tr>
-<td>- dfu_init </td><td>Message initializing the Device Firmware Update module. </td></tr>
-<tr>
-<td>- dfu_image_size_set </td><td>Message setting the DFU image size. </td></tr>
-<tr>
-<td>- dfu_data_pkt_handle </td><td>Message containing a portion of the new application. </td></tr>
-<tr>
-<td>- dfu_init_pkt_handle </td><td>Message for optional customer specific data. </td></tr>
-<tr>
-<td>- dfu_image_validate </td><td>Message triggering validation of the new application. </td></tr>
-<tr>
-<td>- dfu_image_activate </td><td>Message activating the transferred image after validation has successfully completed </td></tr>
-<tr>
-<td>- dfu_sys_reset </td><td>Can occur any time, making the DFU go into a reset of the chip. <br/>
- A bootloader time-out or an external message can trigger the system reset. </td></tr>
-</table>
+<div class="textblock"><p><a class="el" href="a00054.html">ANT and BLE Heart Rate Monitor Relay Application</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00053.html">Bootloader/DFU</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:55 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:45 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

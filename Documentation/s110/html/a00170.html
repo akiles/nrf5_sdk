@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_bps_init_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_dfu_pkt_write_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,49 @@ $(document).ready(function(){initNavTree('a00170.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_bps_init_t Struct Reference<div class="ingroups"><a class="el" href="a00917.html">Blood Pressure Service</a></div></div>  </div>
+<div class="title">ble_dfu_pkt_write_t Struct Reference<div class="ingroups"><a class="el" href="a00860.html">Device Firmware Update Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Blood Pressure Service init structure. This contains all options and data needed for initialization of the service.  
+<p>DFU Packet structure.  
  <a href="a00170.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_bps.h&gt;</code></p>
+<p><code>#include &lt;ble_dfu.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a22943d0794c7a162398ddb54872d1751"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00917.html#ga4c7199796f540fc4ea76d6eb9cd98809">ble_bps_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00170.html#a22943d0794c7a162398ddb54872d1751">evt_handler</a></td></tr>
-<tr class="separator:a22943d0794c7a162398ddb54872d1751"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a977afca322fd5a03271e0fa35300a164"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00317.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00170.html#a977afca322fd5a03271e0fa35300a164">bps_meas_attr_md</a></td></tr>
-<tr class="separator:a977afca322fd5a03271e0fa35300a164"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa811a90c7dd0b8bea4434fe2ef2c4ede"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00319.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00170.html#aa811a90c7dd0b8bea4434fe2ef2c4ede">bps_feature_attr_md</a></td></tr>
-<tr class="separator:aa811a90c7dd0b8bea4434fe2ef2c4ede"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a811bba9e34ca00cad260b8d50aadbe5f"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00170.html#a811bba9e34ca00cad260b8d50aadbe5f">feature</a></td></tr>
-<tr class="separator:a811bba9e34ca00cad260b8d50aadbe5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac28ec8c8ca6292b7987cf6b49a07da4f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00170.html#ac28ec8c8ca6292b7987cf6b49a07da4f">len</a></td></tr>
+<tr class="separator:ac28ec8c8ca6292b7987cf6b49a07da4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e52a5c33d9b8e7f3f605f60f906652c"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00170.html#a6e52a5c33d9b8e7f3f605f60f906652c">p_data</a></td></tr>
+<tr class="separator:a6e52a5c33d9b8e7f3f605f60f906652c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Blood Pressure Service init structure. This contains all options and data needed for initialization of the service. </p>
+<div class="textblock"><p>DFU Packet structure. </p>
+<p>This structure contains the value of the DFU Packet characteristic as written by the peer and the length of the value written. It will be filled by the DFU Service when the peer writes to the DFU Packet characteristic. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aa811a90c7dd0b8bea4434fe2ef2c4ede"></a>
+<a class="anchor" id="ac28ec8c8ca6292b7987cf6b49a07da4f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00319.html">ble_srv_security_mode_t</a> ble_bps_init_t::bps_feature_attr_md</td>
+          <td class="memname">uint8_t ble_dfu_pkt_write_t::len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial security level for blood pressure feature attribute </p>
+<p>Length of the packet received. </p>
 
 </div>
 </div>
-<a class="anchor" id="a977afca322fd5a03271e0fa35300a164"></a>
+<a class="anchor" id="a6e52a5c33d9b8e7f3f605f60f906652c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00317.html">ble_srv_cccd_security_mode_t</a> ble_bps_init_t::bps_meas_attr_md</td>
+          <td class="memname">uint8_t* ble_dfu_pkt_write_t::p_data</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial security level for blood pressure measurement attribute </p>
-
-</div>
-</div>
-<a class="anchor" id="a22943d0794c7a162398ddb54872d1751"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00917.html#ga4c7199796f540fc4ea76d6eb9cd98809">ble_bps_evt_handler_t</a> ble_bps_init_t::evt_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event handler to be called for handling events in the Blood Pressure Service. </p>
-
-</div>
-</div>
-<a class="anchor" id="a811bba9e34ca00cad260b8d50aadbe5f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_bps_init_t::feature</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Initial value for blood pressure feature </p>
+<p>Pointer to the received packet. This will point to a word aligned memory location. </p>
 
 </div>
 </div>
@@ -186,8 +157,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00170.html">ble_bps_init_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00170.html">ble_dfu_pkt_write_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:36 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

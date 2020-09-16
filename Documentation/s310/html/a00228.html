@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: ble_ias_init_t Struct Reference</title>
+<title>nRF51 SDK - S310 SoftDevice: ble_srv_cccd_security_mode_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,52 @@ $(document).ready(function(){initNavTree('a00228.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ias_init_t Struct Reference<div class="ingroups"><a class="el" href="a00676.html">Immediate Alert Service</a></div></div>  </div>
+<div class="title">ble_srv_cccd_security_mode_t Struct Reference<div class="ingroups"><a class="el" href="a00611.html">'Common service definitions'</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Immediate Alert Service init structure. This contains all options and data needed for initialization of the service.  
+<p>Security settings structure.  
  <a href="a00228.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_ias.h&gt;</code></p>
+<p><code>#include &lt;ble_srv_common.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a5e40f1f02a66e26a1da20bbf3e2a275a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00676.html#gab059c5376beb245a8f876ee3d7b8480a">ble_ias_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#a5e40f1f02a66e26a1da20bbf3e2a275a">evt_handler</a></td></tr>
-<tr class="separator:a5e40f1f02a66e26a1da20bbf3e2a275a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a320070d4ad9b4f4948a8bba65f3853c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a320070d4ad9b4f4948a8bba65f3853c0"></a>
+<a class="el" href="a00122.html">ble_gap_conn_sec_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>cccd_write_perm</b></td></tr>
+<tr class="separator:a320070d4ad9b4f4948a8bba65f3853c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3203f11dcbf8bea6cbe1dcffbf68661"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html">ble_gap_conn_sec_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ab3203f11dcbf8bea6cbe1dcffbf68661">read_perm</a></td></tr>
+<tr class="separator:ab3203f11dcbf8bea6cbe1dcffbf68661"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8a8cd605d17911a751bf74d72412568"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00122.html">ble_gap_conn_sec_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00228.html#ac8a8cd605d17911a751bf74d72412568">write_perm</a></td></tr>
+<tr class="separator:ac8a8cd605d17911a751bf74d72412568"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Immediate Alert Service init structure. This contains all options and data needed for initialization of the service. </p>
+<div class="textblock"><p>Security settings structure. </p>
+<p>This structure contains the security options needed during initialization of the service. It can be used when the charecteristics contains cccd. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a5e40f1f02a66e26a1da20bbf3e2a275a"></a>
+<a class="anchor" id="ab3203f11dcbf8bea6cbe1dcffbf68661"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00676.html#gab059c5376beb245a8f876ee3d7b8480a">ble_ias_evt_handler_t</a> ble_ias_init_t::evt_handler</td>
+          <td class="memname"><a class="el" href="a00122.html">ble_gap_conn_sec_mode_t</a> ble_srv_cccd_security_mode_t::read_perm</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Event handler to be called for handling events in the Immediate Alert Service. </p>
+<p>Read permissions. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac8a8cd605d17911a751bf74d72412568"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00122.html">ble_gap_conn_sec_mode_t</a> ble_srv_cccd_security_mode_t::write_perm</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Write permissions. </p>
 
 </div>
 </div>
@@ -141,8 +160,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00228.html">ble_ias_init_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:19 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00228.html">ble_srv_cccd_security_mode_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

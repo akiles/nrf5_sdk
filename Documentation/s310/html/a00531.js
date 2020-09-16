@@ -1,7 +1,11 @@
 var a00531 =
 [
-    [ "CRITICAL_REGION_ENTER", "a00531.html#ga61149a977f6ebdaeb8bdeed626dd9392", null ],
-    [ "CRITICAL_REGION_EXIT", "a00531.html#ga854878240b628e978f760f75aca4e1cc", null ],
-    [ "NRF_APP_PRIORITY_THREAD", "a00531.html#gac3db2bb99db38f42bf316a9d0d9ace99", null ],
-    [ "app_irq_priority_t", "a00531.html#ga1a193131d1d5911b1ec53f9541841b1b", null ]
+    [ "Defines", "a00649.html", "a00649" ],
+    [ "ble_uuid128_t", "a00235.html", [
+      [ "uuid128", "a00235.html#a13339a8ee220b2ad2f4b8e130e730407", null ]
+    ] ],
+    [ "ble_uuid_t", "a00236.html", [
+      [ "type", "a00236.html#ae233c47cdd5f63de456f413a158bb16f", null ],
+      [ "uuid", "a00236.html#ac9ccd46e82b1b51d561f17d49282348c", null ]
+    ] ]
 ];

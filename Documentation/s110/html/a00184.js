@@ -1,7 +1,7 @@
 var a00184 =
 [
-    [ "ble_dfu_evt_type", "a00184.html#a48f6c7cc051e012565ba9b05dd55e05a", null ],
-    [ "ble_dfu_pkt_write", "a00184.html#acc15bfa51d868c165e8dcb85f0c89f3d", null ],
-    [ "evt", "a00184.html#a6916e3599db35f65bad77f4d3ee461e1", null ],
-    [ "pkt_rcpt_notif_req", "a00184.html#ac8054aef37b49a028cfee3dd3007becf", null ]
+    [ "conn_sup_timeout", "a00184.html#ab644e629af7eb4915b0f3a93f682f7ae", null ],
+    [ "max_conn_interval", "a00184.html#abd7a6e16a723de1d779afadae3f3113e", null ],
+    [ "min_conn_interval", "a00184.html#a4d1975f7d25263004c405e0321fbae34", null ],
+    [ "slave_latency", "a00184.html#aa5caf55715aaac33f56cc996f91a92cc", null ]
 ];

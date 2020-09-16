@@ -1,6 +1,5 @@
 var a00713 =
 [
-    [ "nrf_ecb_crypt", "a00713.html#gaaa8745b5d94900452e525ba60f783cd0", null ],
-    [ "nrf_ecb_init", "a00713.html#gae9609bc1e796e528ca2f4ad3311662e4", null ],
-    [ "nrf_ecb_set_key", "a00713.html#ga69e4fcd00a7c2249c5c94210c1c21c90", null ]
+    [ "BLE_GAP_ADDR_CYCLE_MODE_AUTO", "a00713.html#gad1b508bba948e89462e018fecc38b13f", null ],
+    [ "BLE_GAP_ADDR_CYCLE_MODE_NONE", "a00713.html#ga876e1c374d17d451d901e3e8d151a20d", null ]
 ];

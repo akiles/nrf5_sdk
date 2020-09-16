@@ -1,5 +1,5 @@
 var a00085 =
 [
-    [ "addr", "a00085.html#a7e756ddbde7ebf78f17a043d7ebe602c", null ],
-    [ "addr_type", "a00085.html#ad056845594972dd031a09700194d660c", null ]
+    [ "lv", "a00085.html#a3c0b55f3c9f8c589ca46e85d2c8f235c", null ],
+    [ "sm", "a00085.html#ab1014e45933756f4e790ef8181730f7f", null ]
 ];

@@ -1,10 +1,9 @@
 var a00222 =
 [
-    [ "temp_in_celcius", "a00222.html#a4065a89fde57ebf2effce6a1401e38c4", null ],
-    [ "temp_in_fahr", "a00222.html#a0120700a8a6185ce21e1a05391fbc706", null ],
-    [ "temp_in_fahr_units", "a00222.html#a16e05739a1ac3b03a2b4dc683bc1eacd", null ],
-    [ "temp_type", "a00222.html#a12b9d8fddee8e461bfcedb3489bd5f92", null ],
-    [ "temp_type_present", "a00222.html#a10dadb1129dd55a6d597e4e08764d7ff", null ],
-    [ "time_stamp", "a00222.html#aab4240703a233a4bd2cd1a7b3a5997c0", null ],
-    [ "time_stamp_present", "a00222.html#a21a7a430b8f85908438c9bd1fc2e0dce", null ]
+    [ "conn_handle", "a00222.html#aa54416b00fd0d29dbf8c4ce28324a644", null ],
+    [ "evt_handler", "a00222.html#ad91d85a84b9d6728223af53cebf8bbf4", null ],
+    [ "feature", "a00222.html#aeaba73d58a013e5aab5a1f79583d414e", null ],
+    [ "feature_handles", "a00222.html#a9ca692ca7b98730826f4e7bebfa07a72", null ],
+    [ "meas_handles", "a00222.html#a5963b22a3c9a202db1248b6a2c3af6fd", null ],
+    [ "service_handle", "a00222.html#aefd6488d6d70f2a4d85c98504eb876d1", null ]
 ];

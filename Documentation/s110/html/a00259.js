@@ -1,7 +1,7 @@
 var a00259 =
 [
-    [ "read", "a00259.html#aa2fe207fe3fe3b8d5ff5e8fbbf65f495", null ],
-    [ "request", "a00259.html#a9612f4a88d4f51c576db0e5b565a0b27", null ],
-    [ "type", "a00259.html#a8de6fad49332e37d86887303f2bc28a8", null ],
-    [ "write", "a00259.html#ae846e97ba3f096abf3f54e92fcb30049", null ]
+    [ "max_len", "a00259.html#a021ad724a66d2f8e54c1bdff8def4b4c", null ],
+    [ "read_resp", "a00259.html#a9ed64286300a70a9d26f1839f2396221", null ],
+    [ "rep_ref", "a00259.html#af12bb312c4056f52bc2e83ff0ef66233", null ],
+    [ "security_mode", "a00259.html#a88082cfc1a5360f43e333ea838257ccb", null ]
 ];

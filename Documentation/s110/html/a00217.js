@@ -1,5 +1,5 @@
 var a00217 =
 [
-    [ "addr", "a00217.html#abbebf4e8f11e077613a36c7426e7218a", null ],
-    [ "irk", "a00217.html#a72555f9ff6f6160e58b420d743633f9f", null ]
+    [ "chars", "a00217.html#aae5e676db57239ee9cfe89c13f603dd0", null ],
+    [ "count", "a00217.html#a91337d714a569e896c896a3b255db8ff", null ]
 ];

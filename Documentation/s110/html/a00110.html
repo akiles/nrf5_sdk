@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: UART STM RAW protocol</title>
+<title>nRF51 SDK - S110 SoftDevice: Pairing Device with Dynamic Pairing</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,23 +97,33 @@ $(document).ready(function(){initNavTree('a00110.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">UART STM RAW protocol </div>  </div>
+<div class="title">Pairing Device with Dynamic Pairing </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="UART_STM"></a>
-UART STM RAW protocol</h1>
-<p>This driver is intended to use <b>ONLY</b> in configuration containing <b>nRF51</b> SoC and <b>STM</b> microcontroller. Please check the license agreement in respective source files.</p>
-<p>As other serialization transport PHY's, <b>UART</b> <b>STM</b> driver implements <a class="el" href="a00111.html">Serialization PHY</a> API.</p>
-<p>Low power protocol implemented in this solution provides low energy consumption on connectivity chip(<b>nRF51</b> SoC) side.</p>
-<p>Hardware interface uses 4 standard UART lines: (<b>RX</b>,<b>TX</b>,<b>/RTS</b>,<b>/CTS</b>). Be aware that lines RTS and CTS are handled in different way than in standard UART driver. This is due to applied low power protocol.</p>
-<p>Payload transfer is preceded by 2 bytes of physical layer header, which defines the size of packet. Header is transmitted as least significant byte first. </p>
+<div class="textblock"><h1><a class="anchor" id="gzll_example_gzp_pairing_section_device"></a>
+Device pairing</h1>
+<p>This project requires a running counterpart project, which is either a:</p>
+<p>1) nRF24Lxx Host running the gzll_host_w_dynamic_pairing example from the compatible version of the nRFgo SDK, or a</p>
+<p>2) nRF51 Host running the gzp_host_dynamic_pairing_example example.</p>
+<p>The application sends packets continuously. If a packet transmission fails (either times out or encryption failed), the Device will attempt pairing to a Host by sending a pairing request, consisting of an "address request" and a "Host ID" request.</p>
+<p>If the Device is paired to a Host, pairing data will be stored in non volatile memory.</p>
+<p>Before adding a packet to the TX queue, the contents of the GPIO Port BUTTONS is copied to the first payload byte (byte 0). When an ACK is received, the contents of the first payload byte of the ACK are output on GPIO Port LEDS.</p>
+<p>The application alternates between sending the packets encrypted through the pairing library or directly as plaintext using pipe UNENCRYPTED_DATA_PIPE.</p>
+<h1><a class="anchor" id="gzll_example_gzp_pairing_section_host"></a>
+Host pairing</h1>
+<p>This project requires a running counterpart project, which is either a:</p>
+<p>1) nRF24Lxx Device running the gzll_device_w_dynamic_pairing example from the compatible version of the nRFgo SDK, or a</p>
+<p>2) nRF51 Device running the gzp_device_dynamic_pairing_example example.</p>
+<p>The application listens for packets continuously, monitoring for pairing requests as well as normal user data.</p>
+<p>The Gazell pairing library uses pipe 0 and pipe 1 for encrypted communication. The application will grant any request for a Host ID, thus granting pairing. Unencrypted packets can be received on pipe 2.</p>
+<p>When DATA is received, the contents of the first payload byte of the are output on GPIO Port LEDS. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00092.html">S110 Serialization</a></li><li class="navelem"><a class="el" href="a00111.html">Serialization PHY</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:34 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00115.html">Nordic proprietary protocols</a></li><li class="navelem"><a class="el" href="a00107.html">Gazell</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

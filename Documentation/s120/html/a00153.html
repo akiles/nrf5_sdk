@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gatts_hvx_params_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gatts_write_authorize_params_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,93 +106,33 @@ $(document).ready(function(){initNavTree('a00153.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gatts_hvx_params_t Struct Reference<div class="ingroups"><a class="el" href="a00537.html">Structures</a></div></div>  </div>
+<div class="title">ble_gatts_write_authorize_params_t Struct Reference<div class="ingroups"><a class="el" href="a00553.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GATT HVx parameters.  
+<p>GATT Write Authorisation parameters.  
  <a href="a00153.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gatts.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a1a0552b266c588f67d3a6abc712bbfd6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00153.html#a1a0552b266c588f67d3a6abc712bbfd6">handle</a></td></tr>
-<tr class="separator:a1a0552b266c588f67d3a6abc712bbfd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2971c791821bea067f3bc2bbc35b9193"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00153.html#a2971c791821bea067f3bc2bbc35b9193">type</a></td></tr>
-<tr class="separator:a2971c791821bea067f3bc2bbc35b9193"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07033f6e0e63974b67627ae84bc12fc9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00153.html#a07033f6e0e63974b67627ae84bc12fc9">offset</a></td></tr>
-<tr class="separator:a07033f6e0e63974b67627ae84bc12fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b0b2dadb3128b0838c71235661f8174"><td class="memItemLeft" align="right" valign="top">uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00153.html#a8b0b2dadb3128b0838c71235661f8174">p_len</a></td></tr>
-<tr class="separator:a8b0b2dadb3128b0838c71235661f8174"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68325153be760c7742d1bec69da625cf"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00153.html#a68325153be760c7742d1bec69da625cf">p_data</a></td></tr>
-<tr class="separator:a68325153be760c7742d1bec69da625cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e360fe54c33885b6e23e57c483f6959"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00153.html#a1e360fe54c33885b6e23e57c483f6959">gatt_status</a></td></tr>
+<tr class="separator:a1e360fe54c33885b6e23e57c483f6959"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GATT HVx parameters. </p>
+<div class="textblock"><p>GATT Write Authorisation parameters. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a1a0552b266c588f67d3a6abc712bbfd6"></a>
+<a class="anchor" id="a1e360fe54c33885b6e23e57c483f6959"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gatts_hvx_params_t::handle</td>
+          <td class="memname">uint16_t ble_gatts_write_authorize_params_t::gatt_status</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Characteristic Value Handle. </p>
-
-</div>
-</div>
-<a class="anchor" id="a07033f6e0e63974b67627ae84bc12fc9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gatts_hvx_params_t::offset</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Offset within the attribute value. </p>
-
-</div>
-</div>
-<a class="anchor" id="a68325153be760c7742d1bec69da625cf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t* ble_gatts_hvx_params_t::p_data</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Actual data content, use NULL to use the current attribute value. </p>
-
-</div>
-</div>
-<a class="anchor" id="a8b0b2dadb3128b0838c71235661f8174"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t* ble_gatts_hvx_params_t::p_len</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Length in bytes to be written, length in bytes written after successful return. </p>
-
-</div>
-</div>
-<a class="anchor" id="a2971c791821bea067f3bc2bbc35b9193"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gatts_hvx_params_t::type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indication or Notification, see BLE_GATT_HVX_TYPES. </p>
+<p>GATT status code for the operation, see BLE_GATT_STATUS_CODES. </p>
 
 </div>
 </div>
@@ -201,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00153.html">ble_gatts_hvx_params_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:28 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00153.html">ble_gatts_write_authorize_params_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:41 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

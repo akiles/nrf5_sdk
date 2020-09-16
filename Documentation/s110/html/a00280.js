@@ -1,7 +1,5 @@
 var a00280 =
 [
-    [ "max_len", "a00280.html#ac0cfa5494f231413123e5f9b18356591", null ],
-    [ "read_resp", "a00280.html#a9928aad36b7acb9a2d9202384b8d058e", null ],
-    [ "rep_ref", "a00280.html#a75349cbfb49b717b2fda5f70b2622775", null ],
-    [ "security_mode", "a00280.html#ac658edb5d68d2b14843f1d8274a48f60", null ]
+    [ "data", "a00280.html#ad3df37c1998b3d1d213a6e7b5cfbcd5e", null ],
+    [ "header", "a00280.html#ac81a081355f3a10c8496cf16918ac23a", null ]
 ];

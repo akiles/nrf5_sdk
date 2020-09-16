@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['bank_5f0',['bank_0',['../structbootloader__settings__t.html#af258a4e7aa2091a87bbbf900aee3a473',1,'bootloader_settings_t']]],
-  ['bank_5f0_5fcrc',['bank_0_crc',['../structbootloader__settings__t.html#a48a855222210663d34f20a90f6a3f98e',1,'bootloader_settings_t']]],
-  ['bank_5f0_5fsize',['bank_0_size',['../structbootloader__settings__t.html#a96f71ee507a86f0f69f9fd21c4f69f42',1,'bootloader_settings_t']]],
-  ['bank_5f1',['bank_1',['../structbootloader__settings__t.html#a10a41bfab6e5113fb16ec3e302d4d81d',1,'bootloader_settings_t']]],
   ['baud_5frate',['baud_rate',['../structapp__uart__comm__params__t.html#aed401d2ee067394f8996bd5c0f4ff894',1,'app_uart_comm_params_t']]],
   ['beacon_5fdevice_5fmanufacturing_5fid',['beacon_device_manufacturing_id',['../structantfs__params__t.html#a07862fc33a2d5eecefc8094322cd59bb',1,'antfs_params_t']]],
   ['beacon_5fdevice_5ftype',['beacon_device_type',['../structantfs__params__t.html#a27dab00f84fa08d957ce1f8afeba10b3',1,'antfs_params_t']]],

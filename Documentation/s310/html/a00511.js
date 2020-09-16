@@ -1,18 +1,9 @@
 var a00511 =
 [
-    [ "TWI_DELAY", "a00511.html#ga0bdffa7178084c5e1b2e11d3a95c5e85", null ],
-    [ "TWI_DONT_ISSUE_STOP", "a00511.html#gaedaa985feb5cea808d8811bd7ceeb318", null ],
-    [ "TWI_ISSUE_STOP", "a00511.html#ga13a824cf1c6a37f2ddea21c962128a3e", null ],
-    [ "TWI_READ_BIT", "a00511.html#ga67c0f91739433360f513b097acf11946", null ],
-    [ "TWI_SCL_HIGH", "a00511.html#ga7635564961ef4b40ebe54c566b25dc75", null ],
-    [ "TWI_SCL_LOW", "a00511.html#gafef260a0ebd7d5669cd2731d2c20f55d", null ],
-    [ "TWI_SCL_OUTPUT", "a00511.html#gaa73e62b201f371e4d2e543f0ba2bb4cb", null ],
-    [ "TWI_SCL_READ", "a00511.html#ga45cf9fc8c9487711c3b8457b8e1116b2", null ],
-    [ "TWI_SDA_HIGH", "a00511.html#ga112251118224f5623c20423efce89ae8", null ],
-    [ "TWI_SDA_INPUT", "a00511.html#ga63ae25f476902e9df0c31b057e2bb527", null ],
-    [ "TWI_SDA_LOW", "a00511.html#ga6b884c7770898bf063884f3f1893d492", null ],
-    [ "TWI_SDA_OUTPUT", "a00511.html#gaa6c311f207bff59456fb22648965c53b", null ],
-    [ "TWI_SDA_READ", "a00511.html#ga0a7e559c3bceb5b50ff3e51cabb21f73", null ],
-    [ "twi_master_init", "a00511.html#ga148f1dd10bc0248c6c6c5336ce07a540", null ],
-    [ "twi_master_transfer", "a00511.html#ga36e8039d4cbb4f66c0cf0cf1e3a72445", null ]
+    [ "BLE_GAP_CONN_SEC_MODE_SET_ENC_NO_MITM", "a00511.html#ga99f7b13b3c63bcaffe700c9f28c3ee3f", null ],
+    [ "BLE_GAP_CONN_SEC_MODE_SET_ENC_WITH_MITM", "a00511.html#ga9130b57af7649cba1702b99e1594736c", null ],
+    [ "BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS", "a00511.html#ga1cf3822f8bb11e28931afbb9179665b7", null ],
+    [ "BLE_GAP_CONN_SEC_MODE_SET_OPEN", "a00511.html#ga2abd1c711d49a4d4b1ab9bf27cafffbb", null ],
+    [ "BLE_GAP_CONN_SEC_MODE_SET_SIGNED_NO_MITM", "a00511.html#ga23157805ecca708f331d888844146a0e", null ],
+    [ "BLE_GAP_CONN_SEC_MODE_SET_SIGNED_WITH_MITM", "a00511.html#gaa709ac58667ebfe0c9830c9a142d83e4", null ]
 ];

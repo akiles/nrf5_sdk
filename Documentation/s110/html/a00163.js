@@ -1,7 +1,11 @@
 var a00163 =
 [
-    [ "error_handler", "a00163.html#a595f52194b0dbb3300a9e7dc0f0f360f", null ],
-    [ "evt_handler", "a00163.html#aad8ea29f7f384965a82424a4ca3c8e50", null ],
-    [ "message_buffer_size", "a00163.html#a0ac3fed59a0cbf329cc6611ab584ef69", null ],
-    [ "p_message_buffer", "a00163.html#a146d527b7a4824fb4e4f585e455b14f0", null ]
+    [ "error_handler", "a00163.html#a5840a1605a5459c4e82ef773ac9d2e24", null ],
+    [ "evt_handler", "a00163.html#a96de686937df25c7bdc23206170ae50a", null ],
+    [ "list_supported_locations", "a00163.html#a43e3dbaf04322020621f80634fb4ab11", null ],
+    [ "sc_ctrlpt_attr_md", "a00163.html#ace531100dc9ba6f0ff3f62d27fd220f8", null ],
+    [ "sensor_location_handle", "a00163.html#aff182ef403314ac9e5fb3d6964d4e862", null ],
+    [ "service_handle", "a00163.html#a14e10c317dd498dc5ac6d17f162cb01e", null ],
+    [ "size_list_supported_locations", "a00163.html#accef6d6a6a4d4a5365c2a6043850c22a", null ],
+    [ "supported_functions", "a00163.html#a64788d2708103f5bbc852e2e1835182c", null ]
 ];

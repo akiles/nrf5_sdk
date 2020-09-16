@@ -20,7 +20,6 @@ var searchData=
   ['upload_5fenabled_5fflag_5fmask',['UPLOAD_ENABLED_FLAG_MASK',['../group__ant__fs__client__main.html#ga9c329eb39887fed99008737e51666cb8',1,'antfs.h']]],
   ['upload_5fenabled_5fflag_5fshift',['UPLOAD_ENABLED_FLAG_SHIFT',['../group__ant__fs__client__main.html#ga25ef2d20e4bdbe48d573aca71efbb2ae',1,'antfs.h']]],
   ['use_5fparity',['use_parity',['../structapp__uart__comm__params__t.html#a0851da050a073c86c13d0734e78f9d97',1,'app_uart_comm_params_t']]],
-  ['used_5fbaud_5frate',['USED_BAUD_RATE',['../group__ble__sdk__bootloader__hci__congfig.html#ga191602a3878cbd9811815ba22f8fea51',1,'hci_transport_config.h']]],
   ['user_5fdefined1',['user_defined1',['../structantfs__dir__struct__t.html#ac385c84a8c1862b97228eddb4d90fcc7',1,'antfs_dir_struct_t']]],
   ['user_5fdefined2',['user_defined2',['../structantfs__dir__struct__t.html#acbb7884500fe9c0fe071c0daa87f6483',1,'antfs_dir_struct_t']]],
   ['user_5fflags',['user_flags',['../structantfs__dir__struct__t.html#af7ffb6c4ad7a854066ced1832056abad',1,'antfs_dir_struct_t']]],

@@ -1,4 +1,5 @@
 var a00521 =
 [
-    [ "crc16_compute", "a00521.html#ga8708f07a37b9c76f74f69dd00db983b6", null ]
+    [ "BLE_ERROR_GATTS_INVALID_ATTR_TYPE", "a00521.html#ga050988950fb5cfb9e64b1f91f8872b45", null ],
+    [ "BLE_ERROR_GATTS_SYS_ATTR_MISSING", "a00521.html#ga1d0833ac31d0c319e5286623b6301d0a", null ]
 ];

@@ -1,6 +1,6 @@
 var a00372 =
 [
-    [ "BLE_GATTS_AUTHORIZE_TYPE_INVALID", "a00372.html#ga156b817b68ec907affac6d5aa16f29aa", null ],
-    [ "BLE_GATTS_AUTHORIZE_TYPE_READ", "a00372.html#gacd69638f1f1f3eddbedc59c530b946d8", null ],
-    [ "BLE_GATTS_AUTHORIZE_TYPE_WRITE", "a00372.html#ga1b8036fd4c246ad2bb5696632761ab47", null ]
+    [ "BLE_GATTS_SRVC_TYPE_INVALID", "a00372.html#ga07c49b0b262d0b5bd709d282b659436d", null ],
+    [ "BLE_GATTS_SRVC_TYPE_PRIMARY", "a00372.html#ga881b91f3ac789bf6fcefee7f815dcf7e", null ],
+    [ "BLE_GATTS_SRVC_TYPE_SECONDARY", "a00372.html#ga1aa1898278ef4d0034858d752eac29b0", null ]
 ];

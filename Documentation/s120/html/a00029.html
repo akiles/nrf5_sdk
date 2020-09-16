@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: GPIOTE Example</title>
+<title>nRF51 SDK - S120 SoftDevice: nRF6350 Radio Configuration Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,47 +97,55 @@ $(document).ready(function(){initNavTree('a00029.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">GPIOTE Example </div>  </div>
+<div class="title">nRF6350 Radio Configuration Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The GPIOTE Example shows the usage of GPIOTE peripheral by toggling a LED. We use TIMER0 to generate 'EVENT_COMPARE0' event every 200 milliseconds. This will also clear the TIMER0 internal clock. This event is passed through PPI peripheral to generate a task. This task is used by GPIOTE (task mode) to toggle the pin. This means that every time we have EVENT_COMPARE event, the GPIO pin toggles automatically, which can only be achieved using the GPIOTE peripheral. It uses the hardware delivered in the nRF51822 Development Kit.</p>
-<p>[TIMER0]-&gt;EVENT_COMPARE-&gt;[PPI]-&gt;GPIOTE_TASK_OUT-&gt;[GPIOTE]-&gt;toggle_pin</p>
-<pre class="fragment">*          ----------------                       --------------------------
-*  -Start-|    Timer0      |                     |   EEP |    PPI    |  TEP |-------
-*  ------&gt;|  CC[0] = 200ms |-----Timer0_Event---&gt;|       | Channel 0 |      |       |
-* |        ----------------                       --------------------------        |
-* |                                                                                 |
-* |    -----------------------------------------------------------------------------
-* |   |
-* |   |                 -----------------                      ---------------
-* |    ---------TASK--&gt;|     GPIO_TE     |--&gt;Toggled_Output--&gt;|  LED toggling |--
-* |                     -----------------                     |  every 200ms  |  |
-* |                                                            ---------------   |
-*  ------------------------------------------------------------------------------
-*
-* </pre><p>The application starts with configuring the GPIOTE output pin to toggle on a GPIOTE task. Timer0 is configured to generate events every 200ms, and the PPI channel is configured to connect the timer event to the GPIOTE task.</p>
-<h1><a class="anchor" id="gpiote_example_setup"></a>
+<div class="textblock"><p>The nRF6350 Radio Configuration Example shows how to use nRF6350 Display with TWI interface to see all the configurations with the radio and change its state/variables using the joystick on board. It uses the hardware delivered in the nRF51822 Development Kit.</p>
+<p>The different Radio options provided in this application are:</p>
+<ul>
+<li>Enter start channel for Sweep/Channel for constant carrier.</li>
+<li>Enter end channel for Sweep.</li>
+<li>Start TX carrier.</li>
+<li>Enter delay on each channel (1ms-99ms).</li>
+<li>Cancel Sweep/Carrier.</li>
+<li>Enter data rate('0'=250 Kb/s, '1'=1 Mb/s and '2'=2 Mb/s).</li>
+<li>Start modulated TX carrier.</li>
+<li>Enter output Power('0'=+4 dBm, '1'=0 dBm,...,'7'=-40 dBm).</li>
+<li>Start RX sweep.</li>
+<li>Start TX sweep.</li>
+<li>Start RX carrier.</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>When the value of selection is changed in edit mode, its value is taken into effect immediately and the change in the radio spectrum with changed value can be noticed in the spectrometer.</dd></dl>
+<h1><a class="anchor" id="nRF6350_radio_configuration_example_setup"></a>
 Setup</h1>
 <p>Instructions on how to set up the nRFgo Motherboard: <a class="el" href="a00008.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a>. <br/>
 </p>
-<p>LED assignments:</p>
+<p>Use the nRF6350 Display and joystick to maneuver through the Radio options. <br/>
+ Menu and configuration of radio variables:<br/>
+</p>
 <ul>
-<li>LED 0 is used to show the toggling done by the GPIOTE task.</li>
+<li>Browse menu options by moving the joystick forwards/backwards.</li>
+<li>Browse text of the option by moving the joystick right/left.</li>
+<li>Select an option - press joystick down.</li>
+<li>Increase value of selected option - move joystick right.</li>
+<li>Decrease value of selected option - move joystick left.</li>
+<li>return to the menu - press joystick down.</li>
 </ul>
-<h1><a class="anchor" id="flashwrite_example_testing"></a>
+<h1><a class="anchor" id="nRF6350_radio_configuration_example_testing"></a>
 Testing</h1>
-<p>The GPIOTE Example Application can be tested as follows:</p>
+<p>The nRF6350 Radio Configuration Example Application can be tested as follows:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Observe that LED 0 toggles at the rate of 200ms. </li>
+<li>Use the joystick to browse through the menu options.</li>
+<li>Use a spectrum analyzer to confirm the behavior of the Radio module. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00023.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:05 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00022.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

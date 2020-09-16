@@ -37,11 +37,26 @@
  * @param[in] line_num    Line number where the handler is called.
  * @param[in] p_file_name Pointer to the file name.
  */
+ 
+#include "app_util_platform.h"
+#include "nrf_soc.h"
+
+// uint32_t m_error_code;
+// uint32_t m_error_line_num;
+// const uint8_t *m_p_error_file_name;
+
 void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
 {
+	// disable INTs
+    CRITICAL_REGION_ENTER();
+
     /* Light a LED on error or warning. */
     nrf_gpio_cfg_output(SER_CONN_ASSERT_LED_PIN);
     nrf_gpio_pin_set(SER_CONN_ASSERT_LED_PIN);
+
+   	// m_p_error_file_name = p_file_name;
+    // m_error_code = error_code;
+    // m_error_line_num = line_num;
 
     /* Do not reset when warning. */
     if(SER_WARNING_CODE != error_code)
@@ -59,10 +74,11 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
         /* Reset the chip. Should be used in the release version. */
         NVIC_SystemReset();
 #else   /* Debug version. */
-			  /* To be able to see function parameters in a debugger. */
+        /* To be able to see function parameters in a debugger. */
         uint32_t temp = 1;
         while(temp);
 #endif
+        CRITICAL_REGION_EXIT();
 
     }
 }

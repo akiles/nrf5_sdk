@@ -1,7 +1,6 @@
 var a00087 =
 [
-    [ "conn_sup_timeout", "a00087.html#ab644e629af7eb4915b0f3a93f682f7ae", null ],
-    [ "max_conn_interval", "a00087.html#abd7a6e16a723de1d779afadae3f3113e", null ],
-    [ "min_conn_interval", "a00087.html#a4d1975f7d25263004c405e0321fbae34", null ],
-    [ "slave_latency", "a00087.html#aa5caf55715aaac33f56cc996f91a92cc", null ]
+    [ "auth", "a00087.html#a5f21ad24fa7cce2e56ae61beccdcb0b8", null ],
+    [ "ltk", "a00087.html#a545fe8321eef3b128572882aa3997f7f", null ],
+    [ "ltk_len", "a00087.html#a91966f65c4bb6988f847a19ce0b1541e", null ]
 ];

@@ -1,5 +1,5 @@
 var a00157 =
 [
-    [ "ediv", "a00157.html#a221a26308f709715e866c3111992ae9a", null ],
-    [ "rand", "a00157.html#a5eed4e9e5a810616535ae08c4e860302", null ]
+    [ "count", "a00157.html#a6d254feed32dd66c692ad6cdcec386b9", null ],
+    [ "includes", "a00157.html#a46a0118ff8e260244d2cf342d249e7cc", null ]
 ];

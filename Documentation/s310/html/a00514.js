@@ -1,13 +1,9 @@
 var a00514 =
 [
-    [ "app_fifo_t", "a00090.html", [
-      [ "buf_size_mask", "a00090.html#a03c6c7fcf087b5c1e0cfd5ce09661870", null ],
-      [ "p_buf", "a00090.html#a64eafd180a65260208be3b845f6acbf5", null ],
-      [ "read_pos", "a00090.html#aabcc538faf2ea4a374702c9896ae52d6", null ],
-      [ "write_pos", "a00090.html#a12631a6575aae2c98f1cca4034b38eaf", null ]
-    ] ],
-    [ "app_fifo_flush", "a00514.html#ga0944439787b55aafb3288a836efa3b9b", null ],
-    [ "app_fifo_get", "a00514.html#gab6292f78e91737ba0df83d6755e0abb9", null ],
-    [ "app_fifo_init", "a00514.html#gafc2ba3545e60f0134689fac2aa87f493", null ],
-    [ "app_fifo_put", "a00514.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e", null ]
+    [ "BLE_GATT_OP_EXEC_WRITE_REQ", "a00514.html#ga7b4e1d78a5c63acda9f936be6293b513", null ],
+    [ "BLE_GATT_OP_INVALID", "a00514.html#ga608ba17cf0f6dd37f68bcca0f5bcc6c6", null ],
+    [ "BLE_GATT_OP_PREP_WRITE_REQ", "a00514.html#ga2a14ca8931148c5b97289f12acbb2a02", null ],
+    [ "BLE_GATT_OP_SIGN_WRITE_CMD", "a00514.html#ga9a87ace6849f8d15ba3117a5c50ec481", null ],
+    [ "BLE_GATT_OP_WRITE_CMD", "a00514.html#gac70b760454146bc15a51a3e2bbdccf9a", null ],
+    [ "BLE_GATT_OP_WRITE_REQ", "a00514.html#ga07b9cb136bbd9c0b85d0fff54dbe0103", null ]
 ];

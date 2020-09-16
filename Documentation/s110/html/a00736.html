@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Persistent Storage Access Operation Codes</title>
+<title>nRF51 SDK - S110 SoftDevice: SVC return values specific to GATTS</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,92 +99,42 @@ $(document).ready(function(){initNavTree('a00736.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Persistent Storage Access Operation Codes<div class="ingroups"><a class="el" href="a00735.html">Persistent Storage Interface</a></div></div>  </div>
+<div class="title">SVC return values specific to GATTS<div class="ingroups"><a class="el" href="a00920.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Persistent Storage Access Operation Codes. These are used to report any error during a persistent storage access operation or any general error that may occur in the interface.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga31c301088ac2d5534ebdc5ed44bd3b55"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#ga31c301088ac2d5534ebdc5ed44bd3b55">PSTORAGE_ERROR_OP_CODE</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:ga31c301088ac2d5534ebdc5ed44bd3b55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad1415b8815fc4e0ba8f4f6bc2d8e3ce6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#gad1415b8815fc4e0ba8f4f6bc2d8e3ce6">PSTORAGE_STORE_OP_CODE</a>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:gad1415b8815fc4e0ba8f4f6bc2d8e3ce6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4e04e36e3adf60869073dce4af46b7d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#ga4e04e36e3adf60869073dce4af46b7d5">PSTORAGE_LOAD_OP_CODE</a>&#160;&#160;&#160;0x03</td></tr>
-<tr class="separator:ga4e04e36e3adf60869073dce4af46b7d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf2ce8b4e460358a23ae82516167df79c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#gaf2ce8b4e460358a23ae82516167df79c">PSTORAGE_CLEAR_OP_CODE</a>&#160;&#160;&#160;0x04</td></tr>
-<tr class="separator:gaf2ce8b4e460358a23ae82516167df79c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae66936fc791b79a9f85a7058ea83423a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#gae66936fc791b79a9f85a7058ea83423a">PSTORAGE_UPDATE_OP_CODE</a>&#160;&#160;&#160;0x05</td></tr>
-<tr class="separator:gae66936fc791b79a9f85a7058ea83423a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga050988950fb5cfb9e64b1f91f8872b45"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#ga050988950fb5cfb9e64b1f91f8872b45">BLE_ERROR_GATTS_INVALID_ATTR_TYPE</a>&#160;&#160;&#160;(<a class="el" href="a00708.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x000)</td></tr>
+<tr class="separator:ga050988950fb5cfb9e64b1f91f8872b45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d0833ac31d0c319e5286623b6301d0a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00736.html#ga1d0833ac31d0c319e5286623b6301d0a">BLE_ERROR_GATTS_SYS_ATTR_MISSING</a>&#160;&#160;&#160;(<a class="el" href="a00708.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x001)</td></tr>
+<tr class="separator:ga1d0833ac31d0c319e5286623b6301d0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Persistent Storage Access Operation Codes. These are used to report any error during a persistent storage access operation or any general error that may occur in the interface. </p>
-<p>Persistent Storage Access Operation Codes used in error notification callback registered with the interface to report any error during an persistent storage access operation or any general error that may occur in the interface. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gaf2ce8b4e460358a23ae82516167df79c"></a>
+<a class="anchor" id="ga050988950fb5cfb9e64b1f91f8872b45"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define PSTORAGE_CLEAR_OP_CODE&#160;&#160;&#160;0x04</td>
+          <td class="memname">#define BLE_ERROR_GATTS_INVALID_ATTR_TYPE&#160;&#160;&#160;(<a class="el" href="a00708.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x000)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Error when Clear Operation was requested </p>
+<p>Invalid attribute type. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga31c301088ac2d5534ebdc5ed44bd3b55"></a>
+<a class="anchor" id="ga1d0833ac31d0c319e5286623b6301d0a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define PSTORAGE_ERROR_OP_CODE&#160;&#160;&#160;0x01</td>
+          <td class="memname">#define BLE_ERROR_GATTS_SYS_ATTR_MISSING&#160;&#160;&#160;(<a class="el" href="a00708.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x001)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>General Error Code </p>
-
-</div>
-</div>
-<a class="anchor" id="ga4e04e36e3adf60869073dce4af46b7d5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PSTORAGE_LOAD_OP_CODE&#160;&#160;&#160;0x03</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Error when Load Operation was requested </p>
-
-</div>
-</div>
-<a class="anchor" id="gad1415b8815fc4e0ba8f4f6bc2d8e3ce6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PSTORAGE_STORE_OP_CODE&#160;&#160;&#160;0x02</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Error when Store Operation was requested </p>
-
-</div>
-</div>
-<a class="anchor" id="gae66936fc791b79a9f85a7058ea83423a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PSTORAGE_UPDATE_OP_CODE&#160;&#160;&#160;0x05</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Update an already touched storage block </p>
+<p>System Attributes missing. </p>
 
 </div>
 </div>
@@ -193,7 +143,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:34 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:35 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

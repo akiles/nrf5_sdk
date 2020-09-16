@@ -385,6 +385,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>To register an area with a total size (block count * block size) larger than the page size (usually 1024 bytes), the block size must be a divisor of the page size (page size % block size == 0).</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
@@ -525,7 +526,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:44 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:43 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

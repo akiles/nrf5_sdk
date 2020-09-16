@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gattc_evt_rel_disc_rsp_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gatts_evt_read_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,63 @@ $(document).ready(function(){initNavTree('a00241.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gattc_evt_rel_disc_rsp_t Struct Reference<div class="ingroups"><a class="el" href="a00984.html">Structures</a></div></div>  </div>
+<div class="title">ble_gatts_evt_read_t Struct Reference<div class="ingroups"><a class="el" href="a00921.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event structure for BLE_GATTC_EVT_REL_DISC_RSP.  
+<p>Event structure for authorize read request.  
  <a href="a00241.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gattc.h&gt;</code></p>
+<p><code>#include &lt;ble_gatts.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a6d254feed32dd66c692ad6cdcec386b9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00241.html#a6d254feed32dd66c692ad6cdcec386b9">count</a></td></tr>
-<tr class="separator:a6d254feed32dd66c692ad6cdcec386b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46a0118ff8e260244d2cf342d249e7cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00247.html">ble_gattc_include_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00241.html#a46a0118ff8e260244d2cf342d249e7cc">includes</a> [1]</td></tr>
-<tr class="separator:a46a0118ff8e260244d2cf342d249e7cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79c55f70b9d10f1e11b35bb2cc13fdbd"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00241.html#a79c55f70b9d10f1e11b35bb2cc13fdbd">handle</a></td></tr>
+<tr class="separator:a79c55f70b9d10f1e11b35bb2cc13fdbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66d632e13cd7d371036af6a90be224f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00233.html">ble_gatts_attr_context_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00241.html#a66d632e13cd7d371036af6a90be224f4">context</a></td></tr>
+<tr class="separator:a66d632e13cd7d371036af6a90be224f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3c5c0c840625a5f28e90e9021eb2403"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00241.html#ac3c5c0c840625a5f28e90e9021eb2403">offset</a></td></tr>
+<tr class="separator:ac3c5c0c840625a5f28e90e9021eb2403"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event structure for BLE_GATTC_EVT_REL_DISC_RSP. </p>
+<div class="textblock"><p>Event structure for authorize read request. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a6d254feed32dd66c692ad6cdcec386b9"></a>
+<a class="anchor" id="a66d632e13cd7d371036af6a90be224f4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gattc_evt_rel_disc_rsp_t::count</td>
+          <td class="memname"><a class="el" href="a00233.html">ble_gatts_attr_context_t</a> ble_gatts_evt_read_t::context</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Include count. </p>
+<p>Attribute Context. </p>
 
 </div>
 </div>
-<a class="anchor" id="a46a0118ff8e260244d2cf342d249e7cc"></a>
+<a class="anchor" id="a79c55f70b9d10f1e11b35bb2cc13fdbd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00247.html">ble_gattc_include_t</a> ble_gattc_evt_rel_disc_rsp_t::includes[1]</td>
+          <td class="memname">uint16_t ble_gatts_evt_read_t::handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Include data, variable length. </p>
+<p>Attribute Handle. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac3c5c0c840625a5f28e90e9021eb2403"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_gatts_evt_read_t::offset</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Offset for the read operation. </p>
 
 </div>
 </div>
@@ -156,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00241.html">ble_gattc_evt_rel_disc_rsp_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00241.html">ble_gatts_evt_read_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:37 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

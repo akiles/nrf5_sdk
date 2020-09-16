@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gatts_attr_context_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gatts_write_authorize_params_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,108 +106,33 @@ $(document).ready(function(){initNavTree('a00250.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gatts_attr_context_t Struct Reference<div class="ingroups"><a class="el" href="a00988.html">Structures</a></div></div>  </div>
+<div class="title">ble_gatts_write_authorize_params_t Struct Reference<div class="ingroups"><a class="el" href="a00921.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GATT Attribute Context.  
+<p>GATT Write Authorisation parameters.  
  <a href="a00250.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gatts.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a351c0654157494b748a0adcba003e42f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html">ble_uuid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00250.html#a351c0654157494b748a0adcba003e42f">srvc_uuid</a></td></tr>
-<tr class="separator:a351c0654157494b748a0adcba003e42f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbbcf41424e48536f3c3e7f2665005fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html">ble_uuid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00250.html#adbbcf41424e48536f3c3e7f2665005fd">char_uuid</a></td></tr>
-<tr class="separator:adbbcf41424e48536f3c3e7f2665005fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d909918be5c3a58a93e3f345ad0ae5e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html">ble_uuid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00250.html#a6d909918be5c3a58a93e3f345ad0ae5e">desc_uuid</a></td></tr>
-<tr class="separator:a6d909918be5c3a58a93e3f345ad0ae5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ec74591a8b40af4354fed5c2ae33efd"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00250.html#a9ec74591a8b40af4354fed5c2ae33efd">srvc_handle</a></td></tr>
-<tr class="separator:a9ec74591a8b40af4354fed5c2ae33efd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a770254b2ade294a3f24fa0db65a2d0fa"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00250.html#a770254b2ade294a3f24fa0db65a2d0fa">value_handle</a></td></tr>
-<tr class="separator:a770254b2ade294a3f24fa0db65a2d0fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59115313e869d01234cc2ed3ab2e25d9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00250.html#a59115313e869d01234cc2ed3ab2e25d9">type</a></td></tr>
-<tr class="separator:a59115313e869d01234cc2ed3ab2e25d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e360fe54c33885b6e23e57c483f6959"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00250.html#a1e360fe54c33885b6e23e57c483f6959">gatt_status</a></td></tr>
+<tr class="separator:a1e360fe54c33885b6e23e57c483f6959"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GATT Attribute Context. </p>
+<div class="textblock"><p>GATT Write Authorisation parameters. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="adbbcf41424e48536f3c3e7f2665005fd"></a>
+<a class="anchor" id="a1e360fe54c33885b6e23e57c483f6959"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00325.html">ble_uuid_t</a> ble_gatts_attr_context_t::char_uuid</td>
+          <td class="memname">uint16_t ble_gatts_write_authorize_params_t::gatt_status</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Characteristic UUID if applicable (BLE_UUID_TYPE_UNKNOWN if N/A). </p>
-
-</div>
-</div>
-<a class="anchor" id="a6d909918be5c3a58a93e3f345ad0ae5e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00325.html">ble_uuid_t</a> ble_gatts_attr_context_t::desc_uuid</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Descriptor UUID if applicable (BLE_UUID_TYPE_UNKNOWN if N/A). </p>
-
-</div>
-</div>
-<a class="anchor" id="a9ec74591a8b40af4354fed5c2ae33efd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gatts_attr_context_t::srvc_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Service Handle. </p>
-
-</div>
-</div>
-<a class="anchor" id="a351c0654157494b748a0adcba003e42f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00325.html">ble_uuid_t</a> ble_gatts_attr_context_t::srvc_uuid</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Service UUID. </p>
-
-</div>
-</div>
-<a class="anchor" id="a59115313e869d01234cc2ed3ab2e25d9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gatts_attr_context_t::type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Attribute Type, see BLE_GATTS_ATTR_TYPES. </p>
-
-</div>
-</div>
-<a class="anchor" id="a770254b2ade294a3f24fa0db65a2d0fa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gatts_attr_context_t::value_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Characteristic Handle if applicable (BLE_GATT_HANDLE_INVALID if N/A). </p>
+<p>GATT status code for the operation, see BLE_GATT_STATUS_CODES. </p>
 
 </div>
 </div>
@@ -216,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00250.html">ble_gatts_attr_context_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00250.html">ble_gatts_write_authorize_params_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:37 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

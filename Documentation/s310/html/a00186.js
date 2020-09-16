@@ -1,9 +1,11 @@
 var a00186 =
 [
-    [ "init_len", "a00186.html#a7722e94b0c079f7571a0607a13d46bde", null ],
-    [ "init_offs", "a00186.html#aa24ec5661c2ba830f906201285ca941c", null ],
-    [ "max_len", "a00186.html#a5cc60017697406f2f2624e0b15dad294", null ],
-    [ "p_attr_md", "a00186.html#afc04d5311dcd31df52f7d9aac7c05ab1", null ],
-    [ "p_uuid", "a00186.html#a87b18c161a362b54bd349aebd2a45c85", null ],
-    [ "p_value", "a00186.html#abf26555ce0ad9b481c3f638f89dc329a", null ]
+    [ "base_time", "a00186.html#a50043eec02a9af09a81047f4eecfef33", null ],
+    [ "flags", "a00186.html#adaa211ee17f3d46654c641ab339b68db", null ],
+    [ "glucose_concentration", "a00186.html#a8d77eafd69ad69d3753fd043bdd31dc2", null ],
+    [ "sample_location", "a00186.html#a21eed1c3fbda85ac65aa060787a589b4", null ],
+    [ "sensor_status_annunciation", "a00186.html#a765f2b453e27775757271598452e2c8a", null ],
+    [ "sequence_number", "a00186.html#a7e89e39efc4889fc00da13fa87efcbc2", null ],
+    [ "time_offset", "a00186.html#a820a55933ac2e9e047193a846efbaf5d", null ],
+    [ "type", "a00186.html#a4e79195531cf78dfd880479a6404cb44", null ]
 ];

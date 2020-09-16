@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Human Interface Device Service</title>
+<title>nRF51 SDK - S110 SoftDevice: ant_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,6 +64,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
+      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -96,21 +103,76 @@ $(document).ready(function(){initNavTree('a00141.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">Human Interface Device Service </div>  </div>
+<div class="title">ant_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00695.html">Types definitions for ANT support in SoftDevice handler.</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This module implements the Human Interface Device Service with the corresponding set of characteristics. During initialization it adds the Human Interface Device Service and a set of characteristics as per the Human Interface Device Service specification and the user requirements to the BLE stack database.</p>
-<p>If enabled, notification of Input Report characteristics is performed when the application calls the corresponding ble_hids_xx_input_report_send() function.</p>
-<p>If an event handler is supplied by the application, the Human Interface Device Service will generate Human Interface Device Service events to the application.</p>
-<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Human Interface Device Service module by calling <a class="el" href="a00924.html#ga77b3d388f18004a1e730b4f2bbee5cac" title="Function for handling the Application&#39;s BLE Stack events.">ble_hids_on_ble_evt()</a> from the ble_stack_handler callback. </dd></dl>
-</div></div><!-- contents -->
+
+<p>ANT stack event type.  
+ <a href="a00141.html#details">More...</a></p>
+
+<p><code>#include &lt;ant_stack_handler_types.h&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:a5e084957ed6c0f93b78203d74a268e36"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html#a5e084957ed6c0f93b78203d74a268e36">channel</a></td></tr>
+<tr class="separator:a5e084957ed6c0f93b78203d74a268e36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8449b66e97f4dfce737478dc751199e1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html#a8449b66e97f4dfce737478dc751199e1">event</a></td></tr>
+<tr class="separator:a8449b66e97f4dfce737478dc751199e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0945895af053724b710662f5beea9ed5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html#a0945895af053724b710662f5beea9ed5">evt_buffer</a> [32]</td></tr>
+<tr class="separator:a0945895af053724b710662f5beea9ed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>ANT stack event type. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a5e084957ed6c0f93b78203d74a268e36"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ant_evt_t::channel</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Channel number. </p>
+
+</div>
+</div>
+<a class="anchor" id="a8449b66e97f4dfce737478dc751199e1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ant_evt_t::event</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event code. </p>
+
+</div>
+</div>
+<a class="anchor" id="a0945895af053724b710662f5beea9ed5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ant_evt_t::evt_buffer[32]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event message buffer. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00124.html">BLE Services</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:34 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00141.html">ant_evt_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:36 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

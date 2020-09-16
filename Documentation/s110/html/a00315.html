@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_sensorsim_cfg_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: nrf_gzll_host_rx_info_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,40 @@ $(document).ready(function(){initNavTree('a00315.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_sensorsim_cfg_t Struct Reference<div class="ingroups"><a class="el" href="a00914.html">Sensor Data Simulator</a></div></div>  </div>
+<div class="title">nrf_gzll_host_rx_info_t Struct Reference<div class="ingroups"><a class="el" href="a00853.html">Gazell Link Layer</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Triangular waveform sensor simulator configuration.  
+<p>Data structure containing information about the last packet received.  
  <a href="a00315.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_sensorsim.h&gt;</code></p>
+<p><code>#include &lt;nrf_gzll.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a68d5bf12a9ad90af16abd75b5d2b63d3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00315.html#a68d5bf12a9ad90af16abd75b5d2b63d3">min</a></td></tr>
-<tr class="separator:a68d5bf12a9ad90af16abd75b5d2b63d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a706f772aefa1ba388ffa4d89182ed66c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00315.html#a706f772aefa1ba388ffa4d89182ed66c">max</a></td></tr>
-<tr class="separator:a706f772aefa1ba388ffa4d89182ed66c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62eecf0076b6555dd1cd98c22e9323e3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00315.html#a62eecf0076b6555dd1cd98c22e9323e3">incr</a></td></tr>
-<tr class="separator:a62eecf0076b6555dd1cd98c22e9323e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1dc36256413535c9190580f7e263171"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00315.html#ac1dc36256413535c9190580f7e263171">start_at_max</a></td></tr>
-<tr class="separator:ac1dc36256413535c9190580f7e263171"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b024afcc55a2672cc745ccdc1ed21b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b024afcc55a2672cc745ccdc1ed21b4"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00315.html#a0b024afcc55a2672cc745ccdc1ed21b4">packet_removed_from_tx_fifo</a></td></tr>
+<tr class="memdesc:a0b024afcc55a2672cc745ccdc1ed21b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">A payload was received in the ACK. <br/></td></tr>
+<tr class="separator:a0b024afcc55a2672cc745ccdc1ed21b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ca3a1e0fd3866095de97120ce876ac6"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00315.html#a5ca3a1e0fd3866095de97120ce876ac6">rssi</a></td></tr>
+<tr class="memdesc:a5ca3a1e0fd3866095de97120ce876ac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Received signal strength indicator in dBm.  <a href="#a5ca3a1e0fd3866095de97120ce876ac6">More...</a><br/></td></tr>
+<tr class="separator:a5ca3a1e0fd3866095de97120ce876ac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Triangular waveform sensor simulator configuration. </p>
+<div class="textblock"><p>Data structure containing information about the last packet received. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a62eecf0076b6555dd1cd98c22e9323e3"></a>
+<a class="anchor" id="a5ca3a1e0fd3866095de97120ce876ac6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_sensorsim_cfg_t::incr</td>
+          <td class="memname">int16_t nrf_gzll_host_rx_info_t::rssi</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Increment between each measurement. </p>
 
-</div>
-</div>
-<a class="anchor" id="a706f772aefa1ba388ffa4d89182ed66c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_sensorsim_cfg_t::max</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Maximum simulated value. </p>
-
-</div>
-</div>
-<a class="anchor" id="a68d5bf12a9ad90af16abd75b5d2b63d3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_sensorsim_cfg_t::min</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Minimum simulated value. </p>
-
-</div>
-</div>
-<a class="anchor" id="ac1dc36256413535c9190580f7e263171"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_sensorsim_cfg_t::start_at_max</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>TRUE is measurement is to start at the maximum value, FALSE if it is to start at the minimum. </p>
+<p>Received signal strength indicator in dBm. </p>
+<dl class="section see"><dt>See Also</dt><dd>nrf_gzll_enable_rssi(). </dd></dl>
 
 </div>
 </div>
@@ -186,8 +148,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00315.html">ble_sensorsim_cfg_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00315.html">nrf_gzll_host_rx_info_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:37 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

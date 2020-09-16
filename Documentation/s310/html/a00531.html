@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Utility Functions and Definitions (Platform)</title>
+<title>nRF51 SDK - S310 SoftDevice: Common types and macro definitions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,125 +97,38 @@ $(document).ready(function(){initNavTree('a00531.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#groups">Modules</a> &#124;
+<a href="#nested-classes">Data Structures</a>  </div>
   <div class="headertitle">
-<div class="title">Utility Functions and Definitions (Platform)<div class="ingroups"><a class="el" href="a00716.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">Common types and macro definitions<div class="ingroups"><a class="el" href="a00490.html">BLE SoftDevice Common</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Various types and definitions available to all applications when using SoftDevice.  
+<p>Common types and macro definitions for the S110 SoftDevice.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gac3db2bb99db38f42bf316a9d0d9ace99"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00531.html#gac3db2bb99db38f42bf316a9d0d9ace99">NRF_APP_PRIORITY_THREAD</a>&#160;&#160;&#160;4</td></tr>
-<tr class="separator:gac3db2bb99db38f42bf316a9d0d9ace99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9864421b965a73b1feef47c3813bf0e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9864421b965a73b1feef47c3813bf0e2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PACKED</b>(TYPE)&#160;&#160;&#160;__packed TYPE</td></tr>
-<tr class="separator:ga9864421b965a73b1feef47c3813bf0e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga61149a977f6ebdaeb8bdeed626dd9392"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00531.html#ga61149a977f6ebdaeb8bdeed626dd9392">CRITICAL_REGION_ENTER</a>()</td></tr>
-<tr class="memdesc:ga61149a977f6ebdaeb8bdeed626dd9392"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for entering a critical region.  <a href="#ga61149a977f6ebdaeb8bdeed626dd9392">More...</a><br/></td></tr>
-<tr class="separator:ga61149a977f6ebdaeb8bdeed626dd9392"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga854878240b628e978f760f75aca4e1cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00531.html#ga854878240b628e978f760f75aca4e1cc">CRITICAL_REGION_EXIT</a>()</td></tr>
-<tr class="memdesc:ga854878240b628e978f760f75aca4e1cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for leaving a critical region.  <a href="#ga854878240b628e978f760f75aca4e1cc">More...</a><br/></td></tr>
-<tr class="separator:ga854878240b628e978f760f75aca4e1cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00649"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00649.html">Defines</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga1a193131d1d5911b1ec53f9541841b1b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00531.html#ga1a193131d1d5911b1ec53f9541841b1b">app_irq_priority_t</a> { <br/>
-&#160;&#160;<b>APP_IRQ_PRIORITY_HIGH</b> = 1, 
-<br/>
-&#160;&#160;<b>APP_IRQ_PRIORITY_LOW</b> = 3
-<br/>
- }</td></tr>
-<tr class="memdesc:ga1a193131d1d5911b1ec53f9541841b1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interrupt priorities available to the application while the SoftDevice is active. <br/></td></tr>
-<tr class="separator:ga1a193131d1d5911b1ec53f9541841b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html">ble_uuid128_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">128 bit UUID values.  <a href="a00235.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html">ble_uuid_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bluetooth Low Energy UUID type, encapsulates both 16-bit and 128-bit UUIDs.  <a href="a00236.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Various types and definitions available to all applications when using SoftDevice. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga61149a977f6ebdaeb8bdeed626dd9392"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CRITICAL_REGION_ENTER</td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">{                                                                                       \</div>
-<div class="line">        uint8_t IS_NESTED_CRITICAL_REGION = 0;                                              \</div>
-<div class="line">        uint32_t CURRENT_INT_PRI = current_int_priority_get();                              \</div>
-<div class="line">        if (CURRENT_INT_PRI != APP_IRQ_PRIORITY_HIGH)                                       \</div>
-<div class="line">        {                                                                                   \</div>
-<div class="line">            uint32_t ERR_CODE = <a class="code" href="a00733.html#ga741284de7360c6be481178191a423d81" title="Enters critical region.">sd_nvic_critical_region_enter</a>(&amp;IS_NESTED_CRITICAL_REGION);  \</div>
-<div class="line">            if (ERR_CODE == <a class="code" href="a00596.html#ga9a2af1a322a5dfb3bdb69e2aacd3bc27" title="SoftDevice has not been enabled.">NRF_ERROR_SOFTDEVICE_NOT_ENABLED</a>)                               \</div>
-<div class="line">            {                                                                               \</div>
-<div class="line">                __disable_irq();                                                            \</div>
-<div class="line">            }                                                                               \</div>
-<div class="line">            else                                                                            \</div>
-<div class="line">            {                                                                               \</div>
-<div class="line">                APP_ERROR_CHECK(ERR_CODE);                                                  \</div>
-<div class="line">            }                                                                               \</div>
-<div class="line">        }</div>
-</div><!-- fragment -->
-<p>Macro for entering a critical region. </p>
-<dl class="section note"><dt>Note</dt><dd>Due to implementation details, there must exist one and only one call to <a class="el" href="a00531.html#ga854878240b628e978f760f75aca4e1cc" title="Macro for leaving a critical region.">CRITICAL_REGION_EXIT()</a> for each call to <a class="el" href="a00531.html#ga61149a977f6ebdaeb8bdeed626dd9392" title="Macro for entering a critical region.">CRITICAL_REGION_ENTER()</a>, and they must be located in the same scope. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga854878240b628e978f760f75aca4e1cc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CRITICAL_REGION_EXIT</td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">if</span> (CURRENT_INT_PRI != APP_IRQ_PRIORITY_HIGH)                                       \</div>
-<div class="line">        {                                                                                   \</div>
-<div class="line">            uint32_t ERR_CODE;                                                              \</div>
-<div class="line">            __enable_irq();                                                                 \</div>
-<div class="line">            ERR_CODE = <a class="code" href="a00733.html#ga608c5d4dd37ff9c46a868c714746065d" title="Exit critical region.">sd_nvic_critical_region_exit</a>(IS_NESTED_CRITICAL_REGION);             \</div>
-<div class="line">            if (ERR_CODE != <a class="code" href="a00596.html#ga9a2af1a322a5dfb3bdb69e2aacd3bc27" title="SoftDevice has not been enabled.">NRF_ERROR_SOFTDEVICE_NOT_ENABLED</a>)                               \</div>
-<div class="line">            {                                                                               \</div>
-<div class="line">                APP_ERROR_CHECK(ERR_CODE);                                                  \</div>
-<div class="line">            }                                                                               \</div>
-<div class="line">        }                                                                                   \</div>
-<div class="line">    }</div>
-</div><!-- fragment -->
-<p>Macro for leaving a critical region. </p>
-<dl class="section note"><dt>Note</dt><dd>Due to implementation details, there must exist one and only one call to <a class="el" href="a00531.html#ga854878240b628e978f760f75aca4e1cc" title="Macro for leaving a critical region.">CRITICAL_REGION_EXIT()</a> for each call to <a class="el" href="a00531.html#ga61149a977f6ebdaeb8bdeed626dd9392" title="Macro for entering a critical region.">CRITICAL_REGION_ENTER()</a>, and they must be located in the same scope. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gac3db2bb99db38f42bf316a9d0d9ace99"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define NRF_APP_PRIORITY_THREAD&#160;&#160;&#160;4</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>"Interrupt level" when running in Thread Mode. </p>
-
-</div>
-</div>
+<p>Common types and macro definitions for the S110 SoftDevice. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:00 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:46 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

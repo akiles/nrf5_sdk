@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Cycling Speed and Cadence Service</title>
+<title>nRF51 SDK - S310 SoftDevice: Human Immediate Alert Service Client</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,19 +97,18 @@ $(document).ready(function(){initNavTree('a00077.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Cycling Speed and Cadence Service </div>  </div>
+<div class="title">Human Immediate Alert Service Client </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This module implements the Cycling Speed and Cadence Service. If enabled, notification of the Cycling Speead and Candence Measurement is performed when the application calls <a class="el" href="a00667.html#ga445c4e7578c68607b1573e175c20323f" title="Function for sending cycling speed and cadence measurement if notification has been enabled...">ble_cscs_measurement_send()</a>.</p>
-<p>If an event handler is supplied by the application, the Cycling Speed and Cadence Service will generate Cycling Speed and Cadence Service events to the application.</p>
-<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Cycling Speead and Candence Service module by calling <a class="el" href="a00667.html#gabcc0bd0d90b6d40220468349ba190b98" title="Function for handling the Application&#39;s BLE Stack events.">ble_cscs_on_ble_evt()</a> from the from the ble_stack_handler function. </dd></dl>
+<div class="textblock"><p>This module implements the Immediate Alert Service client - locator role of the Find Me profile. On <a class="el" href="a00546.html#ggada486dd3c0cce897b23a887bed284fefaa0b4789724d202a13a5e7eab85c52957">BLE_GAP_EVT_CONNECTED</a> event, this module starts discovery of the Immediate Alert Service with Alert Level characteristic at the peer. This module will indicate the application about a successful service &amp; characteristic discovery using BLE_IAS_C_EVT_CHAR_DISCOVERED event. The application can use <a class="el" href="a00607.html#gab37ce69f8533cd510dc5620effba4409">ble_ias_c_send_alert_level</a> function to signal alerts to the peer.</p>
+<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to this module by calling <a class="el" href="a00607.html#ga7f98bafec49ce5bf78e444e46c628a1f" title="Function for handling the Application&#39;s BLE Stack events for Immediate Alert Service client...">ble_ias_c_on_ble_evt()</a> from the from the ble_stack_handler callback function. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00065.html">BLE Services</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:59 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00057.html">BLE Services</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:45 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

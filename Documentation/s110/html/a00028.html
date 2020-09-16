@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Button Debouncer Example</title>
+<title>nRF51 SDK - S110 SoftDevice: Flash Write Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,37 +97,38 @@ $(document).ready(function(){initNavTree('a00028.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Button Debouncer Example </div>  </div>
+<div class="title">Flash Write Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Button Debouncer Example shows GPIO usage with integrator debouncer to read the GPIO pin states. By pressing and holding one or more buttons on the the nRF51822 Development Kit, the corresponding LEDs will turn on. By releasing a button, the corresponding LED will turn off.</p>
-<p>The source code and project file can be found in the <code>&lt;InstallFolder&gt;\Nordic\nrf51822\Board\nrf6310\debounce_example</code> folder.</p>
-<p>When the application starts, the timer for handling debouncing is configured and started, including enabling the timer interrupt. The GPIO-pins 0-7 are configured for input (Buttons), and the GPIO-pins 8-15 are configured for output (LEDs).</p>
-<h1><a class="anchor" id="gpio_example_app_debounce_setup"></a>
+<div class="textblock"><p>The Flash Write Example erases a page in flash and then reads a pattern from pins 0-7 (Buttons), writes it to flash if a new pattern is detected, reads it back and writes it to pins 8-15 (LEDs). Each time a new pattern is detected, the address in flash is incremented. It uses the hardware delivered in the nRF51822 Development Kit.</p>
+<p>The application starts with setting pins 0-7 as input (Buttons) and pins 8-15 as output (LEDs). The flash start address is set to the last page in flash, and the page is erased. The main loop first reads the button pattern and writes the value to flash. After the write to flash, the same flash address is read and set to the LEDs. Note that by erasing flash, each bit is set to logic one, so by pressing a button, the corresponding LED will be turned off.</p>
+<p>The source code and project file can be found in the <code>&lt;InstallFolder&gt;\Nordic\nrf51822\Board\nrf6310\flashwrite_example</code> folder.</p>
+<h1><a class="anchor" id="flashwrite_example_setup"></a>
 Setup</h1>
-<p>Instructions on how to set up the nRFgo Motherboard: <a class="el" href="a00009.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a>.</p>
+<p>Instructions on how to set up the nRFgo Motherboard: <a class="el" href="a00009.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a>. <br/>
+</p>
 <p>LED assignments:</p>
 <ul>
-<li>LED 0-7: Turns on if corresponding button is pressed.</li>
+<li>LED 0-7 is used to show the value read from flash.</li>
 </ul>
-<p>Buttons assignments:</p>
+<p>Button assignment:</p>
 <ul>
-<li>Button 0-7: Button press is debounced and turns the corresponding LED on while pressed.</li>
+<li>Button 0-7 is used to write a new value to flash.</li>
 </ul>
-<h1><a class="anchor" id="gpio_example_app_debounce_testing"></a>
+<h1><a class="anchor" id="flashwrite_example_testing"></a>
 Testing</h1>
-<p>The Button Debouncer Example Application can be tested as follows:</p>
+<p>The Flash Write Example Application can be tested as follows:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Press buttons and check if the corresponding LEDs are lit. </li>
+<li>Press any buttons and the corresponding LEDs should be turned off. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00024.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:33 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00023.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -28,19 +28,24 @@
 #include "ser_hal_transport.h"
 #include "ser_conn_handlers.h"
 
+#include "ser_phy_debug_comm.h"
 
 /**@brief Main function of the connectivity application. */
 int main(void)
 {
     uint32_t err_code = NRF_SUCCESS;
 
+#if ( defined(SER_PHY_HCI_DEBUG_ENABLE) || defined(SER_PHY_DEBUG_APP_ENABLE))
+	debug_init(NULL);
+#endif	
+	
     /* Initialize scheduler queue. */
     APP_SCHED_INIT(SER_CONN_SCHED_MAX_EVENT_DATA_SIZE, SER_CONN_SCHED_QUEUE_SIZE);
-    
     /* Initialize SoftDevice.
      * SoftDevice Event IRQ is not scheduled but immediately copies BLE events to the application
      * scheduler queue */
     SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+
     
     /* Subscribe for BLE events. */
     err_code = softdevice_ble_evt_handler_set(ser_conn_ble_event_handle);

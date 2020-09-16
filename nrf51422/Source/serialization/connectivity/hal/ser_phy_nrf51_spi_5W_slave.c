@@ -24,6 +24,7 @@
 #include <string.h>
 
 
+#include "boards.h"
 #include "spi_slave.h"
 #include "ser_phy.h"
 #include "ser_config.h"
@@ -33,7 +34,6 @@
 #include "nrf_soc.h"
 #include "app_error.h"
 #include "app_util.h"
-#include "boards.h"
 #include "ser_phy_config_conn_nrf51.h"
 #include "ser_phy_debug_conn.h"
 

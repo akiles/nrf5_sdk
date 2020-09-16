@@ -1,5 +1,7 @@
 var a00757 =
 [
-    [ "BLE_USER_MEM_TYPE_GATTS_QUEUED_WRITES", "a00757.html#ga77c2aca2438a868f228f877cafb5b910", null ],
-    [ "BLE_USER_MEM_TYPE_INVALID", "a00757.html#ga690838a139a17cdd21661c8045073277", null ]
+    [ "Defines", "a00927.html", "a00927" ],
+    [ "Enumerations", "a00928.html", "a00928" ],
+    [ "Types", "a00929.html", "a00929" ],
+    [ "Functions", "a00930.html", "a00930" ]
 ];

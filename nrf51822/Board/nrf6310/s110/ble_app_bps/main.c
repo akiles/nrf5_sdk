@@ -69,7 +69,7 @@
 #define APP_ADV_TIMEOUT_IN_SECONDS           180                                        /**< The advertising timeout in units of seconds. */
 
 #define APP_TIMER_PRESCALER                  0                                          /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS                 3                                          /**< Maximum number of simultaneously created timers. */
+#define APP_TIMER_MAX_TIMERS                 4                                          /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE              4                                          /**< Size of timer operation queues. */
 
 #define NUM_SIM_MEAS_VALUES                  4                                          /**< Number of simulated measurements to cycle through. */

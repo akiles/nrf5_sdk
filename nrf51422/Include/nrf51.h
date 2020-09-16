@@ -6,7 +6,7 @@
  *           nRF51 from Nordic Semiconductor.
  *
  * @version  V522
- * @date     30. June 2014
+ * @date     26. August 2014
  *
  * @note     Generated with SVDConv V2.81d 
  *           from CMSIS SVD File 'nRF51.xml' Version 522,
@@ -432,7 +432,7 @@ typedef struct {                                    /*!< UART Structure         
   __IO uint32_t  PSELCTS;                           /*!< Pin select for CTS.                                                   */
   __IO uint32_t  PSELRXD;                           /*!< Pin select for RXD.                                                   */
   __I  uint32_t  RXD;                               /*!< RXD register. On read action the buffer pointer is displaced.
-                                                         Once read the character is consummed. If read when no character
+                                                         Once read the character is consumed. If read when no character
                                                           available, the UART will stop working.                               */
   __O  uint32_t  TXD;                               /*!< TXD register.                                                         */
   __I  uint32_t  RESERVED10;

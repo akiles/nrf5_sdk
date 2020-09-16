@@ -1,5 +1,5 @@
 var a00214 =
 [
-    [ "char_handles", "a00214.html#a3f137cc3f92bf439d93a8491e4314d5a", null ],
-    [ "ref_handle", "a00214.html#a0209468bba2c298192f4500a652dd6d1", null ]
+    [ "cid", "a00214.html#a6e40f192db4382919b6c1f3db8e70d46", null ],
+    [ "len", "a00214.html#a754900407e75298f4af89a59febed5b8", null ]
 ];

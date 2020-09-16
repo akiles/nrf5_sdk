@@ -1,7 +1,12 @@
 var a00938 =
 [
-    [ "DM_PROTOCOL_CNTXT_ALL", "a00938.html#gabf3d92dc785166cb06763af1c6616b94", null ],
-    [ "DM_PROTOCOL_CNTXT_GATT_CLI_ID", "a00938.html#ga20cd764cccd94fd71cc07c9f5f2c681a", null ],
-    [ "DM_PROTOCOL_CNTXT_GATT_SRVR_ID", "a00938.html#ga40fd38aabb6b0c4ab56549d5189ff366", null ],
-    [ "DM_PROTOCOL_CNTXT_NONE", "a00938.html#gaf4cac13e3128b3131c16d52760393932", null ]
+    [ "BLE SoftDevice Common", "a00704.html", "a00704" ],
+    [ "Generic Access Profile (GAP)", "a00762.html", "a00762" ],
+    [ "Generic Attribute Profile (GATT) Client", "a00782.html", "a00782" ],
+    [ "Generic Attribute Profile (GATT) Common", "a00912.html", "a00912" ],
+    [ "Generic Attribute Profile (GATT) Server", "a00795.html", "a00795" ],
+    [ "Logical Link Control and Adaptation Protocol (L2CAP)", "a00815.html", "a00815" ],
+    [ "SoftDevice Manager API", "a00753.html", "a00753" ],
+    [ "SoftDevice Global Error Codes", "a00751.html", "a00751" ],
+    [ "SoC Library API", "a00755.html", "a00755" ]
 ];

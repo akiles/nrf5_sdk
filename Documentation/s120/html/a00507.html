@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Functions</title>
+<title>nRF51 SDK - S120 SoftDevice: Initialization and Setup</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -96,160 +96,20 @@ $(document).ready(function(){initNavTree('a00507.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Functions<div class="ingroups"><a class="el" href="a00503.html">Battery Service Client</a></div></div>  </div>
+<div class="title">Initialization and Setup<div class="ingroups"><a class="el" href="a00501.html">Device Manager Sequence Charts</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga9d0ae2cdd0fefec37afe05d139739f1d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00507.html#ga9d0ae2cdd0fefec37afe05d139739f1d">ble_bas_c_init</a> (<a class="el" href="a00506.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *p_ble_bas_c, <a class="el" href="a00072.html">ble_bas_c_init_t</a> *p_ble_bas_c_init)</td></tr>
-<tr class="memdesc:ga9d0ae2cdd0fefec37afe05d139739f1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Battery Service client module.  <a href="#ga9d0ae2cdd0fefec37afe05d139739f1d">More...</a><br/></td></tr>
-<tr class="separator:ga9d0ae2cdd0fefec37afe05d139739f1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga987c35a5606a6b0ea23f4f4187fcd2b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00507.html#ga987c35a5606a6b0ea23f4f4187fcd2b0">ble_bas_c_on_ble_evt</a> (<a class="el" href="a00506.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *p_ble_bas_c, const <a class="el" href="a00081.html">ble_evt_t</a> *p_ble_evt)</td></tr>
-<tr class="memdesc:ga987c35a5606a6b0ea23f4f4187fcd2b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling BLE events from the SoftDevice.  <a href="#ga987c35a5606a6b0ea23f4f4187fcd2b0">More...</a><br/></td></tr>
-<tr class="separator:ga987c35a5606a6b0ea23f4f4187fcd2b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga16c5e2436be7c05afc7ea62868981c15"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00507.html#ga16c5e2436be7c05afc7ea62868981c15">ble_bas_c_bl_notif_enable</a> (<a class="el" href="a00506.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *p_ble_bas_c)</td></tr>
-<tr class="memdesc:ga16c5e2436be7c05afc7ea62868981c15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for requesting the peer to start sending notification of Battery Level characteristic.  <a href="#ga16c5e2436be7c05afc7ea62868981c15">More...</a><br/></td></tr>
-<tr class="separator:ga16c5e2436be7c05afc7ea62868981c15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaebe0b4cd8e0e09d54d18c1b8647d1dd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00507.html#gaaebe0b4cd8e0e09d54d18c1b8647d1dd">ble_bas_c_bl_read</a> (<a class="el" href="a00506.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *p_ble_bas_c)</td></tr>
-<tr class="memdesc:gaaebe0b4cd8e0e09d54d18c1b8647d1dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for reading the Battery Level characteristic.  <a href="#gaaebe0b4cd8e0e09d54d18c1b8647d1dd">More...</a><br/></td></tr>
-<tr class="separator:gaaebe0b4cd8e0e09d54d18c1b8647d1dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga16c5e2436be7c05afc7ea62868981c15"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_bas_c_bl_notif_enable </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00506.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ble_bas_c</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for requesting the peer to start sending notification of Battery Level characteristic. </p>
-<p>This function will enable to notification of the Battery Level characteristic at the peer by writing to the CCCD of the Battery Level Characteristic.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">p_ble_bas_c</td><td>Pointer to the Battery Service client structure.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS if the SoftDevice has been requested to write to the CCCD of the peer. Otherwise, an error code. This function propagates the error code returned by the SoftDevice API <a class="el" href="a00534.html#ga90298b8dcd8bbe7bbe69d362d1133378">sd_ble_gattc_write</a>. </dd></dl>
-
+<div align="center">
+<img src="msc_inline_mscgraph_60.png" alt="msc_inline_mscgraph_60" border="0" usemap="#msc_inline_mscgraph_60.map"/>
+<map name="msc_inline_mscgraph_60.map" id="msc_inline_mscgraph_60.map"></map>
 </div>
-</div>
-<a class="anchor" id="gaaebe0b4cd8e0e09d54d18c1b8647d1dd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_bas_c_bl_read </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00506.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ble_bas_c</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for reading the Battery Level characteristic. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">p_ble_bas_c</td><td>Pointer to the Battery Service client structure.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS if the read request was successfully queued to be sent to peer. Otherwise an error code. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9d0ae2cdd0fefec37afe05d139739f1d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_bas_c_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00506.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ble_bas_c</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00072.html">ble_bas_c_init_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ble_bas_c_init</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for initializing the Battery Service client module. </p>
-<p>This function will register with the DB Discovery module. While doing so, it registers for the Battery Service. Doing so will make the DB Discovery module to look for the presence of a Battery Service instance at the peer when a discovery is started..</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_bas_c</td><td>Pointer to the Battery Service client structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_bas_c_init</td><td>Pointer to the Battery Service init structure containing the initialization information.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization. Otherwise an error code. This function propagates the error code returned by the Database Discovery module API <a class="el" href="a00518.html#gafa96fc7df5bdff5ad5051ddbb27e2994">ble_db_discovery_register</a>. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga987c35a5606a6b0ea23f4f4187fcd2b0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ble_bas_c_on_ble_evt </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00506.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ble_bas_c</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00081.html">ble_evt_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ble_evt</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for handling BLE events from the SoftDevice. </p>
-<p>This function will handle the BLE events received from the SoftDevice. If the BLE event is relevant to the Battery Service Client module, then it uses it to update interval variables and, if necessary, send events to the application.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_bas_c</td><td>Pointer to the Battery Service client structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>Pointer to the BLE event. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-</div><!-- contents -->
+ </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:27 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:40 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

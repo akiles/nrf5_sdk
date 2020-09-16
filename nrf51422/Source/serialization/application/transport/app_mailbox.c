@@ -14,6 +14,7 @@
 #include "app_mailbox.h"
 #include "nrf_error.h"
 #include "app_util_platform.h"
+#include "nrf_soc.h"
 
 /**
  * @brief Mailbox handle used for managing a mailbox queue.
@@ -50,7 +51,7 @@ uint32_t app_mailbox_create(const app_mailbox_def_t * queue_def, app_mailbox_id_
         p_mailbox->len      = 0;
         p_mailbox->queue_sz = (uint8_t)queue_def->queue_sz;
         p_mailbox->item_sz  = queue_def->item_sz;
-        p_mailbox->pool     = (void *)((uint32_t)queue_def->pool + sizeof (app_mailbox_t));
+        p_mailbox->pool     = (void *)((uintptr_t)queue_def->pool + sizeof (app_mailbox_t));
         *mailbox_id         = (app_mailbox_id_t)p_mailbox;
     }
 
@@ -78,7 +79,7 @@ uint32_t app_mailbox_put(app_mailbox_id_t mailbox_id, void * mail)
         }
         else
         {
-            p_dst = (void *)((uint32_t)p_dst + (p_mailbox->w_idx * p_mailbox->item_sz));
+            p_dst = (void *)((uintptr_t)p_dst + (p_mailbox->w_idx * p_mailbox->item_sz));
             p_mailbox->w_idx++;
             p_mailbox->len++;
 
@@ -121,7 +122,7 @@ uint32_t app_mailbox_get(app_mailbox_id_t mailbox_id, void * mail)
         }
         else
         {
-            p_src = (void *)((uint32_t)p_src + (p_mailbox->r_idx * p_mailbox->item_sz));
+            p_src = (void *)((uintptr_t)p_src + (p_mailbox->r_idx * p_mailbox->item_sz));
             p_mailbox->r_idx++;
             p_mailbox->len--;
 
@@ -141,3 +142,19 @@ uint32_t app_mailbox_get(app_mailbox_id_t mailbox_id, void * mail)
     return err_code;
 }
 
+uint32_t app_mailbox_get_length (app_mailbox_id_t mailbox_id, uint32_t *p_len)
+{
+    app_mailbox_t * p_mailbox = (app_mailbox_t *)mailbox_id;
+    uint32_t        err_code  = NRF_SUCCESS;
+
+    if (p_len == NULL)
+    {
+        err_code = NRF_ERROR_NULL;
+    }
+    else
+    {
+        *p_len = (uint32_t) p_mailbox->len;
+    }
+
+    return err_code;
+}

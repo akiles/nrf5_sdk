@@ -171,6 +171,18 @@ static void radio_reset(void)
  */
 static uint32_t radio_init(void)
 {
+    // Handle BLE Radio tuning parameters from production for DTM if required.
+    // Only needed for DTM without SoftDevice, as the SoftDevice normally handles this.
+    // PCN-083.
+    if ( ((NRF_FICR->OVERRIDEEN) & FICR_OVERRIDEEN_BLE_1MBIT_Msk) == FICR_OVERRIDEEN_BLE_1MBIT_Override)
+    {
+        NRF_RADIO->OVERRIDE0 = NRF_FICR->BLE_1MBIT[0];
+        NRF_RADIO->OVERRIDE1 = NRF_FICR->BLE_1MBIT[1];
+        NRF_RADIO->OVERRIDE2 = NRF_FICR->BLE_1MBIT[2];
+        NRF_RADIO->OVERRIDE3 = NRF_FICR->BLE_1MBIT[3];
+        NRF_RADIO->OVERRIDE4 = NRF_FICR->BLE_1MBIT[4]| (RADIO_OVERRIDE4_ENABLE_Pos << RADIO_OVERRIDE4_ENABLE_Enabled);
+    }
+
     // Initializing code below is quite generic - for BLE, the values are fixed, and expressions
     // are constant. Non-constant values are essentially set in radio_prepare().
     if (((m_tx_power & 0x03) != 0)           ||      // tx_power should be a multiple of 4

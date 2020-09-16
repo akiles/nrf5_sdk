@@ -1,7 +1,6 @@
 var a00247 =
 [
-    [ "incr", "a00247.html#a62eecf0076b6555dd1cd98c22e9323e3", null ],
-    [ "max", "a00247.html#a706f772aefa1ba388ffa4d89182ed66c", null ],
-    [ "min", "a00247.html#a68d5bf12a9ad90af16abd75b5d2b63d3", null ],
-    [ "start_at_max", "a00247.html#ac1dc36256413535c9190580f7e263171", null ]
+    [ "block_count", "a00247.html#a7bb96f4e9d1b68cb94fd5c75570e5a99", null ],
+    [ "block_size", "a00247.html#a95b58714824957d4c930a5da78d7109a", null ],
+    [ "cb", "a00247.html#a3495db72b9ff587f0c9ea0ab38d5e9f8", null ]
 ];

@@ -1,9 +1,6 @@
 var a00846 =
 [
-    [ "Message Sequence Charts", "a00847.html", "a00847" ],
-    [ "Enumerations", "a00986.html", "a00986" ],
-    [ "Defines", "a00987.html", "a00987" ],
-    [ "Structures", "a00988.html", "a00988" ],
-    [ "Functions", "a00989.html", "a00989" ],
-    [ "User memory layout for Queued Writes", "a01006.html", null ]
+    [ "power_system_off_req_dec", "a00846.html#ga3b111e9000d467d4a358cda27a558b37", null ],
+    [ "temp_get_req_dec", "a00846.html#ga3c4e3f76e2c264210ef7aa17233f00fa", null ],
+    [ "temp_get_rsp_enc", "a00846.html#ga4ec27ca18b068637552f9f9b6a87095c", null ]
 ];

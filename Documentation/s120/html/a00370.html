@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: GATT Server Operations</title>
+<title>nRF51 SDK - S120 SoftDevice: SVC return values specific to GATTS</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,117 +99,42 @@ $(document).ready(function(){initNavTree('a00370.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">GATT Server Operations<div class="ingroups"><a class="el" href="a00536.html">Defines</a></div></div>  </div>
+<div class="title">SVC return values specific to GATTS<div class="ingroups"><a class="el" href="a00552.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gaefcca583b8fedfba89e3e8864f5fb392"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#gaefcca583b8fedfba89e3e8864f5fb392">BLE_GATTS_OP_INVALID</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:gaefcca583b8fedfba89e3e8864f5fb392"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga52cba338739e55ac2843c2ef92bef44b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#ga52cba338739e55ac2843c2ef92bef44b">BLE_GATTS_OP_WRITE_REQ</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:ga52cba338739e55ac2843c2ef92bef44b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac567f652312a6f8bbb5e348f01ed3f77"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#gac567f652312a6f8bbb5e348f01ed3f77">BLE_GATTS_OP_WRITE_CMD</a>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:gac567f652312a6f8bbb5e348f01ed3f77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c61bfea52333d5d0b1f8ede31b3f8ee"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#ga0c61bfea52333d5d0b1f8ede31b3f8ee">BLE_GATTS_OP_SIGN_WRITE_CMD</a>&#160;&#160;&#160;0x03</td></tr>
-<tr class="separator:ga0c61bfea52333d5d0b1f8ede31b3f8ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga97ae5797d7a83c1df161626765ddb436"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#ga97ae5797d7a83c1df161626765ddb436">BLE_GATTS_OP_PREP_WRITE_REQ</a>&#160;&#160;&#160;0x04</td></tr>
-<tr class="separator:ga97ae5797d7a83c1df161626765ddb436"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae298558aca1af7f9dc5ce38268418059"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#gae298558aca1af7f9dc5ce38268418059">BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL</a>&#160;&#160;&#160;0x05</td></tr>
-<tr class="separator:gae298558aca1af7f9dc5ce38268418059"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6b36a56316847e970cc728a68e5bb6f0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#ga6b36a56316847e970cc728a68e5bb6f0">BLE_GATTS_OP_EXEC_WRITE_REQ_NOW</a>&#160;&#160;&#160;0x06</td></tr>
-<tr class="separator:ga6b36a56316847e970cc728a68e5bb6f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga050988950fb5cfb9e64b1f91f8872b45"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#ga050988950fb5cfb9e64b1f91f8872b45">BLE_ERROR_GATTS_INVALID_ATTR_TYPE</a>&#160;&#160;&#160;(<a class="el" href="a00340.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x000)</td></tr>
+<tr class="separator:ga050988950fb5cfb9e64b1f91f8872b45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d0833ac31d0c319e5286623b6301d0a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00370.html#ga1d0833ac31d0c319e5286623b6301d0a">BLE_ERROR_GATTS_SYS_ATTR_MISSING</a>&#160;&#160;&#160;(<a class="el" href="a00340.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x001)</td></tr>
+<tr class="separator:ga1d0833ac31d0c319e5286623b6301d0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gae298558aca1af7f9dc5ce38268418059"></a>
+<a class="anchor" id="ga050988950fb5cfb9e64b1f91f8872b45"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL&#160;&#160;&#160;0x05</td>
+          <td class="memname">#define BLE_ERROR_GATTS_INVALID_ATTR_TYPE&#160;&#160;&#160;(<a class="el" href="a00340.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x000)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Execute Write Request: Cancel all prepared writes. </p>
+<p>Invalid attribute type. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga6b36a56316847e970cc728a68e5bb6f0"></a>
+<a class="anchor" id="ga1d0833ac31d0c319e5286623b6301d0a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GATTS_OP_EXEC_WRITE_REQ_NOW&#160;&#160;&#160;0x06</td>
+          <td class="memname">#define BLE_ERROR_GATTS_SYS_ATTR_MISSING&#160;&#160;&#160;(<a class="el" href="a00340.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x001)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Execute Write Request: Immediately execute all prepared writes. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaefcca583b8fedfba89e3e8864f5fb392"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_GATTS_OP_INVALID&#160;&#160;&#160;0x00</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Invalid Operation. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga97ae5797d7a83c1df161626765ddb436"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_GATTS_OP_PREP_WRITE_REQ&#160;&#160;&#160;0x04</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Prepare Write Request. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga0c61bfea52333d5d0b1f8ede31b3f8ee"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_GATTS_OP_SIGN_WRITE_CMD&#160;&#160;&#160;0x03</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Signed Write Command. </p>
-
-</div>
-</div>
-<a class="anchor" id="gac567f652312a6f8bbb5e348f01ed3f77"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_GATTS_OP_WRITE_CMD&#160;&#160;&#160;0x02</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Write Command. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga52cba338739e55ac2843c2ef92bef44b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_GATTS_OP_WRITE_REQ&#160;&#160;&#160;0x01</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Write Request. </p>
+<p>System Attributes missing. </p>
 
 </div>
 </div>
@@ -218,7 +143,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:06 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

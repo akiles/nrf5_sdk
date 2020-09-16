@@ -1,5 +1,5 @@
 var a00253 =
 [
-    [ "initial_tx_power_level", "a00253.html#a5be1f2c1c00932c36837e70c02679072", null ],
-    [ "tps_attr_md", "a00253.html#afc4915bf42eeee72f61614aa1161aa80", null ]
+    [ "p_data", "a00253.html#af0aec898e61ff702225ab7cb8e81419a", null ],
+    [ "size", "a00253.html#a0ea03f9dd5df67309f05eeddf0b854ff", null ]
 ];

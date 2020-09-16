@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_evt_rssi_changed_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gap_whitelist_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,78 @@ $(document).ready(function(){initNavTree('a00212.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_evt_rssi_changed_t Struct Reference<div class="ingroups"><a class="el" href="a00813.html">Generic Access Profile (GAP)</a></div></div>  </div>
+<div class="title">ble_gap_whitelist_t Struct Reference<div class="ingroups"><a class="el" href="a00910.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event data for advertisement report event.  
+<p>Whitelist structure.  
  <a href="a00212.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a7521901a129bf1516c0bab404045616e"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#a7521901a129bf1516c0bab404045616e">rssi</a></td></tr>
-<tr class="separator:a7521901a129bf1516c0bab404045616e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9316d95519c47512389b4696376556d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00182.html">ble_gap_addr_t</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#a9316d95519c47512389b4696376556d0">pp_addrs</a></td></tr>
+<tr class="separator:a9316d95519c47512389b4696376556d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f7d372587ed29005dbfd515103fa6fd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#a8f7d372587ed29005dbfd515103fa6fd">addr_count</a></td></tr>
+<tr class="separator:a8f7d372587ed29005dbfd515103fa6fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab78ecf15e25742a5ea56377cef1a8603"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00201.html">ble_gap_irk_t</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#ab78ecf15e25742a5ea56377cef1a8603">pp_irks</a></td></tr>
+<tr class="separator:ab78ecf15e25742a5ea56377cef1a8603"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21922578ee2df66befd41e968f8d5af1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#a21922578ee2df66befd41e968f8d5af1">irk_count</a></td></tr>
+<tr class="separator:a21922578ee2df66befd41e968f8d5af1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event data for advertisement report event. </p>
+<div class="textblock"><p>Whitelist structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a7521901a129bf1516c0bab404045616e"></a>
+<a class="anchor" id="a8f7d372587ed29005dbfd515103fa6fd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int8_t ble_gap_evt_rssi_changed_t::rssi</td>
+          <td class="memname">uint8_t ble_gap_whitelist_t::addr_count</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Received Signal Strength Indication in dBm. </p>
+<p>Count of device addresses in array, up to <a class="el" href="a00909.html#ga0e1bde4f7e3b124dc8aa2e7b032b8313">BLE_GAP_WHITELIST_ADDR_MAX_COUNT</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a21922578ee2df66befd41e968f8d5af1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_gap_whitelist_t::irk_count</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Count of IRKs in array, up to <a class="el" href="a00909.html#ga748b090dc565a8499e9088ecebe8672b">BLE_GAP_WHITELIST_IRK_MAX_COUNT</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a9316d95519c47512389b4696376556d0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00182.html">ble_gap_addr_t</a>** ble_gap_whitelist_t::pp_addrs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to array of device address pointers, pointing to addresses to be used in whitelist. NULL if none are given. </p>
+
+</div>
+</div>
+<a class="anchor" id="ab78ecf15e25742a5ea56377cef1a8603"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00201.html">ble_gap_irk_t</a>** ble_gap_whitelist_t::pp_irks</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to array of Identity Resolving Key (IRK) pointers, each pointing to an IRK in the whitelist. NULL if none are given. </p>
 
 </div>
 </div>
@@ -141,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00212.html">ble_gap_evt_rssi_changed_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00212.html">ble_gap_whitelist_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:37 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

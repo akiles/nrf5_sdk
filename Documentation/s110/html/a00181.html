@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_cscs_meas_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_evt_user_mem_request_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,108 +106,33 @@ $(document).ready(function(){initNavTree('a00181.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_cscs_meas_s Struct Reference<div class="ingroups"><a class="el" href="a00918.html">Cycling Speed and Cadence Service</a></div></div>  </div>
+<div class="title">ble_evt_user_mem_request_t Struct Reference<div class="ingroups"><a class="el" href="a00905.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Cycling Speed and Cadence Service measurement structure. This contains a Cycling Speed and Cadence Service measurement.  
+<p>Event structure for BLE_EVT_USER_MEM_REQUEST.  
  <a href="a00181.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_cscs.h&gt;</code></p>
+<p><code>#include &lt;ble.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ae78a3f62b14426e5a3fcc65d5cc54d7c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#ae78a3f62b14426e5a3fcc65d5cc54d7c">is_wheel_rev_data_present</a></td></tr>
-<tr class="separator:ae78a3f62b14426e5a3fcc65d5cc54d7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6750c3a77be5be56ef6e563164b85a4a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a6750c3a77be5be56ef6e563164b85a4a">is_crank_rev_data_present</a></td></tr>
-<tr class="separator:a6750c3a77be5be56ef6e563164b85a4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28e443636699abf5ac97850f4fb9eb39"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a28e443636699abf5ac97850f4fb9eb39">cumulative_wheel_revs</a></td></tr>
-<tr class="separator:a28e443636699abf5ac97850f4fb9eb39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1b12075f983b9149eacf65f318f0482"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#ab1b12075f983b9149eacf65f318f0482">last_wheel_event_time</a></td></tr>
-<tr class="separator:ab1b12075f983b9149eacf65f318f0482"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abaf971426cea9d234838ad3896a5ebb0"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#abaf971426cea9d234838ad3896a5ebb0">cumulative_crank_revs</a></td></tr>
-<tr class="separator:abaf971426cea9d234838ad3896a5ebb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ddda2de7f892024636795e85b9ba914"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a5ddda2de7f892024636795e85b9ba914">last_crank_event_time</a></td></tr>
-<tr class="separator:a5ddda2de7f892024636795e85b9ba914"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0a51b3ce3131df1dcc57a440f5a816c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#ac0a51b3ce3131df1dcc57a440f5a816c">type</a></td></tr>
+<tr class="separator:ac0a51b3ce3131df1dcc57a440f5a816c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Cycling Speed and Cadence Service measurement structure. This contains a Cycling Speed and Cadence Service measurement. </p>
+<div class="textblock"><p>Event structure for BLE_EVT_USER_MEM_REQUEST. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="abaf971426cea9d234838ad3896a5ebb0"></a>
+<a class="anchor" id="ac0a51b3ce3131df1dcc57a440f5a816c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_cscs_meas_s::cumulative_crank_revs</td>
+          <td class="memname">uint8_t ble_evt_user_mem_request_t::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Cumulative Crank Revolutions. </p>
-
-</div>
-</div>
-<a class="anchor" id="a28e443636699abf5ac97850f4fb9eb39"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_cscs_meas_s::cumulative_wheel_revs</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Cumulative Wheel Revolutions. </p>
-
-</div>
-</div>
-<a class="anchor" id="a6750c3a77be5be56ef6e563164b85a4a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_cscs_meas_s::is_crank_rev_data_present</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>True if Crank Revolution Data is present in the measurement. </p>
-
-</div>
-</div>
-<a class="anchor" id="ae78a3f62b14426e5a3fcc65d5cc54d7c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_cscs_meas_s::is_wheel_rev_data_present</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>True if Wheel Revolution Data is present in the measurement. </p>
-
-</div>
-</div>
-<a class="anchor" id="a5ddda2de7f892024636795e85b9ba914"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_cscs_meas_s::last_crank_event_time</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Last Crank Event Time. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab1b12075f983b9149eacf65f318f0482"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_cscs_meas_s::last_wheel_event_time</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Last Wheel Event Time. </p>
+<p>User memory type, see BLE_USER_MEM_TYPES. </p>
 
 </div>
 </div>
@@ -216,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00181.html">ble_cscs_meas_s</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00181.html">ble_evt_user_mem_request_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:36 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,20 +1,44 @@
 var a00870 =
 [
-    [ "ble_enable_req_enc", "a00870.html#ga0e25bbd67c73f9dcb6b36b5d5886d096", null ],
-    [ "ble_enable_rsp_dec", "a00870.html#ga8e8c2d3e293de22ce6f51c649d361e24", null ],
-    [ "ble_event_dec", "a00870.html#ga1cecf2f2d4889378985e0686e8febb21", null ],
-    [ "ble_opt_get_req_enc", "a00870.html#ga93036b021c92c3d271350067386c2c42", null ],
-    [ "ble_opt_get_rsp_dec", "a00870.html#gaae793a61311a1b6842bba53c901e28e1", null ],
-    [ "ble_opt_set_req_enc", "a00870.html#ga9b054e20443eb024b845cc0538e34bae", null ],
-    [ "ble_opt_set_rsp_dec", "a00870.html#ga9c762d08bb9de8aee31675537d6aa9ce", null ],
-    [ "ble_tx_buffer_count_get_req_enc", "a00870.html#ga1804f1406a5798d53e6f3971539647fc", null ],
-    [ "ble_tx_buffer_count_get_rsp_dec", "a00870.html#ga27970df055ead4b81a1afdbd8a04d551", null ],
-    [ "ble_uuid_decode_req_enc", "a00870.html#ga4127010a5d0f872d41c289967dfac461", null ],
-    [ "ble_uuid_decode_rsp_dec", "a00870.html#ga83ea07ac4982e2514a9eb140d10727d4", null ],
-    [ "ble_uuid_encode_req_enc", "a00870.html#gaee51cda56d4af1a49759636188e6a378", null ],
-    [ "ble_uuid_encode_rsp_dec", "a00870.html#ga8f39978be07ed77d4faa02d974038b41", null ],
-    [ "ble_uuid_vs_add_req_enc", "a00870.html#ga55a7349a5fb13ee943bb54680493fed1", null ],
-    [ "ble_uuid_vs_add_rsp_dec", "a00870.html#ga963d164dda3b9fb24fa064349e609351", null ],
-    [ "ble_version_get_req_enc", "a00870.html#ga38f646e1cfb010bb553b6707b21b0168", null ],
-    [ "ble_version_get_rsp_dec", "a00870.html#ga19b7fc274a532e16a956ab6e22f93b75", null ]
+    [ "ble_rscs_evt_t", "a00288.html", [
+      [ "evt_type", "a00288.html#a71e160dc65fed82339dfbec7a0f3f78a", null ]
+    ] ],
+    [ "ble_rscs_init_t", "a00289.html", [
+      [ "evt_handler", "a00289.html#ac8b3f40aba291bb2528c6e3d278e66bd", null ],
+      [ "feature", "a00289.html#afea901cdde73cddc72eb4cfe2f337c78", null ],
+      [ "rsc_feature_attr_md", "a00289.html#ada9c9294592f640a27a344965b22bc76", null ],
+      [ "rsc_meas_attr_md", "a00289.html#a4f33f2c4256a25ac20cdbb2b8fbc8538", null ]
+    ] ],
+    [ "ble_rscs_s", "a00291.html", [
+      [ "conn_handle", "a00291.html#aa54416b00fd0d29dbf8c4ce28324a644", null ],
+      [ "evt_handler", "a00291.html#ad91d85a84b9d6728223af53cebf8bbf4", null ],
+      [ "feature", "a00291.html#aeaba73d58a013e5aab5a1f79583d414e", null ],
+      [ "feature_handles", "a00291.html#a9ca692ca7b98730826f4e7bebfa07a72", null ],
+      [ "meas_handles", "a00291.html#a5963b22a3c9a202db1248b6a2c3af6fd", null ],
+      [ "service_handle", "a00291.html#aefd6488d6d70f2a4d85c98504eb876d1", null ]
+    ] ],
+    [ "ble_rscs_meas_s", "a00290.html", [
+      [ "inst_cadence", "a00290.html#ae0184379a72ca968be31624693859296", null ],
+      [ "inst_speed", "a00290.html#a2c67fcdf6c045252f8f2c19410ce93ce", null ],
+      [ "inst_stride_length", "a00290.html#a80d5e5ebfb6d4e01cf5a3716af83bf6f", null ],
+      [ "is_inst_stride_len_present", "a00290.html#ae051edb606a9de9cebc7ab7a6eef2ae0", null ],
+      [ "is_running", "a00290.html#a1b8f312b31cdc3a4b06f092ce7e2bd8e", null ],
+      [ "is_total_distance_present", "a00290.html#abd1ef1791fd6291c82c5b2f5d9bd289f", null ],
+      [ "total_distance", "a00290.html#a446576bd70deec710453a5e09ff1f7c2", null ]
+    ] ],
+    [ "BLE_RSCS_FEATURE_CALIBRATION_PROCEDURE_BIT", "a00870.html#ga7699ff99de0293fa8183117ba09259c9", null ],
+    [ "BLE_RSCS_FEATURE_INSTANT_STRIDE_LEN_BIT", "a00870.html#gab7a0af47e661440ca6845c1f4a73ad87", null ],
+    [ "BLE_RSCS_FEATURE_MULTIPLE_SENSORS_BIT", "a00870.html#ga069fdb89d733f4bcffc62f9a42a19ffb", null ],
+    [ "BLE_RSCS_FEATURE_TOTAL_DISTANCE_BIT", "a00870.html#gaca7e41a2844d7508da269b933aba0edc", null ],
+    [ "BLE_RSCS_FEATURE_WALKING_OR_RUNNING_STATUS_BIT", "a00870.html#ga032860d4209d0f07f27cd7fb1b6643c3", null ],
+    [ "ble_rscs_evt_handler_t", "a00870.html#ga04b6f149d88df65ebffd5b8297bd657f", null ],
+    [ "ble_rscs_meas_t", "a00870.html#ga1b8b0a0d95abb5145cca3e5fb23a6352", null ],
+    [ "ble_rscs_t", "a00870.html#gac2d10efa222688b53fbe59ad5a9dab85", null ],
+    [ "ble_rscs_evt_type_t", "a00870.html#gaed8352fbaf5d37687a3aa5751f4d23bd", [
+      [ "BLE_RSCS_EVT_NOTIFICATION_ENABLED", "a00870.html#ggaed8352fbaf5d37687a3aa5751f4d23bda4e8e3e5e00758024939ee56a4d2d2418", null ],
+      [ "BLE_RSCS_EVT_NOTIFICATION_DISABLED", "a00870.html#ggaed8352fbaf5d37687a3aa5751f4d23bda36486aa0ec7024c5b29d2b6c2cbb89cd", null ]
+    ] ],
+    [ "ble_rscs_init", "a00870.html#gafd5591aad290232ba97ac0bc7aec8f7b", null ],
+    [ "ble_rscs_measurement_send", "a00870.html#ga16080f0b2880066d0e1f88fbe960079b", null ],
+    [ "ble_rscs_on_ble_evt", "a00870.html#ga23555a37f7903b50d65a818f32c362ec", null ]
 ];

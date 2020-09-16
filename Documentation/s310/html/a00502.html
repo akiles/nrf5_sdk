@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: SDIO driver</title>
+<title>nRF51 SDK - S310 SoftDevice: GAP Advertising types</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,129 +97,74 @@ $(document).ready(function(){initNavTree('a00502.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">SDIO driver<div class="ingroups"><a class="el" href="a00712.html">Peripheral Drivers</a></div></div>  </div>
+<div class="title">GAP Advertising types<div class="ingroups"><a class="el" href="a00643.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>2-wire serial interface driver.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gafd362e60216c5346709cac28c7cc175b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafd362e60216c5346709cac28c7cc175b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00502.html#gafd362e60216c5346709cac28c7cc175b">sdio_init</a> (void)</td></tr>
-<tr class="memdesc:gafd362e60216c5346709cac28c7cc175b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing 2-wire serial interface and trying to handle stuck slaves. <br/></td></tr>
-<tr class="separator:gafd362e60216c5346709cac28c7cc175b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1ff0f4956042d92b01fc2dbeffe26284"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00502.html#ga1ff0f4956042d92b01fc2dbeffe26284">sdio_read_byte</a> (uint8_t address)</td></tr>
-<tr class="memdesc:ga1ff0f4956042d92b01fc2dbeffe26284"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for reading a byte over 2-wire serial interface.  <a href="#ga1ff0f4956042d92b01fc2dbeffe26284">More...</a><br/></td></tr>
-<tr class="separator:ga1ff0f4956042d92b01fc2dbeffe26284"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga95ee69dbe058216ef73012a1ff04c077"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00502.html#ga95ee69dbe058216ef73012a1ff04c077">sdio_read_burst</a> (uint8_t *target_buffer, uint8_t target_buffer_size)</td></tr>
-<tr class="memdesc:ga95ee69dbe058216ef73012a1ff04c077"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for reading several bytes over 2-wire serial interface using burst mode.  <a href="#ga95ee69dbe058216ef73012a1ff04c077">More...</a><br/></td></tr>
-<tr class="separator:ga95ee69dbe058216ef73012a1ff04c077"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2e5d560f80ba374b7fe18f4e8a565ffd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00502.html#ga2e5d560f80ba374b7fe18f4e8a565ffd">sdio_write_byte</a> (uint8_t address, uint8_t data_byte)</td></tr>
-<tr class="memdesc:ga2e5d560f80ba374b7fe18f4e8a565ffd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for writing a byte over 2-wire serial interface.  <a href="#ga2e5d560f80ba374b7fe18f4e8a565ffd">More...</a><br/></td></tr>
-<tr class="separator:ga2e5d560f80ba374b7fe18f4e8a565ffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga6cc0db53453977ee0a31e59f07de2b86"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00502.html#ga6cc0db53453977ee0a31e59f07de2b86">BLE_GAP_ADV_TYPE_ADV_IND</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga6cc0db53453977ee0a31e59f07de2b86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafefde83f6b598e7fb14868e0610bdf43"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00502.html#gafefde83f6b598e7fb14868e0610bdf43">BLE_GAP_ADV_TYPE_ADV_DIRECT_IND</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:gafefde83f6b598e7fb14868e0610bdf43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga594ca8490efef1702e8ccb6a28d2a1de"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00502.html#ga594ca8490efef1702e8ccb6a28d2a1de">BLE_GAP_ADV_TYPE_ADV_SCAN_IND</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:ga594ca8490efef1702e8ccb6a28d2a1de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c86ca45ebffc3938fd97f9556daa49c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00502.html#ga8c86ca45ebffc3938fd97f9556daa49c">BLE_GAP_ADV_TYPE_ADV_NONCONN_IND</a>&#160;&#160;&#160;0x03</td></tr>
+<tr class="separator:ga8c86ca45ebffc3938fd97f9556daa49c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>2-wire serial interface driver. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga95ee69dbe058216ef73012a1ff04c077"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gafefde83f6b598e7fb14868e0610bdf43"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sdio_read_burst </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>target_buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>target_buffer_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define BLE_GAP_ADV_TYPE_ADV_DIRECT_IND&#160;&#160;&#160;0x01</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Function for reading several bytes over 2-wire serial interface using burst mode. </p>
-<p>Developer needs to implement this function in a way that suits the hardware. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">target_buffer</td><td>Buffer location to store read bytes to </td></tr>
-    <tr><td class="paramname">target_buffer_size</td><td>Bytes allocated for target_buffer </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Connectable directed. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga1ff0f4956042d92b01fc2dbeffe26284"></a>
+<a class="anchor" id="ga6cc0db53453977ee0a31e59f07de2b86"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t sdio_read_byte </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>address</em></td><td>)</td>
-          <td></td>
+          <td class="memname">#define BLE_GAP_ADV_TYPE_ADV_IND&#160;&#160;&#160;0x00</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Function for reading a byte over 2-wire serial interface. </p>
-<p>Developer needs to implement this function in a way that suits the hardware. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">address</td><td>Register address to read from </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Byte read </dd></dl>
+<p>Connectable undirected. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga2e5d560f80ba374b7fe18f4e8a565ffd"></a>
+<a class="anchor" id="ga8c86ca45ebffc3938fd97f9556daa49c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sdio_write_byte </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>data_byte</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define BLE_GAP_ADV_TYPE_ADV_NONCONN_IND&#160;&#160;&#160;0x03</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Non connectable undirected. </p>
 
-<p>Function for writing a byte over 2-wire serial interface. </p>
-<p>Developer needs to implement this function in a way that suits the hardware. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">address</td><td>Register address to write to </td></tr>
-    <tr><td class="paramname">data_byte</td><td>Data byte to write </td></tr>
-  </table>
-  </dd>
-</dl>
+</div>
+</div>
+<a class="anchor" id="ga594ca8490efef1702e8ccb6a28d2a1de"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADV_TYPE_ADV_SCAN_IND&#160;&#160;&#160;0x02</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Scannable undirected. </p>
 
 </div>
 </div>
@@ -228,7 +173,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a005
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:59 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:46 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

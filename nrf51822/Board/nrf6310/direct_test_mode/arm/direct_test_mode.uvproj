@@ -395,7 +395,7 @@
             <File>
               <FileName>system_nrf51.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\system_nrf51.c</FilePath>
+              <FilePath>..\..\..\..\Source\templates\system_nrf51.c</FilePath>
             </File>
             <File>
               <FileName>arm_startup_nrf51.s</FileName>
@@ -816,7 +816,7 @@
             <File>
               <FileName>system_nrf51.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\system_nrf51.c</FilePath>
+              <FilePath>..\..\..\..\Source\templates\system_nrf51.c</FilePath>
             </File>
             <File>
               <FileName>arm_startup_nrf51.s</FileName>
@@ -1237,7 +1237,7 @@
             <File>
               <FileName>system_nrf51.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\system_nrf51.c</FilePath>
+              <FilePath>..\..\..\..\Source\templates\system_nrf51.c</FilePath>
             </File>
             <File>
               <FileName>arm_startup_nrf51.s</FileName>
@@ -1658,7 +1658,7 @@
             <File>
               <FileName>system_nrf51.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\system_nrf51.c</FilePath>
+              <FilePath>..\..\..\..\Source\templates\system_nrf51.c</FilePath>
             </File>
             <File>
               <FileName>arm_startup_nrf51.s</FileName>
@@ -2079,7 +2079,7 @@
             <File>
               <FileName>system_nrf51.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\system_nrf51.c</FilePath>
+              <FilePath>..\..\..\..\Source\templates\system_nrf51.c</FilePath>
             </File>
             <File>
               <FileName>arm_startup_nrf51.s</FileName>
@@ -2500,7 +2500,7 @@
             <File>
               <FileName>system_nrf51.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\system_nrf51.c</FilePath>
+              <FilePath>..\..\..\..\Source\templates\system_nrf51.c</FilePath>
             </File>
             <File>
               <FileName>arm_startup_nrf51.s</FileName>

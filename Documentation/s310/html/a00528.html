@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Persistent Memory Interface Data Types</title>
+<title>nRF51 SDK - S310 SoftDevice: Bluetooth status codes</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,61 +97,100 @@ $(document).ready(function(){initNavTree('a00528.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Persistent Memory Interface Data Types<div class="ingroups"><a class="el" href="a00526.html">Persistent Storage Interface</a></div></div>  </div>
+<div class="title">Bluetooth status codes<div class="ingroups"><a class="el" href="a00490.html">BLE SoftDevice Common</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Data Types needed for interfacing with persistent memory.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html">pstorage_module_param_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gaac1d429f24eb2850da6d8f8773a14c47"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00528.html#gaac1d429f24eb2850da6d8f8773a14c47">pstorage_ntf_cb_t</a> )(pstorage_handle_t *p_handle, uint8_t op_code, uint32_t result, uint8_t *p_data, uint32_t data_len)</td></tr>
-<tr class="memdesc:gaac1d429f24eb2850da6d8f8773a14c47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Persistent Storage Error Reporting Callback.  <a href="#gaac1d429f24eb2850da6d8f8773a14c47">More...</a><br/></td></tr>
-<tr class="separator:gaac1d429f24eb2850da6d8f8773a14c47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga2a4e1ac74fc8805c1c78879a100f0a99"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2a4e1ac74fc8805c1c78879a100f0a99"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_SUCCESS</b>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga2a4e1ac74fc8805c1c78879a100f0a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga632cc15e640e9f1796535199ccca015d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga632cc15e640e9f1796535199ccca015d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_UNKNOWN_BTLE_COMMAND</b>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga632cc15e640e9f1796535199ccca015d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga06ca2ee5c0059a51327d72c741411274"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga06ca2ee5c0059a51327d72c741411274"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_UNKNOWN_CONNECTION_IDENTIFIER</b>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:ga06ca2ee5c0059a51327d72c741411274"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1901d4785752421de0733f3488e5b653"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1901d4785752421de0733f3488e5b653"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_AUTHENTICATION_FAILURE</b>&#160;&#160;&#160;0x05</td></tr>
+<tr class="separator:ga1901d4785752421de0733f3488e5b653"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5006ec78f9d9101a1d1d8b72ae98ad20"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5006ec78f9d9101a1d1d8b72ae98ad20"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_PIN_OR_KEY_MISSING</b>&#160;&#160;&#160;0x06</td></tr>
+<tr class="separator:ga5006ec78f9d9101a1d1d8b72ae98ad20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga01a03c53e51db6f2ca548fdce8fc7c38"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga01a03c53e51db6f2ca548fdce8fc7c38"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_MEMORY_CAPACITY_EXCEEDED</b>&#160;&#160;&#160;0x07</td></tr>
+<tr class="separator:ga01a03c53e51db6f2ca548fdce8fc7c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1bb212e3f0e4f2ef6bd02afa644b92fb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1bb212e3f0e4f2ef6bd02afa644b92fb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_CONNECTION_TIMEOUT</b>&#160;&#160;&#160;0x08</td></tr>
+<tr class="separator:ga1bb212e3f0e4f2ef6bd02afa644b92fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacc41d1b3990aebe5067d627b552522da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gacc41d1b3990aebe5067d627b552522da"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_COMMAND_DISALLOWED</b>&#160;&#160;&#160;0x0C</td></tr>
+<tr class="separator:gacc41d1b3990aebe5067d627b552522da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10365b1c8ba16281285e4d0be1b68d83"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga10365b1c8ba16281285e4d0be1b68d83"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_INVALID_BTLE_COMMAND_PARAMETERS</b>&#160;&#160;&#160;0x12</td></tr>
+<tr class="separator:ga10365b1c8ba16281285e4d0be1b68d83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4caeb4bcc901a4f1b00068c498a090c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad4caeb4bcc901a4f1b00068c498a090c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION</b>&#160;&#160;&#160;0x13</td></tr>
+<tr class="separator:gad4caeb4bcc901a4f1b00068c498a090c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga99f0a6b01dc8b232cf8c6472425b2ab2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga99f0a6b01dc8b232cf8c6472425b2ab2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_REMOTE_DEV_TERMINATION_DUE_TO_LOW_RESOURCES</b>&#160;&#160;&#160;0x14</td></tr>
+<tr class="separator:ga99f0a6b01dc8b232cf8c6472425b2ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e8d65cb65b560a8bbb66c7b77c413bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2e8d65cb65b560a8bbb66c7b77c413bf"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_REMOTE_DEV_TERMINATION_DUE_TO_POWER_OFF</b>&#160;&#160;&#160;0x15</td></tr>
+<tr class="separator:ga2e8d65cb65b560a8bbb66c7b77c413bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b7bcbe31925c6d2c305ba4f0ff9889b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0b7bcbe31925c6d2c305ba4f0ff9889b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_LOCAL_HOST_TERMINATED_CONNECTION</b>&#160;&#160;&#160;0x16</td></tr>
+<tr class="separator:ga0b7bcbe31925c6d2c305ba4f0ff9889b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4f79594f915b1ee5fca90008254a957"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa4f79594f915b1ee5fca90008254a957"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_UNSUPPORTED_REMOTE_FEATURE</b>&#160;&#160;&#160;0x1A</td></tr>
+<tr class="separator:gaa4f79594f915b1ee5fca90008254a957"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8dcf12cdc7a9ee6aec5eca3a89b140e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8dcf12cdc7a9ee6aec5eca3a89b140e5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_INVALID_LMP_PARAMETERS</b>&#160;&#160;&#160;0x1E</td></tr>
+<tr class="separator:ga8dcf12cdc7a9ee6aec5eca3a89b140e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f8658a4e455b41aab4031fb3d95d4e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9f8658a4e455b41aab4031fb3d95d4e6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_UNSPECIFIED_ERROR</b>&#160;&#160;&#160;0x1F</td></tr>
+<tr class="separator:ga9f8658a4e455b41aab4031fb3d95d4e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga91c40ef8a7c61f6a3a036eac70956491"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga91c40ef8a7c61f6a3a036eac70956491"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_LMP_RESPONSE_TIMEOUT</b>&#160;&#160;&#160;0x22</td></tr>
+<tr class="separator:ga91c40ef8a7c61f6a3a036eac70956491"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga234093c4696a6c19390b17043431004e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga234093c4696a6c19390b17043431004e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_LMP_PDU_NOT_ALLOWED</b>&#160;&#160;&#160;0x24</td></tr>
+<tr class="separator:ga234093c4696a6c19390b17043431004e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed9fe75c54693c578cfab501206bc41a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaed9fe75c54693c578cfab501206bc41a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_INSTANT_PASSED</b>&#160;&#160;&#160;0x28</td></tr>
+<tr class="separator:gaed9fe75c54693c578cfab501206bc41a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1698ee903c812256fa56b2c14a34e06c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1698ee903c812256fa56b2c14a34e06c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_PAIRING_WITH_UNIT_KEY_UNSUPPORTED</b>&#160;&#160;&#160;0x29</td></tr>
+<tr class="separator:ga1698ee903c812256fa56b2c14a34e06c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga87bc369584c1295fdca7b38696f6f4b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga87bc369584c1295fdca7b38696f6f4b8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_DIFFERENT_TRANSACTION_COLLISION</b>&#160;&#160;&#160;0x2A</td></tr>
+<tr class="separator:ga87bc369584c1295fdca7b38696f6f4b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b78923a6494dcb520a604fb7cb63f37"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2b78923a6494dcb520a604fb7cb63f37"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_CONTROLLER_BUSY</b>&#160;&#160;&#160;0x3A</td></tr>
+<tr class="separator:ga2b78923a6494dcb520a604fb7cb63f37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2050e416bf56097d8dfd499b268abcad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2050e416bf56097d8dfd499b268abcad"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_CONN_INTERVAL_UNACCEPTABLE</b>&#160;&#160;&#160;0x3B</td></tr>
+<tr class="separator:ga2050e416bf56097d8dfd499b268abcad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc453b379f477ef449e7474437f49c52"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabc453b379f477ef449e7474437f49c52"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_DIRECTED_ADVERTISER_TIMEOUT</b>&#160;&#160;&#160;0x3C</td></tr>
+<tr class="separator:gabc453b379f477ef449e7474437f49c52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafe4d349d8ff3edc71dad285d867c4d14"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafe4d349d8ff3edc71dad285d867c4d14"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_CONN_TERMINATED_DUE_TO_MIC_FAILURE</b>&#160;&#160;&#160;0x3D</td></tr>
+<tr class="separator:gafe4d349d8ff3edc71dad285d867c4d14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabee134870c9531f79dbb3dc1b4b9e479"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabee134870c9531f79dbb3dc1b4b9e479"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_CONN_FAILED_TO_BE_ESTABLISHED</b>&#160;&#160;&#160;0x3E</td></tr>
+<tr class="separator:gabee134870c9531f79dbb3dc1b4b9e479"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Data Types needed for interfacing with persistent memory. </p>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gaac1d429f24eb2850da6d8f8773a14c47"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef void(* pstorage_ntf_cb_t)(pstorage_handle_t *p_handle, uint8_t op_code, uint32_t result, uint8_t *p_data, uint32_t data_len)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Persistent Storage Error Reporting Callback. </p>
-<p>Persistent Storage Error Reporting Callback that is used by the interface to report success or failure of a flash operation. Therefore, for any operations, application can know when the procedure was complete. For store operation, since no data copy is made, receiving a success or failure notification, indicated by the reason parameter of callback is an indication that the resident memory could now be reused or freed, as the case may be.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Identifies module and block for which callback is received. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">op_code</td><td>Identifies the operation for which the event is notified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">result</td><td>Identifies the result of flash access operation. NRF_SUCCESS implies, operation succeeded. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Identifies the application data pointer. In case of store operation, this points to the resident source of application memory that application can now free or reuse. In case of clear, this is NULL as no application pointer is needed for this operation. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">data_len</td><td>Length data application had provided for the operation. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:00 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:46 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

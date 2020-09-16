@@ -1,7 +1,6 @@
 var a00722 =
 [
-    [ "APP_ERROR_CHECK", "a00722.html#ga82d00a810dcea7dcc6af469461fb254c", null ],
-    [ "APP_ERROR_CHECK_BOOL", "a00722.html#ga9e67d9f4978caa34040b31f8fb9d4f58", null ],
-    [ "APP_ERROR_HANDLER", "a00722.html#gace6d059863761677dae5a6b1456a34ba", null ],
-    [ "app_error_handler", "a00722.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf", null ]
+    [ "BLE_GAP_AUTH_KEY_TYPE_NONE", "a00722.html#ga869af3b1376d25aec9ae236e5772d7f1", null ],
+    [ "BLE_GAP_AUTH_KEY_TYPE_OOB", "a00722.html#gaf9f173da3e04e3c8054cbbeaa488c3d1", null ],
+    [ "BLE_GAP_AUTH_KEY_TYPE_PASSKEY", "a00722.html#ga914a323fb165826d2995ef9d79b341e6", null ]
 ];

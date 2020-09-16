@@ -1,6 +1,10 @@
 var a00147 =
 [
-    [ "context", "a00147.html#a66d632e13cd7d371036af6a90be224f4", null ],
-    [ "handle", "a00147.html#a79c55f70b9d10f1e11b35bb2cc13fdbd", null ],
-    [ "offset", "a00147.html#ac3c5c0c840625a5f28e90e9021eb2403", null ]
+    [ "authorize_request", "a00147.html#a27802389d2c209e149fd644a35eae956", null ],
+    [ "conn_handle", "a00147.html#abeb8d79046f5ed809e6ac8b5fd40614d", null ],
+    [ "hvc", "a00147.html#a9be30265f4a80ba2d5982bc7eda48891", null ],
+    [ "params", "a00147.html#a7a47598230703711cec37439ff76221e", null ],
+    [ "sys_attr_missing", "a00147.html#ab8c7e34509068fb9d8b78e4cdc2ab0f2", null ],
+    [ "timeout", "a00147.html#a5a5ade5ed126bc40ac43a302b4c7ae44", null ],
+    [ "write", "a00147.html#aaef77783fee30e58006d76bbc976bc9e", null ]
 ];

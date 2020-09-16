@@ -1,5 +1,5 @@
 var a00230 =
 [
-    [ "reliable_wr", "a00230.html#a8b4bb4c79bed8c8a6d75ca0dd08b7591", null ],
-    [ "wr_aux", "a00230.html#a0f36b2c312c08c22853231a3bc8b950c", null ]
+    [ "handle", "a00230.html#ab1f14809099e66b0dc7a4a70cb3dc124", null ],
+    [ "included_srvc", "a00230.html#a3342baabc3197898f17ce875e7a5ba80", null ]
 ];

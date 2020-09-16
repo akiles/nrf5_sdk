@@ -129,6 +129,10 @@ uint32_t pstorage_init(void);
  *             \@ref pstorage_block_identifier_get with based id and provide a block number of 5.
  *             This way application is only expected to remember the base block identifier.
  *
+ * @note       To register an area with a total size (block count * block size) larger than the
+ *             page size (usually 1024 bytes), the block size must be a divisor of the page size 
+ *             (page size % block size == 0).
+ *
  * @retval     NRF_SUCCESS             on success, else an error code indicating reason for failure.
  * @retval     NRF_ERROR_INVALID_STATE is returned is API is called without module initialization.
  * @retval     NRF_ERROR_NULL          if NULL parameter has been passed.

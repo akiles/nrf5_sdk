@@ -1,5 +1,5 @@
 var a00120 =
 [
-    [ "reliable_wr", "a00120.html#a8b4bb4c79bed8c8a6d75ca0dd08b7591", null ],
-    [ "wr_aux", "a00120.html#a0f36b2c312c08c22853231a3bc8b950c", null ]
+    [ "handle", "a00120.html#ada1f0c9228867fd73fd596d6d7241c67", null ],
+    [ "uuid", "a00120.html#a039854704d107784b185fb11b00b1258", null ]
 ];

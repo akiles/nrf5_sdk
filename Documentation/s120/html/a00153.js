@@ -1,8 +1,4 @@
 var a00153 =
 [
-    [ "handle", "a00153.html#a1a0552b266c588f67d3a6abc712bbfd6", null ],
-    [ "offset", "a00153.html#a07033f6e0e63974b67627ae84bc12fc9", null ],
-    [ "p_data", "a00153.html#a68325153be760c7742d1bec69da625cf", null ],
-    [ "p_len", "a00153.html#a8b0b2dadb3128b0838c71235661f8174", null ],
-    [ "type", "a00153.html#a2971c791821bea067f3bc2bbc35b9193", null ]
+    [ "gatt_status", "a00153.html#a1e360fe54c33885b6e23e57c483f6959", null ]
 ];

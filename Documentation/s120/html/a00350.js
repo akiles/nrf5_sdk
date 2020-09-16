@@ -1,6 +1,5 @@
 var a00350 =
 [
-    [ "BLE_GAP_DISC_MODE_GENERAL", "a00350.html#ga124514248a211b305eeac9cc370c7d77", null ],
-    [ "BLE_GAP_DISC_MODE_LIMITED", "a00350.html#ga5c5243da93bae524088eefd608656012", null ],
-    [ "BLE_GAP_DISC_MODE_NOT_DISCOVERABLE", "a00350.html#gafdd0b7bc7d226295035ba29cee3280f6", null ]
+    [ "BLE_GAP_SCAN_TIMEOUT_MAX", "a00350.html#gaf9f03221006c77debca100889d5c59f4", null ],
+    [ "BLE_GAP_SCAN_TIMEOUT_MIN", "a00350.html#ga4baffc2a25f63a57ddf48babb53f2b5a", null ]
 ];

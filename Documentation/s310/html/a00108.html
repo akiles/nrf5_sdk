@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: ble_bps_evt_t Struct Reference</title>
+<title>nRF51 SDK - S310 SoftDevice: ble_dfu_pkt_write_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,49 @@ $(document).ready(function(){initNavTree('a00108.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_bps_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00666.html">Blood Pressure Service</a></div></div>  </div>
+<div class="title">ble_dfu_pkt_write_t Struct Reference<div class="ingroups"><a class="el" href="a00599.html">Device Firmware Update Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Blood Pressure Service event.  
+<p>DFU Packet structure.  
  <a href="a00108.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_bps.h&gt;</code></p>
+<p><code>#include &lt;ble_dfu.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a83328e50ff25cb6d23ccd0922452590d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00666.html#ga98f1cefcd43052be0eede287994762e6">ble_bps_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html#a83328e50ff25cb6d23ccd0922452590d">evt_type</a></td></tr>
-<tr class="separator:a83328e50ff25cb6d23ccd0922452590d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac28ec8c8ca6292b7987cf6b49a07da4f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html#ac28ec8c8ca6292b7987cf6b49a07da4f">len</a></td></tr>
+<tr class="separator:ac28ec8c8ca6292b7987cf6b49a07da4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e52a5c33d9b8e7f3f605f60f906652c"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html#a6e52a5c33d9b8e7f3f605f60f906652c">p_data</a></td></tr>
+<tr class="separator:a6e52a5c33d9b8e7f3f605f60f906652c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Blood Pressure Service event. </p>
+<div class="textblock"><p>DFU Packet structure. </p>
+<p>This structure contains the value of the DFU Packet characteristic as written by the peer and the length of the value written. It will be filled by the DFU Service when the peer writes to the DFU Packet characteristic. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a83328e50ff25cb6d23ccd0922452590d"></a>
+<a class="anchor" id="ac28ec8c8ca6292b7987cf6b49a07da4f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00666.html#ga98f1cefcd43052be0eede287994762e6">ble_bps_evt_type_t</a> ble_bps_evt_t::evt_type</td>
+          <td class="memname">uint8_t ble_dfu_pkt_write_t::len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of event. </p>
+<p>Length of the packet received. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6e52a5c33d9b8e7f3f605f60f906652c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* ble_dfu_pkt_write_t::p_data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to the received packet. This will point to a word aligned memory location. </p>
 
 </div>
 </div>
@@ -141,8 +157,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00108.html">ble_bps_evt_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:17 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00108.html">ble_dfu_pkt_write_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

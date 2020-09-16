@@ -1,6 +1,6 @@
 var a00294 =
 [
-    [ "alert_level", "a00294.html#aadc350acbcf634cf778a5a253049ebe0", null ],
-    [ "evt_type", "a00294.html#a730fff52efb38d8f5f61973ef47696b4", null ],
-    [ "params", "a00294.html#a436ccefb86ad7804abe101b61110304d", null ]
+    [ "location_list", "a00294.html#afd78c23388141f9344bc5e6ffcaedb75", null ],
+    [ "opcode", "a00294.html#a155379662bc1d70f1006fdb6cb3993cb", null ],
+    [ "status", "a00294.html#a2879f0a89583e6148c81d3b8127fe520", null ]
 ];

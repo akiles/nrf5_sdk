@@ -73,7 +73,7 @@
 #define APP_FAST_ADV_TIMEOUT              30                                                /**< The duration of the fast advertising period (in seconds). */
 
 #define APP_TIMER_PRESCALER               0                                                 /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS              5                                                 /**< Maximum number of simultaneously created timers. 1 for Battery measurement, 2 for flashing Advertising LED and Alert LED, 1 for connection parameters module, 1 for button polling timer needed by the app_button module,  */
+#define APP_TIMER_MAX_TIMERS              6                                                 /**< Maximum number of simultaneously created timers. 1 for Battery measurement, 2 for flashing Advertising LED and Alert LED, 1 for connection parameters module, 1 for button polling timer needed by the app_button module,  */
 #define APP_TIMER_OP_QUEUE_SIZE           6                                                 /**< Size of timer operation queues. */
 
 #define BATTERY_LEVEL_MEAS_INTERVAL       APP_TIMER_TICKS(120000, APP_TIMER_PRESCALER)      /**< Battery level measurement interval (ticks). This value corresponds to 120 seconds. */

@@ -1,5 +1,6 @@
 var a00225 =
 [
-    [ "error_handler", "a00677.html#ga83986799fa5972b6665f1dd70af89bca", null ],
-    [ "evt_handler", "a00677.html#ga53302faad4381a87101012bf06af6101", null ]
+    [ "location_list", "a00225.html#afd78c23388141f9344bc5e6ffcaedb75", null ],
+    [ "opcode", "a00225.html#a155379662bc1d70f1006fdb6cb3993cb", null ],
+    [ "status", "a00225.html#a2879f0a89583e6148c81d3b8127fe520", null ]
 ];

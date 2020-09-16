@@ -104,12 +104,12 @@ $(document).ready(function(){initNavTree('a00050.html','');});
 <dl class="section note"><dt>Note</dt><dd>By default this example uses a bit-banged software TWI driver. The API is exactly the same for the hardware TWI driver. Therefore, twi_sw_master.c can be swapped out for the twi_hw_master.c to use on-chip hardware to achieve the same results.</dd></dl>
 <p>Temperature sensor ds1624:</p>
 <ul>
-<li>This example initializes the sensor <a class="el" href="a00500.html#ga0ea8c0c4d140fde9b5b575caed79de6a">ds1624_init</a>. After initialization succeeds the temperature is read from the sensor register <a class="el" href="a00500.html#ga554dc82a94c2878635c336b0fb691144">ds1624_temp_read</a>. The read value is written to GPIO pins 14 to 8, where pin 8 is the lsb value of the temperature.</li>
+<li>This example initializes the sensor <a class="el" href="a00447.html#ga0ea8c0c4d140fde9b5b575caed79de6a">ds1624_init</a>. After initialization succeeds the temperature is read from the sensor register <a class="el" href="a00447.html#ga554dc82a94c2878635c336b0fb691144">ds1624_temp_read</a>. The read value is written to GPIO pins 14 to 8, where pin 8 is the lsb value of the temperature.</li>
 </ul>
 <p>Touchpad sensor:<br/>
 </p>
 <ul>
-<li>This example initializes the sensor <a class="el" href="a00503.html#ga56d2b2da22fd614a12dead51b86f5be8">touchpad_init</a>. After initialization succeeded then we read the button status from sensor register. The read value is written to GPIO pin 15 (which can be connected to LED) when a button is pressed on the touch sensor.</li>
+<li>This example initializes the sensor <a class="el" href="a00450.html#ga56d2b2da22fd614a12dead51b86f5be8">touchpad_init</a>. After initialization succeeded then we read the button status from sensor register. The read value is written to GPIO pin 15 (which can be connected to LED) when a button is pressed on the touch sensor.</li>
 </ul>
 <h1><a class="anchor" id="spi_master_example_setup"></a>
 Setup</h1>
@@ -140,7 +140,7 @@ Testing</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00022.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:52 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:45 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

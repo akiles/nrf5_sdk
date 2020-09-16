@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: PWM example</title>
+<title>nRF51 SDK - S110 SoftDevice: PWM Analyzer Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,38 +97,37 @@ $(document).ready(function(){initNavTree('a00038.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">PWM example </div>  </div>
+<div class="title">PWM Analyzer Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The PWM Example project shows how the PPI and a freerunning timer can be used to output a PWM waveform over a GPIO. The GPIO pin could for example drive a small speaker.</p>
-<p>This example generates a variable duty cycle pulse train on the selected GPIO pin. The duty cycle is read as a byte taken from the state of the buttons and will vary between 1-255. Notice that the value 0 is omitted, this is because of a problem with having two events trigger at the same time only causing one toggle of the output pin. Timer 2 is used to dispatch GPIOTE Toggle events on every compare match. CC1 will set the output pin high while CC0 and CC2 will toggle it low every other turn ending a duty cycle. These compare timings will be set by an interrupt happening every CC1 at the 0(or 256) mark for the period. This interrupt will increase CC1 with one more period and every turn change between setting CC0 and CC2 to the value retrieved from the state of the buttons. The program will emit light on LED0 corresponding to what value is pressed in with buttons, where Button "BUTTON_START" is LSB bit and Button "BUTTON_STOP" is MSB bit of a byte. With a higher value the LED will emit brighter light.</p>
-<h1><a class="anchor" id="pwm_example_setup"></a>
+<div class="textblock"><p>This PWM Analyzer Example uses Timer 1 to read the duty cycle from an input pin and outputs it on the output port 1 with the duty cycle value from 0 to 255. Pin 0 (Button 0) is used as the input pin, and the output value is outputted to the LEDs. It uses the hardware delivered in the nRF51822 Development Kit.</p>
+<p>The application starts with configuring the GPIOTE, setting inputs and outputs, enable interrupt on event, and configuring events to the input pin. The PPI peripheral is configured to capture the Timer 1 value into CC[0] and CC[1] registers at high-to-low and low-to-high transitions, respectively. Timer 1 is configured and enabled, and the GPIOTE interrupt is enabled.</p>
+<h1><a class="anchor" id="pwm_analyzer_example_setup"></a>
 Setup</h1>
 <p>Instructions on how to set up the nRFgo Motherboard: <a class="el" href="a00009.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a>. <br/>
 </p>
 <p>LED assignments:</p>
 <ul>
-<li>LED 0 is used to show the duty cycle of the current state.</li>
+<li>LED 0-7 is used to show the 8 bit duty cycle value.</li>
 </ul>
 <p>Button assignments:</p>
 <ul>
-<li>Buttons 0-7 is used to generate the duty cycle.</li>
+<li>Button 0 is used as input for the duty cycle measurement.</li>
 </ul>
-<h1><a class="anchor" id="pwm_example_testing"></a>
+<h1><a class="anchor" id="pwm_analyzer_example_testing"></a>
 Testing</h1>
-<p>The PWM Example Application can be tested as follows:</p>
+<p>The PWM Analyzer Example Application can be tested as follows:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>LED 0 should give a low light intensity.</li>
-<li>Press and hold Buttons to check if the LED light intensity changes. A higher value should give a higher LED light intensity. </li>
+<li>Press button 0 and observe that the LEDs output some value. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00024.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:33 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00023.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

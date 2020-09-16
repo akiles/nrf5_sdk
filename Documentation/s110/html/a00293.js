@@ -1,7 +1,6 @@
 var a00293 =
 [
-    [ "alert_level_handle", "a00928.html#gad136ca554bce057fd4cd38ba0f796ea6", null ],
-    [ "conn_handle", "a00928.html#gad18ae38bccb88d086eedbc1647ce2386", null ],
-    [ "error_handler", "a00928.html#ga6cecf3d78ec7d72912dd4215455720ed", null ],
-    [ "evt_handler", "a00928.html#gac306d48fcd140ddbffb4d4c64ca4d007", null ]
+    [ "encoded_ctrl_rsp", "a00293.html#adf17b1a0cd599ca5bd71dba42e318e06", null ],
+    [ "len", "a00293.html#afb2e07899dd914805f45b9da0694e0af", null ],
+    [ "status", "a00293.html#a978ed1543a79395ebdefc4f92233dfb7", null ]
 ];

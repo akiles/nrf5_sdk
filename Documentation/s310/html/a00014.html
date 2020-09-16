@@ -101,8 +101,8 @@ $(document).ready(function(){initNavTree('a00014.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>It enables the application to create multiple timer instances based on the RTC1 peripheral. Checking for timeouts and invokation of user timeout handlers is performed in the RTC1 interrupt handler. List handling is done using a software interrupt (SWI0). Both interrupt handlers are running in APP_LOW priority level.</p>
-<dl class="section note"><dt>Note</dt><dd>When calling <a class="el" href="a00517.html#ga03fb5f5fa85d16289db0d3c15bb0f24d" title="Function for starting a timer.">app_timer_start()</a> or <a class="el" href="a00517.html#gad40fbb2a6a9e5bf7d00f838763f5514c" title="Function for stopping the specified timer.">app_timer_stop()</a>, the timer operation is just queued, and the software interrupt is triggered. The actual timer start/stop operation is executed by the SWI0 interrupt handler. Since the SWI0 interrupt is running in APP_LOW, if the application code calling the timer function is running in APP_LOW or APP_HIGH, the timer operation will not be performed until the application handler has returned. This will be the case e.g. when stopping a timer from a timeout handler when not using the scheduler.</dd></dl>
-<p>Use the USE_SCHEDULER parameter of the <a class="el" href="a00517.html#ga9eb4ec72345e8b61aa833ee299a788fe" title="Macro for initializing the application timer module.">APP_TIMER_INIT()</a> macro to select if the <a class="el" href="a00516.html">Scheduler</a> is to be used or not.</p>
+<dl class="section note"><dt>Note</dt><dd>When calling <a class="el" href="a00464.html#ga03fb5f5fa85d16289db0d3c15bb0f24d" title="Function for starting a timer.">app_timer_start()</a> or <a class="el" href="a00464.html#gad40fbb2a6a9e5bf7d00f838763f5514c" title="Function for stopping the specified timer.">app_timer_stop()</a>, the timer operation is just queued, and the software interrupt is triggered. The actual timer start/stop operation is executed by the SWI0 interrupt handler. Since the SWI0 interrupt is running in APP_LOW, if the application code calling the timer function is running in APP_LOW or APP_HIGH, the timer operation will not be performed until the application handler has returned. This will be the case e.g. when stopping a timer from a timeout handler when not using the scheduler.</dd></dl>
+<p>Use the USE_SCHEDULER parameter of the <a class="el" href="a00464.html#ga9eb4ec72345e8b61aa833ee299a788fe" title="Macro for initializing the application timer module.">APP_TIMER_INIT()</a> macro to select if the <a class="el" href="a00463.html">Scheduler</a> is to be used or not.</p>
 <dl class="section note"><dt>Note</dt><dd>Even if the scheduler is not used, app_timer.h will include app_scheduler.h, so when compiling, app_scheduler.h must be available in one of the compiler include paths. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('a00014.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:50 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:45 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

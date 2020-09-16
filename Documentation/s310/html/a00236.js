@@ -1,4 +1,5 @@
 var a00236 =
 [
-    [ "num_of_pkts", "a00236.html#ae358c37001ff578f12948a6e58642843", null ]
+    [ "type", "a00236.html#ae233c47cdd5f63de456f413a158bb16f", null ],
+    [ "uuid", "a00236.html#ac9ccd46e82b1b51d561f17d49282348c", null ]
 ];

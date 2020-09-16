@@ -1,6 +1,7 @@
 var a00314 =
 [
-    [ "cumulative_value", "a00314.html#a9dce1ef6b333542b081df12273229b2e", null ],
-    [ "location", "a00314.html#a27be823fda46c3deb2f3fd98a38bf29f", null ],
-    [ "opcode", "a00314.html#a000223ebda70c1ccce85e8746a7d8207", null ]
+    [ "num_channel_switches", "a00314.html#a7de898270a84874aa41f00361e6d801c", null ],
+    [ "num_tx_attempts", "a00314.html#a9627a112584a28e5c3935e801eebbe6f", null ],
+    [ "payload_received_in_ack", "a00314.html#aba51c6772b538a69a1582bacb6c5c940", null ],
+    [ "rssi", "a00314.html#ac337221c62fa79c2ed581793d1c758b2", null ]
 ];

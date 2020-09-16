@@ -1,5 +1,4 @@
 var a00744 =
 [
-    [ "SDK_COMMON_ERROR_BASE", "a00744.html#ga1fa2dae6c4a22d6592184236f7f8ed4e", null ],
-    [ "SDK_ERROR_BASE", "a00744.html#ga3756b7defda416b28928be1af33c4257", null ]
+    [ "BLE_ERROR_L2CAP_CID_IN_USE", "a00744.html#ga258b4a1e6ac5f32e23036ef0b88af3fa", null ]
 ];

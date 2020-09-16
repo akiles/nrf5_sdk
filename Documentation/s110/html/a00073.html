@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Blood Glucose Application</title>
+<title>nRF51 SDK - S110 SoftDevice: Template Application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,28 +97,15 @@ $(document).ready(function(){initNavTree('a00073.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Blood Glucose Application </div>  </div>
+<div class="title">Template Application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><div class="image">
-<img src="Healthcare.jpg" alt="Healthcare.jpg"/>
-</div>
- <h1><a class="anchor" id="project_gls_intro"></a>
-Blood Glucose Application</h1>
-<p>The Blood Glucose Application is a firmware example that implements the Blood Glucose profile using the hardware delivered in the nRF51822 Development Kit.</p>
-<p>The source code and project file can be found in the <code>&lt;InstallFolder&gt;\Nordic\nrf51822\Board\nrf6310\s110\ble_app_gls</code> folder.</p>
-<p>The application includes the two services in the Blood Glucose profile:</p>
-<ul>
-<li><a class="el" href="a00922.html">Glucose Service</a></li>
-<li><a class="el" href="a00921.html">Device Information Service</a></li>
-</ul>
-<p>In addition, use of the <a class="el" href="a00916.html">Battery Service</a> is also demonstrated.</p>
-<p>When the application starts, a timer for generating battery measurements is started.</p>
-<p>The actual measurements are hard coded values and gets added when connected and bonded to a central, at each press of the button 0. The timestamps are simulated and it uses the Record Access Control point and implements the filtering on sequence number. It supports only glucose measurement characteristic, not glucose context.</p>
-<dl class="section note"><dt>Note</dt><dd>This application is not power optimised! </dd>
-<dd>
-The application will stop advertising after 3 minutes and go to system-off mode. Push the button 0 restart advertising.</dd></dl>
-<h1><a class="anchor" id="project_gls_setup"></a>
+<div class="textblock"><h1><a class="anchor" id="project_template_intro"></a>
+Template Application</h1>
+<p>The Template Application is an application that you can use as a starting point for developing your own application, using the hardware delivered in the nRF51822 Development Kit.</p>
+<p>The source code and project file can be found in the <code>&lt;InstallFolder&gt;\Nordic\nrf51822\Board\nrf6310\s110\ble_app_template</code> folder.</p>
+<dl class="section note"><dt>Note</dt><dd>The application will stop advertising after 3 minutes, and then go to System OFF mode. To wake it up, press the button 0, and it will start advertising again.</dd></dl>
+<h1><a class="anchor" id="app_template_setup"></a>
 Setup</h1>
 <p>Instructions on how to set up the nRFgo Motherboard: <a class="el" href="a00009.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a>.</p>
 <p>LED assignments:</p>
@@ -129,39 +116,24 @@ Setup</h1>
 </ul>
 <p>Buttons assignments:</p>
 <ul>
-<li>Button 0: Wake-up from system-off and restart advertising; in a connection, create a new record.</li>
-<li>Button 1: Wake-up erase all bonds and restart advertising.</li>
+<li>Button 0: Wake-up and start advertising.</li>
 </ul>
-<h1><a class="anchor" id="project_gls_profile"></a>
-Demonstrating the Blood Glucose Meter Profile</h1>
-<p>The Blood Glucose Meter Profile uses the Record Access Control Point characteristic to access all measurements. This means that the sensor does not automatically send new measurements, the collector has to fetch them writing request to the control point (see <a href="http://developer.bluetooth.org/Pages/default.aspx">http://developer.bluetooth.org/Pages/default.aspx</a> for more detail on the RACP characteristic).</p>
-<h1><a class="anchor" id="project_gls_display"></a>
-nRF6350 Display - MITM protection</h1>
-<p>The Blood Glucose Application is able to use the nRF6350 Display to secure the bonding using Man-in-the-Middle protection (MITM). If the nRF6350 Display is available and connected according to the setup found in <a class="el" href="a00009.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a> , then the Blood Glucose Application will present a passkey during bonding.</p>
-<p>The passkey must be entered at the central to complete the bonding and ensure MITM protection.</p>
-<div class="image">
-<img src="mitm_display.jpg" alt="mitm_display.jpg"/>
-<div class="caption">
-nRF6350 Display presenting a passkey</div></div>
- <h1><a class="anchor" id="project_gls_test"></a>
+<h1><a class="anchor" id="app_template_test"></a>
 Testing</h1>
-<p>The Glucose Meter Application can be tested using the "nRF Toolbox" app, available on both iOS (Apple Store) and Android (Google Play).</p>
-<p>It can also be tested using the Master Control Panel as follows:</p>
+<p>The Template Application can be tested using the Master Control Panel as follows:</p>
 <ol type="1">
 <li>Compile and program the application. Observe that the Advertising LED is lit.</li>
-<li>Connect and Bond to the device from Master Control Panel (the device will be advertising as 'Nordic_Glucose'), then perform service discovery. Observe that the Connected LED is lit, and the Advertising LED is off.</li>
-<li>Click the 'Enable services' button on the Master Control Panel. Observe that Battery Level notifications are received every 10 seconds.</li>
-<li>Press Button 0 five times.</li>
-<li>Do a Read all records operation: Write 0101 (OpCode : REPORT_STORED_RECORDS, Operator : ALL_STORED_RECORDS) to Record Access Control Point Characteristic (UUID 0x2A52). Observe that you receive five notification of the glucose measurements(UUID 0x2A18) and one indication of the RACP indicating success (06000101);</li>
-<li>Read the number of stored records: Write 0401 (OpCode: REPORT_NUM_STORED_RECORDS, Operator: ALL_STORED_RECORDS) to Record Access Control Point Characteristic (UUID 0x2A52). Observe that you get an indication of the RACP giving you the number of records, 5 (05000500). </li>
+<li>Connect to the device from Master Control Panel (the device will be advertising as 'Nordic_Template'), then connect and perform service discovery. Observe that the Connected LED is lit, and the Advertising LED is off.</li>
+<li>Disconnect, observe that the Advertising LED is lit, the Connected LED is off. You can wait for 3 minutes and observe that all LEDs are off (the application is in system-off).</li>
+<li>In system-off, press button 0, the application starts advertising again (the Advertising LED is lit). </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00091.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:33 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00082.html">BLE Peripheral</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

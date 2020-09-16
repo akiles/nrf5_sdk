@@ -1,5 +1,6 @@
 var a00297 =
 [
-    [ "data", "a00297.html#ad3df37c1998b3d1d213a6e7b5cfbcd5e", null ],
-    [ "header", "a00297.html#ac81a081355f3a10c8496cf16918ac23a", null ]
+    [ "cccd_write_perm", "a00297.html#a320070d4ad9b4f4948a8bba65f3853c0", null ],
+    [ "read_perm", "a00297.html#ab3203f11dcbf8bea6cbe1dcffbf68661", null ],
+    [ "write_perm", "a00297.html#ac8a8cd605d17911a751bf74d72412568", null ]
 ];

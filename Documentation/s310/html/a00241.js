@@ -1,9 +1,5 @@
 var a00241 =
 [
-    [ "conn_handle", "a00241.html#aa54416b00fd0d29dbf8c4ce28324a644", null ],
-    [ "evt_handler", "a00241.html#ad91d85a84b9d6728223af53cebf8bbf4", null ],
-    [ "feature", "a00241.html#aeaba73d58a013e5aab5a1f79583d414e", null ],
-    [ "feature_handles", "a00241.html#a9ca692ca7b98730826f4e7bebfa07a72", null ],
-    [ "meas_handles", "a00241.html#a5963b22a3c9a202db1248b6a2c3af6fd", null ],
-    [ "service_handle", "a00241.html#aefd6488d6d70f2a4d85c98504eb876d1", null ]
+    [ "cmd_type", "a00241.html#a4955a964032009d6b9b5cc167e758d32", null ],
+    [ "tx_done_result", "a00241.html#ac9e1ac1b373abcbd4e761600473340bc", null ]
 ];

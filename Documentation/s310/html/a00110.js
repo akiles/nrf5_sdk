@@ -1,15 +1,13 @@
 var a00110 =
 [
-    [ "blood_pressure_diastolic", "a00110.html#aed7e0a29d6cda87a84a69f4f7551fb6c", null ],
-    [ "blood_pressure_systolic", "a00110.html#ab097c85436eecc592213cdb75435f596", null ],
-    [ "blood_pressure_units_in_kpa", "a00110.html#a3d4f46ef4a031f2c849bba6ac9d68ba3", null ],
-    [ "mean_arterial_pressure", "a00110.html#a2455e564b8569f3f3bc999420efa7c1d", null ],
-    [ "measurement_status", "a00110.html#aa825f66cc38338e2f8bb4f767cdc8805", null ],
-    [ "measurement_status_present", "a00110.html#a80874044508391d1569ff1c476a4b5a7", null ],
-    [ "pulse_rate", "a00110.html#a4cec6cfcf650361edada4efe2d612461", null ],
-    [ "pulse_rate_present", "a00110.html#adcd3739c6e00a92c9c9026894e4248b8", null ],
-    [ "time_stamp", "a00110.html#a5724947dd197246dea1db93935a24b32", null ],
-    [ "time_stamp_present", "a00110.html#a5ed42a9cdaf140e3e18dc44e1b1baa5b", null ],
-    [ "user_id", "a00110.html#a68b822db90d51c550cddfb74fec7b1a7", null ],
-    [ "user_id_present", "a00110.html#a48e9ed959366ea1e7c7c8bb284a01979", null ]
+    [ "dis_attr_md", "a00110.html#aa2ce530bbd1e27c0714bf8bdeda214d7", null ],
+    [ "fw_rev_str", "a00110.html#ace17346ac188ea3168ce89650b051960", null ],
+    [ "hw_rev_str", "a00110.html#af3ae591191cef78f2f0142f50f896191", null ],
+    [ "manufact_name_str", "a00110.html#a6980c3b02e2eb6513ba564c17aea32af", null ],
+    [ "model_num_str", "a00110.html#a764354961cfdd26b3e400c6292354574", null ],
+    [ "p_pnp_id", "a00110.html#a2bf4b6d703f519f7f52f0f9c757f7e11", null ],
+    [ "p_reg_cert_data_list", "a00110.html#a8fc7c6e19578a044415f703f1a753034", null ],
+    [ "p_sys_id", "a00110.html#a27dd370a69462b8e535284eabba9b3e5", null ],
+    [ "serial_num_str", "a00110.html#a4acba0dc5f1b3c9ef39845594a1d1daa", null ],
+    [ "sw_rev_str", "a00110.html#a2b68d1ba95abca2b58f71a3d11907154", null ]
 ];

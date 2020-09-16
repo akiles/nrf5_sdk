@@ -1,7 +1,6 @@
 var a00277 =
 [
-    [ "b_country_code", "a00277.html#aadd0326cc45c31ea9e16b2f4cf0000fd", null ],
-    [ "bcd_hid", "a00277.html#a077bfa68d00dff20a7497f8f7936ae79", null ],
-    [ "flags", "a00277.html#acec5c1f0cd643c04bce7a9542e1b7444", null ],
-    [ "security_mode", "a00277.html#ad011fc0114c033fc712bce4491101ac1", null ]
+    [ "alert_level", "a00277.html#aadc350acbcf634cf778a5a253049ebe0", null ],
+    [ "evt_type", "a00277.html#a730fff52efb38d8f5f61973ef47696b4", null ],
+    [ "params", "a00277.html#a5cfae88e3afbb36d67f6d386e930df74", null ]
 ];

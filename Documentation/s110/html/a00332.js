@@ -1,6 +1,4 @@
 var a00332 =
 [
-    [ "evt_handler", "a00332.html#a46b0eb7fa4e86eaa2c5f793b2750da38", null ],
-    [ "sec_param", "a00332.html#a763895cc4380ab52a871637ad5156d94", null ],
-    [ "service_type", "a00332.html#a01e7f59d291d6e3962ab36b22a7d1683", null ]
+    [ "num_of_bytes", "a00332.html#a7f6d69ce5cc415b31050e5ed4846c2ff", null ]
 ];

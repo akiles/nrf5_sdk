@@ -52,6 +52,7 @@ INCLUDEPATHS += -I"$(SDK_PATH)Include/ble/ble_services"
 INCLUDEPATHS += -I"$(SDK_PATH)Include/app_common"
 INCLUDEPATHS += -I"$(SDK_PATH)Include/sd_common"
 INCLUDEPATHS += -I"$(SDK_PATH)Include/sdk"
+INCLUDEPATHS += -I"$(SDK_PATH)Include/bootloader_dfu"
 
 C_SOURCE_PATHS += $(SDK_PATH)Source/ble
 C_SOURCE_PATHS += $(SDK_PATH)Source/ble/device_manager

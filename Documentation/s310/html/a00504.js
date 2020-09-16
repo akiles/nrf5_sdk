@@ -1,6 +1,5 @@
 var a00504 =
 [
-    [ "nrf_ecb_crypt", "a00504.html#gaaa8745b5d94900452e525ba60f783cd0", null ],
-    [ "nrf_ecb_init", "a00504.html#gae9609bc1e796e528ca2f4ad3311662e4", null ],
-    [ "nrf_ecb_set_key", "a00504.html#ga69e4fcd00a7c2249c5c94210c1c21c90", null ]
+    [ "BLE_GAP_ADV_TIMEOUT_GENERAL_UNLIMITED", "a00504.html#ga09100a0666512ed8cd2e600627197254", null ],
+    [ "BLE_GAP_ADV_TIMEOUT_LIMITED_MAX", "a00504.html#ga015a498d3d56d7642dc7456fb12e08b6", null ]
 ];

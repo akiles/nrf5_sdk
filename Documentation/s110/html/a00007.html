@@ -130,7 +130,7 @@ $(document).ready(function(){initNavTree('a00007.html','');});
 <div class="line">            NRF_TWI1-&gt;POWER        = 1;</div>
 <div class="line">            NRF_TWI1-&gt;ENABLE       = TWI_ENABLE_ENABLE_Enabled &lt;&lt; TWI_ENABLE_ENABLE_Pos;</div>
 <div class="line"></div>
-<div class="line">            (void)<a class="code" href="a00720.html#ga148f1dd10bc0248c6c6c5336ce07a540" title="Function for initializing TWI bus IO pins and checks if the bus is operational.">twi_master_init</a>();</div>
+<div class="line">            (void)<a class="code" href="a00676.html#ga148f1dd10bc0248c6c6c5336ce07a540" title="Function for initializing TWI bus IO pins and checks if the bus is operational.">twi_master_init</a>();</div>
 <div class="line"></div>
 <div class="line">            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line">        }</div>
@@ -163,7 +163,7 @@ $(document).ready(function(){initNavTree('a00007.html','');});
 <div class="line">            NRF_TWI1-&gt;POWER        = 1;</div>
 <div class="line">            NRF_TWI1-&gt;ENABLE       = TWI_ENABLE_ENABLE_Enabled &lt;&lt; TWI_ENABLE_ENABLE_Pos;</div>
 <div class="line"></div>
-<div class="line">            (void)<a class="code" href="a00720.html#ga148f1dd10bc0248c6c6c5336ce07a540" title="Function for initializing TWI bus IO pins and checks if the bus is operational.">twi_master_init</a>();</div>
+<div class="line">            (void)<a class="code" href="a00676.html#ga148f1dd10bc0248c6c6c5336ce07a540" title="Function for initializing TWI bus IO pins and checks if the bus is operational.">twi_master_init</a>();</div>
 <div class="line"></div>
 <div class="line">            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line">        }</div>
@@ -190,21 +190,21 @@ $(document).ready(function(){initNavTree('a00007.html','');});
 </div><!-- fragment --> <dl class="section user"><dt>Documentation specific to SW controlled TWI master driver.</dt><dd></dd></dl>
 <p>Code snippet below illustrates the write sequence of the SW controlled TWI master driver. </p>
 <div class="fragment"><div class="line">    <span class="comment">// Make sure SDA is an output</span></div>
-<div class="line">    <a class="code" href="a00720.html#gaa6c311f207bff59456fb22648965c53b">TWI_SDA_OUTPUT</a>();</div>
+<div class="line">    <a class="code" href="a00676.html#gaa6c311f207bff59456fb22648965c53b">TWI_SDA_OUTPUT</a>();</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// MSB first</span></div>
 <div class="line">    <span class="keywordflow">for</span> (uint_fast8_t i = 0x80; i != 0; i &gt;&gt;= 1)</div>
 <div class="line">    {</div>
-<div class="line">        <a class="code" href="a00720.html#gafef260a0ebd7d5669cd2731d2c20f55d">TWI_SCL_LOW</a>();</div>
-<div class="line">        <a class="code" href="a00720.html#ga0bdffa7178084c5e1b2e11d3a95c5e85">TWI_DELAY</a>();</div>
+<div class="line">        <a class="code" href="a00676.html#gafef260a0ebd7d5669cd2731d2c20f55d">TWI_SCL_LOW</a>();</div>
+<div class="line">        <a class="code" href="a00676.html#ga0bdffa7178084c5e1b2e11d3a95c5e85">TWI_DELAY</a>();</div>
 <div class="line"></div>
 <div class="line">        <span class="keywordflow">if</span> (databyte &amp; i)</div>
 <div class="line">        {</div>
-<div class="line">            <a class="code" href="a00720.html#ga112251118224f5623c20423efce89ae8">TWI_SDA_HIGH</a>();</div>
+<div class="line">            <a class="code" href="a00676.html#ga112251118224f5623c20423efce89ae8">TWI_SDA_HIGH</a>();</div>
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">else</span></div>
 <div class="line">        {</div>
-<div class="line">            <a class="code" href="a00720.html#ga6b884c7770898bf063884f3f1893d492">TWI_SDA_LOW</a>();</div>
+<div class="line">            <a class="code" href="a00676.html#ga6b884c7770898bf063884f3f1893d492">TWI_SDA_LOW</a>();</div>
 <div class="line">        }</div>
 <div class="line"></div>
 <div class="line">        <span class="keywordflow">if</span> (!twi_master_wait_while_scl_low())</div>
@@ -215,12 +215,12 @@ $(document).ready(function(){initNavTree('a00007.html','');});
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Finish last data bit by pulling SCL low</span></div>
-<div class="line">    <a class="code" href="a00720.html#gafef260a0ebd7d5669cd2731d2c20f55d">TWI_SCL_LOW</a>();</div>
-<div class="line">    <a class="code" href="a00720.html#ga0bdffa7178084c5e1b2e11d3a95c5e85">TWI_DELAY</a>();</div>
+<div class="line">    <a class="code" href="a00676.html#gafef260a0ebd7d5669cd2731d2c20f55d">TWI_SCL_LOW</a>();</div>
+<div class="line">    <a class="code" href="a00676.html#ga0bdffa7178084c5e1b2e11d3a95c5e85">TWI_DELAY</a>();</div>
 <div class="line"></div>
 </div><!-- fragment --><p> Code snippet below illustrates the read sequence of the SW controlled TWI master driver. </p>
 <div class="fragment"><div class="line">    <span class="comment">// Make sure SDA is an input</span></div>
-<div class="line">    <a class="code" href="a00720.html#ga63ae25f476902e9df0c31b057e2bb527">TWI_SDA_INPUT</a>();</div>
+<div class="line">    <a class="code" href="a00676.html#ga63ae25f476902e9df0c31b057e2bb527">TWI_SDA_INPUT</a>();</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// SCL state is guaranteed to be high here</span></div>
 <div class="line"></div>
@@ -233,7 +233,7 @@ $(document).ready(function(){initNavTree('a00007.html','');});
 <div class="line">            <span class="keywordflow">break</span>;</div>
 <div class="line">        }</div>
 <div class="line"></div>
-<div class="line">        <span class="keywordflow">if</span> (<a class="code" href="a00720.html#ga0a7e559c3bceb5b50ff3e51cabb21f73">TWI_SDA_READ</a>())</div>
+<div class="line">        <span class="keywordflow">if</span> (<a class="code" href="a00676.html#ga0a7e559c3bceb5b50ff3e51cabb21f73">TWI_SDA_READ</a>())</div>
 <div class="line">        {</div>
 <div class="line">            byte_read |= i;</div>
 <div class="line">        }</div>
@@ -242,19 +242,19 @@ $(document).ready(function(){initNavTree('a00007.html','');});
 <div class="line">            <span class="comment">// No need to do anything</span></div>
 <div class="line">        }</div>
 <div class="line"></div>
-<div class="line">        <a class="code" href="a00720.html#gafef260a0ebd7d5669cd2731d2c20f55d">TWI_SCL_LOW</a>();</div>
-<div class="line">        <a class="code" href="a00720.html#ga0bdffa7178084c5e1b2e11d3a95c5e85">TWI_DELAY</a>();</div>
+<div class="line">        <a class="code" href="a00676.html#gafef260a0ebd7d5669cd2731d2c20f55d">TWI_SCL_LOW</a>();</div>
+<div class="line">        <a class="code" href="a00676.html#ga0bdffa7178084c5e1b2e11d3a95c5e85">TWI_DELAY</a>();</div>
 <div class="line">    }</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Make sure SDA is an output before we exit the function</span></div>
-<div class="line">    <a class="code" href="a00720.html#gaa6c311f207bff59456fb22648965c53b">TWI_SDA_OUTPUT</a>();</div>
+<div class="line">    <a class="code" href="a00676.html#gaa6c311f207bff59456fb22648965c53b">TWI_SDA_OUTPUT</a>();</div>
 </div><!-- fragment --></div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00002.html">Hardware Drivers</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:32 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:33 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

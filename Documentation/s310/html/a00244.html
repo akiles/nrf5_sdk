@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: ble_sc_ctrlpt_rsp_t Struct Reference</title>
+<title>nRF51 SDK - S310 SoftDevice: nrf_ecb_hal_data_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,29 +106,73 @@ $(document).ready(function(){initNavTree('a00244.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_sc_ctrlpt_rsp_t Struct Reference<div class="ingroups"><a class="el" href="a00680.html">Speed and Cadence Control Point</a></div></div>  </div>
+<div class="title">nrf_ecb_hal_data_t Struct Reference<div class="ingroups"><a class="el" href="a00655.html">Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>AES ECB data structure.  
+ <a href="a00244.html#details">More...</a></p>
+
+<p><code>#include &lt;nrf_soc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a155379662bc1d70f1006fdb6cb3993cb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a155379662bc1d70f1006fdb6cb3993cb"></a>
-<a class="el" href="a00680.html#ga605f2c97850a21288a45f5dec3cfe1cc">ble_scpt_operator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>opcode</b></td></tr>
-<tr class="separator:a155379662bc1d70f1006fdb6cb3993cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2879f0a89583e6148c81d3b8127fe520"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2879f0a89583e6148c81d3b8127fe520"></a>
-<a class="el" href="a00680.html#ga1c8be45ba4b09ec30229b4cfb4fd2d88">ble_scpt_response_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>status</b></td></tr>
-<tr class="separator:a2879f0a89583e6148c81d3b8127fe520"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd78c23388141f9344bc5e6ffcaedb75"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd78c23388141f9344bc5e6ffcaedb75"></a>
-ble_sensor_location_t&#160;</td><td class="memItemRight" valign="bottom"><b>location_list</b> [14]</td></tr>
-<tr class="separator:afd78c23388141f9344bc5e6ffcaedb75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab4ea408dd38499ceff3935ecb5fa39f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00244.html#aab4ea408dd38499ceff3935ecb5fa39f">key</a> [(16)]</td></tr>
+<tr class="separator:aab4ea408dd38499ceff3935ecb5fa39f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4c798195f0d6d399a7f75d09ef89793"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00244.html#ad4c798195f0d6d399a7f75d09ef89793">cleartext</a> [(16)]</td></tr>
+<tr class="separator:ad4c798195f0d6d399a7f75d09ef89793"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a478942ae65d7433678164a95e4944115"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00244.html#a478942ae65d7433678164a95e4944115">ciphertext</a> [((16))]</td></tr>
+<tr class="separator:a478942ae65d7433678164a95e4944115"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>AES ECB data structure. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a478942ae65d7433678164a95e4944115"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t nrf_ecb_hal_data_t::ciphertext[((16))]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Cipher Text data. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad4c798195f0d6d399a7f75d09ef89793"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t nrf_ecb_hal_data_t::cleartext[(16)]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clear Text data. </p>
+
+</div>
+</div>
+<a class="anchor" id="aab4ea408dd38499ceff3935ecb5fa39f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t nrf_ecb_hal_data_t::key[(16)]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encryption key. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00244.html">ble_sc_ctrlpt_rsp_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:19 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00244.html">nrf_ecb_hal_data_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

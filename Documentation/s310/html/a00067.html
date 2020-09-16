@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Debug Assert Handler</title>
+<title>nRF51 SDK - S310 SoftDevice: Alert Notification Service Client</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,17 +97,18 @@ $(document).ready(function(){initNavTree('a00067.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Debug Assert Handler </div>  </div>
+<div class="title">Alert Notification Service Client </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This module may be used during development of an application to facilitate debugging. It contains a function to write file name, line number and the Stack Memory to flash. This module is ONLY for debugging purposes and must never be used in final product. </p>
+<div class="textblock"><p>This module implements the Alert Notification Client according to the Alert Notification Profile.</p>
+<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Alert Notification Client module by calling <a class="el" href="a00594.html#ga6e38c6df7be3e5efeb14389202810152" title="Function for handling the Application&#39;s BLE Stack events.">ble_ans_c_on_ble_evt()</a> from the from the ble_stack_handler callback. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00064.html">BLE libraries</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:58 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00057.html">BLE Services</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:45 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

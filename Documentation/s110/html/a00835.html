@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: GATTC Primary Service Discovery</title>
+<title>nRF51 SDK - S110 SoftDevice: DTM Connectivity command request decoder and command response encoder</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -96,20 +96,136 @@ $(document).ready(function(){initNavTree('a00835.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">GATTC Primary Service Discovery<div class="ingroups"><a class="el" href="a00834.html">Message Sequence Charts</a></div></div>  </div>
+<div class="title">DTM Connectivity command request decoder and command response encoder<div class="ingroups"><a class="el" href="a00945.html">Connectivity common codecs</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<div align="center">
-<img src="msc_inline_mscgraph_22.png" alt="msc_inline_mscgraph_22" border="0" usemap="#msc_inline_mscgraph_22.map"/>
-<map name="msc_inline_mscgraph_22.map" id="msc_inline_mscgraph_22.map"></map>
+
+<p>DTM Connectivity command request decoder and command response encoder.  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga83c3902e3f26071b27f53d8394ea6fed"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00835.html#ga83c3902e3f26071b27f53d8394ea6fed">ble_dtm_init_req_dec</a> (uint8_t const *const p_buf, uint16_t packet_len, <a class="el" href="a00148.html">app_uart_stream_comm_params_t</a> *p_comm_params)</td></tr>
+<tr class="memdesc:ga83c3902e3f26071b27f53d8394ea6fed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes <a class="el" href="a00818.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> command request.  <a href="#ga83c3902e3f26071b27f53d8394ea6fed">More...</a><br/></td></tr>
+<tr class="separator:ga83c3902e3f26071b27f53d8394ea6fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga17ecedcb46b8807bb5af3f3ae3bef469"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00835.html#ga17ecedcb46b8807bb5af3f3ae3bef469">ble_dtm_init_rsp_enc</a> (uint32_t return_code, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
+<tr class="memdesc:ga17ecedcb46b8807bb5af3f3ae3bef469"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a00818.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> command response.  <a href="#ga17ecedcb46b8807bb5af3f3ae3bef469">More...</a><br/></td></tr>
+<tr class="separator:ga17ecedcb46b8807bb5af3f3ae3bef469"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>DTM Connectivity command request decoder and command response encoder. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga83c3902e3f26071b27f53d8394ea6fed"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_dtm_init_req_dec </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>packet_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00148.html">app_uart_stream_comm_params_t</a> *&#160;</td>
+          <td class="paramname"><em>p_comm_params</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decodes <a class="el" href="a00818.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_dtm_init_encoding_sec">Function packet format</a> for packet format, <a class="el" href="a00835.html#ga17ecedcb46b8807bb5af3f3ae3bef469">ble_dtm_init_rsp_enc</a> for response encoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command request packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf_len</td><td>Length (in bytes) of request packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_comm_params</td><td>Pointer to the structure with DTM Uart configuration.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
- </div><!-- contents -->
+</div>
+<a class="anchor" id="ga17ecedcb46b8807bb5af3f3ae3bef469"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_dtm_init_rsp_enc </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>return_code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_buf_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encodes <a class="el" href="a00818.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> command response. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_dtm_init_encoding_sec">Function packet format</a> for packet format. <a class="el" href="a00835.html#ga83c3902e3f26071b27f53d8394ea6fed">ble_dtm_init_req_dec</a> for request decoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">return_code</td><td>Return code indicating if command was successful or not. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command response will be returned. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command response packet.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:36 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

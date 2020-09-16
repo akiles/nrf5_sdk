@@ -315,6 +315,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\Include\sd_common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\Include\s110</state>
           <state>$PROJ_DIR$\..\..\..\..\..\Include\sdk</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\Include\bootloader_dfu</state>
           <state>$PROJ_DIR$\..\..\..\..\..\Include\ble\device_manager</state>
         </option>
         <option>

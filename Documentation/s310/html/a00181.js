@@ -1,5 +1,7 @@
 var a00181 =
 [
-    [ "handle", "a00181.html#ab1f14809099e66b0dc7a4a70cb3dc124", null ],
-    [ "included_srvc", "a00181.html#a3342baabc3197898f17ce875e7a5ba80", null ]
+    [ "params", "a00181.html#ac364488294f0c0ad5c857e56935ca602", null ],
+    [ "read", "a00181.html#a7d0c5d0586fa2a048d724a7ededf5e18", null ],
+    [ "type", "a00181.html#a70efda4990b7c7e43bc7c0b1ae75c05e", null ],
+    [ "write", "a00181.html#aa536efc6b3a866b5ae2d4c6cd9b2aafa", null ]
 ];

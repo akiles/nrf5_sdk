@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Health Thermometer Service</title>
+<title>nRF51 SDK - S310 SoftDevice: TX Power Service</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,19 +97,18 @@ $(document).ready(function(){initNavTree('a00080.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Health Thermometer Service </div>  </div>
+<div class="title">TX Power Service </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This module implements the Health Thermometer Service.</p>
-<p>If an event handler is supplied by the application, the Health Thermometer Service will generate Health Thermometer Service events to the application.</p>
-<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Health Thermometer Service module by calling <a class="el" href="a00675.html#ga1d50a1758227869205ce213a564b436c" title="Function for handling the Application&#39;s BLE Stack events.">ble_hts_on_ble_evt()</a> from the from the ble_stack_handler function. </dd></dl>
+<div class="textblock"><p>This module implements the TX Power Service with the TX Power Level characteristic. During initialization it adds the TX Power Service and TX Power Level characteristic with the specified initial value to the BLE stack database.</p>
+<p>It provides a function for letting the application update the TX Power Level characteristic. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00065.html">BLE Services</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:59 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00057.html">BLE Services</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:45 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

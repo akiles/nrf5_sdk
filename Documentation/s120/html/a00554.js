@@ -1,19 +1,14 @@
 var a00554 =
 [
-    [ "Button Handler", "a00401.html", "a00401" ],
-    [ "Common application error handler", "a00402.html", "a00402" ],
-    [ "FIFO implementation", "a00403.html", "a00403" ],
-    [ "GPIOTE Handler", "a00404.html", "a00404" ],
-    [ "Scheduler", "a00405.html", "a00405" ],
-    [ "Application Timer", "a00406.html", "a00406" ],
-    [ "Debug Logger", "a00407.html", "a00407" ],
-    [ "UART module", "a00408.html", "a00408" ],
-    [ "Utility Functions and Definitions", "a00409.html", "a00409" ],
-    [ "HCI Transport", "a00411.html", "a00411" ],
-    [ "Memory pool", "a00412.html", "a00412" ],
-    [ "SLIP module", "a00414.html", "a00414" ],
-    [ "Persistent Storage Interface", "a00415.html", "a00415" ],
-    [ "Utility Functions and Definitions (Platform)", "a00420.html", "a00420" ],
-    [ "SoftDevice Event Handler", "a00422.html", "a00422" ],
-    [ "SDK Error codes", "a00423.html", "a00423" ]
+    [ "sd_ble_gatts_characteristic_add", "a00554.html#ga9ee07ea4b96dcca1537b01ff9a7692ba", null ],
+    [ "sd_ble_gatts_descriptor_add", "a00554.html#ga0e1478bd565ad99f998671e3baf9847d", null ],
+    [ "sd_ble_gatts_hvx", "a00554.html#ga313fe43c2e93267da668572e885945db", null ],
+    [ "sd_ble_gatts_include_add", "a00554.html#ga591ba1e7e2b8ecb63541a1f2d5282b76", null ],
+    [ "sd_ble_gatts_rw_authorize_reply", "a00554.html#ga6de7aea3a870669e1d869b047de95545", null ],
+    [ "sd_ble_gatts_service_add", "a00554.html#ga39fea660228e4b2e788af7018a83927a", null ],
+    [ "sd_ble_gatts_service_changed", "a00554.html#ga2c8c90d73fa27ba6691ad82b4a960adc", null ],
+    [ "sd_ble_gatts_sys_attr_get", "a00554.html#gae8e852fe2caa6e37c714258e230657c3", null ],
+    [ "sd_ble_gatts_sys_attr_set", "a00554.html#ga34f2bda6800b014135a5775184ecaa0d", null ],
+    [ "sd_ble_gatts_value_get", "a00554.html#ga4db1bcd63b4406a245c737db1ec9cd5e", null ],
+    [ "sd_ble_gatts_value_set", "a00554.html#gac1acf3f19c9d855c166dfa0c1a561f17", null ]
 ];

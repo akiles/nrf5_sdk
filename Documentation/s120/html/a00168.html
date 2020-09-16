@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_version_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: dm_context_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,49 @@ $(document).ready(function(){initNavTree('a00168.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_version_t Struct Reference<div class="ingroups"><a class="el" href="a00521.html">Structures</a></div></div>  </div>
+<div class="title">dm_context_t Struct Reference<div class="ingroups"><a class="el" href="a00529.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Version Information.  
+<p>Definition of Data Context.  
  <a href="a00168.html#details">More...</a></p>
 
-<p><code>#include &lt;ble.h&gt;</code></p>
+<p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:af18ca1a9b3d80b05042d9121e9d3c9ed"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#af18ca1a9b3d80b05042d9121e9d3c9ed">version_number</a></td></tr>
-<tr class="separator:af18ca1a9b3d80b05042d9121e9d3c9ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39ff6a37dbb096bf608d850d0845d252"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a39ff6a37dbb096bf608d850d0845d252">company_id</a></td></tr>
-<tr class="separator:a39ff6a37dbb096bf608d850d0845d252"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd81a16510bfbcf3778af4daab021369"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#abd81a16510bfbcf3778af4daab021369">subversion_number</a></td></tr>
-<tr class="separator:abd81a16510bfbcf3778af4daab021369"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a584d9c286a840f2aa29cf3f6e76362d4"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#a584d9c286a840f2aa29cf3f6e76362d4">len</a></td></tr>
+<tr class="separator:a584d9c286a840f2aa29cf3f6e76362d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbcb29305bde09573e35ed7f4c214641"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00168.html#acbcb29305bde09573e35ed7f4c214641">p_data</a></td></tr>
+<tr class="separator:acbcb29305bde09573e35ed7f4c214641"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Version Information. </p>
+<div class="textblock"><p>Definition of Data Context. </p>
+<p>Defines contextual data format, it consists of context data length and pointer to data. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a39ff6a37dbb096bf608d850d0845d252"></a>
+<a class="anchor" id="a584d9c286a840f2aa29cf3f6e76362d4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_version_t::company_id</td>
+          <td class="memname">uint32_t dm_context_t::len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Company ID, Nordic Semiconductor's company ID is 89 (0x0059) (<a href="https://www.bluetooth.org/apps/content/Default.aspx?doc_id=49708">https://www.bluetooth.org/apps/content/Default.aspx?doc_id=49708</a>). </p>
+<p>Length of data . </p>
 
 </div>
 </div>
-<a class="anchor" id="abd81a16510bfbcf3778af4daab021369"></a>
+<a class="anchor" id="acbcb29305bde09573e35ed7f4c214641"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_version_t::subversion_number</td>
+          <td class="memname">uint8_t* dm_context_t::p_data</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Link Layer Sub Version number, corresponds to the SoftDevice Config ID or Firmware ID (FWID). </p>
-
-</div>
-</div>
-<a class="anchor" id="af18ca1a9b3d80b05042d9121e9d3c9ed"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_version_t::version_number</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Link Layer Version number for BT 4.1 spec is 7 (<a href="https://www.bluetooth.org/en-us/specification/assigned-numbers/link-layer">https://www.bluetooth.org/en-us/specification/assigned-numbers/link-layer</a>). </p>
+<p>Pointer to contextual data, a copy is made of the data. </p>
 
 </div>
 </div>
@@ -171,8 +157,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00168.html">ble_version_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:28 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00168.html">dm_context_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:41 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

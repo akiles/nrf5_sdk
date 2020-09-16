@@ -1,7 +1,6 @@
 var a00155 =
 [
-    [ "params", "a00155.html#a07940475bfc87204a1d9bf8a3721f820", null ],
-    [ "read", "a00155.html#a7d0c5d0586fa2a048d724a7ededf5e18", null ],
-    [ "type", "a00155.html#a70efda4990b7c7e43bc7c0b1ae75c05e", null ],
-    [ "write", "a00155.html#aa536efc6b3a866b5ae2d4c6cd9b2aafa", null ]
+    [ "evt_type", "a00155.html#ab349bf82213ea8f4ae3b547b2a3a4f5f", null ],
+    [ "hrm", "a00155.html#abbddddc557dc3729730e6ccd02041fa9", null ],
+    [ "params", "a00155.html#ae6c899bb74217f2a03e30e8344b05097", null ]
 ];

@@ -1,5 +1,5 @@
 var a00506 =
 [
-    [ "ble_bas_c_evt_handler_t", "a00506.html#ga34be093c7c3ef3b5a62652dff0cf641d", null ],
-    [ "ble_bas_c_t", "a00506.html#ga4ba5a658bdfc3b2a316317abe1c4214c", null ]
+    [ "GAP Peripheral/GAP Central: Delete one bonded device", "a00512.html", null ],
+    [ "GAP Peripheral/GAP Central: Delete all bonded devices", "a00513.html", null ]
 ];

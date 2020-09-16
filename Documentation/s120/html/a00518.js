@@ -1,8 +1,6 @@
 var a00518 =
 [
-    [ "ble_db_discovery_close", "a00518.html#ga4f60f77194de81c2254b858e7773e17a", null ],
-    [ "ble_db_discovery_init", "a00518.html#gad7c6bb614120e1315d2071eb1faabd1a", null ],
-    [ "ble_db_discovery_on_ble_evt", "a00518.html#ga60575c004188a08a78063884356bf15f", null ],
-    [ "ble_db_discovery_register", "a00518.html#gafa96fc7df5bdff5ad5051ddbb27e2994", null ],
-    [ "ble_db_discovery_start", "a00518.html#gad35f52c46e9942291e2d69e2743c4d45", null ]
+    [ "ble_hrs_c_hrm_notif_enable", "a00518.html#gab4bcaf5864ee2e17bc0abf2ae585a68b", null ],
+    [ "ble_hrs_c_init", "a00518.html#ga9ec622429b01bc15e65fbcd3613a8b8b", null ],
+    [ "ble_hrs_c_on_ble_evt", "a00518.html#ga062e0829a2ebd211d4e51a23c520ab1f", null ]
 ];

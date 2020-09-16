@@ -1,25 +1,13 @@
 var a00876 =
 [
-    [ "ble_gatts_characteristic_add_req_enc", "a00876.html#ga9f8deef3fef7f733d77a062bf0afc89c", null ],
-    [ "ble_gatts_characteristic_add_rsp_dec", "a00876.html#ga40d46a3ef94767e174608f5af800f7e7", null ],
-    [ "ble_gatts_descriptor_add_req_enc", "a00876.html#ga5ca09e5e376d4849a52f6b15d44dbba6", null ],
-    [ "ble_gatts_descriptor_add_rsp_dec", "a00876.html#gac111281dfec6f9d80522f261a7c7180c", null ],
-    [ "ble_gatts_hvx_req_enc", "a00876.html#gac180dcf791e1b27024c9863540c9b0f4", null ],
-    [ "ble_gatts_hvx_rsp_dec", "a00876.html#ga1c9d489c05dc06f14a92fc0aae73fb5d", null ],
-    [ "ble_gatts_include_add_req_enc", "a00876.html#gae58d6741d767b65bb550cf110d4b709b", null ],
-    [ "ble_gatts_include_add_rsp_dec", "a00876.html#ga797ef49bbe9e3e1896aa45acdc2f9596", null ],
-    [ "ble_gatts_rw_authorize_reply_req_enc", "a00876.html#ga9350dd16d8b895c3e88a4ca495758aea", null ],
-    [ "ble_gatts_rw_authorize_reply_rsp_dec", "a00876.html#ga969048cf177855ac6b283f929898871a", null ],
-    [ "ble_gatts_service_add_req_enc", "a00876.html#gaac0a67013726b2acda670348aa93c2a0", null ],
-    [ "ble_gatts_service_add_rsp_dec", "a00876.html#gacd0fb852f7c550fba7a188333e746542", null ],
-    [ "ble_gatts_service_changed_req_enc", "a00876.html#ga479eb28bbd78c4ae04e293fdd7a9d174", null ],
-    [ "ble_gatts_service_changed_rsp_dec", "a00876.html#ga9fa9ced08bc9e09d7c7c4a8a65f8092a", null ],
-    [ "ble_gatts_sys_attr_get_req_enc", "a00876.html#ga12acfd5a371570a13779fd2285640e17", null ],
-    [ "ble_gatts_sys_attr_get_rsp_dec", "a00876.html#ga792f9a5be2c22cbe431f4975dad5b9a9", null ],
-    [ "ble_gatts_sys_attr_set_req_enc", "a00876.html#gad9a1be395b1b1986ab761b651fadc762", null ],
-    [ "ble_gatts_sys_attr_set_rsp_dec", "a00876.html#ga841b0ff22a423135a722b08ddd388ff6", null ],
-    [ "ble_gatts_value_get_req_enc", "a00876.html#ga501fbecf183fe56f60249fe087f023cb", null ],
-    [ "ble_gatts_value_get_rsp_dec", "a00876.html#ga577ba664820f7e907b8af1e312f2bf81", null ],
-    [ "ble_gatts_value_set_req_enc", "a00876.html#ga4b6d088d015c5c82e2777e06b81058f4", null ],
-    [ "ble_gatts_value_set_rsp_dec", "a00876.html#ga0f71a48c1ca166ca3414010aa6b193cc", null ]
+    [ "ble_tps_init_t", "a00301.html", [
+      [ "initial_tx_power_level", "a00301.html#a5be1f2c1c00932c36837e70c02679072", null ],
+      [ "tps_attr_md", "a00301.html#afc4915bf42eeee72f61614aa1161aa80", null ]
+    ] ],
+    [ "ble_tps_t", "a00302.html", [
+      [ "service_handle", "a00302.html#a4ebaa77023ad95d4ea1bb2a046b9ea80", null ],
+      [ "tx_power_level_handles", "a00302.html#a6b43774912f600a0069a22603c69bc48", null ]
+    ] ],
+    [ "ble_tps_init", "a00876.html#gadf50170201ca904944d8ba0ecb485ba7", null ],
+    [ "ble_tps_tx_power_level_set", "a00876.html#ga6fccb23ed9c10d23d370e5709cdf6d9f", null ]
 ];

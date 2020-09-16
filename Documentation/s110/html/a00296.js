@@ -1,6 +1,6 @@
 var a00296 =
 [
-    [ "alert_level_handles", "a00296.html#a67d6395f4804c00de308270dddf15b7e", null ],
-    [ "evt_handler", "a00296.html#a6304bcdac9c7d2758f64aa1dd5844959", null ],
-    [ "service_handle", "a00296.html#afa6a28eec3f1b9b4f7ea596af7ee2c29", null ]
+    [ "cumulative_value", "a00296.html#a9dce1ef6b333542b081df12273229b2e", null ],
+    [ "location", "a00296.html#a27be823fda46c3deb2f3fd98a38bf29f", null ],
+    [ "opcode", "a00296.html#a000223ebda70c1ccce85e8746a7d8207", null ]
 ];

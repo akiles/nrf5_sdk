@@ -1,13 +1,16 @@
 var a00723 =
 [
-    [ "app_fifo_t", "a00149.html", [
-      [ "buf_size_mask", "a00149.html#a03c6c7fcf087b5c1e0cfd5ce09661870", null ],
-      [ "p_buf", "a00149.html#a64eafd180a65260208be3b845f6acbf5", null ],
-      [ "read_pos", "a00149.html#aabcc538faf2ea4a374702c9896ae52d6", null ],
-      [ "write_pos", "a00149.html#a12631a6575aae2c98f1cca4034b38eaf", null ]
-    ] ],
-    [ "app_fifo_flush", "a00723.html#ga0944439787b55aafb3288a836efa3b9b", null ],
-    [ "app_fifo_get", "a00723.html#gab6292f78e91737ba0df83d6755e0abb9", null ],
-    [ "app_fifo_init", "a00723.html#gafc2ba3545e60f0134689fac2aa87f493", null ],
-    [ "app_fifo_put", "a00723.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e", null ]
+    [ "BLE_GAP_SEC_STATUS_AUTH_REQ", "a00723.html#gadf389ac11506ee7d7a0c6823d7c7cb5c", null ],
+    [ "BLE_GAP_SEC_STATUS_CONFIRM_VALUE", "a00723.html#ga9d1c29d319e7b1b77d8bbae74760cfe5", null ],
+    [ "BLE_GAP_SEC_STATUS_ENC_KEY_SIZE", "a00723.html#ga3e8868907178ada2854635f2d7ca8ab0", null ],
+    [ "BLE_GAP_SEC_STATUS_INVALID_PARAMS", "a00723.html#ga609204cf12de8edbeaf29077a1c17ba7", null ],
+    [ "BLE_GAP_SEC_STATUS_OOB_NOT_AVAILABLE", "a00723.html#gac29bfa067dbceb9b98e23aefcf0cc155", null ],
+    [ "BLE_GAP_SEC_STATUS_PAIRING_NOT_SUPP", "a00723.html#ga87ed8db7604006675930bdf5fa79ae70", null ],
+    [ "BLE_GAP_SEC_STATUS_PASSKEY_ENTRY_FAILED", "a00723.html#gab86b31f7e0c4a669cdffa4eb71bb0e89", null ],
+    [ "BLE_GAP_SEC_STATUS_PDU_INVALID", "a00723.html#ga6ba7df46db25ac8f2f2b1170106dda25", null ],
+    [ "BLE_GAP_SEC_STATUS_REPEATED_ATTEMPTS", "a00723.html#ga523c9c966eb5fa019fb265a9010775b0", null ],
+    [ "BLE_GAP_SEC_STATUS_SMP_CMD_UNSUPPORTED", "a00723.html#ga7eb7986157fca57470acee71e5940d77", null ],
+    [ "BLE_GAP_SEC_STATUS_SUCCESS", "a00723.html#gaa0334dea24e449e5c28c88bbe8a1d00f", null ],
+    [ "BLE_GAP_SEC_STATUS_TIMEOUT", "a00723.html#ga4bdb61f7294a378778fe478597b17e07", null ],
+    [ "BLE_GAP_SEC_STATUS_UNSPECIFIED", "a00723.html#ga7e767feadf3f8ccef76faff23e12e4c9", null ]
 ];

@@ -1,11 +1,8 @@
 var a00271 =
 [
-    [ "base_time", "a00271.html#a50043eec02a9af09a81047f4eecfef33", null ],
-    [ "flags", "a00271.html#adaa211ee17f3d46654c641ab339b68db", null ],
-    [ "glucose_concentration", "a00271.html#a8d77eafd69ad69d3753fd043bdd31dc2", null ],
-    [ "sample_location", "a00271.html#a21eed1c3fbda85ac65aa060787a589b4", null ],
-    [ "sensor_status_annunciation", "a00271.html#a765f2b453e27775757271598452e2c8a", null ],
-    [ "sequence_number", "a00271.html#a7e89e39efc4889fc00da13fa87efcbc2", null ],
-    [ "time_offset", "a00271.html#a820a55933ac2e9e047193a846efbaf5d", null ],
-    [ "type", "a00271.html#a4e79195531cf78dfd880479a6404cb44", null ]
+    [ "evt_handler", "a00271.html#ac6fbae8371e9336d3acb46b8903a8947", null ],
+    [ "hts_meas_attr_md", "a00271.html#a5c4a4bc737442da34f2b9cfd367bb5e8", null ],
+    [ "hts_temp_type_attr_md", "a00271.html#a1f216c81224e94f40db0d5b4aaa1898b", null ],
+    [ "temp_type", "a00271.html#a7d233be4574d7bdd2f28c9afa8d0efc2", null ],
+    [ "temp_type_as_characteristic", "a00271.html#a6ac11fedc2f4a022e482c6342880e30f", null ]
 ];

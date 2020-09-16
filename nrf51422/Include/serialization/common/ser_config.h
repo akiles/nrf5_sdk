@@ -15,6 +15,9 @@
 
 #include <stdint.h>
 
+#include "nrf51.h"
+#include "nrf51_bitfields.h"
+
 /***********************************************************************************************//**
  * General parameters configuration.
  **************************************************************************************************/
@@ -33,9 +36,14 @@
 
 /** Max packets size in serialization HAL Transport layer (packets before adding PHY header i.e.
  *  packet length). */
-#define SER_HAL_TRANSPORT_APP_TO_CONN_MAX_PKT_SIZE    (uint32_t)(512)
-#define SER_HAL_TRANSPORT_CONN_TO_APP_MAX_PKT_SIZE    (uint32_t)(512)
+#define SER_HAL_TRANSPORT_APP_TO_CONN_MAX_PKT_SIZE    (uint32_t)(384)
+#define SER_HAL_TRANSPORT_CONN_TO_APP_MAX_PKT_SIZE    (uint32_t)(384)
 
+#define SER_HAL_TRANSPORT_MAX_PKT_SIZE ((SER_HAL_TRANSPORT_APP_TO_CONN_MAX_PKT_SIZE) >= \
+                                        (SER_HAL_TRANSPORT_CONN_TO_APP_MAX_PKT_SIZE)    \
+                                        ?                                               \
+                                        (SER_HAL_TRANSPORT_APP_TO_CONN_MAX_PKT_SIZE) :  \
+                                        (SER_HAL_TRANSPORT_CONN_TO_APP_MAX_PKT_SIZE))
 #ifdef SER_CONNECTIVITY
     #define SER_HAL_TRANSPORT_TX_MAX_PKT_SIZE         SER_HAL_TRANSPORT_CONN_TO_APP_MAX_PKT_SIZE
     #define SER_HAL_TRANSPORT_RX_MAX_PKT_SIZE         SER_HAL_TRANSPORT_APP_TO_CONN_MAX_PKT_SIZE
@@ -59,6 +67,41 @@
 #define SER_PHY_UART_FLOW_CTRL          APP_UART_FLOW_CONTROL_ENABLED
 #define SER_PHY_UART_PARITY             true
 #define SER_PHY_UART_BAUDRATE           UART_BAUDRATE_BAUDRATE_Baud1M
+
+/** Find UART baudrate value based on chosen register setting. */
+#if (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud1200)
+    #define SER_PHY_UART_BAUDRATE_VAL 1200uL
+#elif (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud2400)
+    #define SER_PHY_UART_BAUDRATE_VAL 2400uL
+#elif (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud4800)
+    #define SER_PHY_UART_BAUDRATE_VAL 4800uL
+#elif (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud9600)
+    #define SER_PHY_UART_BAUDRATE_VAL 9600uL
+#elif (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud14400)
+    #define SER_PHY_UART_BAUDRATE_VAL 14400uL
+#elif (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud19200)
+    #define SER_PHY_UART_BAUDRATE_VAL 19200uL
+#elif (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud28800)
+    #define SER_PHY_UART_BAUDRATE_VAL 28800uL
+#elif (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud38400)
+    #define SER_PHY_UART_BAUDRATE_VAL 38400uL
+#elif (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud57600)
+    #define SER_PHY_UART_BAUDRATE_VAL 57600uL
+#elif (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud76800)
+    #define SER_PHY_UART_BAUDRATE_VAL 76800uL
+#elif (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud115200)
+    #define SER_PHY_UART_BAUDRATE_VAL 115200uL
+#elif (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud230400)
+    #define SER_PHY_UART_BAUDRATE_VAL 230400uL
+#elif (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud250000)
+    #define SER_PHY_UART_BAUDRATE_VAL 250000uL
+#elif (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud460800)
+    #define SER_PHY_UART_BAUDRATE_VAL 460800uL
+#elif (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud921600)
+    #define SER_PHY_UART_BAUDRATE_VAL 921600uL
+#elif (SER_PHY_UART_BAUDRATE == UART_BAUDRATE_BAUDRATE_Baud1M)
+    #define SER_PHY_UART_BAUDRATE_VAL 1000000uL
+#endif /* SER_PHY_UART_BAUDRATE */
 
 /** Configuration timeouts of connectivity MCU */
 #define CONN_CHIP_RESET_TIME            50      /**< The time to keep the reset line to the nRF51822 low (in milliseconds). */

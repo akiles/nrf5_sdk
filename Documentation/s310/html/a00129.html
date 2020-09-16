@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: ble_dis_reg_cert_data_list_t Struct Reference</title>
+<title>nRF51 SDK - S310 SoftDevice: ble_gap_evt_connected_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,78 @@ $(document).ready(function(){initNavTree('a00129.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_dis_reg_cert_data_list_t Struct Reference<div class="ingroups"><a class="el" href="a00670.html">Device Information Service</a></div></div>  </div>
+<div class="title">ble_gap_evt_connected_t Struct Reference<div class="ingroups"><a class="el" href="a00546.html">Generic Access Profile (GAP)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>IEEE 11073-20601 Regulatory Certification Data List Structure.  
+<p>Event data for connected event.  
  <a href="a00129.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_dis.h&gt;</code></p>
+<p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac2fd43c554a7b7ddc54d007a40bb5a81"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00129.html#ac2fd43c554a7b7ddc54d007a40bb5a81">p_list</a></td></tr>
-<tr class="separator:ac2fd43c554a7b7ddc54d007a40bb5a81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fb27ab1e05a0b9ac07d6abf32012391"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00129.html#a0fb27ab1e05a0b9ac07d6abf32012391">list_len</a></td></tr>
-<tr class="separator:a0fb27ab1e05a0b9ac07d6abf32012391"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2107b9536488cbcb75ca3f059e5ab72e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00119.html">ble_gap_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00129.html#a2107b9536488cbcb75ca3f059e5ab72e">peer_addr</a></td></tr>
+<tr class="separator:a2107b9536488cbcb75ca3f059e5ab72e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade7ff1956c46e2832bf82c95711a408f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00129.html#ade7ff1956c46e2832bf82c95711a408f">irk_match</a>:1</td></tr>
+<tr class="separator:ade7ff1956c46e2832bf82c95711a408f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40ac77b4be795c7085f8eece5adc9d73"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00129.html#a40ac77b4be795c7085f8eece5adc9d73">irk_match_idx</a>:7</td></tr>
+<tr class="separator:a40ac77b4be795c7085f8eece5adc9d73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b48983984c9a6eca0b81380f8af8a05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00121.html">ble_gap_conn_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00129.html#a0b48983984c9a6eca0b81380f8af8a05">conn_params</a></td></tr>
+<tr class="separator:a0b48983984c9a6eca0b81380f8af8a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>IEEE 11073-20601 Regulatory Certification Data List Structure. </p>
+<div class="textblock"><p>Event data for connected event. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a0fb27ab1e05a0b9ac07d6abf32012391"></a>
+<a class="anchor" id="a0b48983984c9a6eca0b81380f8af8a05"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_dis_reg_cert_data_list_t::list_len</td>
+          <td class="memname"><a class="el" href="a00121.html">ble_gap_conn_params_t</a> ble_gap_evt_connected_t::conn_params</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Length of the byte array. </p>
+<p>GAP Connection Parameters. </p>
 
 </div>
 </div>
-<a class="anchor" id="ac2fd43c554a7b7ddc54d007a40bb5a81"></a>
+<a class="anchor" id="ade7ff1956c46e2832bf82c95711a408f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* ble_dis_reg_cert_data_list_t::p_list</td>
+          <td class="memname">uint8_t ble_gap_evt_connected_t::irk_match</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer the byte array containing the encoded opaque structure based on IEEE 11073-20601 specification. </p>
+<p>If 1, peer device's address resolved using an IRK. </p>
+
+</div>
+</div>
+<a class="anchor" id="a40ac77b4be795c7085f8eece5adc9d73"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_gap_evt_connected_t::irk_match_idx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Index in IRK list where the address was matched. </p>
+
+</div>
+</div>
+<a class="anchor" id="a2107b9536488cbcb75ca3f059e5ab72e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00119.html">ble_gap_addr_t</a> ble_gap_evt_connected_t::peer_addr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Bluetooth address of the peer device. </p>
 
 </div>
 </div>
@@ -156,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00129.html">ble_dis_reg_cert_data_list_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:17 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00129.html">ble_gap_evt_connected_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

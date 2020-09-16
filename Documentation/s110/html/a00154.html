@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: app_uart_stream_comm_params_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_ans_control_point_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,108 +106,48 @@ $(document).ready(function(){initNavTree('a00154.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">app_uart_stream_comm_params_t Struct Reference</div>  </div>
+<div class="title">ble_ans_control_point_t Struct Reference<div class="ingroups"><a class="el" href="a00855.html">Alert Notification Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>UART communication structure holding configuration settings for the peripheral.  
+<p>Alert Notification Control Point structure.  
  <a href="a00154.html#details">More...</a></p>
 
-<p><code>#include &lt;dtm_uart_params.h&gt;</code></p>
+<p><code>#include &lt;ble_ans_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a1bb6d6aa16efc7c4d2caee51d8058213"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00154.html#a1bb6d6aa16efc7c4d2caee51d8058213">rx_pin_no</a></td></tr>
-<tr class="separator:a1bb6d6aa16efc7c4d2caee51d8058213"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa13645e8ecb6cb1970dba53fabe08b40"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00154.html#aa13645e8ecb6cb1970dba53fabe08b40">tx_pin_no</a></td></tr>
-<tr class="separator:aa13645e8ecb6cb1970dba53fabe08b40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7bd1bcc691294dfa173105c79e926318"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00154.html#a7bd1bcc691294dfa173105c79e926318">rts_pin_no</a></td></tr>
-<tr class="separator:a7bd1bcc691294dfa173105c79e926318"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3db286645aa6ca3d00b4050837dfac81"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00154.html#a3db286645aa6ca3d00b4050837dfac81">cts_pin_no</a></td></tr>
-<tr class="separator:a3db286645aa6ca3d00b4050837dfac81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52a6d334142f15d9c5ab04c988a40b91"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00154.html#a52a6d334142f15d9c5ab04c988a40b91">use_parity</a></td></tr>
-<tr class="separator:a52a6d334142f15d9c5ab04c988a40b91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3f1e2f02e0c2d6fdfbc09fc335a373a"><td class="memItemLeft" align="right" valign="top">app_uart_stream_baud_rate_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00154.html#af3f1e2f02e0c2d6fdfbc09fc335a373a">baud_rate</a></td></tr>
-<tr class="separator:af3f1e2f02e0c2d6fdfbc09fc335a373a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a884740fe58c776baff9984a9aeb2364a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00855.html#ga27cf2fcb0272333911649738907a64ff">ble_ans_command_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00154.html#a884740fe58c776baff9984a9aeb2364a">command</a></td></tr>
+<tr class="separator:a884740fe58c776baff9984a9aeb2364a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fdff51ec3bc842205991b1d94a6203d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00855.html#gaadf812c0e22b456c6dd0ed92f9bff200">ble_ans_category_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00154.html#a4fdff51ec3bc842205991b1d94a6203d">category</a></td></tr>
+<tr class="separator:a4fdff51ec3bc842205991b1d94a6203d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>UART communication structure holding configuration settings for the peripheral. </p>
+<div class="textblock"><p>Alert Notification Control Point structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="af3f1e2f02e0c2d6fdfbc09fc335a373a"></a>
+<a class="anchor" id="a4fdff51ec3bc842205991b1d94a6203d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">app_uart_stream_baud_rate_t app_uart_stream_comm_params_t::baud_rate</td>
+          <td class="memname"><a class="el" href="a00855.html#gaadf812c0e22b456c6dd0ed92f9bff200">ble_ans_category_id_t</a> ble_ans_control_point_t::category</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Baud rate configuration. </p>
+<p>The category for the control point for which the command applies, see <a class="el" href="a00855.html#gaadf812c0e22b456c6dd0ed92f9bff200">ble_ans_category_id_t</a>. </p>
 
 </div>
 </div>
-<a class="anchor" id="a3db286645aa6ca3d00b4050837dfac81"></a>
+<a class="anchor" id="a884740fe58c776baff9984a9aeb2364a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t app_uart_stream_comm_params_t::cts_pin_no</td>
+          <td class="memname"><a class="el" href="a00855.html#ga27cf2fcb0272333911649738907a64ff">ble_ans_command_id_t</a> ble_ans_control_point_t::command</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>CTS pin number, only used if flow control is enabled. </p>
-
-</div>
-</div>
-<a class="anchor" id="a7bd1bcc691294dfa173105c79e926318"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t app_uart_stream_comm_params_t::rts_pin_no</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>RTS pin number, only used if flow control is enabled. </p>
-
-</div>
-</div>
-<a class="anchor" id="a1bb6d6aa16efc7c4d2caee51d8058213"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t app_uart_stream_comm_params_t::rx_pin_no</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>RX pin number. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa13645e8ecb6cb1970dba53fabe08b40"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t app_uart_stream_comm_params_t::tx_pin_no</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>TX pin number. </p>
-
-</div>
-</div>
-<a class="anchor" id="a52a6d334142f15d9c5ab04c988a40b91"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool app_uart_stream_comm_params_t::use_parity</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Even parity if TRUE, no parity if FALSE. </p>
+<p>The command to be written to the control point, see <a class="el" href="a00855.html#ga27cf2fcb0272333911649738907a64ff">ble_ans_command_id_t</a>. </p>
 
 </div>
 </div>
@@ -216,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00154.html">app_uart_stream_comm_params_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00154.html">ble_ans_control_point_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:36 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,9 +1,8 @@
 var a00162 =
 [
-    [ "alert", "a00162.html#a1516abb33b9dfe3d7ea721f893f3cc7e", null ],
-    [ "data", "a00162.html#ae65b712fd7b67b119ceefc28857f69c8", null ],
-    [ "error_code", "a00162.html#ab6e81a948852e8f1c27d25166815c9eb", null ],
-    [ "evt_type", "a00162.html#a933154cfde918e82cccf331250f23251", null ],
-    [ "settings", "a00162.html#af0183eb636b54d11dedd0b44471ecf68", null ],
-    [ "uuid", "a00162.html#a5291a39d334459d01eb8c359ce40eaf6", null ]
+    [ "conn_handle", "a00162.html#ad7c997d8d0c6e0d3d24de3ecad426645", null ],
+    [ "params", "a00162.html#aa3bf138e5e86c00c38983ffc94fcc618", null ],
+    [ "tx_complete", "a00162.html#a0550e7a2c8b61ab27ea5a691b3f1fac4", null ],
+    [ "user_mem_release", "a00162.html#a21a25a889c763bceb2891d506331f484", null ],
+    [ "user_mem_request", "a00162.html#a4d36c1c20a1ff24a62abba8ea73c74c8", null ]
 ];

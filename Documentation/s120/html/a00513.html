@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Database Discovery</title>
+<title>nRF51 SDK - S120 SoftDevice: GAP Peripheral/GAP Central: Delete all bonded devices</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -96,45 +96,20 @@ $(document).ready(function(){initNavTree('a00513.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Database Discovery<div class="ingroups"><a class="el" href="a00556.html">Experimental Libraries</a></div></div>  </div>
+<div class="title">GAP Peripheral/GAP Central: Delete all bonded devices<div class="ingroups"><a class="el" href="a00506.html">Deleting one or all device context</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Database discovery module.  
-<a href="#details">More...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00514"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00514.html">Defines</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00515"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00515.html">Enumerations</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00516"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00516.html">Structures</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00517"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00517.html">Types</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00518"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00518.html">Functions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Database discovery module. </p>
-<p>This module contains the APIs and types exposed by the DB Discovery module. These APIs and types can be used by the application to perform discovery of a service and its characteristics at the peer server. A typical use of this library is described in the figure below. </p>
-<div class="image">
-<img src="db_discovery.jpg" alt="db_discovery.jpg"/>
+<div align="center">
+<img src="msc_inline_mscgraph_66.png" alt="msc_inline_mscgraph_66" border="0" usemap="#msc_inline_mscgraph_66.map"/>
+<map name="msc_inline_mscgraph_66.map" id="msc_inline_mscgraph_66.map"></map>
 </div>
-<dl class="section warning"><dt>Warning</dt><dd>The maximum number of characteristics per service that can be discovered by this module is indicated by the value of <a class="el" href="a00514.html#gae17633bce497fe1c216826ed096ababd">BLE_DB_DISCOVERY_MAX_CHAR_PER_SRV</a>. If the peer has more than the supported number of characteristics, then the first found supported number of characteristics will only be discovered. Also no descriptors other than Client Characteristic Configuration Descriptors will be searched for at the peer.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>Presently only one instance of Primary Service can be discovered by this module. If there are multiple instances of the service at the peer, only the first instance of it at the peer is fetched and returned to the application.</dd>
-<dd>
-The application must propagate BLE stack events to this module by calling <a class="el" href="a00518.html#ga60575c004188a08a78063884356bf15f" title="Function for handling the Application&#39;s BLE Stack events.">ble_db_discovery_on_ble_evt()</a>. </dd></dl>
-</div><!-- contents -->
+ </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:27 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:40 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

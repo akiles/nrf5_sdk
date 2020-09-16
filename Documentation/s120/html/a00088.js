@@ -1,5 +1,5 @@
 var a00088 =
 [
-    [ "lv", "a00088.html#a3c0b55f3c9f8c589ca46e85d2c8f235c", null ],
-    [ "sm", "a00088.html#ab1014e45933756f4e790ef8181730f7f", null ]
+    [ "enc_info", "a00088.html#a13ede8af725f86dfd2a221e48a61b313", null ],
+    [ "master_id", "a00088.html#a652b5f7ec55ac6f4693515bda2f35176", null ]
 ];

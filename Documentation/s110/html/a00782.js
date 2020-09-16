@@ -1,6 +1,8 @@
 var a00782 =
 [
-    [ "BLE_GATT_HVX_INDICATION", "a00782.html#ga47f3222bcefb5eb4aed9a1dc7c796b1f", null ],
-    [ "BLE_GATT_HVX_INVALID", "a00782.html#gae454efaf8b3f8c6871dca5d2db5ac724", null ],
-    [ "BLE_GATT_HVX_NOTIFICATION", "a00782.html#gad5784996b45947f6d7f0cb81c9a4c9ed", null ]
+    [ "Message Sequence Charts", "a00783.html", "a00783" ],
+    [ "Enumerations", "a00915.html", "a00915" ],
+    [ "Defines", "a00916.html", "a00916" ],
+    [ "Structures", "a00917.html", "a00917" ],
+    [ "Functions", "a00918.html", "a00918" ]
 ];

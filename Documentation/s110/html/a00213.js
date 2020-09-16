@@ -1,8 +1,5 @@
 var a00213 =
 [
-    [ "div", "a00213.html#acf2e9db014242631b9912048cfff21ff", null ],
-    [ "enc_info", "a00213.html#ad111ceb6802da6301dbe73a73b35a4a1", null ],
-    [ "id_info", "a00213.html#a301c28abac3bf1f2f38d2b95854695cd", null ],
-    [ "peer_addr", "a00213.html#a2c9e328ee5b20afe64224e8d807e0015", null ],
-    [ "sign_info", "a00213.html#ad6b652026333405eba289d528d220638", null ]
+    [ "reliable_wr", "a00213.html#a8b4bb4c79bed8c8a6d75ca0dd08b7591", null ],
+    [ "wr_aux", "a00213.html#a0f36b2c312c08c22853231a3bc8b950c", null ]
 ];

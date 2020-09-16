@@ -1,8 +1,8 @@
 var a00003 =
 [
-    [ "BLE libraries", "a00123.html", "a00123" ],
-    [ "BLE Services", "a00124.html", "a00124" ],
-    [ "S110 Serialization", "a00092.html", "a00092" ],
+    [ "BLE libraries", "a00116.html", "a00116" ],
+    [ "BLE Services", "a00117.html", "a00117" ],
+    [ "S110 Serialization", "a00083.html", "a00083" ],
     [ "Transport Services", "a00010.html", "a00010" ],
     [ "SoftDevice Handler Library", "a00011.html", [
       [ "Expectations from the application/developer using this library", "a00011.html#expectations", [
@@ -36,7 +36,7 @@ var a00003 =
       [ "Reading GPIOTE State", "a00016.html#lib_gpiote_get_states", null ]
     ] ],
     [ "Flash handling library", "a00017.html", null ],
-    [ "Gazell Pairing library", "a00118.html", null ],
+    [ "Gazell Pairing library", "a00111.html", null ],
     [ "Persistent Storage Manager", "a00018.html", [
       [ "Introduction", "a00018.html#pstorage_intro", null ],
       [ "Application Interface Overview", "a00018.html#pstorage_api_overview", [

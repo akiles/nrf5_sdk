@@ -1,12 +1,10 @@
 var a00715 =
 [
-    [ "nrf_gpiote_outinit_t", "a00715.html#gab280bbb7269ab98a97e7b47d906ef9aa", [
-      [ "NRF_GPIOTE_INITIAL_VALUE_LOW", "a00715.html#ggab280bbb7269ab98a97e7b47d906ef9aaae0df1a0e930bfe3b198a9692d9916667", null ],
-      [ "NRF_GPIOTE_INITIAL_VALUE_HIGH", "a00715.html#ggab280bbb7269ab98a97e7b47d906ef9aaa1fc9af8ce3fcd7165b3c090b564e9aa4", null ]
-    ] ],
-    [ "nrf_gpiote_polarity_t", "a00715.html#ga9a424db0997c11092f8f69d52155dd9d", [
-      [ "NRF_GPIOTE_POLARITY_LOTOHI", "a00715.html#gga9a424db0997c11092f8f69d52155dd9da59dda358a841a81671bd372058b46498", null ],
-      [ "NRF_GPIOTE_POLARITY_HITOLO", "a00715.html#gga9a424db0997c11092f8f69d52155dd9da97c193ac03f0691bea38c2283b55fa8a", null ],
-      [ "NRF_GPIOTE_POLARITY_TOGGLE", "a00715.html#gga9a424db0997c11092f8f69d52155dd9da00487cd8286ff071ca751cd4a00295d5", null ]
-    ] ]
+    [ "BLE_GAP_ADV_FLAG_BR_EDR_NOT_SUPPORTED", "a00715.html#gacb3630594402e27c96515eb80080f2a3", null ],
+    [ "BLE_GAP_ADV_FLAG_LE_BR_EDR_CONTROLLER", "a00715.html#ga589a2a83eb353ad35fc9660c442514ce", null ],
+    [ "BLE_GAP_ADV_FLAG_LE_BR_EDR_HOST", "a00715.html#gaeb2468cf5bea6160d3b7fff9a1059116", null ],
+    [ "BLE_GAP_ADV_FLAG_LE_GENERAL_DISC_MODE", "a00715.html#ga3b7d4251306cd6644d9125da1994a931", null ],
+    [ "BLE_GAP_ADV_FLAG_LE_LIMITED_DISC_MODE", "a00715.html#ga7ed61557e00488daa5daf0b3d9f3d0fd", null ],
+    [ "BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE", "a00715.html#gaa57375a29c3f6acc5a22565528118cc6", null ],
+    [ "BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE", "a00715.html#gad19a5111127656b299dbdbe5d5e8d4e0", null ]
 ];

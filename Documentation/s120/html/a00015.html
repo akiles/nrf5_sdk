@@ -110,12 +110,12 @@ $(document).ready(function(){initNavTree('a00015.html','');});
 Figure 1: Users are being notified of a pin transition event.</div></div>
 <p>The GPIOTE users are responsible for configuring all their corresponding pins, except the SENSE field, which should be initialized to GPIO_PIN_CNF_SENSE_Disabled.</p>
 <p>The module specifies on which pins events should be generated if the pin(s) goes from low-&gt;high or high-&gt;low or both directions.</p>
-<dl class="section note"><dt>Note</dt><dd>Even if the application is using the <a class="el" href="a00405.html">Scheduler</a>, the GPIOTE event handlers will be called directly from the GPIOTE interrupt handler.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Even if the application is using the <a class="el" href="a00409.html">Scheduler</a>, the GPIOTE event handlers will be called directly from the GPIOTE interrupt handler.</dd></dl>
 <h1><a class="anchor" id="lib_app_gpiote_init"></a>
 Initializing GPIOTE module</h1>
-<p>The initialization procedure must be performed before using any of the other APIs of the module. It is recommended to use initialization macro APP_GPIOTE_INIT instead of the routine <a class="el" href="a00404.html#ga573b71494c38cc4c32b209a13708c78d">app_gpiote_init</a> as the former takes care of reserving needed memory for the each user requested in the MAX_USERS parameter of the macro. This parameter indicates how may users are going to be registering with the library.</p>
+<p>The initialization procedure must be performed before using any of the other APIs of the module. It is recommended to use initialization macro APP_GPIOTE_INIT instead of the routine <a class="el" href="a00408.html#ga573b71494c38cc4c32b209a13708c78d">app_gpiote_init</a> as the former takes care of reserving needed memory for the each user requested in the MAX_USERS parameter of the macro. This parameter indicates how may users are going to be registering with the library.</p>
 <div class="fragment"><div class="line"><span class="comment">// Macro to initialize GPIOTE module and reserving necessary memory for each of user.</span></div>
-<div class="line"><a class="code" href="a00404.html#gaed385f30da9f44fb5bf4591eef4d27d9" title="Macro for initializing the GPIOTE module.">APP_GPIOTE_INIT</a>(MAX_USERS);</div>
+<div class="line"><a class="code" href="a00408.html#gaed385f30da9f44fb5bf4591eef4d27d9" title="Macro for initializing the GPIOTE module.">APP_GPIOTE_INIT</a>(MAX_USERS);</div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Module initialization should be performed only once. Specifically when using the macro to avoid reserving memory for each module several times.</dd></dl>
 <h1><a class="anchor" id="lib_app_gpiote_register"></a>
 Registering with GPIOTE</h1>
@@ -139,12 +139,12 @@ Figure 2: GPIO Pin representation using 32-bit bitmask.</div></div>
 <div class="line">uint32_t  high_to_low_bitmask = 0x0000000E; <span class="comment">// Bitmask to be notified of transition from high to low for GPIO 0-2</span></div>
 <div class="line">uint32_t retval;</div>
 <div class="line"></div>
-<div class="line">retval = <a class="code" href="a00404.html#gaa0fe3334c8940d86fc48af00ccb8e0ed" title="Function for registering a GPIOTE user.">app_gpiote_user_register</a>(&amp;m_example_user_id,</div>
+<div class="line">retval = <a class="code" href="a00408.html#gaa0fe3334c8940d86fc48af00ccb8e0ed" title="Function for registering a GPIOTE user.">app_gpiote_user_register</a>(&amp;m_example_user_id,</div>
 <div class="line">                                  low_to_high_bitmask,</div>
 <div class="line">                                  high_to_low_bitmask,</div>
 <div class="line">                                  example_gpiote_event_handler);</div>
 <div class="line"></div>
-<div class="line"><span class="keywordflow">if</span> (retval != <a class="code" href="a00381.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span> (retval != <a class="code" href="a00385.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Failed to register with user with GPIO module!</span></div>
 <div class="line"></div>
@@ -154,7 +154,7 @@ Figure 2: GPIO Pin representation using 32-bit bitmask.</div></div>
 <div class="line">.</div>
 <div class="line">.</div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>It is possible for more than one user to register for same set/subset of GPIO pins; each of the concerned users will be notified of pin transition events.</dd></dl>
-<p>By default, the GPIOTE is disabled on initialization. Therefore the GPIOTE has to be enabled by one of the users to start receiving GPIOTE state events. <a class="el" href="a00404.html#ga50622a63550c442d6ad8a8a0d34b166d">app_gpiote_user_enable</a> is used to enable GPIOTE.</p>
+<p>By default, the GPIOTE is disabled on initialization. Therefore the GPIOTE has to be enabled by one of the users to start receiving GPIOTE state events. <a class="el" href="a00408.html#ga50622a63550c442d6ad8a8a0d34b166d">app_gpiote_user_enable</a> is used to enable GPIOTE.</p>
 <p>The following is a sample of registered user callback handling pin transition events.</p>
 <div class="fragment"><div class="line"><span class="comment">// GPIOTE event handler.</span></div>
 <div class="line"><span class="keywordtype">void</span> example_gpiote_event_handler (uint32_t event_pins_low_to_high, uint32_t event_pins_high_to_low)</div>
@@ -187,9 +187,9 @@ Enable/Disable GPIOTE</h1>
 <div class="fragment"><div class="line">uint32_t retval;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Enable notifications for example user module which is already registered.</span></div>
-<div class="line">retval = <a class="code" href="a00404.html#ga486576266f08b96279e514f080911350" title="Function for informing the GPIOTE module that the specified user is done using the GPIOTE module...">app_gpiote_user_disable</a>(m_example_user_id);</div>
+<div class="line">retval = <a class="code" href="a00408.html#ga486576266f08b96279e514f080911350" title="Function for informing the GPIOTE module that the specified user is done using the GPIOTE module...">app_gpiote_user_disable</a>(m_example_user_id);</div>
 <div class="line"></div>
-<div class="line"><span class="keywordflow">if</span> (retval != <a class="code" href="a00381.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span> (retval != <a class="code" href="a00385.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Enabling notifications failed. Take corrective/needed action.</span></div>
 <div class="line">    .</div>
@@ -202,9 +202,9 @@ Enable/Disable GPIOTE</h1>
 <div class="line"> .</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Enable notifications for example user module which is already registered.</span></div>
-<div class="line">retval = <a class="code" href="a00404.html#ga50622a63550c442d6ad8a8a0d34b166d" title="Function for informing the GPIOTE module that the specified user wants to use the GPIOTE module...">app_gpiote_user_enable</a>(m_example_user_id);</div>
+<div class="line">retval = <a class="code" href="a00408.html#ga50622a63550c442d6ad8a8a0d34b166d" title="Function for informing the GPIOTE module that the specified user wants to use the GPIOTE module...">app_gpiote_user_enable</a>(m_example_user_id);</div>
 <div class="line"></div>
-<div class="line"><span class="keywordflow">if</span> (retval != <a class="code" href="a00381.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span> (retval != <a class="code" href="a00385.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Enabling notifications failed. Take corrective/needed action.</span></div>
 <div class="line">    .</div>
@@ -216,8 +216,8 @@ Reading GPIOTE State</h1>
 <div class="fragment"><div class="line">uint32_t retval;</div>
 <div class="line">uint32_t gpio_pin_state;</div>
 <div class="line"></div>
-<div class="line">retval = <a class="code" href="a00404.html#ga5eaa7bc1dcd21b11a809dbd13b714d75" title="Function for getting the state of the pins which are registered for the specified user...">app_gpiote_pins_state_get</a>(m_example_user_id,&amp;gpio_pin_state);</div>
-<div class="line"><span class="keywordflow">if</span> (retval != <a class="code" href="a00381.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line">retval = <a class="code" href="a00408.html#ga5eaa7bc1dcd21b11a809dbd13b714d75" title="Function for getting the state of the pins which are registered for the specified user...">app_gpiote_pins_state_get</a>(m_example_user_id,&amp;gpio_pin_state);</div>
+<div class="line"><span class="keywordflow">if</span> (retval != <a class="code" href="a00385.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Failed to read state information. Take corrective action.</span></div>
 <div class="line">}</div>
@@ -238,7 +238,7 @@ Reading GPIOTE State</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:05 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

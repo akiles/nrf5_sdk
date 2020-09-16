@@ -1,5 +1,6 @@
 var a00323 =
 [
-    [ "len", "a00323.html#a14ab9ae8747f2add25b332c15d20647e", null ],
-    [ "p_mem", "a00323.html#ab5fa5a7ab3575057522e07be1581c659", null ]
+    [ "len", "a00323.html#ae7fb48410ecb00dec1dca60d45cbc606", null ],
+    [ "ptr1", "a00323.html#a03e88994f8127e877c2fd08800e64768", null ],
+    [ "ptr2", "a00323.html#a3f670b76c31a7b6badf0bfadd1dc08b0", null ]
 ];

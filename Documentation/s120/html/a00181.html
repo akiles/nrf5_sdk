@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: spi_slave_evt_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: spi_slave_config_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,138 @@ $(document).ready(function(){initNavTree('a00181.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">spi_slave_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00399.html">Software controlled SPI Slave driver.</a></div></div>  </div>
+<div class="title">spi_slave_config_t Struct Reference<div class="ingroups"><a class="el" href="a00403.html">Software controlled SPI Slave driver.</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Struct containing event context from the SPI slave driver.  
+<p>SPI peripheral device configuration data.  
  <a href="a00181.html#details">More...</a></p>
 
 <p><code>#include &lt;spi_slave.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:acbc2e2d26c15219ff593c40aabab3815"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00399.html#ga8c080d3b9fbe05708273eadef309094e">spi_slave_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#acbc2e2d26c15219ff593c40aabab3815">evt_type</a></td></tr>
-<tr class="separator:acbc2e2d26c15219ff593c40aabab3815"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b54206d997d599a2c3ee5751c208c58"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a7b54206d997d599a2c3ee5751c208c58">rx_amount</a></td></tr>
-<tr class="separator:a7b54206d997d599a2c3ee5751c208c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a080b88a554c371f8220691fc28117ebd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a080b88a554c371f8220691fc28117ebd">tx_amount</a></td></tr>
-<tr class="separator:a080b88a554c371f8220691fc28117ebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65afb70f1cdb35519719efa4950294b7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a65afb70f1cdb35519719efa4950294b7">pin_miso</a></td></tr>
+<tr class="separator:a65afb70f1cdb35519719efa4950294b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af40a3044730330e7c560f2a9913b6d55"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#af40a3044730330e7c560f2a9913b6d55">pin_mosi</a></td></tr>
+<tr class="separator:af40a3044730330e7c560f2a9913b6d55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae98dbbcc5e16aea69a2f0922e266f908"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#ae98dbbcc5e16aea69a2f0922e266f908">pin_sck</a></td></tr>
+<tr class="separator:ae98dbbcc5e16aea69a2f0922e266f908"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ff06608d64bb19ed48f49274231de9c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a1ff06608d64bb19ed48f49274231de9c">pin_csn</a></td></tr>
+<tr class="separator:a1ff06608d64bb19ed48f49274231de9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21dcdc253470ffeaf889d2b9ffa22472"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00403.html#ga1febfa1b05a4e0d259877752c6c53c33">spi_slave_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a21dcdc253470ffeaf889d2b9ffa22472">mode</a></td></tr>
+<tr class="separator:a21dcdc253470ffeaf889d2b9ffa22472"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27e8ba88d43c17e40e1c2cbf0f785648"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00403.html#ga348be3a931288103790b15b689696f25">spi_slave_endian_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a27e8ba88d43c17e40e1c2cbf0f785648">bit_order</a></td></tr>
+<tr class="separator:a27e8ba88d43c17e40e1c2cbf0f785648"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f274a8534602ab7cf7b3df09501e3e0"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a4f274a8534602ab7cf7b3df09501e3e0">def_tx_character</a></td></tr>
+<tr class="separator:a4f274a8534602ab7cf7b3df09501e3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d9dd3521043484438ffa72545b6db28"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a7d9dd3521043484438ffa72545b6db28">orc_tx_character</a></td></tr>
+<tr class="separator:a7d9dd3521043484438ffa72545b6db28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Struct containing event context from the SPI slave driver. </p>
+<div class="textblock"><p>SPI peripheral device configuration data. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="acbc2e2d26c15219ff593c40aabab3815"></a>
+<a class="anchor" id="a27e8ba88d43c17e40e1c2cbf0f785648"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00399.html#ga8c080d3b9fbe05708273eadef309094e">spi_slave_evt_type_t</a> spi_slave_evt_t::evt_type</td>
+          <td class="memname"><a class="el" href="a00403.html#ga348be3a931288103790b15b689696f25">spi_slave_endian_t</a> spi_slave_config_t::bit_order</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of event. </p>
+<p>SPI transaction bit order. </p>
 
 </div>
 </div>
-<a class="anchor" id="a7b54206d997d599a2c3ee5751c208c58"></a>
+<a class="anchor" id="a4f274a8534602ab7cf7b3df09501e3e0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t spi_slave_evt_t::rx_amount</td>
+          <td class="memname">uint8_t spi_slave_config_t::def_tx_character</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of bytes received in last transaction (parameter is only valid upon <a class="el" href="a00399.html#gga8c080d3b9fbe05708273eadef309094eabe9f17960cda631b4c223f50e09eff9c">SPI_SLAVE_XFER_DONE</a> event). </p>
+<p>Device configuration mode default character (DEF). Character clocked out in case of an ignored transaction. </p>
 
 </div>
 </div>
-<a class="anchor" id="a080b88a554c371f8220691fc28117ebd"></a>
+<a class="anchor" id="a21dcdc253470ffeaf889d2b9ffa22472"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t spi_slave_evt_t::tx_amount</td>
+          <td class="memname"><a class="el" href="a00403.html#ga1febfa1b05a4e0d259877752c6c53c33">spi_slave_mode_t</a> spi_slave_config_t::mode</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of bytes transmitted in last transaction (parameter is only valid upon <a class="el" href="a00399.html#gga8c080d3b9fbe05708273eadef309094eabe9f17960cda631b4c223f50e09eff9c">SPI_SLAVE_XFER_DONE</a> event). </p>
+<p>SPI mode. </p>
+
+</div>
+</div>
+<a class="anchor" id="a7d9dd3521043484438ffa72545b6db28"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t spi_slave_config_t::orc_tx_character</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Device configuration mode over-read character. Character clocked out after an over-read of the transmit buffer. </p>
+
+</div>
+</div>
+<a class="anchor" id="a1ff06608d64bb19ed48f49274231de9c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t spi_slave_config_t::pin_csn</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>SPI CSN pin. </p>
+
+</div>
+</div>
+<a class="anchor" id="a65afb70f1cdb35519719efa4950294b7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t spi_slave_config_t::pin_miso</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>SPI MISO pin. </p>
+
+</div>
+</div>
+<a class="anchor" id="af40a3044730330e7c560f2a9913b6d55"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t spi_slave_config_t::pin_mosi</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>SPI MOSI pin. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae98dbbcc5e16aea69a2f0922e266f908"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t spi_slave_config_t::pin_sck</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>SPI SCK pin. </p>
 
 </div>
 </div>
@@ -171,8 +246,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00181.html">spi_slave_evt_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:28 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00181.html">spi_slave_config_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:41 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

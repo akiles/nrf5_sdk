@@ -108,15 +108,15 @@ $(document).ready(function(){initNavTree('a00008.html','');});
 </ul>
 <p>The low power mode will be use RTS/CTS flow control while also use the CTS line as to enter low power mode. The UART peripheral will be turned off whenever the CTS signal from the remote side is high, and when CTS becomes low (active) the UART peripheral will be enabled.</p>
 <p><b>Asynchronous nature</b></p>
-<p>The UART module will receive bytes from the RXD register when an EVENT_RXDRDY interrupt has occurred. The byte will be put into the RX FIFO and can be fetched by the application using <a class="el" href="a00728.html#gacddb5b7b711ef104f9eb181a13bc4503">app_uart_get</a>. First byte received and placed in the RX FIFO will trigger an APP_UART_DATA_READY event.</p>
-<p>The <a class="el" href="a00728.html#ga2e4c8407274a151e72ed5a226529dc36">app_uart_put</a> will place the provided byte in the TX FIFO. Bytes in the TX FIFO will be written to the TXD register by the app_uart module. When a byte is successfully transfered an EVENT_TXDRDY interrupt is triggered. The interrupt handler in the app_uart module will fetch the next byte from the FIFO and write it to the TXD register. The application can call <a class="el" href="a00728.html#ga2e4c8407274a151e72ed5a226529dc36">app_uart_put</a> to request transmission of bytes.</p>
+<p>The UART module will receive bytes from the RXD register when an EVENT_RXDRDY interrupt has occurred. The byte will be put into the RX FIFO and can be fetched by the application using <a class="el" href="a00684.html#gacddb5b7b711ef104f9eb181a13bc4503">app_uart_get</a>. First byte received and placed in the RX FIFO will trigger an APP_UART_DATA_READY event.</p>
+<p>The <a class="el" href="a00684.html#ga2e4c8407274a151e72ed5a226529dc36">app_uart_put</a> will place the provided byte in the TX FIFO. Bytes in the TX FIFO will be written to the TXD register by the app_uart module. When a byte is successfully transfered an EVENT_TXDRDY interrupt is triggered. The interrupt handler in the app_uart module will fetch the next byte from the FIFO and write it to the TXD register. The application can call <a class="el" href="a00684.html#ga2e4c8407274a151e72ed5a226529dc36">app_uart_put</a> to request transmission of bytes.</p>
 <p><b>Error handling</b></p>
-<p>An error flag is set in the UART peripheral in event of an error during data reception. The error will be propagated to the application event handler as an <a class="el" href="a00153.html">app_uart_evt_t</a> containing APP_UART_ERROR_SOURCE in the evt_type field. The data.error_source field will contain the original error source information from the UART peripheral register.</p>
-<p>In case the RX FIFO is full when data are received an <a class="el" href="a00153.html">app_uart_evt_t</a> containing APP_UART_NRF_ERROR in the evt_type field will be generated and sent to the application. The event will contain the original error code from the FIFO in the data.error_code field.</p>
+<p>An error flag is set in the UART peripheral in event of an error during data reception. The error will be propagated to the application event handler as an <a class="el" href="a00147.html">app_uart_evt_t</a> containing APP_UART_ERROR_SOURCE in the evt_type field. The data.error_source field will contain the original error source information from the UART peripheral register.</p>
+<p>In case the RX FIFO is full when data are received an <a class="el" href="a00147.html">app_uart_evt_t</a> containing APP_UART_NRF_ERROR in the evt_type field will be generated and sent to the application. The event will contain the original error code from the FIFO in the data.error_code field.</p>
 <p><b>UART Low Power mode with flow control</b></p>
 <p>When UART is configured to use Low Power mode with flow control it will use low power mode when possible. The UART peripheral will be de-activated when the CTS signal from the remote side is set to inactive state. When CTS is set active by the remote side, the UART peripheral will be activated.</p>
 <p>The STARTTX register will be enabled when data are available in the TX FIFO and CTS is active.</p>
-<p>The application should use <a class="el" href="a00728.html#ga4360a21365ae56f22344f84c20933d64">app_uart_get_connection_state</a> to ensure that the nRF51 chip only power off when the UART peripheral is disconnected. When the nRF51 chip is in power off mode the remote side can wake up the nRF51 chip by setting the CTS to active state.</p>
+<p>The application should use <a class="el" href="a00684.html#ga4360a21365ae56f22344f84c20933d64">app_uart_get_connection_state</a> to ensure that the nRF51 chip only power off when the UART peripheral is disconnected. When the nRF51 chip is in power off mode the remote side can wake up the nRF51 chip by setting the CTS to active state.</p>
 <div class="image">
 <img src="uart_state_machine_tx_with_flow_control.png" alt="uart_state_machine_tx_with_flow_control.png"/>
 <div class="caption">
@@ -136,7 +136,7 @@ UART without flow control state machine diagram.</div></div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00002.html">Hardware Drivers</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:32 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:33 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

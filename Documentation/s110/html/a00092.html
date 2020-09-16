@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: S110 Serialization</title>
+<title>nRF51 SDK - S110 SoftDevice: BLE S110 L2CAP Events</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,43 +97,53 @@ $(document).ready(function(){initNavTree('a00092.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">S110 Serialization </div>  </div>
+<div class="title">BLE S110 L2CAP Events </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="nrf51_arch_serialization"></a>
-Architecture</h1>
-<p>The BLE S110 Serialization makes it possible to place a <em>Bluetooth</em> application on an <b>Application chip</b> and connect it to a <b>Connectivity chip</b> running the BLE <a class="el" href="a01005.html">S110 SoftDevice</a>.</p>
-<p><b>Connectivity Chip</b>: <a class="el" href="a00093.html">BLE S110 Connectivity Chip</a><br/>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#nrf51_l2cap_evt_rx_encoding">0x70 - BLE_L2CAP_EVT_RX</a><ul><li class="level2"><a href="#nrf51_l2cap_evt_rx_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_l2cap_evt_rx_encoding_sub_a">Encoding of BLE L2CAP packet received event</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="textblock"><h1><a class="anchor" id="nrf51_l2cap_evt_rx_encoding"></a>
+0x70 - BLE_L2CAP_EVT_RX</h1>
+<h2><a class="anchor" id="nrf51_l2cap_evt_rx_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00925.html#gga200c8684032d8e5fe10d295b2f3a1555af6d68dde17c172258858ea9d9c4488e3">BLE_L2CAP_EVT_RX</a> packet.</p>
+<p>Event ID = 0x70 for BLE_L2CAP_EVT_RX.</p>
+<p>The BLE L2CAP event contains a connection handle, and for the BLE L2CAP event RX, the <a class="el" href="a00280.html">ble_l2cap_evt_rx_t</a> is encoded after connection handle as seen in Figure 1.</p>
+<p>The order of the encoding is: </p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00281.html#ab843f6e96efbaf3d2bffee8c92c62f1a">ble_l2cap_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Data Length </td><td>see <a class="el" href="a00282.html#a754900407e75298f4af89a59febed5b8">ble_l2cap_header_t::len</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>CID </td><td>see <a class="el" href="a00282.html#a6e40f192db4382919b6c1f3db8e70d46">ble_l2cap_header_t::cid</a> </td></tr>
+<tr>
+<td>0..'Data Length' bytes </td><td>Data </td><td>see <a class="el" href="a00280.html#ad3df37c1998b3d1d213a6e7b5cfbcd5e">ble_l2cap_evt_rx_t::data</a> </td></tr>
+</table>
+<p><br/>
 </p>
-<p><b><em>Bluetooth</em> Application Chip:</b> The nRF51822 chip is used merely as a demonstration device running a serialized application, where the <b>BLE S110 SoftDevice</b> is replaced by the Commands Encoder and Events Decoder (<a class="el" href="a00095.html">BLE Serialization Codecs</a>). The <b>nRF51822</b> used as <b>Application chip does not use the BLE S110 SoftDevice</b>. After porting hardware driver for selected <b>PHY</b> layer (<a class="el" href="a00111.html">Serialization PHY</a>), <b>nRF51822</b> at application side is supposed to be replaced by user's device . <br/>
-</p>
+<h2><a class="anchor" id="nrf51_l2cap_evt_rx_encoding_sub_a"></a>
+Encoding of BLE L2CAP packet received event</h2>
 <div class="image">
-<img src="architecture_overview_serialization.png" alt="architecture_overview_serialization.png"/>
+<img src="l2cap_evt_rx.png" alt="l2cap_evt_rx.png"/>
 <div class="caption">
-Architectural overview of Serialized Bluetooth Application.</div></div>
-<p> In the <b><em>Bluetooth</em> Application chip</b>, the <b>BLE S110 SoftDevice</b> is replaced by a codec implementing the <b>S110 SoftDevice API</b>. <br/>
- All function calls to the codec will be serialized and transmitted to the <b>BLE S110 Connectivity Chip</b> using the transport layer drivers. <br/>
- This design makes it possible to substitute an existing <b>PHY</b> layer, such as <b>UART</b> or <b>SPI</b>, without affecting the codecs. <br/>
-</p>
-<p>The <b>BLE S110 Connectivity chip</b> will decode the serialized commands from the <b><em>Bluetooth</em> Application Board</b> and execute the corresponding function in the <b>S110 SoftDevice </b>.<br/>
- Any event from the S110 SoftDevice is encoded by the codec and transmitted to the <b><em>Bluetooth</em> Application chip </b> using the the transport layer. <br/>
- In the <b><em>Bluetooth</em> Application chip </b> the event is decoded and passed to the application. <br/>
-</p>
-<p><b>BLE S110 Serialization</b> simplifies the serialization of an existing <em>Bluetooth</em> application, since limited modifications are needed in the application itself. <br/>
-</p>
-<p>See <a class="el" href="a00094.html">Serialization Setup</a> on how to flash and wire a <b><em>Bluetooth</em> Application Board</b> with a <b>BLE S110 Connectivity Board</b>. <br/>
-</p>
-<p><a class="el" href="a00094.html">Serialization Setup</a></p>
-<p><a class="el" href="a00093.html">BLE S110 Connectivity Chip</a></p>
-<p><a class="el" href="a00095.html">BLE Serialization Codecs</a></p>
-<p><a class="el" href="a00111.html">Serialization PHY</a> </p>
+Figure 1: Encoding of BLE L2CAP packet received event.</div></div>
+<p> <br/>
+ </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:33 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00083.html">S110 Serialization</a></li><li class="navelem"><a class="el" href="a00086.html">BLE Serialization Codecs</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

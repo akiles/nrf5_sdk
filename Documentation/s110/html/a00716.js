@@ -1,8 +1,6 @@
 var a00716 =
 [
-    [ "nrf_nvmc_page_erase", "a00716.html#ga8cf428dbb2a28a342c3b57cc07869d9d", null ],
-    [ "nrf_nvmc_write_byte", "a00716.html#ga008c6a4096bda07d67f33294af00ad9b", null ],
-    [ "nrf_nvmc_write_bytes", "a00716.html#ga7d566edd65fdc5655ce7be3cd17faba0", null ],
-    [ "nrf_nvmc_write_word", "a00716.html#ga1347c44095f9486554be7c3d62737925", null ],
-    [ "nrf_nvmc_write_words", "a00716.html#ga9ac0536be3127139fb91992e1c5b46c4", null ]
+    [ "BLE_GAP_ADV_INTERVAL_MAX", "a00716.html#gada06c7f328e5bcc50ce55f9f567129ca", null ],
+    [ "BLE_GAP_ADV_INTERVAL_MIN", "a00716.html#gaf61691584387648b33a032c934bcd094", null ],
+    [ "BLE_GAP_ADV_NONCON_INTERVAL_MIN", "a00716.html#gaf0853bcb2a170efd2bb58e3a6b3c8ca5", null ]
 ];

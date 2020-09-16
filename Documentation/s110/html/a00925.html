@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Heart Rate Service</title>
+<title>nRF51 SDK - S110 SoftDevice: Structures</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,410 +98,149 @@ $(document).ready(function(){initNavTree('a00925.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Heart Rate Service<div class="ingroups"><a class="el" href="a00964.html">BLE Services</a></div></div>  </div>
+<div class="title">Structures<div class="ingroups"><a class="el" href="a00815.html">Logical Link Control and Adaptation Protocol (L2CAP)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Heart Rate Service module.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00284.html">ble_hrs_evt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heart Rate Service event.  <a href="a00284.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00282.html">ble_l2cap_header_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Packet header format for L2CAP transmission.  <a href="a00282.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html">ble_hrs_init_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heart Rate Service init structure. This contains all options and data needed for initialization of the service.  <a href="a00285.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00280.html">ble_l2cap_evt_rx_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">L2CAP Received packet event report.  <a href="a00280.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00286.html">ble_hrs_s</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heart Rate Service structure. This contains various status information for the service.  <a href="a00286.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00281.html">ble_l2cap_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">L2CAP event callback event structure.  <a href="a00281.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga31b5866ba8e305a1b7ca2fb60db7b326"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga31b5866ba8e305a1b7ca2fb60db7b326"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HRS_BODY_SENSOR_LOCATION_OTHER</b>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:ga31b5866ba8e305a1b7ca2fb60db7b326"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5425d93ca774106500b41705e15055b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5425d93ca774106500b41705e15055b4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HRS_BODY_SENSOR_LOCATION_CHEST</b>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:ga5425d93ca774106500b41705e15055b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga17a151b89da0050f4777588290c4aedb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga17a151b89da0050f4777588290c4aedb"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HRS_BODY_SENSOR_LOCATION_WRIST</b>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:ga17a151b89da0050f4777588290c4aedb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3cc553f76ed3ea59fabb38c628562b0d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3cc553f76ed3ea59fabb38c628562b0d"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HRS_BODY_SENSOR_LOCATION_FINGER</b>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:ga3cc553f76ed3ea59fabb38c628562b0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafd74436f71c3e8398e86837787e3c2a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafd74436f71c3e8398e86837787e3c2a5"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HRS_BODY_SENSOR_LOCATION_HAND</b>&#160;&#160;&#160;4</td></tr>
-<tr class="separator:gafd74436f71c3e8398e86837787e3c2a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga950b269e5a74ec5b830e99f7b7919e52"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga950b269e5a74ec5b830e99f7b7919e52"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HRS_BODY_SENSOR_LOCATION_EAR_LOBE</b>&#160;&#160;&#160;5</td></tr>
-<tr class="separator:ga950b269e5a74ec5b830e99f7b7919e52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga63bef70c28133016a9735ffdbc732df9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga63bef70c28133016a9735ffdbc732df9"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HRS_BODY_SENSOR_LOCATION_FOOT</b>&#160;&#160;&#160;6</td></tr>
-<tr class="separator:ga63bef70c28133016a9735ffdbc732df9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2e829f32fd9d57d18d1e8daa7956dee5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00925.html#ga2e829f32fd9d57d18d1e8daa7956dee5">BLE_HRS_MAX_BUFFERED_RR_INTERVALS</a>&#160;&#160;&#160;20</td></tr>
-<tr class="separator:ga2e829f32fd9d57d18d1e8daa7956dee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gafea0cb34e3a05260b4de67d81f2f4cab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafea0cb34e3a05260b4de67d81f2f4cab"></a>
-typedef struct <a class="el" href="a00286.html">ble_hrs_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a></td></tr>
-<tr class="memdesc:gafea0cb34e3a05260b4de67d81f2f4cab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heart Rate Service structure. This contains various status information for the service. <br/></td></tr>
-<tr class="separator:gafea0cb34e3a05260b4de67d81f2f4cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga85836949ab0f55e7ffcaec72dd0ee6e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga85836949ab0f55e7ffcaec72dd0ee6e1"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00925.html#ga85836949ab0f55e7ffcaec72dd0ee6e1">ble_hrs_evt_handler_t</a> )(<a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs, <a class="el" href="a00284.html">ble_hrs_evt_t</a> *p_evt)</td></tr>
-<tr class="memdesc:ga85836949ab0f55e7ffcaec72dd0ee6e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heart Rate Service event handler type. <br/></td></tr>
-<tr class="separator:ga85836949ab0f55e7ffcaec72dd0ee6e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gaee495052c855cd5345f7301b594763c9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00925.html#gaee495052c855cd5345f7301b594763c9">ble_hrs_evt_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00925.html#ggaee495052c855cd5345f7301b594763c9a0f13cf6877038b174544d95ee3a40894">BLE_HRS_EVT_NOTIFICATION_ENABLED</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00925.html#ggaee495052c855cd5345f7301b594763c9a1ed0b327eecae450aa039af15ddae345">BLE_HRS_EVT_NOTIFICATION_DISABLED</a>
-<br/>
+<tr class="memitem:ga200c8684032d8e5fe10d295b2f3a1555"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00925.html#ga200c8684032d8e5fe10d295b2f3a1555">BLE_L2CAP_EVTS</a> { <a class="el" href="a00925.html#gga200c8684032d8e5fe10d295b2f3a1555af6d68dde17c172258858ea9d9c4488e3">BLE_L2CAP_EVT_RX</a> = 0x70
  }</td></tr>
-<tr class="memdesc:gaee495052c855cd5345f7301b594763c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heart Rate Service event type.  <a href="a00925.html#gaee495052c855cd5345f7301b594763c9">More...</a><br/></td></tr>
-<tr class="separator:gaee495052c855cd5345f7301b594763c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga200c8684032d8e5fe10d295b2f3a1555"><td class="mdescLeft">&#160;</td><td class="mdescRight">L2CAP Event IDs.  <a href="a00925.html#ga200c8684032d8e5fe10d295b2f3a1555">More...</a><br/></td></tr>
+<tr class="separator:ga200c8684032d8e5fe10d295b2f3a1555"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga94256c7eb29129ff352ca53adf1ad5b8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00925.html#ga94256c7eb29129ff352ca53adf1ad5b8">ble_hrs_init</a> (<a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs, const <a class="el" href="a00285.html">ble_hrs_init_t</a> *p_hrs_init)</td></tr>
-<tr class="memdesc:ga94256c7eb29129ff352ca53adf1ad5b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Heart Rate Service.  <a href="#ga94256c7eb29129ff352ca53adf1ad5b8">More...</a><br/></td></tr>
-<tr class="separator:ga94256c7eb29129ff352ca53adf1ad5b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac50e029608199cc8d52463acb3e8a02e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00925.html#gac50e029608199cc8d52463acb3e8a02e">ble_hrs_on_ble_evt</a> (<a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs, <a class="el" href="a00195.html">ble_evt_t</a> *p_ble_evt)</td></tr>
-<tr class="memdesc:gac50e029608199cc8d52463acb3e8a02e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling the Application's BLE Stack events.  <a href="#gac50e029608199cc8d52463acb3e8a02e">More...</a><br/></td></tr>
-<tr class="separator:gac50e029608199cc8d52463acb3e8a02e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabe5fed48baeb4a518a51bd7e2e5f010e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00925.html#gabe5fed48baeb4a518a51bd7e2e5f010e">ble_hrs_heart_rate_measurement_send</a> (<a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs, uint16_t heart_rate)</td></tr>
-<tr class="memdesc:gabe5fed48baeb4a518a51bd7e2e5f010e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for sending heart rate measurement if notification has been enabled.  <a href="#gabe5fed48baeb4a518a51bd7e2e5f010e">More...</a><br/></td></tr>
-<tr class="separator:gabe5fed48baeb4a518a51bd7e2e5f010e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaea316a9c9503571b143d93086295f61a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00925.html#gaea316a9c9503571b143d93086295f61a">ble_hrs_rr_interval_add</a> (<a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs, uint16_t rr_interval)</td></tr>
-<tr class="memdesc:gaea316a9c9503571b143d93086295f61a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for adding a RR Interval measurement to the RR Interval buffer.  <a href="#gaea316a9c9503571b143d93086295f61a">More...</a><br/></td></tr>
-<tr class="separator:gaea316a9c9503571b143d93086295f61a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf207a34d16fbee25b5555fd4192b5b15"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00925.html#gaf207a34d16fbee25b5555fd4192b5b15">ble_hrs_rr_interval_buffer_is_full</a> (<a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs)</td></tr>
-<tr class="memdesc:gaf207a34d16fbee25b5555fd4192b5b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for checking if RR Interval buffer is full.  <a href="#gaf207a34d16fbee25b5555fd4192b5b15">More...</a><br/></td></tr>
-<tr class="separator:gaf207a34d16fbee25b5555fd4192b5b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad8b66aa54ddf79459271df6ec9b65644"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00925.html#gad8b66aa54ddf79459271df6ec9b65644">ble_hrs_sensor_contact_supported_set</a> (<a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs, bool is_sensor_contact_supported)</td></tr>
-<tr class="memdesc:gad8b66aa54ddf79459271df6ec9b65644"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting the state of the Sensor Contact Supported bit.  <a href="#gad8b66aa54ddf79459271df6ec9b65644">More...</a><br/></td></tr>
-<tr class="separator:gad8b66aa54ddf79459271df6ec9b65644"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4eccea2cb1d248ccdc75bebb84c1dff2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00925.html#ga4eccea2cb1d248ccdc75bebb84c1dff2">ble_hrs_sensor_contact_detected_update</a> (<a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs, bool is_sensor_contact_detected)</td></tr>
-<tr class="memdesc:ga4eccea2cb1d248ccdc75bebb84c1dff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting the state of the Sensor Contact Detected bit.  <a href="#ga4eccea2cb1d248ccdc75bebb84c1dff2">More...</a><br/></td></tr>
-<tr class="separator:ga4eccea2cb1d248ccdc75bebb84c1dff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab3ec66c7419f5c79ad54f849353e8aea"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00925.html#gab3ec66c7419f5c79ad54f849353e8aea">ble_hrs_body_sensor_location_set</a> (<a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *p_hrs, uint8_t body_sensor_location)</td></tr>
-<tr class="memdesc:gab3ec66c7419f5c79ad54f849353e8aea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting the Body Sensor Location.  <a href="#gab3ec66c7419f5c79ad54f849353e8aea">More...</a><br/></td></tr>
-<tr class="separator:gab3ec66c7419f5c79ad54f849353e8aea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga124cd974cfc529057218a14af8ee9780"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00925.html#ga124cd974cfc529057218a14af8ee9780">sd_ble_l2cap_cid_register</a> (uint16_t cid)</td></tr>
+<tr class="memdesc:ga124cd974cfc529057218a14af8ee9780"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a CID with L2CAP.  <a href="#ga124cd974cfc529057218a14af8ee9780">More...</a><br/></td></tr>
+<tr class="separator:ga124cd974cfc529057218a14af8ee9780"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78af254844e078b90868b3c827200e25"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00925.html#ga78af254844e078b90868b3c827200e25">sd_ble_l2cap_cid_unregister</a> (uint16_t cid)</td></tr>
+<tr class="memdesc:ga78af254844e078b90868b3c827200e25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregister a CID with L2CAP.  <a href="#ga78af254844e078b90868b3c827200e25">More...</a><br/></td></tr>
+<tr class="separator:ga78af254844e078b90868b3c827200e25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaddb9c946774f03aeb65bb19697759a7c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00925.html#gaddb9c946774f03aeb65bb19697759a7c">sd_ble_l2cap_tx</a> (uint16_t conn_handle, <a class="el" href="a00282.html">ble_l2cap_header_t</a> const *const p_header, uint8_t const *const p_data)</td></tr>
+<tr class="memdesc:gaddb9c946774f03aeb65bb19697759a7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit an L2CAP packet.  <a href="#gaddb9c946774f03aeb65bb19697759a7c">More...</a><br/></td></tr>
+<tr class="separator:gaddb9c946774f03aeb65bb19697759a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Heart Rate Service module. </p>
-<p>This module implements the Heart Rate Service with the Heart Rate Measurement, Body Sensor Location and Heart Rate Control Point characteristics. During initialization it adds the Heart Rate Service and Heart Rate Measurement characteristic to the BLE stack database. Optionally it also adds the Body Sensor Location and Heart Rate Control Point characteristics.</p>
-<p>If enabled, notification of the Heart Rate Measurement characteristic is performed when the application calls <a class="el" href="a00925.html#gabe5fed48baeb4a518a51bd7e2e5f010e" title="Function for sending heart rate measurement if notification has been enabled.">ble_hrs_heart_rate_measurement_send()</a>.</p>
-<p>The Heart Rate Service also provides a set of functions for manipulating the various fields in the Heart Rate Measurement characteristic, as well as setting the Body Sensor Location characteristic value.</p>
-<p>If an event handler is supplied by the application, the Heart Rate Service will generate Heart Rate Service events to the application.</p>
-<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Heart Rate Service module by calling <a class="el" href="a00925.html#gac50e029608199cc8d52463acb3e8a02e" title="Function for handling the Application&#39;s BLE Stack events.">ble_hrs_on_ble_evt()</a> from the from the ble_stack_handler callback.</dd>
-<dd>
-Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profile qualification listings, this section of source code must not be modified. </dd></dl>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga2e829f32fd9d57d18d1e8daa7956dee5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_HRS_MAX_BUFFERED_RR_INTERVALS&#160;&#160;&#160;20</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of RR Interval buffer inside service. </p>
-
-</div>
-</div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaee495052c855cd5345f7301b594763c9"></a>
+<a class="anchor" id="ga200c8684032d8e5fe10d295b2f3a1555"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00925.html#gaee495052c855cd5345f7301b594763c9">ble_hrs_evt_type_t</a></td>
+          <td class="memname">enum <a class="el" href="a00925.html#ga200c8684032d8e5fe10d295b2f3a1555">BLE_L2CAP_EVTS</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Heart Rate Service event type. </p>
+<p>L2CAP Event IDs. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaee495052c855cd5345f7301b594763c9a0f13cf6877038b174544d95ee3a40894"></a>BLE_HRS_EVT_NOTIFICATION_ENABLED</em>&nbsp;</td><td class="fielddoc">
-<p>Heart Rate value notification enabled event. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaee495052c855cd5345f7301b594763c9a1ed0b327eecae450aa039af15ddae345"></a>BLE_HRS_EVT_NOTIFICATION_DISABLED</em>&nbsp;</td><td class="fielddoc">
-<p>Heart Rate value notification disabled event. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga200c8684032d8e5fe10d295b2f3a1555af6d68dde17c172258858ea9d9c4488e3"></a>BLE_L2CAP_EVT_RX</em>&nbsp;</td><td class="fielddoc">
+<p>L2CAP packet received. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gab3ec66c7419f5c79ad54f849353e8aea"></a>
+<a class="anchor" id="ga124cd974cfc529057218a14af8ee9780"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_hrs_body_sensor_location_set </td>
+          <td class="memname">uint32_t sd_ble_l2cap_cid_register </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hrs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>body_sensor_location</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for setting the Body Sensor Location. </p>
-<p>Sets a new value of the Body Sensor Location characteristic. The new value will be sent to the client the next time the client reads the Body Sensor Location characteristic.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_hrs</td><td>Heart Rate Service structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">body_sensor_location</td><td>New Body Sensor Location.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gabe5fed48baeb4a518a51bd7e2e5f010e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_hrs_heart_rate_measurement_send </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hrs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>heart_rate</em>&#160;</td>
-        </tr>
-        <tr>
+          <td class="paramname"><em>cid</em></td><td>)</td>
           <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for sending heart rate measurement if notification has been enabled. </p>
-<p>The application calls this function after having performed a heart rate measurement. If notification has been enabled, the heart rate measurement data is encoded and sent to the client.</p>
+<p>Register a CID with L2CAP. </p>
+<p>This registers a higher protocol layer with the L2CAP multiplexer, and is requried prior to all operations on the CID.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_hrs</td><td>Heart Rate Service structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">heart_rate</td><td>New heart rate measurement. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">include_expended_energy</td><td>Determines if expended energy will be included in the heart rate measurement data.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cid</td><td>L2CAP CID.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="a00751.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a> Successfully registered a CID with the L2CAP layer. </dd>
+<dd>
+<a class="el" href="a00751.html#ga0a5831cf5092e0dd43a01869676ee076">NRF_ERROR_INVALID_PARAM</a> Invalid parameter(s) supplied, CID must be above <a class="el" href="a00924.html#ga04c14ff9adffadf03baad98d7632b620">BLE_L2CAP_CID_DYN_BASE</a>. </dd>
+<dd>
+<a class="el" href="a00744.html#ga258b4a1e6ac5f32e23036ef0b88af3fa">BLE_ERROR_L2CAP_CID_IN_USE</a> L2CAP CID already in use. </dd>
+<dd>
+<a class="el" href="a00751.html#ga7ef4d466b79b31c6325f8b7af5d4f75f">NRF_ERROR_NO_MEM</a> Not enough memory to complete operation. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga94256c7eb29129ff352ca53adf1ad5b8"></a>
+<a class="anchor" id="ga78af254844e078b90868b3c827200e25"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_hrs_init </td>
+          <td class="memname">uint32_t sd_ble_l2cap_cid_unregister </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hrs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00285.html">ble_hrs_init_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hrs_init</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for initializing the Heart Rate Service. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_hrs</td><td>Heart Rate Service structure. This structure will have to be supplied by the application. It will be initialized by this function, and will later be used to identify this particular service instance. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_hrs_init</td><td>Information needed to initialize the service.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization of service, otherwise an error code. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gac50e029608199cc8d52463acb3e8a02e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ble_hrs_on_ble_evt </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hrs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00195.html">ble_evt_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ble_evt</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for handling the Application's BLE Stack events. </p>
-<p>Handles all events from the BLE stack of interest to the Heart Rate Service.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_hrs</td><td>Heart Rate Service structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>Event received from the BLE stack. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaea316a9c9503571b143d93086295f61a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ble_hrs_rr_interval_add </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hrs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>rr_interval</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for adding a RR Interval measurement to the RR Interval buffer. </p>
-<p>All buffered RR Interval measurements will be included in the next heart rate measurement message, up to the maximum number of measurements that will fit into the message. If the buffer is full, the oldest measurement in the buffer will be deleted.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_hrs</td><td>Heart Rate Service structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">rr_interval</td><td>New RR Interval measurement (will be buffered until the next transmission of Heart Rate Measurement). </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf207a34d16fbee25b5555fd4192b5b15"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_hrs_rr_interval_buffer_is_full </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hrs</em></td><td>)</td>
+          <td class="paramname"><em>cid</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for checking if RR Interval buffer is full. </p>
+<p>Unregister a CID with L2CAP. </p>
+<p>This unregisters a previously registerd higher protocol layer with the L2CAP multiplexer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_hrs</td><td>Heart Rate Service structure.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cid</td><td>L2CAP CID.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true if RR Interval buffer is full, false otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="a00751.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a> Successfully unregistered the CID. </dd>
+<dd>
+<a class="el" href="a00751.html#ga0a5831cf5092e0dd43a01869676ee076">NRF_ERROR_INVALID_PARAM</a> Invalid parameter(s) supplied. </dd>
+<dd>
+<a class="el" href="a00751.html#ga349d25ada15be023e0d507f45ada682c">NRF_ERROR_NOT_FOUND</a> CID not previously registered. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga4eccea2cb1d248ccdc75bebb84c1dff2"></a>
+<a class="anchor" id="gaddb9c946774f03aeb65bb19697759a7c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ble_hrs_sensor_contact_detected_update </td>
+          <td class="memname">uint32_t sd_ble_l2cap_tx </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hrs</em>, </td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>is_sensor_contact_detected</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for setting the state of the Sensor Contact Detected bit. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_hrs</td><td>Heart Rate Service structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">is_sensor_contact_detected</td><td>TRUE if sensor contact is detected, FALSE otherwise. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad8b66aa54ddf79459271df6ec9b65644"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_hrs_sensor_contact_supported_set </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab">ble_hrs_t</a> *&#160;</td>
-          <td class="paramname"><em>p_hrs</em>, </td>
+          <td class="paramtype"><a class="el" href="a00282.html">ble_l2cap_header_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_header</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>is_sensor_contact_supported</em>&#160;</td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_data</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -511,15 +250,29 @@ Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profil
       </table>
 </div><div class="memdoc">
 
-<p>Function for setting the state of the Sensor Contact Supported bit. </p>
+<p>Transmit an L2CAP packet. </p>
+<dl class="section note"><dt>Note</dt><dd>It is important to note that a call to this function will <b>consume an application buffer</b>, and will therefore generate a <a class="el" href="a00905.html#ggaa55e423bfea45f03764a636f2cec7a8ba408a77f131a2d314fbf477cdb2d1e0f6">BLE_EVT_TX_COMPLETE</a> event when the packet has been transmitted. Please see the documentation of <a class="el" href="a00906.html#ga37e443c585217475a97e40dfb443a1b6">sd_ble_tx_buffer_count_get</a> for more details.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_hrs</td><td>Heart Rate Service structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">is_sensor_contact_supported</td><td>New state of the Sensor Contact Supported bit.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection Handle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_header</td><td>Pointer to a packet header containing length and CID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Pointer to the data to be transmitted.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="a00751.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a> Successfully queued an L2CAP packet for transmission. </dd>
+<dd>
+<a class="el" href="a00751.html#gabc562e4ddfe2f427666a3acdd0b469a3">NRF_ERROR_INVALID_ADDR</a> Invalid pointer supplied. </dd>
+<dd>
+<a class="el" href="a00751.html#ga0a5831cf5092e0dd43a01869676ee076">NRF_ERROR_INVALID_PARAM</a> Invalid parameter(s) supplied, CIDs must be registered beforehand with <a class="el" href="a00925.html#ga124cd974cfc529057218a14af8ee9780">sd_ble_l2cap_cid_register</a>. </dd>
+<dd>
+<a class="el" href="a00751.html#ga349d25ada15be023e0d507f45ada682c">NRF_ERROR_NOT_FOUND</a> CID not found. </dd>
+<dd>
+<a class="el" href="a00751.html#ga7ef4d466b79b31c6325f8b7af5d4f75f">NRF_ERROR_NO_MEM</a> Not enough memory to complete operation. </dd>
+<dd>
+<a class="el" href="a00707.html#ga901e1bc3ccae29eff9fb31cabdbb5e02">BLE_ERROR_NO_TX_BUFFERS</a> Not enough application buffers available. </dd>
+<dd>
+<a class="el" href="a00751.html#ga4c61f2b54667506e90cc296721b2e658">NRF_ERROR_DATA_SIZE</a> Invalid data size(s) supplied, see <a class="el" href="a00924.html#gacc63c6e5847699642179a1ec792fe1c1">BLE_L2CAP_MTU_DEF</a>. </dd></dl>
 
 </div>
 </div>
@@ -528,7 +281,7 @@ Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profil
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:47 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:36 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

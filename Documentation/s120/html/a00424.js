@@ -1,5 +1,7 @@
 var a00424 =
 [
-    [ "SDK_COMMON_ERROR_BASE", "a00424.html#ga1fa2dae6c4a22d6592184236f7f8ed4e", null ],
-    [ "SDK_ERROR_BASE", "a00424.html#ga3756b7defda416b28928be1af33c4257", null ]
+    [ "CRITICAL_REGION_ENTER", "a00424.html#ga61149a977f6ebdaeb8bdeed626dd9392", null ],
+    [ "CRITICAL_REGION_EXIT", "a00424.html#ga854878240b628e978f760f75aca4e1cc", null ],
+    [ "NRF_APP_PRIORITY_THREAD", "a00424.html#gac3db2bb99db38f42bf316a9d0d9ace99", null ],
+    [ "app_irq_priority_t", "a00424.html#ga1a193131d1d5911b1ec53f9541841b1b", null ]
 ];

@@ -21,13 +21,13 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "adns2080_example.html",
-"group__ant__fs__client__main.html#ga55588605243d48049983d23b46f95dbd",
-"group__ant__sdm__tx__timer.html#ga04d71886f3b92d72ab50e52846328c40",
-"group__nrf51__sdk__api.html",
-"group__sdm__rx__data__buffer__indices.html#gaca05b3a5f2e262ccc7eb69911c5543a8",
-"group__t__s210__ant__interface.html#ga231d8b588e95f769b07b6fbdd879d439",
-"group__t__s210__ant__parameters.html#gabec917ca5568fdf775b40f76800aecbe",
-"structantfs__event__return__t.html"
+"group__ant__fs__client__main.html#gafe8c3fa6fb19e1432ecb2eab4a7940e6",
+"group__app__timer.html",
+"group__nrf__drivers__cherry8x16.html",
+"group__t__s210___n_r_f___s_d_m___t_y_p_e_s.html",
+"group__t__s210__ant__parameters.html#ga37e73711b0db31d8a6371b3d29f10422",
+"lib_pstorage.html",
+"structnrf__ecb__hal__data__t.html#aab4ea408dd38499ceff3935ecb5fa39f"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

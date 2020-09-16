@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_db_discovery_srv_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,112 @@ $(document).ready(function(){initNavTree('a00078.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_db_discovery_srv_t Struct Reference<div class="ingroups"><a class="el" href="a00516.html">Structures</a></div></div>  </div>
+<div class="title">ble_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00537.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure for holding information about the service and the characteristics found during the discovery process.  
+<p>Common BLE Event type, wrapping the module specific event reports.  
  <a href="a00078.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_db_discovery.h&gt;</code></p>
+<p><code>#include &lt;ble.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a97887d3332bca8ac17806b8d328e4a2c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00167.html">ble_uuid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00078.html#a97887d3332bca8ac17806b8d328e4a2c">srv_uuid</a></td></tr>
-<tr class="separator:a97887d3332bca8ac17806b8d328e4a2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a199d43a17b0e41d7904da316db6b98ae"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00078.html#a199d43a17b0e41d7904da316db6b98ae">char_count</a></td></tr>
-<tr class="separator:a199d43a17b0e41d7904da316db6b98ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeeb1c850a101a81108ca109c2f117166"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00075.html">ble_db_discovery_char_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00078.html#aeeb1c850a101a81108ca109c2f117166">charateristics</a> [3]</td></tr>
-<tr class="separator:aeeb1c850a101a81108ca109c2f117166"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2300f7ac7bc453bc13fb060d3ff05efc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00135.html">ble_gattc_handle_range_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00078.html#a2300f7ac7bc453bc13fb060d3ff05efc">handle_range</a></td></tr>
-<tr class="separator:a2300f7ac7bc453bc13fb060d3ff05efc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31f5fb5f33b8020c1b91639d048a6efa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00077.html">ble_evt_hdr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00078.html#a31f5fb5f33b8020c1b91639d048a6efa">header</a></td></tr>
+<tr class="separator:a31f5fb5f33b8020c1b91639d048a6efa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac08badf887ff111382e98c89f40d27d0"><td class="memItemLeft" ><a class="anchor" id="ac08badf887ff111382e98c89f40d27d0"></a>
+union {</td></tr>
+<tr class="memitem:af479e37108978087fc83b5181708c30c"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00076.html">ble_common_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00078.html#a65014fa31bf6c86c113ef47dc929a755">common_evt</a></td></tr>
+<tr class="separator:af479e37108978087fc83b5181708c30c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa41fd452fbb557cba7b9cbcbe539a09"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00102.html">ble_gap_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00078.html#a67ca1f9db570d1c2f196c0a316151af5">gap_evt</a></td></tr>
+<tr class="separator:aaa41fd452fbb557cba7b9cbcbe539a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02b23b1b05c3176d9543876680bab2c3"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00159.html">ble_l2cap_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00078.html#a615ab3df54ef7363a90f915d6440ce1a">l2cap_evt</a></td></tr>
+<tr class="separator:a02b23b1b05c3176d9543876680bab2c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a871c4ea0339afb0b8f1c44b74f9c5879"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00129.html">ble_gattc_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00078.html#a2bdcb3c197239b4e5957d89bb0f26161">gattc_evt</a></td></tr>
+<tr class="separator:a871c4ea0339afb0b8f1c44b74f9c5879"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae71add983ed40141a307e4bb84aa5e70"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00147.html">ble_gatts_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00078.html#aea997556a147ad5541998f13699e27c1">gatts_evt</a></td></tr>
+<tr class="separator:ae71add983ed40141a307e4bb84aa5e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac08badf887ff111382e98c89f40d27d0"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>evt</b></td></tr>
+<tr class="separator:ac08badf887ff111382e98c89f40d27d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure for holding information about the service and the characteristics found during the discovery process. </p>
+<div class="textblock"><p>Common BLE Event type, wrapping the module specific event reports. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a199d43a17b0e41d7904da316db6b98ae"></a>
+<a class="anchor" id="a65014fa31bf6c86c113ef47dc929a755"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_db_discovery_srv_t::char_count</td>
+          <td class="memname"><a class="el" href="a00076.html">ble_common_evt_t</a> ble_evt_t::common_evt</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of characteristics present in the service. </p>
+<p>Common Event, evt_id in BLE_EVT_* series. </p>
 
 </div>
 </div>
-<a class="anchor" id="aeeb1c850a101a81108ca109c2f117166"></a>
+<a class="anchor" id="a67ca1f9db570d1c2f196c0a316151af5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00075.html">ble_db_discovery_char_t</a> ble_db_discovery_srv_t::charateristics[3]</td>
+          <td class="memname"><a class="el" href="a00102.html">ble_gap_evt_t</a> ble_evt_t::gap_evt</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The array of information related to the characteristics present in the service. </p>
+<p>GAP originated event, evt_id in BLE_GAP_EVT_* series. </p>
 
 </div>
 </div>
-<a class="anchor" id="a2300f7ac7bc453bc13fb060d3ff05efc"></a>
+<a class="anchor" id="a2bdcb3c197239b4e5957d89bb0f26161"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00135.html">ble_gattc_handle_range_t</a> ble_db_discovery_srv_t::handle_range</td>
+          <td class="memname"><a class="el" href="a00129.html">ble_gattc_evt_t</a> ble_evt_t::gattc_evt</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Service Handle Range. </p>
+<p>GATT client originated event, evt_id in BLE_GATTC_EVT* series. </p>
 
 </div>
 </div>
-<a class="anchor" id="a97887d3332bca8ac17806b8d328e4a2c"></a>
+<a class="anchor" id="aea997556a147ad5541998f13699e27c1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00167.html">ble_uuid_t</a> ble_db_discovery_srv_t::srv_uuid</td>
+          <td class="memname"><a class="el" href="a00147.html">ble_gatts_evt_t</a> ble_evt_t::gatts_evt</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>UUID of the service. </p>
+<p>GATT server originated event, evt_id in BLE_GATTS_EVT* series. </p>
+
+</div>
+</div>
+<a class="anchor" id="a31f5fb5f33b8020c1b91639d048a6efa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00077.html">ble_evt_hdr_t</a> ble_evt_t::header</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event header. </p>
+
+</div>
+</div>
+<a class="anchor" id="a615ab3df54ef7363a90f915d6440ce1a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00159.html">ble_l2cap_evt_t</a> ble_evt_t::l2cap_evt</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>L2CAP originated event, evt_id in BLE_L2CAP_EVT* series. </p>
 
 </div>
 </div>
@@ -186,8 +220,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00078.html">ble_db_discovery_srv_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:28 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00078.html">ble_evt_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:40 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

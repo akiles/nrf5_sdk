@@ -1,5 +1,5 @@
 var a00321 =
 [
-    [ "initial_tx_power_level", "a00321.html#a5be1f2c1c00932c36837e70c02679072", null ],
-    [ "tps_attr_md", "a00321.html#afc4915bf42eeee72f61614aa1161aa80", null ]
+    [ "high_to_low", "a00321.html#ae5b08a4f0525b94727edf87267f57c0b", null ],
+    [ "low_to_high", "a00321.html#ab74530adb87a0c8728839d2bbdc0f8f0", null ]
 ];

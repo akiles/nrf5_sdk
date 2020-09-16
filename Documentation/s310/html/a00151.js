@@ -1,8 +1,6 @@
 var a00151 =
 [
-    [ "div", "a00151.html#acf2e9db014242631b9912048cfff21ff", null ],
-    [ "enc_info", "a00151.html#ad111ceb6802da6301dbe73a73b35a4a1", null ],
-    [ "id_info", "a00151.html#a301c28abac3bf1f2f38d2b95854695cd", null ],
-    [ "peer_addr", "a00151.html#a2c9e328ee5b20afe64224e8d807e0015", null ],
-    [ "sign_info", "a00151.html#ad6b652026333405eba289d528d220638", null ]
+    [ "count", "a00151.html#a50e19076a010925f0ec9c71d40c33eff", null ],
+    [ "handle_value", "a00151.html#a0e8890391646f5df02ede436e3f1d987", null ],
+    [ "value_len", "a00151.html#a91e554093e8f445960abff9c0015193c", null ]
 ];

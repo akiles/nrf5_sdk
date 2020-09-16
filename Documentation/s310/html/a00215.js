@@ -1,8 +1,6 @@
 var a00215 =
 [
-    [ "data_len", "a00215.html#ad37a58093ba29da8205f825d524fde10", null ],
-    [ "ext_rep_ref_num", "a00215.html#a9dfff543d60774b7fe5bd69f23547e86", null ],
-    [ "p_data", "a00215.html#ac68f34bc812fb78bd16a11acf3931297", null ],
-    [ "p_ext_rep_ref", "a00215.html#a460e7c6bc062f9bd31fd72b4b696c2aa", null ],
-    [ "security_mode", "a00215.html#adcb39f07b266acfe8539c7ed9ed13532", null ]
+    [ "alert_level", "a00215.html#adaf4d087319007c776df8baf3673fe8a", null ],
+    [ "evt_type", "a00215.html#a971a9cd94583dae76dcf5f94eb412686", null ],
+    [ "params", "a00215.html#a88cf99487169b2570c216d8b0b8df40f", null ]
 ];

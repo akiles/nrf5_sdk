@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: ble_gatts_evt_rw_authorize_request_t Struct Reference</title>
+<title>nRF51 SDK - S310 SoftDevice: ble_hids_hid_information_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,67 +106,78 @@ $(document).ready(function(){initNavTree('a00192.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gatts_evt_rw_authorize_request_t Struct Reference<div class="ingroups"><a class="el" href="a00631.html">Generic Attribute Profile (GATT) Server</a></div></div>  </div>
+<div class="title">ble_hids_hid_information_t Struct Reference<div class="ingroups"><a class="el" href="a00603.html">Human Interface Device Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event structure for BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST.  
+<p>HID Information characteristic value.  
  <a href="a00192.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gatts.h&gt;</code></p>
+<p><code>#include &lt;ble_hids.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a8de6fad49332e37d86887303f2bc28a8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00192.html#a8de6fad49332e37d86887303f2bc28a8">type</a></td></tr>
-<tr class="separator:a8de6fad49332e37d86887303f2bc28a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affd49e24a3ab2be6b75aba5383eb63da"><td class="memItemLeft" ><a class="anchor" id="affd49e24a3ab2be6b75aba5383eb63da"></a>
-union {</td></tr>
-<tr class="memitem:aa49b328f6a8e228f3b2833a4c099386e"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00191.html">ble_gatts_evt_read_t</a>&#160;&#160;&#160;<a class="el" href="a00192.html#aa2fe207fe3fe3b8d5ff5e8fbbf65f495">read</a></td></tr>
-<tr class="separator:aa49b328f6a8e228f3b2833a4c099386e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02f0c28ecebc396f8c2006594fb099e9"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00196.html">ble_gatts_evt_write_t</a>&#160;&#160;&#160;<a class="el" href="a00192.html#ae846e97ba3f096abf3f54e92fcb30049">write</a></td></tr>
-<tr class="separator:a02f0c28ecebc396f8c2006594fb099e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affd49e24a3ab2be6b75aba5383eb63da"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>request</b></td></tr>
-<tr class="separator:affd49e24a3ab2be6b75aba5383eb63da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a077bfa68d00dff20a7497f8f7936ae79"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00192.html#a077bfa68d00dff20a7497f8f7936ae79">bcd_hid</a></td></tr>
+<tr class="separator:a077bfa68d00dff20a7497f8f7936ae79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadd0326cc45c31ea9e16b2f4cf0000fd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00192.html#aadd0326cc45c31ea9e16b2f4cf0000fd">b_country_code</a></td></tr>
+<tr class="separator:aadd0326cc45c31ea9e16b2f4cf0000fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acec5c1f0cd643c04bce7a9542e1b7444"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00192.html#acec5c1f0cd643c04bce7a9542e1b7444">flags</a></td></tr>
+<tr class="separator:acec5c1f0cd643c04bce7a9542e1b7444"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad011fc0114c033fc712bce4491101ac1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00230.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00192.html#ad011fc0114c033fc712bce4491101ac1">security_mode</a></td></tr>
+<tr class="separator:ad011fc0114c033fc712bce4491101ac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event structure for BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST. </p>
+<div class="textblock"><p>HID Information characteristic value. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aa2fe207fe3fe3b8d5ff5e8fbbf65f495"></a>
+<a class="anchor" id="aadd0326cc45c31ea9e16b2f4cf0000fd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00191.html">ble_gatts_evt_read_t</a> ble_gatts_evt_rw_authorize_request_t::read</td>
+          <td class="memname">uint8_t ble_hids_hid_information_t::b_country_code</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Attribute Read Parameters. </p>
+<p>Identifies which country the hardware is localized for. Most hardware is not localized and thus this value would be zero (0). </p>
 
 </div>
 </div>
-<a class="anchor" id="a8de6fad49332e37d86887303f2bc28a8"></a>
+<a class="anchor" id="a077bfa68d00dff20a7497f8f7936ae79"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gatts_evt_rw_authorize_request_t::type</td>
+          <td class="memname">uint16_t ble_hids_hid_information_t::bcd_hid</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of authorize operation, see BLE_GATTS_AUTHORIZE_TYPES. </p>
+<p>16-bit unsigned integer representing version number of base USB HID Specification implemented by HID Device </p>
 
 </div>
 </div>
-<a class="anchor" id="ae846e97ba3f096abf3f54e92fcb30049"></a>
+<a class="anchor" id="acec5c1f0cd643c04bce7a9542e1b7444"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00196.html">ble_gatts_evt_write_t</a> ble_gatts_evt_rw_authorize_request_t::write</td>
+          <td class="memname">uint8_t ble_hids_hid_information_t::flags</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Attribute Write Parameters. </p>
+<p>See <a href="http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.hid_information.xml">http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.hid_information.xml</a> </p>
+
+</div>
+</div>
+<a class="anchor" id="ad011fc0114c033fc712bce4491101ac1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00230.html">ble_srv_security_mode_t</a> ble_hids_hid_information_t::security_mode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Security mode for the HID Information characteristic. </p>
 
 </div>
 </div>
@@ -175,8 +186,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00192.html">ble_gatts_evt_rw_authorize_request_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:17 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00192.html">ble_hids_hid_information_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,11 +1,10 @@
 var a00204 =
 [
-    [ "base_time", "a00204.html#a50043eec02a9af09a81047f4eecfef33", null ],
-    [ "flags", "a00204.html#adaa211ee17f3d46654c641ab339b68db", null ],
-    [ "glucose_concentration", "a00204.html#a8d77eafd69ad69d3753fd043bdd31dc2", null ],
-    [ "sample_location", "a00204.html#a21eed1c3fbda85ac65aa060787a589b4", null ],
-    [ "sensor_status_annunciation", "a00204.html#a765f2b453e27775757271598452e2c8a", null ],
-    [ "sequence_number", "a00204.html#a7e89e39efc4889fc00da13fa87efcbc2", null ],
-    [ "time_offset", "a00204.html#a820a55933ac2e9e047193a846efbaf5d", null ],
-    [ "type", "a00204.html#a4e79195531cf78dfd880479a6404cb44", null ]
+    [ "temp_in_celcius", "a00204.html#a4065a89fde57ebf2effce6a1401e38c4", null ],
+    [ "temp_in_fahr", "a00204.html#a0120700a8a6185ce21e1a05391fbc706", null ],
+    [ "temp_in_fahr_units", "a00204.html#a16e05739a1ac3b03a2b4dc683bc1eacd", null ],
+    [ "temp_type", "a00204.html#a12b9d8fddee8e461bfcedb3489bd5f92", null ],
+    [ "temp_type_present", "a00204.html#a10dadb1129dd55a6d597e4e08764d7ff", null ],
+    [ "time_stamp", "a00204.html#aab4240703a233a4bd2cd1a7b3a5997c0", null ],
+    [ "time_stamp_present", "a00204.html#a21a7a430b8f85908438c9bd1fc2e0dce", null ]
 ];

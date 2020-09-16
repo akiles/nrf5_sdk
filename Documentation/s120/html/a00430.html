@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Bootloader util API.</title>
+<title>nRF51 SDK - S120 SoftDevice: Codes reserved as identification for common errors.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,81 +97,43 @@ $(document).ready(function(){initNavTree('a00430.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Bootloader util API.<div class="ingroups"><a class="el" href="a00555.html">Bootloader/DFU API</a></div></div>  </div>
+<div class="title">Codes reserved as identification for common errors.<div class="ingroups"><a class="el" href="a00427.html">SDK Error codes</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Bootloader util module interface.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga1cae97837343b3feb5ff2f5dc5d3ed90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00430.html#ga1cae97837343b3feb5ff2f5dc5d3ed90">bootloader_util_app_start</a> (uint32_t start_addr)</td></tr>
-<tr class="memdesc:ga1cae97837343b3feb5ff2f5dc5d3ed90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for starting the application.  <a href="#ga1cae97837343b3feb5ff2f5dc5d3ed90">More...</a><br/></td></tr>
-<tr class="separator:ga1cae97837343b3feb5ff2f5dc5d3ed90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4eb23ec5cff141b518e2d9c9976bcbe7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00430.html#ga4eb23ec5cff141b518e2d9c9976bcbe7">bootloader_util_settings_get</a> (const <a class="el" href="a00169.html">bootloader_settings_t</a> **pp_bootloader_settings)</td></tr>
-<tr class="memdesc:ga4eb23ec5cff141b518e2d9c9976bcbe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the bootloader settings.  <a href="#ga4eb23ec5cff141b518e2d9c9976bcbe7">More...</a><br/></td></tr>
-<tr class="separator:ga4eb23ec5cff141b518e2d9c9976bcbe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaf36f5aa75ed47d08734e99a6b0e8cef6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf36f5aa75ed47d08734e99a6b0e8cef6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MODULE_NOT_INITIALZED</b>&#160;&#160;&#160;(<a class="el" href="a00428.html#ga1fa2dae6c4a22d6592184236f7f8ed4e">SDK_COMMON_ERROR_BASE</a>+0x0000)</td></tr>
+<tr class="separator:gaf36f5aa75ed47d08734e99a6b0e8cef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gace3482ba7221dffbc669dcb5f364b7a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gace3482ba7221dffbc669dcb5f364b7a0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MUTEX_INIT_FAILED</b>&#160;&#160;&#160;(<a class="el" href="a00428.html#ga1fa2dae6c4a22d6592184236f7f8ed4e">SDK_COMMON_ERROR_BASE</a>+0x0001)</td></tr>
+<tr class="separator:gace3482ba7221dffbc669dcb5f364b7a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga050aa951766a4f680d48802bcddf1055"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga050aa951766a4f680d48802bcddf1055"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MUTEX_LOCK_FAILED</b>&#160;&#160;&#160;(<a class="el" href="a00428.html#ga1fa2dae6c4a22d6592184236f7f8ed4e">SDK_COMMON_ERROR_BASE</a>+0x0002)</td></tr>
+<tr class="separator:ga050aa951766a4f680d48802bcddf1055"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7498ea6962aba7ab6fab8de092ebb9bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7498ea6962aba7ab6fab8de092ebb9bd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MUTEX_UNLOCK_FAILED</b>&#160;&#160;&#160;(<a class="el" href="a00428.html#ga1fa2dae6c4a22d6592184236f7f8ed4e">SDK_COMMON_ERROR_BASE</a>+0x0003)</td></tr>
+<tr class="separator:ga7498ea6962aba7ab6fab8de092ebb9bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4e0c3de188ddca6e30a1af513f47a6f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4e0c3de188ddca6e30a1af513f47a6f1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MUTEX_COND_INIT_FAILED</b>&#160;&#160;&#160;(<a class="el" href="a00428.html#ga1fa2dae6c4a22d6592184236f7f8ed4e">SDK_COMMON_ERROR_BASE</a>+0x0004)</td></tr>
+<tr class="separator:ga4e0c3de188ddca6e30a1af513f47a6f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ff6730e744e4d5a9f724d0f7d0e3299"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5ff6730e744e4d5a9f724d0f7d0e3299"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>API_NOT_IMPLEMENTED</b>&#160;&#160;&#160;(<a class="el" href="a00428.html#ga1fa2dae6c4a22d6592184236f7f8ed4e">SDK_COMMON_ERROR_BASE</a>+0x0010)</td></tr>
+<tr class="separator:ga5ff6730e744e4d5a9f724d0f7d0e3299"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9973a5348a547679d95c0d9d5c4f171c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9973a5348a547679d95c0d9d5c4f171c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FEATURE_NOT_ENABLED</b>&#160;&#160;&#160;(<a class="el" href="a00428.html#ga1fa2dae6c4a22d6592184236f7f8ed4e">SDK_COMMON_ERROR_BASE</a>+0x0011)</td></tr>
+<tr class="separator:ga9973a5348a547679d95c0d9d5c4f171c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Bootloader util module interface. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga1cae97837343b3feb5ff2f5dc5d3ed90"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void bootloader_util_app_start </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>start_addr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for starting the application. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">start_addr</td><td>Start address. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4eb23ec5cff141b518e2d9c9976bcbe7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void bootloader_util_settings_get </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00169.html">bootloader_settings_t</a> **&#160;</td>
-          <td class="paramname"><em>pp_bootloader_settings</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for getting the bootloader settings. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">pp_bootloader_settings</td><td>Bootloader settings. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:06 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

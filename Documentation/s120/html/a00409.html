@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Utility Functions and Definitions</title>
+<title>nRF51 SDK - S120 SoftDevice: Scheduler</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,83 +97,134 @@ $(document).ready(function(){initNavTree('a00409.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Utility Functions and Definitions<div class="ingroups"><a class="el" href="a00554.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">Scheduler<div class="ingroups"><a class="el" href="a00571.html">SDK Common Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Various types and definitions available to all applications.  
+<p>The scheduler is used for transferring execution from the interrupt context to the main context.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00182.html">uint8_array_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Byte array type.  <a href="a00182.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga5efe7d9be4898d0ad40b4ba7182f69e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#ga5efe7d9be4898d0ad40b4ba7182f69e2">STATIC_ASSERT</a>(EXPR)&#160;&#160;&#160;typedef char static_assert_failed[(EXPR) ? 1 : -1]</td></tr>
-<tr class="memdesc:ga5efe7d9be4898d0ad40b4ba7182f69e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for doing static (i.e. compile time) assertion.  <a href="#ga5efe7d9be4898d0ad40b4ba7182f69e2">More...</a><br/></td></tr>
-<tr class="separator:ga5efe7d9be4898d0ad40b4ba7182f69e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga25e8110559dbc9665dfb9485be8ac60f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#ga25e8110559dbc9665dfb9485be8ac60f">ROUNDED_DIV</a>(A, B)&#160;&#160;&#160;(((A) + ((B) / 2)) / (B))</td></tr>
-<tr class="memdesc:ga25e8110559dbc9665dfb9485be8ac60f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform rounded integer division (as opposed to truncating the result).  <a href="#ga25e8110559dbc9665dfb9485be8ac60f">More...</a><br/></td></tr>
-<tr class="separator:ga25e8110559dbc9665dfb9485be8ac60f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga93157dfd3f26159fb0a1a542723def55"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#ga93157dfd3f26159fb0a1a542723def55">IS_POWER_OF_TWO</a>(A)&#160;&#160;&#160;( ((A) != 0) &amp;&amp; ((((A) - 1) &amp; (A)) == 0) )</td></tr>
-<tr class="memdesc:ga93157dfd3f26159fb0a1a542723def55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the integer provided is a power of two.  <a href="#ga93157dfd3f26159fb0a1a542723def55">More...</a><br/></td></tr>
-<tr class="separator:ga93157dfd3f26159fb0a1a542723def55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae7c9ee84adc7fdda8b3b8e2175245717"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#gae7c9ee84adc7fdda8b3b8e2175245717">MSEC_TO_UNITS</a>(TIME, RESOLUTION)&#160;&#160;&#160;(((TIME) * 1000) / (RESOLUTION))</td></tr>
-<tr class="memdesc:gae7c9ee84adc7fdda8b3b8e2175245717"><td class="mdescLeft">&#160;</td><td class="mdescRight">To convert ticks to millisecond.  <a href="#gae7c9ee84adc7fdda8b3b8e2175245717">More...</a><br/></td></tr>
-<tr class="separator:gae7c9ee84adc7fdda8b3b8e2175245717"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7aaa817cfd7ed354f09db5675ffe1427"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#ga7aaa817cfd7ed354f09db5675ffe1427">CEIL_DIV</a>(A, B)</td></tr>
-<tr class="memdesc:ga7aaa817cfd7ed354f09db5675ffe1427"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform integer division, making sure the result is rounded up.  <a href="#ga7aaa817cfd7ed354f09db5675ffe1427">More...</a><br/></td></tr>
-<tr class="separator:ga7aaa817cfd7ed354f09db5675ffe1427"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6ec6d3a526d13df66e0aff7d20049e20"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#ga6ec6d3a526d13df66e0aff7d20049e20">APP_SCHED_EVENT_HEADER_SIZE</a>&#160;&#160;&#160;8</td></tr>
+<tr class="separator:ga6ec6d3a526d13df66e0aff7d20049e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga197748a0733d615e809ce71effa6dc48"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#ga197748a0733d615e809ce71effa6dc48">APP_SCHED_BUF_SIZE</a>(EVENT_SIZE, QUEUE_SIZE)&#160;&#160;&#160;(((EVENT_SIZE) + <a class="el" href="a00409.html#ga6ec6d3a526d13df66e0aff7d20049e20">APP_SCHED_EVENT_HEADER_SIZE</a>) * ((QUEUE_SIZE) + 1))</td></tr>
+<tr class="memdesc:ga197748a0733d615e809ce71effa6dc48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute number of bytes required to hold the scheduler buffer.  <a href="#ga197748a0733d615e809ce71effa6dc48">More...</a><br/></td></tr>
+<tr class="separator:ga197748a0733d615e809ce71effa6dc48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa9670ed0053a67304c3d2d0cb3eb1333"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#gaa9670ed0053a67304c3d2d0cb3eb1333">APP_SCHED_INIT</a>(EVENT_SIZE, QUEUE_SIZE)</td></tr>
+<tr class="memdesc:gaa9670ed0053a67304c3d2d0cb3eb1333"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for initializing the event scheduler.  <a href="#gaa9670ed0053a67304c3d2d0cb3eb1333">More...</a><br/></td></tr>
+<tr class="separator:gaa9670ed0053a67304c3d2d0cb3eb1333"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gaa6f104ea023a4a6a56ef05f30b0cfdc3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa6f104ea023a4a6a56ef05f30b0cfdc3"></a>
-typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#gaa6f104ea023a4a6a56ef05f30b0cfdc3">uint16_le_t</a> [2]</td></tr>
-<tr class="memdesc:gaa6f104ea023a4a6a56ef05f30b0cfdc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">type for holding an encoded (i.e. little endian) 16 bit unsigned integer. <br/></td></tr>
-<tr class="separator:gaa6f104ea023a4a6a56ef05f30b0cfdc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga634aa3136e273c2a368023ce97e73f01"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga634aa3136e273c2a368023ce97e73f01"></a>
-typedef uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#ga634aa3136e273c2a368023ce97e73f01">uint32_le_t</a> [4]</td></tr>
-<tr class="memdesc:ga634aa3136e273c2a368023ce97e73f01"><td class="mdescLeft">&#160;</td><td class="mdescRight">type for holding an encoded (i.e. little endian) 32 bit unsigned integer. <br/></td></tr>
-<tr class="separator:ga634aa3136e273c2a368023ce97e73f01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad36ea5cb15b82aa724a13f1ba24ef005"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad36ea5cb15b82aa724a13f1ba24ef005"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#gad36ea5cb15b82aa724a13f1ba24ef005">app_sched_event_handler_t</a> )(void *p_event_data, uint16_t event_size)</td></tr>
+<tr class="memdesc:gad36ea5cb15b82aa724a13f1ba24ef005"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scheduler event handler type. <br/></td></tr>
+<tr class="separator:gad36ea5cb15b82aa724a13f1ba24ef005"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gab04a0655cd1e3bcac5e8f48c18df1a57"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00409.html#ggab04a0655cd1e3bcac5e8f48c18df1a57a448dcb5272567df7360a964e7c9b91b1">UNIT_0_625_MS</a> = 625, 
-<br/>
-&#160;&#160;<a class="el" href="a00409.html#ggab04a0655cd1e3bcac5e8f48c18df1a57abd6cc6c5518e69158001db0a5b3c4410">UNIT_1_25_MS</a> = 1250, 
-<br/>
-&#160;&#160;<a class="el" href="a00409.html#ggab04a0655cd1e3bcac5e8f48c18df1a57adfbb1465ed01976b118bae937a90cc60">UNIT_10_MS</a> = 10000
-<br/>
- }</td></tr>
-<tr class="separator:gab04a0655cd1e3bcac5e8f48c18df1a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gaf021e02dd6ca1767b428c250d1ded56c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#gaf021e02dd6ca1767b428c250d1ded56c">app_sched_init</a> (uint16_t max_event_size, uint16_t queue_size, void *p_evt_buffer)</td></tr>
+<tr class="memdesc:gaf021e02dd6ca1767b428c250d1ded56c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Scheduler.  <a href="#gaf021e02dd6ca1767b428c250d1ded56c">More...</a><br/></td></tr>
+<tr class="separator:gaf021e02dd6ca1767b428c250d1ded56c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab725820c32a8d05379db4567cf30e862"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#gab725820c32a8d05379db4567cf30e862">app_sched_execute</a> (void)</td></tr>
+<tr class="memdesc:gab725820c32a8d05379db4567cf30e862"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for executing all scheduled events.  <a href="#gab725820c32a8d05379db4567cf30e862">More...</a><br/></td></tr>
+<tr class="separator:gab725820c32a8d05379db4567cf30e862"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga49ec0ad278ece44b5dc56b86ac44489c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#ga49ec0ad278ece44b5dc56b86ac44489c">app_sched_event_put</a> (void *p_event_data, uint16_t event_size, <a class="el" href="a00409.html#gad36ea5cb15b82aa724a13f1ba24ef005">app_sched_event_handler_t</a> handler)</td></tr>
+<tr class="memdesc:ga49ec0ad278ece44b5dc56b86ac44489c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for scheduling an event.  <a href="#ga49ec0ad278ece44b5dc56b86ac44489c">More...</a><br/></td></tr>
+<tr class="separator:ga49ec0ad278ece44b5dc56b86ac44489c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Various types and definitions available to all applications. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga7aaa817cfd7ed354f09db5675ffe1427"></a>
+<p>The scheduler is used for transferring execution from the interrupt context to the main context. </p>
+<p>See ble_sdk_apps_seq_diagrams for sequence diagrams illustrating the flow of events when using the Scheduler.</p>
+<h1><a class="anchor" id="app_scheduler_req"></a>
+Requirements:</h1>
+<h2><a class="anchor" id="main_context_logic"></a>
+Logic in main context:</h2>
+<ul>
+<li>Define an event handler for each type of event expected.</li>
+<li>Initialize the scheduler by calling the <a class="el" href="a00409.html#gaa9670ed0053a67304c3d2d0cb3eb1333" title="Macro for initializing the event scheduler.">APP_SCHED_INIT()</a> macro before entering the application main loop.</li>
+<li>Call <a class="el" href="a00409.html#gab725820c32a8d05379db4567cf30e862" title="Function for executing all scheduled events.">app_sched_execute()</a> from the main loop each time the application wakes up because of an event (typically when <a class="el" href="a00567.html#ga11d88d38ac99fb72cde74c9385d36433" title="Waits for an application event.">sd_app_evt_wait()</a> returns).</li>
+</ul>
+<h2><a class="anchor" id="int_context_logic"></a>
+Logic in interrupt context:</h2>
+<ul>
+<li>In the interrupt handler, call <a class="el" href="a00409.html#ga49ec0ad278ece44b5dc56b86ac44489c" title="Function for scheduling an event.">app_sched_event_put()</a> with the appropriate data and event handler. This will insert an event into the scheduler's queue. The <a class="el" href="a00409.html#gab725820c32a8d05379db4567cf30e862" title="Function for executing all scheduled events.">app_sched_execute()</a> function will pull this event and call its handler in the main context.</li>
+</ul>
+<p>For an example usage of the scheduler, please see the implementations of ble_sdk_app_hids_mouse and ble_sdk_app_hids_keyboard.</p>
+<div class="image">
+<img src="scheduler_working.jpg" alt="scheduler_working.jpg"/>
+<div class="caption">
+The high level design of the scheduler</div></div>
+ <h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga197748a0733d615e809ce71effa6dc48"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CEIL_DIV</td>
+          <td class="memname">#define APP_SCHED_BUF_SIZE</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">A, </td>
+          <td class="paramname">EVENT_SIZE, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">B&#160;</td>
+          <td class="paramname">QUEUE_SIZE&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;(((EVENT_SIZE) + <a class="el" href="a00409.html#ga6ec6d3a526d13df66e0aff7d20049e20">APP_SCHED_EVENT_HEADER_SIZE</a>) * ((QUEUE_SIZE) + 1))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute number of bytes required to hold the scheduler buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">EVENT_SIZE</td><td>Maximum size of events to be passed through the scheduler. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">QUEUE_SIZE</td><td>Number of entries in scheduler queue (i.e. the maximum number of events that can be scheduled for execution).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Required scheduler buffer size (in bytes). </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6ec6d3a526d13df66e0aff7d20049e20"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_SCHED_EVENT_HEADER_SIZE&#160;&#160;&#160;8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size of app_scheduler.event_header_t (only for use inside <a class="el" href="a00409.html#ga197748a0733d615e809ce71effa6dc48" title="Compute number of bytes required to hold the scheduler buffer.">APP_SCHED_BUF_SIZE()</a>). </p>
+
+</div>
+</div>
+<a class="anchor" id="gaa9670ed0053a67304c3d2d0cb3eb1333"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_SCHED_INIT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">EVENT_SIZE, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">QUEUE_SIZE&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -182,169 +233,139 @@ Enumerations</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="comment">/*lint -save -e573 */</span>   \</div>
-<div class="line">    ((((A) - 1) / (B)) + 1) \</div>
-<div class="line">    <span class="comment">/*lint -restore */</span></div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>                                                                                             \</div>
+<div class="line">    {                                                                                              \</div>
+<div class="line">        static uint32_t APP_SCHED_BUF[<a class="code" href="a00413.html#ga7aaa817cfd7ed354f09db5675ffe1427" title="Perform integer division, making sure the result is rounded up.">CEIL_DIV</a>(<a class="code" href="a00409.html#ga197748a0733d615e809ce71effa6dc48" title="Compute number of bytes required to hold the scheduler buffer.">APP_SCHED_BUF_SIZE</a>((EVENT_SIZE), (QUEUE_SIZE)),     \</div>
+<div class="line">                                               <span class="keyword">sizeof</span>(uint32_t))];                                 \</div>
+<div class="line">        uint32_t ERR_CODE = <a class="code" href="a00409.html#gaf021e02dd6ca1767b428c250d1ded56c" title="Function for initializing the Scheduler.">app_sched_init</a>((EVENT_SIZE), (QUEUE_SIZE), APP_SCHED_BUF);             \</div>
+<div class="line">        APP_ERROR_CHECK(ERR_CODE);                                                                 \</div>
+<div class="line">    } <span class="keywordflow">while</span> (0)</div>
 </div><!-- fragment -->
-<p>Perform integer division, making sure the result is rounded up. </p>
-<p>One typical use for this is to compute the number of objects with size B is needed to hold A number of bytes.</p>
+<p>Macro for initializing the event scheduler. </p>
+<p>It will also handle dimensioning and allocation of the memory buffer required by the scheduler, making sure the buffer is correctly aligned.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Numerator. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">B</td><td>Denominator.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">EVENT_SIZE</td><td>Maximum size of events to be passed through the scheduler. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">QUEUE_SIZE</td><td>Number of entries in scheduler queue (i.e. the maximum number of events that can be scheduled for execution).</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Integer result of dividing A by B, rounded up. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Since this macro allocates a buffer, it must only be called once (it is OK to call it several times as long as it is from the same location, e.g. to do a reinitialization). </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga93157dfd3f26159fb0a1a542723def55"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga49ec0ad278ece44b5dc56b86ac44489c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define IS_POWER_OF_TWO</td>
+          <td class="memname">uint32_t app_sched_event_put </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">A</td><td>)</td>
-          <td>&#160;&#160;&#160;( ((A) != 0) &amp;&amp; ((((A) - 1) &amp; (A)) == 0) )</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Check if the integer provided is a power of two. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Number to be tested.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true if value is power of two. </dd>
-<dd>
-false if value not power of two. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gae7c9ee84adc7fdda8b3b8e2175245717"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MSEC_TO_UNITS</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">TIME, </td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_event_data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">RESOLUTION&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;(((TIME) * 1000) / (RESOLUTION))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>To convert ticks to millisecond. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">time</td><td>Number of millseconds that needs to be converted. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">resolution</td><td>Units to be converted. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga25e8110559dbc9665dfb9485be8ac60f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ROUNDED_DIV</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">A, </td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>event_size</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">B&#160;</td>
+          <td class="paramtype"><a class="el" href="a00409.html#gad36ea5cb15b82aa724a13f1ba24ef005">app_sched_event_handler_t</a>&#160;</td>
+          <td class="paramname"><em>handler</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td>&#160;&#160;&#160;(((A) + ((B) / 2)) / (B))</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Perform rounded integer division (as opposed to truncating the result). </p>
+<p>Function for scheduling an event. </p>
+<p>Puts an event into the event queue.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">A</td><td>Numerator. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">B</td><td>Denominator.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_event_data</td><td>Pointer to event data to be scheduled. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_event_size</td><td>Size of event data to be scheduled. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">handler</td><td>Event handler to receive the event.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Rounded (integer) result of dividing A by B. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga5efe7d9be4898d0ad40b4ba7182f69e2"></a>
+<a class="anchor" id="gab725820c32a8d05379db4567cf30e862"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define STATIC_ASSERT</td>
+          <td class="memname">void app_sched_execute </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">EXPR</td><td>)</td>
-          <td>&#160;&#160;&#160;typedef char static_assert_failed[(EXPR) ? 1 : -1]</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Macro for doing static (i.e. compile time) assertion. </p>
-<dl class="section note"><dt>Note</dt><dd>If the assertion fails when compiling using Keil, the compiler will report error message "error: #94: the size of an array must be greater than zero" (while gcc will list the symbol static_assert_failed, making the error message more readable). If the supplied expression can not be evaluated at compile time, Keil will report "error: #28: expression must have a constant value".</dd>
-<dd>
-The macro is intentionally implemented not using do while(0), allowing it to be used outside function blocks (e.g. close to global type- and variable declarations). If used in a code block, it must be used before any executable code in this block.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">EXPR</td><td>Constant expression to be verified. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Function for executing all scheduled events. </p>
+<p>This function must be called from within the main loop. It will execute all events scheduled since the last time it was called. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gab04a0655cd1e3bcac5e8f48c18df1a57"></a>
+<a class="anchor" id="gaf021e02dd6ca1767b428c250d1ded56c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">uint32_t app_sched_init </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>max_event_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>queue_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_evt_buffer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab04a0655cd1e3bcac5e8f48c18df1a57a448dcb5272567df7360a964e7c9b91b1"></a>UNIT_0_625_MS</em>&nbsp;</td><td class="fielddoc">
-<p>Number of microseconds in 0.625 milliseconds. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab04a0655cd1e3bcac5e8f48c18df1a57abd6cc6c5518e69158001db0a5b3c4410"></a>UNIT_1_25_MS</em>&nbsp;</td><td class="fielddoc">
-<p>Number of microseconds in 1.25 milliseconds. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab04a0655cd1e3bcac5e8f48c18df1a57adfbb1465ed01976b118bae937a90cc60"></a>UNIT_10_MS</em>&nbsp;</td><td class="fielddoc">
-<p>Number of microseconds in 10 milliseconds. </p>
-</td></tr>
-</table>
+
+<p>Function for initializing the Scheduler. </p>
+<p>It must be called before entering the main loop.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">max_event_size</td><td>Maximum size of events to be passed through the scheduler. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">queue_size</td><td>Number of entries in scheduler queue (i.e. the maximum number of events that can be scheduled for execution). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_event_buffer</td><td>Pointer to memory buffer for holding the scheduler queue. It must be dimensioned using the APP_SCHED_BUFFER_SIZE() macro. The buffer must be aligned to a 4 byte boundary.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Normally initialization should be done using the <a class="el" href="a00409.html#gaa9670ed0053a67304c3d2d0cb3eb1333" title="Macro for initializing the event scheduler.">APP_SCHED_INIT()</a> macro, as that will both allocate the scheduler buffer, and also align the buffer correctly.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Successful initialization. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Invalid parameter (buffer not aligned to a 4 byte boundary). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -353,7 +374,7 @@ The macro is intentionally implemented not using do while(0), allowing it to be 
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:06 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

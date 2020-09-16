@@ -1,5 +1,6 @@
 var modules =
 [
-    [ "nRF51 SDK", "a00552.html", "a00552" ],
-    [ "S120 (BLE Central)", "a00558.html", "a00558" ]
+    [ "Device Manager", "a00500.html", "a00500" ],
+    [ "nRF51 SDK", "a00568.html", "a00568" ],
+    [ "S120 (BLE Central)", "a00578.html", "a00578" ]
 ];

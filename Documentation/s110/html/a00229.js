@@ -1,7 +1,5 @@
 var a00229 =
 [
-    [ "addr_count", "a00229.html#a8f7d372587ed29005dbfd515103fa6fd", null ],
-    [ "irk_count", "a00229.html#a21922578ee2df66befd41e968f8d5af1", null ],
-    [ "pp_addrs", "a00229.html#a9316d95519c47512389b4696376556d0", null ],
-    [ "pp_irks", "a00229.html#ab78ecf15e25742a5ea56377cef1a8603", null ]
+    [ "handle", "a00229.html#af1b50c1fd1d5be05d0d0cf25e0925fd0", null ],
+    [ "p_value", "a00229.html#a6e842e1c975c50acf7eec947baa405e8", null ]
 ];

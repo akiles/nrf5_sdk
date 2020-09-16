@@ -1,9 +1,12 @@
 var a00141 =
 [
-    [ "rd_auth", "a00141.html#a0d2f2743a556d382513a43607a08c057", null ],
-    [ "read_perm", "a00141.html#a61a4ef92eba3a3b2b3f616557f6b74aa", null ],
-    [ "vlen", "a00141.html#a921e414734cd784e0c3b7309d3a14f39", null ],
-    [ "vloc", "a00141.html#abbd6b9b2d75565fc6fd66074a47308c7", null ],
-    [ "wr_auth", "a00141.html#affcd971025cbaa9525c2ed9ff95d913c", null ],
-    [ "write_perm", "a00141.html#af04a8d72352f3c02dbef021b360f477f", null ]
+    [ "char_ext_props", "a00141.html#ac5e56544775870bc0dfcccbfe49546c5", null ],
+    [ "char_props", "a00141.html#a3d9381741f1a0b9e3ca5e2a5ddeb6877", null ],
+    [ "char_user_desc_max_size", "a00141.html#a5916d5b2468348a72e9dcbdfc8d09404", null ],
+    [ "char_user_desc_size", "a00141.html#a1fdf0123a1e5ae6591be0e16879c7bf4", null ],
+    [ "p_cccd_md", "a00141.html#a86233448bf572b753bb23acc21836887", null ],
+    [ "p_char_pf", "a00141.html#af7a06b2899457e00a555432106cc21f2", null ],
+    [ "p_char_user_desc", "a00141.html#a6d3f8e028fac8cba3158281ec6880118", null ],
+    [ "p_sccd_md", "a00141.html#a859f6ec1fc35c5983fc34a09c79b8b1e", null ],
+    [ "p_user_desc_md", "a00141.html#ae4858815d704c68d78b4a318011252b6", null ]
 ];

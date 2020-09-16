@@ -41,22 +41,28 @@ typedef enum
  *       CRITICAL_REGION_EXIT() for each call to CRITICAL_REGION_ENTER(), and they must be located
  *       in the same scope.
  */
+/*
 #define CRITICAL_REGION_ENTER()                                                             \
     {                                                                                       \
                                                                                    \
                 __disable_irq();                                                                                    \
         
-    
+*/
+void CRITICAL_REGION_ENTER(void);
+
 /**@brief Macro for leaving a critical region.
  *
  * @note Due to implementation details, there must exist one and only one call to
  *       CRITICAL_REGION_EXIT() for each call to CRITICAL_REGION_ENTER(), and they must be located
  *       in the same scope.
  */
+/*
 #define CRITICAL_REGION_EXIT()                                                               \
             __enable_irq();                                             \
     }
-        
+*/
+void CRITICAL_REGION_EXIT(void);
+
 /**@brief Function for finding the current interrupt level.
  *
  * @return   Current interrupt level.

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: app_uart_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_ans_c_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,83 +106,123 @@ $(document).ready(function(){initNavTree('a00153.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">app_uart_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00728.html">UART module</a></div></div>  </div>
+<div class="title">ble_ans_c_s Struct Reference<div class="ingroups"><a class="el" href="a00855.html">Alert Notification Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Struct containing events from the UART module.  
+<p>Alert Notification structure. This contains various status information for the client.  
  <a href="a00153.html#details">More...</a></p>
 
-<p><code>#include &lt;app_uart.h&gt;</code></p>
+<p><code>#include &lt;ble_ans_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ae89e1d236d49d18fa5be6fa32ba3c0d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00728.html#ga9346b21b144fd9499e24853bbf781e17">app_uart_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00153.html#ae89e1d236d49d18fa5be6fa32ba3c0d8">evt_type</a></td></tr>
-<tr class="separator:ae89e1d236d49d18fa5be6fa32ba3c0d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9241052870696d4d825c91c4a834a84f"><td class="memItemLeft" ><a class="anchor" id="a9241052870696d4d825c91c4a834a84f"></a>
-union {</td></tr>
-<tr class="memitem:a19088df95593f28e3aaf7918adb71e68"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="a00153.html#ae2f48256edd4052e8273d098bb8249c4">error_communication</a></td></tr>
-<tr class="separator:a19088df95593f28e3aaf7918adb71e68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba3e6cbd04fd2edb31362120a02dbab0"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="a00153.html#ab2aeea864de0050ec22790a186a4e9b1">error_code</a></td></tr>
-<tr class="separator:aba3e6cbd04fd2edb31362120a02dbab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b1dbc88cd4ca0169bbd4a51318a333a"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00153.html#a9e34eabccc01fe3eeff1c7392d737d84">value</a></td></tr>
-<tr class="separator:a8b1dbc88cd4ca0169bbd4a51318a333a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9241052870696d4d825c91c4a834a84f"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
-<tr class="separator:a9241052870696d4d825c91c4a834a84f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5125f0b98f069ac8c455b109212d3d33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00855.html#gaf4d6c41652f6accd6829112a74334c4e">ble_ans_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00153.html#a5125f0b98f069ac8c455b109212d3d33">evt_handler</a></td></tr>
+<tr class="separator:a5125f0b98f069ac8c455b109212d3d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad18e423fbc97fa13b4f5f99097b5c3e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00872.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00153.html#ad18e423fbc97fa13b4f5f99097b5c3e6">error_handler</a></td></tr>
+<tr class="separator:ad18e423fbc97fa13b4f5f99097b5c3e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafc23bf2964f2476098f8841b808829a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00153.html#aafc23bf2964f2476098f8841b808829a">conn_handle</a></td></tr>
+<tr class="separator:aafc23bf2964f2476098f8841b808829a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0522feee52899c6d746fb496458c8681"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00153.html#a0522feee52899c6d746fb496458c8681">central_handle</a></td></tr>
+<tr class="separator:a0522feee52899c6d746fb496458c8681"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae696c92497734c92e20a628893a621b3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00153.html#ae696c92497734c92e20a628893a621b3">service_handle</a></td></tr>
+<tr class="separator:ae696c92497734c92e20a628893a621b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af58f6202418c1aab68d7224dcec9ba95"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00153.html#af58f6202418c1aab68d7224dcec9ba95">message_buffer_size</a></td></tr>
+<tr class="separator:af58f6202418c1aab68d7224dcec9ba95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12d3fef2b50b34a7cf6e42fbbc55308e"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00153.html#a12d3fef2b50b34a7cf6e42fbbc55308e">p_message_buffer</a></td></tr>
+<tr class="separator:a12d3fef2b50b34a7cf6e42fbbc55308e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Struct containing events from the UART module. </p>
-<p>The <a class="el" href="a00153.html" title="Struct containing events from the UART module.">app_uart_evt_t</a> is used to notify the application of asynchronous events when data are received on the UART peripheral or in case an error occured during data reception. </p>
+<div class="textblock"><p>Alert Notification structure. This contains various status information for the client. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ab2aeea864de0050ec22790a186a4e9b1"></a>
+<a class="anchor" id="a0522feee52899c6d746fb496458c8681"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t app_uart_evt_t::error_code</td>
+          <td class="memname">uint8_t ble_ans_c_s::central_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Field used if evt_type is: NRF_ERROR_x. Additional status/error code if the error event type is APP_UART_FIFO_ERROR. This error code refer to errors defined in nrf_error.h. </p>
+<p>Handle for the currently connected central if peer is bonded. </p>
 
 </div>
 </div>
-<a class="anchor" id="ae2f48256edd4052e8273d098bb8249c4"></a>
+<a class="anchor" id="aafc23bf2964f2476098f8841b808829a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t app_uart_evt_t::error_communication</td>
+          <td class="memname">uint16_t ble_ans_c_s::conn_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Field used if evt_type is: APP_UART_COMMUNICATION_ERROR. This field contains the value in the ERRORSRC register for the UART peripheral. The UART_ERRORSRC_x defines from nrf51_bitfields.h can be used to parse the error code. See also the nRF51 Series Reference Manual for specification. </p>
+<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
 
 </div>
 </div>
-<a class="anchor" id="ae89e1d236d49d18fa5be6fa32ba3c0d8"></a>
+<a class="anchor" id="ad18e423fbc97fa13b4f5f99097b5c3e6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00728.html#ga9346b21b144fd9499e24853bbf781e17">app_uart_evt_type_t</a> app_uart_evt_t::evt_type</td>
+          <td class="memname"><a class="el" href="a00872.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_ans_c_s::error_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of event. </p>
+<p>Function to be called in case of an error. </p>
 
 </div>
 </div>
-<a class="anchor" id="a9e34eabccc01fe3eeff1c7392d737d84"></a>
+<a class="anchor" id="a5125f0b98f069ac8c455b109212d3d33"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t app_uart_evt_t::value</td>
+          <td class="memname"><a class="el" href="a00855.html#gaf4d6c41652f6accd6829112a74334c4e">ble_ans_c_evt_handler_t</a> ble_ans_c_s::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Field used if evt_type is: NRF_ERROR_x. Additional status/error code if the error event type is APP_UART_FIFO_ERROR. This error code refer to errors defined in nrf_error.h. </p>
+<p>Event handler to be called for handling events in the Alert Notification Client Application. </p>
+
+</div>
+</div>
+<a class="anchor" id="af58f6202418c1aab68d7224dcec9ba95"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_ans_c_s::message_buffer_size</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size of message buffer to hold the additional text messages received on notifications. </p>
+
+</div>
+</div>
+<a class="anchor" id="a12d3fef2b50b34a7cf6e42fbbc55308e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* ble_ans_c_s::p_message_buffer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to the buffer to be used for additional text message handling. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae696c92497734c92e20a628893a621b3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_ans_c_s::service_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle to the service in the database to use for this instance. </p>
 
 </div>
 </div>
@@ -191,8 +231,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00153.html">app_uart_evt_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00153.html">ble_ans_c_s</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:36 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

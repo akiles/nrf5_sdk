@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_ias_c_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_sc_ctrlpt_resp_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,35 +106,73 @@ $(document).ready(function(){initNavTree('a00293.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ias_c_s Struct Reference<div class="ingroups"><a class="el" href="a00928.html">Immediate Alert Service Client</a></div></div>  </div>
+<div class="title">ble_sc_ctrlpt_resp_t Struct Reference<div class="ingroups"><a class="el" href="a00871.html">Speed and Cadence Control Point</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>IAS Client structure. This contains various status information for the client.  
+<p>Speed and Cadence Control Point response indication structure.  
  <a href="a00293.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_ias_c.h&gt;</code></p>
+<p><code>#include &lt;ble_sc_ctrlpt.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:gac306d48fcd140ddbffb4d4c64ca4d007"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00928.html#ga96adb4273980cee3c28140485a07884f">ble_ias_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00928.html#gac306d48fcd140ddbffb4d4c64ca4d007">evt_handler</a></td></tr>
-<tr class="separator:gac306d48fcd140ddbffb4d4c64ca4d007"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6cecf3d78ec7d72912dd4215455720ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00932.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00928.html#ga6cecf3d78ec7d72912dd4215455720ed">error_handler</a></td></tr>
-<tr class="separator:ga6cecf3d78ec7d72912dd4215455720ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad136ca554bce057fd4cd38ba0f796ea6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00928.html#gad136ca554bce057fd4cd38ba0f796ea6">alert_level_handle</a></td></tr>
-<tr class="separator:gad136ca554bce057fd4cd38ba0f796ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad18ae38bccb88d086eedbc1647ce2386"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00928.html#gad18ae38bccb88d086eedbc1647ce2386">conn_handle</a></td></tr>
-<tr class="separator:gad18ae38bccb88d086eedbc1647ce2386"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a978ed1543a79395ebdefc4f92233dfb7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00871.html#ga1c8be45ba4b09ec30229b4cfb4fd2d88">ble_scpt_response_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#a978ed1543a79395ebdefc4f92233dfb7">status</a></td></tr>
+<tr class="separator:a978ed1543a79395ebdefc4f92233dfb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb2e07899dd914805f45b9da0694e0af"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#afb2e07899dd914805f45b9da0694e0af">len</a></td></tr>
+<tr class="separator:afb2e07899dd914805f45b9da0694e0af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf17b1a0cd599ca5bd71dba42e318e06"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00293.html#adf17b1a0cd599ca5bd71dba42e318e06">encoded_ctrl_rsp</a> [19]</td></tr>
+<tr class="separator:adf17b1a0cd599ca5bd71dba42e318e06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>IAS Client structure. This contains various status information for the client. </p>
-</div></div><!-- contents -->
+<div class="textblock"><p>Speed and Cadence Control Point response indication structure. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="adf17b1a0cd599ca5bd71dba42e318e06"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_sc_ctrlpt_resp_t::encoded_ctrl_rsp[19]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>control point encoded response. </p>
+
+</div>
+</div>
+<a class="anchor" id="afb2e07899dd914805f45b9da0694e0af"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_sc_ctrlpt_resp_t::len</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>control point response length . </p>
+
+</div>
+</div>
+<a class="anchor" id="a978ed1543a79395ebdefc4f92233dfb7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00871.html#ga1c8be45ba4b09ec30229b4cfb4fd2d88">ble_scpt_response_t</a> ble_sc_ctrlpt_resp_t::status</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>control point response status . </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00293.html">ble_ias_c_s</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00293.html">ble_sc_ctrlpt_resp_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:37 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

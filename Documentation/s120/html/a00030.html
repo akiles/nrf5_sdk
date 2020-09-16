@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: nRF6350 Radio Configuration Example</title>
+<title>nRF51 SDK - S120 SoftDevice: Radio Receiver Example for PCA10000 Board</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,55 +97,30 @@ $(document).ready(function(){initNavTree('a00030.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">nRF6350 Radio Configuration Example </div>  </div>
+<div class="title">Radio Receiver Example for PCA10000 Board </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The nRF6350 Radio Configuration Example shows how to use nRF6350 Display with TWI interface to see all the configurations with the radio and change its state/variables using the joystick on board. It uses the hardware delivered in the nRF51822 Development Kit.</p>
-<p>The different Radio options provided in this application are:</p>
-<ul>
-<li>Enter start channel for Sweep/Channel for constant carrier.</li>
-<li>Enter end channel for Sweep.</li>
-<li>Start TX carrier.</li>
-<li>Enter delay on each channel (1ms-99ms).</li>
-<li>Cancel Sweep/Carrier.</li>
-<li>Enter data rate('0'=250 Kb/s, '1'=1 Mb/s and '2'=2 Mb/s).</li>
-<li>Start modulated TX carrier.</li>
-<li>Enter output Power('0'=+4 dBm, '1'=0 dBm,...,'7'=-40 dBm).</li>
-<li>Start RX sweep.</li>
-<li>Start TX sweep.</li>
-<li>Start RX carrier.</li>
-</ul>
-<dl class="section note"><dt>Note</dt><dd>When the value of selection is changed in edit mode, its value is taken into effect immediately and the change in the radio spectrum with changed value can be noticed in the spectrometer.</dd></dl>
-<h1><a class="anchor" id="nRF6350_radio_configuration_example_setup"></a>
+<div class="textblock"><p>The Radio Receiver Example demonstrate how to receive data using the NRF_RADIO peripheral. This project must be used together with the corresponding transmitter project for the PCA10001 board. Button presses on the PCA10001 board are sent to the PCA10000 board, and printed in a COM listener (like PUTTY) using UART.</p>
+<p>The receiver is configured to continuously receive packets from the corresponding transmitter project. The on-byte payload contains the button status on the transmitter board. If the byte is 1 Button 1 is pressed, if the byte is 2 Button 1 is pressed and if it's 3 both buttons are pressed.</p>
+<h1><a class="anchor" id="nrf_dev_button_radio_rx_example_setup"></a>
 Setup</h1>
-<p>Instructions on how to set up the nRFgo Motherboard: <a class="el" href="a00008.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a>. <br/>
-</p>
-<p>Use the nRF6350 Display and joystick to maneuver through the Radio options. <br/>
- Menu and configuration of radio variables:<br/>
-</p>
-<ul>
-<li>Browse menu options by moving the joystick forwards/backwards.</li>
-<li>Browse text of the option by moving the joystick right/left.</li>
-<li>Select an option - press joystick down.</li>
-<li>Increase value of selected option - move joystick right.</li>
-<li>Decrease value of selected option - move joystick left.</li>
-<li>return to the menu - press joystick down.</li>
-</ul>
-<h1><a class="anchor" id="nRF6350_radio_configuration_example_testing"></a>
+<p>Insert the PCA10000 board in a USB slot, and find out which COM port it uses.</p>
+<h1><a class="anchor" id="nrf_dev_button_radio_rx_example_testing"></a>
 Testing</h1>
-<p>The nRF6350 Radio Configuration Example Application can be tested as follows:</p>
+<p>The Radio Receiver Example Application can be tested as follows:</p>
 <ol type="1">
-<li>Compile and program the application.</li>
-<li>Use the joystick to browse through the menu options.</li>
-<li>Use a spectrum analyzer to confirm the behavior of the Radio module. </li>
+<li>Flash button_radio_example in the PCA10001 board folder to PCA10001 board.</li>
+<li>Flash button_radio_example in the PCA10000 board folder to PCA10000 board.</li>
+<li>Use a terminal program on your PC to connect to the PCA10000 board. 38400 bps, 8 data bits, 1 stop bit.</li>
+<li>Press a button on PCA10001 board, you should see "Button 0/1 pressed" on your terminal. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00023.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:05 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00022.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

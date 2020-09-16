@@ -84,7 +84,7 @@
 #define APP_FAST_ADV_WHITELIST_TIMEOUT   20                                           /**< The duration of the fast advertising with whitelist period (in seconds). */
 
 #define APP_TIMER_PRESCALER              0                                            /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS             3                                            /**< Maximum number of simultaneously created timers. */
+#define APP_TIMER_MAX_TIMERS             4                                            /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE          4                                            /**< Size of timer operation queues. */
 
 #define BATTERY_LEVEL_MEAS_INTERVAL      APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER)   /**< Battery level measurement interval (ticks). */
@@ -155,6 +155,7 @@ static void on_ias_c_evt(ble_ias_c_t * p_lls, ble_ias_c_evt_t * p_evt);
 static void advertising_init(uint8_t adv_flags);
 
 
+#if 0
 /**@brief Function for error handling, which is called when an error has occurred.
  *
  * @warning This handler is an example only and does not fit a final product. You need to analyze
@@ -180,7 +181,32 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
     // On assert, the system can only recover with a reset.
     NVIC_SystemReset();
 }
+#else
 
+#include "app_util_platform.h"
+//uint32_t m_error_code;
+//uint32_t m_line_num;
+//const uint8_t *m_p_file_name;
+
+void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
+{
+    // disable INTs
+    CRITICAL_REGION_ENTER();
+    /* Light a LED on error or warning. */
+    nrf_gpio_cfg_output(SER_CONN_ASSERT_LED_PIN);
+    nrf_gpio_pin_set(SER_CONN_ASSERT_LED_PIN);
+
+//    m_p_file_name = p_file_name;
+//    m_error_code = error_code;
+//    m_line_num = line_num;
+
+    /* To be able to see function parameters in a debugger. */
+    uint32_t temp = 1;
+    while(temp);
+    CRITICAL_REGION_EXIT();    
+}
+
+#endif
 
 /**@brief Callback function for asserts in the SoftDevice.
  *
@@ -1042,7 +1068,7 @@ int main(void)
     leds_init();
     timers_init();
     gpiote_init();
-    buttons_init();
+    buttons_init();		
     ble_stack_init();
     device_manager_init();
     gap_params_init();

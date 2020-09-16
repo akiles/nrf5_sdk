@@ -1,17 +1,10 @@
 var a00176 =
 [
-    [ "char_disc_rsp", "a00176.html#a34bad897428604d4b08c4f8cf4ef47e5", null ],
-    [ "char_val_by_uuid_read_rsp", "a00176.html#ae5be4e95ec69711bb425db151632b3e1", null ],
-    [ "char_vals_read_rsp", "a00176.html#a9c786b070343169cfdd505415880d789", null ],
-    [ "conn_handle", "a00176.html#a26991e5deaf0de51e7b2413de1114c0e", null ],
-    [ "desc_disc_rsp", "a00176.html#a23df4ef5d71063a9921c787dbf2dfa85", null ],
-    [ "error_handle", "a00176.html#a3dd6ec7de3d6017e588120106e918bc9", null ],
-    [ "gatt_status", "a00176.html#a844b25b255a6a17284b6285baa1fec6f", null ],
-    [ "hvx", "a00176.html#a5f0bb863ceca0550c1bfa5482a79222d", null ],
-    [ "params", "a00176.html#a4498670b6f66ad03452ca465968124e9", null ],
-    [ "prim_srvc_disc_rsp", "a00176.html#a07f81765794c5b6bb0f8aeb0971807c6", null ],
-    [ "read_rsp", "a00176.html#afe94966527cf767c92f028de45d04e6d", null ],
-    [ "rel_disc_rsp", "a00176.html#ae83b3965e69f4226c8fe7586a30a4d7e", null ],
-    [ "timeout", "a00176.html#aca37c05800643ee41df04d1007c3e7e9", null ],
-    [ "write_rsp", "a00176.html#ad9a800da6785563a3f837db443568496", null ]
+    [ "authorize_request", "a00176.html#a27802389d2c209e149fd644a35eae956", null ],
+    [ "conn_handle", "a00176.html#abeb8d79046f5ed809e6ac8b5fd40614d", null ],
+    [ "hvc", "a00176.html#a9be30265f4a80ba2d5982bc7eda48891", null ],
+    [ "params", "a00176.html#a750065b8cf4aae2c44cfe89c1b5e273b", null ],
+    [ "sys_attr_missing", "a00176.html#ab8c7e34509068fb9d8b78e4cdc2ab0f2", null ],
+    [ "timeout", "a00176.html#a5a5ade5ed126bc40ac43a302b4c7ae44", null ],
+    [ "write", "a00176.html#aaef77783fee30e58006d76bbc976bc9e", null ]
 ];

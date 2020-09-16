@@ -1,13 +1,9 @@
 var a00273 =
 [
-    [ "conn_handle", "a00273.html#a58872790eba51c45b267473235ebd32d", null ],
-    [ "error_handler", "a00273.html#a99953e3d617e280b5e2af8cefce53786", null ],
-    [ "evt_handler", "a00273.html#aea357d52245f373e6aed7e75d10c0e80", null ],
-    [ "feature", "a00273.html#a738170bfd0b71e8a4befe527b74b8377", null ],
-    [ "glf_handles", "a00273.html#ab165cc78412830043bb851ffc6e6dc85", null ],
-    [ "glm_context_handles", "a00273.html#a04a7dd42f5a8645f568c5ad91a36cc85", null ],
-    [ "glm_handles", "a00273.html#ac6d4433547db64cf7b1d166f83d72c10", null ],
-    [ "is_context_supported", "a00273.html#ae8550b67974545fd563afbbaaddf2bf7", null ],
-    [ "racp_handles", "a00273.html#ab48807f749f83b1d6b48101e3409cced", null ],
-    [ "service_handle", "a00273.html#af41bbddc33e6fd21be56b5953733ea92", null ]
+    [ "conn_handle", "a00273.html#a71533de99d438bb326730e08da1d402a", null ],
+    [ "evt_handler", "a00273.html#ab0392a7012b01ace2dad863bc8f573cc", null ],
+    [ "meas_handles", "a00273.html#a6e3f96502d28802be863f09b2839817d", null ],
+    [ "service_handle", "a00273.html#ac62f9c0c453beef41d04c488c5d19ecc", null ],
+    [ "temp_type", "a00273.html#ad8e572095f9a6cecdf4bcde49c527aab", null ],
+    [ "temp_type_handles", "a00273.html#a514df962e0856554cd6eee1e2b11bf26", null ]
 ];

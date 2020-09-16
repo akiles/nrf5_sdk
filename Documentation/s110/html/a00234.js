@@ -1,5 +1,9 @@
 var a00234 =
 [
-    [ "chars", "a00234.html#aae5e676db57239ee9cfe89c13f603dd0", null ],
-    [ "count", "a00234.html#a91337d714a569e896c896a3b255db8ff", null ]
+    [ "rd_auth", "a00234.html#a0d2f2743a556d382513a43607a08c057", null ],
+    [ "read_perm", "a00234.html#a61a4ef92eba3a3b2b3f616557f6b74aa", null ],
+    [ "vlen", "a00234.html#a921e414734cd784e0c3b7309d3a14f39", null ],
+    [ "vloc", "a00234.html#abbd6b9b2d75565fc6fd66074a47308c7", null ],
+    [ "wr_auth", "a00234.html#affcd971025cbaa9525c2ed9ff95d913c", null ],
+    [ "write_perm", "a00234.html#af04a8d72352f3c02dbef021b360f477f", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Serial (HCI)</title>
+<title>nRF51 SDK - S310 SoftDevice: Debug Assert Handler</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,79 +97,17 @@ $(document).ready(function(){initNavTree('a00059.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Serial (HCI) </div>  </div>
+<div class="title">Debug Assert Handler </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="ble_sdk_app_bootloader_packet_sec"></a>
-Packet Format</h1>
-<p>Sending a new image application to the nRF51822 is done in three steps:</p>
-<p>-First a start packet must be send to the DFU Bootloader.</p>
-<p>-Thereafter the binary Application image can be transferred.</p>
-<p>-When the complete application image has been transferred, a stop package must be transmitted in order to activate the new image.</p>
-<dl class="section note"><dt>Note</dt><dd>After an image has been successfully written to the flash, the DFU Bootloader resets the chip and boots the application. If a new image is desired to be written at a later time, then <b>Button 1</b> can be pushed during system start-up. This will force the DFU Bootloader into update mode, and a new image can be transferred.</dd></dl>
-<h2><a class="anchor" id="ble_sdk_app_bootloader_packet_sub_a"></a>
-Prepare Application Flash Area</h2>
-<p>The first packet the DFU Bootloader must receive is the start packet. This packet will inform the DFU Bootloader that the flash must be prepared (erased) and it contains the length of the binary application image. The length of the image is a unsigned 32 bit integer in LSB first order.</p>
-<p>If the Heart Rate Example application was to be transfered, the image size is 17,336 bytes, thus the initial packet will become </p>
-<pre class="fragment">0xC0 0xC1 0x4E 0x00 0xF1 0x02 0x00 0x00 0x00 0xB8 0x43 0x00 0x00 0xC1 0xA7 0xC0 </pre><table  border="0">
-<tr>
-<td>0xC0</td><td>SLIP start/stop </td></tr>
-<tr>
-<td>0xC1 0x4E 0x00 0xF1</td><td>Packet Header </td></tr>
-<tr>
-<td>0x02 0x00 0x00 0x00</td><td>DFU Bootloader Packet field, DFU Bootloader Start Packet. </td></tr>
-<tr>
-<td>0xB8 0x43 0x00 0x00</td><td>DFU Bootloader Application Image Size: 0x000043B8 = 17,336 bytes. </td></tr>
-<tr>
-<td>0xC1 0xA7</td><td>CRC check. </td></tr>
-<tr>
-<td>0xC0</td><td>SLIP start/stop </td></tr>
-</table>
-<p><b>Figure 2</b> Shows the example start packet.</p>
-<div class="image">
-<img src="hci_start_packet_example.png" alt="hci_start_packet_example.png"/>
-<div class="caption">
-Figure 2: Example start packet.</div></div>
-<dl class="section note"><dt>Note</dt><dd>The maximum data packet that can be transfered is 512 bytes + header.</dd></dl>
-<table  border="0">
-<tr>
-<td>0xC0</td><td>SLIP start/stop </td></tr>
-<tr>
-<td></td><td>Packet Header </td></tr>
-<tr>
-<td>0x03 0x00 0x00 0x00</td><td>DFU Bootloader Packet field, DFU Bootloader Application Data Packet. </td></tr>
-<tr>
-<td>... Rest of packet ...</td><td>DFU Bootloader Application Data, 512 bytes. </td></tr>
-<tr>
-<td></td><td>CRC check. </td></tr>
-<tr>
-<td>0xC0</td><td>SLIP start/stop </td></tr>
-</table>
-<h2><a class="anchor" id="ble_sdk_app_bootloader_packet_sub_c"></a>
-Activate Image</h2>
-<p>When the Application image has been transferred to the DFU Bootloader the image must be activated. The stop packet will inform the DFU Bootloader that transferring of the image has completed and the application can be started.</p>
-<p>A stop packet is encoded as:</p>
-<table  border="0">
-<tr>
-<td>0xC0</td><td>SLIP start/stop </td></tr>
-<tr>
-<td></td><td>Packet Header </td></tr>
-<tr>
-<td>0x04 0x00 0x00 0x00</td><td>DFU Bootloader Packet field, DFU Bootloader Stop Packet. </td></tr>
-<tr>
-<td></td><td>CRC check. </td></tr>
-<tr>
-<td>0xC0</td><td>SLIP start/stop </td></tr>
-</table>
-<p><br/>
- </p>
+<div class="textblock"><p>This module may be used during development of an application to facilitate debugging. It contains a function to write file name, line number and the Stack Memory to flash. This module is ONLY for debugging purposes and must never be used in final product. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00053.html">Bootloader/DFU</a></li><li class="navelem"><a class="el" href="a00057.html">DFU Transport Layers</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:57 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00056.html">BLE libraries</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:45 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

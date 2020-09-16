@@ -1,14 +1,8 @@
 var a00100 =
 [
-    [ "ans_email_support", "a00100.html#a09b71707752759e5b8e3dd4f4e3d0870", null ],
-    [ "ans_high_prioritized_alert_support", "a00100.html#ad2753bba8861ad675e3b65a9abbe8cd3", null ],
-    [ "ans_instant_message_support", "a00100.html#a2de5d1b537d50f27286c128eb6b5976a", null ],
-    [ "ans_missed_call_support", "a00100.html#a6186de6a37856067d92965d6d0dd4626", null ],
-    [ "ans_news_support", "a00100.html#a88815e36d8fa931ebcea839e1abf0983", null ],
-    [ "ans_notification_call_support", "a00100.html#a6511b1795dd269a795b78ebe9df46228", null ],
-    [ "ans_schedule_support", "a00100.html#a81dce8e0370cf2d7b714660fe976409d", null ],
-    [ "ans_simple_alert_support", "a00100.html#affc67b4d67eeac394109f08b9580b65a", null ],
-    [ "ans_sms_mms_support", "a00100.html#a47d61bd0a24b4f4ab1b76b68783273b4", null ],
-    [ "ans_voice_mail_support", "a00100.html#a1bcd98adf2665087646639c37f9713b1", null ],
-    [ "reserved", "a00100.html#a219becdab50c9c9be670d144dfe534fa", null ]
+    [ "conn_handle", "a00100.html#ad7c997d8d0c6e0d3d24de3ecad426645", null ],
+    [ "params", "a00100.html#aa1bd5d9383036225f08d3dd0a9e62557", null ],
+    [ "tx_complete", "a00100.html#a0550e7a2c8b61ab27ea5a691b3f1fac4", null ],
+    [ "user_mem_release", "a00100.html#a21a25a889c763bceb2891d506331f484", null ],
+    [ "user_mem_request", "a00100.html#a4d36c1c20a1ff24a62abba8ea73c74c8", null ]
 ];

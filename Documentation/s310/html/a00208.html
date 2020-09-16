@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: ble_hids_evt_t Struct Reference</title>
+<title>nRF51 SDK - S310 SoftDevice: ble_ias_c_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,137 +106,35 @@ $(document).ready(function(){initNavTree('a00208.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_hids_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00673.html">Human Interface Device Service</a></div></div>  </div>
+<div class="title">ble_ias_c_s Struct Reference<div class="ingroups"><a class="el" href="a00607.html">Immediate Alert Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>HID Service event.  
+<p>IAS Client structure. This contains various status information for the client.  
  <a href="a00208.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_hids.h&gt;</code></p>
+<p><code>#include &lt;ble_ias_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a51d0ccfb2582557e1863bb12d77e71dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00673.html#ga621d899fc96687c922a0c65010bfc063">ble_hids_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00208.html#a51d0ccfb2582557e1863bb12d77e71dc">evt_type</a></td></tr>
-<tr class="separator:a51d0ccfb2582557e1863bb12d77e71dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af237843eb10af4a0276e151412ec48f8"><td class="memItemLeft" ><a class="anchor" id="af237843eb10af4a0276e151412ec48f8"></a>
-union {</td></tr>
-<tr class="memitem:a71c288998c213900a3e6fd89c1132a0d"><td class="memItemLeft" >&#160;&#160;&#160;struct {</td></tr>
-<tr class="memitem:aca32f87262bbd4f18cb66d3bf94bf182"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;<a class="el" href="a00207.html">ble_hids_char_id_t</a>&#160;&#160;&#160;<a class="el" href="a00208.html#a778ecea962888dfc1e026fc52526a9a4">char_id</a></td></tr>
-<tr class="separator:aca32f87262bbd4f18cb66d3bf94bf182"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71c288998c213900a3e6fd89c1132a0d"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;&#160;&#160;<b>notification</b></td></tr>
-<tr class="separator:a71c288998c213900a3e6fd89c1132a0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad76f852eefa0f64c1180fd386c0e7180"><td class="memItemLeft" >&#160;&#160;&#160;struct {</td></tr>
-<tr class="memitem:ad0e6b5af77d0eb808753c212f29d729b"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;<a class="el" href="a00207.html">ble_hids_char_id_t</a>&#160;&#160;&#160;<a class="el" href="a00208.html#a778ecea962888dfc1e026fc52526a9a4">char_id</a></td></tr>
-<tr class="separator:ad0e6b5af77d0eb808753c212f29d729b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a694546a9e3b52147677f9960613c2112"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint16_t&#160;&#160;&#160;<a class="el" href="a00208.html#ab8048550dc2672f019c4e6278977efbc">offset</a></td></tr>
-<tr class="separator:a694546a9e3b52147677f9960613c2112"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59e04c4989a88bac95d995246b95870d"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint16_t&#160;&#160;&#160;<a class="el" href="a00208.html#ae218ffb7a01687ebe2557a2ab2d48bba">len</a></td></tr>
-<tr class="separator:a59e04c4989a88bac95d995246b95870d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf0da6a706c683b31fc60798fda47437"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint8_t *&#160;&#160;&#160;<a class="el" href="a00208.html#a8c305e6a62b2c26934d5be6e84dec0f5">data</a></td></tr>
-<tr class="separator:adf0da6a706c683b31fc60798fda47437"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad76f852eefa0f64c1180fd386c0e7180"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;&#160;&#160;<b>char_write</b></td></tr>
-<tr class="separator:ad76f852eefa0f64c1180fd386c0e7180"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c8e23eeb5bd3c7c27d1eb9daf01c0f4"><td class="memItemLeft" >&#160;&#160;&#160;struct {</td></tr>
-<tr class="memitem:aff6d04d14e9ea5292ada629a31b71552"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;<a class="el" href="a00207.html">ble_hids_char_id_t</a>&#160;&#160;&#160;<a class="el" href="a00208.html#a778ecea962888dfc1e026fc52526a9a4">char_id</a></td></tr>
-<tr class="separator:aff6d04d14e9ea5292ada629a31b71552"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c8e23eeb5bd3c7c27d1eb9daf01c0f4"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;&#160;&#160;<b>char_auth_read</b></td></tr>
-<tr class="separator:a6c8e23eeb5bd3c7c27d1eb9daf01c0f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af237843eb10af4a0276e151412ec48f8"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:af237843eb10af4a0276e151412ec48f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43346ee583a9d322a18716f188630a89"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00133.html">ble_evt_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00208.html#a43346ee583a9d322a18716f188630a89">p_ble_evt</a></td></tr>
-<tr class="separator:a43346ee583a9d322a18716f188630a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac306d48fcd140ddbffb4d4c64ca4d007"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00607.html#ga96adb4273980cee3c28140485a07884f">ble_ias_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00607.html#gac306d48fcd140ddbffb4d4c64ca4d007">evt_handler</a></td></tr>
+<tr class="separator:gac306d48fcd140ddbffb4d4c64ca4d007"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6cecf3d78ec7d72912dd4215455720ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00611.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00607.html#ga6cecf3d78ec7d72912dd4215455720ed">error_handler</a></td></tr>
+<tr class="separator:ga6cecf3d78ec7d72912dd4215455720ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad136ca554bce057fd4cd38ba0f796ea6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00607.html#gad136ca554bce057fd4cd38ba0f796ea6">alert_level_handle</a></td></tr>
+<tr class="separator:gad136ca554bce057fd4cd38ba0f796ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad18ae38bccb88d086eedbc1647ce2386"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00607.html#gad18ae38bccb88d086eedbc1647ce2386">conn_handle</a></td></tr>
+<tr class="separator:gad18ae38bccb88d086eedbc1647ce2386"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>HID Service event. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a778ecea962888dfc1e026fc52526a9a4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00207.html">ble_hids_char_id_t</a> ble_hids_evt_t::char_id</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Id of characteristic for which notification has been started.</p>
-<p>Id of characteristic having been written.</p>
-<p>Id of characteristic being read. </p>
-
-</div>
-</div>
-<a class="anchor" id="a8c305e6a62b2c26934d5be6e84dec0f5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t* ble_hids_evt_t::data</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Incoming data, variable length </p>
-
-</div>
-</div>
-<a class="anchor" id="a51d0ccfb2582557e1863bb12d77e71dc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00673.html#ga621d899fc96687c922a0c65010bfc063">ble_hids_evt_type_t</a> ble_hids_evt_t::evt_type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Type of event. </p>
-
-</div>
-</div>
-<a class="anchor" id="ae218ffb7a01687ebe2557a2ab2d48bba"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_hids_evt_t::len</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Length of the incoming data. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab8048550dc2672f019c4e6278977efbc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_hids_evt_t::offset</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Offset for the write operation. </p>
-
-</div>
-</div>
-<a class="anchor" id="a43346ee583a9d322a18716f188630a89"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00133.html">ble_evt_t</a>* ble_hids_evt_t::p_ble_evt</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>corresponding received ble event, NULL if not relevant </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>IAS Client structure. This contains various status information for the client. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00208.html">ble_hids_evt_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:17 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00208.html">ble_ias_c_s</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

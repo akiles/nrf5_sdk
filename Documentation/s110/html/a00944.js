@@ -1,7 +1,9 @@
 var a00944 =
 [
-    [ "Device Module Set-up APIs", "a00945.html", "a00945" ],
-    [ "APIs to set up or read status of security on a link.", "a00946.html", "a00946" ],
-    [ "Context Management APIs", "a00947.html", "a00947" ],
-    [ "Utility APIs", "a00948.html", "a00948" ]
+    [ "Scheduler in the connectivity chip", "a00834.html", "a00834" ],
+    [ "Command decoder in the connectivity chip", "a00847.html", "a00847" ],
+    [ "DTM Command Decoder in the connectivity chip", "a00848.html", "a00848" ],
+    [ "Events encoder in the connectivity chip", "a00849.html", "a00849" ],
+    [ "Events handlers in the connectivity chip", "a00850.html", "a00850" ],
+    [ "Packets decoder in the connectivity chip", "a00851.html", "a00851" ]
 ];

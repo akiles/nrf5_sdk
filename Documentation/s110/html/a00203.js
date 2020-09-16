@@ -1,5 +1,6 @@
 var a00203 =
 [
-    [ "encr_key_size", "a00203.html#abca3beb1304d60fd03f5ae098495dd6f", null ],
-    [ "sec_mode", "a00203.html#ada618e26f99059e7ccbe5be9f5d1049d", null ]
+    [ "conn_handle", "a00203.html#a2c0b8fc1f46e4360b34a1806061e828a", null ],
+    [ "p_actual_latency", "a00203.html#a769493b896a8e6709956d5248aaa94d6", null ],
+    [ "requested_latency", "a00203.html#ac06a0a4e53f12763e0966c9bff3e0545", null ]
 ];

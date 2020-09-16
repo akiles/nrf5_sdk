@@ -1,9 +1,13 @@
 var a00172 =
 [
-    [ "conn_handle", "a00172.html#acb6ea6f96806c80017f6d80a65fa1c40", null ],
-    [ "evt_handler", "a00172.html#ad503c598af64ae0973fcbd69c2564f6c", null ],
-    [ "feature", "a00172.html#ab6a6c9882bfb4ca35a22b2b46e6cc342", null ],
-    [ "feature_handles", "a00172.html#ad7b6cace6c499b77b40be59b7d9ed843", null ],
-    [ "meas_handles", "a00172.html#ab61b1c5af5765ac4f24f617a24a81cd0", null ],
-    [ "service_handle", "a00172.html#a08ca745c921f74e622b3226b74a5453a", null ]
+    [ "dis_attr_md", "a00172.html#aa2ce530bbd1e27c0714bf8bdeda214d7", null ],
+    [ "fw_rev_str", "a00172.html#ace17346ac188ea3168ce89650b051960", null ],
+    [ "hw_rev_str", "a00172.html#af3ae591191cef78f2f0142f50f896191", null ],
+    [ "manufact_name_str", "a00172.html#a6980c3b02e2eb6513ba564c17aea32af", null ],
+    [ "model_num_str", "a00172.html#a764354961cfdd26b3e400c6292354574", null ],
+    [ "p_pnp_id", "a00172.html#a2bf4b6d703f519f7f52f0f9c757f7e11", null ],
+    [ "p_reg_cert_data_list", "a00172.html#a8fc7c6e19578a044415f703f1a753034", null ],
+    [ "p_sys_id", "a00172.html#a27dd370a69462b8e535284eabba9b3e5", null ],
+    [ "serial_num_str", "a00172.html#a4acba0dc5f1b3c9ef39845594a1d1daa", null ],
+    [ "sw_rev_str", "a00172.html#a2b68d1ba95abca2b58f71a3d11907154", null ]
 ];

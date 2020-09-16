@@ -1,12 +1,13 @@
 var a00188 =
 [
-    [ "char_ext_props", "a00188.html#ac5e56544775870bc0dfcccbfe49546c5", null ],
-    [ "char_props", "a00188.html#a3d9381741f1a0b9e3ca5e2a5ddeb6877", null ],
-    [ "char_user_desc_max_size", "a00188.html#a5916d5b2468348a72e9dcbdfc8d09404", null ],
-    [ "char_user_desc_size", "a00188.html#a1fdf0123a1e5ae6591be0e16879c7bf4", null ],
-    [ "p_cccd_md", "a00188.html#a86233448bf572b753bb23acc21836887", null ],
-    [ "p_char_pf", "a00188.html#af7a06b2899457e00a555432106cc21f2", null ],
-    [ "p_char_user_desc", "a00188.html#a6d3f8e028fac8cba3158281ec6880118", null ],
-    [ "p_sccd_md", "a00188.html#a859f6ec1fc35c5983fc34a09c79b8b1e", null ],
-    [ "p_user_desc_md", "a00188.html#ae4858815d704c68d78b4a318011252b6", null ]
+    [ "conn_handle", "a00188.html#a58872790eba51c45b267473235ebd32d", null ],
+    [ "error_handler", "a00188.html#a99953e3d617e280b5e2af8cefce53786", null ],
+    [ "evt_handler", "a00188.html#aea357d52245f373e6aed7e75d10c0e80", null ],
+    [ "feature", "a00188.html#a738170bfd0b71e8a4befe527b74b8377", null ],
+    [ "glf_handles", "a00188.html#ab165cc78412830043bb851ffc6e6dc85", null ],
+    [ "glm_context_handles", "a00188.html#a04a7dd42f5a8645f568c5ad91a36cc85", null ],
+    [ "glm_handles", "a00188.html#ac6d4433547db64cf7b1d166f83d72c10", null ],
+    [ "is_context_supported", "a00188.html#ae8550b67974545fd563afbbaaddf2bf7", null ],
+    [ "racp_handles", "a00188.html#ab48807f749f83b1d6b48101e3409cced", null ],
+    [ "service_handle", "a00188.html#af41bbddc33e6fd21be56b5953733ea92", null ]
 ];

@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['serial_20_28hci_29',['Serial (HCI)',['../a00059.html',1,'dfu_transport']]],
   ['spi_20master',['SPI Master',['../a00005.html',1,'hardware_drivers']]],
-  ['sensor_20data_20simulator',['Sensor Data Simulator',['../a00073.html',1,'lib_ble']]],
+  ['sensor_20data_20simulator',['Sensor Data Simulator',['../a00065.html',1,'lib_ble']]],
   ['schedule_20handling_20library',['Schedule handling library',['../a00013.html',1,'general_libraries']]],
   ['slip_20handling_20library',['SLIP handling library',['../a00021.html',1,'transport_libraries']]],
   ['softdevice_20handler_20library',['SoftDevice Handler Library',['../a00010.html',1,'general_libraries']]],

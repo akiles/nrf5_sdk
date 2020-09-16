@@ -1,5 +1,5 @@
 var a00104 =
 [
-    [ "bond", "a00104.html#a32442df72521ef48a0f9f7ade597635b", null ],
-    [ "mitm", "a00104.html#af8ac90cfda5fca2ba1858ef674403a5e", null ]
+    [ "id_addr_info", "a00104.html#a1bd1659b09527f11f048c6e26cc7dfbe", null ],
+    [ "id_info", "a00104.html#afacb110ee8e9be828954f516a04008ad", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Heart Rate Application</title>
+<title>nRF51 SDK - S110 SoftDevice: Bootloader/DFU Keil project</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,70 +97,95 @@ $(document).ready(function(){initNavTree('a00077.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Heart Rate Application </div>  </div>
+<div class="title">Bootloader/DFU Keil project </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><div class="image">
-<img src="Sports-and-Fitness.jpg" alt="Sports-and-Fitness.jpg"/>
-</div>
- <h1><a class="anchor" id="project_hrs_intro"></a>
-Heart Rate Example</h1>
-<p>The Heart Rate Application is a firmware example that implements the Heart Rate profile using the hardware delivered in the nRF51822 Development Kit.</p>
-<p>The source code and project file can be found in the <code>&lt;InstallFolder&gt;\Nordic\nrf51822\Board\nrf6310\s110\ble_app_hrs</code> folder.</p>
-<p>The application includes the two services in the Heart Rate profile:</p>
+<div class="textblock"><h1><a class="anchor" id="dfu_bootloader_keil_sec"></a>
+Bootloader/DFU compile targets</h1>
+<p>The Bootloader/DFU project can be built using Keil uVision.</p>
+<p>The project file contains three targets</p>
+<table class="doxtable">
+<tr>
+<th>Target </th><th>Description</th></tr>
+<tr>
+<td>dfu_dual_bank_hci </td><td>Project target using dual bank solution and image is transferred using HCI Transport layer over UART. See <a class="el" href="a00080.html">Serial (HCI)</a> </td></tr>
+<tr>
+<td>dfu_single_bank_hci </td><td>Project target using single bank solution and image is transferred using HCI Transport layer over UART. See <a class="el" href="a00080.html">Serial (HCI)</a> </td></tr>
+<tr>
+<td>dfu_dual_bank_ble (s110) </td><td>Project target using dual bank solution and image is transferred using BLE with the S110 SoftDevice. See <a class="el" href="a00081.html">BLE</a> </td></tr>
+</table>
+<p>In the nRF51 series, a Master Boot Record (MBR) will be placed at address <code>0x00000000</code>. The SoftDevice will be placed at address 0x00001000.<br/>
+ The s110 nRF51822 SoftDevice image includes both the MBR and the SoftDevice but on SoftDevice update only the SoftDevice will be updated. In the Bootloader/DFU example, the S110 SoftDevice v7.0.0 or later is used and thus it must be present at this address, (see the nRF51822 DK User Guide on how to flash the SoftDevice). <br/>
+</p>
+<p>The MBR will initiate the Bootloader present at the address defined in UICR.BOOTLOADERADDR. During iniitialization the Bootloader will determine wether DFU mode should be entered or request the SoftDevice to start the application. UICR.BOOTLOADERADDR register is located at address <code>0x10001014</code> .<br/>
+</p>
+<p>The Bootloader/DFU with SoftDevice update is located at address <code>0x0003C000</code>, as seen in <b>Figure 1.</b>.</p>
+<div class="image">
+<img src="dfu_bootloader_flash_view.png" alt="dfu_bootloader_flash_view.png"/>
+<div class="caption">
+Figure 1: Bootloader/DFU Flash layout overview.</div></div>
+<p>In the Bootloader/DFU project, the writing of the UICR.BOOTLOADERADDR is linked into the HEX file and will be written automatically when flashing the bootloader with <code>nrfjprog.exe</code>, see <a class="el" href="a00077.html#dfu_bootloader_keil_flashing_sec">Bootloader/DFU Flashing</a>.<br/>
+</p>
+<p>This is ensured by the following code in <code>bootloader_util_arm.c</code> </p>
+<div class="fragment"><div class="line">uint32_t m_uicr_bootloader_start_address __attribute__((at(NRF_UICR_BOOT_START_ADDRESS))) = BOOTLOADER_REGION_START;</div>
+</div><!-- fragment --><p><code>BOOTLOADER_REGION_START</code> must point to the correct location of the bootloader in the flash. The location in this example is <code>0x0003C000</code>.</p>
+<h1><a class="anchor" id="dfu_bootloader_keil_flashing_sec"></a>
+Bootloader/DFU Flashing</h1>
+<p>The J-Link Target Driver used for flashing other example applications in the nRF51 SDK does not support writing of the UICR register.<br/>
+</p>
+<p>Therefore it is necessary to use the <code>nrfjprog.exe</code> tool for programming the nRF51 with the Bootloader/DFU project.<br/>
+ The <code>nrfjprog.exe</code> is delivered as part of the nRF51 SDK installer, and should therefore already be present.<br/>
+</p>
+<p>The Bootloader/DFU project is configured to use <code>nrfjprog.exe</code> per default, and is expecting the tool to be present in windows' system path. <code>nrfjprog.exe</code> programs the compiled and linked HEX file to the nRF51 chip when flashing from Keil uVision.<br/>
+<br/>
+</p>
+<p><b>Figure 2</b> shows the settings for <code>nrfjprog.exec</code> in Keil.</p>
+<div class="image">
+<img src="keil_project_flash_tool.png" alt="keil_project_flash_tool.png"/>
+<div class="caption">
+Figure 2: Flash tool configuration in Keil uVision</div></div>
+<p> If more than one J-Link is present in the system, a pop-up windows will appear requiring the user to choose which to use. Choose the J-Link attached to the Development Kit containing the nRF51 Chip to be flashed with Bootloader/DFU. See <b>Figure 3</b>.</p>
+<div class="image">
+<img src="keil_project_popup.png" alt="keil_project_popup.png"/>
+<div class="caption">
+Figure 3: nrfjprog.exe Pop-up for J-Link selection</div></div>
+ <h1><a class="anchor" id="dfu_bootloader_keil_image_conv_sec"></a>
+Bootloader/DFU Application Image Conversion</h1>
+<p>The DFU supports only binary images for data transfer as described in <a class="el" href="a00078.html#dfu_transport_layer_sec">DFU Transport Layers</a>.</p>
+<p>When compiling an application, such as Heart Rate Measurement, two images are created.</p>
 <ul>
-<li><a class="el" href="a00925.html">Heart Rate Service</a></li>
-<li><a class="el" href="a00921.html">Device Information Service</a></li>
+<li>A HEX file.</li>
+<li>An AXF file.</li>
 </ul>
-<p>In addition, use of the <a class="el" href="a00916.html">Battery Service</a> is also demonstrated.</p>
-<p>When the application starts, three timers are started which control generation of various parts of the Heart Rate Measurement characteristic value:</p>
-<ul>
-<li>Heart Rate</li>
-<li>RR Interval</li>
-<li>Sensor Contact Detected</li>
-</ul>
-<p>Also, a timer for generating battery measurements is started.</p>
-<p>The sensor measurements are simulated the following way:</p>
-<ul>
-<li>Heart Rate: See <a class="el" href="a00914.html">Sensor Data Simulator</a>.</li>
-<li>RR Interval: See <a class="el" href="a00914.html">Sensor Data Simulator</a>.</li>
-<li>Sensor Contact: The state is toggled each time the timer expires.</li>
-<li>Battery Level: See <a class="el" href="a00914.html">Sensor Data Simulator</a>.</li>
-</ul>
-<p>When notification of Heart Rate Measurement characteristic is enabled, the Heart Rate Measurement, containing the current value for all the components of the Heart Rate Measurement characteristic, is notified each time the Heart Rate measurement timer expires. When notification of Battery Level characteristic is enabled, the Battery Level is notified each time the Battery Level measurement timer expires.</p>
-<dl class="section note"><dt>Note</dt><dd>This application is not power optimised! </dd>
-<dd>
-The application will stop advertising after 3 minutes and go to system-off mode. Push the button 0 restart advertising.</dd></dl>
-<h1><a class="anchor" id="project_hrs_setup"></a>
-Setup</h1>
-<p>Instructions on how to set up the nRFgo Motherboard: <a class="el" href="a00009.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a>.</p>
-<p>LED assignments:</p>
-<ul>
-<li>LED 0: Advertising</li>
-<li>LED 1: Connected</li>
-<li>LED 7: Asserted (i.e. an assert check in the application has failed)</li>
-</ul>
-<p>Buttons assignments:</p>
-<ul>
-<li>Button 0: Wake-up from system-off and restart advertising.</li>
-<li>Button 1: Wake-up erase all bonds and restart advertising.</li>
-</ul>
-<h1><a class="anchor" id="project_hrs_test"></a>
-Testing</h1>
-<p>The Heart Rate Application can be tested using the "nRF Toolbox" app, available on both iOS (Apple Store) and Android (Google Play).</p>
-<p>It can also be tested using the Master Control Panel as follows:</p>
-<ol type="1">
-<li>Compile and program the application. Observe that the Advertising LED is lit.</li>
-<li>Connect to the device from Master Control Panel (the device will be advertising as 'Nordic_HRM'), then perform service discovery. Observe that the Connected LED is lit, and the Advertising LED is off.</li>
-<li>Click the 'Enable services' button on the Master Control Panel. Observe that Heart Rate notifications are received every second, and Battery Level notifications are received every two seconds. </li>
-</ol>
+<p>Keil uVision contains a command line tool, <code>fromelf.exe</code>, which can convert the AXF file into a binary image.<br/>
+ The tool is located in the Keil installation folder as: </p>
+<pre class="fragment">&lt;Keil-folder&gt;\ARM\ARMCC\bin\fromelf.exe
+</pre><p>Converting an AXF image into BIN file can be done as: </p>
+<pre class="fragment">&lt;Keil-folder&gt;\ARM\ARMCC\bin\fromelf.exe --bin --output &lt;outfile.bin&gt; &lt;infile.axf&gt;
+</pre><h1><a class="anchor" id="dfu_bootloader_keil_bootloader_extend_sec"></a>
+Bootloader/DFU Flash relocation.</h1>
+<p>In case the Bootloader/DFU software is extended with additional functionality and a larger code size is needed, then it is possible to move the start address of the Bootloader/DFU. If moving the bootloader to a different location, as example <code>0x00038000</code>, then the <code>BOOTLOADER_REGION_START</code> defined in <code>dfu_types.h</code> must be updated accordingly. </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#define BOOTLOADER_REGION_START         0x0003C000</span></div>
+</div><!-- fragment --><p>For the linker to work correctly, then changing <code>BOOTLOADER_REGION_START</code> also requires change to the Keil project. In Keil, go to <code> project-&gt;options for target</code>, and change the IROM1 Start address to the new value. Also remember to increase the Size field (default <code>0x4000</code> ).<br/>
+</p>
+<p>As example, moving from address <code>0x0003C000</code>, Size <code>0x3800</code> to new address <code>0x00038000</code> gives 0x4800 additional bytes (18 pages), thus the new size becomes <code>0x8200</code>. </p>
+<dl class="section note"><dt>Note</dt><dd>Changing the Bootloader/DFU Start address requires the UICR register to be erased. To ensure correct behaviour, the following procedure should be followed <br/>
+ 1) Erase the whole chip with <code>nrfjprog.exe</code> <br/>
+ 2) Flash the SoftDevice <br/>
+ 3) Flash the Bootloader/DFU with the new address.</dd></dl>
+<p><b>Figure 4</b> shows the setting in Keil to modify, if the Bootloader/DFU start address must be changed.</p>
+<dl class="section note"><dt>Note</dt><dd>All Start addresses MUST be page aligned and the page size is 0x400 (1024d) bytes.</dd></dl>
+<div class="image">
+<img src="keil_project_bootloader_location.png" alt="keil_project_bootloader_location.png"/>
+<div class="caption">
+Figure 4: Bootloader/DFU Start address setting in Keil.</div></div>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00091.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:33 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00056.html">Bootloader/DFU - SoftDevice update support</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

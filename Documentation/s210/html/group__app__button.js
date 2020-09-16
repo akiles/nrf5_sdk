@@ -21,5 +21,5 @@ var group__app__button =
     [ "app_button_disable", "group__app__button.html#ga261a5deb026836858a61905db0e8ac90", null ],
     [ "app_button_enable", "group__app__button.html#gab498b436a38ebb03393e1129a6daffc9", null ],
     [ "app_button_init", "group__app__button.html#gaf277d828259fc6b338959e89d0f87194", null ],
-    [ "app_button_is_pushed", "group__app__button.html#ga250eea833bc1419495654e647c7ab073", null ]
+    [ "app_button_is_pushed", "group__app__button.html#ga6a7a1664fb906351ed582a95553c17a2", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_evt_user_mem_request_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_conn_params_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,81 @@ $(document).ready(function(){initNavTree('a00084.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_evt_user_mem_request_t Struct Reference<div class="ingroups"><a class="el" href="a00521.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_conn_params_t Struct Reference<div class="ingroups"><a class="el" href="a00542.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event structure for BLE_EVT_USER_MEM_REQUEST.  
+<p>GAP connection parameters.  
  <a href="a00084.html#details">More...</a></p>
 
-<p><code>#include &lt;ble.h&gt;</code></p>
+<p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac0a51b3ce3131df1dcc57a440f5a816c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00084.html#ac0a51b3ce3131df1dcc57a440f5a816c">type</a></td></tr>
-<tr class="separator:ac0a51b3ce3131df1dcc57a440f5a816c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d1975f7d25263004c405e0321fbae34"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00084.html#a4d1975f7d25263004c405e0321fbae34">min_conn_interval</a></td></tr>
+<tr class="separator:a4d1975f7d25263004c405e0321fbae34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd7a6e16a723de1d779afadae3f3113e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00084.html#abd7a6e16a723de1d779afadae3f3113e">max_conn_interval</a></td></tr>
+<tr class="separator:abd7a6e16a723de1d779afadae3f3113e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5caf55715aaac33f56cc996f91a92cc"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00084.html#aa5caf55715aaac33f56cc996f91a92cc">slave_latency</a></td></tr>
+<tr class="separator:aa5caf55715aaac33f56cc996f91a92cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab644e629af7eb4915b0f3a93f682f7ae"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00084.html#ab644e629af7eb4915b0f3a93f682f7ae">conn_sup_timeout</a></td></tr>
+<tr class="separator:ab644e629af7eb4915b0f3a93f682f7ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event structure for BLE_EVT_USER_MEM_REQUEST. </p>
+<div class="textblock"><p>GAP connection parameters. </p>
+<dl class="section note"><dt>Note</dt><dd>When ble_conn_params_t is received in an event, both min_conn_interval and max_conn_interval will be equal to the connection interval set by the central.</dd>
+<dd>
+If both conn_sup_timeout and max_conn_interval are specified, then the following constraint applies: conn_sup_timeout * 4 &gt; (1 + slave_latency) * max_conn_interval that corresponds to the following BT Spec 4.1 Vol 2 Part E, Section 7.8.12 requirement: The Supervision_Timeout in milliseconds shall be larger than (1 + Conn_Latency) * Conn_Interval_Max * 2, where Conn_Interval_Max is given in milliseconds. </dd></dl>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ac0a51b3ce3131df1dcc57a440f5a816c"></a>
+<a class="anchor" id="ab644e629af7eb4915b0f3a93f682f7ae"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_evt_user_mem_request_t::type</td>
+          <td class="memname">uint16_t ble_gap_conn_params_t::conn_sup_timeout</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>User memory type, see BLE_USER_MEM_TYPES. </p>
+<p>Connection Supervision Timeout in 10 ms units, see BLE_GAP_CP_LIMITS. </p>
+
+</div>
+</div>
+<a class="anchor" id="abd7a6e16a723de1d779afadae3f3113e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_gap_conn_params_t::max_conn_interval</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Maximum Connection Interval in 1.25 ms units, see BLE_GAP_CP_LIMITS. </p>
+
+</div>
+</div>
+<a class="anchor" id="a4d1975f7d25263004c405e0321fbae34"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_gap_conn_params_t::min_conn_interval</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Minimum Connection Interval in 1.25 ms units, see BLE_GAP_CP_LIMITS. </p>
+
+</div>
+</div>
+<a class="anchor" id="aa5caf55715aaac33f56cc996f91a92cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_gap_conn_params_t::slave_latency</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Slave Latency in number of connection events, see BLE_GAP_CP_LIMITS. </p>
 
 </div>
 </div>
@@ -141,8 +189,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00084.html">ble_evt_user_mem_request_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:28 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00084.html">ble_gap_conn_params_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:40 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

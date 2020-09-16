@@ -1,5 +1,4 @@
 var a00115 =
 [
-    [ "keys_central", "a00115.html#a823705c8aecd73949bb7d7b0f2639c0f", null ],
-    [ "keys_periph", "a00115.html#a129763caaa3dc397a06a4e4757f1aac9", null ]
+    [ "csrk", "a00115.html#ae7391524e0075eaebdf6f1be1920bc88", null ]
 ];

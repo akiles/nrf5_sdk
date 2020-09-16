@@ -1,4 +1,5 @@
 var a00303 =
 [
-    [ "gap", "a00303.html#a8f3500ea048fa1ebff3a2fa7aa3f8d5d", null ]
+    [ "len", "a00303.html#a14ab9ae8747f2add25b332c15d20647e", null ],
+    [ "p_mem", "a00303.html#ab5fa5a7ab3575057522e07be1581c659", null ]
 ];

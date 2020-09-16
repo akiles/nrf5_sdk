@@ -94,8 +94,10 @@ static void data_message_handle(uint8_t const * const p_event_message_buffer)
     uint32_t seconds;
 #endif // TRACE_HRM_PAGE_1
 
+#if defined(TRACE_HRM_PAGE_4)
     // Heart beat count from previous received page.
-    static uint32_t m_previous_beat_count = 0;      
+    static uint32_t m_previous_beat_count = 0;  
+#endif 
     const uint32_t  current_page          = p_event_message_buffer[BUFFER_INDEX_MESG_DATA];
 
     // Decode the default page data present in all pages.
@@ -159,6 +161,8 @@ static void data_message_handle(uint8_t const * const p_event_message_buffer)
             printf("Hardware Rev ID %u ", m_page3_data.hw_version);
             printf("Model %u\n", m_page3_data.model_num);
             printf("Software Ver ID %u\n", m_page3_data.sw_version);
+#else
+            (void)m_page3_data;
 #endif // TRACE_HRM_PAGE_3
             break;
       
@@ -180,9 +184,9 @@ static void data_message_handle(uint8_t const * const p_event_message_buffer)
                 printf("%03u s\n", 
                     (uint32_t)((((rr_interval % 1024u) * HRM_PRECISION) + 512u) / 1024u));
             }
+            m_previous_beat_count = m_page0_data.beat_count;
 #endif // TRACE_HRM_PAGE_4               
 
-            m_previous_beat_count = m_page0_data.beat_count;
 
 #if defined(TRACE_HRM_PAGE_4)
             printf("Time of last heart beat event: %u.", (uint32_t)(m_page0_data.beat_time/1024u));

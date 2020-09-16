@@ -1,7 +1,6 @@
 var a00067 =
 [
-    [ "buf_size_mask", "a00067.html#a03c6c7fcf087b5c1e0cfd5ce09661870", null ],
-    [ "p_buf", "a00067.html#a64eafd180a65260208be3b845f6acbf5", null ],
-    [ "read_pos", "a00067.html#aabcc538faf2ea4a374702c9896ae52d6", null ],
-    [ "write_pos", "a00067.html#a12631a6575aae2c98f1cca4034b38eaf", null ]
+    [ "channel", "a00067.html#a5e084957ed6c0f93b78203d74a268e36", null ],
+    [ "event", "a00067.html#a8449b66e97f4dfce737478dc751199e1", null ],
+    [ "evt_buffer", "a00067.html#a0945895af053724b710662f5beea9ed5", null ]
 ];

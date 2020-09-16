@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gatts_evt_sys_attr_missing_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gatts_evt_write_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,108 @@ $(document).ready(function(){initNavTree('a00149.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gatts_evt_sys_attr_missing_t Struct Reference<div class="ingroups"><a class="el" href="a00537.html">Structures</a></div></div>  </div>
+<div class="title">ble_gatts_evt_write_t Struct Reference<div class="ingroups"><a class="el" href="a00553.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event structure for BLE_GATTS_EVT_SYS_ATTR_MISSING.  
+<p>Event structure for BLE_GATTS_EVT_WRITE.  
  <a href="a00149.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gatts.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a185bd248ff35543e4a827438c881d51d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00149.html#a185bd248ff35543e4a827438c881d51d">hint</a></td></tr>
-<tr class="separator:a185bd248ff35543e4a827438c881d51d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0637f8a8c322380f80f113edc931751"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00149.html#ae0637f8a8c322380f80f113edc931751">handle</a></td></tr>
+<tr class="separator:ae0637f8a8c322380f80f113edc931751"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e27117bb9e805b03a2c198b0684c621"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00149.html#a4e27117bb9e805b03a2c198b0684c621">op</a></td></tr>
+<tr class="separator:a4e27117bb9e805b03a2c198b0684c621"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1728a17f5c77bff7285e29c1a8afe6e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00137.html">ble_gatts_attr_context_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00149.html#a1728a17f5c77bff7285e29c1a8afe6e8">context</a></td></tr>
+<tr class="separator:a1728a17f5c77bff7285e29c1a8afe6e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc84657816fd23a1e7c5f4b0e848e69d"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00149.html#afc84657816fd23a1e7c5f4b0e848e69d">offset</a></td></tr>
+<tr class="separator:afc84657816fd23a1e7c5f4b0e848e69d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56b5ec3ad2054c52588721d6273eb109"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00149.html#a56b5ec3ad2054c52588721d6273eb109">len</a></td></tr>
+<tr class="separator:a56b5ec3ad2054c52588721d6273eb109"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe4bd839db7c40829ccdbff3d1f79a57"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00149.html#abe4bd839db7c40829ccdbff3d1f79a57">data</a> [1]</td></tr>
+<tr class="separator:abe4bd839db7c40829ccdbff3d1f79a57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event structure for BLE_GATTS_EVT_SYS_ATTR_MISSING. </p>
+<div class="textblock"><p>Event structure for BLE_GATTS_EVT_WRITE. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a185bd248ff35543e4a827438c881d51d"></a>
+<a class="anchor" id="a1728a17f5c77bff7285e29c1a8afe6e8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gatts_evt_sys_attr_missing_t::hint</td>
+          <td class="memname"><a class="el" href="a00137.html">ble_gatts_attr_context_t</a> ble_gatts_evt_write_t::context</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Hint (TBD). </p>
+<p>Attribute Context. </p>
+
+</div>
+</div>
+<a class="anchor" id="abe4bd839db7c40829ccdbff3d1f79a57"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_gatts_evt_write_t::data[1]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Incoming data, variable length. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae0637f8a8c322380f80f113edc931751"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_gatts_evt_write_t::handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Attribute Handle. </p>
+
+</div>
+</div>
+<a class="anchor" id="a56b5ec3ad2054c52588721d6273eb109"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_gatts_evt_write_t::len</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Length of the incoming data. </p>
+
+</div>
+</div>
+<a class="anchor" id="afc84657816fd23a1e7c5f4b0e848e69d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_gatts_evt_write_t::offset</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Offset for the write operation. </p>
+
+</div>
+</div>
+<a class="anchor" id="a4e27117bb9e805b03a2c198b0684c621"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_gatts_evt_write_t::op</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Type of write operation, see BLE_GATTS_OPS. </p>
 
 </div>
 </div>
@@ -141,8 +216,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00149.html">ble_gatts_evt_sys_attr_missing_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:28 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00149.html">ble_gatts_evt_write_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:41 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

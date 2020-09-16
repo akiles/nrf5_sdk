@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: ble_sensorsim_state_t Struct Reference</title>
+<title>nRF51 SDK - S310 SoftDevice: sfloat_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,48 @@ $(document).ready(function(){initNavTree('a00248.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_sensorsim_state_t Struct Reference<div class="ingroups"><a class="el" href="a00663.html">Sensor Data Simulator</a></div></div>  </div>
+<div class="title">sfloat_t Struct Reference<div class="ingroups"><a class="el" href="a00601.html">Glucose Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Triangular waveform sensor simulator state.  
+<p>SFLOAT format (IEEE-11073 16-bit FLOAT, meaning 4 bits for exponent (base 10) and 12 bits mantissa)  
  <a href="a00248.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_sensorsim.h&gt;</code></p>
+<p><code>#include &lt;ble_gls.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a607fd7c8e6f2f3e7bbe8dc5d5b44b54e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00248.html#a607fd7c8e6f2f3e7bbe8dc5d5b44b54e">current_val</a></td></tr>
-<tr class="separator:a607fd7c8e6f2f3e7bbe8dc5d5b44b54e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21bddc380a89ed66e20f88dfd4da4c8a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00248.html#a21bddc380a89ed66e20f88dfd4da4c8a">is_increasing</a></td></tr>
-<tr class="separator:a21bddc380a89ed66e20f88dfd4da4c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a831aa262a275e9fe9b611e074ab357fe"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00248.html#a831aa262a275e9fe9b611e074ab357fe">exponent</a></td></tr>
+<tr class="separator:a831aa262a275e9fe9b611e074ab357fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f8b946e6d4361fa7a8e427a1c5cc0ef"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00248.html#a3f8b946e6d4361fa7a8e427a1c5cc0ef">mantissa</a></td></tr>
+<tr class="separator:a3f8b946e6d4361fa7a8e427a1c5cc0ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Triangular waveform sensor simulator state. </p>
+<div class="textblock"><p>SFLOAT format (IEEE-11073 16-bit FLOAT, meaning 4 bits for exponent (base 10) and 12 bits mantissa) </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a607fd7c8e6f2f3e7bbe8dc5d5b44b54e"></a>
+<a class="anchor" id="a831aa262a275e9fe9b611e074ab357fe"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_sensorsim_state_t::current_val</td>
+          <td class="memname">int8_t sfloat_t::exponent</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Current sensor value. </p>
+<p>Base 10 exponent, should be using only 4 bits </p>
 
 </div>
 </div>
-<a class="anchor" id="a21bddc380a89ed66e20f88dfd4da4c8a"></a>
+<a class="anchor" id="a3f8b946e6d4361fa7a8e427a1c5cc0ef"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool ble_sensorsim_state_t::is_increasing</td>
+          <td class="memname">int16_t sfloat_t::mantissa</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TRUE if the simulator is in increasing state, FALSE otherwise. </p>
+<p>Mantissa, should be using only 12 bits </p>
 
 </div>
 </div>
@@ -156,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00248.html">ble_sensorsim_state_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:19 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00248.html">sfloat_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

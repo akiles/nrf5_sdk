@@ -1,11 +1,10 @@
 var a00178 =
 [
-    [ "error_handler", "a00178.html#a5840a1605a5459c4e82ef773ac9d2e24", null ],
-    [ "evt_handler", "a00178.html#a96de686937df25c7bdc23206170ae50a", null ],
-    [ "list_supported_locations", "a00178.html#a43e3dbaf04322020621f80634fb4ab11", null ],
-    [ "sc_ctrlpt_attr_md", "a00178.html#ace531100dc9ba6f0ff3f62d27fd220f8", null ],
-    [ "sensor_location_handle", "a00178.html#aff182ef403314ac9e5fb3d6964d4e862", null ],
-    [ "service_handle", "a00178.html#a14e10c317dd498dc5ac6d17f162cb01e", null ],
-    [ "size_list_supported_locations", "a00178.html#accef6d6a6a4d4a5365c2a6043850c22a", null ],
-    [ "supported_functions", "a00178.html#a64788d2708103f5bbc852e2e1835182c", null ]
+    [ "common_evt", "a00178.html#a65014fa31bf6c86c113ef47dc929a755", null ],
+    [ "evt", "a00178.html#ae7ccb4cc8dc42f58ea4fc167e8021cd2", null ],
+    [ "gap_evt", "a00178.html#a67ca1f9db570d1c2f196c0a316151af5", null ],
+    [ "gattc_evt", "a00178.html#a2bdcb3c197239b4e5957d89bb0f26161", null ],
+    [ "gatts_evt", "a00178.html#aea997556a147ad5541998f13699e27c1", null ],
+    [ "header", "a00178.html#a31f5fb5f33b8020c1b91639d048a6efa", null ],
+    [ "l2cap_evt", "a00178.html#a615ab3df54ef7363a90f915d6440ce1a", null ]
 ];

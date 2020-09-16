@@ -6609,7 +6609,7 @@
 #define UART_ENABLE_ENABLE_Enabled (0x04UL) /*!< UART enabled. */
 
 /* Register: UART_RXD */
-/* Description: RXD register. On read action the buffer pointer is displaced. Once read the character is consummed. If read when no character available, the UART will stop working. */
+/* Description: RXD register. On read action the buffer pointer is displaced. Once read the character is consumed. If read when no character available, the UART will stop working. */
 
 /* Bits 7..0 : RX data from previous transfer. Double buffered. */
 #define UART_RXD_RXD_Pos (0UL) /*!< Position of RXD field. */

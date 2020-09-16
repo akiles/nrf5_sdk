@@ -1,6 +1,5 @@
 var a00343 =
 [
-    [ "ciphertext", "a00343.html#a478942ae65d7433678164a95e4944115", null ],
-    [ "cleartext", "a00343.html#ad4c798195f0d6d399a7f75d09ef89793", null ],
-    [ "key", "a00343.html#aab4ea408dd38499ceff3935ecb5fa39f", null ]
+    [ "p_data", "a00343.html#af0aec898e61ff702225ab7cb8e81419a", null ],
+    [ "size", "a00343.html#a0ea03f9dd5df67309f05eeddf0b854ff", null ]
 ];

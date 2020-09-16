@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Bootloader/DFU Architecture</title>
+<title>nRF51 SDK - S120 SoftDevice: BLE Multi-link Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,74 +97,57 @@ $(document).ready(function(){initNavTree('a00056.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Bootloader/DFU Architecture </div>  </div>
+<div class="title">BLE Multi-link Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="dfu_bootloader_arch_sec"></a>
-Bootloader/DFU Architectural Overview</h1>
-<p>The Bootloader/DFU example makes it possible to receive an application image and write it to the internal flash of the nRF51.</p>
-<p>The image can be transferred using serial wire (UART) or over BLE.</p>
-<p>During system start-up, the Bootloader/DFU will be started and during start-up it will determine if a valid application is present in bank 0 at Address <code>0x00016000</code> (see also Single Bank Flash Layout or Dual Bank Flash Layout for detailed description). If a valid application is present in Bank 0 the Bootloader will start the application, otherwise the Bootloader will be in DFU mode expecting a Device Firmware Update. If it is desired to put a device with an existing application, restart with device with Button 7 pressed. Note that SoftDevice S110 uses bank 0 at Address <code>0x00016000</code> and SoftDevice S310 uses bank 0 at Address <code>0x00020000</code>.</p>
-<p>A schematic overview of the blocks in Bootloader/DFU is seen in <b>Figure 1.</b></p>
-<div class="image">
-<img src="dfu_bootloader_overview.png" alt="dfu_bootloader_overview.png"/>
-<div class="caption">
-Figure 1: Architectural overview of Bootloader/DFU.</div></div>
-<h1><a class="anchor" id="dfu_bootloader_ble_transport_sec"></a>
-Bootloader/DFU BLE Transfer</h1>
-<p>The Bootloader/DFU supports transferring of an image using BLE.</p>
-<p>The DFU BLE Transport uses a BLE Service for data transfer (see DFU Service). The BLE DFU Service relies on S110/S310 SoftDevice for data transfer. The DFU Bank Handling will ensure the writing of received data packets to flash.</p>
-<p><b>Figure 2</b> shows a schematic overview of the Bootloader/DFU project with BLE Support.</p>
-<div class="image">
-<img src="dfu_transfer_ble_overview.png" alt="dfu_transfer_ble_overview.png"/>
-<div class="caption">
-Figure 2: Architectural overview of Bootloader/DFU supporting BLE transfer.</div></div>
-<h1><a class="anchor" id="dfu_bootloader_serial_transport_sec"></a>
-Bootloader/DFU Serial (HCI) Transfer</h1>
-<p>The Bootloader/DFU supports transferring of an image using UART. The UART will use HCI Transport layer for increased robustness of the transfer. A detailed description of HCI is found in <a class="el" href="a00411.html">HCI Transport</a>.</p>
-<p>The DFU Bank Handling will ensure the writing of received data packets to flash.</p>
-<p><b>Figure 3</b> shows a schematic overview of the Bootloader/DFU project with UART Support.</p>
-<div class="image">
-<img src="dfu_transfer_serial_overview.png" alt="dfu_transfer_serial_overview.png"/>
-<div class="caption">
-Figure 3: Architectural overview of Bootloader/DFU supporting Serial transfer.</div></div>
-<h1><a class="anchor" id="dfu_bootloader_state_machine_sec"></a>
-The DFU State Machine</h1>
-<p>The DFU bootloader has an internal state machine independent of the transport layer used. All initializing and writing to non-volatile memory is controlled by the DFU module.</p>
-<p><b>Figure 1</b> illustrates the transitions in the state machine: </p>
-<div class="image">
-<img src="DFU_state_machine.png" alt="DFU_state_machine.png"/>
-<div class="caption">
-Figure 4: State machine transitions in the DFU.</div></div>
-<p><b>Entry point</b> indicates that the bootloader is started up, and would initialize the DFU. In this initialization the DFU would prepare the non-volatile memory region for the new application. Either using all available memory overwriting the old image, or using banked memory where the old application is retained until a new application is uploaded and validated. Also the selected transport layer would be initialized in this phase.</p>
-<h2><a class="anchor" id="dfu_bootloader_event_message_subsec"></a>
-DFU Event Message Types</h2>
-<table class="doxtable">
-<tr>
-<th>Message type </th><th>Description</th></tr>
-<tr>
-<td>- dfu_init </td><td>Message initializing the Device Firmware Update module. </td></tr>
-<tr>
-<td>- dfu_image_size_set </td><td>Message setting the DFU image size. </td></tr>
-<tr>
-<td>- dfu_data_pkt_handle </td><td>Message containing a portion of the new application. </td></tr>
-<tr>
-<td>- dfu_init_pkt_handle </td><td>Message for optional customer specific data. </td></tr>
-<tr>
-<td>- dfu_image_validate </td><td>Message triggering validation of the new application. </td></tr>
-<tr>
-<td>- dfu_image_activate </td><td>Message activating the transferred image after validation has successfully completed </td></tr>
-<tr>
-<td>- dfu_sys_reset </td><td>Can occur any time, making the DFU go into a reset of the chip. <br/>
- A bootloader time-out or an external message can trigger the system reset. </td></tr>
-</table>
+<div class="textblock"><h1><a class="anchor" id="project_intro"></a>
+Functionality</h1>
+<p>The BLE Multi-link Central application together with the BLE Multi-link Peripheral application tests the multi-link functionality of the S120 SoftDevice. The BLE Multi-link Example demonstrates how one central device can connect to multiple peripheral devices.</p>
+<p>The source code and project file can be found in the following folders: <br/>
+ <code>&lt;InstallFolder&gt;\Nordic\nrf51822\Board\nrf6310\s120\ble_app_multilink_central</code> <br/>
+ <code>&lt;InstallFolder&gt;\Nordic\nrf51822\Board\nrf6310\s120\ble_app_multilink_peripheral</code> </p>
+<dl class="section note"><dt>Note</dt><dd>Although the folder ble_app_multilink_peripheral is placed under s120 folder, it needs the S110 SoftDevice to work. Its primary use is to act as helper application to test the ble_app_multilink_central example, thus it is placed in the s120 folder.</dd></dl>
+<p>On startup, the peripheral devices will start advertising. Once connected to the central, pressing button 0 on the peripheral toggles the state of LED 0 on the peripheral and a corresponding LED on the central. When multiple peripherals are connected, each peripheral is assigned one LED by the central depending on the order in which the peripherals got connected. For example, LED 0 will be assigned to the peripheral that connects first. LED 1 will be assigned to the peripheral that connects second and so on.</p>
+<h1><a class="anchor" id="project_multilink_setup"></a>
+Setup</h1>
+<p>The BLE multi-link example requires at least three boards to verify that more than one link is active. The central device can have a maximum of 8 concurrent connections to peripheral devices, which corresponds to 8 LEDs. Consequently, the BLE Multi-link Central application is designed for the nRFgo Motherboard (nRF6310). The BLE Multi-link Peripheral application is designed for the Evaluation Kit PCA10001.</p>
+<p>Instructions on how to set up the nRFgo Motherboard: <a class="el" href="a00008.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a>.</p>
+<h2><a class="anchor" id="project_multilink_setup_buttons_leds"></a>
+Button and LED Assignments</h2>
+<p>LED assignments PCA10001 Peripheral:</p>
+<ul>
+<li>LED 0: Advertising. When in Connected state, this LED toggles each time button 0 is pressed.</li>
+<li>LED 1: Connected and the central application has configured it to send notifications.</li>
+</ul>
+<p>Buttons assignments PCA10001 Peripheral:</p>
+<ul>
+<li>Button 0: Toggle LED 0 on peripheral side (local board) and assigned LED on Central side</li>
+</ul>
+<p>LED assignments nRF6310 Central:</p>
+<ul>
+<li>LED 0-7: Assigned first come first serve to connecting peripherals. Toggled on and off based on notifications received from the respective peripherals.</li>
+</ul>
+<h2><a class="anchor" id="project_multilink_porting_to_eval"></a>
+Porting the central example to run on evaluation board</h2>
+<p>The central application can be easily ported to run on a PCA10001 evaluation board. The only changed needed would be adapt to the two LEDs on evaluation board. To do this, the preprocessor define BOARD_NRF6310 (available in Keil uVision IDE at Projects-&gt;Options for...-&gt;C/C++) should be changed to BOARD_PCA10001. Since the evaluation board has only two LEDs, it can visually identify only two links. If more than two links need to be supported, UART logging (for example) can be used instead of the LEDs.</p>
+<h1><a class="anchor" id="project_multilink_testing"></a>
+Testing</h1>
+<p>Tested with one nRFgo Motherboard (nRF6310) and two evaluation kits (PCA10001).</p>
+<ol type="1">
+<li>Compile and program the peripheral application onto the two PCA10001 kits. Observe that advertising LED 0 is lit on both the boards. This means they are advertising and are waiting for the central device to connect.</li>
+<li>Compile and program the central application onto the nRF6310 board.</li>
+<li>As soon as the central application is programmed, it starts scanning and attempts to connect to the peripherals and enable notifications. Hence on the PCA10001 kits, observe that the advertising LED 0 turns off and the LED 1 turns on after a few seconds.</li>
+<li>Press button 0 on one of the peripherals. Observe that LED 0 of that peripheral is turned ON and one of the LEDs on the central turns ON.</li>
+<li>Press button 0 again on the same peripheral again. Observe that LED 0 on the peripheral is turned OFF and the corresponding LED on the central is turned off.</li>
+<li>Repeat the last two steps with other connected peripherals and observe the same behavior. </li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00054.html">Bootloader/DFU</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:05 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00054.html">BLE Central</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

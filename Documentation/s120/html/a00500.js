@@ -1,8 +1,9 @@
 var a00500 =
 [
-    [ "Message Sequence Charts", "a00501.html", "a00501" ],
-    [ "Enumerations", "a00539.html", "a00539" ],
-    [ "Defines", "a00540.html", "a00540" ],
-    [ "Structures", "a00541.html", "a00541" ],
-    [ "Functions", "a00542.html", "a00542" ]
+    [ "Device Manager Sequence Charts", "a00501.html", "a00501" ],
+    [ "Service/Protocol Types", "a00524.html", "a00524" ],
+    [ "Device Manager Events", "a00525.html", "a00525" ],
+    [ "Device Manager Data Types", "a00529.html", "a00529" ],
+    [ "Device Module APIs", "a00530.html", "a00530" ],
+    [ "DM_INVALID_ID", "a00500.html#gaffbf0ad98e25546a4645eb2cac9bef8a", null ]
 ];

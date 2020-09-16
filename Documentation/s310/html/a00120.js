@@ -1,9 +1,9 @@
 var a00120 =
 [
-    [ "cumulative_crank_revs", "a00120.html#abaf971426cea9d234838ad3896a5ebb0", null ],
-    [ "cumulative_wheel_revs", "a00120.html#a28e443636699abf5ac97850f4fb9eb39", null ],
-    [ "is_crank_rev_data_present", "a00120.html#a6750c3a77be5be56ef6e563164b85a4a", null ],
-    [ "is_wheel_rev_data_present", "a00120.html#ae78a3f62b14426e5a3fcc65d5cc54d7c", null ],
-    [ "last_crank_event_time", "a00120.html#a5ddda2de7f892024636795e85b9ba914", null ],
-    [ "last_wheel_event_time", "a00120.html#ab1b12075f983b9149eacf65f318f0482", null ]
+    [ "fp", "a00120.html#a9e2d44610c896a2d1466eb293688f226", null ],
+    [ "interval", "a00120.html#a289b288f81c56920fea9a6373697c7f3", null ],
+    [ "p_peer_addr", "a00120.html#ae87243568d5b9a272a15df0cd4673cdb", null ],
+    [ "p_whitelist", "a00120.html#afd7f1f2a29e883a60a17363bccc24dca", null ],
+    [ "timeout", "a00120.html#a81b240f5be7e508a84467b7ac2ff6d15", null ],
+    [ "type", "a00120.html#aece8d919208244b8085f64b613708427", null ]
 ];

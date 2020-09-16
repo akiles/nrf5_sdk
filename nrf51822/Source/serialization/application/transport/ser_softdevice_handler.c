@@ -37,11 +37,16 @@ APP_MAILBOX_DEF(sd_ble_evt_mailbox, SD_BLE_EVT_MAILBOX_QUEUE_SIZE, ser_sd_handle
 
 static app_mailbox_id_t m_ble_evt_mailbox_id; /**< mailbox identifier. */
 
-static void connectivity_chip_reset(void)
+static void connectivity_reset_low(void)
 {
     //Signal a reset to the nRF51822 by setting the reset pin on the nRF51822 low.
     ser_app_hal_nrf_reset_pin_clear();
     ser_app_hal_delay(CONN_CHIP_RESET_TIME);
+
+}
+
+static void connectivity_reset_high(void)
+{
 
     //Set the reset level to high again.
     ser_app_hal_nrf_reset_pin_set();
@@ -123,7 +128,7 @@ uint32_t sd_softdevice_enable(nrf_clock_lfclksrc_t           clock_source,
 
     if (err_code == NRF_SUCCESS)
     {
-        connectivity_chip_reset();
+        connectivity_reset_low();
 
         err_code = app_mailbox_create(APP_MAILBOX(sd_ble_evt_mailbox), &m_ble_evt_mailbox_id);
 
@@ -133,6 +138,10 @@ uint32_t sd_softdevice_enable(nrf_clock_lfclksrc_t           clock_source,
                                              ser_sd_rsp_wait,
                                              NULL,
                                              NULL);
+            if (err_code == NRF_SUCCESS)
+            {
+              connectivity_reset_high();
+            }
         }
     }
 

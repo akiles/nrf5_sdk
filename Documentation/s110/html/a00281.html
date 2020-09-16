@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_hids_rep_char_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_l2cap_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,52 @@ $(document).ready(function(){initNavTree('a00281.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_hids_rep_char_t Struct Reference<div class="ingroups"><a class="el" href="a00924.html">Human Interface Device Service</a></div></div>  </div>
+<div class="title">ble_l2cap_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00925.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>HID Report characteristic structure.  
+<p>L2CAP event callback event structure.  
  <a href="a00281.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_hids.h&gt;</code></p>
+<p><code>#include &lt;ble_l2cap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a3f137cc3f92bf439d93a8491e4314d5a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00253.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00281.html#a3f137cc3f92bf439d93a8491e4314d5a">char_handles</a></td></tr>
-<tr class="separator:a3f137cc3f92bf439d93a8491e4314d5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0209468bba2c298192f4500a652dd6d1"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00281.html#a0209468bba2c298192f4500a652dd6d1">ref_handle</a></td></tr>
-<tr class="separator:a0209468bba2c298192f4500a652dd6d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab843f6e96efbaf3d2bffee8c92c62f1a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00281.html#ab843f6e96efbaf3d2bffee8c92c62f1a">conn_handle</a></td></tr>
+<tr class="separator:ab843f6e96efbaf3d2bffee8c92c62f1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9beac1420f25dbd4bd49bb88bc2302d"><td class="memItemLeft" ><a class="anchor" id="ac9beac1420f25dbd4bd49bb88bc2302d"></a>
+union {</td></tr>
+<tr class="memitem:aa4874a31c1ff7bf6ad5f27e1f09b628c"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00280.html">ble_l2cap_evt_rx_t</a>&#160;&#160;&#160;<a class="el" href="a00281.html#afc4cbc758b308e6698b16650310cc52b">rx</a></td></tr>
+<tr class="separator:aa4874a31c1ff7bf6ad5f27e1f09b628c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9beac1420f25dbd4bd49bb88bc2302d"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
+<tr class="separator:ac9beac1420f25dbd4bd49bb88bc2302d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>HID Report characteristic structure. </p>
+<div class="textblock"><p>L2CAP event callback event structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a3f137cc3f92bf439d93a8491e4314d5a"></a>
+<a class="anchor" id="ab843f6e96efbaf3d2bffee8c92c62f1a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00253.html">ble_gatts_char_handles_t</a> ble_hids_rep_char_t::char_handles</td>
+          <td class="memname">uint16_t ble_l2cap_evt_t::conn_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handles related to the Report characteristic. </p>
+<p>Connection Handle on which event occured. </p>
 
 </div>
 </div>
-<a class="anchor" id="a0209468bba2c298192f4500a652dd6d1"></a>
+<a class="anchor" id="afc4cbc758b308e6698b16650310cc52b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_hids_rep_char_t::ref_handle</td>
+          <td class="memname"><a class="el" href="a00280.html">ble_l2cap_evt_rx_t</a> ble_l2cap_evt_t::rx</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of the Report Reference descriptor. </p>
+<p>RX Event parameters. </p>
 
 </div>
 </div>
@@ -156,8 +160,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00281.html">ble_hids_rep_char_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00281.html">ble_l2cap_evt_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:37 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

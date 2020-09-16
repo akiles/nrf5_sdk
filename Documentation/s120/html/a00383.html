@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: SoftDevice Manager API</title>
+<title>nRF51 SDK - S120 SoftDevice: Types of UUID</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,37 +97,68 @@ $(document).ready(function(){initNavTree('a00383.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">SoftDevice Manager API<div class="ingroups"><a class="el" href="a00558.html">S120 (BLE Central)</a></div></div>  </div>
+<div class="title">Types of UUID<div class="ingroups"><a class="el" href="a00559.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>APIs for SoftDevice management.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00384"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00384.html">SoftDevice Manager Error Codes</a></td></tr>
-<tr class="memdesc:a00384"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error definitions for the SDM API. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00545"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00545.html">Defines</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00546"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00546.html">Enumerations</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00547"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00547.html">Types</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00548"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00548.html">Functions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga0dfc5e26324c8cd7226f3941acbf5b7e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00383.html#ga0dfc5e26324c8cd7226f3941acbf5b7e">BLE_UUID_TYPE_UNKNOWN</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga0dfc5e26324c8cd7226f3941acbf5b7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae549d14b15783ba52dae5fdd5f9ac959"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00383.html#gae549d14b15783ba52dae5fdd5f9ac959">BLE_UUID_TYPE_BLE</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:gae549d14b15783ba52dae5fdd5f9ac959"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7bdcaea9ea91ab20be755d78833da46d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00383.html#ga7bdcaea9ea91ab20be755d78833da46d">BLE_UUID_TYPE_VENDOR_BEGIN</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:ga7bdcaea9ea91ab20be755d78833da46d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>APIs for SoftDevice management. </p>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gae549d14b15783ba52dae5fdd5f9ac959"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_UUID_TYPE_BLE&#160;&#160;&#160;0x01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Bluetooth SIG UUID (16-bit). </p>
+
+</div>
+</div>
+<a class="anchor" id="ga0dfc5e26324c8cd7226f3941acbf5b7e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_UUID_TYPE_UNKNOWN&#160;&#160;&#160;0x00</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Invalid UUID type. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga7bdcaea9ea91ab20be755d78833da46d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_UUID_TYPE_VENDOR_BEGIN&#160;&#160;&#160;0x02</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Vendor UUID types start at this index (128-bit). </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:06 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

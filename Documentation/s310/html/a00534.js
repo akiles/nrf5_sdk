@@ -1,8 +1,6 @@
 var a00534 =
 [
-    [ "Base defined for SDK Modules", "a00535.html", "a00535" ],
-    [ "Codes reserved as identification for module where the error occurred.", "a00536.html", null ],
-    [ "Codes reserved as identification for common errors.", "a00537.html", null ],
-    [ "Error / status codes specific to device manager.", "a00538.html", null ],
-    [ "api_result_t", "a00534.html#ga981ace296dd50082e82b56dc820295a9", null ]
+    [ "BLE_UUID_TYPE_BLE", "a00534.html#gae549d14b15783ba52dae5fdd5f9ac959", null ],
+    [ "BLE_UUID_TYPE_UNKNOWN", "a00534.html#ga0dfc5e26324c8cd7226f3941acbf5b7e", null ],
+    [ "BLE_UUID_TYPE_VENDOR_BEGIN", "a00534.html#ga7bdcaea9ea91ab20be755d78833da46d", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: ble_ans_c_s Struct Reference</title>
+<title>nRF51 SDK - S310 SoftDevice: ble_cscs_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,67 +106,129 @@ $(document).ready(function(){initNavTree('a00103.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ans_c_s Struct Reference<div class="ingroups"><a class="el" href="a00664.html">Alert Notification Service Client</a></div></div>  </div>
+<div class="title">ble_cscs_init_t Struct Reference<div class="ingroups"><a class="el" href="a00597.html">Cycling Speed and Cadence Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Alert Notification structure. This contains various status information for the client.  
+<p>Cycling Speed and Cadence Service init structure. This contains all options and data needed for initialization of the service.  
  <a href="a00103.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_ans_c.h&gt;</code></p>
+<p><code>#include &lt;ble_cscs.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a5125f0b98f069ac8c455b109212d3d33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00664.html#gaf4d6c41652f6accd6829112a74334c4e">ble_ans_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#a5125f0b98f069ac8c455b109212d3d33">evt_handler</a></td></tr>
-<tr class="separator:a5125f0b98f069ac8c455b109212d3d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad18e423fbc97fa13b4f5f99097b5c3e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00681.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#ad18e423fbc97fa13b4f5f99097b5c3e6">error_handler</a></td></tr>
-<tr class="separator:ad18e423fbc97fa13b4f5f99097b5c3e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafc23bf2964f2476098f8841b808829a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#aafc23bf2964f2476098f8841b808829a">conn_handle</a></td></tr>
-<tr class="separator:aafc23bf2964f2476098f8841b808829a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0522feee52899c6d746fb496458c8681"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#a0522feee52899c6d746fb496458c8681">central_handle</a></td></tr>
-<tr class="separator:a0522feee52899c6d746fb496458c8681"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae696c92497734c92e20a628893a621b3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#ae696c92497734c92e20a628893a621b3">service_handle</a></td></tr>
-<tr class="separator:ae696c92497734c92e20a628893a621b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af58f6202418c1aab68d7224dcec9ba95"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#af58f6202418c1aab68d7224dcec9ba95">message_buffer_size</a></td></tr>
-<tr class="separator:af58f6202418c1aab68d7224dcec9ba95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12d3fef2b50b34a7cf6e42fbbc55308e"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#a12d3fef2b50b34a7cf6e42fbbc55308e">p_message_buffer</a></td></tr>
-<tr class="separator:a12d3fef2b50b34a7cf6e42fbbc55308e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f766010d9a6bc81bb6797c1b4d5daf6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00597.html#ga10281fbc8ffe1192d6047d3e9fa0ddc0">ble_cscs_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#a9f766010d9a6bc81bb6797c1b4d5daf6">evt_handler</a></td></tr>
+<tr class="separator:a9f766010d9a6bc81bb6797c1b4d5daf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5e96f9cc92d4606148bdcbab1f267f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00228.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#ab5e96f9cc92d4606148bdcbab1f267f8">csc_meas_attr_md</a></td></tr>
+<tr class="separator:ab5e96f9cc92d4606148bdcbab1f267f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7abd30a1cf1bd5370034ecd106770649"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00228.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#a7abd30a1cf1bd5370034ecd106770649">csc_ctrlpt_attr_md</a></td></tr>
+<tr class="separator:a7abd30a1cf1bd5370034ecd106770649"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a923061b93c1ccd5084a26a3473fe017f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00230.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#a923061b93c1ccd5084a26a3473fe017f">csc_feature_attr_md</a></td></tr>
+<tr class="separator:a923061b93c1ccd5084a26a3473fe017f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab63bfc8e6831331b8094ddff39f9f450"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#ab63bfc8e6831331b8094ddff39f9f450">feature</a></td></tr>
+<tr class="separator:ab63bfc8e6831331b8094ddff39f9f450"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15059621d6cb93de8b90767f76adc6e7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#a15059621d6cb93de8b90767f76adc6e7">ctrplt_supported_functions</a></td></tr>
+<tr class="separator:a15059621d6cb93de8b90767f76adc6e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae231dc1f9d43bda606fa4b727caf3884"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00610.html#gad91610b2c3b5ca4bc187387d6bf61528">ble_sc_ctrlpt_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#ae231dc1f9d43bda606fa4b727caf3884">ctrlpt_evt_handler</a></td></tr>
+<tr class="separator:ae231dc1f9d43bda606fa4b727caf3884"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a373d7b18dfbd5752d3289df0ac9c2c0b"><td class="memItemLeft" align="right" valign="top">ble_sensor_location_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#a373d7b18dfbd5752d3289df0ac9c2c0b">list_supported_locations</a></td></tr>
+<tr class="separator:a373d7b18dfbd5752d3289df0ac9c2c0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac680f9557c992b9e2443b2fec6c022d1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#ac680f9557c992b9e2443b2fec6c022d1">size_list_supported_locations</a></td></tr>
+<tr class="separator:ac680f9557c992b9e2443b2fec6c022d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4396c5044bb0f5e1220c29a87b6ca54d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00611.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#a4396c5044bb0f5e1220c29a87b6ca54d">error_handler</a></td></tr>
+<tr class="separator:a4396c5044bb0f5e1220c29a87b6ca54d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d866076247845450b80114da2d67b48"><td class="memItemLeft" align="right" valign="top">ble_sensor_location_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#a3d866076247845450b80114da2d67b48">sensor_location</a></td></tr>
+<tr class="separator:a3d866076247845450b80114da2d67b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8408f547469c37daf6f400b0e29ea728"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00228.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00103.html#a8408f547469c37daf6f400b0e29ea728">csc_sensor_loc_attr_md</a></td></tr>
+<tr class="separator:a8408f547469c37daf6f400b0e29ea728"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Alert Notification structure. This contains various status information for the client. </p>
+<div class="textblock"><p>Cycling Speed and Cadence Service init structure. This contains all options and data needed for initialization of the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a0522feee52899c6d746fb496458c8681"></a>
+<a class="anchor" id="a7abd30a1cf1bd5370034ecd106770649"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_ans_c_s::central_handle</td>
+          <td class="memname"><a class="el" href="a00228.html">ble_srv_cccd_security_mode_t</a> ble_cscs_init_t::csc_ctrlpt_attr_md</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle for the currently connected central if peer is bonded. </p>
+<p>Initial security level for cycling speed and cadence control point attribute </p>
 
 </div>
 </div>
-<a class="anchor" id="aafc23bf2964f2476098f8841b808829a"></a>
+<a class="anchor" id="a923061b93c1ccd5084a26a3473fe017f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_ans_c_s::conn_handle</td>
+          <td class="memname"><a class="el" href="a00230.html">ble_srv_security_mode_t</a> ble_cscs_init_t::csc_feature_attr_md</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
+<p>Initial security level for feature attribute </p>
 
 </div>
 </div>
-<a class="anchor" id="ad18e423fbc97fa13b4f5f99097b5c3e6"></a>
+<a class="anchor" id="ab5e96f9cc92d4606148bdcbab1f267f8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00681.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_ans_c_s::error_handler</td>
+          <td class="memname"><a class="el" href="a00228.html">ble_srv_cccd_security_mode_t</a> ble_cscs_init_t::csc_meas_attr_md</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initial security level for cycling speed and cadence measurement attribute </p>
+
+</div>
+</div>
+<a class="anchor" id="a8408f547469c37daf6f400b0e29ea728"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00228.html">ble_srv_cccd_security_mode_t</a> ble_cscs_init_t::csc_sensor_loc_attr_md</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initial security level for sensor location attribute </p>
+
+</div>
+</div>
+<a class="anchor" id="ae231dc1f9d43bda606fa4b727caf3884"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00610.html#gad91610b2c3b5ca4bc187387d6bf61528">ble_sc_ctrlpt_evt_handler_t</a> ble_cscs_init_t::ctrlpt_evt_handler</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event handler </p>
+
+</div>
+</div>
+<a class="anchor" id="a15059621d6cb93de8b90767f76adc6e7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_cscs_init_t::ctrplt_supported_functions</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Supported control point functionnalities see BLE_SRV_SC_CTRLPT_SUPP_FUNC. </p>
+
+</div>
+</div>
+<a class="anchor" id="a4396c5044bb0f5e1220c29a87b6ca54d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00611.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_cscs_init_t::error_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -174,55 +236,68 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5125f0b98f069ac8c455b109212d3d33"></a>
+<a class="anchor" id="a9f766010d9a6bc81bb6797c1b4d5daf6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00664.html#gaf4d6c41652f6accd6829112a74334c4e">ble_ans_c_evt_handler_t</a> ble_ans_c_s::evt_handler</td>
+          <td class="memname"><a class="el" href="a00597.html#ga10281fbc8ffe1192d6047d3e9fa0ddc0">ble_cscs_evt_handler_t</a> ble_cscs_init_t::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Event handler to be called for handling events in the Alert Notification Client Application. </p>
+<p>Event handler to be called for handling events in the Cycling Speed and Cadence Service. </p>
 
 </div>
 </div>
-<a class="anchor" id="af58f6202418c1aab68d7224dcec9ba95"></a>
+<a class="anchor" id="ab63bfc8e6831331b8094ddff39f9f450"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_ans_c_s::message_buffer_size</td>
+          <td class="memname">uint16_t ble_cscs_init_t::feature</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Size of message buffer to hold the additional text messages received on notifications. </p>
+<p>Initial value for features of sensor <a class="el" href="a00598.html">Cycling Speed and Cadence Service feature bits</a>. </p>
 
 </div>
 </div>
-<a class="anchor" id="a12d3fef2b50b34a7cf6e42fbbc55308e"></a>
+<a class="anchor" id="a373d7b18dfbd5752d3289df0ac9c2c0b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* ble_ans_c_s::p_message_buffer</td>
+          <td class="memname">ble_sensor_location_t* ble_cscs_init_t::list_supported_locations</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to the buffer to be used for additional text message handling. </p>
+<p>List of supported sensor locations. </p>
 
 </div>
 </div>
-<a class="anchor" id="ae696c92497734c92e20a628893a621b3"></a>
+<a class="anchor" id="a3d866076247845450b80114da2d67b48"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_ans_c_s::service_handle</td>
+          <td class="memname">ble_sensor_location_t* ble_cscs_init_t::sensor_location</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle to the service in the database to use for this instance. </p>
+<p>Initial Sensor Location, if NULL, sensor_location characteristic is not added </p>
+
+</div>
+</div>
+<a class="anchor" id="ac680f9557c992b9e2443b2fec6c022d1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_cscs_init_t::size_list_supported_locations</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Number of supported sensor locations in the list. </p>
 
 </div>
 </div>
@@ -231,8 +306,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00103.html">ble_ans_c_s</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:17 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00103.html">ble_cscs_init_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

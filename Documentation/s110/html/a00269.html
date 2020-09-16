@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gls_init_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_hrs_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,183 @@ $(document).ready(function(){initNavTree('a00269.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gls_init_t Struct Reference<div class="ingroups"><a class="el" href="a00922.html">Glucose Service</a></div></div>  </div>
+<div class="title">ble_hrs_s Struct Reference<div class="ingroups"><a class="el" href="a00865.html">Heart Rate Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Glucose Service init structure. This contains all options and data needed for initialization of the service.  
+<p>Heart Rate Service structure. This contains various status information for the service.  
  <a href="a00269.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gls.h&gt;</code></p>
+<p><code>#include &lt;ble_hrs.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a30ba6c48423cf07609a21bc2de05ece9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00922.html#ga3ce1768be78844adcb2729acbf38a99f">ble_gls_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00269.html#a30ba6c48423cf07609a21bc2de05ece9">evt_handler</a></td></tr>
-<tr class="separator:a30ba6c48423cf07609a21bc2de05ece9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60dd2e384291225af96e549356836e96"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00932.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00269.html#a60dd2e384291225af96e549356836e96">error_handler</a></td></tr>
-<tr class="separator:a60dd2e384291225af96e549356836e96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6db8884060986d835bd1e6aadffc770"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00269.html#aa6db8884060986d835bd1e6aadffc770">feature</a></td></tr>
-<tr class="separator:aa6db8884060986d835bd1e6aadffc770"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10d72eae94458d3d33788faf4099893c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00269.html#a10d72eae94458d3d33788faf4099893c">is_context_supported</a></td></tr>
-<tr class="separator:a10d72eae94458d3d33788faf4099893c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd7c3e92fc72df788563a53bd0f4ce2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00865.html#ga85836949ab0f55e7ffcaec72dd0ee6e1">ble_hrs_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00269.html#abd7c3e92fc72df788563a53bd0f4ce2d">evt_handler</a></td></tr>
+<tr class="separator:abd7c3e92fc72df788563a53bd0f4ce2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2328b5880df56c0afca889faaac0cab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00269.html#ac2328b5880df56c0afca889faaac0cab">is_expended_energy_supported</a></td></tr>
+<tr class="separator:ac2328b5880df56c0afca889faaac0cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa373c36f6b186c6d6a2846535cf431e3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00269.html#aa373c36f6b186c6d6a2846535cf431e3">is_sensor_contact_supported</a></td></tr>
+<tr class="separator:aa373c36f6b186c6d6a2846535cf431e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaa286c0fe8805c891b2b4160ca4ac0b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00269.html#adaa286c0fe8805c891b2b4160ca4ac0b">service_handle</a></td></tr>
+<tr class="separator:adaa286c0fe8805c891b2b4160ca4ac0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77fcb24345f20bd721cf5a2820749875"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00269.html#a77fcb24345f20bd721cf5a2820749875">hrm_handles</a></td></tr>
+<tr class="separator:a77fcb24345f20bd721cf5a2820749875"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a32b7e1cf6a5f95cdeeb6eaa8f6f6ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00269.html#a0a32b7e1cf6a5f95cdeeb6eaa8f6f6ba">bsl_handles</a></td></tr>
+<tr class="separator:a0a32b7e1cf6a5f95cdeeb6eaa8f6f6ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c58eabf826182923b1f2ed209f8dc0e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00269.html#a1c58eabf826182923b1f2ed209f8dc0e">hrcp_handles</a></td></tr>
+<tr class="separator:a1c58eabf826182923b1f2ed209f8dc0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d918e6a8f1da592ea67134cb9c9fec9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00269.html#a3d918e6a8f1da592ea67134cb9c9fec9">conn_handle</a></td></tr>
+<tr class="separator:a3d918e6a8f1da592ea67134cb9c9fec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63f11f789786cf4e44bae53c8f63c55e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00269.html#a63f11f789786cf4e44bae53c8f63c55e">is_sensor_contact_detected</a></td></tr>
+<tr class="separator:a63f11f789786cf4e44bae53c8f63c55e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaae77371d110359230bee5c06d9f1e4f"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00269.html#aaae77371d110359230bee5c06d9f1e4f">rr_interval</a> [20]</td></tr>
+<tr class="separator:aaae77371d110359230bee5c06d9f1e4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cf8168d7866d6530c9763a0953bb8d2"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00269.html#a9cf8168d7866d6530c9763a0953bb8d2">rr_interval_count</a></td></tr>
+<tr class="separator:a9cf8168d7866d6530c9763a0953bb8d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Glucose Service init structure. This contains all options and data needed for initialization of the service. </p>
+<div class="textblock"><p>Heart Rate Service structure. This contains various status information for the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a60dd2e384291225af96e549356836e96"></a>
+<a class="anchor" id="a0a32b7e1cf6a5f95cdeeb6eaa8f6f6ba"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00932.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_gls_init_t::error_handler</td>
+          <td class="memname"><a class="el" href="a00236.html">ble_gatts_char_handles_t</a> ble_hrs_s::bsl_handles</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Function to be called in case of an error. </p>
+<p>Handles related to the Body Sensor Location characteristic. </p>
 
 </div>
 </div>
-<a class="anchor" id="a30ba6c48423cf07609a21bc2de05ece9"></a>
+<a class="anchor" id="a3d918e6a8f1da592ea67134cb9c9fec9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00922.html#ga3ce1768be78844adcb2729acbf38a99f">ble_gls_evt_handler_t</a> ble_gls_init_t::evt_handler</td>
+          <td class="memname">uint16_t ble_hrs_s::conn_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Event handler to be called for handling events in the Glucose Service. </p>
+<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
 
 </div>
 </div>
-<a class="anchor" id="aa6db8884060986d835bd1e6aadffc770"></a>
+<a class="anchor" id="abd7c3e92fc72df788563a53bd0f4ce2d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gls_init_t::feature</td>
+          <td class="memname"><a class="el" href="a00865.html#ga85836949ab0f55e7ffcaec72dd0ee6e1">ble_hrs_evt_handler_t</a> ble_hrs_s::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Glucose Feature value indicating supported features. </p>
+<p>Event handler to be called for handling events in the Heart Rate Service. </p>
 
 </div>
 </div>
-<a class="anchor" id="a10d72eae94458d3d33788faf4099893c"></a>
+<a class="anchor" id="a1c58eabf826182923b1f2ed209f8dc0e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool ble_gls_init_t::is_context_supported</td>
+          <td class="memname"><a class="el" href="a00236.html">ble_gatts_char_handles_t</a> ble_hrs_s::hrcp_handles</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Determines if optional Glucose Measurement Context is to be supported. </p>
+<p>Handles related to the Heart Rate Control Point characteristic. </p>
+
+</div>
+</div>
+<a class="anchor" id="a77fcb24345f20bd721cf5a2820749875"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00236.html">ble_gatts_char_handles_t</a> ble_hrs_s::hrm_handles</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handles related to the Heart Rate Measurement characteristic. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac2328b5880df56c0afca889faaac0cab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ble_hrs_s::is_expended_energy_supported</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TRUE if Expended Energy measurement is supported. </p>
+
+</div>
+</div>
+<a class="anchor" id="a63f11f789786cf4e44bae53c8f63c55e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ble_hrs_s::is_sensor_contact_detected</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TRUE if sensor contact has been detected. </p>
+
+</div>
+</div>
+<a class="anchor" id="aa373c36f6b186c6d6a2846535cf431e3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ble_hrs_s::is_sensor_contact_supported</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TRUE if sensor contact detection is supported. </p>
+
+</div>
+</div>
+<a class="anchor" id="aaae77371d110359230bee5c06d9f1e4f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_hrs_s::rr_interval[20]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set of RR Interval measurements since the last Heart Rate Measurement transmission. </p>
+
+</div>
+</div>
+<a class="anchor" id="a9cf8168d7866d6530c9763a0953bb8d2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_hrs_s::rr_interval_count</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Number of RR Interval measurements since the last Heart Rate Measurement transmission. </p>
+
+</div>
+</div>
+<a class="anchor" id="adaa286c0fe8805c891b2b4160ca4ac0b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_hrs_s::service_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle of Heart Rate Service (as provided by the BLE stack). </p>
 
 </div>
 </div>
@@ -186,8 +291,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00269.html">ble_gls_init_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00269.html">ble_hrs_s</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:37 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

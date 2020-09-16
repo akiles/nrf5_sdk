@@ -1,10 +1,8 @@
 var a00227 =
 [
-    [ "bond", "a00227.html#af2d04383bf2e1c7a4447e024528b7db9", null ],
-    [ "io_caps", "a00227.html#a13fd33e5f5b50a596e255123f8d21036", null ],
-    [ "max_key_size", "a00227.html#a6f9134a72c72763bc041086eea13aced", null ],
-    [ "min_key_size", "a00227.html#a70632c0a1d795c5b651d910826803cad", null ],
-    [ "mitm", "a00227.html#ab717b7758f6bc0d7ea50682a4d4e149b", null ],
-    [ "oob", "a00227.html#a72cc5af2f69e1b15a7c0b281acd1059e", null ],
-    [ "timeout", "a00227.html#a878cc687986fe9b95109762f3a1f8ed0", null ]
+    [ "data", "a00227.html#a1691be986d4b730bbe2ccc3d40c5a088", null ],
+    [ "handle", "a00227.html#ae8e1aafaf1cbc9b6f7b5fcd163dd5cac", null ],
+    [ "len", "a00227.html#a323a6805f77fe47c890cde179ea2f674", null ],
+    [ "offset", "a00227.html#a09d38782fd5d200a45146ae303614733", null ],
+    [ "write_op", "a00227.html#a7cbd3dd7ab5f53b8f14e023b9c0c2db6", null ]
 ];

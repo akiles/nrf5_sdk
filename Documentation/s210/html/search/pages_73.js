@@ -1,7 +1,6 @@
 var searchData=
 [
   ['speed_20and_20cadence',['Speed and Cadence',['../ant_examples_sdm.html',1,'examples_ant']]],
-  ['serial_20_28hci_29',['Serial (HCI)',['../dfu_transport_serial.html',1,'dfu_transport']]],
   ['spi_20master',['SPI Master',['../hardware_driver_spi_master.html',1,'hardware_drivers']]],
   ['schedule_20handling_20library',['Schedule handling library',['../lib_scheduler.html',1,'general_libraries']]],
   ['slip_20handling_20library',['SLIP handling library',['../lib_slip.html',1,'transport_libraries']]],

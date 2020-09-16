@@ -1,41 +1,22 @@
 var a00925 =
 [
-    [ "ble_hrs_evt_t", "a00284.html", [
-      [ "evt_type", "a00284.html#aa66cdb9dcfb0d14b84933eed8ef6d369", null ]
+    [ "ble_l2cap_header_t", "a00282.html", [
+      [ "cid", "a00282.html#a6e40f192db4382919b6c1f3db8e70d46", null ],
+      [ "len", "a00282.html#a754900407e75298f4af89a59febed5b8", null ]
     ] ],
-    [ "ble_hrs_init_t", "a00285.html", [
-      [ "evt_handler", "a00285.html#aa86b9c7d2205607e9e77fa9c3affabbe", null ],
-      [ "hrs_bsl_attr_md", "a00285.html#a12b40292268a248ca7341f0298d16b1a", null ],
-      [ "hrs_hrm_attr_md", "a00285.html#a8023c653b5f45b8fd6de1fc61761275a", null ],
-      [ "is_sensor_contact_supported", "a00285.html#af531586afe7aa4c124e96e04d42e70d1", null ],
-      [ "p_body_sensor_location", "a00285.html#a6950ba718a00b8236331be362d3a9beb", null ]
+    [ "ble_l2cap_evt_rx_t", "a00280.html", [
+      [ "data", "a00280.html#ad3df37c1998b3d1d213a6e7b5cfbcd5e", null ],
+      [ "header", "a00280.html#ac81a081355f3a10c8496cf16918ac23a", null ]
     ] ],
-    [ "ble_hrs_s", "a00286.html", [
-      [ "bsl_handles", "a00286.html#a0a32b7e1cf6a5f95cdeeb6eaa8f6f6ba", null ],
-      [ "conn_handle", "a00286.html#a3d918e6a8f1da592ea67134cb9c9fec9", null ],
-      [ "evt_handler", "a00286.html#abd7c3e92fc72df788563a53bd0f4ce2d", null ],
-      [ "hrcp_handles", "a00286.html#a1c58eabf826182923b1f2ed209f8dc0e", null ],
-      [ "hrm_handles", "a00286.html#a77fcb24345f20bd721cf5a2820749875", null ],
-      [ "is_expended_energy_supported", "a00286.html#ac2328b5880df56c0afca889faaac0cab", null ],
-      [ "is_sensor_contact_detected", "a00286.html#a63f11f789786cf4e44bae53c8f63c55e", null ],
-      [ "is_sensor_contact_supported", "a00286.html#aa373c36f6b186c6d6a2846535cf431e3", null ],
-      [ "rr_interval", "a00286.html#aaae77371d110359230bee5c06d9f1e4f", null ],
-      [ "rr_interval_count", "a00286.html#a9cf8168d7866d6530c9763a0953bb8d2", null ],
-      [ "service_handle", "a00286.html#adaa286c0fe8805c891b2b4160ca4ac0b", null ]
+    [ "ble_l2cap_evt_t", "a00281.html", [
+      [ "conn_handle", "a00281.html#ab843f6e96efbaf3d2bffee8c92c62f1a", null ],
+      [ "params", "a00281.html#ac9beac1420f25dbd4bd49bb88bc2302d", null ],
+      [ "rx", "a00281.html#afc4cbc758b308e6698b16650310cc52b", null ]
     ] ],
-    [ "BLE_HRS_MAX_BUFFERED_RR_INTERVALS", "a00925.html#ga2e829f32fd9d57d18d1e8daa7956dee5", null ],
-    [ "ble_hrs_evt_handler_t", "a00925.html#ga85836949ab0f55e7ffcaec72dd0ee6e1", null ],
-    [ "ble_hrs_t", "a00925.html#gafea0cb34e3a05260b4de67d81f2f4cab", null ],
-    [ "ble_hrs_evt_type_t", "a00925.html#gaee495052c855cd5345f7301b594763c9", [
-      [ "BLE_HRS_EVT_NOTIFICATION_ENABLED", "a00925.html#ggaee495052c855cd5345f7301b594763c9a0f13cf6877038b174544d95ee3a40894", null ],
-      [ "BLE_HRS_EVT_NOTIFICATION_DISABLED", "a00925.html#ggaee495052c855cd5345f7301b594763c9a1ed0b327eecae450aa039af15ddae345", null ]
+    [ "BLE_L2CAP_EVTS", "a00925.html#ga200c8684032d8e5fe10d295b2f3a1555", [
+      [ "BLE_L2CAP_EVT_RX", "a00925.html#gga200c8684032d8e5fe10d295b2f3a1555af6d68dde17c172258858ea9d9c4488e3", null ]
     ] ],
-    [ "ble_hrs_body_sensor_location_set", "a00925.html#gab3ec66c7419f5c79ad54f849353e8aea", null ],
-    [ "ble_hrs_heart_rate_measurement_send", "a00925.html#gabe5fed48baeb4a518a51bd7e2e5f010e", null ],
-    [ "ble_hrs_init", "a00925.html#ga94256c7eb29129ff352ca53adf1ad5b8", null ],
-    [ "ble_hrs_on_ble_evt", "a00925.html#gac50e029608199cc8d52463acb3e8a02e", null ],
-    [ "ble_hrs_rr_interval_add", "a00925.html#gaea316a9c9503571b143d93086295f61a", null ],
-    [ "ble_hrs_rr_interval_buffer_is_full", "a00925.html#gaf207a34d16fbee25b5555fd4192b5b15", null ],
-    [ "ble_hrs_sensor_contact_detected_update", "a00925.html#ga4eccea2cb1d248ccdc75bebb84c1dff2", null ],
-    [ "ble_hrs_sensor_contact_supported_set", "a00925.html#gad8b66aa54ddf79459271df6ec9b65644", null ]
+    [ "sd_ble_l2cap_cid_register", "a00925.html#ga124cd974cfc529057218a14af8ee9780", null ],
+    [ "sd_ble_l2cap_cid_unregister", "a00925.html#ga78af254844e078b90868b3c827200e25", null ],
+    [ "sd_ble_l2cap_tx", "a00925.html#gaddb9c946774f03aeb65bb19697759a7c", null ]
 ];

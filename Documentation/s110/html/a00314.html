@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_sc_ctrlpt_val_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: nrf_gzll_device_tx_info_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,29 +106,58 @@ $(document).ready(function(){initNavTree('a00314.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_sc_ctrlpt_val_t Struct Reference<div class="ingroups"><a class="el" href="a00931.html">Speed and Cadence Control Point</a></div></div>  </div>
+<div class="title">nrf_gzll_device_tx_info_t Struct Reference<div class="ingroups"><a class="el" href="a00853.html">Gazell Link Layer</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Data structure containing information about the last packet transmission.  
+ <a href="a00314.html#details">More...</a></p>
+
+<p><code>#include &lt;nrf_gzll.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a000223ebda70c1ccce85e8746a7d8207"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a000223ebda70c1ccce85e8746a7d8207"></a>
-<a class="el" href="a00931.html#ga605f2c97850a21288a45f5dec3cfe1cc">ble_scpt_operator_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>opcode</b></td></tr>
-<tr class="separator:a000223ebda70c1ccce85e8746a7d8207"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9dce1ef6b333542b081df12273229b2e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9dce1ef6b333542b081df12273229b2e"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>cumulative_value</b></td></tr>
-<tr class="separator:a9dce1ef6b333542b081df12273229b2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27be823fda46c3deb2f3fd98a38bf29f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27be823fda46c3deb2f3fd98a38bf29f"></a>
-ble_sensor_location_t&#160;</td><td class="memItemRight" valign="bottom"><b>location</b></td></tr>
-<tr class="separator:a27be823fda46c3deb2f3fd98a38bf29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba51c6772b538a69a1582bacb6c5c940"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba51c6772b538a69a1582bacb6c5c940"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#aba51c6772b538a69a1582bacb6c5c940">payload_received_in_ack</a></td></tr>
+<tr class="memdesc:aba51c6772b538a69a1582bacb6c5c940"><td class="mdescLeft">&#160;</td><td class="mdescRight">A payload was received in the ACK. <br/></td></tr>
+<tr class="separator:aba51c6772b538a69a1582bacb6c5c940"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9627a112584a28e5c3935e801eebbe6f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9627a112584a28e5c3935e801eebbe6f"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#a9627a112584a28e5c3935e801eebbe6f">num_tx_attempts</a></td></tr>
+<tr class="memdesc:a9627a112584a28e5c3935e801eebbe6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of attempts used on previous Device packet transmission. <br/></td></tr>
+<tr class="separator:a9627a112584a28e5c3935e801eebbe6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7de898270a84874aa41f00361e6d801c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7de898270a84874aa41f00361e6d801c"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#a7de898270a84874aa41f00361e6d801c">num_channel_switches</a></td></tr>
+<tr class="memdesc:a7de898270a84874aa41f00361e6d801c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of channel switches needed during previous packet transmission. <br/></td></tr>
+<tr class="separator:a7de898270a84874aa41f00361e6d801c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac337221c62fa79c2ed581793d1c758b2"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00314.html#ac337221c62fa79c2ed581793d1c758b2">rssi</a></td></tr>
+<tr class="memdesc:ac337221c62fa79c2ed581793d1c758b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Received signal strength indicator in dBm.  <a href="#ac337221c62fa79c2ed581793d1c758b2">More...</a><br/></td></tr>
+<tr class="separator:ac337221c62fa79c2ed581793d1c758b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Data structure containing information about the last packet transmission. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="ac337221c62fa79c2ed581793d1c758b2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int16_t nrf_gzll_device_tx_info_t::rssi</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Received signal strength indicator in dBm. </p>
+<dl class="section see"><dt>See Also</dt><dd>nrf_gzll_enable_rssi(). </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00314.html">ble_sc_ctrlpt_val_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00314.html">nrf_gzll_device_tx_info_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:37 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

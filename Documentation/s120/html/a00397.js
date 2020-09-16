@@ -1,8 +1,6 @@
 var a00397 =
 [
-    [ "simple_uart_config", "a00397.html#ga15ab88a2172a5ea02ff41ae9711bc0af", null ],
-    [ "simple_uart_get", "a00397.html#gabae30008064ce450ab819949a692c511", null ],
-    [ "simple_uart_get_with_timeout", "a00397.html#gad4e7d17833960c77c90db7a5cb309a68", null ],
-    [ "simple_uart_put", "a00397.html#ga6346f3ba3f0f1eaaa123064daa3df405", null ],
-    [ "simple_uart_putstring", "a00397.html#ga76e6bde269950e02affbff121c79d408", null ]
+    [ "nrf_ecb_crypt", "a00397.html#gaaa8745b5d94900452e525ba60f783cd0", null ],
+    [ "nrf_ecb_init", "a00397.html#gae9609bc1e796e528ca2f4ad3311662e4", null ],
+    [ "nrf_ecb_set_key", "a00397.html#ga69e4fcd00a7c2249c5c94210c1c21c90", null ]
 ];

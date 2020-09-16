@@ -1,8 +1,8 @@
 var a00265 =
 [
-    [ "gatt_status", "a00265.html#a76066ec0dfed065ff7e58a709eaf8042", null ],
-    [ "len", "a00265.html#a5242203755359060a29308d0e64b6da7", null ],
-    [ "offset", "a00265.html#a7b823765dc8e01aa1dfc9a3124f92bc9", null ],
-    [ "p_data", "a00265.html#a777067adc297b1e3fa67a4671663ba2f", null ],
-    [ "update", "a00265.html#a27015e208127d98d0600657e4f9224fc", null ]
+    [ "data_len", "a00265.html#ad37a58093ba29da8205f825d524fde10", null ],
+    [ "ext_rep_ref_num", "a00265.html#a9dfff543d60774b7fe5bd69f23547e86", null ],
+    [ "p_data", "a00265.html#ac68f34bc812fb78bd16a11acf3931297", null ],
+    [ "p_ext_rep_ref", "a00265.html#a460e7c6bc062f9bd31fd72b4b696c2aa", null ],
+    [ "security_mode", "a00265.html#adcb39f07b266acfe8539c7ed9ed13532", null ]
 ];

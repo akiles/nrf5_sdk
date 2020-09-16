@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: ble_gls_init_t Struct Reference</title>
+<title>nRF51 SDK - S310 SoftDevice: ble_hts_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,33 @@ $(document).ready(function(){initNavTree('a00202.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gls_init_t Struct Reference<div class="ingroups"><a class="el" href="a00671.html">Glucose Service</a></div></div>  </div>
+<div class="title">ble_hts_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00605.html">Health Thermometer Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Glucose Service init structure. This contains all options and data needed for initialization of the service.  
+<p>Health Thermometer Service event.  
  <a href="a00202.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gls.h&gt;</code></p>
+<p><code>#include &lt;ble_hts.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a30ba6c48423cf07609a21bc2de05ece9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00671.html#ga3ce1768be78844adcb2729acbf38a99f">ble_gls_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00202.html#a30ba6c48423cf07609a21bc2de05ece9">evt_handler</a></td></tr>
-<tr class="separator:a30ba6c48423cf07609a21bc2de05ece9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60dd2e384291225af96e549356836e96"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00681.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00202.html#a60dd2e384291225af96e549356836e96">error_handler</a></td></tr>
-<tr class="separator:a60dd2e384291225af96e549356836e96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6db8884060986d835bd1e6aadffc770"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00202.html#aa6db8884060986d835bd1e6aadffc770">feature</a></td></tr>
-<tr class="separator:aa6db8884060986d835bd1e6aadffc770"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10d72eae94458d3d33788faf4099893c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00202.html#a10d72eae94458d3d33788faf4099893c">is_context_supported</a></td></tr>
-<tr class="separator:a10d72eae94458d3d33788faf4099893c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe0fd1c3cee451270df1d333c1605837"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00605.html#ga9de0c7527af87daac3cf198d8708cc27">ble_hts_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00202.html#afe0fd1c3cee451270df1d333c1605837">evt_type</a></td></tr>
+<tr class="separator:afe0fd1c3cee451270df1d333c1605837"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Glucose Service init structure. This contains all options and data needed for initialization of the service. </p>
+<div class="textblock"><p>Health Thermometer Service event. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a60dd2e384291225af96e549356836e96"></a>
+<a class="anchor" id="afe0fd1c3cee451270df1d333c1605837"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00681.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_gls_init_t::error_handler</td>
+          <td class="memname"><a class="el" href="a00605.html#ga9de0c7527af87daac3cf198d8708cc27">ble_hts_evt_type_t</a> ble_hts_evt_t::evt_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Function to be called in case of an error. </p>
-
-</div>
-</div>
-<a class="anchor" id="a30ba6c48423cf07609a21bc2de05ece9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00671.html#ga3ce1768be78844adcb2729acbf38a99f">ble_gls_evt_handler_t</a> ble_gls_init_t::evt_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event handler to be called for handling events in the Glucose Service. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa6db8884060986d835bd1e6aadffc770"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gls_init_t::feature</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Glucose Feature value indicating supported features. </p>
-
-</div>
-</div>
-<a class="anchor" id="a10d72eae94458d3d33788faf4099893c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_gls_init_t::is_context_supported</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Determines if optional Glucose Measurement Context is to be supported. </p>
+<p>Type of event. </p>
 
 </div>
 </div>
@@ -186,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00202.html">ble_gls_init_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:17 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00202.html">ble_hts_evt_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,5 +1,10 @@
 var a00091 =
 [
-    [ "enc_info", "a00091.html#a13ede8af725f86dfd2a221e48a61b313", null ],
-    [ "master_id", "a00091.html#a652b5f7ec55ac6f4693515bda2f35176", null ]
+    [ "auth_status", "a00091.html#a7abaaec9ee09953586fa7ab79c106a25", null ],
+    [ "bonded", "a00091.html#a54615bc38138687aef17d617c49c6f2a", null ],
+    [ "error_src", "a00091.html#aace68175dd43ad9be164097ef656e04e", null ],
+    [ "kdist_central", "a00091.html#a78ff491a0868d626e18245792325c4a3", null ],
+    [ "kdist_periph", "a00091.html#a8fc7c09f814b1d3d0537d0411b2b143e", null ],
+    [ "sm1_levels", "a00091.html#a6843023d29415f3ede4471a9fe359acf", null ],
+    [ "sm2_levels", "a00091.html#a29d62f41ca47daabc4098310ceffd4e1", null ]
 ];

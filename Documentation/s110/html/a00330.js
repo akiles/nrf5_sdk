@@ -1,6 +1,7 @@
 var a00330 =
 [
-    [ "p_data_packet", "a00330.html#a806267cb1cae7aa747fac775fcab881b", null ],
-    [ "packet_length", "a00330.html#a489f1b8f3ed0c6167b0b96ce1a5149ff", null ],
-    [ "packet_type", "a00330.html#ab181d68ce3f0f88e0f4020c1e07bb14d", null ]
+    [ "evt_params", "a00330.html#a93ce86e2fdc1e3c64d3d545d3b6419f8", null ],
+    [ "evt_type", "a00330.html#a084775a085056cceca5175e7e5026e97", null ],
+    [ "phy_error", "a00330.html#a7186bdccc491957a3f07275385aeec58", null ],
+    [ "rx_pkt_received", "a00330.html#a9cc1eff2ee2b68876628553920d5d831", null ]
 ];

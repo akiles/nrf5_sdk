@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Radio Transmitter Example for PCA10000 Board</title>
+<title>nRF51 SDK - S120 SoftDevice: Radio Transmitter Example for PCA10001 Board</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,30 +97,33 @@ $(document).ready(function(){initNavTree('a00032.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Radio Transmitter Example for PCA10000 Board </div>  </div>
+<div class="title">Radio Transmitter Example for PCA10001 Board </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Radio Transmitter Example demonstrates how to transmit data using the NRF_RADIO peripheral. This project must be used together with the corresponding transmitter project for the PCA10001 board. A COM listener (like PUTTY) using UART, is used to command the PCA10000 board to send packets to the PCA10001 board telling it to turn on LEDs.</p>
-<p>The example reads a character from the UART, and if it is '0' or '1' the character is placed in a one-byte payload and transmitted using the radio.</p>
-<h1><a class="anchor" id="nrf_dev_led_radio_tx_example_setup"></a>
+<div class="textblock"><p>The Radio Transmitter Example demonstrate how to transmit data using the NRF_RADIO peripheral. This project must be used together with the corresponding receiver project for the PCA10000 board. Button presses on the PCA10001 board are sent to the PCA10000 board, and printed in a COM listener (like PUTTY) using UART.</p>
+<p>This example continuously sends one-byte payload radio packets. The payload contains the button status of the PCA10001 board. If Button 0 is pushed the payload is 1, if Button 1 is pushed the payload is 2 and if both are pushed the payload is 3. When no button is pushed the payload is set to zero and only when a button's state goes from not pushed to pushed the corresponding bit in the payload is set.</p>
+<h1><a class="anchor" id="nrf_dev_button_radio_tx_example_setup"></a>
 Setup</h1>
-<p>Insert the PCA10000 board in a USB slot, and find out which COM port it uses.</p>
-<h1><a class="anchor" id="nrf_dev_led_radio_tx_example_testing"></a>
+<p>Button assignments:</p>
+<ul>
+<li>Button 0-1 is used to send data to the PCA10000 board.</li>
+</ul>
+<h1><a class="anchor" id="nrf_dev_button_radio_tx_example_testing"></a>
 Testing</h1>
 <p>The Radio Transmitter Example Application can be tested as follows:</p>
 <ol type="1">
-<li>Flash led_radio_example in the PCA10001 board folder to PCA10001 board.</li>
-<li>Flash led_radio_example in the PCA10000 board folder to PCA10000 board.</li>
+<li>Flash button_radio_example in the PCA10001 board folder to PCA10001 board.</li>
+<li>Flash button_radio_example in the PCA10000 board folder to PCA10000 board.</li>
 <li>Use a terminal program on your PC to connect to the PCA10000 board. 38400 bps, 8 data bits, 1 stop bit.</li>
-<li>Press '0' or '1' on your terminal. This will light up either LED0 or LED1 on PCA10001 board. </li>
+<li>Press a button on PCA10001 board, you should see "Button 0/1 pressed" on your terminal. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00023.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:05 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00022.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

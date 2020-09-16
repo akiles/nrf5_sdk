@@ -1,6 +1,8 @@
 var a00160 =
 [
-    [ "lv1", "a00160.html#ad5928e9ef7150d0ea5769a7a4ce6e0e9", null ],
-    [ "lv2", "a00160.html#a3a5ac21e29c1c675ad3b1ccf0db2fec6", null ],
-    [ "lv3", "a00160.html#a78aa0c3d2fee6fccf52f73e45cd66cf6", null ]
+    [ "data", "a00160.html#a1691be986d4b730bbe2ccc3d40c5a088", null ],
+    [ "handle", "a00160.html#ae8e1aafaf1cbc9b6f7b5fcd163dd5cac", null ],
+    [ "len", "a00160.html#a323a6805f77fe47c890cde179ea2f674", null ],
+    [ "offset", "a00160.html#a09d38782fd5d200a45146ae303614733", null ],
+    [ "write_op", "a00160.html#a7cbd3dd7ab5f53b8f14e023b9c0c2db6", null ]
 ];

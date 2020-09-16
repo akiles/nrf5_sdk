@@ -1,12 +1,11 @@
 var a00524 =
 [
-    [ "RX_BUF_QUEUE_SIZE", "a00524.html#gae8e478dba1ce71687ba038123e8da2f4", null ],
-    [ "RX_BUF_QUEUE_SIZE", "a00524.html#gae8e478dba1ce71687ba038123e8da2f4", null ],
-    [ "RX_BUF_QUEUE_SIZE", "a00524.html#gae8e478dba1ce71687ba038123e8da2f4", null ],
-    [ "RX_BUF_SIZE", "a00524.html#ga690f985c933da2ce6fe62b6c61dfa662", null ],
-    [ "RX_BUF_SIZE", "a00524.html#ga690f985c933da2ce6fe62b6c61dfa662", null ],
-    [ "RX_BUF_SIZE", "a00524.html#ga690f985c933da2ce6fe62b6c61dfa662", null ],
-    [ "TX_BUF_SIZE", "a00524.html#ga5d3fb1970e1e98050006978a14b3d95e", null ],
-    [ "TX_BUF_SIZE", "a00524.html#ga5d3fb1970e1e98050006978a14b3d95e", null ],
-    [ "TX_BUF_SIZE", "a00524.html#ga5d3fb1970e1e98050006978a14b3d95e", null ]
+    [ "BLE_GATTS_ATTR_TYPE_CHAR_DECL", "a00524.html#ga102e704417b457854a05daa5fa06d7d6", null ],
+    [ "BLE_GATTS_ATTR_TYPE_CHAR_VAL", "a00524.html#gac7e5c6d395c2a57918233dd8c7a9a699", null ],
+    [ "BLE_GATTS_ATTR_TYPE_DESC", "a00524.html#gac5f3e3213a49c7fe404a1c3f934de50c", null ],
+    [ "BLE_GATTS_ATTR_TYPE_INC_DECL", "a00524.html#gadf7b95716018edd34e87df7e4163bc74", null ],
+    [ "BLE_GATTS_ATTR_TYPE_INVALID", "a00524.html#ga24097ed5a56be45fc4d051584546e458", null ],
+    [ "BLE_GATTS_ATTR_TYPE_OTHER", "a00524.html#gadbf23b44b2e2731d944ba3682427c316", null ],
+    [ "BLE_GATTS_ATTR_TYPE_PRIM_SRVC_DECL", "a00524.html#ga0bb8323562a8a6be5ad1b2287b20373c", null ],
+    [ "BLE_GATTS_ATTR_TYPE_SEC_SRVC_DECL", "a00524.html#gafa5f417382bd4c490203767739062c74", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Common application error handler</title>
+<title>nRF51 SDK - S120 SoftDevice: SPI Master driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,151 +97,293 @@ $(document).ready(function(){initNavTree('a00402.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Common application error handler<div class="ingroups"><a class="el" href="a00554.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">SPI Master driver<div class="ingroups"><a class="el" href="a00569.html">Peripheral Drivers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Common application error handler and macros for utilizing a common error handler.  
+<p>SPI master driver.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00179.html">spi_master_config_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A structure containing configuration parameters of the SPI master driver.  <a href="a00179.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00180.html">spi_master_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct containing parameters of the SPI MASTER event.  <a href="a00180.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gace6d059863761677dae5a6b1456a34ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#gace6d059863761677dae5a6b1456a34ba">APP_ERROR_HANDLER</a>(ERR_CODE)</td></tr>
-<tr class="memdesc:gace6d059863761677dae5a6b1456a34ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for calling error handler function.  <a href="#gace6d059863761677dae5a6b1456a34ba">More...</a><br/></td></tr>
-<tr class="separator:gace6d059863761677dae5a6b1456a34ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga82d00a810dcea7dcc6af469461fb254c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#ga82d00a810dcea7dcc6af469461fb254c">APP_ERROR_CHECK</a>(ERR_CODE)</td></tr>
-<tr class="memdesc:ga82d00a810dcea7dcc6af469461fb254c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.  <a href="#ga82d00a810dcea7dcc6af469461fb254c">More...</a><br/></td></tr>
-<tr class="separator:ga82d00a810dcea7dcc6af469461fb254c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9e67d9f4978caa34040b31f8fb9d4f58"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#ga9e67d9f4978caa34040b31f8fb9d4f58">APP_ERROR_CHECK_BOOL</a>(BOOLEAN_VALUE)</td></tr>
-<tr class="memdesc:ga9e67d9f4978caa34040b31f8fb9d4f58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for calling error handler function if supplied boolean value is false.  <a href="#ga9e67d9f4978caa34040b31f8fb9d4f58">More...</a><br/></td></tr>
-<tr class="separator:ga9e67d9f4978caa34040b31f8fb9d4f58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8e14bea8a6a4f612ee61ad0e6b1c42a4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#ga8e14bea8a6a4f612ee61ad0e6b1c42a4">SPI_PIN_DISCONNECTED</a>&#160;&#160;&#160;0xFFFFFFFF</td></tr>
+<tr class="separator:ga8e14bea8a6a4f612ee61ad0e6b1c42a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6ab8549e69d7db67767780b4a437e871"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#ga6ab8549e69d7db67767780b4a437e871">SPI_DEFAULT_TX_BYTE</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga6ab8549e69d7db67767780b4a437e871"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac60ab1614b729be681ca7268fee84350"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#gac60ab1614b729be681ca7268fee84350">SPI_MASTER_INIT_DEFAULT</a></td></tr>
+<tr class="memdesc:gac60ab1614b729be681ca7268fee84350"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for initializing SPI master by default values.  <a href="#gac60ab1614b729be681ca7268fee84350">More...</a><br/></td></tr>
+<tr class="separator:gac60ab1614b729be681ca7268fee84350"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga8e658ee16bfb5beb4d00e27c93f68f96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8e658ee16bfb5beb4d00e27c93f68f96"></a>
+typedef enum <a class="el" href="a00402.html#ga31240c0ee79ef65d920c9d3fa8899789">spi_master_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#ga8e658ee16bfb5beb4d00e27c93f68f96">spi_master_evt_type_t</a></td></tr>
+<tr class="memdesc:ga8e658ee16bfb5beb4d00e27c93f68f96"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI master driver events types. <br/></td></tr>
+<tr class="separator:ga8e658ee16bfb5beb4d00e27c93f68f96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2df76693a9ed10e7d44b0e1663b50738"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#ga2df76693a9ed10e7d44b0e1663b50738">spi_master_event_handler_t</a> )(<a class="el" href="a00180.html">spi_master_evt_t</a> spi_master_evt)</td></tr>
+<tr class="memdesc:ga2df76693a9ed10e7d44b0e1663b50738"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of generic callback function handler to be used by all SPI MASTER driver events.  <a href="#ga2df76693a9ed10e7d44b0e1663b50738">More...</a><br/></td></tr>
+<tr class="separator:ga2df76693a9ed10e7d44b0e1663b50738"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga31240c0ee79ef65d920c9d3fa8899789"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#ga31240c0ee79ef65d920c9d3fa8899789">spi_master_evt_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00402.html#gga31240c0ee79ef65d920c9d3fa8899789a24504bd3bcb0bb7778ee2b99dfb1f4d4">SPI_MASTER_EVT_TRANSFER_STARTED</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00402.html#gga31240c0ee79ef65d920c9d3fa8899789ac7b903657b890c123f4b51fd2a26e53e">SPI_MASTER_EVT_TRANSFER_COMPLETED</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00402.html#gga31240c0ee79ef65d920c9d3fa8899789aa4eba2079274bf69027092844ac7d161">SPI_MASTER_EVT_TYPE_MAX</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga31240c0ee79ef65d920c9d3fa8899789"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI master driver events types.  <a href="a00402.html#ga31240c0ee79ef65d920c9d3fa8899789">More...</a><br/></td></tr>
+<tr class="separator:ga31240c0ee79ef65d920c9d3fa8899789"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac3471b7aba2dd998dd08263d80a46d44"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#gac3471b7aba2dd998dd08263d80a46d44">spi_master_state_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00402.html#ggac3471b7aba2dd998dd08263d80a46d44a06bb576779307e515a0f9f1f1711f2d1">SPI_MASTER_STATE_DISABLED</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00402.html#ggac3471b7aba2dd998dd08263d80a46d44a4a4ae82272756db931981e38786c2b3d">SPI_MASTER_STATE_BUSY</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00402.html#ggac3471b7aba2dd998dd08263d80a46d44a2f2ddd197a11b1c3eac344d93accae07">SPI_MASTER_STATE_IDLE</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gac3471b7aba2dd998dd08263d80a46d44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Types of the SPI master internal states.  <a href="a00402.html#gac3471b7aba2dd998dd08263d80a46d44">More...</a><br/></td></tr>
+<tr class="separator:gac3471b7aba2dd998dd08263d80a46d44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84f5e5074c1cb0163acc71cd9b4d1107"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00402.html#gga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d">SPI_MASTER_0</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00402.html#gga84f5e5074c1cb0163acc71cd9b4d1107a83453ab7546115900d25a83c533fb0fc">SPI_MASTER_1</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00402.html#gga84f5e5074c1cb0163acc71cd9b4d1107ad189c52211b6de22a7e6aed4d078406a">SPI_MASTER_HW_ENABLED_COUNT</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga84f5e5074c1cb0163acc71cd9b4d1107"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum containing instances of the SPI master driver.  <a href="a00402.html#ga84f5e5074c1cb0163acc71cd9b4d1107">More...</a><br/></td></tr>
+<tr class="separator:ga84f5e5074c1cb0163acc71cd9b4d1107"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gad8b5b293dfa06cbbfeb03aaaaa2772cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> (uint32_t error_code, uint32_t line_num, const uint8_t *p_file_name)</td></tr>
-<tr class="memdesc:gad8b5b293dfa06cbbfeb03aaaaa2772cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for error handling, which is called when an error has occurred.  <a href="#gad8b5b293dfa06cbbfeb03aaaaa2772cf">More...</a><br/></td></tr>
-<tr class="separator:gad8b5b293dfa06cbbfeb03aaaaa2772cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3cf5563d474f5b41080b6ae53be0ee51"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#ga3cf5563d474f5b41080b6ae53be0ee51">spi_master_open</a> (const <a class="el" href="a00402.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a> spi_master_hw_instance, <a class="el" href="a00179.html">spi_master_config_t</a> const *const p_spi_master_config)</td></tr>
+<tr class="memdesc:ga3cf5563d474f5b41080b6ae53be0ee51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for opening and initializing a SPI master driver.  <a href="#ga3cf5563d474f5b41080b6ae53be0ee51">More...</a><br/></td></tr>
+<tr class="separator:ga3cf5563d474f5b41080b6ae53be0ee51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50bc5bf9e8334ef1387826e0a2af4256"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#ga50bc5bf9e8334ef1387826e0a2af4256">spi_master_close</a> (const <a class="el" href="a00402.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a> spi_master_hw_instance)</td></tr>
+<tr class="memdesc:ga50bc5bf9e8334ef1387826e0a2af4256"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for closing a SPI MASTER driver.  <a href="#ga50bc5bf9e8334ef1387826e0a2af4256">More...</a><br/></td></tr>
+<tr class="separator:ga50bc5bf9e8334ef1387826e0a2af4256"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4e03ec39c566925e98fe0ec79c6d7623"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#ga4e03ec39c566925e98fe0ec79c6d7623">spi_master_send_recv</a> (const <a class="el" href="a00402.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a> spi_master_hw_instance, uint8_t *const p_tx_buf, const uint16_t tx_buf_len, uint8_t *const p_rx_buf, const uint16_t rx_buf_len)</td></tr>
+<tr class="memdesc:ga4e03ec39c566925e98fe0ec79c6d7623"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for transferring data between SPI master and SPI slave.  <a href="#ga4e03ec39c566925e98fe0ec79c6d7623">More...</a><br/></td></tr>
+<tr class="separator:ga4e03ec39c566925e98fe0ec79c6d7623"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga76af017b1ce006baeed02f2668c00e7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#ga76af017b1ce006baeed02f2668c00e7d">spi_master_evt_handler_reg</a> (const <a class="el" href="a00402.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a> spi_master_hw_instance, <a class="el" href="a00402.html#ga2df76693a9ed10e7d44b0e1663b50738">spi_master_event_handler_t</a> event_handler)</td></tr>
+<tr class="memdesc:ga76af017b1ce006baeed02f2668c00e7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registration event handler.  <a href="#ga76af017b1ce006baeed02f2668c00e7d">More...</a><br/></td></tr>
+<tr class="separator:ga76af017b1ce006baeed02f2668c00e7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa052cc71238a379eaeb7d227bd060d46"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00402.html#gac3471b7aba2dd998dd08263d80a46d44">spi_master_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00402.html#gaa052cc71238a379eaeb7d227bd060d46">spi_master_get_state</a> (const <a class="el" href="a00402.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a> spi_master_hw_instance)</td></tr>
+<tr class="memdesc:gaa052cc71238a379eaeb7d227bd060d46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting current state of the SPI master driver.  <a href="#gaa052cc71238a379eaeb7d227bd060d46">More...</a><br/></td></tr>
+<tr class="separator:gaa052cc71238a379eaeb7d227bd060d46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Common application error handler and macros for utilizing a common error handler. </p>
+<p>SPI master driver. </p>
+<p>This file contains declarations of functions and typedefs used as API of the SPI master driver. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga82d00a810dcea7dcc6af469461fb254c"></a>
+<a class="anchor" id="ga6ab8549e69d7db67767780b4a437e871"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define APP_ERROR_CHECK</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">ERR_CODE</td><td>)</td>
-          <td></td>
+          <td class="memname">#define SPI_DEFAULT_TX_BYTE&#160;&#160;&#160;0x00</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>                                                      \</div>
-<div class="line">    {                                                       \</div>
-<div class="line">        const uint32_t LOCAL_ERR_CODE = (ERR_CODE);         \</div>
-<div class="line">        if (LOCAL_ERR_CODE != <a class="code" href="a00381.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)                  \</div>
-<div class="line">        {                                                   \</div>
-<div class="line">            APP_ERROR_HANDLER(LOCAL_ERR_CODE);              \</div>
-<div class="line">        }                                                   \</div>
-<div class="line">    } <span class="keywordflow">while</span> (0)</div>
+<p>Default byte (used to clock transmission from slave to the master) </p>
+
+</div>
+</div>
+<a class="anchor" id="gac60ab1614b729be681ca7268fee84350"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SPI_MASTER_INIT_DEFAULT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">{                                                                           \</div>
+<div class="line">    SPI_FREQUENCY_FREQUENCY_M1, <span class="comment">/**&lt; Serial clock frequency 1 Mbps. */</span>      \</div>
+<div class="line">    SPI_PIN_DISCONNECTED,       <span class="comment">/**&lt; SCK pin DISCONNECTED. */</span>               \</div>
+<div class="line">    SPI_PIN_DISCONNECTED,       <span class="comment">/**&lt; MISO pin DISCONNECTED. */</span>              \</div>
+<div class="line">    SPI_PIN_DISCONNECTED,       <span class="comment">/**&lt; MOSI pin DISCONNECTED. */</span>              \</div>
+<div class="line">    SPI_PIN_DISCONNECTED,       <span class="comment">/**&lt; Slave select pin DISCONNECTED. */</span>      \</div>
+<div class="line">    APP_IRQ_PRIORITY_LOW,       <span class="comment">/**&lt; Interrupt priority LOW. */</span>             \</div>
+<div class="line">    SPI_CONFIG_ORDER_LsbFirst,  <span class="comment">/**&lt; Bits order LSB. */</span>                     \</div>
+<div class="line">    SPI_CONFIG_CPOL_ActiveHigh, <span class="comment">/**&lt; Serial clock polarity ACTIVEHIGH. */</span>   \</div>
+<div class="line">    SPI_CONFIG_CPHA_Leading,    <span class="comment">/**&lt; Serial clock phase LEADING. */</span>         \</div>
+<div class="line">    0                           <span class="comment">/**&lt; Don&#39;t disable all IRQs. */</span>             \</div>
+<div class="line">};</div>
 </div><!-- fragment -->
-<p>Macro for calling error handler function if supplied error code any other than NRF_SUCCESS. </p>
+<p>Macro for initializing SPI master by default values. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga8e14bea8a6a4f612ee61ad0e6b1c42a4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SPI_PIN_DISCONNECTED&#160;&#160;&#160;0xFFFFFFFF</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A value used to the PIN deinitialization. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga2df76693a9ed10e7d44b0e1663b50738"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* spi_master_event_handler_t)(<a class="el" href="a00180.html">spi_master_evt_t</a> spi_master_evt)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Type of generic callback function handler to be used by all SPI MASTER driver events. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ERR_CODE</td><td>Error code supplied to the error handler. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">spi_master_evt</td><td>SPI MASTER driver event. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga9e67d9f4978caa34040b31f8fb9d4f58"></a>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga31240c0ee79ef65d920c9d3fa8899789"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define APP_ERROR_CHECK_BOOL</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">BOOLEAN_VALUE</td><td>)</td>
-          <td></td>
+          <td class="memname">enum <a class="el" href="a00402.html#ga31240c0ee79ef65d920c9d3fa8899789">spi_master_evt_type_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>                                                      \</div>
-<div class="line">    {                                                       \</div>
-<div class="line">        const <span class="keywordtype">bool</span> LOCAL_BOOLEAN_VALUE = (BOOLEAN_VALUE);   \</div>
-<div class="line">        if (!LOCAL_BOOLEAN_VALUE)                           \</div>
-<div class="line">        {                                                   \</div>
-<div class="line">            APP_ERROR_HANDLER(0);                           \</div>
-<div class="line">        }                                                   \</div>
-<div class="line">    } <span class="keywordflow">while</span> (0)</div>
-</div><!-- fragment -->
-<p>Macro for calling error handler function if supplied boolean value is false. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">BOOLEAN_VALUE</td><td>Boolean value to be evaluated. </td></tr>
-  </table>
-  </dd>
-</dl>
+
+<p>SPI master driver events types. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga31240c0ee79ef65d920c9d3fa8899789a24504bd3bcb0bb7778ee2b99dfb1f4d4"></a>SPI_MASTER_EVT_TRANSFER_STARTED</em>&nbsp;</td><td class="fielddoc">
+<p>An event indicating that transfer has been started. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga31240c0ee79ef65d920c9d3fa8899789ac7b903657b890c123f4b51fd2a26e53e"></a>SPI_MASTER_EVT_TRANSFER_COMPLETED</em>&nbsp;</td><td class="fielddoc">
+<p>An event indicating that transfer has been completed. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga31240c0ee79ef65d920c9d3fa8899789aa4eba2079274bf69027092844ac7d161"></a>SPI_MASTER_EVT_TYPE_MAX</em>&nbsp;</td><td class="fielddoc">
+<p>Enumeration upper bound. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
-<a class="anchor" id="gace6d059863761677dae5a6b1456a34ba"></a>
+<a class="anchor" id="ga84f5e5074c1cb0163acc71cd9b4d1107"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define APP_ERROR_HANDLER</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">ERR_CODE</td><td>)</td>
-          <td></td>
+          <td class="memname">enum <a class="el" href="a00402.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>                                                      \</div>
-<div class="line">    {                                                       \</div>
-<div class="line">        app_error_handler((ERR_CODE), __LINE__, (uint8_t*) __FILE__);  \</div>
-<div class="line">    } <span class="keywordflow">while</span> (0)</div>
-</div><!-- fragment -->
-<p>Macro for calling error handler function. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ERR_CODE</td><td>Error code supplied to the error handler. </td></tr>
-  </table>
-  </dd>
-</dl>
+
+<p>Enum containing instances of the SPI master driver. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d"></a>SPI_MASTER_0</em>&nbsp;</td><td class="fielddoc">
+<p>A instance of NRF_SPI0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga84f5e5074c1cb0163acc71cd9b4d1107a83453ab7546115900d25a83c533fb0fc"></a>SPI_MASTER_1</em>&nbsp;</td><td class="fielddoc">
+<p>A instance of NRF_SPI1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga84f5e5074c1cb0163acc71cd9b4d1107ad189c52211b6de22a7e6aed4d078406a"></a>SPI_MASTER_HW_ENABLED_COUNT</em>&nbsp;</td><td class="fielddoc">
+<p>A number of enabled instances of the SPI master. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gac3471b7aba2dd998dd08263d80a46d44"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00402.html#gac3471b7aba2dd998dd08263d80a46d44">spi_master_state_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Types of the SPI master internal states. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac3471b7aba2dd998dd08263d80a46d44a06bb576779307e515a0f9f1f1711f2d1"></a>SPI_MASTER_STATE_DISABLED</em>&nbsp;</td><td class="fielddoc">
+<p>A state indicating that SPI master is disabled. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac3471b7aba2dd998dd08263d80a46d44a4a4ae82272756db931981e38786c2b3d"></a>SPI_MASTER_STATE_BUSY</em>&nbsp;</td><td class="fielddoc">
+<p>A state indicating that SPI master is sending now. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac3471b7aba2dd998dd08263d80a46d44a2f2ddd197a11b1c3eac344d93accae07"></a>SPI_MASTER_STATE_IDLE</em>&nbsp;</td><td class="fielddoc">
+<p>A state indicating that SPI master is idle now. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gad8b5b293dfa06cbbfeb03aaaaa2772cf"></a>
+<a class="anchor" id="ga50bc5bf9e8334ef1387826e0a2af4256"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void app_error_handler </td>
+          <td class="memname">void spi_master_close </td>
           <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>error_code</em>, </td>
+          <td class="paramtype">const <a class="el" href="a00402.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a>&#160;</td>
+          <td class="paramname"><em>spi_master_hw_instance</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for closing a SPI MASTER driver. </p>
+<dl class="section note"><dt>Note</dt><dd>Function disable hardware, reset internal module states and unregister events callback function.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">spi_master_hw_instance</td><td>A instance of SPI master. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga76af017b1ce006baeed02f2668c00e7d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void spi_master_evt_handler_reg </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00402.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a>&#160;</td>
+          <td class="paramname"><em>spi_master_hw_instance</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>line_num</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>p_file_name</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00402.html#ga2df76693a9ed10e7d44b0e1663b50738">spi_master_event_handler_t</a>&#160;</td>
+          <td class="paramname"><em>event_handler</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -251,12 +393,154 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for error handling, which is called when an error has occurred. </p>
+<p>Function for registration event handler. </p>
+<dl class="section note"><dt>Note</dt><dd>Function registers a event handler to be used by SPI MASTER driver for sending events. <a class="el" href="a00402.html#gga31240c0ee79ef65d920c9d3fa8899789a24504bd3bcb0bb7778ee2b99dfb1f4d4">SPI_MASTER_EVT_TRANSFER_STARTED</a> and <a class="el" href="a00402.html#gga31240c0ee79ef65d920c9d3fa8899789ac7b903657b890c123f4b51fd2a26e53e">SPI_MASTER_EVT_TRANSFER_COMPLETED</a>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">error_code</td><td>Error code supplied to the handler. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">line_num</td><td>Line number where the handler is called. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_file_name</td><td>Pointer to the file name. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">spi_master_hw_instance</td><td>Instance of SPI master module. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event_handler</td><td>Generic callback function handler to be used by all SPI master driver events. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa052cc71238a379eaeb7d227bd060d46"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00402.html#gac3471b7aba2dd998dd08263d80a46d44">spi_master_state_t</a> spi_master_get_state </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00402.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a>&#160;</td>
+          <td class="paramname"><em>spi_master_hw_instance</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for getting current state of the SPI master driver. </p>
+<dl class="section note"><dt>Note</dt><dd>Function gets current state of the SPI master driver.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">spi_master_hw_instance</td><td>Instance of SPI master module.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">SPI_MASTER_STATE_DISABLED</td><td>SPI MASTER is disabled. </td></tr>
+    <tr><td class="paramname">SPI_MASTER_STATE_BUSY</td><td>SPI_MASTER is sending now. </td></tr>
+    <tr><td class="paramname">SPI_MASTER_STATE_IDLE</td><td>SPI_MASTER is idle now. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3cf5563d474f5b41080b6ae53be0ee51"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t spi_master_open </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00402.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a>&#160;</td>
+          <td class="paramname"><em>spi_master_hw_instance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00179.html">spi_master_config_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_spi_master_config</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for opening and initializing a SPI master driver. </p>
+<dl class="section note"><dt>Note</dt><dd>Function initializes SPI master hardware and internal module states, unregister events callback.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>If the function has been already called, the function <a class="el" href="a00402.html#ga50bc5bf9e8334ef1387826e0a2af4256">spi_master_close</a> has to be called before spi_master_open can be called again.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">spi_master_hw_instance</td><td>Instance of SPI master module. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_spi_master_config</td><td>Pointer to configuration structure which will be used to initialize SPI MASTER hardware.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Operation failure. The function has been already called. To call it again the function <a class="el" href="a00402.html#ga50bc5bf9e8334ef1387826e0a2af4256">spi_master_close</a> has to be called previously. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4e03ec39c566925e98fe0ec79c6d7623"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t spi_master_send_recv </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00402.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a>&#160;</td>
+          <td class="paramname"><em>spi_master_hw_instance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_tx_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>tx_buf_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_rx_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>rx_buf_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for transferring data between SPI master and SPI slave. </p>
+<dl class="section note"><dt>Note</dt><dd>Function registers buffers pointed by p_tx_buf and p_rx_buf parameters, after that starts transmission. Function generates an event of type <a class="el" href="a00402.html#gga31240c0ee79ef65d920c9d3fa8899789a24504bd3bcb0bb7778ee2b99dfb1f4d4">SPI_MASTER_EVT_TRANSFER_STARTED</a> when transfer has been started and <a class="el" href="a00402.html#gga31240c0ee79ef65d920c9d3fa8899789ac7b903657b890c123f4b51fd2a26e53e">SPI_MASTER_EVT_TRANSFER_COMPLETED</a> when transfer has been completed.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">spi_master_hw_instance</td><td>Instance of SPI master module. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_tx_buf</td><td>Pointer to a transmit buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tx_buf_len</td><td>Number of octets to the transfer. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_rx_buf</td><td>Pointer to a receive buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rx_buf_len</td><td>Number of octets to be received.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. Packet was registered to the transmission and event will be send upon transmission completion. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_BUSY</td><td>Operation failure. Transmitting of a data is in progress. </td></tr>
   </table>
   </dd>
 </dl>
@@ -268,7 +552,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:06 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

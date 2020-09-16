@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Packets decoder in the connectivity chip</title>
+<title>nRF51 SDK - S110 SoftDevice: Nrf_bootloader_util</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -96,65 +96,16 @@ $(document).ready(function(){initNavTree('a00901.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Packets decoder in the connectivity chip<div class="ingroups"><a class="el" href="a01011.html">Connectivity application code</a></div></div>  </div>
+<div class="title">Nrf_bootloader_util<div class="ingroups"><a class="el" href="a00897.html">Bootloader/DFU API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Decoder for serialized packets from an Application Chip.  
-<a href="#details">More...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gad559e91ce1be69927a87c644069154c0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00901.html#gad559e91ce1be69927a87c644069154c0">ser_conn_received_pkt_process</a> (<a class="el" href="a00359.html">ser_hal_transport_evt_rx_pkt_received_params_t</a> *p_rx_pkt_params)</td></tr>
-<tr class="memdesc:gad559e91ce1be69927a87c644069154c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for dispatching packets from an Application Chip to an appropriate decoder.  <a href="#gad559e91ce1be69927a87c644069154c0">More...</a><br/></td></tr>
-<tr class="separator:gad559e91ce1be69927a87c644069154c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Decoder for serialized packets from an Application Chip. </p>
-<p>This file contains declaration of common function used for processing packets (packets dispatcher) received by the transport layer. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gad559e91ce1be69927a87c644069154c0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ser_conn_received_pkt_process </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00359.html">ser_hal_transport_evt_rx_pkt_received_params_t</a> *&#160;</td>
-          <td class="paramname"><em>p_rx_pkt_params</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function for dispatching packets from an Application Chip to an appropriate decoder. </p>
-<p>The function is called to process received packets from a transport layer. The function analyzes packet type and calls appropriate command decoder which among other things processes command and sends a response. Then a received packet is freed.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_rx_pkt_params</td><td>A pointer to a transport layer event of type <a class="el" href="a00359.html">ser_hal_transport_evt_rx_pkt_received_params_t</a>.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INTERNAL</td><td>Operation failure. Internal error ocurred. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:47 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:36 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

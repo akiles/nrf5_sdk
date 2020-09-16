@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_evt_auth_key_request_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gap_opt_privacy_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,51 @@ $(document).ready(function(){initNavTree('a00205.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_evt_auth_key_request_t Struct Reference<div class="ingroups"><a class="el" href="a00813.html">Generic Access Profile (GAP)</a></div></div>  </div>
+<div class="title">ble_gap_opt_privacy_t Struct Reference<div class="ingroups"><a class="el" href="a00762.html">Generic Access Profile (GAP)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event data for authentication key request event.  
+<p>Custom Privacy Options.  
  <a href="a00205.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a29472c8dcb6c9298ca6b007b633a06a6"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#a29472c8dcb6c9298ca6b007b633a06a6">key_type</a></td></tr>
-<tr class="separator:a29472c8dcb6c9298ca6b007b633a06a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03cc47081b7b470ad239d1bf9055ea34"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00201.html">ble_gap_irk_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#a03cc47081b7b470ad239d1bf9055ea34">p_irk</a></td></tr>
+<tr class="separator:a03cc47081b7b470ad239d1bf9055ea34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac6428abddc0bf75fc092a553312661a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#aac6428abddc0bf75fc092a553312661a">interval_s</a></td></tr>
+<tr class="separator:aac6428abddc0bf75fc092a553312661a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event data for authentication key request event. </p>
+<div class="textblock"><p>Custom Privacy Options. </p>
+<dl class="section note"><dt>Note</dt><dd>The specified address cycle interval is used when the address cycle mode is <a class="el" href="a00713.html#gad1b508bba948e89462e018fecc38b13f">BLE_GAP_ADDR_CYCLE_MODE_AUTO</a>. If 0 is given, the address will not be refreshed at any interval, and not at start of advertising. A new address can be generated manually by calling <a class="el" href="a00911.html#ga6c68f3d6d9efa837de7b1ee28613e058">sd_ble_gap_address_set</a> with the same type again. The default interval is <a class="el" href="a00909.html#ga09366f020307b3079d1038062b7e162d">BLE_GAP_DEFAULT_PRIVATE_ADDR_CYCLE_INTERVAL_S</a>.</dd>
+<dd>
+If cycle mode is <a class="el" href="a00713.html#gad1b508bba948e89462e018fecc38b13f">BLE_GAP_ADDR_CYCLE_MODE_AUTO</a>, the address will immediately be refreshed when this option is set. </dd></dl>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a29472c8dcb6c9298ca6b007b633a06a6"></a>
+<a class="anchor" id="aac6428abddc0bf75fc092a553312661a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_evt_auth_key_request_t::key_type</td>
+          <td class="memname">uint16_t ble_gap_opt_privacy_t::interval_s</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>See BLE_GAP_AUTH_KEY_TYPES. </p>
+<p>When input: Custom private address cycle interval in seconds. When output: The current private address cycle interval. </p>
+
+</div>
+</div>
+<a class="anchor" id="a03cc47081b7b470ad239d1bf9055ea34"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00201.html">ble_gap_irk_t</a>* ble_gap_opt_privacy_t::p_irk</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>When input: Pointer to custom IRK, or NULL to use/reset to the device's default IRK. When output: Pointer to where the current IRK is to be stored, or NULL to not read out the IRK. </p>
 
 </div>
 </div>
@@ -141,8 +159,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00205.html">ble_gap_evt_auth_key_request_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00205.html">ble_gap_opt_privacy_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:36 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

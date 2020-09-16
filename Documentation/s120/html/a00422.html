@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: SoftDevice Event Handler</title>
+<title>nRF51 SDK - S120 SoftDevice: Persistent Storage Access Routines</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,212 +97,183 @@ $(document).ready(function(){initNavTree('a00422.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">SoftDevice Event Handler<div class="ingroups"><a class="el" href="a00554.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">Persistent Storage Access Routines<div class="ingroups"><a class="el" href="a00419.html">Persistent Storage Interface</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>API for initializing and disabling the SoftDevice.  
+<p>Functions/Interface SDK modules use to persistently store data.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00419"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00419.html">Types definitions for ANT support in SoftDevice handler.</a></td></tr>
-<tr class="memdesc:a00419"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file contains the declarations of types required for ANT stack support. These types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00421"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00421.html">Types definitions for BLE support in SoftDevice handler.</a></td></tr>
-<tr class="memdesc:a00421"><td class="mdescLeft">&#160;</td><td class="mdescRight">This file contains the declarations of types required for BLE stack support. These types will be defined when the preprocessor define BLE_STACK_SUPPORT_REQD is defined. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga9977dc2f6256c9b2c6d23622fa4da975"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga9977dc2f6256c9b2c6d23622fa4da975">SOFTDEVICE_SCHED_EVT_SIZE</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:ga9977dc2f6256c9b2c6d23622fa4da975"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33d256e5c8385694b358053139fe2153"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga33d256e5c8385694b358053139fe2153">SYS_EVT_MSG_BUF_SIZE</a>&#160;&#160;&#160;sizeof(uint32_t)</td></tr>
-<tr class="separator:ga33d256e5c8385694b358053139fe2153"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ff2f68caf148f0645c9953c93aa2ec7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga9ff2f68caf148f0645c9953c93aa2ec7">SOFTDEVICE_HANDLER_INIT</a>(CLOCK_SOURCE,USE_SCHEDULER)</td></tr>
-<tr class="memdesc:ga9ff2f68caf148f0645c9953c93aa2ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for initializing the stack event handler.  <a href="#ga9ff2f68caf148f0645c9953c93aa2ec7">More...</a><br/></td></tr>
-<tr class="separator:ga9ff2f68caf148f0645c9953c93aa2ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga25f319506f20e24ad71478dce23f7f39"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga25f319506f20e24ad71478dce23f7f39"></a>
-typedef uint32_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga25f319506f20e24ad71478dce23f7f39">softdevice_evt_schedule_func_t</a> )(void)</td></tr>
-<tr class="memdesc:ga25f319506f20e24ad71478dce23f7f39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of function for passing events from the stack handler module to the scheduler. <br/></td></tr>
-<tr class="separator:ga25f319506f20e24ad71478dce23f7f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5daeb8e474f0ad143566e2045233a53e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5daeb8e474f0ad143566e2045233a53e"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga5daeb8e474f0ad143566e2045233a53e">sys_evt_handler_t</a> )(uint32_t evt_id)</td></tr>
-<tr class="memdesc:ga5daeb8e474f0ad143566e2045233a53e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application System (SOC) event handler type. <br/></td></tr>
-<tr class="separator:ga5daeb8e474f0ad143566e2045233a53e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga53c8f6b5556622cc42f717ddf756ca8e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga53c8f6b5556622cc42f717ddf756ca8e">softdevice_handler_init</a> (<a class="el" href="a00547.html#gabfecdd0b916a4022bd5688d4f842c473">nrf_clock_lfclksrc_t</a> clock_source, void *p_evt_buffer, uint16_t evt_buffer_size, <a class="el" href="a00422.html#ga25f319506f20e24ad71478dce23f7f39">softdevice_evt_schedule_func_t</a> evt_schedule_func)</td></tr>
-<tr class="memdesc:ga53c8f6b5556622cc42f717ddf756ca8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the stack handler module.  <a href="#ga53c8f6b5556622cc42f717ddf756ca8e">More...</a><br/></td></tr>
-<tr class="separator:ga53c8f6b5556622cc42f717ddf756ca8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabbec783a89f93617d3661a819597d79c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#gabbec783a89f93617d3661a819597d79c">softdevice_handler_sd_disable</a> (void)</td></tr>
-<tr class="memdesc:gabbec783a89f93617d3661a819597d79c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for disabling the SoftDevice.  <a href="#gabbec783a89f93617d3661a819597d79c">More...</a><br/></td></tr>
-<tr class="separator:gabbec783a89f93617d3661a819597d79c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga200d4e1f1c70a46e6de6343f0a7d84b1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga200d4e1f1c70a46e6de6343f0a7d84b1">softdevice_sys_evt_handler_set</a> (<a class="el" href="a00422.html#ga5daeb8e474f0ad143566e2045233a53e">sys_evt_handler_t</a> sys_evt_handler)</td></tr>
-<tr class="memdesc:ga200d4e1f1c70a46e6de6343f0a7d84b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering for System (SOC) events.  <a href="#ga200d4e1f1c70a46e6de6343f0a7d84b1">More...</a><br/></td></tr>
-<tr class="separator:ga200d4e1f1c70a46e6de6343f0a7d84b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga729ef8b64fc0cb6bfdabb2543a565d32"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga729ef8b64fc0cb6bfdabb2543a565d32">pstorage_init</a> (void)</td></tr>
+<tr class="memdesc:ga729ef8b64fc0cb6bfdabb2543a565d32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module Initialization Routine.  <a href="#ga729ef8b64fc0cb6bfdabb2543a565d32">More...</a><br/></td></tr>
+<tr class="separator:ga729ef8b64fc0cb6bfdabb2543a565d32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0a57b964c8945eaca2d267835ef6688c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga0a57b964c8945eaca2d267835ef6688c">pstorage_register</a> (<a class="el" href="a00178.html">pstorage_module_param_t</a> *p_module_param, pstorage_handle_t *p_block_id)</td></tr>
+<tr class="memdesc:ga0a57b964c8945eaca2d267835ef6688c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register with persistent storage interface.  <a href="#ga0a57b964c8945eaca2d267835ef6688c">More...</a><br/></td></tr>
+<tr class="separator:ga0a57b964c8945eaca2d267835ef6688c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafdeeb475e4f2db19863226bc55d507b5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#gafdeeb475e4f2db19863226bc55d507b5">pstorage_block_identifier_get</a> (pstorage_handle_t *p_base_id, pstorage_size_t block_num, pstorage_handle_t *p_block_id)</td></tr>
+<tr class="memdesc:gafdeeb475e4f2db19863226bc55d507b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get block id with reference to base block identifier provided at time of registration.  <a href="#gafdeeb475e4f2db19863226bc55d507b5">More...</a><br/></td></tr>
+<tr class="separator:gafdeeb475e4f2db19863226bc55d507b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga12e52da12709de8d43bfb8389b80af6d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga12e52da12709de8d43bfb8389b80af6d">pstorage_store</a> (pstorage_handle_t *p_dest, uint8_t *p_src, pstorage_size_t size, pstorage_size_t offset)</td></tr>
+<tr class="memdesc:ga12e52da12709de8d43bfb8389b80af6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to persistently store data of length 'size' contained in 'p_src' address in storage module at 'p_dest' address; Equivalent to Storage Write.  <a href="#ga12e52da12709de8d43bfb8389b80af6d">More...</a><br/></td></tr>
+<tr class="separator:ga12e52da12709de8d43bfb8389b80af6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0316f640da7481e9bd03ed51b29a3e65"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga0316f640da7481e9bd03ed51b29a3e65">pstorage_update</a> (pstorage_handle_t *p_dest, uint8_t *p_src, pstorage_size_t size, pstorage_size_t offset)</td></tr>
+<tr class="memdesc:ga0316f640da7481e9bd03ed51b29a3e65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to update persistently stored data of length 'size' contained in 'p_src' address in storage module at 'p_dest' address.  <a href="#ga0316f640da7481e9bd03ed51b29a3e65">More...</a><br/></td></tr>
+<tr class="separator:ga0316f640da7481e9bd03ed51b29a3e65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga99402440650cc2d2ee63d8866760a25b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga99402440650cc2d2ee63d8866760a25b">pstorage_load</a> (uint8_t *p_dest, pstorage_handle_t *p_src, pstorage_size_t size, pstorage_size_t offset)</td></tr>
+<tr class="memdesc:ga99402440650cc2d2ee63d8866760a25b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to load persistently stored data of length 'size' from 'p_src' address to 'p_dest' address; Equivalent to Storage Read.  <a href="#ga99402440650cc2d2ee63d8866760a25b">More...</a><br/></td></tr>
+<tr class="separator:ga99402440650cc2d2ee63d8866760a25b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga64d9814f864c3f771a99eb7574e87dd0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga64d9814f864c3f771a99eb7574e87dd0">pstorage_clear</a> (pstorage_handle_t *p_base_id, pstorage_size_t size)</td></tr>
+<tr class="memdesc:ga64d9814f864c3f771a99eb7574e87dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to clear data in persistent memory.  <a href="#ga64d9814f864c3f771a99eb7574e87dd0">More...</a><br/></td></tr>
+<tr class="separator:ga64d9814f864c3f771a99eb7574e87dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1553a4d6d6d8ddf070d0eb4960b72d62"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00422.html#ga1553a4d6d6d8ddf070d0eb4960b72d62">pstorage_access_status_get</a> (uint32_t *p_count)</td></tr>
+<tr class="memdesc:ga1553a4d6d6d8ddf070d0eb4960b72d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">API to get status of number of pending operations with the module.  <a href="#ga1553a4d6d6d8ddf070d0eb4960b72d62">More...</a><br/></td></tr>
+<tr class="separator:ga1553a4d6d6d8ddf070d0eb4960b72d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>API for initializing and disabling the SoftDevice. </p>
-<p>This API contains the functions and defines exposed by the <a class="el" href="a00010.html">SoftDevice Handler Library</a>. For more information on the library and how the application should use it, please refer <a class="el" href="a00010.html">SoftDevice Handler Library</a>.</p>
-<dl class="section note"><dt>Note</dt><dd>Use the USE_SCHEDULER parameter of the <a class="el" href="a00422.html#ga9ff2f68caf148f0645c9953c93aa2ec7" title="Macro for initializing the stack event handler.">SOFTDEVICE_HANDLER_INIT()</a> macro to select if the <a class="el" href="a00405.html">Scheduler</a> is to be used or not.</dd>
-<dd>
-Even if the scheduler is not used, softdevice_handler.h will include app_scheduler.h. So when compiling, app_scheduler.h must be available in one of the compiler include paths. </dd></dl>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga9ff2f68caf148f0645c9953c93aa2ec7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SOFTDEVICE_HANDLER_INIT</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">CLOCK_SOURCE, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">USE_SCHEDULER&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>                                                                                             \</div>
-<div class="line">    {                                                                                              \</div>
-<div class="line">        static uint32_t EVT_BUFFER[<a class="code" href="a00409.html#ga7aaa817cfd7ed354f09db5675ffe1427" title="Perform integer division, making sure the result is rounded up.">CEIL_DIV</a>(MAX(                                                   \</div>
-<div class="line">                                                MAX(<a class="code" href="a00421.html#gab11d82da68bcf71c064b936f8398fb26">BLE_STACK_EVT_MSG_BUF_SIZE</a>,                    \</div>
-<div class="line">                                                    <a class="code" href="a00419.html#ga099e8f139d53724bf7238bb77c9e32e0">ANT_STACK_EVT_STRUCT_SIZE</a>),                    \</div>
-<div class="line">                                                <a class="code" href="a00422.html#ga33d256e5c8385694b358053139fe2153">SYS_EVT_MSG_BUF_SIZE</a>                               \</div>
-<div class="line">                                               ),                                                  \</div>
-<div class="line">                                            <span class="keyword">sizeof</span>(uint32_t))];                                    \</div>
-<div class="line">        uint32_t ERR_CODE;                                                                         \</div>
-<div class="line">        ERR_CODE = <a class="code" href="a00422.html#ga53c8f6b5556622cc42f717ddf756ca8e" title="Function for initializing the stack handler module.">softdevice_handler_init</a>((CLOCK_SOURCE),                                         \</div>
-<div class="line">                                           EVT_BUFFER,                                             \</div>
-<div class="line">                                           <span class="keyword">sizeof</span>(EVT_BUFFER),                                     \</div>
-<div class="line">                                           (USE_SCHEDULER) ? softdevice_evt_schedule : NULL);      \</div>
-<div class="line">        APP_ERROR_CHECK(ERR_CODE);                                                                 \</div>
-<div class="line">    } <span class="keywordflow">while</span> (0)</div>
-</div><!-- fragment -->
-<p>Macro for initializing the stack event handler. </p>
-<p>It will handle dimensioning and allocation of the memory buffer required for reading events from the stack, making sure the buffer is correctly aligned. It will also connect the stack event handler to the scheduler (if specified).</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">CLOCK_SOURCE</td><td>Low frequency clock source and accuracy (type nrf_clock_lfclksrc_t, see <a class="el" href="a00548.html#ga26ecfde6eee7363f88bed8a8b711122a" title="Enables the SoftDevice and by extension the protocol stack.">sd_softdevice_enable()</a> for details). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">USE_SCHEDULER</td><td>TRUE if the application is using the event scheduler, FALSE otherwise.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Since this macro allocates a buffer, it must only be called once (it is OK to call it several times as long as it is from the same location, that is to do a reinitialization). </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9977dc2f6256c9b2c6d23622fa4da975"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SOFTDEVICE_SCHED_EVT_SIZE&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of button events being passed through the scheduler (is to be used for computing the maximum size of scheduler events). For SoftDevice events, this size is 0, since the events are being pulled in the event handler. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga33d256e5c8385694b358053139fe2153"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SYS_EVT_MSG_BUF_SIZE&#160;&#160;&#160;sizeof(uint32_t)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of System (SOC) event message buffer. </p>
-
-</div>
-</div>
+<p>Functions/Interface SDK modules use to persistently store data. </p>
+<p>Interface for Application &amp; SDK module to load/store information persistently. Note: that while implementation of each of the persistent storage access function depends on the system and can specific to system/solution, the signature of the interface routines should not be altered. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga53c8f6b5556622cc42f717ddf756ca8e"></a>
+<a class="anchor" id="ga1553a4d6d6d8ddf070d0eb4960b72d62"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t softdevice_handler_init </td>
+          <td class="memname">uint32_t pstorage_access_status_get </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00547.html#gabfecdd0b916a4022bd5688d4f842c473">nrf_clock_lfclksrc_t</a>&#160;</td>
-          <td class="paramname"><em>clock_source</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>p_count</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>p_evt_buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>evt_buffer_size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00422.html#ga25f319506f20e24ad71478dce23f7f39">softdevice_evt_schedule_func_t</a>&#160;</td>
-          <td class="paramname"><em>evt_schedule_func</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for initializing the stack handler module. </p>
-<p>Enables the SoftDevice and the stack event interrupt handler.</p>
-<dl class="section note"><dt>Note</dt><dd>This function must be called before calling any function in the SoftDevice API.</dd>
-<dd>
-Normally initialization should be done using the <a class="el" href="a00422.html#ga9ff2f68caf148f0645c9953c93aa2ec7" title="Macro for initializing the stack event handler.">SOFTDEVICE_HANDLER_INIT()</a> macro, as that will both allocate the event buffer, and also align the buffer correctly.</dd></dl>
+<p>API to get status of number of pending operations with the module. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">clock_source</td><td>Low frequency clock source to be used by the SoftDevice. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_evt_buffer</td><td>Buffer for holding one stack event. Since heap is not being used, this buffer must be provided by the application. The buffer must be large enough to hold the biggest stack event the application is supposed to handle. The buffer must be aligned to a 4 byte boundary. This parameter is unused if neither BLE nor ANT stack support is required. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">evt_buffer_size</td><td>Size of SoftDevice event buffer. This parameter is unused if BLE stack support is not required. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">evt_schedule_func</td><td>Function for passing events to the scheduler. Point to ble_ant_stack_evt_schedule() to connect to the scheduler. Set to NULL to make the stack handler module call the event handler directly from the stack event interrupt handler.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_count</td><td>Number of storage operations pending with the module, if 0, there are no outstanding requests.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Successful initialization. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Invalid parameter (buffer not aligned to a 4 byte boundary) or NULL. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>is returned is API is called without module initialization. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>if NULL parameter has been passed. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gabbec783a89f93617d3661a819597d79c"></a>
+<a class="anchor" id="gafdeeb475e4f2db19863226bc55d507b5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t softdevice_handler_sd_disable </td>
+          <td class="memname">uint32_t pstorage_block_identifier_get </td>
+          <td>(</td>
+          <td class="paramtype">pstorage_handle_t *&#160;</td>
+          <td class="paramname"><em>p_base_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pstorage_size_t&#160;</td>
+          <td class="paramname"><em>block_num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pstorage_handle_t *&#160;</td>
+          <td class="paramname"><em>p_block_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function to get block id with reference to base block identifier provided at time of registration. </p>
+<p>Function to get block id with reference to base block identifier provided at time of registration. In case more than one memory blocks were requested when registering, the identifier provided here is the base identifier for the first block and to identify subsequent block, application shall use this routine to get block identifier providing input as base identifier and block number. Therefore if 10 blocks of size 64 are requested and application wishes to store memory in 6th block, it shall use @ref pstorage_block_identifier_get with based id and provide a block number of 5. This way application is only expected to remember the base block identifier.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_base_id</td><td>Base block id received at the time of registration. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">block_num</td><td>Block Number, with first block numbered zero. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_block_id</td><td>Block identifier for the block number requested in case the API succeeds.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>is returned is API is called without module initialization. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>if NULL parameter has been passed. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>if invalid parameters are passed to the API. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga64d9814f864c3f771a99eb7574e87dd0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t pstorage_clear </td>
+          <td>(</td>
+          <td class="paramtype">pstorage_handle_t *&#160;</td>
+          <td class="paramname"><em>p_base_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pstorage_size_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Routine to clear data in persistent memory. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_base_id</td><td>Base block identifier in persistent memory that needs to cleared; Equivalent to an Erase Operation.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Size of data to be cleared from persistent memory expressed in bytes. This parameter is to provision for clearing of certain blocks of memory, or all memory blocks in a registered module. If the total size of the application module is used (blocks * block size) in combination with the identifier for the first block in the module, all blocks in the module will be erased.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>is returned is API is called without module initialization. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>if NULL parameter has been passed. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>if invalid parameters are passed to the API. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>in case data address 'p_dst' is not aligned. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>in case request cannot be processed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Clear operations may take time. This API however, does not block until the clear procedure is complete. Application is notified of procedure completion using notification callback registered by the application. 'result' parameter of the callback suggests if the procedure was successful or not. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga729ef8b64fc0cb6bfdabb2543a565d32"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t pstorage_init </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -311,40 +282,242 @@ Normally initialization should be done using the <a class="el" href="a00422.html
       </table>
 </div><div class="memdoc">
 
-<p>Function for disabling the SoftDevice. </p>
-<p>This function will disable the SoftDevice. It will also update the internal state of this module. </p>
+<p>Module Initialization Routine. </p>
+<p>Initializes module. To be called once before any other APIs of the module are used.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga200d4e1f1c70a46e6de6343f0a7d84b1"></a>
+<a class="anchor" id="ga99402440650cc2d2ee63d8866760a25b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t softdevice_sys_evt_handler_set </td>
+          <td class="memname">uint32_t pstorage_load </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00422.html#ga5daeb8e474f0ad143566e2045233a53e">sys_evt_handler_t</a>&#160;</td>
-          <td class="paramname"><em>sys_evt_handler</em></td><td>)</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">pstorage_handle_t *&#160;</td>
+          <td class="paramname"><em>p_src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pstorage_size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pstorage_size_t&#160;</td>
+          <td class="paramname"><em>offset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for registering for System (SOC) events. </p>
-<p>The application should use this function to register for receiving System (SOC) events from the SoftDevice. If the application does not call this function, then any System (SOC) events that may be generated by the SoftDevice will NOT be fetched. Once the application has registered for the events, it is not possible to possible to cancel the registration. However, it is possible to register a different function for handling the events at any point of time.</p>
+<p>Routine to load persistently stored data of length 'size' from 'p_src' address to 'p_dest' address; Equivalent to Storage Read. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">sys_evt_handler</td><td>Function to be called for each received System (SOC) event.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_dest</td><td>Destination address where persistently stored data is to be loaded. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_src</td><td>Source from where data is to be loaded from persistent memory. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Size of data to be loaded from persistent memory expressed in bytes. Should be word aligned. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Offset in bytes to be applied when loading from the block. For example, if within a block of 100 bytes, application wishes to load 20 bytes from offset of 12, then this field should be set to 12. Should be word aligned.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Successful registration. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Null pointer provided as input. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>is returned is API is called without module initialization. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>if NULL parameter has been passed. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>if invalid parameters are passed to the API. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>in case data address 'p_dst' is not aligned. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>in case request cannot be processed. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="ga0a57b964c8945eaca2d267835ef6688c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t pstorage_register </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00178.html">pstorage_module_param_t</a> *&#160;</td>
+          <td class="paramname"><em>p_module_param</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pstorage_handle_t *&#160;</td>
+          <td class="paramname"><em>p_block_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Register with persistent storage interface. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_module_param</td><td>Module registration param. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_block_id</td><td>Block identifier to identify persistent memory blocks in case registration succeeds. Application is expected to use the block ids for subsequent operations on requested persistent memory. Maximum registrations permitted is determined by configuration parameter PSTORAGE_MAX_APPLICATIONS. In case more than one memory blocks are requested, the identifier provided here is the base identifier for the first block and to identify subsequent block, application shall use @ref pstorage_block_identifier_get with this base identifier and block number. Therefore if 10 blocks of size 64 are requested and application wishes to store memory in 6th block, it shall use @ref pstorage_block_identifier_get with based id and provide a block number of 5. This way application is only expected to remember the base block identifier.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>To register an area with a total size (block count * block size) larger than the page size (usually 1024 bytes), the block size must be a divisor of the page size (page size % block size == 0).</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>is returned is API is called without module initialization. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>if NULL parameter has been passed. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>if invalid parameters are passed to the API. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>in case no more registrations can be supported. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga12e52da12709de8d43bfb8389b80af6d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t pstorage_store </td>
+          <td>(</td>
+          <td class="paramtype">pstorage_handle_t *&#160;</td>
+          <td class="paramname"><em>p_dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pstorage_size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pstorage_size_t&#160;</td>
+          <td class="paramname"><em>offset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Routine to persistently store data of length 'size' contained in 'p_src' address in storage module at 'p_dest' address; Equivalent to Storage Write. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_dest</td><td>Destination address where data is to be stored persistently. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_src</td><td>Source address containing data to be stored. API assumes this to be resident memory and no intermediate copy of data is made by the API. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Size of data to be stored expressed in bytes. Should be word aligned. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Offset in bytes to be applied when writing to the block. For example, if within a block of 100 bytes, application wishes to write 20 bytes at offset of 12, then this field should be set to 12. Should be word aligned.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>is returned is API is called without module initialization. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>if NULL parameter has been passed. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>if invalid parameters are passed to the API. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>in case data address 'p_src' is not aligned. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>in case request cannot be processed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>No copy of the data is made, and hence memory provided for data source to be written to flash cannot be freed or reused by the application until this procedure is complete. End of this procedure is notified to the application using the notification callback registered by the application. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga0316f640da7481e9bd03ed51b29a3e65"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t pstorage_update </td>
+          <td>(</td>
+          <td class="paramtype">pstorage_handle_t *&#160;</td>
+          <td class="paramname"><em>p_dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pstorage_size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pstorage_size_t&#160;</td>
+          <td class="paramname"><em>offset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Routine to update persistently stored data of length 'size' contained in 'p_src' address in storage module at 'p_dest' address. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_dest</td><td>Destination address where data is to be updated. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_src</td><td>Source address containing data to be stored. API assumes this to be resident memory and no intermediate copy of data is made by the API. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Size of data to be stored expressed in bytes. Should be word aligned. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Offset in bytes to be applied when writing to the block. For example, if within a block of 100 bytes, application wishes to write 20 bytes at offset of 12, then this field should be set to 12. Should be word aligned.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>is returned is API is called without module initialization. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>if NULL parameter has been passed. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>if invalid parameters are passed to the API. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>in case data address 'p_src' is not aligned. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>in case request cannot be processed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>No copy of the data is made, and hence memory provided for data source to be written to flash cannot be freed or reused by the application until this procedure is complete. End of this procedure is notified to the application using the notification callback registered by the application. </dd></dl>
 
 </div>
 </div>
@@ -353,7 +526,7 @@ Normally initialization should be done using the <a class="el" href="a00422.html
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:06 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: SDK Error codes</title>
+<title>nRF51 SDK - S120 SoftDevice: Types definitions for ANT support in SoftDevice handler.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,47 +97,103 @@ $(document).ready(function(){initNavTree('a00423.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">SDK Error codes<div class="ingroups"><a class="el" href="a00554.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">Types definitions for ANT support in SoftDevice handler.<div class="ingroups"><a class="el" href="a00426.html">SoftDevice Event Handler</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>This file contains the declarations of types required for ANT stack support. These types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00424"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00424.html">Base defined for SDK Modules</a></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00067.html">ant_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ANT stack event type.  <a href="a00067.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00425"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00425.html">Codes reserved as identification for module where the error occurred.</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00426"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00426.html">Codes reserved as identification for common errors.</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00427"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00427.html">Error / status codes specific to device manager.</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gafcf5a1211ca1625c5c111871c6139d79"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00423.html#gafcf5a1211ca1625c5c111871c6139d79">ANT_STACK_EVT_MSG_BUF_SIZE</a>&#160;&#160;&#160;32</td></tr>
+<tr class="separator:gafcf5a1211ca1625c5c111871c6139d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga099e8f139d53724bf7238bb77c9e32e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00423.html#ga099e8f139d53724bf7238bb77c9e32e0">ANT_STACK_EVT_STRUCT_SIZE</a>&#160;&#160;&#160;(sizeof(<a class="el" href="a00067.html">ant_evt_t</a>))</td></tr>
+<tr class="separator:ga099e8f139d53724bf7238bb77c9e32e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga981ace296dd50082e82b56dc820295a9"><td class="memItemLeft" align="right" valign="top">typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00423.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a></td></tr>
-<tr class="memdesc:ga981ace296dd50082e82b56dc820295a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">API Result.  <a href="#ga981ace296dd50082e82b56dc820295a9">More...</a><br/></td></tr>
-<tr class="separator:ga981ace296dd50082e82b56dc820295a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2b0ca4dbb952df8f26cb58d4e7341115"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00423.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a> )(<a class="el" href="a00067.html">ant_evt_t</a> *p_ant_evt)</td></tr>
+<tr class="memdesc:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application ANT stack event handler type. <br/></td></tr>
+<tr class="separator:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gac05d1d266aef077ae88818dff3775010"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00423.html#gac05d1d266aef077ae88818dff3775010">softdevice_ant_evt_handler_set</a> (<a class="el" href="a00423.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a> ant_evt_handler)</td></tr>
+<tr class="memdesc:gac05d1d266aef077ae88818dff3775010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering for ANT events.  <a href="#gac05d1d266aef077ae88818dff3775010">More...</a><br/></td></tr>
+<tr class="separator:gac05d1d266aef077ae88818dff3775010"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Error codes are 32-bit unsigned integers with the most significant 16-bit reserved for identifying the module where the error occurred while the least least significant LSB are used to provide the cause or nature of error. Each module is assigned a 16-bit unsigned integer. Which it will use to identify all errors that occurred in it. 16-bit LSB range is with module id as the MSB in the 32-bit error code is reserved for the module. As an example, if 0x8800 identifies a certain SDK module, all values from 0x88000000 - 0x8800FFFF are reserved for this module. It should be noted that common error reasons have been assigned values to make it possible to decode error reason easily. As an example, lets module uninitialized has been assigned an error code 0x000A0. Then, if application encounters an error code 0xZZZZ00A0, it knows that it accessing a certain module without initializing it. Apart from this, each module is allowed to define error codes that are not covered by the common ones, however, these values are defined in a range that does not conflict with common error values. For module, specific error however, it is possible that the same error value is used by two different modules to indicated errors of very different nature. If error is already defined by the NRF common error codes, these are reused. A range is reserved for application as well, it can use this range for defining application specific errors.</p>
-<dl class="section note"><dt>Note</dt><dd>Success code, NRF_SUCCESS, does not include any module identifier. </dd></dl>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga981ace296dd50082e82b56dc820295a9"></a>
+<p>This file contains the declarations of types required for ANT stack support. These types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined. </p>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gafcf5a1211ca1625c5c111871c6139d79"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef uint32_t <a class="el" href="a00423.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a></td>
+          <td class="memname">#define ANT_STACK_EVT_MSG_BUF_SIZE&#160;&#160;&#160;32</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size of ANT event message buffer. This will be provided to the SoftDevice while fetching an event. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga099e8f139d53724bf7238bb77c9e32e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ANT_STACK_EVT_STRUCT_SIZE&#160;&#160;&#160;(sizeof(<a class="el" href="a00067.html">ant_evt_t</a>))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size of the <a class="el" href="a00067.html">ant_evt_t</a> structure. This will be used by the softdevice_handler.h to internal event buffer size needed. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gac05d1d266aef077ae88818dff3775010"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t softdevice_ant_evt_handler_set </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00423.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a>&#160;</td>
+          <td class="paramname"><em>ant_evt_handler</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>API Result. </p>
-<p>Indicates success or failure of an API procedure. In case of failure, a comprehensive error code indicating cause or reason for failure is provided.</p>
-<p>Though called an API result, it could used in Asynchronous notifications callback along with asynchronous callback as event result. This mechanism is employed when an event marks the end of procedure initiated using API. API result, in this case, will only be an indicative of whether the procedure has been requested successfully. </p>
+<p>Function for registering for ANT events. </p>
+<p>The application should use this function to register for receiving ANT events from the SoftDevice. If the application does not call this function, then any ANT event that may be generated by the SoftDevice will NOT be fetched. Once the application has registered for the events, it is not possible to possible to cancel the registration. However, it is possible to register a different function for handling the events at any point of time.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ant_evt_handler</td><td>Function to be called for each received ANT event.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Successful registration. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Null pointer provided as input. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -146,7 +202,7 @@ Typedefs</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:06 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

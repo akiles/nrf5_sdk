@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Bluetooth Appearance values</title>
+<title>nRF51 SDK - S310 SoftDevice: Battery Service</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,615 +97,203 @@ $(document).ready(function(){initNavTree('a00595.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Bluetooth Appearance values<div class="ingroups"><a class="el" href="a00726.html">Defines</a></div></div>  </div>
+<div class="title">Battery Service<div class="ingroups"><a class="el" href="a00633.html">BLE Services</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Battery Service module.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga45ecf7c049e0f1f6a4a2332b2033b5b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga45ecf7c049e0f1f6a4a2332b2033b5b4">BLE_APPEARANCE_UNKNOWN</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:ga45ecf7c049e0f1f6a4a2332b2033b5b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9e49b6a59be5a7b7d3fc2d6bb7d33c82"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga9e49b6a59be5a7b7d3fc2d6bb7d33c82">BLE_APPEARANCE_GENERIC_PHONE</a>&#160;&#160;&#160;64</td></tr>
-<tr class="separator:ga9e49b6a59be5a7b7d3fc2d6bb7d33c82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa71281a8fe31b848e3ad4b67e2d9d14e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gaa71281a8fe31b848e3ad4b67e2d9d14e">BLE_APPEARANCE_GENERIC_COMPUTER</a>&#160;&#160;&#160;128</td></tr>
-<tr class="separator:gaa71281a8fe31b848e3ad4b67e2d9d14e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac33412b7491ee76236bdd1bb1a1f2818"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gac33412b7491ee76236bdd1bb1a1f2818">BLE_APPEARANCE_GENERIC_WATCH</a>&#160;&#160;&#160;192</td></tr>
-<tr class="separator:gac33412b7491ee76236bdd1bb1a1f2818"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga36ad112fa0bc482256f11d3e210d3b45"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga36ad112fa0bc482256f11d3e210d3b45">BLE_APPEARANCE_WATCH_SPORTS_WATCH</a>&#160;&#160;&#160;193</td></tr>
-<tr class="separator:ga36ad112fa0bc482256f11d3e210d3b45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga58d6951a86675854ea8b9a1e8284318c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga58d6951a86675854ea8b9a1e8284318c">BLE_APPEARANCE_GENERIC_CLOCK</a>&#160;&#160;&#160;256</td></tr>
-<tr class="separator:ga58d6951a86675854ea8b9a1e8284318c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga71a5be0afbbc3bd78c8a7010a16ac908"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga71a5be0afbbc3bd78c8a7010a16ac908">BLE_APPEARANCE_GENERIC_DISPLAY</a>&#160;&#160;&#160;320</td></tr>
-<tr class="separator:ga71a5be0afbbc3bd78c8a7010a16ac908"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad600d4f563f97be538b6dc8011e6a413"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gad600d4f563f97be538b6dc8011e6a413">BLE_APPEARANCE_GENERIC_REMOTE_CONTROL</a>&#160;&#160;&#160;384</td></tr>
-<tr class="separator:gad600d4f563f97be538b6dc8011e6a413"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga365fa871a32eb974f629f6d44fbc556b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga365fa871a32eb974f629f6d44fbc556b">BLE_APPEARANCE_GENERIC_EYE_GLASSES</a>&#160;&#160;&#160;448</td></tr>
-<tr class="separator:ga365fa871a32eb974f629f6d44fbc556b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae858415a747a5c18a37896028285eaa2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gae858415a747a5c18a37896028285eaa2">BLE_APPEARANCE_GENERIC_TAG</a>&#160;&#160;&#160;512</td></tr>
-<tr class="separator:gae858415a747a5c18a37896028285eaa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7239b3bf480c0814172799d8b52ed478"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga7239b3bf480c0814172799d8b52ed478">BLE_APPEARANCE_GENERIC_KEYRING</a>&#160;&#160;&#160;576</td></tr>
-<tr class="separator:ga7239b3bf480c0814172799d8b52ed478"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga467963f51aae2cc61e5689fecd85767d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga467963f51aae2cc61e5689fecd85767d">BLE_APPEARANCE_GENERIC_MEDIA_PLAYER</a>&#160;&#160;&#160;640</td></tr>
-<tr class="separator:ga467963f51aae2cc61e5689fecd85767d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaaafaf0f13b0451047e820df62d87cc9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gaaaafaf0f13b0451047e820df62d87cc9">BLE_APPEARANCE_GENERIC_BARCODE_SCANNER</a>&#160;&#160;&#160;704</td></tr>
-<tr class="separator:gaaaafaf0f13b0451047e820df62d87cc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae035f9dd63fe3590273cd8afa2f60098"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gae035f9dd63fe3590273cd8afa2f60098">BLE_APPEARANCE_GENERIC_THERMOMETER</a>&#160;&#160;&#160;768</td></tr>
-<tr class="separator:gae035f9dd63fe3590273cd8afa2f60098"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2dc350f30b586cf625c140f98a4eb98f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga2dc350f30b586cf625c140f98a4eb98f">BLE_APPEARANCE_THERMOMETER_EAR</a>&#160;&#160;&#160;769</td></tr>
-<tr class="separator:ga2dc350f30b586cf625c140f98a4eb98f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae08d97017cbf4ed3807ead537f72fff1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gae08d97017cbf4ed3807ead537f72fff1">BLE_APPEARANCE_GENERIC_HEART_RATE_SENSOR</a>&#160;&#160;&#160;832</td></tr>
-<tr class="separator:gae08d97017cbf4ed3807ead537f72fff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga590996bfcab479b91c41ee10060e3ce7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga590996bfcab479b91c41ee10060e3ce7">BLE_APPEARANCE_HEART_RATE_SENSOR_HEART_RATE_BELT</a>&#160;&#160;&#160;833</td></tr>
-<tr class="separator:ga590996bfcab479b91c41ee10060e3ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7eb86873b8119bd9aaa297afdc449fe9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga7eb86873b8119bd9aaa297afdc449fe9">BLE_APPEARANCE_GENERIC_BLOOD_PRESSURE</a>&#160;&#160;&#160;896</td></tr>
-<tr class="separator:ga7eb86873b8119bd9aaa297afdc449fe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f3b0095593a1aabaa90c1124990902b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga3f3b0095593a1aabaa90c1124990902b">BLE_APPEARANCE_BLOOD_PRESSURE_ARM</a>&#160;&#160;&#160;897</td></tr>
-<tr class="separator:ga3f3b0095593a1aabaa90c1124990902b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac8f717c93120efaef5a1036cc6810ee6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gac8f717c93120efaef5a1036cc6810ee6">BLE_APPEARANCE_BLOOD_PRESSURE_WRIST</a>&#160;&#160;&#160;898</td></tr>
-<tr class="separator:gac8f717c93120efaef5a1036cc6810ee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacdfa9ccd5890931e1235b253cf11beec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gacdfa9ccd5890931e1235b253cf11beec">BLE_APPEARANCE_GENERIC_HID</a>&#160;&#160;&#160;960</td></tr>
-<tr class="separator:gacdfa9ccd5890931e1235b253cf11beec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac08ceb7b199eceefc4650399a3a7ff75"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gac08ceb7b199eceefc4650399a3a7ff75">BLE_APPEARANCE_HID_KEYBOARD</a>&#160;&#160;&#160;961</td></tr>
-<tr class="separator:gac08ceb7b199eceefc4650399a3a7ff75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3d9f11a5e2e12fb8add3d08b08beb260"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga3d9f11a5e2e12fb8add3d08b08beb260">BLE_APPEARANCE_HID_MOUSE</a>&#160;&#160;&#160;962</td></tr>
-<tr class="separator:ga3d9f11a5e2e12fb8add3d08b08beb260"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9a087c6268d1c285d1f99419b50929a0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga9a087c6268d1c285d1f99419b50929a0">BLE_APPEARANCE_HID_JOYSTICK</a>&#160;&#160;&#160;963</td></tr>
-<tr class="separator:ga9a087c6268d1c285d1f99419b50929a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac387e20b0aef25837038e59e254f483e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gac387e20b0aef25837038e59e254f483e">BLE_APPEARANCE_HID_GAMEPAD</a>&#160;&#160;&#160;964</td></tr>
-<tr class="separator:gac387e20b0aef25837038e59e254f483e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacd99c2b7b0fce1a331709f3bdd98e1fc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gacd99c2b7b0fce1a331709f3bdd98e1fc">BLE_APPEARANCE_HID_DIGITIZERSUBTYPE</a>&#160;&#160;&#160;965</td></tr>
-<tr class="separator:gacd99c2b7b0fce1a331709f3bdd98e1fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3afe69f1a556c083502002e1330d34f9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga3afe69f1a556c083502002e1330d34f9">BLE_APPEARANCE_HID_CARD_READER</a>&#160;&#160;&#160;966</td></tr>
-<tr class="separator:ga3afe69f1a556c083502002e1330d34f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaace906381d9ec09056ab3385a5deb3e6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gaace906381d9ec09056ab3385a5deb3e6">BLE_APPEARANCE_HID_DIGITAL_PEN</a>&#160;&#160;&#160;967</td></tr>
-<tr class="separator:gaace906381d9ec09056ab3385a5deb3e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabe5f4d90093f15ac5f82cf5767bb98cb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gabe5f4d90093f15ac5f82cf5767bb98cb">BLE_APPEARANCE_HID_BARCODE</a>&#160;&#160;&#160;968</td></tr>
-<tr class="separator:gabe5f4d90093f15ac5f82cf5767bb98cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaffc5ed3121b304386e30afd357cf8299"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gaffc5ed3121b304386e30afd357cf8299">BLE_APPEARANCE_GENERIC_GLUCOSE_METER</a>&#160;&#160;&#160;1024</td></tr>
-<tr class="separator:gaffc5ed3121b304386e30afd357cf8299"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga013ad9984a86af0e2121b07925675cf8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga013ad9984a86af0e2121b07925675cf8">BLE_APPEARANCE_GENERIC_RUNNING_WALKING_SENSOR</a>&#160;&#160;&#160;1088</td></tr>
-<tr class="separator:ga013ad9984a86af0e2121b07925675cf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8fac62e43a01e63c5e45461d4b7d357c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga8fac62e43a01e63c5e45461d4b7d357c">BLE_APPEARANCE_RUNNING_WALKING_SENSOR_IN_SHOE</a>&#160;&#160;&#160;1089</td></tr>
-<tr class="separator:ga8fac62e43a01e63c5e45461d4b7d357c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga71c0d429a3168558cb8adede902550f8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga71c0d429a3168558cb8adede902550f8">BLE_APPEARANCE_RUNNING_WALKING_SENSOR_ON_SHOE</a>&#160;&#160;&#160;1090</td></tr>
-<tr class="separator:ga71c0d429a3168558cb8adede902550f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga08773a452bae47d0fba7bc99b3655961"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga08773a452bae47d0fba7bc99b3655961">BLE_APPEARANCE_RUNNING_WALKING_SENSOR_ON_HIP</a>&#160;&#160;&#160;1091</td></tr>
-<tr class="separator:ga08773a452bae47d0fba7bc99b3655961"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa0743a4678d7521a6bd530205bf82b65"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gaa0743a4678d7521a6bd530205bf82b65">BLE_APPEARANCE_GENERIC_CYCLING</a>&#160;&#160;&#160;1152</td></tr>
-<tr class="separator:gaa0743a4678d7521a6bd530205bf82b65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafc5b37a81851103bab4827448da89c79"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gafc5b37a81851103bab4827448da89c79">BLE_APPEARANCE_CYCLING_CYCLING_COMPUTER</a>&#160;&#160;&#160;1153</td></tr>
-<tr class="separator:gafc5b37a81851103bab4827448da89c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4383eb6254457261db8c303995f09b31"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga4383eb6254457261db8c303995f09b31">BLE_APPEARANCE_CYCLING_SPEED_SENSOR</a>&#160;&#160;&#160;1154</td></tr>
-<tr class="separator:ga4383eb6254457261db8c303995f09b31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga05cec1ed2b1af0adaba18c418825359d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga05cec1ed2b1af0adaba18c418825359d">BLE_APPEARANCE_CYCLING_CADENCE_SENSOR</a>&#160;&#160;&#160;1155</td></tr>
-<tr class="separator:ga05cec1ed2b1af0adaba18c418825359d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac250aebd30701ab2a6b22d761bd4da83"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gac250aebd30701ab2a6b22d761bd4da83">BLE_APPEARANCE_CYCLING_POWER_SENSOR</a>&#160;&#160;&#160;1156</td></tr>
-<tr class="separator:gac250aebd30701ab2a6b22d761bd4da83"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga49db7fef901abcc165099596c9d4007c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga49db7fef901abcc165099596c9d4007c">BLE_APPEARANCE_CYCLING_SPEED_CADENCE_SENSOR</a>&#160;&#160;&#160;1157</td></tr>
-<tr class="separator:ga49db7fef901abcc165099596c9d4007c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00093.html">ble_bas_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Battery Service event.  <a href="a00093.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00094.html">ble_bas_init_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Battery Service init structure. This contains all options and data needed for initialization of the service.  <a href="a00094.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00095.html">ble_bas_s</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Battery Service structure. This contains various status information for the service.  <a href="a00095.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaea81f98230816bcfcbfd6ccbb4db3999"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaea81f98230816bcfcbfd6ccbb4db3999"></a>
+typedef struct <a class="el" href="a00095.html">ble_bas_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gaea81f98230816bcfcbfd6ccbb4db3999">ble_bas_t</a></td></tr>
+<tr class="memdesc:gaea81f98230816bcfcbfd6ccbb4db3999"><td class="mdescLeft">&#160;</td><td class="mdescRight">Battery Service structure. This contains various status information for the service. <br/></td></tr>
+<tr class="separator:gaea81f98230816bcfcbfd6ccbb4db3999"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga07fd95f8afa679110161bb8391496abd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga07fd95f8afa679110161bb8391496abd"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga07fd95f8afa679110161bb8391496abd">ble_bas_evt_handler_t</a> )(<a class="el" href="a00595.html#gaea81f98230816bcfcbfd6ccbb4db3999">ble_bas_t</a> *p_bas, <a class="el" href="a00093.html">ble_bas_evt_t</a> *p_evt)</td></tr>
+<tr class="memdesc:ga07fd95f8afa679110161bb8391496abd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Battery Service event handler type. <br/></td></tr>
+<tr class="separator:ga07fd95f8afa679110161bb8391496abd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gab63b7f474ce48636cd355f6b75ea1ca9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gab63b7f474ce48636cd355f6b75ea1ca9">ble_bas_evt_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00595.html#ggab63b7f474ce48636cd355f6b75ea1ca9a657f8681ada82fd2990d5458442ed85a">BLE_BAS_EVT_NOTIFICATION_ENABLED</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00595.html#ggab63b7f474ce48636cd355f6b75ea1ca9afcba4bddb1a583374bb27d3f3ed5b8d1">BLE_BAS_EVT_NOTIFICATION_DISABLED</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gab63b7f474ce48636cd355f6b75ea1ca9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Battery Service event type.  <a href="a00595.html#gab63b7f474ce48636cd355f6b75ea1ca9">More...</a><br/></td></tr>
+<tr class="separator:gab63b7f474ce48636cd355f6b75ea1ca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gacb8ac9205dcec39e216575c76261c807"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#gacb8ac9205dcec39e216575c76261c807">ble_bas_init</a> (<a class="el" href="a00595.html#gaea81f98230816bcfcbfd6ccbb4db3999">ble_bas_t</a> *p_bas, const <a class="el" href="a00094.html">ble_bas_init_t</a> *p_bas_init)</td></tr>
+<tr class="memdesc:gacb8ac9205dcec39e216575c76261c807"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Battery Service.  <a href="#gacb8ac9205dcec39e216575c76261c807">More...</a><br/></td></tr>
+<tr class="separator:gacb8ac9205dcec39e216575c76261c807"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga01b70d77540660d7e312121d9f1d3b3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga01b70d77540660d7e312121d9f1d3b3a">ble_bas_on_ble_evt</a> (<a class="el" href="a00595.html#gaea81f98230816bcfcbfd6ccbb4db3999">ble_bas_t</a> *p_bas, <a class="el" href="a00115.html">ble_evt_t</a> *p_ble_evt)</td></tr>
+<tr class="memdesc:ga01b70d77540660d7e312121d9f1d3b3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling the Application's BLE Stack events.  <a href="#ga01b70d77540660d7e312121d9f1d3b3a">More...</a><br/></td></tr>
+<tr class="separator:ga01b70d77540660d7e312121d9f1d3b3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58d8f4336cce49ea5b3a2f8997bfe00e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00595.html#ga58d8f4336cce49ea5b3a2f8997bfe00e">ble_bas_battery_level_update</a> (<a class="el" href="a00595.html#gaea81f98230816bcfcbfd6ccbb4db3999">ble_bas_t</a> *p_bas, uint8_t battery_level)</td></tr>
+<tr class="memdesc:ga58d8f4336cce49ea5b3a2f8997bfe00e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for updating the battery level.  <a href="#ga58d8f4336cce49ea5b3a2f8997bfe00e">More...</a><br/></td></tr>
+<tr class="separator:ga58d8f4336cce49ea5b3a2f8997bfe00e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<dl class="section note"><dt>Note</dt><dd>Retrieved from <a href="http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.gap.appearance.xml">http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.gap.appearance.xml</a> </dd></dl>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga3f3b0095593a1aabaa90c1124990902b"></a>
+<p>Battery Service module. </p>
+<p>This module implements the Battery Service with the Battery Level characteristic. During initialization it adds the Battery Service and Battery Level characteristic to the BLE stack database. Optionally it can also add a Report Reference descriptor to the Battery Level characteristic (used when including the Battery Service in the HID service).</p>
+<p>If specified, the module will support notification of the Battery Level characteristic through the <a class="el" href="a00595.html#ga58d8f4336cce49ea5b3a2f8997bfe00e" title="Function for updating the battery level.">ble_bas_battery_level_update()</a> function. If an event handler is supplied by the application, the Battery Service will generate Battery Service events to the application.</p>
+<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Battery Service module by calling <a class="el" href="a00595.html#ga01b70d77540660d7e312121d9f1d3b3a" title="Function for handling the Application&#39;s BLE Stack events.">ble_bas_on_ble_evt()</a> from the from the ble_stack_handler callback.</dd>
+<dd>
+Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profile qualification listings, this section of source code must not be modified. </dd></dl>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gab63b7f474ce48636cd355f6b75ea1ca9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_APPEARANCE_BLOOD_PRESSURE_ARM&#160;&#160;&#160;897</td>
+          <td class="memname">enum <a class="el" href="a00595.html#gab63b7f474ce48636cd355f6b75ea1ca9">ble_bas_evt_type_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Blood Pressure: Arm. </p>
+
+<p>Battery Service event type. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab63b7f474ce48636cd355f6b75ea1ca9a657f8681ada82fd2990d5458442ed85a"></a>BLE_BAS_EVT_NOTIFICATION_ENABLED</em>&nbsp;</td><td class="fielddoc">
+<p>Battery value notification enabled event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab63b7f474ce48636cd355f6b75ea1ca9afcba4bddb1a583374bb27d3f3ed5b8d1"></a>BLE_BAS_EVT_NOTIFICATION_DISABLED</em>&nbsp;</td><td class="fielddoc">
+<p>Battery value notification disabled event. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
-<a class="anchor" id="gac8f717c93120efaef5a1036cc6810ee6"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga58d8f4336cce49ea5b3a2f8997bfe00e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_APPEARANCE_BLOOD_PRESSURE_WRIST&#160;&#160;&#160;898</td>
+          <td class="memname">uint32_t ble_bas_battery_level_update </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00595.html#gaea81f98230816bcfcbfd6ccbb4db3999">ble_bas_t</a> *&#160;</td>
+          <td class="paramname"><em>p_bas</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>battery_level</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Blood Pressure: Wrist. </p>
+
+<p>Function for updating the battery level. </p>
+<p>The application calls this function after having performed a battery measurement. If notification has been enabled, the battery level characteristic is sent to the client.</p>
+<dl class="section note"><dt>Note</dt><dd>For the requirements in the BAS specification to be fulfilled, this function must be called upon reconnection if the battery level has changed while the service has been disconnected from a bonded client.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_bas</td><td>Battery Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">battery_level</td><td>New battery measurement value (in percent of full capacity).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga05cec1ed2b1af0adaba18c418825359d"></a>
+<a class="anchor" id="gacb8ac9205dcec39e216575c76261c807"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_APPEARANCE_CYCLING_CADENCE_SENSOR&#160;&#160;&#160;1155</td>
+          <td class="memname">uint32_t ble_bas_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00595.html#gaea81f98230816bcfcbfd6ccbb4db3999">ble_bas_t</a> *&#160;</td>
+          <td class="paramname"><em>p_bas</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00094.html">ble_bas_init_t</a> *&#160;</td>
+          <td class="paramname"><em>p_bas_init</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Cycling: Cadence Sensor. </p>
+
+<p>Function for initializing the Battery Service. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_bas</td><td>Battery Service structure. This structure will have to be supplied by the application. It will be initialized by this function, and will later be used to identify this particular service instance. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_bas_init</td><td>Information needed to initialize the service.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization of service, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gafc5b37a81851103bab4827448da89c79"></a>
+<a class="anchor" id="ga01b70d77540660d7e312121d9f1d3b3a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_APPEARANCE_CYCLING_CYCLING_COMPUTER&#160;&#160;&#160;1153</td>
+          <td class="memname">void ble_bas_on_ble_evt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00595.html#gaea81f98230816bcfcbfd6ccbb4db3999">ble_bas_t</a> *&#160;</td>
+          <td class="paramname"><em>p_bas</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00115.html">ble_evt_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_evt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Cycling: Cycling Computer. </p>
 
-</div>
-</div>
-<a class="anchor" id="gac250aebd30701ab2a6b22d761bd4da83"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_CYCLING_POWER_SENSOR&#160;&#160;&#160;1156</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Cycling: Power Sensor. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga49db7fef901abcc165099596c9d4007c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_CYCLING_SPEED_CADENCE_SENSOR&#160;&#160;&#160;1157</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Cycling: Speed and Cadence Sensor. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga4383eb6254457261db8c303995f09b31"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_CYCLING_SPEED_SENSOR&#160;&#160;&#160;1154</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Cycling: Speed Sensor. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaaaafaf0f13b0451047e820df62d87cc9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_BARCODE_SCANNER&#160;&#160;&#160;704</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Barcode Scanner. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga7eb86873b8119bd9aaa297afdc449fe9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_BLOOD_PRESSURE&#160;&#160;&#160;896</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Blood Pressure. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga58d6951a86675854ea8b9a1e8284318c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_CLOCK&#160;&#160;&#160;256</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Clock. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaa71281a8fe31b848e3ad4b67e2d9d14e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_COMPUTER&#160;&#160;&#160;128</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Computer. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaa0743a4678d7521a6bd530205bf82b65"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_CYCLING&#160;&#160;&#160;1152</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Cycling. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga71a5be0afbbc3bd78c8a7010a16ac908"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_DISPLAY&#160;&#160;&#160;320</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Display. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga365fa871a32eb974f629f6d44fbc556b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_EYE_GLASSES&#160;&#160;&#160;448</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Eye-glasses. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaffc5ed3121b304386e30afd357cf8299"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_GLUCOSE_METER&#160;&#160;&#160;1024</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Glucose Meter. </p>
-
-</div>
-</div>
-<a class="anchor" id="gae08d97017cbf4ed3807ead537f72fff1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_HEART_RATE_SENSOR&#160;&#160;&#160;832</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Heart rate Sensor. </p>
-
-</div>
-</div>
-<a class="anchor" id="gacdfa9ccd5890931e1235b253cf11beec"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_HID&#160;&#160;&#160;960</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Human Interface Device (HID). </p>
-
-</div>
-</div>
-<a class="anchor" id="ga7239b3bf480c0814172799d8b52ed478"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_KEYRING&#160;&#160;&#160;576</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Keyring. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga467963f51aae2cc61e5689fecd85767d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_MEDIA_PLAYER&#160;&#160;&#160;640</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Media Player. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga9e49b6a59be5a7b7d3fc2d6bb7d33c82"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_PHONE&#160;&#160;&#160;64</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Phone. </p>
-
-</div>
-</div>
-<a class="anchor" id="gad600d4f563f97be538b6dc8011e6a413"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_REMOTE_CONTROL&#160;&#160;&#160;384</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Remote Control. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga013ad9984a86af0e2121b07925675cf8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_RUNNING_WALKING_SENSOR&#160;&#160;&#160;1088</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Running Walking Sensor. </p>
-
-</div>
-</div>
-<a class="anchor" id="gae858415a747a5c18a37896028285eaa2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_TAG&#160;&#160;&#160;512</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Tag. </p>
-
-</div>
-</div>
-<a class="anchor" id="gae035f9dd63fe3590273cd8afa2f60098"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_THERMOMETER&#160;&#160;&#160;768</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Thermometer. </p>
-
-</div>
-</div>
-<a class="anchor" id="gac33412b7491ee76236bdd1bb1a1f2818"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_GENERIC_WATCH&#160;&#160;&#160;192</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Generic Watch. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga590996bfcab479b91c41ee10060e3ce7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_HEART_RATE_SENSOR_HEART_RATE_BELT&#160;&#160;&#160;833</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Heart Rate Sensor: Heart Rate Belt. </p>
-
-</div>
-</div>
-<a class="anchor" id="gabe5f4d90093f15ac5f82cf5767bb98cb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_HID_BARCODE&#160;&#160;&#160;968</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Barcode Scanner (HID Subtype). </p>
-
-</div>
-</div>
-<a class="anchor" id="ga3afe69f1a556c083502002e1330d34f9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_HID_CARD_READER&#160;&#160;&#160;966</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Card Reader (HID Subtype). </p>
-
-</div>
-</div>
-<a class="anchor" id="gaace906381d9ec09056ab3385a5deb3e6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_HID_DIGITAL_PEN&#160;&#160;&#160;967</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Digital Pen (HID Subtype). </p>
-
-</div>
-</div>
-<a class="anchor" id="gacd99c2b7b0fce1a331709f3bdd98e1fc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_HID_DIGITIZERSUBTYPE&#160;&#160;&#160;965</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Digitizer Tablet (HID Subtype). </p>
-
-</div>
-</div>
-<a class="anchor" id="gac387e20b0aef25837038e59e254f483e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_HID_GAMEPAD&#160;&#160;&#160;964</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Gamepad (HID Subtype). </p>
-
-</div>
-</div>
-<a class="anchor" id="ga9a087c6268d1c285d1f99419b50929a0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_HID_JOYSTICK&#160;&#160;&#160;963</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Joystiq (HID Subtype). </p>
-
-</div>
-</div>
-<a class="anchor" id="gac08ceb7b199eceefc4650399a3a7ff75"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_HID_KEYBOARD&#160;&#160;&#160;961</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Keyboard (HID Subtype). </p>
-
-</div>
-</div>
-<a class="anchor" id="ga3d9f11a5e2e12fb8add3d08b08beb260"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_HID_MOUSE&#160;&#160;&#160;962</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Mouse (HID Subtype). </p>
-
-</div>
-</div>
-<a class="anchor" id="ga8fac62e43a01e63c5e45461d4b7d357c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_RUNNING_WALKING_SENSOR_IN_SHOE&#160;&#160;&#160;1089</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Running Walking Sensor: In-Shoe. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga08773a452bae47d0fba7bc99b3655961"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_RUNNING_WALKING_SENSOR_ON_HIP&#160;&#160;&#160;1091</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Running Walking Sensor: On-Hip. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga71c0d429a3168558cb8adede902550f8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_RUNNING_WALKING_SENSOR_ON_SHOE&#160;&#160;&#160;1090</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Running Walking Sensor: On-Shoe. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga2dc350f30b586cf625c140f98a4eb98f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_THERMOMETER_EAR&#160;&#160;&#160;769</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Thermometer: Ear. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga45ecf7c049e0f1f6a4a2332b2033b5b4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_UNKNOWN&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Unknown. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga36ad112fa0bc482256f11d3e210d3b45"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_APPEARANCE_WATCH_SPORTS_WATCH&#160;&#160;&#160;193</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Watch: Sports Watch. </p>
+<p>Function for handling the Application's BLE Stack events. </p>
+<p>Handles all events from the BLE stack of interest to the Battery Service.</p>
+<dl class="section note"><dt>Note</dt><dd>For the requirements in the BAS specification to be fulfilled, <a class="el" href="a00595.html#ga58d8f4336cce49ea5b3a2f8997bfe00e" title="Function for updating the battery level.">ble_bas_battery_level_update()</a> must be called upon reconnection if the battery level has changed while the service has been disconnected from a bonded client.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_bas</td><td>Battery Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>Event received from the BLE stack. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -714,7 +302,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:00 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:46 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

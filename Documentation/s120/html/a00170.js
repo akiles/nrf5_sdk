@@ -1,6 +1,6 @@
 var a00170 =
 [
-    [ "p_data_packet", "a00170.html#a806267cb1cae7aa747fac775fcab881b", null ],
-    [ "packet_length", "a00170.html#a489f1b8f3ed0c6167b0b96ce1a5149ff", null ],
-    [ "packet_type", "a00170.html#ab181d68ce3f0f88e0f4020c1e07bb14d", null ]
+    [ "event_id", "a00170.html#a2a75f3476e816a31085bef063855687e", null ],
+    [ "event_param", "a00170.html#a2dbb0e734ebc009dcc98b7c5055d7112", null ],
+    [ "event_paramlen", "a00170.html#a44a56d892899cd9a146cc4aaddd0d772", null ]
 ];

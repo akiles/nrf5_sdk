@@ -1,8 +1,7 @@
 var a00070 =
 [
-    [ "data", "a00070.html#a922d6e5dd0b72176c5da3522fe24b591", null ],
-    [ "error_code", "a00070.html#ab2aeea864de0050ec22790a186a4e9b1", null ],
-    [ "error_communication", "a00070.html#ae2f48256edd4052e8273d098bb8249c4", null ],
-    [ "evt_type", "a00070.html#ae89e1d236d49d18fa5be6fa32ba3c0d8", null ],
-    [ "value", "a00070.html#a9e34eabccc01fe3eeff1c7392d737d84", null ]
+    [ "rx_buf", "a00070.html#ab5c77995614a78b4a7baf6f5ab59bb5c", null ],
+    [ "rx_buf_size", "a00070.html#a42c5f8c78ee123d84c7de5da43f703e0", null ],
+    [ "tx_buf", "a00070.html#a1073bbd41b6d0ddc55e7ec432cf517dd", null ],
+    [ "tx_buf_size", "a00070.html#a8a0ff8a830eadfc972a4d44e1340e392", null ]
 ];

@@ -156,9 +156,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga261a5deb026836858a61905db0e8ac90"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__app__button.html#ga261a5deb026836858a61905db0e8ac90">app_button_disable</a> (void)</td></tr>
 <tr class="memdesc:ga261a5deb026836858a61905db0e8ac90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for disabling button detection.  <a href="#ga261a5deb026836858a61905db0e8ac90">More...</a><br/></td></tr>
 <tr class="separator:ga261a5deb026836858a61905db0e8ac90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga250eea833bc1419495654e647c7ab073"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__app__button.html#ga250eea833bc1419495654e647c7ab073">app_button_is_pushed</a> (uint8_t pin_no, bool *p_is_pushed)</td></tr>
-<tr class="memdesc:ga250eea833bc1419495654e647c7ab073"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for checking if a button is currently being pushed.  <a href="#ga250eea833bc1419495654e647c7ab073">More...</a><br/></td></tr>
-<tr class="separator:ga250eea833bc1419495654e647c7ab073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a7a1664fb906351ed582a95553c17a2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__app__button.html#ga6a7a1664fb906351ed582a95553c17a2">app_button_is_pushed</a> (uint8_t button_id, bool *p_is_pushed)</td></tr>
+<tr class="memdesc:ga6a7a1664fb906351ed582a95553c17a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for checking if a button is currently being pushed.  <a href="#ga6a7a1664fb906351ed582a95553c17a2">More...</a><br/></td></tr>
+<tr class="separator:ga6a7a1664fb906351ed582a95553c17a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Buttons handling module. </p>
@@ -397,7 +397,7 @@ Even if the scheduler is not used, app_button.h will include app_scheduler.h, so
 
 </div>
 </div>
-<a class="anchor" id="ga250eea833bc1419495654e647c7ab073"></a>
+<a class="anchor" id="ga6a7a1664fb906351ed582a95553c17a2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -405,7 +405,7 @@ Even if the scheduler is not used, app_button.h will include app_scheduler.h, so
           <td class="memname">uint32_t app_button_is_pushed </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>pin_no</em>, </td>
+          <td class="paramname"><em>button_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -424,7 +424,7 @@ Even if the scheduler is not used, app_button.h will include app_scheduler.h, so
 <p>Function for checking if a button is currently being pushed. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pin_no</td><td>Button pin to be checked. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">button_id</td><td>Button index (in the <a class="el" href="structapp__button__cfg__t.html" title="Button configuration structure.">app_button_cfg_t</a> array given to app_button_init) to be checked. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_is_pushed</td><td>Button state.</td></tr>
   </table>
   </dd>
@@ -432,7 +432,7 @@ Even if the scheduler is not used, app_button.h will include app_scheduler.h, so
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">NRF_SUCCESS</td><td>State successfully read. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Invalid pin_no. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Invalid button index. </td></tr>
   </table>
   </dd>
 </dl>
@@ -444,7 +444,7 @@ Even if the scheduler is not used, app_button.h will include app_scheduler.h, so
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:37 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:43 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

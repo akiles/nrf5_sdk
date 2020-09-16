@@ -1,10 +1,5 @@
 var a00121 =
 [
-    [ "auth_signed_wr", "a00121.html#ad021e4c1c66a2595cb430d1e0598bc0d", null ],
-    [ "broadcast", "a00121.html#a66788f87aed20bf98b81af57051e9795", null ],
-    [ "indicate", "a00121.html#a256d8d59b59f7f1a079e962196e026dd", null ],
-    [ "notify", "a00121.html#a9dd91c1e55995665ef09ec4c5bd5eaf7", null ],
-    [ "read", "a00121.html#a1da688e4cfacf724ee7636dbf534716f", null ],
-    [ "write", "a00121.html#ae0ef9c3f220f06e735b534d232cb9108", null ],
-    [ "write_wo_resp", "a00121.html#a61fdb334c11f2a62accb48f297fb46ef", null ]
+    [ "chars", "a00121.html#aae5e676db57239ee9cfe89c13f603dd0", null ],
+    [ "count", "a00121.html#a91337d714a569e896c896a3b255db8ff", null ]
 ];

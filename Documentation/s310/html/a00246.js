@@ -1,6 +1,5 @@
 var a00246 =
 [
-    [ "cumulative_value", "a00246.html#a9dce1ef6b333542b081df12273229b2e", null ],
-    [ "location", "a00246.html#a27be823fda46c3deb2f3fd98a38bf29f", null ],
-    [ "opcode", "a00246.html#a000223ebda70c1ccce85e8746a7d8207", null ]
+    [ "high_to_low", "a00246.html#ae5b08a4f0525b94727edf87267f57c0b", null ],
+    [ "low_to_high", "a00246.html#ab74530adb87a0c8728839d2bbdc0f8f0", null ]
 ];

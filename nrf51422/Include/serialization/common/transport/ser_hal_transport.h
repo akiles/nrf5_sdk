@@ -23,6 +23,12 @@
  *          Currently the HAL Transport layer is responsible for controlling the PHY layer and
  *          memory management. In the future it is possible to add more feature to it as: crc,
  *          retransmission etc.
+ *
+ * \n \n
+ * \image html ser_hal_transport_rx_state_machine.png "RX state machine"
+ * \n \n
+ * \image html ser_hal_transport_tx_state_machine.png "TX state machine"
+ * \n
  */
 
 #ifndef SER_HAL_TRANSPORT_H__

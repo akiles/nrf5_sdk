@@ -1,44 +1,27 @@
 var a00398 =
 [
-    [ "spi_master_config_t", "a00178.html", [
-      [ "SPI_CONFIG_CPHA", "a00178.html#a8d9ec5e520efd6528eac731dc6ec1d09", null ],
-      [ "SPI_CONFIG_CPOL", "a00178.html#afcfa3b91400e01c58ed4bcb01579957b", null ],
-      [ "SPI_CONFIG_ORDER", "a00178.html#a9ae7b60e2bf798c6c3c2a31e05d71436", null ],
-      [ "SPI_DisableAllIRQ", "a00178.html#a8eb5716e03de5b39ef991a7fe237b77d", null ],
-      [ "SPI_Freq", "a00178.html#afd21a8a469598aaa408f4e13a9a3040f", null ],
-      [ "SPI_Pin_MISO", "a00178.html#aee3ebe39323764d06cef34ab601ed870", null ],
-      [ "SPI_Pin_MOSI", "a00178.html#a104ebda3a0069d2dc638022dd4e4d385", null ],
-      [ "SPI_Pin_SCK", "a00178.html#a0beff1248c5fd9d9f257fc2c3ea12a84", null ],
-      [ "SPI_Pin_SS", "a00178.html#a0203f17b181806c009086cce9c5c044c", null ],
-      [ "SPI_PriorityIRQ", "a00178.html#ae73b65ac984bdc5b1855cb026009ff0e", null ]
+    [ "nrf_gpio_pin_dir_t", "a00398.html#ga4089fa9e3311c34d254d4d00029911bc", [
+      [ "NRF_GPIO_PIN_DIR_INPUT", "a00398.html#gga4089fa9e3311c34d254d4d00029911bcadcb15e081def4002ed564fd8abbaa29d", null ],
+      [ "NRF_GPIO_PIN_DIR_OUTPUT", "a00398.html#gga4089fa9e3311c34d254d4d00029911bca51b31d6f52c664433688ecc535e49f54", null ]
     ] ],
-    [ "spi_master_evt_t", "a00179.html", [
-      [ "data_count", "a00179.html#a370358835ed2aa53bcc515894b13eb87", null ],
-      [ "evt_type", "a00179.html#a622197dded7bfa292535944e6870c5f7", null ]
+    [ "nrf_gpio_pin_pull_t", "a00398.html#ga07e0c8c0b30499cf0a7b79dbe62d3fcc", [
+      [ "NRF_GPIO_PIN_NOPULL", "a00398.html#gga07e0c8c0b30499cf0a7b79dbe62d3fcca13ffcb94eb78be866c66b5f5b516af65", null ],
+      [ "NRF_GPIO_PIN_PULLDOWN", "a00398.html#gga07e0c8c0b30499cf0a7b79dbe62d3fcca314d4b349d7e59ea3373a1ced4f32e4d", null ],
+      [ "NRF_GPIO_PIN_PULLUP", "a00398.html#gga07e0c8c0b30499cf0a7b79dbe62d3fccad60f768c699495d9976a45fa7a9f51c6", null ]
     ] ],
-    [ "SPI_DEFAULT_TX_BYTE", "a00398.html#ga6ab8549e69d7db67767780b4a437e871", null ],
-    [ "SPI_MASTER_INIT_DEFAULT", "a00398.html#gac60ab1614b729be681ca7268fee84350", null ],
-    [ "SPI_PIN_DISCONNECTED", "a00398.html#ga8e14bea8a6a4f612ee61ad0e6b1c42a4", null ],
-    [ "spi_master_event_handler_t", "a00398.html#ga2df76693a9ed10e7d44b0e1663b50738", null ],
-    [ "spi_master_evt_type_t", "a00398.html#ga8e658ee16bfb5beb4d00e27c93f68f96", null ],
-    [ "spi_master_evt_type_t", "a00398.html#ga31240c0ee79ef65d920c9d3fa8899789", [
-      [ "SPI_MASTER_EVT_TRANSFER_STARTED", "a00398.html#gga31240c0ee79ef65d920c9d3fa8899789a24504bd3bcb0bb7778ee2b99dfb1f4d4", null ],
-      [ "SPI_MASTER_EVT_TRANSFER_COMPLETED", "a00398.html#gga31240c0ee79ef65d920c9d3fa8899789ac7b903657b890c123f4b51fd2a26e53e", null ],
-      [ "SPI_MASTER_EVT_TYPE_MAX", "a00398.html#gga31240c0ee79ef65d920c9d3fa8899789aa4eba2079274bf69027092844ac7d161", null ]
+    [ "nrf_gpio_pin_sense_t", "a00398.html#ga0708136c752d69015962a2ccb4c59fbd", [
+      [ "NRF_GPIO_PIN_NOSENSE", "a00398.html#gga0708136c752d69015962a2ccb4c59fbda60d9e9b3abe91c66a618e34d88444e95", null ],
+      [ "NRF_GPIO_PIN_SENSE_LOW", "a00398.html#gga0708136c752d69015962a2ccb4c59fbda48aaaa3fc33a295d9c65f094e03aba24", null ],
+      [ "NRF_GPIO_PIN_SENSE_HIGH", "a00398.html#gga0708136c752d69015962a2ccb4c59fbda8fe882a266370654fa6d664be3e1ecce", null ]
     ] ],
-    [ "spi_master_hw_instance_t", "a00398.html#ga84f5e5074c1cb0163acc71cd9b4d1107", [
-      [ "SPI_MASTER_0", "a00398.html#gga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d", null ],
-      [ "SPI_MASTER_1", "a00398.html#gga84f5e5074c1cb0163acc71cd9b4d1107a83453ab7546115900d25a83c533fb0fc", null ],
-      [ "SPI_MASTER_HW_ENABLED_COUNT", "a00398.html#gga84f5e5074c1cb0163acc71cd9b4d1107ad189c52211b6de22a7e6aed4d078406a", null ]
+    [ "nrf_gpio_port_dir_t", "a00398.html#ga494d7ac30db1cbb6366e0b9ebd5b49b4", [
+      [ "NRF_GPIO_PORT_DIR_OUTPUT", "a00398.html#gga494d7ac30db1cbb6366e0b9ebd5b49b4a90b7ce7a76775cb7534487635755be3f", null ],
+      [ "NRF_GPIO_PORT_DIR_INPUT", "a00398.html#gga494d7ac30db1cbb6366e0b9ebd5b49b4a6ec5811669635e30b9dc014e1f494936", null ]
     ] ],
-    [ "spi_master_state_t", "a00398.html#gac3471b7aba2dd998dd08263d80a46d44", [
-      [ "SPI_MASTER_STATE_DISABLED", "a00398.html#ggac3471b7aba2dd998dd08263d80a46d44a06bb576779307e515a0f9f1f1711f2d1", null ],
-      [ "SPI_MASTER_STATE_BUSY", "a00398.html#ggac3471b7aba2dd998dd08263d80a46d44a4a4ae82272756db931981e38786c2b3d", null ],
-      [ "SPI_MASTER_STATE_IDLE", "a00398.html#ggac3471b7aba2dd998dd08263d80a46d44a2f2ddd197a11b1c3eac344d93accae07", null ]
-    ] ],
-    [ "spi_master_close", "a00398.html#ga50bc5bf9e8334ef1387826e0a2af4256", null ],
-    [ "spi_master_evt_handler_reg", "a00398.html#ga76af017b1ce006baeed02f2668c00e7d", null ],
-    [ "spi_master_get_state", "a00398.html#gaa052cc71238a379eaeb7d227bd060d46", null ],
-    [ "spi_master_open", "a00398.html#ga3cf5563d474f5b41080b6ae53be0ee51", null ],
-    [ "spi_master_send_recv", "a00398.html#ga4e03ec39c566925e98fe0ec79c6d7623", null ]
+    [ "nrf_gpio_port_select_t", "a00398.html#gaa1a5c145e334817f2d960317d64fcb3d", [
+      [ "NRF_GPIO_PORT_SELECT_PORT0", "a00398.html#ggaa1a5c145e334817f2d960317d64fcb3dada4c86d9760e81857ec0482c1cc78190", null ],
+      [ "NRF_GPIO_PORT_SELECT_PORT1", "a00398.html#ggaa1a5c145e334817f2d960317d64fcb3da9209d7820d65eb58c7804e676581bf40", null ],
+      [ "NRF_GPIO_PORT_SELECT_PORT2", "a00398.html#ggaa1a5c145e334817f2d960317d64fcb3daf83f3be082e45a73102618f149448fc8", null ],
+      [ "NRF_GPIO_PORT_SELECT_PORT3", "a00398.html#ggaa1a5c145e334817f2d960317d64fcb3da9075a015252fd02d27ba7ca897aa564d", null ]
+    ] ]
 ];

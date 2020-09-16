@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: dfu_update_status_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ser_phy_evt_hw_error_params_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,33 @@ $(document).ready(function(){initNavTree('a00331.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dfu_update_status_t Struct Reference<div class="ingroups"><a class="el" href="a00753.html">Types and definitions.</a></div></div>  </div>
+<div class="title">ser_phy_evt_hw_error_params_t Struct Reference<div class="ingroups"><a class="el" href="a00832.html">Serialization PHY</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure holding DFU complete event.  
+<p>A struct containing parameters of the event of type <a class="el" href="a00832.html#ggaef62df8feedfbe682684c6f1ea704061afad1fa7a81b1ed34ede87c0751125c4e">SER_PHY_EVT_HW_ERROR</a>.  
  <a href="a00331.html#details">More...</a></p>
 
-<p><code>#include &lt;dfu_types.h&gt;</code></p>
+<p><code>#include &lt;ser_phy.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac8f74ba3fe25a5db401c156ad55360b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00753.html#ga53842ec56bb0c14aa506551bfdc0c652">dfu_update_status_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#ac8f74ba3fe25a5db401c156ad55360b1">status_code</a></td></tr>
-<tr class="separator:ac8f74ba3fe25a5db401c156ad55360b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad23c5de3d64733cea90d62aece2cf641"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#ad23c5de3d64733cea90d62aece2cf641">app_crc</a></td></tr>
-<tr class="separator:ad23c5de3d64733cea90d62aece2cf641"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a3071d6e7b79e59aae9aa9022b462c1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#a5a3071d6e7b79e59aae9aa9022b462c1">app_size</a></td></tr>
-<tr class="separator:a5a3071d6e7b79e59aae9aa9022b462c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2624b8e32e14b6e9b83cfeb552c58077"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00331.html#a2624b8e32e14b6e9b83cfeb552c58077">error_code</a></td></tr>
+<tr class="separator:a2624b8e32e14b6e9b83cfeb552c58077"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure holding DFU complete event. </p>
+<div class="textblock"><p>A struct containing parameters of the event of type <a class="el" href="a00832.html#ggaef62df8feedfbe682684c6f1ea704061afad1fa7a81b1ed34ede87c0751125c4e">SER_PHY_EVT_HW_ERROR</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ad23c5de3d64733cea90d62aece2cf641"></a>
+<a class="anchor" id="a2624b8e32e14b6e9b83cfeb552c58077"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t dfu_update_status_t::app_crc</td>
+          <td class="memname">uint32_t ser_phy_evt_hw_error_params_t::error_code</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>CRC of the recieved application. </p>
-
-</div>
-</div>
-<a class="anchor" id="a5a3071d6e7b79e59aae9aa9022b462c1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t dfu_update_status_t::app_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of the recieved application. </p>
-
-</div>
-</div>
-<a class="anchor" id="ac8f74ba3fe25a5db401c156ad55360b1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00753.html#ga53842ec56bb0c14aa506551bfdc0c652">dfu_update_status_code_t</a> dfu_update_status_t::status_code</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Device Firmware Update status. </p>
+<p>Hardware error code - specific for any microcontroller. </p>
 
 </div>
 </div>
@@ -171,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00331.html">dfu_update_status_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00331.html">ser_phy_evt_hw_error_params_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:37 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

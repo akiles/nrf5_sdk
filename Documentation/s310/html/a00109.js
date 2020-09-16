@@ -1,7 +1,11 @@
 var a00109 =
 [
-    [ "bps_feature_attr_md", "a00109.html#aa811a90c7dd0b8bea4434fe2ef2c4ede", null ],
-    [ "bps_meas_attr_md", "a00109.html#a977afca322fd5a03271e0fa35300a164", null ],
-    [ "evt_handler", "a00109.html#a22943d0794c7a162398ddb54872d1751", null ],
-    [ "feature", "a00109.html#a811bba9e34ca00cad260b8d50aadbe5f", null ]
+    [ "conn_handle", "a00109.html#a48a44e4e8cd1e67fbb32989de8a99b36", null ],
+    [ "dfu_ctrl_pt_handles", "a00109.html#a2b5f5316143335f6f2b8a41058097d17", null ],
+    [ "dfu_pkt_handles", "a00109.html#a759fe67aab5aa380ef2fb004b162fd7d", null ],
+    [ "dfu_status_rep_handles", "a00109.html#a458dbd2ff5429f61da7adb60e0905ba8", null ],
+    [ "error_handler", "a00109.html#a49fa8cfd9bce660ff46708670a6b0eef", null ],
+    [ "evt_handler", "a00109.html#a306430130c5f0868b715478449009be0", null ],
+    [ "service_handle", "a00109.html#abac31261d78df5dfec65e37ba3d456fb", null ],
+    [ "uuid_type", "a00109.html#a8e4c2d2d6901dc489294370ecff5632b", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Glucose Service</title>
+<title>nRF51 SDK - S110 SoftDevice: Link Loss Service</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,23 +97,20 @@ $(document).ready(function(){initNavTree('a00138.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Glucose Service </div>  </div>
+<div class="title">Link Loss Service </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="section_glucose_service"></a>
-Glucose Service</h1>
-<p>This module implements the Glucose Service.</p>
-<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Glucose Service module by calling <a class="el" href="a00922.html#ga4bdc87162eabb09cc417e95a95c02809" title="Function for handling the Application&#39;s BLE Stack events.">ble_gls_on_ble_evt()</a> from the from the ble_stack_handler callback.</dd></dl>
-<h1><a class="anchor" id="section_glucose_service_db"></a>
-Glucose Service Database</h1>
-<p>This module implements at database of stored glucose measurement values. </p>
+<div class="textblock"><p>This module implements the Link Loss Service with the Alert Level characteristic. During initialization it adds the Link Loss Service and Alert Level characteristic to the BLE stack database.</p>
+<p>The application must supply an event handler for receiving Link Loss Service events. Using this handler, the service will notify the application when the link has been lost, and which Alert Level has been set.</p>
+<p>The service also provides a function for letting the application poll the current value of the Alert Level characteristic.</p>
+<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Link Loss Service module by calling <a class="el" href="a00869.html#ga8016405e451656f510b244e4cbe09653" title="Function for handling the Application&#39;s BLE Stack events.">ble_lls_on_ble_evt()</a> from the ble_stack_handler callback. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00124.html">BLE Services</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:34 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00117.html">BLE Services</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

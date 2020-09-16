@@ -68,7 +68,7 @@
 #define DEVICE_NAME                   "Nordic_Power_Mgmt"                           /**< Name of device. Will be included in the advertising data. */
 
 #define APP_TIMER_PRESCALER           0                                             /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS          2                                             /**< Maximum number of simultaneously created timers. */
+#define APP_TIMER_MAX_TIMERS          3                                             /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE       4                                             /**< Size of timer operation queues. */
 
 #define CHAR_NOTIF_TIMEOUT_IN_TKS     APP_TIMER_TICKS(APP_CFG_CHAR_NOTIF_TIMEOUT,\
@@ -705,6 +705,7 @@ int main(void)
     }
 
     // Initialize SoftDevice.
+    timers_init();
     ble_stack_init();
 
     if (!is_notification_mode && !is_non_connectable_mode)
@@ -719,8 +720,6 @@ int main(void)
     
     // If we reach this point, the application was woken up by pressing one of the two configured
     // buttons.
-
-    timers_init();
     gap_params_init();
 
     if (is_notification_mode)

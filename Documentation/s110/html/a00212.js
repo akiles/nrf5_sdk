@@ -1,4 +1,7 @@
 var a00212 =
 [
-    [ "rssi", "a00212.html#a7521901a129bf1516c0bab404045616e", null ]
+    [ "addr_count", "a00212.html#a8f7d372587ed29005dbfd515103fa6fd", null ],
+    [ "irk_count", "a00212.html#a21922578ee2df66befd41e968f8d5af1", null ],
+    [ "pp_addrs", "a00212.html#a9316d95519c47512389b4696376556d0", null ],
+    [ "pp_irks", "a00212.html#ab78ecf15e25742a5ea56377cef1a8603", null ]
 ];

@@ -39,7 +39,7 @@ All rights reserved.
 void softdevice_assert_callback(uint32_t pc, uint16_t line_num, const uint8_t * p_file_name)
 {
     printf("ASSERT-softdevice_assert_callback\n");
-    printf("PC: %#x\n", pc);
+    printf("PC: %#x\n", (unsigned int)pc);
     printf("File name: %s\n", (const char*)p_file_name);
     printf("Line number: %u\n", line_num);
 
@@ -78,9 +78,9 @@ static __INLINE void softdevice_setup(void)
 void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
 {
     printf("ASSERT-app_error_handler\n");
-    printf("Error code: %u\n", error_code);
+    printf("Error code: %u\n", (unsigned int)error_code);
     printf("File name: %s\n", (const char*)p_file_name);
-    printf("Line number: %u\n", line_num);
+    printf("Line number: %u\n", (unsigned int)line_num);
 
     for (;;)
     {

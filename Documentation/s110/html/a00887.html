@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Connectivity event encoders</title>
+<title>nRF51 SDK - S110 SoftDevice: GAP Central</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -96,89 +96,20 @@ $(document).ready(function(){initNavTree('a00887.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Connectivity event encoders<div class="ingroups"><a class="el" href="a01013.html">Connectivity s110 codecs</a></div></div>  </div>
+<div class="title">GAP Central<div class="ingroups"><a class="el" href="a00881.html">Link Encryption with Bonded Device</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Connectivity event encoders.  
-<a href="#details">More...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga044c29bd0438f9cee2843e5ac753b548"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00887.html#ga044c29bd0438f9cee2843e5ac753b548">ble_evt_tx_complete_enc</a> (<a class="el" href="a00195.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga044c29bd0438f9cee2843e5ac753b548"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes ble_evt_tx_complete event.  <a href="#ga044c29bd0438f9cee2843e5ac753b548">More...</a><br/></td></tr>
-<tr class="separator:ga044c29bd0438f9cee2843e5ac753b548"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Connectivity event encoders. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga044c29bd0438f9cee2843e5ac753b548"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_evt_tx_complete_enc </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00195.html">ble_evt_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_event</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>event_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes ble_evt_tx_complete event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00097.html#nrf51_evt_tx_complete_encoding">0x01 - BLE_EVT_TX_COMPLETE</a> for packet format.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_event</td><td>Pointer to the <a class="el" href="a00195.html">ble_evt_t</a> buffer that shall be encoded. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_len</td><td>Size (in bytes) of <code>p_event</code> buffer. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of a buffer for encoded event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> Size (in bytes) of <code>p_buf</code> buffer. <code>out:</code> Length of encoded contents in <code>p_buf</code>.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<div align="center">
+<img src="msc_inline_mscgraph_55.png" alt="msc_inline_mscgraph_55" border="0" usemap="#msc_inline_mscgraph_55.map"/>
+<map name="msc_inline_mscgraph_55.map" id="msc_inline_mscgraph_55.map"></map>
 </div>
-</div>
-</div><!-- contents -->
+ </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:47 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:36 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

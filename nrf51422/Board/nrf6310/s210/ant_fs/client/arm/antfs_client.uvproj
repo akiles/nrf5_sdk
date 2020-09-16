@@ -357,7 +357,7 @@
               <MiscControls>--diag_suppress=C3017 --c99</MiscControls>
               <Define>NRF51 BOARD_NRF6310 TRACE_MEM_WRITE_OFF</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\..\..\Include;..\..\..\..\..\..\Include\app_common;..\..\..\..\..\..\Include\sd_common;..\include;..\..\..\..\..\..\Include\s210;..\..\..\..\..\..\Include\ant</IncludePath>
+              <IncludePath>..\..\..\..\..\..\Include;..\..\..\..\..\..\Include\app_common;..\..\..\..\..\..\Include\sd_common;..\include;..\..\..\..\..\..\Include\s210</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

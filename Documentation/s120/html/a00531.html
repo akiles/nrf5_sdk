@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Enumerations</title>
+<title>nRF51 SDK - S120 SoftDevice: Device Module Set-up APIs</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,149 +97,131 @@ $(document).ready(function(){initNavTree('a00531.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Enumerations<div class="ingroups"><a class="el" href="a00464.html">Generic Attribute Profile (GATT) Client</a></div></div>  </div>
+<div class="title">Device Module Set-up APIs<div class="ingroups"><a class="el" href="a00530.html">Device Module APIs</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Initialization &amp; registration APIs that are pre-requisite for all other module procedures.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga1861d83550e6998efd13d44b09ec1ba9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00531.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> { <br/>
-&#160;&#160;<a class="el" href="a00531.html#gga1861d83550e6998efd13d44b09ec1ba9a6362074e02b0a5e960257ceaa0886f51">SD_BLE_GATTC_PRIMARY_SERVICES_DISCOVER</a> = 0x90, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#gga1861d83550e6998efd13d44b09ec1ba9a84e92548312cd9db93e3b6943ce83e65">SD_BLE_GATTC_RELATIONSHIPS_DISCOVER</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#gga1861d83550e6998efd13d44b09ec1ba9aa07c8e5ddc5a267dd9561787695d48ee">SD_BLE_GATTC_CHARACTERISTICS_DISCOVER</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#gga1861d83550e6998efd13d44b09ec1ba9acbf16ad32f9408da33a6fdb9c969f455">SD_BLE_GATTC_DESCRIPTORS_DISCOVER</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#gga1861d83550e6998efd13d44b09ec1ba9aba39e3ced819d191f10a368eb4d28595">SD_BLE_GATTC_CHAR_VALUE_BY_UUID_READ</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#gga1861d83550e6998efd13d44b09ec1ba9a8cd119e7dac7c5a94a6b9b209cd072f9">SD_BLE_GATTC_READ</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#gga1861d83550e6998efd13d44b09ec1ba9aefadfe6aebd0e0f3111d9514e3387c90">SD_BLE_GATTC_CHAR_VALUES_READ</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#gga1861d83550e6998efd13d44b09ec1ba9ae34d35052cd94de5fd4e6c5263d898ab">SD_BLE_GATTC_WRITE</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#gga1861d83550e6998efd13d44b09ec1ba9a3bb17168d2477e2fce1b66481ebcfb02">SD_BLE_GATTC_HV_CONFIRM</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga1861d83550e6998efd13d44b09ec1ba9"><td class="mdescLeft">&#160;</td><td class="mdescRight">GATTC API SVC numbers.  <a href="a00531.html#ga1861d83550e6998efd13d44b09ec1ba9">More...</a><br/></td></tr>
-<tr class="separator:ga1861d83550e6998efd13d44b09ec1ba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafd9b8b42eeb832d688e33f4561f97efc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00531.html#gafd9b8b42eeb832d688e33f4561f97efc">BLE_GATTC_EVTS</a> { <br/>
-&#160;&#160;<a class="el" href="a00531.html#ggafd9b8b42eeb832d688e33f4561f97efcaa4ebe118aada0a7d38163ea11492f020">BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP</a> = 0x30, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#ggafd9b8b42eeb832d688e33f4561f97efcac52e2f11dc65da2efe53f7041d0ead6b">BLE_GATTC_EVT_REL_DISC_RSP</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#ggafd9b8b42eeb832d688e33f4561f97efcac385b5d8f35de9cfd0df5b5aea9cb310">BLE_GATTC_EVT_CHAR_DISC_RSP</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#ggafd9b8b42eeb832d688e33f4561f97efca990d593e0c54f813ee6d6bb7fad619a2">BLE_GATTC_EVT_DESC_DISC_RSP</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#ggafd9b8b42eeb832d688e33f4561f97efca9741363d5e934220a35f1c01f62a194c">BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#ggafd9b8b42eeb832d688e33f4561f97efca2355be2e3b5c9bd1c235f7abbc56ef6d">BLE_GATTC_EVT_READ_RSP</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#ggafd9b8b42eeb832d688e33f4561f97efcaab8322d0d775f2726cfc0215ef63f298">BLE_GATTC_EVT_CHAR_VALS_READ_RSP</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#ggafd9b8b42eeb832d688e33f4561f97efca6a70fe83b91997c8d3cd47b6cd98a91a">BLE_GATTC_EVT_WRITE_RSP</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#ggafd9b8b42eeb832d688e33f4561f97efca0f71b4e016b2049dfbd74fa2e46b9cd3">BLE_GATTC_EVT_HVX</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00531.html#ggafd9b8b42eeb832d688e33f4561f97efcacdb80367c0f97c95db04e19665ebf2fc">BLE_GATTC_EVT_TIMEOUT</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gafd9b8b42eeb832d688e33f4561f97efc"><td class="mdescLeft">&#160;</td><td class="mdescRight">GATT Client Event IDs.  <a href="a00531.html#gafd9b8b42eeb832d688e33f4561f97efc">More...</a><br/></td></tr>
-<tr class="separator:gafd9b8b42eeb832d688e33f4561f97efc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga5103c3ed7af4bef6e8a76075d48d14f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00427.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00531.html#ga5103c3ed7af4bef6e8a76075d48d14f1">dm_init</a> (<a class="el" href="a00171.html">dm_init_param_t</a> const *p_init_param)</td></tr>
+<tr class="memdesc:ga5103c3ed7af4bef6e8a76075d48d14f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module Initialization Routine.  <a href="#ga5103c3ed7af4bef6e8a76075d48d14f1">More...</a><br/></td></tr>
+<tr class="separator:ga5103c3ed7af4bef6e8a76075d48d14f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62366984b8a674d9cadb48a8da2d3694"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00427.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00531.html#ga62366984b8a674d9cadb48a8da2d3694">dm_register</a> (<a class="el" href="a00529.html#ga3c013385ac2ef5502370f598308d0339">dm_application_instance_t</a> *p_appl_instance, <a class="el" href="a00167.html">dm_application_param_t</a> const *p_appl_param)</td></tr>
+<tr class="memdesc:ga62366984b8a674d9cadb48a8da2d3694"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering the application.  <a href="#ga62366984b8a674d9cadb48a8da2d3694">More...</a><br/></td></tr>
+<tr class="separator:ga62366984b8a674d9cadb48a8da2d3694"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga57e8fe96dc9be50938198204894eceeb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00531.html#ga57e8fe96dc9be50938198204894eceeb">dm_ble_evt_handler</a> (<a class="el" href="a00078.html">ble_evt_t</a> *p_ble_evt)</td></tr>
+<tr class="memdesc:ga57e8fe96dc9be50938198204894eceeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling BLE events.  <a href="#ga57e8fe96dc9be50938198204894eceeb">More...</a><br/></td></tr>
+<tr class="separator:ga57e8fe96dc9be50938198204894eceeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gafd9b8b42eeb832d688e33f4561f97efc"></a>
+<p>Initialization &amp; registration APIs that are pre-requisite for all other module procedures. </p>
+<p>This section describes the Module Initialization and Registration APIs needed to be set up by the application before device manager can start managing devices and device contexts for the application. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga57e8fe96dc9be50938198204894eceeb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00531.html#gafd9b8b42eeb832d688e33f4561f97efc">BLE_GATTC_EVTS</a></td>
+          <td class="memname">void dm_ble_evt_handler </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00078.html">ble_evt_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_evt</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>GATT Client Event IDs. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggafd9b8b42eeb832d688e33f4561f97efcaa4ebe118aada0a7d38163ea11492f020"></a>BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP</em>&nbsp;</td><td class="fielddoc">
-<p>GATTC BLE Event base. Primary Service Discovery Response event. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafd9b8b42eeb832d688e33f4561f97efcac52e2f11dc65da2efe53f7041d0ead6b"></a>BLE_GATTC_EVT_REL_DISC_RSP</em>&nbsp;</td><td class="fielddoc">
-<p>Relationship Discovery Response event. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafd9b8b42eeb832d688e33f4561f97efcac385b5d8f35de9cfd0df5b5aea9cb310"></a>BLE_GATTC_EVT_CHAR_DISC_RSP</em>&nbsp;</td><td class="fielddoc">
-<p>Characteristic Discovery Response event. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafd9b8b42eeb832d688e33f4561f97efca990d593e0c54f813ee6d6bb7fad619a2"></a>BLE_GATTC_EVT_DESC_DISC_RSP</em>&nbsp;</td><td class="fielddoc">
-<p>Descriptor Discovery Response event. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafd9b8b42eeb832d688e33f4561f97efca9741363d5e934220a35f1c01f62a194c"></a>BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP</em>&nbsp;</td><td class="fielddoc">
-<p>Read By UUID Response event. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafd9b8b42eeb832d688e33f4561f97efca2355be2e3b5c9bd1c235f7abbc56ef6d"></a>BLE_GATTC_EVT_READ_RSP</em>&nbsp;</td><td class="fielddoc">
-<p>Read Response event. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafd9b8b42eeb832d688e33f4561f97efcaab8322d0d775f2726cfc0215ef63f298"></a>BLE_GATTC_EVT_CHAR_VALS_READ_RSP</em>&nbsp;</td><td class="fielddoc">
-<p>Read multiple Response event. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafd9b8b42eeb832d688e33f4561f97efca6a70fe83b91997c8d3cd47b6cd98a91a"></a>BLE_GATTC_EVT_WRITE_RSP</em>&nbsp;</td><td class="fielddoc">
-<p>Write Response event. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafd9b8b42eeb832d688e33f4561f97efca0f71b4e016b2049dfbd74fa2e46b9cd3"></a>BLE_GATTC_EVT_HVX</em>&nbsp;</td><td class="fielddoc">
-<p>Handle Value Notification or Indication event. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggafd9b8b42eeb832d688e33f4561f97efcacdb80367c0f97c95db04e19665ebf2fc"></a>BLE_GATTC_EVT_TIMEOUT</em>&nbsp;</td><td class="fielddoc">
-<p>Timeout event. </p>
-</td></tr>
-</table>
+<p>Function for handling BLE events. </p>
+<p>BLE Event Handler for the module. This routine should be called from BLE stack event dispatcher for the module to work as expected.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>BLE stack event being dispatched to the function. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga1861d83550e6998efd13d44b09ec1ba9"></a>
+<a class="anchor" id="ga5103c3ed7af4bef6e8a76075d48d14f1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00531.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a></td>
+          <td class="memname"><a class="el" href="a00427.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a> dm_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00171.html">dm_init_param_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_init_param</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>GATTC API SVC numbers. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9a6362074e02b0a5e960257ceaa0886f51"></a>SD_BLE_GATTC_PRIMARY_SERVICES_DISCOVER</em>&nbsp;</td><td class="fielddoc">
-<p>GATTC BLE SVC base. Primary Service Discovery. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9a84e92548312cd9db93e3b6943ce83e65"></a>SD_BLE_GATTC_RELATIONSHIPS_DISCOVER</em>&nbsp;</td><td class="fielddoc">
-<p>Relationship Discovery. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9aa07c8e5ddc5a267dd9561787695d48ee"></a>SD_BLE_GATTC_CHARACTERISTICS_DISCOVER</em>&nbsp;</td><td class="fielddoc">
-<p>Characteristic Discovery. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9acbf16ad32f9408da33a6fdb9c969f455"></a>SD_BLE_GATTC_DESCRIPTORS_DISCOVER</em>&nbsp;</td><td class="fielddoc">
-<p>Characteristic Descriptor Discovery. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9aba39e3ced819d191f10a368eb4d28595"></a>SD_BLE_GATTC_CHAR_VALUE_BY_UUID_READ</em>&nbsp;</td><td class="fielddoc">
-<p>Read Characteristic Value by UUID. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9a8cd119e7dac7c5a94a6b9b209cd072f9"></a>SD_BLE_GATTC_READ</em>&nbsp;</td><td class="fielddoc">
-<p>Generic read. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9aefadfe6aebd0e0f3111d9514e3387c90"></a>SD_BLE_GATTC_CHAR_VALUES_READ</em>&nbsp;</td><td class="fielddoc">
-<p>Read multiple Characteristic Values. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9ae34d35052cd94de5fd4e6c5263d898ab"></a>SD_BLE_GATTC_WRITE</em>&nbsp;</td><td class="fielddoc">
-<p>Generic write. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1861d83550e6998efd13d44b09ec1ba9a3bb17168d2477e2fce1b66481ebcfb02"></a>SD_BLE_GATTC_HV_CONFIRM</em>&nbsp;</td><td class="fielddoc">
-<p>Handle Value Confirmation. </p>
-</td></tr>
-</table>
+<p>Module Initialization Routine. </p>
+<p>Function for initializing the module. Must called before any other APIs of the module are used.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_init_param</td><td>Initialization parameters.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>On success, else an error code indicating reason for failure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>It is mandatory that pstorage is initialized before initializing this module. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga62366984b8a674d9cadb48a8da2d3694"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00427.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a> dm_register </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00529.html#ga3c013385ac2ef5502370f598308d0339">dm_application_instance_t</a> *&#160;</td>
+          <td class="paramname"><em>p_appl_instance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00167.html">dm_application_param_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_appl_param</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for registering the application. </p>
+<p>This routine is used by the application to register for asynchronous events with the device manager. During registration the application also indicates the services that it intends to support on this instance. It is possible to register multiple times with the device manager. At least one instance shall be registered with the device manager after the module has been initialized. Maximum number of application instances device manager can support is determined by DM_MAX_APPLICATIONS.</p>
+<p>All applications must be registered before initiating or accepting connections from the peer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_appl_param</td><td>Application parameters. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_appl_instance</td><td>Application Instance Identifier in case registration is successful.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>On success, else an error code indicating reason for failure. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If the API is called without module initialization. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>If module cannot support more applications.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Currently only one application instance is supported by the module. </dd></dl>
 
 </div>
 </div>
@@ -248,7 +230,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:27 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:40 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

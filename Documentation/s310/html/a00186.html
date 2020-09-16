@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: ble_gatts_attr_t Struct Reference</title>
+<title>nRF51 SDK - S310 SoftDevice: ble_gls_meas_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,109 +106,138 @@ $(document).ready(function(){initNavTree('a00186.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gatts_attr_t Struct Reference<div class="ingroups"><a class="el" href="a00631.html">Generic Attribute Profile (GATT) Server</a></div></div>  </div>
+<div class="title">ble_gls_meas_t Struct Reference<div class="ingroups"><a class="el" href="a00601.html">Glucose Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GATT Attribute.  
+<p>Glucose Measurement structure. This contains glucose measurement value.  
  <a href="a00186.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gatts.h&gt;</code></p>
+<p><code>#include &lt;ble_gls.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a87b18c161a362b54bd349aebd2a45c85"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00257.html">ble_uuid_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a87b18c161a362b54bd349aebd2a45c85">p_uuid</a></td></tr>
-<tr class="separator:a87b18c161a362b54bd349aebd2a45c85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc04d5311dcd31df52f7d9aac7c05ab1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00185.html">ble_gatts_attr_md_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#afc04d5311dcd31df52f7d9aac7c05ab1">p_attr_md</a></td></tr>
-<tr class="separator:afc04d5311dcd31df52f7d9aac7c05ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7722e94b0c079f7571a0607a13d46bde"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a7722e94b0c079f7571a0607a13d46bde">init_len</a></td></tr>
-<tr class="separator:a7722e94b0c079f7571a0607a13d46bde"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa24ec5661c2ba830f906201285ca941c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#aa24ec5661c2ba830f906201285ca941c">init_offs</a></td></tr>
-<tr class="separator:aa24ec5661c2ba830f906201285ca941c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cc60017697406f2f2624e0b15dad294"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a5cc60017697406f2f2624e0b15dad294">max_len</a></td></tr>
-<tr class="separator:a5cc60017697406f2f2624e0b15dad294"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf26555ce0ad9b481c3f638f89dc329a"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#abf26555ce0ad9b481c3f638f89dc329a">p_value</a></td></tr>
-<tr class="separator:abf26555ce0ad9b481c3f638f89dc329a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaa211ee17f3d46654c641ab339b68db"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#adaa211ee17f3d46654c641ab339b68db">flags</a></td></tr>
+<tr class="separator:adaa211ee17f3d46654c641ab339b68db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e89e39efc4889fc00da13fa87efcbc2"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a7e89e39efc4889fc00da13fa87efcbc2">sequence_number</a></td></tr>
+<tr class="separator:a7e89e39efc4889fc00da13fa87efcbc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50043eec02a9af09a81047f4eecfef33"><td class="memItemLeft" align="right" valign="top">ble_date_time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a50043eec02a9af09a81047f4eecfef33">base_time</a></td></tr>
+<tr class="separator:a50043eec02a9af09a81047f4eecfef33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a820a55933ac2e9e047193a846efbaf5d"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a820a55933ac2e9e047193a846efbaf5d">time_offset</a></td></tr>
+<tr class="separator:a820a55933ac2e9e047193a846efbaf5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d77eafd69ad69d3753fd043bdd31dc2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00248.html">sfloat_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a8d77eafd69ad69d3753fd043bdd31dc2">glucose_concentration</a></td></tr>
+<tr class="separator:a8d77eafd69ad69d3753fd043bdd31dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e79195531cf78dfd880479a6404cb44"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a4e79195531cf78dfd880479a6404cb44">type</a></td></tr>
+<tr class="separator:a4e79195531cf78dfd880479a6404cb44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21eed1c3fbda85ac65aa060787a589b4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a21eed1c3fbda85ac65aa060787a589b4">sample_location</a></td></tr>
+<tr class="separator:a21eed1c3fbda85ac65aa060787a589b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a765f2b453e27775757271598452e2c8a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html#a765f2b453e27775757271598452e2c8a">sensor_status_annunciation</a></td></tr>
+<tr class="separator:a765f2b453e27775757271598452e2c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GATT Attribute. </p>
+<div class="textblock"><p>Glucose Measurement structure. This contains glucose measurement value. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a7722e94b0c079f7571a0607a13d46bde"></a>
+<a class="anchor" id="a50043eec02a9af09a81047f4eecfef33"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gatts_attr_t::init_len</td>
+          <td class="memname">ble_date_time_t ble_gls_meas_t::base_time</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial attribute value length in bytes. </p>
+<p>Time stamp </p>
 
 </div>
 </div>
-<a class="anchor" id="aa24ec5661c2ba830f906201285ca941c"></a>
+<a class="anchor" id="adaa211ee17f3d46654c641ab339b68db"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gatts_attr_t::init_offs</td>
+          <td class="memname">uint8_t ble_gls_meas_t::flags</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial attribute value offset in bytes. If different from zero, the first init_offs bytes of the attribute value will be left uninitialized. </p>
+<p>Flags </p>
 
 </div>
 </div>
-<a class="anchor" id="a5cc60017697406f2f2624e0b15dad294"></a>
+<a class="anchor" id="a8d77eafd69ad69d3753fd043bdd31dc2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gatts_attr_t::max_len</td>
+          <td class="memname"><a class="el" href="a00248.html">sfloat_t</a> ble_gls_meas_t::glucose_concentration</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Maximum attribute value length in bytes, see BLE_GATTS_ATTR_LENS_MAX for maximum values. </p>
+<p>Glucose concentration </p>
 
 </div>
 </div>
-<a class="anchor" id="afc04d5311dcd31df52f7d9aac7c05ab1"></a>
+<a class="anchor" id="a21eed1c3fbda85ac65aa060787a589b4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00185.html">ble_gatts_attr_md_t</a>* ble_gatts_attr_t::p_attr_md</td>
+          <td class="memname">uint8_t ble_gls_meas_t::sample_location</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to the attribute metadata structure. </p>
+<p>Sample location </p>
 
 </div>
 </div>
-<a class="anchor" id="a87b18c161a362b54bd349aebd2a45c85"></a>
+<a class="anchor" id="a765f2b453e27775757271598452e2c8a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00257.html">ble_uuid_t</a>* ble_gatts_attr_t::p_uuid</td>
+          <td class="memname">uint16_t ble_gls_meas_t::sensor_status_annunciation</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to the attribute UUID. </p>
+<p>Sensor status annunciation </p>
 
 </div>
 </div>
-<a class="anchor" id="abf26555ce0ad9b481c3f638f89dc329a"></a>
+<a class="anchor" id="a7e89e39efc4889fc00da13fa87efcbc2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* ble_gatts_attr_t::p_value</td>
+          <td class="memname">uint16_t ble_gls_meas_t::sequence_number</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">        Pointer to the attribute data. Please note that if the @ref BLE_GATTS_VLOC_USER value location is selected in the attribute metadata, this will have to point to a buffer
-</pre><p> that remains valid through the lifetime of the attribute. This excludes usage of automatic variables that may go out of scope or any other temporary location. The stack may access that memory directly without the application's knowledge. </p>
+<p>Sequence number </p>
+
+</div>
+</div>
+<a class="anchor" id="a820a55933ac2e9e047193a846efbaf5d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int16_t ble_gls_meas_t::time_offset</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Time offset </p>
+
+</div>
+</div>
+<a class="anchor" id="a4e79195531cf78dfd880479a6404cb44"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_gls_meas_t::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Type </p>
 
 </div>
 </div>
@@ -217,8 +246,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00186.html">ble_gatts_attr_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:17 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00186.html">ble_gls_meas_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

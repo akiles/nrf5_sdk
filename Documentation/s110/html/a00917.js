@@ -1,56 +1,113 @@
 var a00917 =
 [
-    [ "ble_bps_evt_t", "a00169.html", [
-      [ "evt_type", "a00169.html#a83328e50ff25cb6d23ccd0922452590d", null ]
+    [ "ble_gattc_handle_range_t", "a00228.html", [
+      [ "end_handle", "a00228.html#a7ef3ed6409b66e9b087a761bd6a2b747", null ],
+      [ "start_handle", "a00228.html#a091b1b8aeda9dcc211ec3f44d6832c51", null ]
     ] ],
-    [ "ieee_float16_t", "a00341.html", [
-      [ "exponent", "a00341.html#a42d83a992fc160d167482ec70b58d17c", null ],
-      [ "mantissa", "a00341.html#a4668d8cc50fe654da1cfff425c16c5c0", null ]
+    [ "ble_gattc_service_t", "a00231.html", [
+      [ "handle_range", "a00231.html#ab54f33f930899f4e27df1d5819670958", null ],
+      [ "uuid", "a00231.html#a3f00e5eb4b0f87085de2ea1e9464258b", null ]
     ] ],
-    [ "ble_bps_init_t", "a00170.html", [
-      [ "bps_feature_attr_md", "a00170.html#aa811a90c7dd0b8bea4434fe2ef2c4ede", null ],
-      [ "bps_meas_attr_md", "a00170.html#a977afca322fd5a03271e0fa35300a164", null ],
-      [ "evt_handler", "a00170.html#a22943d0794c7a162398ddb54872d1751", null ],
-      [ "feature", "a00170.html#a811bba9e34ca00cad260b8d50aadbe5f", null ]
+    [ "ble_gattc_include_t", "a00230.html", [
+      [ "handle", "a00230.html#ab1f14809099e66b0dc7a4a70cb3dc124", null ],
+      [ "included_srvc", "a00230.html#a3342baabc3197898f17ce875e7a5ba80", null ]
     ] ],
-    [ "ble_bps_s", "a00172.html", [
-      [ "conn_handle", "a00172.html#acb6ea6f96806c80017f6d80a65fa1c40", null ],
-      [ "evt_handler", "a00172.html#ad503c598af64ae0973fcbd69c2564f6c", null ],
-      [ "feature", "a00172.html#ab6a6c9882bfb4ca35a22b2b46e6cc342", null ],
-      [ "feature_handles", "a00172.html#ad7b6cace6c499b77b40be59b7d9ed843", null ],
-      [ "meas_handles", "a00172.html#ab61b1c5af5765ac4f24f617a24a81cd0", null ],
-      [ "service_handle", "a00172.html#a08ca745c921f74e622b3226b74a5453a", null ]
+    [ "ble_gattc_char_t", "a00215.html", [
+      [ "char_ext_props", "a00215.html#a0399fb7726aec8438c535400f5f1f4b1", null ],
+      [ "char_props", "a00215.html#ae68a35f9169191539d6910f11be6eced", null ],
+      [ "handle_decl", "a00215.html#a2ba0a3bc741d666e765ca29285946de8", null ],
+      [ "handle_value", "a00215.html#af595827dab88a0b110f49e47a64b45dd", null ],
+      [ "uuid", "a00215.html#a69ac665a39feea71fafac8a54ecf0a5e", null ]
     ] ],
-    [ "ble_bps_meas_s", "a00171.html", [
-      [ "blood_pressure_diastolic", "a00171.html#aed7e0a29d6cda87a84a69f4f7551fb6c", null ],
-      [ "blood_pressure_systolic", "a00171.html#ab097c85436eecc592213cdb75435f596", null ],
-      [ "blood_pressure_units_in_kpa", "a00171.html#a3d4f46ef4a031f2c849bba6ac9d68ba3", null ],
-      [ "mean_arterial_pressure", "a00171.html#a2455e564b8569f3f3bc999420efa7c1d", null ],
-      [ "measurement_status", "a00171.html#aa825f66cc38338e2f8bb4f767cdc8805", null ],
-      [ "measurement_status_present", "a00171.html#a80874044508391d1569ff1c476a4b5a7", null ],
-      [ "pulse_rate", "a00171.html#a4cec6cfcf650361edada4efe2d612461", null ],
-      [ "pulse_rate_present", "a00171.html#adcd3739c6e00a92c9c9026894e4248b8", null ],
-      [ "time_stamp", "a00171.html#a5724947dd197246dea1db93935a24b32", null ],
-      [ "time_stamp_present", "a00171.html#a5ed42a9cdaf140e3e18dc44e1b1baa5b", null ],
-      [ "user_id", "a00171.html#a68b822db90d51c550cddfb74fec7b1a7", null ],
-      [ "user_id_present", "a00171.html#a48e9ed959366ea1e7c7c8bb284a01979", null ]
+    [ "ble_gattc_desc_t", "a00216.html", [
+      [ "handle", "a00216.html#ada1f0c9228867fd73fd596d6d7241c67", null ],
+      [ "uuid", "a00216.html#a039854704d107784b185fb11b00b1258", null ]
     ] ],
-    [ "BLE_BPS_FEATURE_BODY_MOVEMENT_BIT", "a00917.html#gab290c8fad6602966bdf90d503234c1d4", null ],
-    [ "BLE_BPS_FEATURE_CUFF_FIT_BIT", "a00917.html#gad99e5cdbef5e342fc386a0fe2fda3dbb", null ],
-    [ "BLE_BPS_FEATURE_IRREGULAR_PULSE_BIT", "a00917.html#gab9c335e57d829d3025d24412c630ec01", null ],
-    [ "BLE_BPS_FEATURE_MEASUREMENT_POSITION_BIT", "a00917.html#ga0a92ff47d40fe0c771b52bc3c40c2854", null ],
-    [ "BLE_BPS_FEATURE_MULTIPLE_BOND_BIT", "a00917.html#ga4e7f65094b9653a90bbfbc9c56176d76", null ],
-    [ "BLE_BPS_FEATURE_PULSE_RATE_RANGE_BIT", "a00917.html#gadd2fb490c4220a74a6b3654b7c424500", null ],
-    [ "ble_bps_evt_handler_t", "a00917.html#ga4c7199796f540fc4ea76d6eb9cd98809", null ],
-    [ "ble_bps_meas_t", "a00917.html#ga806d743979c29aa0326b9b155ae920fd", null ],
-    [ "ble_bps_t", "a00917.html#ga242d78f65ee0028e8b2e87a954811158", null ],
-    [ "ble_bps_evt_type_t", "a00917.html#ga98f1cefcd43052be0eede287994762e6", [
-      [ "BLE_BPS_EVT_INDICATION_ENABLED", "a00917.html#gga98f1cefcd43052be0eede287994762e6a4ea1567592db55227fffc3d07af1ba09", null ],
-      [ "BLE_BPS_EVT_INDICATION_DISABLED", "a00917.html#gga98f1cefcd43052be0eede287994762e6a26c6a093dd2ab03e8a1a9f31cb3783ba", null ],
-      [ "BLE_BPS_EVT_INDICATION_CONFIRMED", "a00917.html#gga98f1cefcd43052be0eede287994762e6afbd5349a29d34a241d1380a7d6e28668", null ]
+    [ "ble_gattc_write_params_t", "a00232.html", [
+      [ "flags", "a00232.html#ae9bf42dc0e530824c93ec423e6539220", null ],
+      [ "handle", "a00232.html#a4b5cec7a8b33f482114d99026b2ee92d", null ],
+      [ "len", "a00232.html#a068c40f218ed3932901529ac05b69c21", null ],
+      [ "offset", "a00232.html#a85d01254a43068218061ab21acabe980", null ],
+      [ "p_value", "a00232.html#a361b91f9ee1961598bc9c94520f8004b", null ],
+      [ "write_op", "a00232.html#a2c42a23118699b0fab8f49f1d9b4b386", null ]
     ] ],
-    [ "ble_bps_init", "a00917.html#gaefd86b5ffa856f1d3b22a11939ea318b", null ],
-    [ "ble_bps_is_indication_enabled", "a00917.html#gab2de420367180bd1762ea7dc7e269fee", null ],
-    [ "ble_bps_measurement_send", "a00917.html#gafa33eb35e243d0fca55b44ac136f1f68", null ],
-    [ "ble_bps_on_ble_evt", "a00917.html#gaa5b69f0e2e6a3063254e198ca426c39a", null ]
+    [ "ble_gattc_evt_prim_srvc_disc_rsp_t", "a00222.html", [
+      [ "count", "a00222.html#a742e7bdddc67ae7054c2758382973c2c", null ],
+      [ "services", "a00222.html#ade86618d036b675b570e0f92d95e9755", null ]
+    ] ],
+    [ "ble_gattc_evt_rel_disc_rsp_t", "a00224.html", [
+      [ "count", "a00224.html#a6d254feed32dd66c692ad6cdcec386b9", null ],
+      [ "includes", "a00224.html#a46a0118ff8e260244d2cf342d249e7cc", null ]
+    ] ],
+    [ "ble_gattc_evt_char_disc_rsp_t", "a00217.html", [
+      [ "chars", "a00217.html#aae5e676db57239ee9cfe89c13f603dd0", null ],
+      [ "count", "a00217.html#a91337d714a569e896c896a3b255db8ff", null ]
+    ] ],
+    [ "ble_gattc_evt_desc_disc_rsp_t", "a00220.html", [
+      [ "count", "a00220.html#a50815a26acf0eaa4a6d7ef9bebf7f58d", null ],
+      [ "descs", "a00220.html#a3d41c7255fa19fa2b55acd6962be26ee", null ]
+    ] ],
+    [ "ble_gattc_handle_value_t", "a00229.html", [
+      [ "handle", "a00229.html#af1b50c1fd1d5be05d0d0cf25e0925fd0", null ],
+      [ "p_value", "a00229.html#a6e842e1c975c50acf7eec947baa405e8", null ]
+    ] ],
+    [ "ble_gattc_evt_char_val_by_uuid_read_rsp_t", "a00218.html", [
+      [ "count", "a00218.html#a50e19076a010925f0ec9c71d40c33eff", null ],
+      [ "handle_value", "a00218.html#a0e8890391646f5df02ede436e3f1d987", null ],
+      [ "value_len", "a00218.html#a91e554093e8f445960abff9c0015193c", null ]
+    ] ],
+    [ "ble_gattc_evt_read_rsp_t", "a00223.html", [
+      [ "data", "a00223.html#adaf3ed862b2c96947da60d9b576b31c9", null ],
+      [ "handle", "a00223.html#a54644f05780b15248eba975decdd4e48", null ],
+      [ "len", "a00223.html#a5131e80ad4da52f707a84aed7240f2ee", null ],
+      [ "offset", "a00223.html#a1ed66c83e153fd6471056d19b10fac67", null ]
+    ] ],
+    [ "ble_gattc_evt_char_vals_read_rsp_t", "a00219.html", [
+      [ "len", "a00219.html#a6ece59636f724d7a7759d4bc11cec8d9", null ],
+      [ "values", "a00219.html#ac586dcb02b8f378127157ee8c45abea9", null ]
+    ] ],
+    [ "ble_gattc_evt_write_rsp_t", "a00227.html", [
+      [ "data", "a00227.html#a1691be986d4b730bbe2ccc3d40c5a088", null ],
+      [ "handle", "a00227.html#ae8e1aafaf1cbc9b6f7b5fcd163dd5cac", null ],
+      [ "len", "a00227.html#a323a6805f77fe47c890cde179ea2f674", null ],
+      [ "offset", "a00227.html#a09d38782fd5d200a45146ae303614733", null ],
+      [ "write_op", "a00227.html#a7cbd3dd7ab5f53b8f14e023b9c0c2db6", null ]
+    ] ],
+    [ "ble_gattc_evt_hvx_t", "a00221.html", [
+      [ "data", "a00221.html#af239b9ba3cff6d1fc678f3f71711a2f3", null ],
+      [ "handle", "a00221.html#a96ee6ce1546af608cf4b3b9d81cd7f09", null ],
+      [ "len", "a00221.html#a173be268109e2223c485a9a10a6a9ba3", null ],
+      [ "type", "a00221.html#ac1de2368e40b7e4c7eab1fcb770605f2", null ]
+    ] ],
+    [ "ble_gattc_evt_timeout_t", "a00226.html", [
+      [ "src", "a00226.html#a445daba867e5aef62f251e31e8972d63", null ]
+    ] ],
+    [ "ble_gattc_evt_t", "a00225.html", [
+      [ "char_disc_rsp", "a00225.html#a34bad897428604d4b08c4f8cf4ef47e5", null ],
+      [ "char_val_by_uuid_read_rsp", "a00225.html#ae5be4e95ec69711bb425db151632b3e1", null ],
+      [ "char_vals_read_rsp", "a00225.html#a9c786b070343169cfdd505415880d789", null ],
+      [ "conn_handle", "a00225.html#a26991e5deaf0de51e7b2413de1114c0e", null ],
+      [ "desc_disc_rsp", "a00225.html#a23df4ef5d71063a9921c787dbf2dfa85", null ],
+      [ "error_handle", "a00225.html#a3dd6ec7de3d6017e588120106e918bc9", null ],
+      [ "gatt_status", "a00225.html#a844b25b255a6a17284b6285baa1fec6f", null ],
+      [ "hvx", "a00225.html#a5f0bb863ceca0550c1bfa5482a79222d", null ],
+      [ "params", "a00225.html#a5bc3592fa7b2d1feacc26c570de83e7a", null ],
+      [ "prim_srvc_disc_rsp", "a00225.html#a07f81765794c5b6bb0f8aeb0971807c6", null ],
+      [ "read_rsp", "a00225.html#afe94966527cf767c92f028de45d04e6d", null ],
+      [ "rel_disc_rsp", "a00225.html#ae83b3965e69f4226c8fe7586a30a4d7e", null ],
+      [ "timeout", "a00225.html#aca37c05800643ee41df04d1007c3e7e9", null ],
+      [ "write_rsp", "a00225.html#ad9a800da6785563a3f837db443568496", null ]
+    ] ],
+    [ "BLE_GATTC_EVTS", "a00917.html#gafd9b8b42eeb832d688e33f4561f97efc", [
+      [ "BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP", "a00917.html#ggafd9b8b42eeb832d688e33f4561f97efcaa4ebe118aada0a7d38163ea11492f020", null ],
+      [ "BLE_GATTC_EVT_REL_DISC_RSP", "a00917.html#ggafd9b8b42eeb832d688e33f4561f97efcac52e2f11dc65da2efe53f7041d0ead6b", null ],
+      [ "BLE_GATTC_EVT_CHAR_DISC_RSP", "a00917.html#ggafd9b8b42eeb832d688e33f4561f97efcac385b5d8f35de9cfd0df5b5aea9cb310", null ],
+      [ "BLE_GATTC_EVT_DESC_DISC_RSP", "a00917.html#ggafd9b8b42eeb832d688e33f4561f97efca990d593e0c54f813ee6d6bb7fad619a2", null ],
+      [ "BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP", "a00917.html#ggafd9b8b42eeb832d688e33f4561f97efca9741363d5e934220a35f1c01f62a194c", null ],
+      [ "BLE_GATTC_EVT_READ_RSP", "a00917.html#ggafd9b8b42eeb832d688e33f4561f97efca2355be2e3b5c9bd1c235f7abbc56ef6d", null ],
+      [ "BLE_GATTC_EVT_CHAR_VALS_READ_RSP", "a00917.html#ggafd9b8b42eeb832d688e33f4561f97efcaab8322d0d775f2726cfc0215ef63f298", null ],
+      [ "BLE_GATTC_EVT_WRITE_RSP", "a00917.html#ggafd9b8b42eeb832d688e33f4561f97efca6a70fe83b91997c8d3cd47b6cd98a91a", null ],
+      [ "BLE_GATTC_EVT_HVX", "a00917.html#ggafd9b8b42eeb832d688e33f4561f97efca0f71b4e016b2049dfbd74fa2e46b9cd3", null ],
+      [ "BLE_GATTC_EVT_TIMEOUT", "a00917.html#ggafd9b8b42eeb832d688e33f4561f97efcacdb80367c0f97c95db04e19665ebf2fc", null ]
+    ] ]
 ];

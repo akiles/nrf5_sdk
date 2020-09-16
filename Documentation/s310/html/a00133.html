@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: ble_evt_t Struct Reference</title>
+<title>nRF51 SDK - S310 SoftDevice: ble_gap_evt_sec_info_request_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,112 +106,93 @@ $(document).ready(function(){initNavTree('a00133.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00551.html">Events, type definitions and API calls</a></div></div>  </div>
+<div class="title">ble_gap_evt_sec_info_request_t Struct Reference<div class="ingroups"><a class="el" href="a00546.html">Generic Access Profile (GAP)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Common BLE Event type, wrapping the module specific event reports.  
+<p>Event data for securito info request event.  
  <a href="a00133.html#details">More...</a></p>
 
-<p><code>#include &lt;ble.h&gt;</code></p>
+<p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a31f5fb5f33b8020c1b91639d048a6efa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00132.html">ble_evt_hdr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00133.html#a31f5fb5f33b8020c1b91639d048a6efa">header</a></td></tr>
-<tr class="separator:a31f5fb5f33b8020c1b91639d048a6efa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef8699c52739460f3052387e62eeacc8"><td class="memItemLeft" ><a class="anchor" id="aef8699c52739460f3052387e62eeacc8"></a>
-union {</td></tr>
-<tr class="memitem:a43f000c576e11d2d073dd8ec4a664f17"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00114.html">ble_common_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00133.html#a65014fa31bf6c86c113ef47dc929a755">common_evt</a></td></tr>
-<tr class="separator:a43f000c576e11d2d073dd8ec4a664f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0921d9b115f6e3a1087eb76fd9970761"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00153.html">ble_gap_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00133.html#a67ca1f9db570d1c2f196c0a316151af5">gap_evt</a></td></tr>
-<tr class="separator:a0921d9b115f6e3a1087eb76fd9970761"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae51e0f476f92f690b5a2eed7e5c2b607"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00231.html">ble_l2cap_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00133.html#a615ab3df54ef7363a90f915d6440ce1a">l2cap_evt</a></td></tr>
-<tr class="separator:ae51e0f476f92f690b5a2eed7e5c2b607"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee61690c0630fb6a024512e7049a0f84"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00176.html">ble_gattc_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00133.html#a2bdcb3c197239b4e5957d89bb0f26161">gattc_evt</a></td></tr>
-<tr class="separator:aee61690c0630fb6a024512e7049a0f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3873ad6b17158dd15c611a38fa9a0da3"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00194.html">ble_gatts_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00133.html#aea997556a147ad5541998f13699e27c1">gatts_evt</a></td></tr>
-<tr class="separator:a3873ad6b17158dd15c611a38fa9a0da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef8699c52739460f3052387e62eeacc8"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>evt</b></td></tr>
-<tr class="separator:aef8699c52739460f3052387e62eeacc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c9e328ee5b20afe64224e8d807e0015"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00119.html">ble_gap_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00133.html#a2c9e328ee5b20afe64224e8d807e0015">peer_addr</a></td></tr>
+<tr class="separator:a2c9e328ee5b20afe64224e8d807e0015"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf2e9db014242631b9912048cfff21ff"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00133.html#acf2e9db014242631b9912048cfff21ff">div</a></td></tr>
+<tr class="separator:acf2e9db014242631b9912048cfff21ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad111ceb6802da6301dbe73a73b35a4a1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00133.html#ad111ceb6802da6301dbe73a73b35a4a1">enc_info</a>: 1</td></tr>
+<tr class="separator:ad111ceb6802da6301dbe73a73b35a4a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a301c28abac3bf1f2f38d2b95854695cd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00133.html#a301c28abac3bf1f2f38d2b95854695cd">id_info</a>: 1</td></tr>
+<tr class="separator:a301c28abac3bf1f2f38d2b95854695cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6b652026333405eba289d528d220638"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00133.html#ad6b652026333405eba289d528d220638">sign_info</a>: 1</td></tr>
+<tr class="separator:ad6b652026333405eba289d528d220638"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Common BLE Event type, wrapping the module specific event reports. </p>
+<div class="textblock"><p>Event data for securito info request event. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a65014fa31bf6c86c113ef47dc929a755"></a>
+<a class="anchor" id="acf2e9db014242631b9912048cfff21ff"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00114.html">ble_common_evt_t</a> ble_evt_t::common_evt</td>
+          <td class="memname">uint16_t ble_gap_evt_sec_info_request_t::div</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Common Event, evt_id in BLE_EVT_* series. </p>
+<p>Encryption diversifier for LTK lookup. </p>
 
 </div>
 </div>
-<a class="anchor" id="a67ca1f9db570d1c2f196c0a316151af5"></a>
+<a class="anchor" id="ad111ceb6802da6301dbe73a73b35a4a1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00153.html">ble_gap_evt_t</a> ble_evt_t::gap_evt</td>
+          <td class="memname">uint8_t ble_gap_evt_sec_info_request_t::enc_info</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GAP originated event, evt_id in BLE_GAP_EVT_* series. </p>
+<p>If 1, Encryption Information required. </p>
 
 </div>
 </div>
-<a class="anchor" id="a2bdcb3c197239b4e5957d89bb0f26161"></a>
+<a class="anchor" id="a301c28abac3bf1f2f38d2b95854695cd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00176.html">ble_gattc_evt_t</a> ble_evt_t::gattc_evt</td>
+          <td class="memname">uint8_t ble_gap_evt_sec_info_request_t::id_info</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GATT client originated event, evt_id in BLE_GATTC_EVT* series. </p>
+<p>If 1, Identity Information required. </p>
 
 </div>
 </div>
-<a class="anchor" id="aea997556a147ad5541998f13699e27c1"></a>
+<a class="anchor" id="a2c9e328ee5b20afe64224e8d807e0015"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00194.html">ble_gatts_evt_t</a> ble_evt_t::gatts_evt</td>
+          <td class="memname"><a class="el" href="a00119.html">ble_gap_addr_t</a> ble_gap_evt_sec_info_request_t::peer_addr</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GATT server originated event, evt_id in BLE_GATTS_EVT* series. </p>
+<p>Bluetooth address of the peer device. </p>
 
 </div>
 </div>
-<a class="anchor" id="a31f5fb5f33b8020c1b91639d048a6efa"></a>
+<a class="anchor" id="ad6b652026333405eba289d528d220638"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00132.html">ble_evt_hdr_t</a> ble_evt_t::header</td>
+          <td class="memname">uint8_t ble_gap_evt_sec_info_request_t::sign_info</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Event header. </p>
-
-</div>
-</div>
-<a class="anchor" id="a615ab3df54ef7363a90f915d6440ce1a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00231.html">ble_l2cap_evt_t</a> ble_evt_t::l2cap_evt</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>L2CAP originated event, evt_id in BLE_L2CAP_EVT* series. </p>
+<p>If 1, Signing Information required. </p>
 
 </div>
 </div>
@@ -220,8 +201,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00133.html">ble_evt_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:17 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00133.html">ble_gap_evt_sec_info_request_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

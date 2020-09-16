@@ -1,43 +1,32 @@
 var a00595 =
 [
-    [ "BLE_APPEARANCE_BLOOD_PRESSURE_ARM", "a00595.html#ga3f3b0095593a1aabaa90c1124990902b", null ],
-    [ "BLE_APPEARANCE_BLOOD_PRESSURE_WRIST", "a00595.html#gac8f717c93120efaef5a1036cc6810ee6", null ],
-    [ "BLE_APPEARANCE_CYCLING_CADENCE_SENSOR", "a00595.html#ga05cec1ed2b1af0adaba18c418825359d", null ],
-    [ "BLE_APPEARANCE_CYCLING_CYCLING_COMPUTER", "a00595.html#gafc5b37a81851103bab4827448da89c79", null ],
-    [ "BLE_APPEARANCE_CYCLING_POWER_SENSOR", "a00595.html#gac250aebd30701ab2a6b22d761bd4da83", null ],
-    [ "BLE_APPEARANCE_CYCLING_SPEED_CADENCE_SENSOR", "a00595.html#ga49db7fef901abcc165099596c9d4007c", null ],
-    [ "BLE_APPEARANCE_CYCLING_SPEED_SENSOR", "a00595.html#ga4383eb6254457261db8c303995f09b31", null ],
-    [ "BLE_APPEARANCE_GENERIC_BARCODE_SCANNER", "a00595.html#gaaaafaf0f13b0451047e820df62d87cc9", null ],
-    [ "BLE_APPEARANCE_GENERIC_BLOOD_PRESSURE", "a00595.html#ga7eb86873b8119bd9aaa297afdc449fe9", null ],
-    [ "BLE_APPEARANCE_GENERIC_CLOCK", "a00595.html#ga58d6951a86675854ea8b9a1e8284318c", null ],
-    [ "BLE_APPEARANCE_GENERIC_COMPUTER", "a00595.html#gaa71281a8fe31b848e3ad4b67e2d9d14e", null ],
-    [ "BLE_APPEARANCE_GENERIC_CYCLING", "a00595.html#gaa0743a4678d7521a6bd530205bf82b65", null ],
-    [ "BLE_APPEARANCE_GENERIC_DISPLAY", "a00595.html#ga71a5be0afbbc3bd78c8a7010a16ac908", null ],
-    [ "BLE_APPEARANCE_GENERIC_EYE_GLASSES", "a00595.html#ga365fa871a32eb974f629f6d44fbc556b", null ],
-    [ "BLE_APPEARANCE_GENERIC_GLUCOSE_METER", "a00595.html#gaffc5ed3121b304386e30afd357cf8299", null ],
-    [ "BLE_APPEARANCE_GENERIC_HEART_RATE_SENSOR", "a00595.html#gae08d97017cbf4ed3807ead537f72fff1", null ],
-    [ "BLE_APPEARANCE_GENERIC_HID", "a00595.html#gacdfa9ccd5890931e1235b253cf11beec", null ],
-    [ "BLE_APPEARANCE_GENERIC_KEYRING", "a00595.html#ga7239b3bf480c0814172799d8b52ed478", null ],
-    [ "BLE_APPEARANCE_GENERIC_MEDIA_PLAYER", "a00595.html#ga467963f51aae2cc61e5689fecd85767d", null ],
-    [ "BLE_APPEARANCE_GENERIC_PHONE", "a00595.html#ga9e49b6a59be5a7b7d3fc2d6bb7d33c82", null ],
-    [ "BLE_APPEARANCE_GENERIC_REMOTE_CONTROL", "a00595.html#gad600d4f563f97be538b6dc8011e6a413", null ],
-    [ "BLE_APPEARANCE_GENERIC_RUNNING_WALKING_SENSOR", "a00595.html#ga013ad9984a86af0e2121b07925675cf8", null ],
-    [ "BLE_APPEARANCE_GENERIC_TAG", "a00595.html#gae858415a747a5c18a37896028285eaa2", null ],
-    [ "BLE_APPEARANCE_GENERIC_THERMOMETER", "a00595.html#gae035f9dd63fe3590273cd8afa2f60098", null ],
-    [ "BLE_APPEARANCE_GENERIC_WATCH", "a00595.html#gac33412b7491ee76236bdd1bb1a1f2818", null ],
-    [ "BLE_APPEARANCE_HEART_RATE_SENSOR_HEART_RATE_BELT", "a00595.html#ga590996bfcab479b91c41ee10060e3ce7", null ],
-    [ "BLE_APPEARANCE_HID_BARCODE", "a00595.html#gabe5f4d90093f15ac5f82cf5767bb98cb", null ],
-    [ "BLE_APPEARANCE_HID_CARD_READER", "a00595.html#ga3afe69f1a556c083502002e1330d34f9", null ],
-    [ "BLE_APPEARANCE_HID_DIGITAL_PEN", "a00595.html#gaace906381d9ec09056ab3385a5deb3e6", null ],
-    [ "BLE_APPEARANCE_HID_DIGITIZERSUBTYPE", "a00595.html#gacd99c2b7b0fce1a331709f3bdd98e1fc", null ],
-    [ "BLE_APPEARANCE_HID_GAMEPAD", "a00595.html#gac387e20b0aef25837038e59e254f483e", null ],
-    [ "BLE_APPEARANCE_HID_JOYSTICK", "a00595.html#ga9a087c6268d1c285d1f99419b50929a0", null ],
-    [ "BLE_APPEARANCE_HID_KEYBOARD", "a00595.html#gac08ceb7b199eceefc4650399a3a7ff75", null ],
-    [ "BLE_APPEARANCE_HID_MOUSE", "a00595.html#ga3d9f11a5e2e12fb8add3d08b08beb260", null ],
-    [ "BLE_APPEARANCE_RUNNING_WALKING_SENSOR_IN_SHOE", "a00595.html#ga8fac62e43a01e63c5e45461d4b7d357c", null ],
-    [ "BLE_APPEARANCE_RUNNING_WALKING_SENSOR_ON_HIP", "a00595.html#ga08773a452bae47d0fba7bc99b3655961", null ],
-    [ "BLE_APPEARANCE_RUNNING_WALKING_SENSOR_ON_SHOE", "a00595.html#ga71c0d429a3168558cb8adede902550f8", null ],
-    [ "BLE_APPEARANCE_THERMOMETER_EAR", "a00595.html#ga2dc350f30b586cf625c140f98a4eb98f", null ],
-    [ "BLE_APPEARANCE_UNKNOWN", "a00595.html#ga45ecf7c049e0f1f6a4a2332b2033b5b4", null ],
-    [ "BLE_APPEARANCE_WATCH_SPORTS_WATCH", "a00595.html#ga36ad112fa0bc482256f11d3e210d3b45", null ]
+    [ "ble_bas_evt_t", "a00093.html", [
+      [ "evt_type", "a00093.html#a6c48fd8a78c416e452d5b01add737b6e", null ]
+    ] ],
+    [ "ble_bas_init_t", "a00094.html", [
+      [ "battery_level_char_attr_md", "a00094.html#aba436d52b264fb93a74de510a9e7ef07", null ],
+      [ "battery_level_report_read_perm", "a00094.html#a07135d9b12640710f520ef87d7a4f1be", null ],
+      [ "evt_handler", "a00094.html#a84932ecefd721efa23840b01ca3ce7eb", null ],
+      [ "initial_batt_level", "a00094.html#a22993ab4d63fdbd764624856605d1b7f", null ],
+      [ "p_report_ref", "a00094.html#afcbdf538aff06891b6f0057015b5c6e0", null ],
+      [ "support_notification", "a00094.html#ad4f3272ae66ece4ee5a4b8c3ff7fba88", null ]
+    ] ],
+    [ "ble_bas_s", "a00095.html", [
+      [ "battery_level_handles", "a00095.html#ade3d3767c6bec8d2c8fc37ed8303d4fb", null ],
+      [ "battery_level_last", "a00095.html#a90db9b31ace864a1952fd520957cb831", null ],
+      [ "conn_handle", "a00095.html#a4906d1aa3c702704f4392d90cd8102f0", null ],
+      [ "evt_handler", "a00095.html#a84827e57e33bae7cf628c4c5826b1ac4", null ],
+      [ "is_notification_supported", "a00095.html#a877690be6248d047f102fc238ab0c527", null ],
+      [ "report_ref_handle", "a00095.html#a70d124cbed946045d133aa76acd9581a", null ],
+      [ "service_handle", "a00095.html#af8c61a4fe0b938cc1b47989d67a20c4c", null ]
+    ] ],
+    [ "ble_bas_evt_handler_t", "a00595.html#ga07fd95f8afa679110161bb8391496abd", null ],
+    [ "ble_bas_t", "a00595.html#gaea81f98230816bcfcbfd6ccbb4db3999", null ],
+    [ "ble_bas_evt_type_t", "a00595.html#gab63b7f474ce48636cd355f6b75ea1ca9", [
+      [ "BLE_BAS_EVT_NOTIFICATION_ENABLED", "a00595.html#ggab63b7f474ce48636cd355f6b75ea1ca9a657f8681ada82fd2990d5458442ed85a", null ],
+      [ "BLE_BAS_EVT_NOTIFICATION_DISABLED", "a00595.html#ggab63b7f474ce48636cd355f6b75ea1ca9afcba4bddb1a583374bb27d3f3ed5b8d1", null ]
+    ] ],
+    [ "ble_bas_battery_level_update", "a00595.html#ga58d8f4336cce49ea5b3a2f8997bfe00e", null ],
+    [ "ble_bas_init", "a00595.html#gacb8ac9205dcec39e216575c76261c807", null ],
+    [ "ble_bas_on_ble_evt", "a00595.html#ga01b70d77540660d7e312121d9f1d3b3a", null ]
 ];

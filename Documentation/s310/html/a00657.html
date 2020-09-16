@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Assert Handler for debug purposes.</title>
+<title>nRF51 SDK - S310 SoftDevice: S310 (ANT and BLE peripheral)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,77 +97,56 @@ $(document).ready(function(){initNavTree('a00657.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Assert Handler for debug purposes.<div class="ingroups"><a class="el" href="a00715.html">BLE Libraries</a></div></div>  </div>
+<div class="title">S310 (ANT and BLE peripheral)</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Module for handling of assert during application development when debugging.  
+<p>Application Programming Interface for S310 SoftDevice.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga516d223d23265c3c1095e1543d3691ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00657.html#ga516d223d23265c3c1095e1543d3691ae">ble_debug_assert_handler</a> (uint32_t error_code, uint32_t line_num, const uint8_t *p_file_name)</td></tr>
-<tr class="memdesc:ga516d223d23265c3c1095e1543d3691ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling the Debug assert, which can be called from an error handler. To be used only for debugging purposes.  <a href="#ga516d223d23265c3c1095e1543d3691ae">More...</a><br/></td></tr>
-<tr class="separator:ga516d223d23265c3c1095e1543d3691ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00487"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00487.html">ANT STACK</a></td></tr>
+<tr class="memdesc:a00487"><td class="mdescLeft">&#160;</td><td class="mdescRight">APIs for the ANT Stack. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00490"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00490.html">BLE SoftDevice Common</a></td></tr>
+<tr class="memdesc:a00490"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type definitions, macros, error codes, SVC and event number subranges etc. common to all S110 SoftDevice modules. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00546"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00546.html">Generic Access Profile (GAP)</a></td></tr>
+<tr class="memdesc:a00546"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definitions and prototypes for the GAP interface. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00558"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00558.html">Generic Attribute Profile (GATT) Client</a></td></tr>
+<tr class="memdesc:a00558"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definitions and prototypes for the GATT Client interface. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00644"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00644.html">Generic Attribute Profile (GATT) Common</a></td></tr>
+<tr class="memdesc:a00644"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common definitions and prototypes for the GATT interfaces. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00571"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00571.html">Generic Attribute Profile (GATT) Server</a></td></tr>
+<tr class="memdesc:a00571"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definitions and prototypes for the GATTS interface. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00591"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00591.html">Logical Link Control and Adaptation Protocol (L2CAP)</a></td></tr>
+<tr class="memdesc:a00591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definitions and prototypes for the L2CAP interface. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00538"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00538.html">SoftDevice Manager API</a></td></tr>
+<tr class="memdesc:a00538"><td class="mdescLeft">&#160;</td><td class="mdescRight">APIs for SoftDevice management. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00536"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00536.html">SoftDevice Global Error Codes</a></td></tr>
+<tr class="memdesc:a00536"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global Error definitions. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00540"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00540.html">SoC Library API</a></td></tr>
+<tr class="memdesc:a00540"><td class="mdescLeft">&#160;</td><td class="mdescRight">APIs for the SoC library. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Module for handling of assert during application development when debugging. </p>
-<p>This module may be used during development of an application to facilitate debugging. It contains a function to write file name, line number and the Stack Memory to flash. This module is ONLY for debugging purposes and must never be used in final product. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga516d223d23265c3c1095e1543d3691ae"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ble_debug_assert_handler </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>error_code</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>line_num</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>p_file_name</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for handling the Debug assert, which can be called from an error handler. To be used only for debugging purposes. </p>
-<p>This code will copy the filename and line number into local variables for them to always be accessible in Keil debugger. The function will also write the ARM Cortex-M0 stack memory into flash where it can be retrieved and manually un-winded in order to back-trace the location where the error ocured.<br/>
- </p>
-<dl class="section warning"><dt>Warning</dt><dd><b>ALL INTERRUPTS WILL BE DISABLED.</b></dd></dl>
-<dl class="section note"><dt>Note</dt><dd>This function will never return but loop forever for debug purposes.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">error_code</td><td>Error code supplied to the handler. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">line_num</td><td>Line number where the original handler is called. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_file_name</td><td>Pointer to the file name. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
+<p>Application Programming Interface for S310 SoftDevice. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:15 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

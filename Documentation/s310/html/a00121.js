@@ -1,11 +1,7 @@
 var a00121 =
 [
-    [ "conn_handle", "a00121.html#a84ba1f5c9a2f30359b12cc4dcbda3478", null ],
-    [ "ctrl_pt", "a00121.html#a90f150d8ecb3b79596f1ec3807867f1a", null ],
-    [ "evt_handler", "a00121.html#ac2e6ecdcdab44250a58bebd85104143b", null ],
-    [ "feature", "a00121.html#a32ce63e283663bde451653a25fc5b4bd", null ],
-    [ "feature_handles", "a00121.html#a967fca5b0492cbf671183eed800fcd3a", null ],
-    [ "meas_handles", "a00121.html#a9596e5fc4db125abaae55fc329982dfd", null ],
-    [ "sensor_loc_handles", "a00121.html#a3572c357aed7775240aee4a217ddaf60", null ],
-    [ "service_handle", "a00121.html#a3850255dd1cc2f89b7086771201eb8e0", null ]
+    [ "conn_sup_timeout", "a00121.html#ab644e629af7eb4915b0f3a93f682f7ae", null ],
+    [ "max_conn_interval", "a00121.html#abd7a6e16a723de1d779afadae3f3113e", null ],
+    [ "min_conn_interval", "a00121.html#a4d1975f7d25263004c405e0321fbae34", null ],
+    [ "slave_latency", "a00121.html#aa5caf55715aaac33f56cc996f91a92cc", null ]
 ];

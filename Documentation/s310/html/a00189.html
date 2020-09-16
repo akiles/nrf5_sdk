@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: ble_gatts_char_pf_t Struct Reference</title>
+<title>nRF51 SDK - S310 SoftDevice: ble_hids_char_id_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,93 +106,63 @@ $(document).ready(function(){initNavTree('a00189.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gatts_char_pf_t Struct Reference<div class="ingroups"><a class="el" href="a00631.html">Generic Attribute Profile (GATT) Server</a></div></div>  </div>
+<div class="title">ble_hids_char_id_t Struct Reference<div class="ingroups"><a class="el" href="a00603.html">Human Interface Device Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GATT Characteristic Presentation Format.  
+<p>HID Service characteristic id.  
  <a href="a00189.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gatts.h&gt;</code></p>
+<p><code>#include &lt;ble_hids.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a9a79d570aa8f758c81ddddbf345b289e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a9a79d570aa8f758c81ddddbf345b289e">format</a></td></tr>
-<tr class="separator:a9a79d570aa8f758c81ddddbf345b289e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a931b1bdd89be7d3aaa1d1522d20c7dd5"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a931b1bdd89be7d3aaa1d1522d20c7dd5">exponent</a></td></tr>
-<tr class="separator:a931b1bdd89be7d3aaa1d1522d20c7dd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab28e4dc2a48e6329df85b3f974cf4466"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#ab28e4dc2a48e6329df85b3f974cf4466">unit</a></td></tr>
-<tr class="separator:ab28e4dc2a48e6329df85b3f974cf4466"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a279e1e8de47b628414382aed4cec3c68"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a279e1e8de47b628414382aed4cec3c68">name_space</a></td></tr>
-<tr class="separator:a279e1e8de47b628414382aed4cec3c68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9133fc1220787c07ac21291dab7b8b22"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a9133fc1220787c07ac21291dab7b8b22">desc</a></td></tr>
-<tr class="separator:a9133fc1220787c07ac21291dab7b8b22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47c01b1e08f6757e61e2dd38dcb67044"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a47c01b1e08f6757e61e2dd38dcb67044">uuid</a></td></tr>
+<tr class="separator:a47c01b1e08f6757e61e2dd38dcb67044"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affea5bdaeda61718d00cf34afa060f20"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#affea5bdaeda61718d00cf34afa060f20">rep_type</a></td></tr>
+<tr class="separator:affea5bdaeda61718d00cf34afa060f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06b63ec45cda32c75e842421f1235063"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a06b63ec45cda32c75e842421f1235063">rep_index</a></td></tr>
+<tr class="separator:a06b63ec45cda32c75e842421f1235063"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GATT Characteristic Presentation Format. </p>
+<div class="textblock"><p>HID Service characteristic id. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a9133fc1220787c07ac21291dab7b8b22"></a>
+<a class="anchor" id="a06b63ec45cda32c75e842421f1235063"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gatts_char_pf_t::desc</td>
+          <td class="memname">uint8_t ble_hids_char_id_t::rep_index</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Namespace description from Bluetooth Assigned Numbers, see BLE_GATT_CPF_NAMESPACES. </p>
+<p>Index of the characteristic (only used for BLE_UUID_REPORT_CHAR). </p>
 
 </div>
 </div>
-<a class="anchor" id="a931b1bdd89be7d3aaa1d1522d20c7dd5"></a>
+<a class="anchor" id="affea5bdaeda61718d00cf34afa060f20"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int8_t ble_gatts_char_pf_t::exponent</td>
+          <td class="memname">uint8_t ble_hids_char_id_t::rep_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Exponent for integer data types. </p>
+<p>Type of report (only used for BLE_UUID_REPORT_CHAR, see BLE_HIDS_REPORT_TYPE). </p>
 
 </div>
 </div>
-<a class="anchor" id="a9a79d570aa8f758c81ddddbf345b289e"></a>
+<a class="anchor" id="a47c01b1e08f6757e61e2dd38dcb67044"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gatts_char_pf_t::format</td>
+          <td class="memname">uint16_t ble_hids_char_id_t::uuid</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Format of the value, see BLE_GATT_CPF_FORMATS. </p>
-
-</div>
-</div>
-<a class="anchor" id="a279e1e8de47b628414382aed4cec3c68"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gatts_char_pf_t::name_space</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Namespace from Bluetooth Assigned Numbers, see BLE_GATT_CPF_NAMESPACES. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab28e4dc2a48e6329df85b3f974cf4466"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gatts_char_pf_t::unit</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>UUID from Bluetooth Assigned Numbers. </p>
+<p>UUID of characteristic. </p>
 
 </div>
 </div>
@@ -201,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00189.html">ble_gatts_char_pf_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:17 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00189.html">ble_hids_char_id_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

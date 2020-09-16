@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_hrs_c_evt_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_l2cap_evt_rx_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,52 +106,48 @@ $(document).ready(function(){initNavTree('a00158.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_hrs_c_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00510.html">Structures</a></div></div>  </div>
+<div class="title">ble_l2cap_evt_rx_t Struct Reference<div class="ingroups"><a class="el" href="a00557.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Heart Rate Event structure.  
+<p>L2CAP Received packet event report.  
  <a href="a00158.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_hrs_c.h&gt;</code></p>
+<p><code>#include &lt;ble_l2cap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ab349bf82213ea8f4ae3b547b2a3a4f5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00509.html#ga1cb65f3c0928fd75d0e186c28fca8c0e">ble_hrs_c_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00158.html#ab349bf82213ea8f4ae3b547b2a3a4f5f">evt_type</a></td></tr>
-<tr class="separator:ab349bf82213ea8f4ae3b547b2a3a4f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6097c51c114167826b1e4f216788095"><td class="memItemLeft" ><a class="anchor" id="ab6097c51c114167826b1e4f216788095"></a>
-union {</td></tr>
-<tr class="memitem:a680b8f8d66c6ddd5a5c36600a2265bc7"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00157.html">ble_hrm_t</a>&#160;&#160;&#160;<a class="el" href="a00158.html#abbddddc557dc3729730e6ccd02041fa9">hrm</a></td></tr>
-<tr class="separator:a680b8f8d66c6ddd5a5c36600a2265bc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6097c51c114167826b1e4f216788095"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:ab6097c51c114167826b1e4f216788095"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac81a081355f3a10c8496cf16918ac23a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00160.html">ble_l2cap_header_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00158.html#ac81a081355f3a10c8496cf16918ac23a">header</a></td></tr>
+<tr class="separator:ac81a081355f3a10c8496cf16918ac23a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3df37c1998b3d1d213a6e7b5cfbcd5e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00158.html#ad3df37c1998b3d1d213a6e7b5cfbcd5e">data</a> [1]</td></tr>
+<tr class="separator:ad3df37c1998b3d1d213a6e7b5cfbcd5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Heart Rate Event structure. </p>
+<div class="textblock"><p>L2CAP Received packet event report. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ab349bf82213ea8f4ae3b547b2a3a4f5f"></a>
+<a class="anchor" id="ad3df37c1998b3d1d213a6e7b5cfbcd5e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00509.html#ga1cb65f3c0928fd75d0e186c28fca8c0e">ble_hrs_c_evt_type_t</a> ble_hrs_c_evt_t::evt_type</td>
+          <td class="memname">uint8_t ble_l2cap_evt_rx_t::data[1]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of the event. </p>
+<p>Packet data, variable length. </p>
 
 </div>
 </div>
-<a class="anchor" id="abbddddc557dc3729730e6ccd02041fa9"></a>
+<a class="anchor" id="ac81a081355f3a10c8496cf16918ac23a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00157.html">ble_hrm_t</a> ble_hrs_c_evt_t::hrm</td>
+          <td class="memname"><a class="el" href="a00160.html">ble_l2cap_header_t</a> ble_l2cap_evt_rx_t::header</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Heart rate measurement received. This will be filled if the evt_type is <a class="el" href="a00509.html#gga1cb65f3c0928fd75d0e186c28fca8c0ea8c95bb250aab94f4b82257bdeadfa673">BLE_HRS_C_EVT_HRM_NOTIFICATION</a>. </p>
+<p>L2CAP packet header. </p>
 
 </div>
 </div>
@@ -160,8 +156,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00158.html">ble_hrs_c_evt_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:28 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00158.html">ble_l2cap_evt_rx_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:41 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

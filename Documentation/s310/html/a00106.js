@@ -1,9 +1,7 @@
 var a00106 =
 [
-    [ "battery_level_char_attr_md", "a00106.html#aba436d52b264fb93a74de510a9e7ef07", null ],
-    [ "battery_level_report_read_perm", "a00106.html#a07135d9b12640710f520ef87d7a4f1be", null ],
-    [ "evt_handler", "a00106.html#a84932ecefd721efa23840b01ca3ce7eb", null ],
-    [ "initial_batt_level", "a00106.html#a22993ab4d63fdbd764624856605d1b7f", null ],
-    [ "p_report_ref", "a00106.html#afcbdf538aff06891b6f0057015b5c6e0", null ],
-    [ "support_notification", "a00106.html#ad4f3272ae66ece4ee5a4b8c3ff7fba88", null ]
+    [ "ble_dfu_evt_type", "a00106.html#a48f6c7cc051e012565ba9b05dd55e05a", null ],
+    [ "ble_dfu_pkt_write", "a00106.html#acc15bfa51d868c165e8dcb85f0c89f3d", null ],
+    [ "evt", "a00106.html#abbe4eeeac8c716e42319999fa1c2e616", null ],
+    [ "pkt_rcpt_notif_req", "a00106.html#ac8054aef37b49a028cfee3dd3007becf", null ]
 ];

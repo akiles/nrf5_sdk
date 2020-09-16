@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: SPI master example application to be used with the SPI slave example application</title>
+<title>nRF51 SDK - S110 SoftDevice: SPI master Loopback Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,42 +97,63 @@ $(document).ready(function(){initNavTree('a00047.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">SPI master example application to be used with the SPI slave example application </div>  </div>
+<div class="title">SPI master Loopback Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The SPI master example has been created specifically for verifying the SPI connectivity link for the SPI slave example application. The SPI master example can only be used with a nRF51822 Development Kit board that is running the SPI slave example application and it only tests SPI0. The application executes SPI transactions every 100 ms and uses the LEDs to indicate the status of the SPI transaction.</p>
-<h1><a class="anchor" id="spi_master_example_with_spi_slave_setup"></a>
+<div class="textblock"><p>The SPI master Loopback Example is for demonstrating the SPI Master using a Loopback for verification. There are two ways to make the loopback complete: Either connect and configure a slave to transmit the received bytes or wire the MOSI and MISO pins of the SPI master together. Both SPI_MASTER_0 and SPI_MASTER_1 are tested in this example. It uses the hardware delivered in the nRF51822 Development Kit.</p>
+<p>TX_RX_MSG_LENGTH number of bytes are transmitted through the master and the received bytes are verified to be the same as transmitted. If there is an error, the GPIO pin for the relevant SPI module is set high to show the error</p>
+<ul>
+<li>ERROR_PIN_SPI0 (Pin 8, P1.0).</li>
+<li>ERROR_PIN_SPI1 (Pin 9, P1.1).</li>
+</ul>
+<p>If there is error from both modules, both pins go high and the application loops infinitely.</p>
+<p>The application is started with configuring GPIO. Both SPI_MASTER_0 and SPI_MASTER_1 are tested, first with shifting lsb first, then by shifting msb first. If there is an error, the LED will be turned on.</p>
+<h1><a class="anchor" id="spi_master_example_setup"></a>
 Setup</h1>
 <p>Instructions on how to set up the nRFgo Motherboard: <a class="el" href="a00009.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a>. <br/>
 </p>
-<p>Used SPI master pin configurations:<br/>
-</p>
+<p>If a slave is configured to transmit the received bytes:<br/>
+ Configuration for SPI_MASTER_0:</p>
 <ul>
+<li>SCK0 (Pin 25, P3.1).</li>
 <li>MOSI0 (Pin 20, P2.4).</li>
 <li>MISO0 (Pin 22, P2.6).</li>
-<li>SS0 (Pin 21, P2.5).</li>
-<li>SCK0 (Pin 23, P2.7).</li>
+<li>SS0 (Pin 24, P3.0).</li>
+</ul>
+<p>Configuration for SPI_MASTER_1:</p>
+<ul>
+<li>SCK1 (Pin 29, P3.5).</li>
+<li>MOSI1 (Pin 21, P2.5).</li>
+<li>MISO1 (Pin 23, P2.7).</li>
+<li>SS1 (Pin 28, P3.4).</li>
+</ul>
+<p>If MOSI and MISO are connected together:<br/>
+</p>
+<ul>
+<li>MOSI0 (Pin 20, P2.4) should be connected to MISO0 (Pin 22, P2.6).</li>
+<li>MOSI1 (Pin 21, P2.5) should be connected to MISO1 (Pin 23, P2.7).</li>
 </ul>
 <p>LED assignments:</p>
 <ul>
-<li>LED 0 is used to show that an application is running.</li>
-<li>LED 1 is toggled everytime a single SPI transaction has completed successfully.</li>
-<li>LED 2 is used to show if an SPI transaction error has ocurred.</li>
+<li>LED 0 is used to show if SPI_MASTER_0 had an error.</li>
+<li>LED 1 is used to show if SPI_MASTER_1 had an error.</li>
 </ul>
-<h1><a class="anchor" id="spi_master_example_with_spi_slave_testing"></a>
+<h1><a class="anchor" id="spi_master_example_testing"></a>
 Testing</h1>
-<p>The example application can be tested as follows:</p>
+<p>The SPI master Loopback Example Application can be tested as follows:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Observe that the LED 0 is lit and LED 1 is toggled every 100ms. </li>
+<li>Observe that no LEDs are lit on the board.</li>
+<li>If LED 0 is lit, SPI_MASTER_0 had an error.</li>
+<li>If LED 1 is lit, SPI_MASTER_1 had an error. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00024.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:33 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00023.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

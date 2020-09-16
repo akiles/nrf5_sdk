@@ -68,7 +68,7 @@
 #define ADV_INTERVAL_FAST_PERIOD        30                                                   /**< The duration of the fast advertising period (in seconds). */
 
 #define APP_TIMER_PRESCALER             0                                                    /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS            2                                                    /**< Maximum number of simultaneously created timers. */
+#define APP_TIMER_MAX_TIMERS            3                                                    /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE         4                                                    /**< Size of timer operation queues. */
 
 #define MIN_CONN_INTERVAL               MSEC_TO_UNITS(500, UNIT_1_25_MS)                     /**< Minimum acceptable connection interval (0.5 seconds). */

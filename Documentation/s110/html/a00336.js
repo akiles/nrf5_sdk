@@ -1,4 +1,5 @@
 var a00336 =
 [
-    [ "clear_persistent_data", "a00336.html#ab5feebf730ecc50b0c78c0f4354d6fc3", null ]
+    [ "num_of_bytes", "a00336.html#a52ba1214757a5bbc308333735cdbf0d2", null ],
+    [ "p_buffer", "a00336.html#ae2d1620a22cdf63f23e5f13965412cb8", null ]
 ];

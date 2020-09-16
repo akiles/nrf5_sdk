@@ -1,7 +1,7 @@
 var modules =
 [
-    [ "Master Boot Record API", "a00808.html", "a00808" ],
-    [ "nRF51 SDK", "a00962.html", "a00962" ],
-    [ "S110 (BLE peripheral)", "a01005.html", "a01005" ],
-    [ "Proprietary stacks", "a01014.html", "a01014" ]
+    [ "Master Boot Record API", "a00757.html", "a00757" ],
+    [ "nRF51 SDK", "a00891.html", "a00891" ],
+    [ "S110 (BLE peripheral)", "a00938.html", "a00938" ],
+    [ "Proprietary stacks", "a00947.html", "a00947" ]
 ];

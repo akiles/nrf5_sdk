@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_hts_meas_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_rscs_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,123 +106,78 @@ $(document).ready(function(){initNavTree('a00289.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_hts_meas_s Struct Reference<div class="ingroups"><a class="el" href="a00926.html">Health Thermometer Service</a></div></div>  </div>
+<div class="title">ble_rscs_init_t Struct Reference<div class="ingroups"><a class="el" href="a00870.html">Running Speed and Cadence Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Health Thermometer Service measurement structure. This contains a Health Thermometer measurement.  
+<p>Running Speed and Cadence Service init structure. This contains all options and data needed for initialization of the service.  
  <a href="a00289.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_hts.h&gt;</code></p>
+<p><code>#include &lt;ble_rscs.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a16e05739a1ac3b03a2b4dc683bc1eacd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#a16e05739a1ac3b03a2b4dc683bc1eacd">temp_in_fahr_units</a></td></tr>
-<tr class="separator:a16e05739a1ac3b03a2b4dc683bc1eacd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21a7a430b8f85908438c9bd1fc2e0dce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#a21a7a430b8f85908438c9bd1fc2e0dce">time_stamp_present</a></td></tr>
-<tr class="separator:a21a7a430b8f85908438c9bd1fc2e0dce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10dadb1129dd55a6d597e4e08764d7ff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#a10dadb1129dd55a6d597e4e08764d7ff">temp_type_present</a></td></tr>
-<tr class="separator:a10dadb1129dd55a6d597e4e08764d7ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4065a89fde57ebf2effce6a1401e38c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00342.html">ieee_float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#a4065a89fde57ebf2effce6a1401e38c4">temp_in_celcius</a></td></tr>
-<tr class="separator:a4065a89fde57ebf2effce6a1401e38c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0120700a8a6185ce21e1a05391fbc706"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00342.html">ieee_float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#a0120700a8a6185ce21e1a05391fbc706">temp_in_fahr</a></td></tr>
-<tr class="separator:a0120700a8a6185ce21e1a05391fbc706"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab4240703a233a4bd2cd1a7b3a5997c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00183.html">ble_date_time_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#aab4240703a233a4bd2cd1a7b3a5997c0">time_stamp</a></td></tr>
-<tr class="separator:aab4240703a233a4bd2cd1a7b3a5997c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12b9d8fddee8e461bfcedb3489bd5f92"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#a12b9d8fddee8e461bfcedb3489bd5f92">temp_type</a></td></tr>
-<tr class="separator:a12b9d8fddee8e461bfcedb3489bd5f92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8b3f40aba291bb2528c6e3d278e66bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00870.html#ga04b6f149d88df65ebffd5b8297bd657f">ble_rscs_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ac8b3f40aba291bb2528c6e3d278e66bd">evt_handler</a></td></tr>
+<tr class="separator:ac8b3f40aba291bb2528c6e3d278e66bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f33f2c4256a25ac20cdbb2b8fbc8538"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00297.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#a4f33f2c4256a25ac20cdbb2b8fbc8538">rsc_meas_attr_md</a></td></tr>
+<tr class="separator:a4f33f2c4256a25ac20cdbb2b8fbc8538"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada9c9294592f640a27a344965b22bc76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00299.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#ada9c9294592f640a27a344965b22bc76">rsc_feature_attr_md</a></td></tr>
+<tr class="separator:ada9c9294592f640a27a344965b22bc76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afea901cdde73cddc72eb4cfe2f337c78"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00289.html#afea901cdde73cddc72eb4cfe2f337c78">feature</a></td></tr>
+<tr class="separator:afea901cdde73cddc72eb4cfe2f337c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Health Thermometer Service measurement structure. This contains a Health Thermometer measurement. </p>
+<div class="textblock"><p>Running Speed and Cadence Service init structure. This contains all options and data needed for initialization of the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a4065a89fde57ebf2effce6a1401e38c4"></a>
+<a class="anchor" id="ac8b3f40aba291bb2528c6e3d278e66bd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00342.html">ieee_float32_t</a> ble_hts_meas_s::temp_in_celcius</td>
+          <td class="memname"><a class="el" href="a00870.html#ga04b6f149d88df65ebffd5b8297bd657f">ble_rscs_evt_handler_t</a> ble_rscs_init_t::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Temperature Measurement Value (Celcius). </p>
+<p>Event handler to be called for handling events in the Running Speed and Cadence Service. </p>
 
 </div>
 </div>
-<a class="anchor" id="a0120700a8a6185ce21e1a05391fbc706"></a>
+<a class="anchor" id="afea901cdde73cddc72eb4cfe2f337c78"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00342.html">ieee_float32_t</a> ble_hts_meas_s::temp_in_fahr</td>
+          <td class="memname">uint16_t ble_rscs_init_t::feature</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Temperature Measurement Value (Fahrenheit). </p>
+<p>Initial value for features of sensor. </p>
 
 </div>
 </div>
-<a class="anchor" id="a16e05739a1ac3b03a2b4dc683bc1eacd"></a>
+<a class="anchor" id="ada9c9294592f640a27a344965b22bc76"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool ble_hts_meas_s::temp_in_fahr_units</td>
+          <td class="memname"><a class="el" href="a00299.html">ble_srv_security_mode_t</a> ble_rscs_init_t::rsc_feature_attr_md</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>True if Temperature is in Fahrenheit units, Celcius otherwise. </p>
+<p>Initial security level for feature attribute </p>
 
 </div>
 </div>
-<a class="anchor" id="a12b9d8fddee8e461bfcedb3489bd5f92"></a>
+<a class="anchor" id="a4f33f2c4256a25ac20cdbb2b8fbc8538"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_hts_meas_s::temp_type</td>
+          <td class="memname"><a class="el" href="a00297.html">ble_srv_cccd_security_mode_t</a> ble_rscs_init_t::rsc_meas_attr_md</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Temperature Type. </p>
-
-</div>
-</div>
-<a class="anchor" id="a10dadb1129dd55a6d597e4e08764d7ff"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_hts_meas_s::temp_type_present</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>True if Temperature Type is present. </p>
-
-</div>
-</div>
-<a class="anchor" id="aab4240703a233a4bd2cd1a7b3a5997c0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00183.html">ble_date_time_t</a> ble_hts_meas_s::time_stamp</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Time Stamp. </p>
-
-</div>
-</div>
-<a class="anchor" id="a21a7a430b8f85908438c9bd1fc2e0dce"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_hts_meas_s::time_stamp_present</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>True if Time Stamp is present. </p>
+<p>Initial security level for running speed and cadence measurement attribute </p>
 
 </div>
 </div>
@@ -231,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00289.html">ble_hts_meas_s</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00289.html">ble_rscs_init_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:37 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

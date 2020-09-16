@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gap_conn_sec_mode_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_enc_key_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,56 +106,48 @@ $(document).ready(function(){initNavTree('a00088.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_conn_sec_mode_t Struct Reference<div class="ingroups"><a class="el" href="a00526.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_enc_key_t Struct Reference<div class="ingroups"><a class="el" href="a00542.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GAP link requirements.  
+<p>Encryption Key.  
  <a href="a00088.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ab1014e45933756f4e790ef8181730f7f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00088.html#ab1014e45933756f4e790ef8181730f7f">sm</a>: 4</td></tr>
-<tr class="separator:ab1014e45933756f4e790ef8181730f7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c0b55f3c9f8c589ca46e85d2c8f235c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00088.html#a3c0b55f3c9f8c589ca46e85d2c8f235c">lv</a>: 4</td></tr>
-<tr class="separator:a3c0b55f3c9f8c589ca46e85d2c8f235c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13ede8af725f86dfd2a221e48a61b313"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html">ble_gap_enc_info_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00088.html#a13ede8af725f86dfd2a221e48a61b313">enc_info</a></td></tr>
+<tr class="separator:a13ede8af725f86dfd2a221e48a61b313"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a652b5f7ec55ac6f4693515bda2f35176"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00106.html">ble_gap_master_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00088.html#a652b5f7ec55ac6f4693515bda2f35176">master_id</a></td></tr>
+<tr class="separator:a652b5f7ec55ac6f4693515bda2f35176"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GAP link requirements. </p>
-<p>See Bluetooth Core specification, Volume 3 Part C 10.2 for details.</p>
-<p>Security Mode 0 Level 0: No access permissions at all (this level is not defined by the Bluetooth Core specification).<br/>
- Security Mode 1 Level 1: No security is needed (aka open link).<br/>
- Security Mode 1 Level 2: Encrypted link required, MITM protection not necessary.<br/>
- Security Mode 1 Level 3: MITM protected encrypted link required.<br/>
- Security Mode 2 Level 1: Signing or encryption required, MITM protection not necessary.<br/>
- Security Mode 2 Level 2: MITM protected signing required, unless link is MITM protected encrypted.<br/>
- </p>
+<div class="textblock"><p>Encryption Key. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a3c0b55f3c9f8c589ca46e85d2c8f235c"></a>
+<a class="anchor" id="a13ede8af725f86dfd2a221e48a61b313"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_conn_sec_mode_t::lv</td>
+          <td class="memname"><a class="el" href="a00087.html">ble_gap_enc_info_t</a> ble_gap_enc_key_t::enc_info</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Level (1, 2 or 3), 0 for no permissions at all. </p>
+<p>Encryption Information. </p>
 
 </div>
 </div>
-<a class="anchor" id="ab1014e45933756f4e790ef8181730f7f"></a>
+<a class="anchor" id="a652b5f7ec55ac6f4693515bda2f35176"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_conn_sec_mode_t::sm</td>
+          <td class="memname"><a class="el" href="a00106.html">ble_gap_master_id_t</a> ble_gap_enc_key_t::master_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Security Mode (1 or 2), 0 for no permissions at all. </p>
+<p>Master Identification. </p>
 
 </div>
 </div>
@@ -164,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00088.html">ble_gap_conn_sec_mode_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:28 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00088.html">ble_gap_enc_key_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:40 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

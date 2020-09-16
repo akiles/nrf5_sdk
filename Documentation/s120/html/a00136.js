@@ -1,5 +1,9 @@
 var a00136 =
 [
-    [ "handle", "a00136.html#af1b50c1fd1d5be05d0d0cf25e0925fd0", null ],
-    [ "p_value", "a00136.html#a6e842e1c975c50acf7eec947baa405e8", null ]
+    [ "flags", "a00136.html#ae9bf42dc0e530824c93ec423e6539220", null ],
+    [ "handle", "a00136.html#a4b5cec7a8b33f482114d99026b2ee92d", null ],
+    [ "len", "a00136.html#a068c40f218ed3932901529ac05b69c21", null ],
+    [ "offset", "a00136.html#a85d01254a43068218061ab21acabe980", null ],
+    [ "p_value", "a00136.html#a361b91f9ee1961598bc9c94520f8004b", null ],
+    [ "write_op", "a00136.html#a2c42a23118699b0fab8f49f1d9b4b386", null ]
 ];

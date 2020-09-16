@@ -1,9 +1,22 @@
 var a00748 =
 [
-    [ "Types and definitions.", "a00749.html", "a00749" ],
-    [ "bootloader_app_is_valid", "a00748.html#gabd325fffda0cb29f1a8b917eb61d2494", null ],
-    [ "bootloader_app_start", "a00748.html#ga4fc5191d040a4abb9a23b52e22f56101", null ],
-    [ "bootloader_dfu_start", "a00748.html#gaf11a485218863db81385fe18437b5961", null ],
-    [ "bootloader_dfu_update_process", "a00748.html#gaebf46c5b600b9c2a5609c7f36954adef", null ],
-    [ "bootloader_settings_get", "a00748.html#ga5a5868fa37d3f3ef4cdb3cd54cb81684", null ]
+    [ "BLE_UUID_CHARACTERISTIC", "a00748.html#gac1247c863c8c293a1ab2d8d53fc86b77", null ],
+    [ "BLE_UUID_DESCRIPTOR_CHAR_AGGREGATE_FORMAT", "a00748.html#ga082c169a7d21fa9c21b9bc7897a47dc5", null ],
+    [ "BLE_UUID_DESCRIPTOR_CHAR_EXT_PROP", "a00748.html#gad912e4f32457de19e8bcfbd95b80df44", null ],
+    [ "BLE_UUID_DESCRIPTOR_CHAR_PRESENTATION_FORMAT", "a00748.html#gaaab8d24f4f044cdbc956fbbf16aa2b2d", null ],
+    [ "BLE_UUID_DESCRIPTOR_CHAR_USER_DESC", "a00748.html#gae4485d6b145f9b635842a1d27ee3603c", null ],
+    [ "BLE_UUID_DESCRIPTOR_CLIENT_CHAR_CONFIG", "a00748.html#gae3c54dd809c9dec53a3c4995b0f408f1", null ],
+    [ "BLE_UUID_DESCRIPTOR_SERVER_CHAR_CONFIG", "a00748.html#ga03ceb71bc3996111c5ded9ba1f5b5ea5", null ],
+    [ "BLE_UUID_GAP", "a00748.html#ga03f02e3183f99757dc2fac8192bcbf86", null ],
+    [ "BLE_UUID_GAP_CHARACTERISTIC_APPEARANCE", "a00748.html#gafc8e59c9ba74e25c058a37dfa33b8aa4", null ],
+    [ "BLE_UUID_GAP_CHARACTERISTIC_DEVICE_NAME", "a00748.html#gaefc74572ced8c611602f5bb25804281e", null ],
+    [ "BLE_UUID_GAP_CHARACTERISTIC_PPCP", "a00748.html#ga7d00000113781b827c4c645b99e06ed2", null ],
+    [ "BLE_UUID_GAP_CHARACTERISTIC_PPF", "a00748.html#ga69a09268e373ef95cd35de1457b99cf7", null ],
+    [ "BLE_UUID_GAP_CHARACTERISTIC_RECONN_ADDR", "a00748.html#ga9017ed725d44887f8d69e004187bf92f", null ],
+    [ "BLE_UUID_GATT", "a00748.html#ga418b2799bf0d0d7e15496c9ece20c800", null ],
+    [ "BLE_UUID_GATT_CHARACTERISTIC_SERVICE_CHANGED", "a00748.html#gab2c3d0d5d8e4d88e14e544c4518a4e5b", null ],
+    [ "BLE_UUID_SERVICE_INCLUDE", "a00748.html#gab90b6506450b9102b00f3cd675680f44", null ],
+    [ "BLE_UUID_SERVICE_PRIMARY", "a00748.html#ga1c79cdc83128a672be4d07921d2e45c2", null ],
+    [ "BLE_UUID_SERVICE_SECONDARY", "a00748.html#ga2c15c436aa715834bb47cb695e952cae", null ],
+    [ "BLE_UUID_UNKNOWN", "a00748.html#gae98868aa7a26c8f1f813e329d3be7925", null ]
 ];

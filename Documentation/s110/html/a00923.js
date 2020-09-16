@@ -1,8 +1,8 @@
 var a00923 =
 [
-    [ "ble_gls_db_init", "a00923.html#ga11a776d3fd91b8260a65ecfd68629899", null ],
-    [ "ble_gls_db_num_records_get", "a00923.html#gae6f7f2899cb93e01209a23f2468e5689", null ],
-    [ "ble_gls_db_record_add", "a00923.html#gae57fa97c63a33a39ee11b61123016ee9", null ],
-    [ "ble_gls_db_record_delete", "a00923.html#ga57f663101a66de5959d262a01278d3b3", null ],
-    [ "ble_gls_db_record_get", "a00923.html#ga30d6e12419921bdabed1f2436b7cfac6", null ]
+    [ "BLE_L2CAP_SVCS", "a00923.html#ga08e7b23691ec76610bbd89735c642322", [
+      [ "SD_BLE_L2CAP_CID_REGISTER", "a00923.html#gga08e7b23691ec76610bbd89735c642322a6168d9f18ea5916224c6b76a118ae076", null ],
+      [ "SD_BLE_L2CAP_CID_UNREGISTER", "a00923.html#gga08e7b23691ec76610bbd89735c642322ace8a5ba33631ecf722fd5ce033a413e8", null ],
+      [ "SD_BLE_L2CAP_TX", "a00923.html#gga08e7b23691ec76610bbd89735c642322a073ec8ef84fe64e4d3cfdb9538c70438", null ]
+    ] ]
 ];

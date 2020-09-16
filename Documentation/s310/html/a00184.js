@@ -1,9 +1,7 @@
 var a00184 =
 [
-    [ "char_uuid", "a00184.html#adbbcf41424e48536f3c3e7f2665005fd", null ],
-    [ "desc_uuid", "a00184.html#a6d909918be5c3a58a93e3f345ad0ae5e", null ],
-    [ "srvc_handle", "a00184.html#a9ec74591a8b40af4354fed5c2ae33efd", null ],
-    [ "srvc_uuid", "a00184.html#a351c0654157494b748a0adcba003e42f", null ],
-    [ "type", "a00184.html#a59115313e869d01234cc2ed3ab2e25d9", null ],
-    [ "value_handle", "a00184.html#a770254b2ade294a3f24fa0db65a2d0fa", null ]
+    [ "error_handler", "a00184.html#a60dd2e384291225af96e549356836e96", null ],
+    [ "evt_handler", "a00184.html#a30ba6c48423cf07609a21bc2de05ece9", null ],
+    [ "feature", "a00184.html#aa6db8884060986d835bd1e6aadffc770", null ],
+    [ "is_context_supported", "a00184.html#a10d72eae94458d3d33788faf4099893c", null ]
 ];

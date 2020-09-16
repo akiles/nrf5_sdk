@@ -72,8 +72,6 @@ var searchData=
   ['cleartext',['cleartext',['../structnrf__ecb__hal__data__t.html#ad4c798195f0d6d399a7f75d09ef89793',1,'nrf_ecb_hal_data_t']]],
   ['client_5fserial_5fnumber',['client_serial_number',['../structantfs__params__t.html#a241352a89c655afae2b422bd1b1b9b66',1,'antfs_params_t']]],
   ['close_5fall_5fchannels',['CLOSE_ALL_CHANNELS',['../group__t__s210__ant__parameters.html#ga294cc2a8b09302615ff6c499ffeab85f',1,'ant_parameters.h']]],
-  ['code_5fpage_5fsize',['CODE_PAGE_SIZE',['../group__nrf__dfu__types.html#ga8b56633cd2604d9fae053b04ff288841',1,'dfu_types.h']]],
-  ['code_5fregion_5f1_5fstart',['CODE_REGION_1_START',['../group__nrf__dfu__types.html#ga1e59438986d1f2183af8cabb1ab3be0c',1,'dfu_types.h']]],
   ['common_5fpage_5f80',['COMMON_PAGE_80',['../group__ant__bicycle__power__minimum__receiver.html#ga66afebbba0658e2baeba27dbf022e09f',1,'COMMON_PAGE_80():&#160;defines.h'],['../group__ant__bicycle__power__only__sensor.html#ga66afebbba0658e2baeba27dbf022e09f',1,'COMMON_PAGE_80():&#160;defines.h']]],
   ['common_5fpage_5f81',['COMMON_PAGE_81',['../group__ant__bicycle__power__minimum__receiver.html#gaf6b52b5e5adc6df7b844c2b18f9b2af4',1,'COMMON_PAGE_81():&#160;defines.h'],['../group__ant__bicycle__power__only__sensor.html#gaf6b52b5e5adc6df7b844c2b18f9b2af4',1,'COMMON_PAGE_81():&#160;defines.h']]],
   ['computed_5fheart_5frate',['computed_heart_rate',['../structhrm__page0__data__t.html#aff664538df27d8873e5a429bb96d729c',1,'hrm_page0_data_t']]],

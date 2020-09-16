@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Error Log Module</title>
+<title>nRF51 SDK - S110 SoftDevice: Structures</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -98,122 +98,166 @@ $(document).ready(function(){initNavTree('a00910.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Error Log Module<div class="ingroups"><a class="el" href="a00965.html">BLE Libraries</a></div></div>  </div>
+<div class="title">Structures<div class="ingroups"><a class="el" href="a00762.html">Generic Access Profile (GAP)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Module for writing error and stack to flash memory.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00193.html">ble_error_log_data_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error Log Data structure.  <a href="a00193.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00182.html">ble_gap_addr_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bluetooth Low Energy address.  <a href="a00182.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00184.html">ble_gap_conn_params_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GAP connection parameters.  <a href="a00184.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00185.html">ble_gap_conn_sec_mode_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GAP link requirements.  <a href="a00185.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html">ble_gap_conn_sec_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GAP connection security status.  <a href="a00186.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00201.html">ble_gap_irk_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identity Resolving Key.  <a href="a00201.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html">ble_gap_whitelist_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whitelist structure.  <a href="a00212.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00183.html">ble_gap_adv_params_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GAP advertising parameters.  <a href="a00183.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00207.html">ble_gap_scan_params_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GAP scanning parameters.  <a href="a00207.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00210.html">ble_gap_sec_params_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GAP security parameters.  <a href="a00210.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00187.html">ble_gap_enc_info_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GAP Encryption Information.  <a href="a00187.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00202.html">ble_gap_master_id_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GAP Master Identification.  <a href="a00202.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00200.html">ble_gap_id_info_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GAP Identity Information.  <a href="a00200.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html">ble_gap_sign_info_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GAP Signing Information.  <a href="a00211.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gad86bea2e9fcd0774bb5f9a891aa2bdb5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gad86bea2e9fcd0774bb5f9a891aa2bdb5">ERROR_MESSAGE_LENGTH</a>&#160;&#160;&#160;128</td></tr>
-<tr class="separator:gad86bea2e9fcd0774bb5f9a891aa2bdb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad65ee5b47c0b932f924210605a8d635e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gad65ee5b47c0b932f924210605a8d635e">STACK_DUMP_LENGTH</a>&#160;&#160;&#160;256</td></tr>
-<tr class="separator:gad65ee5b47c0b932f924210605a8d635e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8f48afb84b718eda14c45489906fce49"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga8f48afb84b718eda14c45489906fce49">FLASH_PAGE_ERROR_LOG</a>&#160;&#160;&#160;(<a class="el" href="a00911.html#gaad80a1b31add453ba141177eddd972a1">BLE_FLASH_PAGE_END</a> - 2)</td></tr>
-<tr class="separator:ga8f48afb84b718eda14c45489906fce49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga17047bf17f360d32faa6b06ba587f444"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga17047bf17f360d32faa6b06ba587f444">ble_error_log_write</a> (uint32_t err_code, const uint8_t *p_message, uint16_t line_number)</td></tr>
-<tr class="memdesc:ga17047bf17f360d32faa6b06ba587f444"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for writing the file name/message, line number, and current program stack to flash.  <a href="#ga17047bf17f360d32faa6b06ba587f444">More...</a><br/></td></tr>
-<tr class="separator:ga17047bf17f360d32faa6b06ba587f444"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gada486dd3c0cce897b23a887bed284fef"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gada486dd3c0cce897b23a887bed284fef">BLE_GAP_EVTS</a> { <br/>
+&#160;&#160;<a class="el" href="a00910.html#ggada486dd3c0cce897b23a887bed284fefaa0b4789724d202a13a5e7eab85c52957">BLE_GAP_EVT_CONNECTED</a> = 0x10, 
+<br/>
+&#160;&#160;<a class="el" href="a00910.html#ggada486dd3c0cce897b23a887bed284fefa057001bbd6ea9e615f19ef93cc0831ee">BLE_GAP_EVT_DISCONNECTED</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00910.html#ggada486dd3c0cce897b23a887bed284fefa9117fcf7efad580886dfad72e5d7cce7">BLE_GAP_EVT_CONN_PARAM_UPDATE</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00910.html#ggada486dd3c0cce897b23a887bed284fefa6c5eefbcfabbc1ce4a8bcbf550c285ae">BLE_GAP_EVT_SEC_PARAMS_REQUEST</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00910.html#ggada486dd3c0cce897b23a887bed284fefaf1c60079f92820cb933ebdb66d2d8d7d">BLE_GAP_EVT_SEC_INFO_REQUEST</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00910.html#ggada486dd3c0cce897b23a887bed284fefaedc549f5a6853a542bf93ff5d155292a">BLE_GAP_EVT_PASSKEY_DISPLAY</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00910.html#ggada486dd3c0cce897b23a887bed284fefa64d5d52e3ca8d8957bce011ad43d0f67">BLE_GAP_EVT_AUTH_KEY_REQUEST</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00910.html#ggada486dd3c0cce897b23a887bed284fefa8958220152f7547da3b250b4f724877c">BLE_GAP_EVT_AUTH_STATUS</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00910.html#ggada486dd3c0cce897b23a887bed284fefa361bcc6098a88825333464335f6d22cc">BLE_GAP_EVT_CONN_SEC_UPDATE</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00910.html#ggada486dd3c0cce897b23a887bed284fefa57e5d1061d9b3d1500fb3556a3fb8847">BLE_GAP_EVT_TIMEOUT</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00910.html#ggada486dd3c0cce897b23a887bed284fefa4d1c7d552ad87b09c53a4d4352fc91e6">BLE_GAP_EVT_RSSI_CHANGED</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gada486dd3c0cce897b23a887bed284fef"><td class="mdescLeft">&#160;</td><td class="mdescRight">GAP Event IDs. Those IDs uniquely identify an event coming from the stack to the application.  <a href="a00910.html#gada486dd3c0cce897b23a887bed284fef">More...</a><br/></td></tr>
+<tr class="separator:gada486dd3c0cce897b23a887bed284fef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2da79b1e293414621d79814490a8598e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga2da79b1e293414621d79814490a8598e">BLE_GAP_OPTS</a> { <br/>
+&#160;&#160;<a class="el" href="a00910.html#gga2da79b1e293414621d79814490a8598eaf2ca06bf556f7283c9ed43c1310d492b">BLE_GAP_OPT_LOCAL_CONN_LATENCY</a> = 0x20, 
+<br/>
+&#160;&#160;<a class="el" href="a00910.html#gga2da79b1e293414621d79814490a8598ea9b99a25c5a7668e610256c8c5bdffbf7">BLE_GAP_OPT_PASSKEY</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00910.html#gga2da79b1e293414621d79814490a8598eab364187b87f231ad372422775886675a">BLE_GAP_OPT_PRIVACY</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga2da79b1e293414621d79814490a8598e"><td class="mdescLeft">&#160;</td><td class="mdescRight">GAP Option IDs. IDs that uniquely identify a GAP option.  <a href="a00910.html#ga2da79b1e293414621d79814490a8598e">More...</a><br/></td></tr>
+<tr class="separator:ga2da79b1e293414621d79814490a8598e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Module for writing error and stack to flash memory. </p>
-<p>It contains functions for writing an error code, line number, filename/message and the stack to the flash during an error, e.g. in the assert handler. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gad86bea2e9fcd0774bb5f9a891aa2bdb5"></a>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gada486dd3c0cce897b23a887bed284fef"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ERROR_MESSAGE_LENGTH&#160;&#160;&#160;128</td>
+          <td class="memname">enum <a class="el" href="a00910.html#gada486dd3c0cce897b23a887bed284fef">BLE_GAP_EVTS</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Length of error message to stored. </p>
+
+<p>GAP Event IDs. Those IDs uniquely identify an event coming from the stack to the application. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggada486dd3c0cce897b23a887bed284fefaa0b4789724d202a13a5e7eab85c52957"></a>BLE_GAP_EVT_CONNECTED</em>&nbsp;</td><td class="fielddoc">
+<p>Connection established. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggada486dd3c0cce897b23a887bed284fefa057001bbd6ea9e615f19ef93cc0831ee"></a>BLE_GAP_EVT_DISCONNECTED</em>&nbsp;</td><td class="fielddoc">
+<p>Disconnected from peer. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggada486dd3c0cce897b23a887bed284fefa9117fcf7efad580886dfad72e5d7cce7"></a>BLE_GAP_EVT_CONN_PARAM_UPDATE</em>&nbsp;</td><td class="fielddoc">
+<p>Connection Parameters updated. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggada486dd3c0cce897b23a887bed284fefa6c5eefbcfabbc1ce4a8bcbf550c285ae"></a>BLE_GAP_EVT_SEC_PARAMS_REQUEST</em>&nbsp;</td><td class="fielddoc">
+<p>Request to provide security parameters. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggada486dd3c0cce897b23a887bed284fefaf1c60079f92820cb933ebdb66d2d8d7d"></a>BLE_GAP_EVT_SEC_INFO_REQUEST</em>&nbsp;</td><td class="fielddoc">
+<p>Request to provide security information. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggada486dd3c0cce897b23a887bed284fefaedc549f5a6853a542bf93ff5d155292a"></a>BLE_GAP_EVT_PASSKEY_DISPLAY</em>&nbsp;</td><td class="fielddoc">
+<p>Request to display a passkey to the user. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggada486dd3c0cce897b23a887bed284fefa64d5d52e3ca8d8957bce011ad43d0f67"></a>BLE_GAP_EVT_AUTH_KEY_REQUEST</em>&nbsp;</td><td class="fielddoc">
+<p>Request to provide an authentication key. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggada486dd3c0cce897b23a887bed284fefa8958220152f7547da3b250b4f724877c"></a>BLE_GAP_EVT_AUTH_STATUS</em>&nbsp;</td><td class="fielddoc">
+<p>Authentication procedure completed with status. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggada486dd3c0cce897b23a887bed284fefa361bcc6098a88825333464335f6d22cc"></a>BLE_GAP_EVT_CONN_SEC_UPDATE</em>&nbsp;</td><td class="fielddoc">
+<p>Connection security updated. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggada486dd3c0cce897b23a887bed284fefa57e5d1061d9b3d1500fb3556a3fb8847"></a>BLE_GAP_EVT_TIMEOUT</em>&nbsp;</td><td class="fielddoc">
+<p>Timeout expired. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggada486dd3c0cce897b23a887bed284fefa4d1c7d552ad87b09c53a4d4352fc91e6"></a>BLE_GAP_EVT_RSSI_CHANGED</em>&nbsp;</td><td class="fielddoc">
+<p>Signal strength measurement report. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
-<a class="anchor" id="ga8f48afb84b718eda14c45489906fce49"></a>
+<a class="anchor" id="ga2da79b1e293414621d79814490a8598e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FLASH_PAGE_ERROR_LOG&#160;&#160;&#160;(<a class="el" href="a00911.html#gaad80a1b31add453ba141177eddd972a1">BLE_FLASH_PAGE_END</a> - 2)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Address in flash where stack trace can be stored. </p>
-
-</div>
-</div>
-<a class="anchor" id="gad65ee5b47c0b932f924210605a8d635e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define STACK_DUMP_LENGTH&#160;&#160;&#160;256</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Length of stack to be stored at max: 64 entries of 4 bytes each. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga17047bf17f360d32faa6b06ba587f444"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_error_log_write </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>err_code</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>p_message</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>line_number</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">enum <a class="el" href="a00910.html#ga2da79b1e293414621d79814490a8598e">BLE_GAP_OPTS</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for writing the file name/message, line number, and current program stack to flash. </p>
-<dl class="section note"><dt>Note</dt><dd>This function will force the writing to flash, and disregard any radio communication. USE THIS FUNCTION WITH CARE.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">err_code</td><td>Error code to be logged. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_message</td><td>Message to be written to the flash together with stack dump, usually the file name where the error occured. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">line_number</td><td>Line number where the error occured.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful writing of the error log. </dd></dl>
+<p>GAP Option IDs. IDs that uniquely identify a GAP option. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2da79b1e293414621d79814490a8598eaf2ca06bf556f7283c9ed43c1310d492b"></a>BLE_GAP_OPT_LOCAL_CONN_LATENCY</em>&nbsp;</td><td class="fielddoc">
+<p>GAP BLE Option base. Local connection latency. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2da79b1e293414621d79814490a8598ea9b99a25c5a7668e610256c8c5bdffbf7"></a>BLE_GAP_OPT_PASSKEY</em>&nbsp;</td><td class="fielddoc">
+<p>Set passkey to be used during pairing. This option can be used to make the SoftDevice use an application provided passkey instead of generating a random passkey. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2da79b1e293414621d79814490a8598eab364187b87f231ad372422775886675a"></a>BLE_GAP_OPT_PRIVACY</em>&nbsp;</td><td class="fielddoc">
+<p>Set or get custom IRK or custom private address cycle interval. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -222,7 +266,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:47 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:36 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

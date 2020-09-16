@@ -1,10 +1,6 @@
 var a00536 =
 [
-    [ "SVC return values specific to GATTS", "a00366.html", "a00366" ],
-    [ "Maximum attribute lengths", "a00367.html", "a00367" ],
-    [ "GATT Server Service Types", "a00368.html", "a00368" ],
-    [ "GATT Server Attribute Types", "a00369.html", "a00369" ],
-    [ "GATT Server Operations", "a00370.html", "a00370" ],
-    [ "GATT Value Locations", "a00371.html", "a00371" ],
-    [ "GATT Server Authorization Types", "a00372.html", "a00372" ]
+    [ "User Memory Types", "a00338.html", "a00338" ],
+    [ "BLE_EVTS_PTR_ALIGNMENT", "a00536.html#ga60320cd534c9f7f0f16a1da17d5afacb", null ],
+    [ "BLE_UUID_VS_MAX_COUNT", "a00536.html#gaef66ffd47e836932207ee77faecacb8b", null ]
 ];

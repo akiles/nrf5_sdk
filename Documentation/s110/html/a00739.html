@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Types definitions for ANT support in SoftDevice handler.</title>
+<title>nRF51 SDK - S110 SoftDevice: GATT Server Attribute Types</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,103 +97,134 @@ $(document).ready(function(){initNavTree('a00739.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Types definitions for ANT support in SoftDevice handler.<div class="ingroups"><a class="el" href="a00742.html">SoftDevice Event Handler</a></div></div>  </div>
+<div class="title">GATT Server Attribute Types<div class="ingroups"><a class="el" href="a00920.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>This file contains the declarations of types required for ANT stack support. These types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00147.html">ant_evt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ANT stack event type.  <a href="a00147.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gafcf5a1211ca1625c5c111871c6139d79"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00739.html#gafcf5a1211ca1625c5c111871c6139d79">ANT_STACK_EVT_MSG_BUF_SIZE</a>&#160;&#160;&#160;32</td></tr>
-<tr class="separator:gafcf5a1211ca1625c5c111871c6139d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga099e8f139d53724bf7238bb77c9e32e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00739.html#ga099e8f139d53724bf7238bb77c9e32e0">ANT_STACK_EVT_STRUCT_SIZE</a>&#160;&#160;&#160;(sizeof(<a class="el" href="a00147.html">ant_evt_t</a>))</td></tr>
-<tr class="separator:ga099e8f139d53724bf7238bb77c9e32e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2b0ca4dbb952df8f26cb58d4e7341115"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00739.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a> )(<a class="el" href="a00147.html">ant_evt_t</a> *p_ant_evt)</td></tr>
-<tr class="memdesc:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application ANT stack event handler type. <br/></td></tr>
-<tr class="separator:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gac05d1d266aef077ae88818dff3775010"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00739.html#gac05d1d266aef077ae88818dff3775010">softdevice_ant_evt_handler_set</a> (<a class="el" href="a00739.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a> ant_evt_handler)</td></tr>
-<tr class="memdesc:gac05d1d266aef077ae88818dff3775010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering for ANT events.  <a href="#gac05d1d266aef077ae88818dff3775010">More...</a><br/></td></tr>
-<tr class="separator:gac05d1d266aef077ae88818dff3775010"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga24097ed5a56be45fc4d051584546e458"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00739.html#ga24097ed5a56be45fc4d051584546e458">BLE_GATTS_ATTR_TYPE_INVALID</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga24097ed5a56be45fc4d051584546e458"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0bb8323562a8a6be5ad1b2287b20373c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00739.html#ga0bb8323562a8a6be5ad1b2287b20373c">BLE_GATTS_ATTR_TYPE_PRIM_SRVC_DECL</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga0bb8323562a8a6be5ad1b2287b20373c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa5f417382bd4c490203767739062c74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00739.html#gafa5f417382bd4c490203767739062c74">BLE_GATTS_ATTR_TYPE_SEC_SRVC_DECL</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:gafa5f417382bd4c490203767739062c74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf7b95716018edd34e87df7e4163bc74"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00739.html#gadf7b95716018edd34e87df7e4163bc74">BLE_GATTS_ATTR_TYPE_INC_DECL</a>&#160;&#160;&#160;0x03</td></tr>
+<tr class="separator:gadf7b95716018edd34e87df7e4163bc74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga102e704417b457854a05daa5fa06d7d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00739.html#ga102e704417b457854a05daa5fa06d7d6">BLE_GATTS_ATTR_TYPE_CHAR_DECL</a>&#160;&#160;&#160;0x04</td></tr>
+<tr class="separator:ga102e704417b457854a05daa5fa06d7d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac7e5c6d395c2a57918233dd8c7a9a699"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00739.html#gac7e5c6d395c2a57918233dd8c7a9a699">BLE_GATTS_ATTR_TYPE_CHAR_VAL</a>&#160;&#160;&#160;0x05</td></tr>
+<tr class="separator:gac7e5c6d395c2a57918233dd8c7a9a699"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac5f3e3213a49c7fe404a1c3f934de50c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00739.html#gac5f3e3213a49c7fe404a1c3f934de50c">BLE_GATTS_ATTR_TYPE_DESC</a>&#160;&#160;&#160;0x06</td></tr>
+<tr class="separator:gac5f3e3213a49c7fe404a1c3f934de50c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadbf23b44b2e2731d944ba3682427c316"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00739.html#gadbf23b44b2e2731d944ba3682427c316">BLE_GATTS_ATTR_TYPE_OTHER</a>&#160;&#160;&#160;0x07</td></tr>
+<tr class="separator:gadbf23b44b2e2731d944ba3682427c316"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>This file contains the declarations of types required for ANT stack support. These types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gafcf5a1211ca1625c5c111871c6139d79"></a>
+<a class="anchor" id="ga102e704417b457854a05daa5fa06d7d6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ANT_STACK_EVT_MSG_BUF_SIZE&#160;&#160;&#160;32</td>
+          <td class="memname">#define BLE_GATTS_ATTR_TYPE_CHAR_DECL&#160;&#160;&#160;0x04</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Size of ANT event message buffer. This will be provided to the SoftDevice while fetching an event. </p>
+<p>Characteristic Declaration. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga099e8f139d53724bf7238bb77c9e32e0"></a>
+<a class="anchor" id="gac7e5c6d395c2a57918233dd8c7a9a699"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define ANT_STACK_EVT_STRUCT_SIZE&#160;&#160;&#160;(sizeof(<a class="el" href="a00147.html">ant_evt_t</a>))</td>
+          <td class="memname">#define BLE_GATTS_ATTR_TYPE_CHAR_VAL&#160;&#160;&#160;0x05</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Size of the <a class="el" href="a00147.html">ant_evt_t</a> structure. This will be used by the softdevice_handler.h to internal event buffer size needed. </p>
+<p>Characteristic Value. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gac05d1d266aef077ae88818dff3775010"></a>
+<a class="anchor" id="gac5f3e3213a49c7fe404a1c3f934de50c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t softdevice_ant_evt_handler_set </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00739.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a>&#160;</td>
-          <td class="paramname"><em>ant_evt_handler</em></td><td>)</td>
-          <td></td>
+          <td class="memname">#define BLE_GATTS_ATTR_TYPE_DESC&#160;&#160;&#160;0x06</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Descriptor. </p>
 
-<p>Function for registering for ANT events. </p>
-<p>The application should use this function to register for receiving ANT events from the SoftDevice. If the application does not call this function, then any ANT event that may be generated by the SoftDevice will NOT be fetched. Once the application has registered for the events, it is not possible to possible to cancel the registration. However, it is possible to register a different function for handling the events at any point of time.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ant_evt_handler</td><td>Function to be called for each received ANT event.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Successful registration. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Null pointer provided as input. </td></tr>
-  </table>
-  </dd>
-</dl>
+</div>
+</div>
+<a class="anchor" id="gadf7b95716018edd34e87df7e4163bc74"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATTS_ATTR_TYPE_INC_DECL&#160;&#160;&#160;0x03</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Include Declaration. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga24097ed5a56be45fc4d051584546e458"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATTS_ATTR_TYPE_INVALID&#160;&#160;&#160;0x00</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Invalid Attribute Type. </p>
+
+</div>
+</div>
+<a class="anchor" id="gadbf23b44b2e2731d944ba3682427c316"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATTS_ATTR_TYPE_OTHER&#160;&#160;&#160;0x07</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Other, non-GATT specific type. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga0bb8323562a8a6be5ad1b2287b20373c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATTS_ATTR_TYPE_PRIM_SRVC_DECL&#160;&#160;&#160;0x01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Primary Service Declaration. </p>
+
+</div>
+</div>
+<a class="anchor" id="gafa5f417382bd4c490203767739062c74"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATTS_ATTR_TYPE_SEC_SRVC_DECL&#160;&#160;&#160;0x02</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Secondary Service Declaration. </p>
 
 </div>
 </div>
@@ -202,7 +233,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:35 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:35 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

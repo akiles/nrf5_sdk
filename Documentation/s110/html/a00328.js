@@ -1,5 +1,5 @@
 var a00328 =
 [
-    [ "id_info", "a00328.html#a46a8d2c66a3a8eb114173e6f88163fd9", null ],
-    [ "irk", "a00328.html#a07fd1fbebc7504dd56072f310510ff7d", null ]
+    [ "error_type", "a00328.html#a5e8316b48a23107bf7983adeae181ee6", null ],
+    [ "hw_error_code", "a00328.html#ae3d54d4d1e511ad693f7927ea4da5d05", null ]
 ];

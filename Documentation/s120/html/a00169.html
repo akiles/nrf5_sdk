@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: bootloader_settings_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: dm_event_param_t Union Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,79 @@ $(document).ready(function(){initNavTree('a00169.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">bootloader_settings_t Struct Reference<div class="ingroups"><a class="el" href="a00429.html">Types and definitions.</a></div></div>  </div>
+<div class="title">dm_event_param_t Union Reference<div class="ingroups"><a class="el" href="a00529.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure holding bootloader settings for application and bank data.  
+<p>Event parameters.  
  <a href="a00169.html#details">More...</a></p>
 
-<p><code>#include &lt;bootloader_types.h&gt;</code></p>
+<p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:af258a4e7aa2091a87bbbf900aee3a473"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00429.html#gaa42a54966d007c04ca5fbca6775187f2">bootloader_bank_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00169.html#af258a4e7aa2091a87bbbf900aee3a473">bank_0</a></td></tr>
-<tr class="separator:af258a4e7aa2091a87bbbf900aee3a473"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48a855222210663d34f20a90f6a3f98e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00169.html#a48a855222210663d34f20a90f6a3f98e">bank_0_crc</a></td></tr>
-<tr class="separator:a48a855222210663d34f20a90f6a3f98e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10a41bfab6e5113fb16ec3e302d4d81d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00429.html#gaa42a54966d007c04ca5fbca6775187f2">bootloader_bank_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00169.html#a10a41bfab6e5113fb16ec3e302d4d81d">bank_1</a></td></tr>
-<tr class="separator:a10a41bfab6e5113fb16ec3e302d4d81d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96f71ee507a86f0f69f9fd21c4f69f42"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00169.html#a96f71ee507a86f0f69f9fd21c4f69f42">bank_0_size</a></td></tr>
-<tr class="separator:a96f71ee507a86f0f69f9fd21c4f69f42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0e4a6616d2156de4d92277ea7f0df5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00102.html">ble_gap_evt_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00169.html#af0e4a6616d2156de4d92277ea7f0df5f">p_gap_param</a></td></tr>
+<tr class="separator:af0e4a6616d2156de4d92277ea7f0df5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9ad98969539dba415cfb4cd9e0f0564"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00529.html#gaca2973e52020d6f1078540f0b1a732fa">dm_application_context_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00169.html#ae9ad98969539dba415cfb4cd9e0f0564">p_app_context</a></td></tr>
+<tr class="separator:ae9ad98969539dba415cfb4cd9e0f0564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a1372003da3dd695160653c24e3eaf8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00172.html">dm_service_context_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00169.html#a7a1372003da3dd695160653c24e3eaf8">p_service_context</a></td></tr>
+<tr class="separator:a7a1372003da3dd695160653c24e3eaf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abeb2585ead8af941c5619bbfad06b963"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00529.html#ga7e116c1567d58a325c14a1b8a9a75d48">dm_device_context_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00169.html#abeb2585ead8af941c5619bbfad06b963">p_device_context</a></td></tr>
+<tr class="separator:abeb2585ead8af941c5619bbfad06b963"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure holding bootloader settings for application and bank data. </p>
+<div class="textblock"><p>Event parameters. </p>
+<p>Defines event parameters for each of the events notified by the module. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="af258a4e7aa2091a87bbbf900aee3a473"></a>
+<a class="anchor" id="ae9ad98969539dba415cfb4cd9e0f0564"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00429.html#gaa42a54966d007c04ca5fbca6775187f2">bootloader_bank_code_t</a> bootloader_settings_t::bank_0</td>
+          <td class="memname"><a class="el" href="a00529.html#gaca2973e52020d6f1078540f0b1a732fa">dm_application_context_t</a>* dm_event_param_t::p_app_context</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Variable to store if bank 0 contains a valid application. </p>
+<p>All events that are associated with application context procedures of store, load, and deletion have this as event parameter. </p>
 
 </div>
 </div>
-<a class="anchor" id="a48a855222210663d34f20a90f6a3f98e"></a>
+<a class="anchor" id="abeb2585ead8af941c5619bbfad06b963"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t bootloader_settings_t::bank_0_crc</td>
+          <td class="memname"><a class="el" href="a00529.html#ga7e116c1567d58a325c14a1b8a9a75d48">dm_device_context_t</a>* dm_event_param_t::p_device_context</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>If bank is valid, this field will contain a valid CRC of the image. </p>
+<p>All events that are associated with device context procedures of store, load and deletion have this as event parameter. </p>
 
 </div>
 </div>
-<a class="anchor" id="a96f71ee507a86f0f69f9fd21c4f69f42"></a>
+<a class="anchor" id="af0e4a6616d2156de4d92277ea7f0df5f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t bootloader_settings_t::bank_0_size</td>
+          <td class="memname"><a class="el" href="a00102.html">ble_gap_evt_t</a>* dm_event_param_t::p_gap_param</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Size of bank0. </p>
+<p>All events that are triggered in device manager as a result of GAP events, like connection, disconnection and security procedures are accompanied with GAP parameters. </p>
 
 </div>
 </div>
-<a class="anchor" id="a10a41bfab6e5113fb16ec3e302d4d81d"></a>
+<a class="anchor" id="a7a1372003da3dd695160653c24e3eaf8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00429.html#gaa42a54966d007c04ca5fbca6775187f2">bootloader_bank_code_t</a> bootloader_settings_t::bank_1</td>
+          <td class="memname"><a class="el" href="a00172.html">dm_service_context_t</a>* dm_event_param_t::p_service_context</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Variable to store if bank 1 has been erased/prepared for new image. Bank 1 is only used in Banked Update scenario. </p>
+<p>All events that are associated with service context procedures of store, load and deletion have this as event parameter. </p>
 
 </div>
 </div>
@@ -186,8 +187,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00169.html">bootloader_settings_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:28 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00169.html">dm_event_param_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:41 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

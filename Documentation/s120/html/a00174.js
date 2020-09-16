@@ -1,5 +1,4 @@
 var a00174 =
 [
-    [ "cmd_type", "a00174.html#a4955a964032009d6b9b5cc167e758d32", null ],
-    [ "tx_done_result", "a00174.html#ac9e1ac1b373abcbd4e761600473340bc", null ]
+    [ "evt_type", "a00174.html#ad8b8284f5d85ee34da6a3db177c35d20", null ]
 ];

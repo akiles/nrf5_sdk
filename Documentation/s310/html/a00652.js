@@ -1,4 +1,5 @@
 var a00652 =
 [
-    [ "L2CAP API", "a00653.html", null ]
+    [ "nrf_clock_lfclksrc_t", "a00652.html#gabfecdd0b916a4022bd5688d4f842c473", null ],
+    [ "softdevice_assertion_handler_t", "a00652.html#gaddfb569a9b86648e642ed0d7e3a83034", null ]
 ];

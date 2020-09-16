@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Radio Test Example</title>
+<title>nRF51 SDK - S110 SoftDevice: Radio Transmitter Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,48 +97,38 @@ $(document).ready(function(){initNavTree('a00041.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Radio Test Example </div>  </div>
+<div class="title">Radio Transmitter Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Radio Test Example shows how to configure the radio as a constant RX/TX carrier, modulated TX carrier, and RX/TX sweep. The tests are controlled with simple one-letter commands via the serial port at 38400 baud. The following radio parameters can be set at any time during the tests: output power, bit rate, and channel. The time on each channel in sweep mode can also be set in steps of 1 ms from 1 ms to 99 ms.</p>
-<p>The application starts with enabling the 16MHz crystal oscillator and configuring the UART and interrupts. The main loop waits and initiates the requested command when it's received through the UART.</p>
-<h1><a class="anchor" id="nrf_radio_test_example_setup"></a>
+<div class="textblock"><p>The Radio Transmitter Example shows how to transmit data with the NRF_RADIO peripheral. The transmitter is configured to continuously send packets. The first payload byte of the packet is taken from GPIO Port 0 which can connect to the buttons on an nRFgo board for example. After transmission, the first payload byte of the packet is sent to P1 which can be used light up the LEDs on the nRF6310 board. It uses the hardware delivered in the nRF51822 Development Kit.</p>
+<p>The application starts with enabling the 16MHz crystal oscillator, configuring the GPIO and the radio. The main loop reads the data on port 0 (Buttons) and enables the radio. When an event is ready, the packet is transmitted and the value is written to the port 1 (LEDs). The radio is disabled and the events are disabled.</p>
+<h1><a class="anchor" id="nrf_dev_radio_tx_example_setup"></a>
 Setup</h1>
 <p>Instructions on how to set up the nRFgo Motherboard: <a class="el" href="a00009.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a>. <br/>
 </p>
-<p>The available one-letter commands are:<br/>
-</p>
+<p>LED assignments:</p>
 <ul>
-<li>a: Enter start channel for sweep/channel for constant carrier.</li>
-<li>b: Enter end channel for sweep.</li>
-<li>c: Start TX carrier.</li>
-<li>d: Enter time on each channel (1ms-99ms).</li>
-<li>e: Cancel sweep/carrier.</li>
-<li>m: Enter data rate.</li>
-<li>o: Start modulated TX carrier.</li>
-<li>p: Enter output power.</li>
-<li>s: Print current delay, channels and so on.</li>
-<li>r: Start RX sweep.</li>
-<li>t: Start TX sweep.</li>
-<li>x: Start RX carrier.</li>
+<li>LED 0-7 is used to show the buttons pressed.</li>
 </ul>
-<h1><a class="anchor" id="nrf_radio_test_example_testing"></a>
+<p>Button assignments:</p>
+<ul>
+<li>Button 0-7 is used to light up the corresponding LEDs on both Transmitter and Receiver board.</li>
+</ul>
+<h1><a class="anchor" id="nrf_dev_radio_tx_example_testing"></a>
 Testing</h1>
-<p>The Radio Test Example Application can be tested as follows:</p>
+<p>The Radio Transmitter example Application can be tested as follows:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Start a COM listener like PUTTY and connect to the used COM port at 38400 baud rate.</li>
-<li>The text "RF Test" should appear at the top of the terminal.</li>
-<li>Typing any of the letters described in the setup section should give an output text on the PUTTY window or start a sweep or signal.</li>
-<li>Use a spectrum analyzer to confirm the behavior of the Radio module. </li>
+<li>The Radio Receiver project must be programmed to another nRF6310 board.</li>
+<li>Press buttons on the transmitter board and the corresponding LEDs on the receiver board should be turned on. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00024.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:33 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00023.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,9 +1,6 @@
 var a00417 =
 [
-    [ "pstorage_module_param_t", "a00177.html", [
-      [ "block_count", "a00177.html#a7bb96f4e9d1b68cb94fd5c75570e5a99", null ],
-      [ "block_size", "a00177.html#a95b58714824957d4c930a5da78d7109a", null ],
-      [ "cb", "a00177.html#a3495db72b9ff587f0c9ea0ab38d5e9f8", null ]
-    ] ],
-    [ "pstorage_ntf_cb_t", "a00417.html#gaac1d429f24eb2850da6d8f8773a14c47", null ]
+    [ "RX_BUF_QUEUE_SIZE", "a00417.html#gae8e478dba1ce71687ba038123e8da2f4", null ],
+    [ "RX_BUF_SIZE", "a00417.html#ga690f985c933da2ce6fe62b6c61dfa662", null ],
+    [ "TX_BUF_SIZE", "a00417.html#ga5d3fb1970e1e98050006978a14b3d95e", null ]
 ];

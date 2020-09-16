@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: ble_ans_alert_notification_t Struct Reference</title>
+<title>nRF51 SDK - S310 SoftDevice: ble_bps_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,108 @@ $(document).ready(function(){initNavTree('a00099.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ans_alert_notification_t Struct Reference<div class="ingroups"><a class="el" href="a00664.html">Alert Notification Service Client</a></div></div>  </div>
+<div class="title">ble_bps_s Struct Reference<div class="ingroups"><a class="el" href="a00596.html">Blood Pressure Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Alert Notification structure.  
+<p>Blood Pressure Service structure. This contains various status information for the service.  
  <a href="a00099.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_ans_c.h&gt;</code></p>
+<p><code>#include &lt;ble_bps.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:afa8fc29bec3beb7c27a5b8638273c811"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00099.html#afa8fc29bec3beb7c27a5b8638273c811">alert_category</a></td></tr>
-<tr class="separator:afa8fc29bec3beb7c27a5b8638273c811"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92d6452f642f4010d2a45eaa6e2de420"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00099.html#a92d6452f642f4010d2a45eaa6e2de420">alert_category_count</a></td></tr>
-<tr class="separator:a92d6452f642f4010d2a45eaa6e2de420"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afdc318698fc9128ebe8f068b6350c4ec"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00099.html#afdc318698fc9128ebe8f068b6350c4ec">alert_msg_length</a></td></tr>
-<tr class="separator:afdc318698fc9128ebe8f068b6350c4ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8b8813b3a0e089e79b4c48d05d46001"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00099.html#aa8b8813b3a0e089e79b4c48d05d46001">p_alert_msg_buf</a></td></tr>
-<tr class="separator:aa8b8813b3a0e089e79b4c48d05d46001"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad503c598af64ae0973fcbd69c2564f6c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00596.html#ga4c7199796f540fc4ea76d6eb9cd98809">ble_bps_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00099.html#ad503c598af64ae0973fcbd69c2564f6c">evt_handler</a></td></tr>
+<tr class="separator:ad503c598af64ae0973fcbd69c2564f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08ca745c921f74e622b3226b74a5453a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00099.html#a08ca745c921f74e622b3226b74a5453a">service_handle</a></td></tr>
+<tr class="separator:a08ca745c921f74e622b3226b74a5453a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab61b1c5af5765ac4f24f617a24a81cd0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00169.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00099.html#ab61b1c5af5765ac4f24f617a24a81cd0">meas_handles</a></td></tr>
+<tr class="separator:ab61b1c5af5765ac4f24f617a24a81cd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7b6cace6c499b77b40be59b7d9ed843"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00169.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00099.html#ad7b6cace6c499b77b40be59b7d9ed843">feature_handles</a></td></tr>
+<tr class="separator:ad7b6cace6c499b77b40be59b7d9ed843"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb6ea6f96806c80017f6d80a65fa1c40"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00099.html#acb6ea6f96806c80017f6d80a65fa1c40">conn_handle</a></td></tr>
+<tr class="separator:acb6ea6f96806c80017f6d80a65fa1c40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6a6c9882bfb4ca35a22b2b46e6cc342"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00099.html#ab6a6c9882bfb4ca35a22b2b46e6cc342">feature</a></td></tr>
+<tr class="separator:ab6a6c9882bfb4ca35a22b2b46e6cc342"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Alert Notification structure. </p>
+<div class="textblock"><p>Blood Pressure Service structure. This contains various status information for the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="afa8fc29bec3beb7c27a5b8638273c811"></a>
+<a class="anchor" id="acb6ea6f96806c80017f6d80a65fa1c40"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_ans_alert_notification_t::alert_category</td>
+          <td class="memname">uint16_t ble_bps_s::conn_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Alert category to which this alert belongs. </p>
+<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
 
 </div>
 </div>
-<a class="anchor" id="a92d6452f642f4010d2a45eaa6e2de420"></a>
+<a class="anchor" id="ad503c598af64ae0973fcbd69c2564f6c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_ans_alert_notification_t::alert_category_count</td>
+          <td class="memname"><a class="el" href="a00596.html#ga4c7199796f540fc4ea76d6eb9cd98809">ble_bps_evt_handler_t</a> ble_bps_s::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of alerts in the category. </p>
+<p>Event handler to be called for handling events in the Blood Pressure Service. </p>
 
 </div>
 </div>
-<a class="anchor" id="afdc318698fc9128ebe8f068b6350c4ec"></a>
+<a class="anchor" id="ab6a6c9882bfb4ca35a22b2b46e6cc342"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_ans_alert_notification_t::alert_msg_length</td>
+          <td class="memname">uint16_t ble_bps_s::feature</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Length of optional text message send by the server. </p>
+<p>Value of Blood Pressure feature. </p>
 
 </div>
 </div>
-<a class="anchor" id="aa8b8813b3a0e089e79b4c48d05d46001"></a>
+<a class="anchor" id="ad7b6cace6c499b77b40be59b7d9ed843"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* ble_ans_alert_notification_t::p_alert_msg_buf</td>
+          <td class="memname"><a class="el" href="a00169.html">ble_gatts_char_handles_t</a> ble_bps_s::feature_handles</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to buffer containing the optional text message. </p>
+<p>Handles related to the Blood Pressure Feature characteristic. </p>
+
+</div>
+</div>
+<a class="anchor" id="ab61b1c5af5765ac4f24f617a24a81cd0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00169.html">ble_gatts_char_handles_t</a> ble_bps_s::meas_handles</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handles related to the Blood Pressure Measurement characteristic. </p>
+
+</div>
+</div>
+<a class="anchor" id="a08ca745c921f74e622b3226b74a5453a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_bps_s::service_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle of Blood Pressure Service (as provided by the BLE stack). </p>
 
 </div>
 </div>
@@ -186,8 +216,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00099.html">ble_ans_alert_notification_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:17 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00099.html">ble_bps_s</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

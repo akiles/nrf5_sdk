@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Advertising Data Encoder</title>
+<title>nRF51 SDK - S310 SoftDevice: Defines</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,118 +97,127 @@ $(document).ready(function(){initNavTree('a00654.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Advertising Data Encoder<div class="ingroups"><a class="el" href="a00715.html">BLE Libraries</a></div></div>  </div>
+<div class="title">Defines<div class="ingroups"><a class="el" href="a00540.html">SoC Library API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Function for encoding the advertising data and/or scan response data, and passing them to the stack.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00098.html">ble_advdata_uuid_list_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">UUID list type.  <a href="a00098.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00094.html">ble_advdata_conn_int_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connection interval range structure.  <a href="a00094.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00095.html">ble_advdata_manuf_data_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manufacturer specific data structure.  <a href="a00095.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00096.html">ble_advdata_service_data_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Service data structure.  <a href="a00096.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html">ble_advdata_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advertising data structure. This contains all options and data needed for encoding and setting the advertising data.  <a href="a00097.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga03c5ccf232779001be9786021b1a563b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00654.html#ga03c5ccf232779001be9786021b1a563b">ble_advdata_name_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00654.html#gga03c5ccf232779001be9786021b1a563ba6e99a7c49e28bdae76c43edce53516f7">BLE_ADVDATA_NO_NAME</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00654.html#gga03c5ccf232779001be9786021b1a563ba28f0d09500400f6210b789bdfe89a0e0">BLE_ADVDATA_SHORT_NAME</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00654.html#gga03c5ccf232779001be9786021b1a563ba63a26e22b9d6a0899edac755d0e2f488">BLE_ADVDATA_FULL_NAME</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga03c5ccf232779001be9786021b1a563b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advertising data name type. This contains the options available for the device name inside the advertising data.  <a href="a00654.html#ga03c5ccf232779001be9786021b1a563b">More...</a><br/></td></tr>
-<tr class="separator:ga03c5ccf232779001be9786021b1a563b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga180ff4057a0763688c734e98ab8d976b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00654.html#ga180ff4057a0763688c734e98ab8d976b">ble_advdata_set</a> (const <a class="el" href="a00097.html">ble_advdata_t</a> *p_advdata, const <a class="el" href="a00097.html">ble_advdata_t</a> *p_srdata)</td></tr>
-<tr class="memdesc:ga180ff4057a0763688c734e98ab8d976b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for encoding and setting the advertising data and/or scan response data.  <a href="#ga180ff4057a0763688c734e98ab8d976b">More...</a><br/></td></tr>
-<tr class="separator:ga180ff4057a0763688c734e98ab8d976b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga5907cc7ce1f01bd6113de826ed7d26bb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5907cc7ce1f01bd6113de826ed7d26bb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00654.html#ga5907cc7ce1f01bd6113de826ed7d26bb">SOC_SVC_BASE</a>&#160;&#160;&#160;0x20</td></tr>
+<tr class="memdesc:ga5907cc7ce1f01bd6113de826ed7d26bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of the lowest SVC number reserved for the SoC library. <br/></td></tr>
+<tr class="separator:ga5907cc7ce1f01bd6113de826ed7d26bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadd071bf670a2cecff60e432f9c715e9d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadd071bf670a2cecff60e432f9c715e9d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00654.html#gadd071bf670a2cecff60e432f9c715e9d">NRF_RADIO_NOTIFICATION_INACTIVE_GUARANTEED_TIME_US</a>&#160;&#160;&#160;(62)</td></tr>
+<tr class="memdesc:gadd071bf670a2cecff60e432f9c715e9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Guranteed time for application to process radio inactive notification. <br/></td></tr>
+<tr class="separator:gadd071bf670a2cecff60e432f9c715e9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1aea03ca9f54e2fc9b43734f5d40e82"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00654.html#gab1aea03ca9f54e2fc9b43734f5d40e82">SOC_ECB_KEY_LENGTH</a>&#160;&#160;&#160;(16)</td></tr>
+<tr class="separator:gab1aea03ca9f54e2fc9b43734f5d40e82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c1e2a1d66aa73d72f4f97cda84d60bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00654.html#ga7c1e2a1d66aa73d72f4f97cda84d60bb">SOC_ECB_CLEARTEXT_LENGTH</a>&#160;&#160;&#160;(16)</td></tr>
+<tr class="separator:ga7c1e2a1d66aa73d72f4f97cda84d60bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8101d58f6f2699fc2f2b70fc995968f3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00654.html#ga8101d58f6f2699fc2f2b70fc995968f3">SOC_ECB_CIPHERTEXT_LENGTH</a>&#160;&#160;&#160;(<a class="el" href="a00654.html#ga7c1e2a1d66aa73d72f4f97cda84d60bb">SOC_ECB_CLEARTEXT_LENGTH</a>)</td></tr>
+<tr class="separator:ga8101d58f6f2699fc2f2b70fc995968f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee08151dcab1d4c9e4d9e08d7cdfadb6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00654.html#gaee08151dcab1d4c9e4d9e08d7cdfadb6">SD_EVT_IRQn</a>&#160;&#160;&#160;(SWI2_IRQn)</td></tr>
+<tr class="separator:gaee08151dcab1d4c9e4d9e08d7cdfadb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9db40f61f23b1f085d329121819657bf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00654.html#ga9db40f61f23b1f085d329121819657bf">SD_EVT_IRQHandler</a>&#160;&#160;&#160;(SWI2_IRQHandler)</td></tr>
+<tr class="separator:ga9db40f61f23b1f085d329121819657bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf055e0c080d12802fc5b4383d72e806"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00654.html#gabf055e0c080d12802fc5b4383d72e806">RADIO_NOTIFICATION_IRQn</a>&#160;&#160;&#160;(SWI1_IRQn)</td></tr>
+<tr class="separator:gabf055e0c080d12802fc5b4383d72e806"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga456d5bd7eb8192fa3a0828646994587d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00654.html#ga456d5bd7eb8192fa3a0828646994587d">RADIO_NOTIFICATION_IRQHandler</a>&#160;&#160;&#160;(SWI1_IRQHandler)</td></tr>
+<tr class="separator:ga456d5bd7eb8192fa3a0828646994587d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Function for encoding the advertising data and/or scan response data, and passing them to the stack. </p>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga03c5ccf232779001be9786021b1a563b"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga456d5bd7eb8192fa3a0828646994587d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00654.html#ga03c5ccf232779001be9786021b1a563b">ble_advdata_name_type_t</a></td>
+          <td class="memname">#define RADIO_NOTIFICATION_IRQHandler&#160;&#160;&#160;(SWI1_IRQHandler)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Advertising data name type. This contains the options available for the device name inside the advertising data. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga03c5ccf232779001be9786021b1a563ba6e99a7c49e28bdae76c43edce53516f7"></a>BLE_ADVDATA_NO_NAME</em>&nbsp;</td><td class="fielddoc">
-<p>Include no device name in advertising data. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga03c5ccf232779001be9786021b1a563ba28f0d09500400f6210b789bdfe89a0e0"></a>BLE_ADVDATA_SHORT_NAME</em>&nbsp;</td><td class="fielddoc">
-<p>Include short device name in advertising data. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga03c5ccf232779001be9786021b1a563ba63a26e22b9d6a0899edac755d0e2f488"></a>BLE_ADVDATA_FULL_NAME</em>&nbsp;</td><td class="fielddoc">
-<p>Include full device name in advertising data. </p>
-</td></tr>
-</table>
+<p>The radio notification IRQ handler. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga180ff4057a0763688c734e98ab8d976b"></a>
+<a class="anchor" id="gabf055e0c080d12802fc5b4383d72e806"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_advdata_set </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00097.html">ble_advdata_t</a> *&#160;</td>
-          <td class="paramname"><em>p_advdata</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00097.html">ble_advdata_t</a> *&#160;</td>
-          <td class="paramname"><em>p_srdata</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define RADIO_NOTIFICATION_IRQn&#160;&#160;&#160;(SWI1_IRQn)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The radio notification IRQ number. </p>
 
-<p>Function for encoding and setting the advertising data and/or scan response data. </p>
-<p>This function encodes advertising data and/or scan response data based on the selections in the supplied structures, and passes the encoded data to the stack.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_advdata</td><td>Structure for specifying the content of the advertising data. Set to NULL if advertising data is not to be set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_srdata</td><td>Structure for specifying the content of the scan response data. Set to NULL if scan response data is not to be set.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, NRF_ERROR_DATA_SIZE if not all the requested data could fit into the advertising packet. The maximum size of the advertisement packet is <a class="el" href="a00720.html#ga6d6ae1b58ea2dc641e4dc30e8e2dcc0b">BLE_GAP_ADV_MAX_SIZE</a>.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>This API may override application's request to use the long name and use a short name instead. This truncation will occur in case the long name does not fit advertisement data size. Application is permitted to specify a preferred short name length in case truncation is required. For example, if the complete device name is ABCD_HRMonitor, application can specify short name length to 8 such that short device name appears as ABCD_HRM instead of ABCD_HRMo or ABCD_HRMoni etc if available size for short name is 9 or 12 respectively to have more apporpriate short name. However, it should be noted that this is just a preference that application can specify and if the preference too large to fit in Advertisement Data, this can be further truncated. </dd></dl>
+</div>
+</div>
+<a class="anchor" id="ga9db40f61f23b1f085d329121819657bf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SD_EVT_IRQHandler&#160;&#160;&#160;(SWI2_IRQHandler)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>SoftDevice Event IRQ handler. Used for both protocol events and SoC events. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaee08151dcab1d4c9e4d9e08d7cdfadb6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SD_EVT_IRQn&#160;&#160;&#160;(SWI2_IRQn)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>SoftDevice Event IRQ number. Used for both protocol events and SoC events. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga8101d58f6f2699fc2f2b70fc995968f3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SOC_ECB_CIPHERTEXT_LENGTH&#160;&#160;&#160;(<a class="el" href="a00654.html#ga7c1e2a1d66aa73d72f4f97cda84d60bb">SOC_ECB_CLEARTEXT_LENGTH</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ECB ciphertext length. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga7c1e2a1d66aa73d72f4f97cda84d60bb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SOC_ECB_CLEARTEXT_LENGTH&#160;&#160;&#160;(16)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ECB cleartext length. </p>
+
+</div>
+</div>
+<a class="anchor" id="gab1aea03ca9f54e2fc9b43734f5d40e82"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SOC_ECB_KEY_LENGTH&#160;&#160;&#160;(16)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>ECB key length. </p>
 
 </div>
 </div>
@@ -217,7 +226,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:15 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

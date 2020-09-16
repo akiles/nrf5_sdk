@@ -236,13 +236,17 @@ uint32_t app_button_disable(void)
 }
 
 
-uint32_t app_button_is_pushed(uint8_t pin_no, bool * p_is_pushed)
+uint32_t app_button_is_pushed(uint8_t button_id, bool * p_is_pushed)
 {
     uint32_t err_code;
     uint32_t active_pins;
     
-    app_button_cfg_t * p_btn = &mp_buttons[pin_no];
-
+    if (button_id > m_button_count)
+    {
+        return NRF_ERROR_INVALID_PARAM;
+    }
+    app_button_cfg_t * p_btn = &mp_buttons[button_id];
+    
     if (mp_buttons == NULL)
     {
         return NRF_ERROR_INVALID_STATE;
@@ -258,7 +262,7 @@ uint32_t app_button_is_pushed(uint8_t pin_no, bool * p_is_pushed)
     if(p_btn->active_state == APP_BUTTON_ACTIVE_LOW)
     {
         // If the pin is active low, then the pin being high means it is not pushed.
-        if(((active_pins >> pin_no) & 0x01))
+        if(((active_pins >> p_btn->pin_no) & 0x01))
         {
             *p_is_pushed = false;
         }
@@ -270,7 +274,7 @@ uint32_t app_button_is_pushed(uint8_t pin_no, bool * p_is_pushed)
     else if(p_btn->active_state == APP_BUTTON_ACTIVE_HIGH)
     {
         // If the pin is active high, then the pin being high means it is pushed.
-        if(((active_pins >> pin_no) & 0x01))
+        if(((active_pins >> p_btn->pin_no) & 0x01))
         {
             *p_is_pushed = true;
         }

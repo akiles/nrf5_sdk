@@ -363,9 +363,12 @@ uint32_t app_uart_init(const app_uart_comm_params_t * p_comm_params,
     m_event_handler = event_handler;
     m_rx_byte       = BYTE_INVALID;
 
+
     // Configure RX and TX pins.
+    nrf_gpio_pin_set(p_comm_params->tx_pin_no);
     nrf_gpio_cfg_output(p_comm_params->tx_pin_no);
-    nrf_gpio_cfg_input(p_comm_params->rx_pin_no, NRF_GPIO_PIN_NOPULL);
+    nrf_gpio_cfg_input(p_comm_params->rx_pin_no, NRF_GPIO_PIN_PULLUP);
+
 
     NRF_UART0->PSELTXD = p_comm_params->tx_pin_no;
     NRF_UART0->PSELRXD = p_comm_params->rx_pin_no;
@@ -487,30 +490,37 @@ uint32_t app_uart_init(const app_uart_comm_params_t * p_comm_params,
 
 uint32_t app_uart_get(uint8_t * p_byte)
 {
+    uint32_t err_code = NRF_SUCCESS;
+
     if (m_rx_byte == BYTE_INVALID)
     {
-        return NRF_ERROR_NOT_FOUND;
+      err_code = NRF_ERROR_NOT_FOUND;
+    }
+    else
+    {
+      *p_byte   = m_rx_byte;
+      m_rx_byte = BYTE_INVALID;
     }
 
-    *p_byte   = m_rx_byte;
-    m_rx_byte = BYTE_INVALID;
-
-    return NRF_SUCCESS;
+    return err_code;
 }
 
 
 uint32_t app_uart_put(uint8_t byte)
 {
+    uint32_t err_code = NRF_SUCCESS;
+
     if (m_current_state != UART_READY)
     {
-        return NRF_ERROR_NO_MEM;
+      err_code = NRF_ERROR_NO_MEM;
+    }
+    else
+    {
+      m_tx_byte = byte;
+      on_uart_event(ON_UART_PUT);
     }
 
-    m_tx_byte = byte;
-
-    on_uart_event(ON_UART_PUT);
-
-    return NRF_SUCCESS;
+    return err_code;
 }
 
 

@@ -1,8 +1,4 @@
 var a00074 =
 [
-    [ "conn_handle", "a00074.html#ad7c997d8d0c6e0d3d24de3ecad426645", null ],
-    [ "params", "a00074.html#a68370cb595b720c6b0b25eefdb3ea5dd", null ],
-    [ "tx_complete", "a00074.html#a0550e7a2c8b61ab27ea5a691b3f1fac4", null ],
-    [ "user_mem_release", "a00074.html#a21a25a889c763bceb2891d506331f484", null ],
-    [ "user_mem_request", "a00074.html#a4d36c1c20a1ff24a62abba8ea73c74c8", null ]
+    [ "evt_handler", "a00074.html#a4304bbf50589e7dea41870223731602d", null ]
 ];

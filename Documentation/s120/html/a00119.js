@@ -1,7 +1,8 @@
 var a00119 =
 [
-    [ "addr_count", "a00119.html#a8f7d372587ed29005dbfd515103fa6fd", null ],
-    [ "irk_count", "a00119.html#a21922578ee2df66befd41e968f8d5af1", null ],
-    [ "pp_addrs", "a00119.html#a9316d95519c47512389b4696376556d0", null ],
-    [ "pp_irks", "a00119.html#ab78ecf15e25742a5ea56377cef1a8603", null ]
+    [ "char_ext_props", "a00119.html#a0399fb7726aec8438c535400f5f1f4b1", null ],
+    [ "char_props", "a00119.html#ae68a35f9169191539d6910f11be6eced", null ],
+    [ "handle_decl", "a00119.html#a2ba0a3bc741d666e765ca29285946de8", null ],
+    [ "handle_value", "a00119.html#af595827dab88a0b110f49e47a64b45dd", null ],
+    [ "uuid", "a00119.html#a69ac665a39feea71fafac8a54ecf0a5e", null ]
 ];

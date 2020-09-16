@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: GATTS Handle Value Indication or Notification disabled</title>
+<title>nRF51 SDK - S110 SoftDevice: Device Information Service</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -96,20 +96,110 @@ $(document).ready(function(){initNavTree('a00861.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">GATTS Handle Value Indication or Notification disabled<div class="ingroups"><a class="el" href="a00847.html">Message Sequence Charts</a></div></div>  </div>
+<div class="title">Device Information Service<div class="ingroups"><a class="el" href="a00893.html">BLE Services</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<div align="center">
-<img src="msc_inline_mscgraph_46.png" alt="msc_inline_mscgraph_46" border="0" usemap="#msc_inline_mscgraph_46.map"/>
-<map name="msc_inline_mscgraph_46.map" id="msc_inline_mscgraph_46.map"></map>
+
+<p>Device Information Service module.  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00175.html">ble_dis_sys_id_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">System ID parameters.  <a href="a00175.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00174.html">ble_dis_reg_cert_data_list_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">IEEE 11073-20601 Regulatory Certification Data List Structure.  <a href="a00174.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00173.html">ble_dis_pnp_id_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">PnP ID parameters.  <a href="a00173.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00172.html">ble_dis_init_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Information Service init structure. This contains all possible characteristics needed for initialization of the service.  <a href="a00172.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga2a573ffb57010f1c6d913783684bf6e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00861.html#ga2a573ffb57010f1c6d913783684bf6e4">BLE_DIS_VENDOR_ID_SRC_BLUETOOTH_SIG</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:ga2a573ffb57010f1c6d913783684bf6e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9594abefbf537a6efdb26c8844f84ba8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00861.html#ga9594abefbf537a6efdb26c8844f84ba8">BLE_DIS_VENDOR_ID_SRC_USB_IMPL_FORUM</a>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:ga9594abefbf537a6efdb26c8844f84ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga472c83dfe2ad977d76b664095a4991cd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00861.html#ga472c83dfe2ad977d76b664095a4991cd">ble_dis_init</a> (const <a class="el" href="a00172.html">ble_dis_init_t</a> *p_dis_init)</td></tr>
+<tr class="memdesc:ga472c83dfe2ad977d76b664095a4991cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Device Information Service.  <a href="#ga472c83dfe2ad977d76b664095a4991cd">More...</a><br/></td></tr>
+<tr class="separator:ga472c83dfe2ad977d76b664095a4991cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Device Information Service module. </p>
+<p>This module implements the Device Information Service. During initialization it adds the Device Information Service to the BLE stack database. It then encodes the supplied information, and adds the curresponding characteristics.</p>
+<dl class="section note"><dt>Note</dt><dd>Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profile qualification listings, this section of source code must not be modified. </dd></dl>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga2a573ffb57010f1c6d913783684bf6e4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_DIS_VENDOR_ID_SRC_BLUETOOTH_SIG&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Vendor ID assigned by Bluetooth SIG. </p>
+
 </div>
- </div><!-- contents -->
+</div>
+<a class="anchor" id="ga9594abefbf537a6efdb26c8844f84ba8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_DIS_VENDOR_ID_SRC_USB_IMPL_FORUM&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Vendor ID assigned by USB Implementer's Forum. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga472c83dfe2ad977d76b664095a4991cd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_dis_init </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="a00172.html">ble_dis_init_t</a> *&#160;</td>
+          <td class="paramname"><em>p_dis_init</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for initializing the Device Information Service. </p>
+<p>This call allows the application to initialize the device information service. It adds the DIS service and DIS characteristics to the database, using the initial values supplied through the p_dis_init parameter. Characteristics which are not to be added, shall be set to NULL in p_dis_init.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_dis_init</td><td>The structure containing the values of characteristics needed by the service.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization of service. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:45 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:36 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

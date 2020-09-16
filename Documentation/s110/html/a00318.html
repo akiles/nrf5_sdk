@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_srv_report_ref_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: nrf_radio_request_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,49 +106,67 @@ $(document).ready(function(){initNavTree('a00318.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_srv_report_ref_t Struct Reference<div class="ingroups"><a class="el" href="a00932.html">'Common service definitions'</a></div></div>  </div>
+<div class="title">nrf_radio_request_t Struct Reference<div class="ingroups"><a class="el" href="a00936.html">Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Value of a Report Reference descriptor.  
+<p>Radio request parameters.  
  <a href="a00318.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_srv_common.h&gt;</code></p>
+<p><code>#include &lt;nrf_soc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a4db26fdff00f44138f9f684ff1dfd149"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00318.html#a4db26fdff00f44138f9f684ff1dfd149">report_id</a></td></tr>
-<tr class="separator:a4db26fdff00f44138f9f684ff1dfd149"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a765872684206db6d91ad6de596599434"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00318.html#a765872684206db6d91ad6de596599434">report_type</a></td></tr>
-<tr class="separator:a765872684206db6d91ad6de596599434"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6c3fb2f810242bef92760745327f718"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00318.html#af6c3fb2f810242bef92760745327f718">request_type</a></td></tr>
+<tr class="separator:af6c3fb2f810242bef92760745327f718"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4f9bfa9137bdf6d8e098b45c21e28c7"><td class="memItemLeft" ><a class="anchor" id="aa4f9bfa9137bdf6d8e098b45c21e28c7"></a>
+union {</td></tr>
+<tr class="memitem:a0b19a019bb93518fe08a1130737b463d"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00316.html">nrf_radio_request_earliest_t</a>&#160;&#160;&#160;<a class="el" href="a00318.html#a7ed176c3d465f35d68d00b70282bbb13">earliest</a></td></tr>
+<tr class="separator:a0b19a019bb93518fe08a1130737b463d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91576b63bec8a5d2a7ba4939b8202d06"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00317.html">nrf_radio_request_normal_t</a>&#160;&#160;&#160;<a class="el" href="a00318.html#a140d30391ab57e9fbd4e98536d687e09">normal</a></td></tr>
+<tr class="separator:a91576b63bec8a5d2a7ba4939b8202d06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4f9bfa9137bdf6d8e098b45c21e28c7"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
+<tr class="separator:aa4f9bfa9137bdf6d8e098b45c21e28c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Value of a Report Reference descriptor. </p>
-<p>This is mapping information which maps the parent characteristic to the Report ID(s) and Report Type(s) defined within a Report Map characteristic. </p>
+<div class="textblock"><p>Radio request parameters. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a4db26fdff00f44138f9f684ff1dfd149"></a>
+<a class="anchor" id="a7ed176c3d465f35d68d00b70282bbb13"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_srv_report_ref_t::report_id</td>
+          <td class="memname"><a class="el" href="a00316.html">nrf_radio_request_earliest_t</a> nrf_radio_request_t::earliest</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Non-zero value if these is more than one instance of the same Report Type </p>
+<p>Parameters for a request for a timeslot as early as possible. </p>
 
 </div>
 </div>
-<a class="anchor" id="a765872684206db6d91ad6de596599434"></a>
+<a class="anchor" id="a140d30391ab57e9fbd4e98536d687e09"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_srv_report_ref_t::report_type</td>
+          <td class="memname"><a class="el" href="a00317.html">nrf_radio_request_normal_t</a> nrf_radio_request_t::normal</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of Report characteristic (see BLE_SRV_HIDS_REPORT_TYPE) </p>
+<p>Parameters for a normal radio request. </p>
+
+</div>
+</div>
+<a class="anchor" id="af6c3fb2f810242bef92760745327f718"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t nrf_radio_request_t::request_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Type of request, see <a class="el" href="a00936.html#ga1d048df14a3eeef46aabec45e9643858">NRF_RADIO_REQUEST_TYPE</a>. </p>
 
 </div>
 </div>
@@ -157,8 +175,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00318.html">ble_srv_report_ref_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00318.html">nrf_radio_request_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:37 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

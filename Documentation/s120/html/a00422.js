@@ -1,13 +1,11 @@
 var a00422 =
 [
-    [ "Types definitions for ANT support in SoftDevice handler.", "a00419.html", "a00419" ],
-    [ "Types definitions for BLE support in SoftDevice handler.", "a00421.html", "a00421" ],
-    [ "SOFTDEVICE_HANDLER_INIT", "a00422.html#ga9ff2f68caf148f0645c9953c93aa2ec7", null ],
-    [ "SOFTDEVICE_SCHED_EVT_SIZE", "a00422.html#ga9977dc2f6256c9b2c6d23622fa4da975", null ],
-    [ "SYS_EVT_MSG_BUF_SIZE", "a00422.html#ga33d256e5c8385694b358053139fe2153", null ],
-    [ "softdevice_evt_schedule_func_t", "a00422.html#ga25f319506f20e24ad71478dce23f7f39", null ],
-    [ "sys_evt_handler_t", "a00422.html#ga5daeb8e474f0ad143566e2045233a53e", null ],
-    [ "softdevice_handler_init", "a00422.html#ga53c8f6b5556622cc42f717ddf756ca8e", null ],
-    [ "softdevice_handler_sd_disable", "a00422.html#gabbec783a89f93617d3661a819597d79c", null ],
-    [ "softdevice_sys_evt_handler_set", "a00422.html#ga200d4e1f1c70a46e6de6343f0a7d84b1", null ]
+    [ "pstorage_access_status_get", "a00422.html#ga1553a4d6d6d8ddf070d0eb4960b72d62", null ],
+    [ "pstorage_block_identifier_get", "a00422.html#gafdeeb475e4f2db19863226bc55d507b5", null ],
+    [ "pstorage_clear", "a00422.html#ga64d9814f864c3f771a99eb7574e87dd0", null ],
+    [ "pstorage_init", "a00422.html#ga729ef8b64fc0cb6bfdabb2543a565d32", null ],
+    [ "pstorage_load", "a00422.html#ga99402440650cc2d2ee63d8866760a25b", null ],
+    [ "pstorage_register", "a00422.html#ga0a57b964c8945eaca2d267835ef6688c", null ],
+    [ "pstorage_store", "a00422.html#ga12e52da12709de8d43bfb8389b80af6d", null ],
+    [ "pstorage_update", "a00422.html#ga0316f640da7481e9bd03ed51b29a3e65", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: CRC compute</title>
+<title>nRF51 SDK - S110 SoftDevice: GATT Execute Write flags</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,74 +97,28 @@ $(document).ready(function(){initNavTree('a00730.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">CRC compute<div class="ingroups"><a class="el" href="a00731.html">HCI Transport</a></div></div>  </div>
+<div class="title">GATT Execute Write flags<div class="ingroups"><a class="el" href="a00913.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>This module implements the CRC-16 calculation in the blocks.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga8708f07a37b9c76f74f69dd00db983b6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00730.html#ga8708f07a37b9c76f74f69dd00db983b6">crc16_compute</a> (const uint8_t *p_data, uint32_t size, const uint16_t *p_crc)</td></tr>
-<tr class="memdesc:ga8708f07a37b9c76f74f69dd00db983b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for calculating CRC-16 in blocks.  <a href="#ga8708f07a37b9c76f74f69dd00db983b6">More...</a><br/></td></tr>
-<tr class="separator:ga8708f07a37b9c76f74f69dd00db983b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gafad654e82156e3953a749394c4989a1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafad654e82156e3953a749394c4989a1b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_GATT_EXEC_WRITE_FLAG_PREPARED_CANCEL</b>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:gafad654e82156e3953a749394c4989a1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga40747f153640ff0bdaab2d69eef8647e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga40747f153640ff0bdaab2d69eef8647e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_GATT_EXEC_WRITE_FLAG_PREPARED_WRITE</b>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga40747f153640ff0bdaab2d69eef8647e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>This module implements the CRC-16 calculation in the blocks. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga8708f07a37b9c76f74f69dd00db983b6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t crc16_compute </td>
-          <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>p_data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint16_t *&#160;</td>
-          <td class="paramname"><em>p_crc</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for calculating CRC-16 in blocks. </p>
-<p>Feed each consecutive data block into this function, along with the current value of p_crc as returned by the previous call of this function. The first call of this function should pass NULL as the initial value of the crc in p_crc.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>The input data block for computation. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The size of the input data block in bytes. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_crc</td><td>The previous calculated CRC-16 value or NULL if first call.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The updated CRC-16 value, based on the input supplied. </dd></dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:34 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:35 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

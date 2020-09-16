@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Types definitions for ANT support in SoftDevice handler.</title>
+<title>nRF51 SDK - S310 SoftDevice: Module specific SVC and event number subranges</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,112 +97,98 @@ $(document).ready(function(){initNavTree('a00530.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Types definitions for ANT support in SoftDevice handler.<div class="ingroups"><a class="el" href="a00533.html">SoftDevice Event Handler</a></div></div>  </div>
+<div class="title">Module specific SVC and event number subranges<div class="ingroups"><a class="el" href="a00490.html">BLE SoftDevice Common</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This file contains the declarations of types required for ANT stack support. These types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined.  
+<p>Definition of SVC and event number subranges for each API module.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00088.html">ant_evt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ANT stack event type.  <a href="a00088.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gafcf5a1211ca1625c5c111871c6139d79"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00530.html#gafcf5a1211ca1625c5c111871c6139d79">ANT_STACK_EVT_MSG_BUF_SIZE</a>&#160;&#160;&#160;32</td></tr>
-<tr class="separator:gafcf5a1211ca1625c5c111871c6139d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga099e8f139d53724bf7238bb77c9e32e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00530.html#ga099e8f139d53724bf7238bb77c9e32e0">ANT_STACK_EVT_STRUCT_SIZE</a>&#160;&#160;&#160;(sizeof(<a class="el" href="a00088.html">ant_evt_t</a>))</td></tr>
-<tr class="separator:ga099e8f139d53724bf7238bb77c9e32e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2b0ca4dbb952df8f26cb58d4e7341115"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00530.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a> )(<a class="el" href="a00088.html">ant_evt_t</a> *p_ant_evt)</td></tr>
-<tr class="memdesc:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application ANT stack event handler type. <br/></td></tr>
-<tr class="separator:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gac05d1d266aef077ae88818dff3775010"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00530.html#gac05d1d266aef077ae88818dff3775010">softdevice_ant_evt_handler_set</a> (<a class="el" href="a00530.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a> ant_evt_handler)</td></tr>
-<tr class="memdesc:gac05d1d266aef077ae88818dff3775010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering for ANT events.  <a href="#gac05d1d266aef077ae88818dff3775010">More...</a><br/></td></tr>
-<tr class="separator:gac05d1d266aef077ae88818dff3775010"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1460dd3c6fd12e45fb44f424e5999894"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1460dd3c6fd12e45fb44f424e5999894"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_SVC_BASE</b>&#160;&#160;&#160;0x60</td></tr>
+<tr class="separator:ga1460dd3c6fd12e45fb44f424e5999894"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga07a1d39b3b4d51905af9187563610908"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga07a1d39b3b4d51905af9187563610908"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_SVC_LAST</b>&#160;&#160;&#160;0x6B       /* Total: 12. */</td></tr>
+<tr class="separator:ga07a1d39b3b4d51905af9187563610908"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9314db2b011127132215ede8f3e6660f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9314db2b011127132215ede8f3e6660f"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_RESERVED_SVC_BASE</b>&#160;&#160;&#160;0x6C</td></tr>
+<tr class="separator:ga9314db2b011127132215ede8f3e6660f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga93fe9ee6a36cc137bfe6564bc5f378a7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga93fe9ee6a36cc137bfe6564bc5f378a7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_RESERVED_SVC_LAST</b>&#160;&#160;&#160;0x6F       /* Total: 4. */</td></tr>
+<tr class="separator:ga93fe9ee6a36cc137bfe6564bc5f378a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad3d4ea835e2700bc646b5771a5efb2f5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad3d4ea835e2700bc646b5771a5efb2f5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_GAP_SVC_BASE</b>&#160;&#160;&#160;0x70</td></tr>
+<tr class="separator:gad3d4ea835e2700bc646b5771a5efb2f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0fa665dc65a10489ee6be15dfe9f4ea0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0fa665dc65a10489ee6be15dfe9f4ea0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_GAP_SVC_LAST</b>&#160;&#160;&#160;0x8F       /* Total: 32. */</td></tr>
+<tr class="separator:ga0fa665dc65a10489ee6be15dfe9f4ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac96306083b8e790c654348f3c304c7e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac96306083b8e790c654348f3c304c7e6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_GATTC_SVC_BASE</b>&#160;&#160;&#160;0x90</td></tr>
+<tr class="separator:gac96306083b8e790c654348f3c304c7e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga549e663ff1cf40eb8f3bbfa6160a4cf2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga549e663ff1cf40eb8f3bbfa6160a4cf2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_GATTC_SVC_LAST</b>&#160;&#160;&#160;0x9F       /* Total: 16. */</td></tr>
+<tr class="separator:ga549e663ff1cf40eb8f3bbfa6160a4cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga696d8756d643b1c4718f6eac14df49d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga696d8756d643b1c4718f6eac14df49d0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_GATTS_SVC_BASE</b>&#160;&#160;&#160;0xA0</td></tr>
+<tr class="separator:ga696d8756d643b1c4718f6eac14df49d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadee6ad3db763d31a4a0eeefdaa19d2cd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadee6ad3db763d31a4a0eeefdaa19d2cd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_GATTS_SVC_LAST</b>&#160;&#160;&#160;0xAF       /* Total: 16. */</td></tr>
+<tr class="separator:gadee6ad3db763d31a4a0eeefdaa19d2cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6a6fd8143cb2420fbf4149daf78c7e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab6a6fd8143cb2420fbf4149daf78c7e9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_L2CAP_SVC_BASE</b>&#160;&#160;&#160;0xB0</td></tr>
+<tr class="separator:gab6a6fd8143cb2420fbf4149daf78c7e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaada564cfd6ca6edf1c45eda42a861822"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaada564cfd6ca6edf1c45eda42a861822"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_L2CAP_SVC_LAST</b>&#160;&#160;&#160;0xBF       /* Total: 16. */</td></tr>
+<tr class="separator:gaada564cfd6ca6edf1c45eda42a861822"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab29373292f05fce69233a4ab4dec9e85"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab29373292f05fce69233a4ab4dec9e85"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_EVT_INVALID</b>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:gab29373292f05fce69233a4ab4dec9e85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga136cf514347dab9c68cc0450bfd02594"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga136cf514347dab9c68cc0450bfd02594"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_EVT_BASE</b>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga136cf514347dab9c68cc0450bfd02594"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf426f99e0319d1a77c9d73bef5a77fce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf426f99e0319d1a77c9d73bef5a77fce"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_EVT_LAST</b>&#160;&#160;&#160;0x0F       /* Total: 15. */</td></tr>
+<tr class="separator:gaf426f99e0319d1a77c9d73bef5a77fce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga621644213e30ea5431aec45fee333dfd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga621644213e30ea5431aec45fee333dfd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_GAP_EVT_BASE</b>&#160;&#160;&#160;0x10</td></tr>
+<tr class="separator:ga621644213e30ea5431aec45fee333dfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca97fe53dd6aa24cd5de9e09f8e7c2d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaca97fe53dd6aa24cd5de9e09f8e7c2d6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_GAP_EVT_LAST</b>&#160;&#160;&#160;0x2F       /* Total: 32. */</td></tr>
+<tr class="separator:gaca97fe53dd6aa24cd5de9e09f8e7c2d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa72efefa1900595ba9ffd66a66d6b63a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa72efefa1900595ba9ffd66a66d6b63a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_GATTC_EVT_BASE</b>&#160;&#160;&#160;0x30</td></tr>
+<tr class="separator:gaa72efefa1900595ba9ffd66a66d6b63a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b6c3c8dffebc1e4d583b4f4d40a6e50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9b6c3c8dffebc1e4d583b4f4d40a6e50"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_GATTC_EVT_LAST</b>&#160;&#160;&#160;0x4F       /* Total: 32. */</td></tr>
+<tr class="separator:ga9b6c3c8dffebc1e4d583b4f4d40a6e50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga107c9ecf24c2e85d521284b1851e039b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga107c9ecf24c2e85d521284b1851e039b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_GATTS_EVT_BASE</b>&#160;&#160;&#160;0x50</td></tr>
+<tr class="separator:ga107c9ecf24c2e85d521284b1851e039b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac85948d1686ed46abee84f672a8f9b1e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac85948d1686ed46abee84f672a8f9b1e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_GATTS_EVT_LAST</b>&#160;&#160;&#160;0x6F       /* Total: 32. */</td></tr>
+<tr class="separator:gac85948d1686ed46abee84f672a8f9b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafe55d4e7505467d4a3b5151447e8384c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafe55d4e7505467d4a3b5151447e8384c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_L2CAP_EVT_BASE</b>&#160;&#160;&#160;0x70</td></tr>
+<tr class="separator:gafe55d4e7505467d4a3b5151447e8384c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga42ced9aa990ee243dc51551d65682293"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga42ced9aa990ee243dc51551d65682293"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_L2CAP_EVT_LAST</b>&#160;&#160;&#160;0x8F       /* Total: 32.  */</td></tr>
+<tr class="separator:ga42ced9aa990ee243dc51551d65682293"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>This file contains the declarations of types required for ANT stack support. These types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gafcf5a1211ca1625c5c111871c6139d79"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ANT_STACK_EVT_MSG_BUF_SIZE&#160;&#160;&#160;32</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of ANT event message buffer. This will be provided to the SoftDevice while fetching an event. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga099e8f139d53724bf7238bb77c9e32e0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ANT_STACK_EVT_STRUCT_SIZE&#160;&#160;&#160;(sizeof(<a class="el" href="a00088.html">ant_evt_t</a>))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of the <a class="el" href="a00088.html">ant_evt_t</a> structure. This will be used by the softdevice_handler.h to internal event buffer size needed. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gac05d1d266aef077ae88818dff3775010"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t softdevice_ant_evt_handler_set </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00530.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a>&#160;</td>
-          <td class="paramname"><em>ant_evt_handler</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for registering for ANT events. </p>
-<p>The application should use this function to register for receiving ANT events from the SoftDevice. If the application does not call this function, then any ANT event that may be generated by the SoftDevice will NOT be fetched. Once the application has registered for the events, it is not possible to possible to cancel the registration. However, it is possible to register a different function for handling the events at any point of time.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ant_evt_handler</td><td>Function to be called for each received ANT event.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Successful registration. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Null pointer provided as input. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
+<p>Definition of SVC and event number subranges for each API module. </p>
+<dl class="section note"><dt>Note</dt><dd>SVCs and event numbers are split into subranges for each API module. Each module receives its entire allocated range of SVC calls, whether implemented or not, but return BLE_ERROR_NOT_SUPPORTED for unimplemented or undefined calls in its range.</dd></dl>
+<p>Note that the symbols BLE_&lt;module&gt;_SVC_LAST is the end of the allocated SVC range, rather than the last SVC function call actually defined and implemented.</p>
+<p>Specific SVC and event values are defined in each module's ble_&lt;module&gt;.h file, which defines names of each individual SVC code based on the range start value. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:00 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:46 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

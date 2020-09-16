@@ -1,9 +1,7 @@
 var a00111 =
 [
-    [ "conn_handle", "a00111.html#acb6ea6f96806c80017f6d80a65fa1c40", null ],
-    [ "evt_handler", "a00111.html#ad503c598af64ae0973fcbd69c2564f6c", null ],
-    [ "feature", "a00111.html#ab6a6c9882bfb4ca35a22b2b46e6cc342", null ],
-    [ "feature_handles", "a00111.html#ad7b6cace6c499b77b40be59b7d9ed843", null ],
-    [ "meas_handles", "a00111.html#ab61b1c5af5765ac4f24f617a24a81cd0", null ],
-    [ "service_handle", "a00111.html#a08ca745c921f74e622b3226b74a5453a", null ]
+    [ "product_id", "a00111.html#aa0d1f51b878c90d2ee68e8c332194345", null ],
+    [ "product_version", "a00111.html#a39d73de0dca55716ebcaed3ecf7a43e9", null ],
+    [ "vendor_id", "a00111.html#a06800d391cc463d5be9e1a7987e04c78", null ],
+    [ "vendor_id_source", "a00111.html#af3a10730991ad81e94ce05ff3dfdb6e3", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: BLE Peripheral</title>
+<title>nRF51 SDK - S110 SoftDevice: BLE S110 GATTS Events</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,85 +97,316 @@ $(document).ready(function(){initNavTree('a00091.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BLE Peripheral </div>  </div>
+<div class="title">BLE S110 GATTS Events </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Example applications implementing BLE profiles and demonstrating the use of BLE services.</p>
-<p>We have two types of example application designs:</p>
-<ul>
-<li><b>Using Scheduler</b>: Events are passed from interrupt level to the main loop (thread mode) using a <a class="el" href="a00725.html">Scheduler</a>.</li>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#nrf51_evt_write_encoding">0x50 - BLE_GATTS_EVT_WRITE</a><ul><li class="level2"><a href="#nrf51_evt_write_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_evt_write_encoding_sub_d">Encoding of GATTS Write event</a></li>
+<li class="level2"><a href="#nrf51_evt_write_encoding_sub_e">Encoding of Context</a></li>
 </ul>
-<ul>
-<li><b>App Low only</b>: All service and application code executes in App Low interrupt level.</li>
+</li>
+<li class="level1"><a href="#nrf51_evt_rw_authorize_request">0x51 - BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST</a><ul><li class="level2"><a href="#nrf51_evt_rw_authorize_request_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_evt_rw_authorize_request_sub_d">Encoding of GATTS RW Authorize Request event - Read</a></li>
+<li class="level2"><a href="#nrf51_evt_rw_authorize_request_sub_e">Encoding of GATTS RW Authorize Request event - Write</a></li>
+<li class="level2"><a href="#nrf51_evt_rw_authorize_request_sub_f">Encoding of Attribute Context</a></li>
 </ul>
-<p>In both designs, the example applications have many similarities:</p>
-<ul>
-<li><b>Main function</b>: The main function consists of a number of init function calls, followed by a small main loop. In an "App Low only" application, the main loop only handles power management. In Scheduler applications, the main loop contains a call to app_sched_schedule() in addition to the power management.</li>
+</li>
+<li class="level1"><a href="#nrf51_evt_sys_attr_missing_encoding">0x52 - BLE_GATTS_EVT_SYS_ATTR_MISSING</a><ul><li class="level2"><a href="#nrf51_evt_sys_attr_missing_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_evt_sys_attr_missing_encoding_sub_d">Encoding of GATTS System Attributes Missing event</a></li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>For more information of low power modes used in the example applications, see <a class="el" href="a00082.html#power_mgmt">Power Management</a> section in the documentation of Power profiling example.</dd></dl>
-<ul>
-<li><b>Service initialization</b>: All applications contain a function named services_init. This function will initialize all services to be used by the application.</li>
+</li>
+<li class="level1"><a href="#nrf51_gatts_evt_hvc_encoding">0x53 - BLE_GATTS_EVT_HVC</a><ul><li class="level2"><a href="#nrf51_gatts_evt_hvc_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_gatts_evt_hvc_encoding_sub_a">Encoding of BLE GATTS HVC event</a></li>
 </ul>
-<ul>
-<li><b>BLE stack interrupt handler</b>: All applications include the ble_stack_handler module, which contains a BLE stack interrupt handler (SWI2_IRQHandler). This interrupt handler will be called each time the stack wants to pass an event to the application. The handler reads the stack event, and passes the event to the application through a callback function. In applications using the Scheduler, this callback function is always named ble_evt_schedule(), and in applications not using the Scheduler, it is always named ble_evt_dispatch(). The callback function dispatches the event to the BLE stack event handler of all its services and modules having such a handler (either directly, or through the Scheduler). Optionally, it may also dispatch the event to an application specific BLE stack event handler.</li>
+</li>
+<li class="level1"><a href="#nrf51_gatts_evt_sc_confirm_encoding">0x54 - BLE_GATTS_EVT_SC_CONFIRM</a><ul><li class="level2"><a href="#nrf51_gatts_evt_sc_confirm_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_gatts_evt_sc_confirm_encoding_sub_a">Encoding of BLE GATTS SC Confirm event</a></li>
 </ul>
-<ul>
-<li><b>Service BLE stack event handlers</b>: Services may implement their own BLE stack event handlers. These must be called when SWI2_IRQHandler (in ble_stack_handler) receives a BLE event (see previous point). The handlers will react to events that are relevant to the service, while ignoring all others.</li>
-</ul>
-<ul>
-<li><b>Application BLE stack event handler</b>: Optionally the application may implement its own BLE stack event handler. This must be called when SWI2_IRQHandler (in ble_stack_handler) receives a BLE event. The handler will react to events that are relevant to the application, while ignoring all others.</li>
-</ul>
-<ul>
-<li><b>Service event handlers</b>: The application may provide event handlers to services, letting the service inform the application about events inside the service. For some services this is optional, while for others it is mandatory.</li>
-</ul>
-<ul>
-<li><b>Service error handlers</b>: To some services, the application may provide an error handler, letting the service inform the application about errors.</li>
-</ul>
-<ul>
-<li><b>Assert handler</b>: BLE applications must implement an assert handler callback function named assert_nrf_callback. This assert handler function will be passed to the S110 SoftDevice during system initialization using <a class="el" href="a01001.html#ga26ecfde6eee7363f88bed8a8b711122a">sd_softdevice_enable</a>. In the BLE Peripheral example applications the assert_nrf_callback is propagating all asserts to the <b>app_error_handler</b>. If different actions are required for application error and BLE S110 SoftDevice asserts a dedicated <b>assert_nrf_callback</b> should be implemented.</li>
-</ul>
-<ul>
-<li><b>Error handler</b>: Applications must implement an error handler callback function named app_error_handler. This is called directly from the application <a class="el" href="a00722.html#gace6d059863761677dae5a6b1456a34ba">APP_ERROR_HANDLER</a> macro (implemented in app_error.h). And indirectly from <a class="el" href="a00722.html#ga82d00a810dcea7dcc6af469461fb254c">APP_ERROR_CHECK</a> and <a class="el" href="a00722.html#ga9e67d9f4978caa34040b31f8fb9d4f58">APP_ERROR_CHECK_BOOL</a>.</li>
-</ul>
-<ul>
-<li><b>LEDs common to all applications written to work on the nRFgo Motherboard (the applications inside nrf6310 folder) except <a class="el" href="a00082.html">Power Profiling Application</a> :</b><ul>
-<li>LED 0: Advertising</li>
-<li>LED 1: Connected</li>
-<li>LED 7: Asserted (i.e. an assert check in the application has failed)</li>
+</li>
+<li class="level1"><a href="#nrf51_gatts_evt_timeout_encoding">0x55 - BLE_GATTS_EVT_TIMEOUT</a><ul><li class="level2"><a href="#nrf51_gatts_evt_timeout_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_gatts_evt_timeout_encoding_sub_a">Encoding of BLE GATTS Timeout event</a></li>
 </ul>
 </li>
 </ul>
-<ul>
-<li><b>Behavior when maximum number of bonds is reached</b>: All applications that support bonding use the bond manager module. <b>When the bond manager notifies the application that it cannot store a newly bonded master into the flash, the application will assert</b>. When this happens, allow the device to go into System Off mode and then press Button 1. This will wake up the application and clear all existing bonds. The bonds can also be cleared by power-cycling the board by keeping the Button 1 pressed.</li>
-</ul>
-<p>In an application using the Scheduler, instead of calling service/application event handlers directly from the ble_stack_handler callback function, the callback function passes "wrapper" events to the Scheduler, and the "wrapper" event handler will call the service/application event handlers, thus making all service/application event handlers execute in thread mode.</p>
-<p>When initializing the <a class="el" href="a00726.html">Application Timer</a> module, applications using the <a class="el" href="a00725.html">Scheduler</a> must supply a pointer to the app_sched_timer_event_schedule() function to <a class="el" href="a00726.html#ga96087520ca79dfa28fb6ba6bb562a88f" title="Function for initializing the timer module.">app_timer_init()</a>. This function will transfer execution of timer timeout handlers to the main loop by using the <a class="el" href="a00725.html">Scheduler</a>.</p>
-<p>See ble_sdk_apps_seq_diagrams for illustrations showing the flow of events for various application scenarios, both with and without the Scheduler.</p>
-<p>Examples:</p>
-<p><a class="el" href="a00077.html">Heart Rate Application</a></p>
-<p><a class="el" href="a00078.html">Heart Rate Application for Eval Board</a></p>
-<p><a class="el" href="a00074.html">Multiprotocol Application</a></p>
-<p><a class="el" href="a00073.html">Blood Glucose Application</a></p>
-<p><a class="el" href="a00072.html">Cycling Speed and Cadence Application</a></p>
-<p><a class="el" href="a00071.html">Blood Pressure Application</a></p>
-<p><a class="el" href="a00068.html">Alert Notification Application</a></p>
-<p><a class="el" href="a00075.html">HID Keyboard Application</a></p>
-<p><a class="el" href="a00076.html">HID Mouse Application</a></p>
-<p><a class="el" href="a00079.html">Health Thermometer Application</a></p>
-<p><a class="el" href="a00080.html">Proximity Application</a></p>
-<p><a class="el" href="a00081.html">Proximity Application for Eval Board</a></p>
-<p><a class="el" href="a00082.html">Power Profiling Application</a></p>
-<p><a class="el" href="a00083.html">Running Speed and Cadence Application</a></p>
-<p><a class="el" href="a00084.html">Template Application</a></p>
-<p><a class="el" href="a00069.html">Beacon Application</a></p>
-<p><a class="el" href="a00070.html">Beacon Application for Eval Board</a> </p>
+</div>
+<div class="textblock"><h1><a class="anchor" id="nrf51_evt_write_encoding"></a>
+0x50 - BLE_GATTS_EVT_WRITE</h1>
+<h2><a class="anchor" id="nrf51_evt_write_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00921.html#ggae537647902af1b05c1e32f12d6b401c7aa68b7764f5264ff092d2ad17851355ed">BLE_GATTS_EVT_WRITE</a> packet.</p>
+<p>Event ID = 0x50 for BLE_GATTS_EVT_WRITE</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The BLE GAP event contains a connection handle, and for the BLE GATTS Write event, the <a class="el" href="a00246.html">ble_gatts_evt_write_t</a> is encoded after connection handle as seen in Figure 2.</p>
+<p>The order of the encoding is: </p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00244.html#abeb8d79046f5ed809e6ac8b5fd40614d">ble_gatts_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Attribute Handle </td><td>see <a class="el" href="a00246.html#ae0637f8a8c322380f80f113edc931751">ble_gatts_evt_write_t::handle</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Write Operation </td><td>see <a class="el" href="a00246.html#a4e27117bb9e805b03a2c198b0684c621">ble_gatts_evt_write_t::op</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Service UUID </td><td>UUID Value </td></tr>
+<tr>
+<td>1 byte </td><td>Service UUID Type </td><td>UUID Type </td></tr>
+<tr>
+<td>2 bytes </td><td>Char UUID </td><td>Characteristic UUID if applicable </td></tr>
+<tr>
+<td>1 byte </td><td>Char UUID Type </td><td>Characteristic UUID Type if applicable (BLE_UUID_TYPE_UNKNOWN if N/A) </td></tr>
+<tr>
+<td>2 bytes </td><td>Desc UUID </td><td>Descriptor UUID if applicable </td></tr>
+<tr>
+<td>1 byte </td><td>Desc UUID Type </td><td>Descriptor UUID Type if applicable (BLE_UUID_TYPE_UNKNOWN if N/A) </td></tr>
+<tr>
+<td>2 bytes </td><td>Service Handle </td><td>Handle Value </td></tr>
+<tr>
+<td>2 bytes </td><td>Value Handle </td><td>Characteristic Handle if applicable (BLE_GATT_HANDLE_INVALID if N/A) </td></tr>
+<tr>
+<td>1 byte </td><td>Attribute Type </td><td>see <a class="el" href="a00739.html">GATT Server Attribute Types</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Offset </td><td>see <a class="el" href="a00246.html#afc84657816fd23a1e7c5f4b0e848e69d">ble_gatts_evt_write_t::offset</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Data Length </td><td>see <a class="el" href="a00246.html#a56b5ec3ad2054c52588721d6273eb109">ble_gatts_evt_write_t::len</a> </td></tr>
+<tr>
+<td>0...'Data Length' bytes </td><td>Data </td><td>see <a class="el" href="a00246.html#abe4bd839db7c40829ccdbff3d1f79a57">ble_gatts_evt_write_t::data</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_evt_write_encoding_sub_d"></a>
+Encoding of GATTS Write event</h2>
+<div class="image">
+<img src="event_gatts_write_packet.png" alt="event_gatts_write_packet.png"/>
+<div class="caption">
+Figure 1: Encoding of GATTS Write event.</div></div>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_evt_write_encoding_sub_e"></a>
+Encoding of Context</h2>
+<div class="image">
+<img src="event_gatts_write_packet_context.png" alt="event_gatts_write_packet_context.png"/>
+<div class="caption">
+Figure 2: Encoding of Context inside a GATTS Write event.</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="nrf51_evt_rw_authorize_request"></a>
+0x51 - BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST</h1>
+<h2><a class="anchor" id="nrf51_evt_rw_authorize_request_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00921.html#ggae537647902af1b05c1e32f12d6b401c7a333a0e896f77ea1c7f9a0e1e11f8240d">BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST</a> packet.</p>
+<p>Event ID = 0x51 for BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The BLE GAP event contains a connection handle, and for the BLE GATTS RW Authorize Request event, the <a class="el" href="a00242.html">ble_gatts_evt_rw_authorize_request_t</a> is encoded after connection handle as seen in Figure 1 and Figure 2.</p>
+<p>Read authorization the order of the encoding is:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00244.html#abeb8d79046f5ed809e6ac8b5fd40614d">ble_gatts_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Authorization Type </td><td>see <a class="el" href="a00242.html#a8de6fad49332e37d86887303f2bc28a8">ble_gatts_evt_rw_authorize_request_t::type</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Attribute Handle </td><td>see <a class="el" href="a00241.html#a79c55f70b9d10f1e11b35bb2cc13fdbd">ble_gatts_evt_read_t::handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Service UUID </td><td>UUID Value </td></tr>
+<tr>
+<td>1 byte </td><td>Service UUID Type </td><td>UUID Type </td></tr>
+<tr>
+<td>2 bytes </td><td>Char UUID </td><td>Characteristic UUID if applicable </td></tr>
+<tr>
+<td>1 byte </td><td>Char UUID Type </td><td>Characteristic UUID Type if applicable (BLE_UUID_TYPE_UNKNOWN if N/A) </td></tr>
+<tr>
+<td>2 bytes </td><td>Desc UUID </td><td>Descriptor UUID if applicable </td></tr>
+<tr>
+<td>1 byte </td><td>Desc UUID Type </td><td>Descriptor UUID Type if applicable (BLE_UUID_TYPE_UNKNOWN if N/A) </td></tr>
+<tr>
+<td>2 bytes </td><td>Service Handle </td><td>Handle Value </td></tr>
+<tr>
+<td>2 bytes </td><td>Value Handle </td><td>Characteristic Handle if applicable (BLE_GATT_HANDLE_INVALID if N/A) </td></tr>
+<tr>
+<td>1 byte </td><td>Attribute Type </td><td>see <a class="el" href="a00739.html">GATT Server Attribute Types</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Offset </td><td>Offset for the write operation </td></tr>
+</table>
+<p><br/>
+</p>
+<p>Write authorization the order of the encoding is:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00244.html#abeb8d79046f5ed809e6ac8b5fd40614d">ble_gatts_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Authorization Type </td><td>see <a class="el" href="a00242.html#a8de6fad49332e37d86887303f2bc28a8">ble_gatts_evt_rw_authorize_request_t::type</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Attribute Handle </td><td>see <a class="el" href="a00246.html#ae0637f8a8c322380f80f113edc931751">ble_gatts_evt_write_t::handle</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Write Operation </td><td>Type of write operation, see <a class="el" href="a00740.html">GATT Server Operations</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Service UUID </td><td>UUID Value </td></tr>
+<tr>
+<td>1 byte </td><td>Service UUID Type </td><td>UUID Type </td></tr>
+<tr>
+<td>2 bytes </td><td>Char UUID </td><td>Characteristic UUID if applicable </td></tr>
+<tr>
+<td>1 byte </td><td>Char UUID Type </td><td>Characteristic UUID Type if applicable (BLE_UUID_TYPE_UNKNOWN if N/A) </td></tr>
+<tr>
+<td>2 bytes </td><td>Desc UUID </td><td>Descriptor UUID if applicable </td></tr>
+<tr>
+<td>1 byte </td><td>Desc UUID Type </td><td>Descriptor UUID Type if applicable (BLE_UUID_TYPE_UNKNOWN if N/A) </td></tr>
+<tr>
+<td>2 bytes </td><td>Service Handle </td><td>Handle Value </td></tr>
+<tr>
+<td>2 bytes </td><td>Value Handle </td><td>Characteristic Handle if applicable (BLE_GATT_HANDLE_INVALID if N/A) </td></tr>
+<tr>
+<td>1 byte </td><td>Attribute Type </td><td>see <a class="el" href="a00739.html">GATT Server Attribute Types</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Offset </td><td>Offset for the write operation </td></tr>
+<tr>
+<td>2 bytes </td><td>Data Length </td><td>Length of the incoming data </td></tr>
+<tr>
+<td>0...'Data Length' bytes </td><td>Data </td><td>Incoming data, variable length </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_evt_rw_authorize_request_sub_d"></a>
+Encoding of GATTS RW Authorize Request event - Read</h2>
+<div class="image">
+<img src="gatts_event_rw_authorize_request_dec_read.png" alt="gatts_event_rw_authorize_request_dec_read.png"/>
+<div class="caption">
+Figure 1: Encoding of GATTS RW Authorize Request event.</div></div>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_evt_rw_authorize_request_sub_e"></a>
+Encoding of GATTS RW Authorize Request event - Write</h2>
+<div class="image">
+<img src="gatts_event_rw_authorize_request_dec_write.png" alt="gatts_event_rw_authorize_request_dec_write.png"/>
+<div class="caption">
+Figure 2: Encoding of GATTS RW Authorize Request event.</div></div>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_evt_rw_authorize_request_sub_f"></a>
+Encoding of Attribute Context</h2>
+<div class="image">
+<img src="event_gatts_write_packet_context.png" alt="event_gatts_write_packet_context.png"/>
+<div class="caption">
+Figure 3: Encoding of Context inside a GATTS RW Authorize Request event.</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="nrf51_evt_sys_attr_missing_encoding"></a>
+0x52 - BLE_GATTS_EVT_SYS_ATTR_MISSING</h1>
+<h2><a class="anchor" id="nrf51_evt_sys_attr_missing_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00921.html#ggae537647902af1b05c1e32f12d6b401c7ae3776204f11a583e105aed0e477601da">BLE_GATTS_EVT_SYS_ATTR_MISSING</a> packet.</p>
+<p>Event ID = 0x52 for BLE_GATTS_EVT_SYS_ATTR_MISSING</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The BLE GATTS event contains a connection handle, and for the BLE GATTS System Attributes Missing event, the <a class="el" href="a00243.html">ble_gatts_evt_sys_attr_missing_t</a> is encoded after connection handle as seen in Figure 1.</p>
+<p>The order of the encoding is: </p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00244.html#abeb8d79046f5ed809e6ac8b5fd40614d">ble_gatts_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Hint </td><td>see ble_gatts_evt_sys_attr_missing_t::hint </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_evt_sys_attr_missing_encoding_sub_d"></a>
+Encoding of GATTS System Attributes Missing event</h2>
+<div class="image">
+<img src="event_sys_attr_missing.png" alt="event_sys_attr_missing.png"/>
+<div class="caption">
+Figure 1: Encoding of GATTS System Attributes Missing event.</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="nrf51_gatts_evt_hvc_encoding"></a>
+0x53 - BLE_GATTS_EVT_HVC</h1>
+<h2><a class="anchor" id="nrf51_gatts_evt_hvc_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00921.html#ggae537647902af1b05c1e32f12d6b401c7af6a065c5c7e0682989ddd6cc557e0ffa">BLE_GATTS_EVT_HVC</a> packet.</p>
+<p>Event ID = 0x53 for BLE_GATTS_EVT_HVC</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The BLE GATTS event contains a connection handle, and for the BLE GATTS HVC event, the <a class="el" href="a00240.html">ble_gatts_evt_hvc_t</a> is encoded after connection handle as seen in Figure 1.</p>
+<p>The order of the encoding is: </p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00244.html#abeb8d79046f5ed809e6ac8b5fd40614d">ble_gatts_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Attribute Handle </td><td>see <a class="el" href="a00240.html#ae09ecd90f134500a4297c4be1063985b">ble_gatts_evt_hvc_t::handle</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gatts_evt_hvc_encoding_sub_a"></a>
+Encoding of BLE GATTS HVC event</h2>
+<div class="image">
+<img src="gatts_event_hvc.png" alt="gatts_event_hvc.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE GATTS HVC event.</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="nrf51_gatts_evt_sc_confirm_encoding"></a>
+0x54 - BLE_GATTS_EVT_SC_CONFIRM</h1>
+<h2><a class="anchor" id="nrf51_gatts_evt_sc_confirm_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00921.html#ggae537647902af1b05c1e32f12d6b401c7a052eae0b3eb431b7e984107b2308ad50">BLE_GATTS_EVT_SC_CONFIRM</a> packet.</p>
+<p>Event ID = 0x54 for BLE_GATTS_EVT_SC_CONFIRM</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>BLE_GATTS_EVT_SC_CONFIRM event is encoded in a following order (also presented in Figure 1):</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00244.html#abeb8d79046f5ed809e6ac8b5fd40614d">ble_gatts_evt_t::conn_handle</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gatts_evt_sc_confirm_encoding_sub_a"></a>
+Encoding of BLE GATTS SC Confirm event</h2>
+<div class="image">
+<img src="event_gatts_evt_sc_confirm.png" alt="event_gatts_evt_sc_confirm.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE GATTS SC Confirm event.</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="nrf51_gatts_evt_timeout_encoding"></a>
+0x55 - BLE_GATTS_EVT_TIMEOUT</h1>
+<h2><a class="anchor" id="nrf51_gatts_evt_timeout_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00921.html#ggae537647902af1b05c1e32f12d6b401c7a6a06b6ca6c9e46ed778b79522867301c">BLE_GATTS_EVT_TIMEOUT</a> packet.</p>
+<p>Event ID = 0x55 for BLE_GATTS_EVT_TIMEOUT</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The BLE GATTS event contains a connection handle, and for the BLE GATTS Timeout event, the <a class="el" href="a00245.html">ble_gatts_evt_timeout_t</a> is encoded after connection handle as seen in Figure 1.</p>
+<p>The order of the encoding is: </p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00244.html#abeb8d79046f5ed809e6ac8b5fd40614d">ble_gatts_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Timeout Source </td><td>see <a class="el" href="a00245.html#a400157c31004116309fd4c33afeedb72">ble_gatts_evt_timeout_t::src</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gatts_evt_timeout_encoding_sub_a"></a>
+Encoding of BLE GATTS Timeout event</h2>
+<div class="image">
+<img src="gatts_event_timeout.png" alt="gatts_event_timeout.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE GATTS Timeout event.</div></div>
+<p><br/>
+ </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:33 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00083.html">S110 Serialization</a></li><li class="navelem"><a class="el" href="a00086.html">BLE Serialization Codecs</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

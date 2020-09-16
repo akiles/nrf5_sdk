@@ -1,6 +1,4 @@
 var a00090 =
 [
-    [ "auth", "a00090.html#a5f21ad24fa7cce2e56ae61beccdcb0b8", null ],
-    [ "ltk", "a00090.html#a545fe8321eef3b128572882aa3997f7f", null ],
-    [ "ltk_len", "a00090.html#a91966f65c4bb6988f847a19ce0b1541e", null ]
+    [ "key_type", "a00090.html#a29472c8dcb6c9298ca6b007b633a06a6", null ]
 ];

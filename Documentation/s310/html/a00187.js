@@ -1,7 +1,5 @@
 var a00187 =
 [
-    [ "cccd_handle", "a00187.html#a7764817bceb1a13dde2a2d614aaff900", null ],
-    [ "sccd_handle", "a00187.html#a0ebe446f83e8675203f224b1796939fa", null ],
-    [ "user_desc_handle", "a00187.html#a263781c226cad6bfeeb894e133b19c55", null ],
-    [ "value_handle", "a00187.html#a685865a59e73158fd661e9d64407e9d9", null ]
+    [ "context", "a00187.html#a22ff0b5a0e6b034b6021996257ed1161", null ],
+    [ "meas", "a00187.html#a02b5dfbcd8fadfd476e956714007a679", null ]
 ];

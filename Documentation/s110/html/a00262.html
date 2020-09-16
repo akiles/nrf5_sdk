@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gatts_evt_timeout_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_hids_inp_rep_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,78 @@ $(document).ready(function(){initNavTree('a00262.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gatts_evt_timeout_t Struct Reference<div class="ingroups"><a class="el" href="a00988.html">Structures</a></div></div>  </div>
+<div class="title">ble_hids_inp_rep_init_t Struct Reference<div class="ingroups"><a class="el" href="a00864.html">Human Interface Device Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event structure for BLE_GATTS_EVT_TIMEOUT.  
+<p>HID Service Input Report characteristic init structure. This contains all options and data needed for initialization of one Input Report characteristic.  
  <a href="a00262.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gatts.h&gt;</code></p>
+<p><code>#include &lt;ble_hids.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a400157c31004116309fd4c33afeedb72"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00262.html#a400157c31004116309fd4c33afeedb72">src</a></td></tr>
-<tr class="separator:a400157c31004116309fd4c33afeedb72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a656fc246bd9f18026083e3efb640052e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00262.html#a656fc246bd9f18026083e3efb640052e">max_len</a></td></tr>
+<tr class="separator:a656fc246bd9f18026083e3efb640052e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb77c0bc0738fbb0be766e574ac173b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00298.html">ble_srv_report_ref_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00262.html#aeb77c0bc0738fbb0be766e574ac173b5">rep_ref</a></td></tr>
+<tr class="separator:aeb77c0bc0738fbb0be766e574ac173b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a757afd0e411e7e67224c94fefcf26bab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00297.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00262.html#a757afd0e411e7e67224c94fefcf26bab">security_mode</a></td></tr>
+<tr class="separator:a757afd0e411e7e67224c94fefcf26bab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49208f982abf135a1f8d5c76ee893995"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00262.html#a49208f982abf135a1f8d5c76ee893995">read_resp</a>: 1</td></tr>
+<tr class="separator:a49208f982abf135a1f8d5c76ee893995"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event structure for BLE_GATTS_EVT_TIMEOUT. </p>
+<div class="textblock"><p>HID Service Input Report characteristic init structure. This contains all options and data needed for initialization of one Input Report characteristic. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a400157c31004116309fd4c33afeedb72"></a>
+<a class="anchor" id="a656fc246bd9f18026083e3efb640052e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gatts_evt_timeout_t::src</td>
+          <td class="memname">uint16_t ble_hids_inp_rep_init_t::max_len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Timeout source, see BLE_GATT_TIMEOUT_SOURCES. </p>
+<p>Maximum length of characteristic value. </p>
+
+</div>
+</div>
+<a class="anchor" id="a49208f982abf135a1f8d5c76ee893995"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_hids_inp_rep_init_t::read_resp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Should application generate a response to read requests. </p>
+
+</div>
+</div>
+<a class="anchor" id="aeb77c0bc0738fbb0be766e574ac173b5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00298.html">ble_srv_report_ref_t</a> ble_hids_inp_rep_init_t::rep_ref</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Value of the Report Reference descriptor. </p>
+
+</div>
+</div>
+<a class="anchor" id="a757afd0e411e7e67224c94fefcf26bab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00297.html">ble_srv_cccd_security_mode_t</a> ble_hids_inp_rep_init_t::security_mode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Security mode for the HID Input Report characteristic, including cccd. </p>
 
 </div>
 </div>
@@ -141,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00262.html">ble_gatts_evt_timeout_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00262.html">ble_hids_inp_rep_init_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:37 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

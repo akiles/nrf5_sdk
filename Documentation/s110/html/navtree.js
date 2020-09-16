@@ -7,7 +7,6 @@ var NAVTREE =
     [ "Libraries", "a00003.html", "a00003" ],
     [ "Examples", "a00004.html", "a00004" ],
     [ "User Guides", "a00005.html", "a00005" ],
-    [ "Experimental", "a00023.html", "a00023" ],
     [ "API Reference", "modules.html", "modules" ],
     [ "Data Structures", null, [
       [ "Data Structures", "annotated.html", "annotated" ],
@@ -23,24 +22,23 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "a00001.html",
-"a00066.html#project_uart_nus_eval_test",
-"a00102.html",
-"a00121.html#factory_pres",
-"a00182.html#a3850255dd1cc2f89b7086771201eb8e0",
-"a00239.html#ade86618d036b675b570e0f92d95e9755",
-"a00283.html",
-"a00341.html#a42d83a992fc160d167482ec70b58d17c",
-"a00714.html#ggaa1a5c145e334817f2d960317d64fcb3da9209d7820d65eb58c7804e676581bf40",
-"a00732.html#gad1da3c1e38317a5c312650396d9da6e8",
-"a00774.html#ga7eb7986157fca57470acee71e5940d77",
-"a00801.html#ga71a5be0afbbc3bd78c8a7010a16ac908",
-"a00874.html#ga4a3559ff1ac9071778e44a04ed12e4ba",
-"a00893.html#ga81d5893fd48beaedf26f68db593d849d",
-"a00904.html#gaa957841254817c0a239fd1f99506294d",
-"a00920.html#ga8c02cda322aae2f242e2ade7c8284cfc",
-"a00931.html#gaf5547fc2afb40884fb0f08546095b24a",
-"a00973.html#gac27814ac145d826cda33446a51ad04a2",
-"a01003.html#ga66c4a4f3902bf8dfd3751c32e6589790"
+"a00072.html#project_rscs_test",
+"a00094.html#nrf51_disconnect_encoding_sec_response",
+"a00142.html#af55e02af042a4d038dac26a7658536f6",
+"a00187.html",
+"a00242.html#a8de6fad49332e37d86887303f2bc28a8",
+"a00287.html#ae358c37001ff578f12948a6e58642843",
+"a00663.html#ga7abcaefa87c1e9452357ceaf16b0f367",
+"a00682.html#ga191e41b150c033b065b213998814e71e",
+"a00715.html#gad19a5111127656b299dbdbe5d5e8d4e0",
+"a00749.html#gae549d14b15783ba52dae5fdd5f9ac959",
+"a00821.html#ga7e3bf15cae194bd8d68bad96c75a7529",
+"a00839.html#gae4cc5b956577e034254cbf7d3680dd6d",
+"a00853.html#ggad45683bddfd8a170f89280b722f7744ca7ac745d687a1dc56962bed8a98ba719f",
+"a00862.html#ga3bc737580589e1330cbb1087cd18e291",
+"a00874.html#ga2aa05a5800902525167c99d2a9dbe24b",
+"a00918.html#gacbdf576af1acf60fc63b7002e0a98322",
+"a00946.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

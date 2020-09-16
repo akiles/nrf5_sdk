@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Defines</title>
+<title>nRF51 SDK - S120 SoftDevice: Heart Rate Service Client</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,53 +97,37 @@ $(document).ready(function(){initNavTree('a00514.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Defines<div class="ingroups"><a class="el" href="a00513.html">Database Discovery</a></div></div>  </div>
+<div class="title">Heart Rate Service Client<div class="ingroups"><a class="el" href="a00570.html">BLE Services</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Heart Rate Service Client module.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaf1f2ccd6a3638aab1ef6a6a68866fe71"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00514.html#gaf1f2ccd6a3638aab1ef6a6a68866fe71">BLE_DB_DISCOVERY_MAX_SRV</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:gaf1f2ccd6a3638aab1ef6a6a68866fe71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae17633bce497fe1c216826ed096ababd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00514.html#gae17633bce497fe1c216826ed096ababd">BLE_DB_DISCOVERY_MAX_CHAR_PER_SRV</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:gae17633bce497fe1c216826ed096ababd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00515"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00515.html">Enumerations</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00516"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00516.html">Structures</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00517"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00517.html">Types</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00518"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00518.html">Functions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gae17633bce497fe1c216826ed096ababd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_DB_DISCOVERY_MAX_CHAR_PER_SRV&#160;&#160;&#160;3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Maximum number of characteristics per service supported by this module. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaf1f2ccd6a3638aab1ef6a6a68866fe71"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_DB_DISCOVERY_MAX_SRV&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Maximum number of services supported by this module. This also indicates the maximum number of users allowed to be registered to this module (one user per service). </p>
-
-</div>
-</div>
+<p>Heart Rate Service Client module. </p>
+<p>This module contains the APIs and types exposed by the Heart Rate Service Client module. These APIs and types can be used by the application to perform discovery of Heart Rate Service at the peer and interact with it.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Currently this module only has support for Heart Rate Measurement characteristic. This means that it will be able to enable notification of the characteristic at the peer and be able to receive Heart Rate Measurement notifications from the peer. It does not support the Body Sensor Location and the Heart Rate Control Point characteristics. When a Heart Rate Measurement is received, this module will decode only the Heart Rate Measurement Value (both 8 bit and 16 bit) field from it and provide it to the application.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to this module by calling <a class="el" href="a00518.html#ga062e0829a2ebd211d4e51a23c520ab1f" title="Function for handling BLE events from the SoftDevice.">ble_hrs_c_on_ble_evt()</a>. </dd></dl>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:27 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:40 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

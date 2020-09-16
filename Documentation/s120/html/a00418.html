@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Persistent Storage Access Routines</title>
+<title>nRF51 SDK - S120 SoftDevice: SLIP module</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,183 +97,110 @@ $(document).ready(function(){initNavTree('a00418.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Persistent Storage Access Routines<div class="ingroups"><a class="el" href="a00415.html">Persistent Storage Interface</a></div></div>  </div>
+<div class="title">SLIP module<div class="ingroups"><a class="el" href="a00571.html">SDK Common Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Functions/Interface SDK modules use to persistently store data.  
+<p>SLIP layer for supporting packet framing in HCI transport.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00173.html">hci_slip_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure containing an event from the SLIP layer.  <a href="a00173.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gab1b3735b482e480ee925e78c544f84d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab1b3735b482e480ee925e78c544f84d0"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#gab1b3735b482e480ee925e78c544f84d0">hci_slip_event_handler_t</a> )(<a class="el" href="a00173.html">hci_slip_evt_t</a> event)</td></tr>
+<tr class="memdesc:gab1b3735b482e480ee925e78c544f84d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for the SLIP layer event callback. <br/></td></tr>
+<tr class="separator:gab1b3735b482e480ee925e78c544f84d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaf03d61e05dd64c3a61644580c29aa0b4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00418.html#ggaf03d61e05dd64c3a61644580c29aa0b4a518c3406525586d68bf2f476c1935eb9">HCI_SLIP_RX_RDY</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00418.html#ggaf03d61e05dd64c3a61644580c29aa0b4a507424cf2788c502b25b730450fa3c1b">HCI_SLIP_TX_DONE</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00418.html#ggaf03d61e05dd64c3a61644580c29aa0b4acd2a18f379c0f764d52782bf13ae7f60">HCI_SLIP_RX_OVERFLOW</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00418.html#ggaf03d61e05dd64c3a61644580c29aa0b4a89ce814e3c2dbfc49432118d735d6eef">HCI_SLIP_ERROR</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00418.html#ggaf03d61e05dd64c3a61644580c29aa0b4a1922de9f57ef7bf2c0e2af37877224f1">HCI_SLIP_EVT_TYPE_MAX</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaf03d61e05dd64c3a61644580c29aa0b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event types from the SLIP Layer.  <a href="a00418.html#gaf03d61e05dd64c3a61644580c29aa0b4">More...</a><br/></td></tr>
+<tr class="separator:gaf03d61e05dd64c3a61644580c29aa0b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga729ef8b64fc0cb6bfdabb2543a565d32"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#ga729ef8b64fc0cb6bfdabb2543a565d32">pstorage_init</a> (void)</td></tr>
-<tr class="memdesc:ga729ef8b64fc0cb6bfdabb2543a565d32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module Initialization Routine.  <a href="#ga729ef8b64fc0cb6bfdabb2543a565d32">More...</a><br/></td></tr>
-<tr class="separator:ga729ef8b64fc0cb6bfdabb2543a565d32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0a57b964c8945eaca2d267835ef6688c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#ga0a57b964c8945eaca2d267835ef6688c">pstorage_register</a> (<a class="el" href="a00177.html">pstorage_module_param_t</a> *p_module_param, pstorage_handle_t *p_block_id)</td></tr>
-<tr class="memdesc:ga0a57b964c8945eaca2d267835ef6688c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register with persistent storage interface.  <a href="#ga0a57b964c8945eaca2d267835ef6688c">More...</a><br/></td></tr>
-<tr class="separator:ga0a57b964c8945eaca2d267835ef6688c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafdeeb475e4f2db19863226bc55d507b5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#gafdeeb475e4f2db19863226bc55d507b5">pstorage_block_identifier_get</a> (pstorage_handle_t *p_base_id, pstorage_size_t block_num, pstorage_handle_t *p_block_id)</td></tr>
-<tr class="memdesc:gafdeeb475e4f2db19863226bc55d507b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get block id with reference to base block identifier provided at time of registration.  <a href="#gafdeeb475e4f2db19863226bc55d507b5">More...</a><br/></td></tr>
-<tr class="separator:gafdeeb475e4f2db19863226bc55d507b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga12e52da12709de8d43bfb8389b80af6d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#ga12e52da12709de8d43bfb8389b80af6d">pstorage_store</a> (pstorage_handle_t *p_dest, uint8_t *p_src, pstorage_size_t size, pstorage_size_t offset)</td></tr>
-<tr class="memdesc:ga12e52da12709de8d43bfb8389b80af6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to persistently store data of length 'size' contained in 'p_src' address in storage module at 'p_dest' address; Equivalent to Storage Write.  <a href="#ga12e52da12709de8d43bfb8389b80af6d">More...</a><br/></td></tr>
-<tr class="separator:ga12e52da12709de8d43bfb8389b80af6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0316f640da7481e9bd03ed51b29a3e65"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#ga0316f640da7481e9bd03ed51b29a3e65">pstorage_update</a> (pstorage_handle_t *p_dest, uint8_t *p_src, pstorage_size_t size, pstorage_size_t offset)</td></tr>
-<tr class="memdesc:ga0316f640da7481e9bd03ed51b29a3e65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to update persistently stored data of length 'size' contained in 'p_src' address in storage module at 'p_dest' address.  <a href="#ga0316f640da7481e9bd03ed51b29a3e65">More...</a><br/></td></tr>
-<tr class="separator:ga0316f640da7481e9bd03ed51b29a3e65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga99402440650cc2d2ee63d8866760a25b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#ga99402440650cc2d2ee63d8866760a25b">pstorage_load</a> (uint8_t *p_dest, pstorage_handle_t *p_src, pstorage_size_t size, pstorage_size_t offset)</td></tr>
-<tr class="memdesc:ga99402440650cc2d2ee63d8866760a25b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to load persistently stored data of length 'size' from 'p_src' address to 'p_dest' address; Equivalent to Storage Read.  <a href="#ga99402440650cc2d2ee63d8866760a25b">More...</a><br/></td></tr>
-<tr class="separator:ga99402440650cc2d2ee63d8866760a25b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga64d9814f864c3f771a99eb7574e87dd0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#ga64d9814f864c3f771a99eb7574e87dd0">pstorage_clear</a> (pstorage_handle_t *p_base_id, pstorage_size_t size)</td></tr>
-<tr class="memdesc:ga64d9814f864c3f771a99eb7574e87dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routine to clear data in persistent memory.  <a href="#ga64d9814f864c3f771a99eb7574e87dd0">More...</a><br/></td></tr>
-<tr class="separator:ga64d9814f864c3f771a99eb7574e87dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1553a4d6d6d8ddf070d0eb4960b72d62"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#ga1553a4d6d6d8ddf070d0eb4960b72d62">pstorage_access_status_get</a> (uint32_t *p_count)</td></tr>
-<tr class="memdesc:ga1553a4d6d6d8ddf070d0eb4960b72d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">API to get status of number of pending operations with the module.  <a href="#ga1553a4d6d6d8ddf070d0eb4960b72d62">More...</a><br/></td></tr>
-<tr class="separator:ga1553a4d6d6d8ddf070d0eb4960b72d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5174ac7933b8633a86c1560e645dcf43"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#ga5174ac7933b8633a86c1560e645dcf43">hci_slip_evt_handler_register</a> (<a class="el" href="a00418.html#gab1b3735b482e480ee925e78c544f84d0">hci_slip_event_handler_t</a> event_handler)</td></tr>
+<tr class="memdesc:ga5174ac7933b8633a86c1560e645dcf43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering the event handler provided as parameter and this event handler will be used by SLIP layer to send events described in <a class="el" href="a00418.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a>.  <a href="#ga5174ac7933b8633a86c1560e645dcf43">More...</a><br/></td></tr>
+<tr class="separator:ga5174ac7933b8633a86c1560e645dcf43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga395ec28c5fd6a5ca2f8dcd68817cced1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#ga395ec28c5fd6a5ca2f8dcd68817cced1">hci_slip_open</a> (void)</td></tr>
+<tr class="memdesc:ga395ec28c5fd6a5ca2f8dcd68817cced1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for opening the SLIP layer. This function must be called before <a class="el" href="a00418.html#gaba13b94dd501034bd33b1d10941ded4b">hci_slip_write</a> and before any data can be received.  <a href="#ga395ec28c5fd6a5ca2f8dcd68817cced1">More...</a><br/></td></tr>
+<tr class="separator:ga395ec28c5fd6a5ca2f8dcd68817cced1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac07c6af846ecdbdaa3def1860aff6e47"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#gac07c6af846ecdbdaa3def1860aff6e47">hci_slip_close</a> (void)</td></tr>
+<tr class="memdesc:gac07c6af846ecdbdaa3def1860aff6e47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for closing the SLIP layer. After this function is called no data can be transmitted or received in this layer.  <a href="#gac07c6af846ecdbdaa3def1860aff6e47">More...</a><br/></td></tr>
+<tr class="separator:gac07c6af846ecdbdaa3def1860aff6e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba13b94dd501034bd33b1d10941ded4b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#gaba13b94dd501034bd33b1d10941ded4b">hci_slip_write</a> (const uint8_t *p_buffer, uint32_t length)</td></tr>
+<tr class="memdesc:gaba13b94dd501034bd33b1d10941ded4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for writing a packet with SLIP encoding. Packet transmission is confirmed when the HCI_SLIP_TX_DONE event is received by the function caller.  <a href="#gaba13b94dd501034bd33b1d10941ded4b">More...</a><br/></td></tr>
+<tr class="separator:gaba13b94dd501034bd33b1d10941ded4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabd00a0b89127a66990a2ea728fd39b3f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#gabd00a0b89127a66990a2ea728fd39b3f">hci_slip_rx_buffer_register</a> (uint8_t *p_buffer, uint32_t length)</td></tr>
+<tr class="memdesc:gabd00a0b89127a66990a2ea728fd39b3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering a receive buffer. The receive buffer will be used for storage of received and SLIP decoded data. No data can be received by the SLIP layer until a receive buffer has been registered.  <a href="#gabd00a0b89127a66990a2ea728fd39b3f">More...</a><br/></td></tr>
+<tr class="separator:gabd00a0b89127a66990a2ea728fd39b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Functions/Interface SDK modules use to persistently store data. </p>
-<p>Interface for Application &amp; SDK module to load/store information persistently. Note: that while implementation of each of the persistent storage access function depends on the system and can specific to system/solution, the signature of the interface routines should not be altered. </p>
+<p>SLIP layer for supporting packet framing in HCI transport. </p>
+<p>This module implements SLIP packet framing as described in the Bluetooth Core Specification 4.0, Volume 4, Part D, Chapter 3 SLIP Layer.</p>
+<p>SLIP framing ensures that all packets sent on the UART are framed as: &lt;0xC0&gt; SLIP packet 1 &lt;0xC0&gt; &lt;0xC0&gt; SLIP packet 2 &lt;0xC0&gt;.</p>
+<p>The SLIP layer uses events to notify the upper layer when data transmission is complete and when a SLIP packet is received. </p>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gaf03d61e05dd64c3a61644580c29aa0b4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00418.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Event types from the SLIP Layer. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4a518c3406525586d68bf2f476c1935eb9"></a>HCI_SLIP_RX_RDY</em>&nbsp;</td><td class="fielddoc">
+<p>An event indicating that an RX packet is ready to be read. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4a507424cf2788c502b25b730450fa3c1b"></a>HCI_SLIP_TX_DONE</em>&nbsp;</td><td class="fielddoc">
+<p>An event indicating write completion of the TX packet provided in the function call <a class="el" href="a00418.html#gaba13b94dd501034bd33b1d10941ded4b">hci_slip_write</a> . </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4acd2a18f379c0f764d52782bf13ae7f60"></a>HCI_SLIP_RX_OVERFLOW</em>&nbsp;</td><td class="fielddoc">
+<p>An event indicating that RX data has been discarded due to lack of free RX memory. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4a89ce814e3c2dbfc49432118d735d6eef"></a>HCI_SLIP_ERROR</em>&nbsp;</td><td class="fielddoc">
+<p>An event indicating that an unrecoverable error has occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4a1922de9f57ef7bf2c0e2af37877224f1"></a>HCI_SLIP_EVT_TYPE_MAX</em>&nbsp;</td><td class="fielddoc">
+<p>Enumeration upper bound. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga1553a4d6d6d8ddf070d0eb4960b72d62"></a>
+<a class="anchor" id="gac07c6af846ecdbdaa3def1860aff6e47"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t pstorage_access_status_get </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t *&#160;</td>
-          <td class="paramname"><em>p_count</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>API to get status of number of pending operations with the module. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_count</td><td>Number of storage operations pending with the module, if 0, there are no outstanding requests.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>is returned is API is called without module initialization. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>if NULL parameter has been passed. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gafdeeb475e4f2db19863226bc55d507b5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t pstorage_block_identifier_get </td>
-          <td>(</td>
-          <td class="paramtype">pstorage_handle_t *&#160;</td>
-          <td class="paramname"><em>p_base_id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pstorage_size_t&#160;</td>
-          <td class="paramname"><em>block_num</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pstorage_handle_t *&#160;</td>
-          <td class="paramname"><em>p_block_id</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function to get block id with reference to base block identifier provided at time of registration. </p>
-<p>Function to get block id with reference to base block identifier provided at time of registration. In case more than one memory blocks were requested when registering, the identifier provided here is the base identifier for the first block and to identify subsequent block, application shall use this routine to get block identifier providing input as base identifier and block number. Therefore if 10 blocks of size 64 are requested and application wishes to store memory in 6th block, it shall use @ref pstorage_block_identifier_get with based id and provide a block number of 5. This way application is only expected to remember the base block identifier.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_base_id</td><td>Base block id received at the time of registration. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">block_num</td><td>Block Number, with first block numbered zero. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_block_id</td><td>Block identifier for the block number requested in case the API succeeds.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>is returned is API is called without module initialization. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>if NULL parameter has been passed. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>if invalid parameters are passed to the API. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga64d9814f864c3f771a99eb7574e87dd0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t pstorage_clear </td>
-          <td>(</td>
-          <td class="paramtype">pstorage_handle_t *&#160;</td>
-          <td class="paramname"><em>p_base_id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pstorage_size_t&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Routine to clear data in persistent memory. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_base_id</td><td>Base block identifier in persistent memory that needs to cleared; Equivalent to an Erase Operation.</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Size of data to be cleared from persistent memory expressed in bytes. This parameter is to provision for clearing of certain blocks of memory, or all memory blocks in a registered module. If the total size of the application module is used (blocks * block size) in combination with the identifier for the first block in the module, all blocks in the module will be erased.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>is returned is API is called without module initialization. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>if NULL parameter has been passed. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>if invalid parameters are passed to the API. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>in case data address 'p_dst' is not aligned. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>in case request cannot be processed.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>Clear operations may take time. This API however, does not block until the clear procedure is complete. Application is notified of procedure completion using notification callback registered by the application. 'result' parameter of the callback suggests if the procedure was successful or not. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga729ef8b64fc0cb6bfdabb2543a565d32"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t pstorage_init </td>
+          <td class="memname">uint32_t hci_slip_close </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -282,44 +209,89 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Module Initialization Routine. </p>
-<p>Initializes module. To be called once before any other APIs of the module are used.</p>
+<p>Function for closing the SLIP layer. After this function is called no data can be transmitted or received in this layer. </p>
+<dl class="section note"><dt>Note</dt><dd>This function can be called multiple times and also for an unopened channel.</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga99402440650cc2d2ee63d8866760a25b"></a>
+<a class="anchor" id="ga5174ac7933b8633a86c1560e645dcf43"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t pstorage_load </td>
+          <td class="memname">uint32_t hci_slip_evt_handler_register </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00418.html#gab1b3735b482e480ee925e78c544f84d0">hci_slip_event_handler_t</a>&#160;</td>
+          <td class="paramname"><em>event_handler</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for registering the event handler provided as parameter and this event handler will be used by SLIP layer to send events described in <a class="el" href="a00418.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a>. </p>
+<dl class="section note"><dt>Note</dt><dd>Multiple registration requests will overwrite any existing registration.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">event_handler</td><td>This function is called by the SLIP layer upon an event.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga395ec28c5fd6a5ca2f8dcd68817cced1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t hci_slip_open </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for opening the SLIP layer. This function must be called before <a class="el" href="a00418.html#gaba13b94dd501034bd33b1d10941ded4b">hci_slip_write</a> and before any data can be received. </p>
+<dl class="section note"><dt>Note</dt><dd>Can be called multiple times.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The SLIP layer module will propagate errors from underlying sub-modules. This implementation is using UART module as a physical transmission layer, and hci_slip_open executes <a class="el" href="a00412.html#gae650b57bf30da0f26ae409782de9fcbd">app_uart_init</a> . For an extended error list, please refer to <a class="el" href="a00412.html#gae650b57bf30da0f26ae409782de9fcbd">app_uart_init</a> . </p>
+
+</div>
+</div>
+<a class="anchor" id="gabd00a0b89127a66990a2ea728fd39b3f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t hci_slip_rx_buffer_register </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_dest</em>, </td>
+          <td class="paramname"><em>p_buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">pstorage_handle_t *&#160;</td>
-          <td class="paramname"><em>p_src</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pstorage_size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pstorage_size_t&#160;</td>
-          <td class="paramname"><em>offset</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -329,45 +301,40 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Routine to load persistently stored data of length 'size' from 'p_src' address to 'p_dest' address; Equivalent to Storage Read. </p>
+<p>Function for registering a receive buffer. The receive buffer will be used for storage of received and SLIP decoded data. No data can be received by the SLIP layer until a receive buffer has been registered. </p>
+<dl class="section note"><dt>Note</dt><dd>The lifetime of the buffer must be valid during complete reception of data. A static buffer is recommended.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Multiple registration requests will overwrite any existing registration.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_dest</td><td>Destination address where persistently stored data is to be loaded. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_src</td><td>Source from where data is to be loaded from persistent memory. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Size of data to be loaded from persistent memory expressed in bytes. Should be word aligned. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Offset in bytes to be applied when loading from the block. For example, if within a block of 100 bytes, application wishes to load 20 bytes from offset of 12, then this field should be set to 12. Should be word aligned.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to receive buffer. The received and SLIP decoded packet will be placed in this buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Buffer length, in bytes.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>is returned is API is called without module initialization. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>if NULL parameter has been passed. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>if invalid parameters are passed to the API. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>in case data address 'p_dst' is not aligned. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>in case request cannot be processed. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga0a57b964c8945eaca2d267835ef6688c"></a>
+<a class="anchor" id="gaba13b94dd501034bd33b1d10941ded4b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t pstorage_register </td>
+          <td class="memname">uint32_t hci_slip_write </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00177.html">pstorage_module_param_t</a> *&#160;</td>
-          <td class="paramname"><em>p_module_param</em>, </td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>p_buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">pstorage_handle_t *&#160;</td>
-          <td class="paramname"><em>p_block_id</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -377,146 +344,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Register with persistent storage interface. </p>
+<p>Function for writing a packet with SLIP encoding. Packet transmission is confirmed when the HCI_SLIP_TX_DONE event is received by the function caller. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_module_param</td><td>Module registration param. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_block_id</td><td>Block identifier to identify persistent memory blocks in case registration succeeds. Application is expected to use the block ids for subsequent operations on requested persistent memory. Maximum registrations permitted is determined by configuration parameter PSTORAGE_MAX_APPLICATIONS. In case more than one memory blocks are requested, the identifier provided here is the base identifier for the first block and to identify subsequent block, application shall use @ref pstorage_block_identifier_get with this base identifier and block number. Therefore if 10 blocks of size 64 are requested and application wishes to store memory in 6th block, it shall use @ref pstorage_block_identifier_get with based id and provide a block number of 5. This way application is only expected to remember the base block identifier.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to the packet to transmit. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Packet length, in bytes.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>is returned is API is called without module initialization. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>if NULL parameter has been passed. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>if invalid parameters are passed to the API. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>in case no more registrations can be supported. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. Packet was encoded and added to the transmission queue and an event will be sent upon transmission completion. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>Operation failure. Transmission queue is full and packet was not added to the transmission queue. Application shall wait for the <a class="el" href="a00418.html#ggaf03d61e05dd64c3a61644580c29aa0b4a507424cf2788c502b25b730450fa3c1b">HCI_SLIP_TX_DONE</a> event. After HCI_SLIP_TX_DONE this function can be executed for transmission of next packet. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>If a NULL pointer is provided. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Operation failure. Module is not open. </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="ga12e52da12709de8d43bfb8389b80af6d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t pstorage_store </td>
-          <td>(</td>
-          <td class="paramtype">pstorage_handle_t *&#160;</td>
-          <td class="paramname"><em>p_dest</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_src</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pstorage_size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pstorage_size_t&#160;</td>
-          <td class="paramname"><em>offset</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Routine to persistently store data of length 'size' contained in 'p_src' address in storage module at 'p_dest' address; Equivalent to Storage Write. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_dest</td><td>Destination address where data is to be stored persistently. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_src</td><td>Source address containing data to be stored. API assumes this to be resident memory and no intermediate copy of data is made by the API. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Size of data to be stored expressed in bytes. Should be word aligned. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Offset in bytes to be applied when writing to the block. For example, if within a block of 100 bytes, application wishes to write 20 bytes at offset of 12, then this field should be set to 12. Should be word aligned.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>is returned is API is called without module initialization. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>if NULL parameter has been passed. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>if invalid parameters are passed to the API. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>in case data address 'p_src' is not aligned. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>in case request cannot be processed.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section warning"><dt>Warning</dt><dd>No copy of the data is made, and hence memory provided for data source to be written to flash cannot be freed or reused by the application until this procedure is complete. End of this procedure is notified to the application using the notification callback registered by the application. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga0316f640da7481e9bd03ed51b29a3e65"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t pstorage_update </td>
-          <td>(</td>
-          <td class="paramtype">pstorage_handle_t *&#160;</td>
-          <td class="paramname"><em>p_dest</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_src</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pstorage_size_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">pstorage_size_t&#160;</td>
-          <td class="paramname"><em>offset</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Routine to update persistently stored data of length 'size' contained in 'p_src' address in storage module at 'p_dest' address. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_dest</td><td>Destination address where data is to be updated. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_src</td><td>Source address containing data to be stored. API assumes this to be resident memory and no intermediate copy of data is made by the API. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Size of data to be stored expressed in bytes. Should be word aligned. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Offset in bytes to be applied when writing to the block. For example, if within a block of 100 bytes, application wishes to write 20 bytes at offset of 12, then this field should be set to 12. Should be word aligned.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>on success, else an error code indicating reason for failure. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>is returned is API is called without module initialization. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>if NULL parameter has been passed. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>if invalid parameters are passed to the API. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>in case data address 'p_src' is not aligned. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>in case request cannot be processed.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section warning"><dt>Warning</dt><dd>No copy of the data is made, and hence memory provided for data source to be written to flash cannot be freed or reused by the application until this procedure is complete. End of this procedure is notified to the application using the notification callback registered by the application. </dd></dl>
 
 </div>
 </div>
@@ -525,7 +369,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:06 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:39 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

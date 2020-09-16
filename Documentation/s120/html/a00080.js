@@ -1,5 +1,5 @@
 var a00080 =
 [
-    [ "evt_id", "a00080.html#a2084aff335bd3cbb7e7b3d48c04f1d7a", null ],
-    [ "evt_len", "a00080.html#a982f138c7092a79876d0535522b76cfa", null ]
+    [ "mem_block", "a00080.html#a9663c005ebf68e15d7ba6740238bbe30", null ],
+    [ "type", "a00080.html#a597b8f59bf2ab45d0d5ccf9329b50d13", null ]
 ];

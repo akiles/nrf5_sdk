@@ -1,10 +1,9 @@
 var a00165 =
 [
-    [ "auth_signed_wr", "a00165.html#ad021e4c1c66a2595cb430d1e0598bc0d", null ],
-    [ "broadcast", "a00165.html#a66788f87aed20bf98b81af57051e9795", null ],
-    [ "indicate", "a00165.html#a256d8d59b59f7f1a079e962196e026dd", null ],
-    [ "notify", "a00165.html#a9dd91c1e55995665ef09ec4c5bd5eaf7", null ],
-    [ "read", "a00165.html#a1da688e4cfacf724ee7636dbf534716f", null ],
-    [ "write", "a00165.html#ae0ef9c3f220f06e735b534d232cb9108", null ],
-    [ "write_wo_resp", "a00165.html#a61fdb334c11f2a62accb48f297fb46ef", null ]
+    [ "flags", "a00165.html#ae9bf42dc0e530824c93ec423e6539220", null ],
+    [ "handle", "a00165.html#a4b5cec7a8b33f482114d99026b2ee92d", null ],
+    [ "len", "a00165.html#a068c40f218ed3932901529ac05b69c21", null ],
+    [ "offset", "a00165.html#a85d01254a43068218061ab21acabe980", null ],
+    [ "p_value", "a00165.html#a361b91f9ee1961598bc9c94520f8004b", null ],
+    [ "write_op", "a00165.html#a2c42a23118699b0fab8f49f1d9b4b386", null ]
 ];

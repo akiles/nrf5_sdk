@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_evt_hdr_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_evt_user_mem_release_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,48 @@ $(document).ready(function(){initNavTree('a00080.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_evt_hdr_t Struct Reference<div class="ingroups"><a class="el" href="a00521.html">Structures</a></div></div>  </div>
+<div class="title">ble_evt_user_mem_release_t Struct Reference<div class="ingroups"><a class="el" href="a00537.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>BLE Event header.  
+<p>Event structure for BLE_EVT_USER_MEM_RELEASE.  
  <a href="a00080.html#details">More...</a></p>
 
 <p><code>#include &lt;ble.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a2084aff335bd3cbb7e7b3d48c04f1d7a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#a2084aff335bd3cbb7e7b3d48c04f1d7a">evt_id</a></td></tr>
-<tr class="separator:a2084aff335bd3cbb7e7b3d48c04f1d7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a982f138c7092a79876d0535522b76cfa"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#a982f138c7092a79876d0535522b76cfa">evt_len</a></td></tr>
-<tr class="separator:a982f138c7092a79876d0535522b76cfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a597b8f59bf2ab45d0d5ccf9329b50d13"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#a597b8f59bf2ab45d0d5ccf9329b50d13">type</a></td></tr>
+<tr class="separator:a597b8f59bf2ab45d0d5ccf9329b50d13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9663c005ebf68e15d7ba6740238bbe30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00162.html">ble_user_mem_block_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#a9663c005ebf68e15d7ba6740238bbe30">mem_block</a></td></tr>
+<tr class="separator:a9663c005ebf68e15d7ba6740238bbe30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>BLE Event header. </p>
+<div class="textblock"><p>Event structure for BLE_EVT_USER_MEM_RELEASE. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a2084aff335bd3cbb7e7b3d48c04f1d7a"></a>
+<a class="anchor" id="a9663c005ebf68e15d7ba6740238bbe30"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_evt_hdr_t::evt_id</td>
+          <td class="memname"><a class="el" href="a00162.html">ble_user_mem_block_t</a> ble_evt_user_mem_release_t::mem_block</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Value from a BLE_&lt;module&gt;_EVT series. </p>
+<p>User memory block </p>
 
 </div>
 </div>
-<a class="anchor" id="a982f138c7092a79876d0535522b76cfa"></a>
+<a class="anchor" id="a597b8f59bf2ab45d0d5ccf9329b50d13"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_evt_hdr_t::evt_len</td>
+          <td class="memname">uint8_t ble_evt_user_mem_release_t::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Length in octets excluding this header. </p>
+<p>User memory type, see BLE_USER_MEM_TYPES. </p>
 
 </div>
 </div>
@@ -156,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00080.html">ble_evt_hdr_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:28 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00080.html">ble_evt_user_mem_release_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:40 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

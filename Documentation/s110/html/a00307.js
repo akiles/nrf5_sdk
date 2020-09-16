@@ -1,7 +1,5 @@
 var a00307 =
 [
-    [ "evt_handler", "a00307.html#ac8b3f40aba291bb2528c6e3d278e66bd", null ],
-    [ "feature", "a00307.html#afea901cdde73cddc72eb4cfe2f337c78", null ],
-    [ "rsc_feature_attr_md", "a00307.html#ada9c9294592f640a27a344965b22bc76", null ],
-    [ "rsc_meas_attr_md", "a00307.html#a4f33f2c4256a25ac20cdbb2b8fbc8538", null ]
+    [ "id_info", "a00307.html#a46a8d2c66a3a8eb114173e6f88163fd9", null ],
+    [ "irk", "a00307.html#a07fd1fbebc7504dd56072f310510ff7d", null ]
 ];

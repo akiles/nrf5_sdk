@@ -1,10 +1,7 @@
 var a00540 =
 [
-    [ "bootloader_settings_t", "a00259.html", [
-      [ "bank_0", "a00259.html#af258a4e7aa2091a87bbbf900aee3a473", null ],
-      [ "bank_0_crc", "a00259.html#a48a855222210663d34f20a90f6a3f98e", null ],
-      [ "bank_0_size", "a00259.html#a96f71ee507a86f0f69f9fd21c4f69f42", null ],
-      [ "bank_1", "a00259.html#a10a41bfab6e5113fb16ec3e302d4d81d", null ]
-    ] ],
-    [ "bootloader_bank_code_t", "a00540.html#gaa42a54966d007c04ca5fbca6775187f2", null ]
+    [ "SoC Library Error Codes", "a00541.html", "a00541" ],
+    [ "Defines", "a00654.html", "a00654" ],
+    [ "Types", "a00655.html", "a00655" ],
+    [ "Functions", "a00656.html", "a00656" ]
 ];

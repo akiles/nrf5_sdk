@@ -1,7 +1,6 @@
 var examples =
 [
     [ "ANT", "examples_ant.html", "examples_ant" ],
-    [ "Bootloader/DFU", "examples_bootloader_dfu.html", "examples_bootloader_dfu" ],
     [ "Direct Test Mode", "ble_sdk_app_dtm_serial.html", [
       [ "Direct Test Mode", "ble_sdk_app_dtm_serial.html#project_dtm_intro", null ],
       [ "BLE DTM module interface", "ble_sdk_app_dtm_serial.html#ble_sdk_dtm_lib_interface", null ],

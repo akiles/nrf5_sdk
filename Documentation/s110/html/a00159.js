@@ -1,5 +1,7 @@
 var a00159 =
 [
-    [ "p_uuids", "a00159.html#ad2afd54b16525fc33156e9cea8b8a90d", null ],
-    [ "uuid_cnt", "a00159.html#a5ef99273de36b66fcbe5cc2c18091cec", null ]
+    [ "bps_feature_attr_md", "a00159.html#aa811a90c7dd0b8bea4434fe2ef2c4ede", null ],
+    [ "bps_meas_attr_md", "a00159.html#a977afca322fd5a03271e0fa35300a164", null ],
+    [ "evt_handler", "a00159.html#a22943d0794c7a162398ddb54872d1751", null ],
+    [ "feature", "a00159.html#a811bba9e34ca00cad260b8d50aadbe5f", null ]
 ];

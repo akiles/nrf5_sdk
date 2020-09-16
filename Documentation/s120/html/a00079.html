@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_db_discovery_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_evt_tx_complete_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,109 +106,33 @@ $(document).ready(function(){initNavTree('a00079.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_db_discovery_t Struct Reference<div class="ingroups"><a class="el" href="a00516.html">Structures</a></div></div>  </div>
+<div class="title">ble_evt_tx_complete_t Struct Reference<div class="ingroups"><a class="el" href="a00537.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure for holding the information related to the GATT database at the server.  
+<p>TX complete event.  
  <a href="a00079.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_db_discovery.h&gt;</code></p>
+<p><code>#include &lt;ble.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a982a55a9d1b9f10e010fcebeea5b8911"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00078.html">ble_db_discovery_srv_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a982a55a9d1b9f10e010fcebeea5b8911">services</a> [2]</td></tr>
-<tr class="separator:a982a55a9d1b9f10e010fcebeea5b8911"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea6b3ca0b15ba3d4684ac2dfaafb584b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#aea6b3ca0b15ba3d4684ac2dfaafb584b">conn_handle</a></td></tr>
-<tr class="separator:aea6b3ca0b15ba3d4684ac2dfaafb584b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cbdc7069a26178c67b3b558633fa261"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a0cbdc7069a26178c67b3b558633fa261">srv_count</a></td></tr>
-<tr class="separator:a0cbdc7069a26178c67b3b558633fa261"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ca30b7a259a7342dc23272fcd6d889f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a2ca30b7a259a7342dc23272fcd6d889f">curr_char_ind</a></td></tr>
-<tr class="separator:a2ca30b7a259a7342dc23272fcd6d889f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa598c16586a07aa4b13e38c35b8b803d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#aa598c16586a07aa4b13e38c35b8b803d">curr_srv_ind</a></td></tr>
-<tr class="separator:aa598c16586a07aa4b13e38c35b8b803d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afca8a6f17e6b6d6c40f9fa490ed42b94"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#afca8a6f17e6b6d6c40f9fa490ed42b94">discovery_in_progress</a></td></tr>
-<tr class="separator:afca8a6f17e6b6d6c40f9fa490ed42b94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f0ff85ec5add11dad58af0a0ba5a5a8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a2f0ff85ec5add11dad58af0a0ba5a5a8">count</a></td></tr>
+<tr class="separator:a2f0ff85ec5add11dad58af0a0ba5a5a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure for holding the information related to the GATT database at the server. </p>
-<p>This structure will be used to identify an instance of this module. For example, there can be one instance of this module per connection. If there are multiple connections, that would mean that there are multiple instances of this structure each containing the information about the GATT Database at the server in that connection. </p>
+<div class="textblock"><p>TX complete event. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aea6b3ca0b15ba3d4684ac2dfaafb584b"></a>
+<a class="anchor" id="a2f0ff85ec5add11dad58af0a0ba5a5a8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_db_discovery_t::conn_handle</td>
+          <td class="memname">uint8_t ble_evt_tx_complete_t::count</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Connection handle as provided by the SoftDevice. </p>
-
-</div>
-</div>
-<a class="anchor" id="a2ca30b7a259a7342dc23272fcd6d889f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_db_discovery_t::curr_char_ind</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Index of the current characteristic being discovered. This is intended for internal use during service discovery. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa598c16586a07aa4b13e38c35b8b803d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_db_discovery_t::curr_srv_ind</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Index of the current service being discovered. This is intended for internal use during service discovery. </p>
-
-</div>
-</div>
-<a class="anchor" id="afca8a6f17e6b6d6c40f9fa490ed42b94"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_db_discovery_t::discovery_in_progress</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Variable to indicate if there is a service discovery in progress. </p>
-
-</div>
-</div>
-<a class="anchor" id="a982a55a9d1b9f10e010fcebeea5b8911"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00078.html">ble_db_discovery_srv_t</a> ble_db_discovery_t::services[2]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Information related to the current service being discovered. This is intended for internal use during service discovery. </p>
-
-</div>
-</div>
-<a class="anchor" id="a0cbdc7069a26178c67b3b558633fa261"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_db_discovery_t::srv_count</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Number of services at the peers GATT database. </p>
+<p>Number of packets transmitted. </p>
 
 </div>
 </div>
@@ -217,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00079.html">ble_db_discovery_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:28:28 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00079.html">ble_evt_tx_complete_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:40 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

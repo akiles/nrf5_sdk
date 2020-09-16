@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: app_button_cfg_t Struct Reference</title>
+<title>nRF51 SDK - S310 SoftDevice: ble_ans_c_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,98 @@ $(document).ready(function(){initNavTree('a00089.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">app_button_cfg_t Struct Reference<div class="ingroups"><a class="el" href="a00512.html">Button Handler</a></div></div>  </div>
+<div class="title">ble_ans_c_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00594.html">Alert Notification Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Button configuration structure.  
+<p>Alert Notification Event structure.  
  <a href="a00089.html#details">More...</a></p>
 
-<p><code>#include &lt;app_button.h&gt;</code></p>
+<p><code>#include &lt;ble_ans_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:af6a18934c420213be9eee710854e1ab9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00089.html#af6a18934c420213be9eee710854e1ab9">pin_no</a></td></tr>
-<tr class="separator:af6a18934c420213be9eee710854e1ab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af55e02af042a4d038dac26a7658536f6"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00089.html#af55e02af042a4d038dac26a7658536f6">active_state</a></td></tr>
-<tr class="separator:af55e02af042a4d038dac26a7658536f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf23ae362a2ecdfbc73c9f6736ce0ba8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00505.html#ga07e0c8c0b30499cf0a7b79dbe62d3fcc">nrf_gpio_pin_pull_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00089.html#abf23ae362a2ecdfbc73c9f6736ce0ba8">pull_cfg</a></td></tr>
-<tr class="separator:abf23ae362a2ecdfbc73c9f6736ce0ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad06ea1e496c4b37802492b289b54a875"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00512.html#ga5c09451dc7c257a9d3846268e110cf8d">app_button_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00089.html#ad06ea1e496c4b37802492b289b54a875">button_handler</a></td></tr>
-<tr class="separator:ad06ea1e496c4b37802492b289b54a875"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a933154cfde918e82cccf331250f23251"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00594.html#gaa03e4ae40d8528eecbed2552d64468d6">ble_ans_c_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00089.html#a933154cfde918e82cccf331250f23251">evt_type</a></td></tr>
+<tr class="separator:a933154cfde918e82cccf331250f23251"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5291a39d334459d01eb8c359ce40eaf6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html">ble_uuid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00089.html#a5291a39d334459d01eb8c359ce40eaf6">uuid</a></td></tr>
+<tr class="separator:a5291a39d334459d01eb8c359ce40eaf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4c7989c6bab1d99266802c47b376c5f"><td class="memItemLeft" ><a class="anchor" id="ab4c7989c6bab1d99266802c47b376c5f"></a>
+union {</td></tr>
+<tr class="memitem:a87924bfb6e6913b8bdc47e283a25897e"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00088.html">ble_ans_alert_settings_t</a>&#160;&#160;&#160;<a class="el" href="a00089.html#af0183eb636b54d11dedd0b44471ecf68">settings</a></td></tr>
+<tr class="separator:a87924bfb6e6913b8bdc47e283a25897e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae908fc023c8f3b4d2cdd94abe99df0f5"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00087.html">ble_ans_alert_notification_t</a>&#160;&#160;&#160;<a class="el" href="a00089.html#a1516abb33b9dfe3d7ea721f893f3cc7e">alert</a></td></tr>
+<tr class="separator:ae908fc023c8f3b4d2cdd94abe99df0f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff3abd8e3914588a0de6742666492481"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="a00089.html#ab6e81a948852e8f1c27d25166815c9eb">error_code</a></td></tr>
+<tr class="separator:aff3abd8e3914588a0de6742666492481"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4c7989c6bab1d99266802c47b376c5f"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
+<tr class="separator:ab4c7989c6bab1d99266802c47b376c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Button configuration structure. </p>
+<div class="textblock"><p>Alert Notification Event structure. </p>
+<p>The structure contains the event that should be handled, as well as additional information. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="af55e02af042a4d038dac26a7658536f6"></a>
+<a class="anchor" id="a1516abb33b9dfe3d7ea721f893f3cc7e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t app_button_cfg_t::active_state</td>
+          <td class="memname"><a class="el" href="a00087.html">ble_ans_alert_notification_t</a> ble_ans_c_evt_t::alert</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>APP_BUTTON_ACTIVE_HIGH or APP_BUTTON_ACTIVE_LOW. </p>
+<p>Alert Notification data sent by the server. </p>
 
 </div>
 </div>
-<a class="anchor" id="ad06ea1e496c4b37802492b289b54a875"></a>
+<a class="anchor" id="ab6e81a948852e8f1c27d25166815c9eb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00512.html#ga5c09451dc7c257a9d3846268e110cf8d">app_button_handler_t</a> app_button_cfg_t::button_handler</td>
+          <td class="memname">uint32_t ble_ans_c_evt_t::error_code</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handler to be called when button is pushed. </p>
+<p>Additional status/error code if the event was caused by a stack error or gatt status, e.g. during service discovery. </p>
 
 </div>
 </div>
-<a class="anchor" id="af6a18934c420213be9eee710854e1ab9"></a>
+<a class="anchor" id="a933154cfde918e82cccf331250f23251"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t app_button_cfg_t::pin_no</td>
+          <td class="memname"><a class="el" href="a00594.html#gaa03e4ae40d8528eecbed2552d64468d6">ble_ans_c_evt_type_t</a> ble_ans_c_evt_t::evt_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pin to be used as a button. </p>
+<p>Type of event. </p>
 
 </div>
 </div>
-<a class="anchor" id="abf23ae362a2ecdfbc73c9f6736ce0ba8"></a>
+<a class="anchor" id="af0183eb636b54d11dedd0b44471ecf68"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00505.html#ga07e0c8c0b30499cf0a7b79dbe62d3fcc">nrf_gpio_pin_pull_t</a> app_button_cfg_t::pull_cfg</td>
+          <td class="memname"><a class="el" href="a00088.html">ble_ans_alert_settings_t</a> ble_ans_c_evt_t::settings</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pull-up or -down configuration. </p>
+<p>Setting returned from server on read request. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5291a39d334459d01eb8c359ce40eaf6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00236.html">ble_uuid_t</a> ble_ans_c_evt_t::uuid</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UUID of the event in case of an alert or notification. </p>
 
 </div>
 </div>
@@ -186,8 +206,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00089.html">app_button_cfg_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:17 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00089.html">ble_ans_c_evt_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

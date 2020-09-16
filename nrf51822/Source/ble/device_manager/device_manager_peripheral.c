@@ -17,7 +17,8 @@
 #include "app_error.h"
 #include "app_util.h"
 
-#define INVALID_ADDR_TYPE 0xFF /**< Identifier for an invalid address type. */
+#define INVALID_ADDR_TYPE 0xFF   /**< Identifier for an invalid address type. */
+#define DIV_INIT_VAL      0xFFFF /**< Initial value for diversifier. */
 
 /**
  * @defgroup device_manager_conn_inst_states Connection Manager Connection Instances States.
@@ -25,10 +26,10 @@
  */
 #define STATE_IDLE             0x01 /**< State where connection instance is free. */
 #define STATE_CONNECTED        0x02 /**< State where connection is successfully established. */
-#define STATE_PAIRING          0x04 /**< State where pairing procedure is in progress. This state is used for pairing & bonding, as pairing is needed for both. */
+#define STATE_PAIRING          0x04 /**< State where pairing procedure is in progress. This state is used for pairing and bonding, as pairing is needed for both. */
 #define STATE_BONDED           0x08 /**< State where device is bonded. */
-#define STATE_DISCONNECTING    0x10 /**< State where disconnection is in progress, app will be notified first, but no further active procedures on the link. */
-#define STATE_BOND_INFO_UPDATE 0x20 /**< State where information has been updated, update flash. */
+#define STATE_DISCONNECTING    0x10 /**< State where disconnection is in progress, application will be notified first, but no further active procedures on the link. */
+#define STATE_BOND_INFO_UPDATE 0x20 /**< State where information has been updated, update the flash. */
 #define STATE_LINK_ENCRYPTED   0x40 /**< State where link is encrypted. */
 /** @} */
 
@@ -141,8 +142,8 @@ typedef enum
  *          framework is provided in case need arises to use an alternative architecture.
  * @{
  */
-#define DM_MUTEX_LOCK()   SDK_MUTEX_LOCK(m_dm_mutex)                                     /**< Lock module using mutex. */
-#define DM_MUTEX_UNLOCK() SDK_MUTEX_UNLOCK(m_dm_mutex)                                   /**< Unlock module using mutex. */
+#define DM_MUTEX_LOCK()   SDK_MUTEX_LOCK(m_dm_mutex)   /**< Lock module using mutex. */
+#define DM_MUTEX_UNLOCK() SDK_MUTEX_UNLOCK(m_dm_mutex) /**< Unlock module using mutex. */
 /** @} */
 
 
@@ -161,7 +162,7 @@ typedef enum
 #define DM_SERVICE_CONTEXT_COUNT     (DM_PROTOCOL_CNTXT_ALL + 1)                         /**< Maximum number of service contexts. */
 #define DM_EVT_DEVICE_CONTEXT_BASE   0x20                                                /**< Base for device context base. */
 #define DM_EVT_SERVICE_CONTEXT_BASE  0x30                                                /**< Base for service context base. */
-#define DM_EVT_APP_CONTEXT_BASE      0x40                                                /**< Base for app context base. */
+#define DM_EVT_APP_CONTEXT_BASE      0x40                                                /**< Base for application context base. */
 #define DM_LOAD_OPERATION_ID         0x01                                                /**< Load operation identifier. */
 #define DM_STORE_OPERATION_ID        0x02                                                /**< Store operation identifier. */
 #define DM_CLEAR_OPERATION_ID        0x03                                                /**< Clear operation identifier. */
@@ -173,9 +174,9 @@ typedef enum
 /**
  * @defgroup api_param_check API Parameters check macros.
  *
- * @details Macros that verify parameters passed to the module in the APIs. These macros
- *          could be mapped to nothing in final versions of code to save execution and size.
- *
+ * @details Macros for verifying parameters passed to the module in the APIs. These macros
+ *          could be mapped nothing in the final version of the code in order to save execution time
+ *          and program size.
  * @{
  */
 
@@ -320,7 +321,7 @@ typedef enum
 /**
  * @defgroup dm_data_types Module's internal data types.
  *
- * @brief This section describes module's internal data structures.
+ * @brief This section describes a module's internal data structures.
  * @{
  */
 /**@brief Peer identification information.
@@ -329,6 +330,7 @@ typedef struct
 {
     ble_gap_irk_t  irk;       /**< IRK of peer. */
     ble_gap_addr_t peer_addr; /**< Address of peer device. */
+    uint16_t       div;       /**< Peer's diversifier. */
     uint8_t        id_bitmap; /**< Contains information which of the fields above (irk, addr or both) is valid. */
 } peer_id_t;
 
@@ -359,11 +361,11 @@ typedef struct
 
 STATIC_ASSERT(sizeof(dm_gatts_context_t) % 4 == 0); /**< Check to ensure GATT Server Attributes size and data information is a multiple of 4. */
 
-/**@brief GATT Client context information. Place holder for now.
+/**@brief GATT Client context information. Placeholder for now.
  */
 typedef struct
 {
-    void * p_dummy; /**< Place holder, currently unused. */
+    void * p_dummy; /**< Placeholder, currently unused. */
 } dm_gatt_client_context_t;
 
 STATIC_ASSERT(sizeof(dm_gatt_client_context_t) % 4 == 0);  /**< Check to ensure GATT Client context information is a multiple of 4. */
@@ -408,7 +410,7 @@ typedef api_result_t (* service_context_access_t)(pstorage_handle_t const * p_bl
  */
 typedef api_result_t (* service_context_apply_t)(dm_handle_t * p_handle);
 
-/**@brief Function for performing necessary storage function of store or update.
+/**@brief Function for performing necessary functions of storing or updating.
  *
  * @param[in] p_dest Destination address where data is stored persistently.
  * @param[in] p_src  Source address containing data to be stored.
@@ -424,20 +426,20 @@ typedef uint32_t (* storage_operation)(pstorage_handle_t * p_dest,
 /** @} */
 
 /**
- * @defgroup dm_tables  Module's internal tables.
+ * @defgroup dm_tables Module's internal tables.
  *
- * @brief This section describes module's internal tables and static global variables needed for
- *        its functionality.
+ * @brief This section describes the module's internal tables and the static global variables
+ *        needed for its functionality.
  * @{
  */
 #if (DEVICE_MANAGER_APP_CONTEXT_SIZE != 0)
-static uint8_t * m_app_context_table[DEVICE_MANAGER_MAX_BONDS]; /**< Table to remember application contexts of bonded devices. */
+static uint8_t * m_app_context_table[DEVICE_MANAGER_MAX_BONDS];                     /**< Table to remember application contexts of bonded devices. */
 #endif //DEVICE_MANAGER_APP_CONTEXT_SIZE
-static peer_id_t              m_peer_table[DEVICE_MANAGER_MAX_BONDS];               /**< Table maintaining bonded devices' identification information, an instance is allocated in the table when a device is bonded and freed when bond information is deleted. */
-static bond_context_t         m_bond_table[DEVICE_MANAGER_MAX_CONNECTIONS];         /**< Table maintaining bond information for active peers. */
+static peer_id_t              m_peer_table[DEVICE_MANAGER_MAX_BONDS];               /**< Table to maintain bonded devices' identification information, an instance is allocated in the table when a device is bonded and freed when bond information is deleted. */
+static bond_context_t         m_bond_table[DEVICE_MANAGER_MAX_CONNECTIONS];         /**< Table to maintain bond information for active peers. */
 static dm_gatts_context_t     m_gatts_table[DEVICE_MANAGER_MAX_CONNECTIONS];        /**< Table for service information for active connection instances. */
-static connection_instance_t  m_connection_table[DEVICE_MANAGER_MAX_CONNECTIONS];   /**< Table maintaining active peer information. An instance is allocated in the table when a new connection is established and freed on disconnection. */
-static application_instance_t m_application_table[DEVICE_MANAGER_MAX_APPLICATIONS]; /**< Table maintaining application instances. */
+static connection_instance_t  m_connection_table[DEVICE_MANAGER_MAX_CONNECTIONS];   /**< Table to maintain active peer information. An instance is allocated in the table when a new connection is established and freed on disconnection. */
+static application_instance_t m_application_table[DEVICE_MANAGER_MAX_APPLICATIONS]; /**< Table to maintain application instances. */
 static pstorage_handle_t      m_storage_handle;                                     /**< Persistent storage handle for blocks requested by the module. */
 static uint32_t               m_peer_addr_update;                                   /**< 32-bit bitmap to remember peer device address update. */
 static bool                   m_module_initialized = false;                         /**< State indicating if module is initialized or not. */
@@ -503,15 +505,15 @@ const service_context_access_t m_service_context_load[DM_SERVICE_CONTEXT_COUNT] 
 const service_context_apply_t m_service_context_apply[DM_SERVICE_CONTEXT_COUNT] =
 {
     no_service_context_apply, /**< Dummy function, when there is no service context registered. */
-    gatts_context_apply,      /**< GATT Server context store function. */
-    gattc_context_apply,      /**< GATT Client context store function. */
-    gattsc_context_apply      /**< GATT Server & Client context store function. */
+    gatts_context_apply,      /**< GATT Server context apply function. */
+    gattc_context_apply,      /**< GATT Client context apply function. */
+    gattsc_context_apply      /**< GATT Server & Client context apply function. */
 };
 
 
 const uint32_t m_context_init_len = DM_INVALID_VALUE; /**< Constant to update init value for context in flash. */
 
-/**@brief Function for setting update status for device identified by 'index'.
+/**@brief Function for setting update status for the device identified by 'index'.
  *
  * @param[in] index Device identifier.
  */
@@ -521,7 +523,7 @@ static __INLINE void update_status_bit_set(uint32_t index)
 }
 
 
-/**@brief Function for initialiasing application instance identified by 'index'.
+/**@brief Function for resetting update status for device identified by 'index'.
  *
  * @param[in] index Device identifier.
  */
@@ -531,9 +533,11 @@ static __INLINE void update_status_bit_reset(uint32_t index)
 }
 
 
-/**@brief Function for providing update status for device identified by 'index'.
+/**@brief Function for providing update status for the device identified by 'index'.
  *
  * @param[in] index Device identifier.
+ *
+ * @retval true if the bit is set, false otherwise.
  */
 static __INLINE bool update_status_bit_is_set(uint32_t index)
 {
@@ -541,7 +545,7 @@ static __INLINE bool update_status_bit_is_set(uint32_t index)
 }
 
 
-/**@brief Function for initialiasing application instance identified by 'index'.
+/**@brief Function for initialiasing the application instance identified by 'index'.
  *
  * @param[in] index Device identifier.
  */
@@ -554,11 +558,11 @@ static __INLINE void application_instance_init(uint32_t index)
 }
 
 
-/**@brief Function for searching connection instance matching the connection handle and state
+/**@brief Function for searching connection instance matching the connection handle and the state
  *        requested.
  *
  * @details Connection handle and state information is used to get a connection instance, it
- *          is possible to ignore connection handle by using BLE_CONN_HANDLE_INVALID.
+ *          is possible to ignore the connection handle by using BLE_CONN_HANDLE_INVALID.
  *
  * @param[in]  conn_handle Connection handle.
  * @param[in]  state       Connection instance state.
@@ -579,10 +583,10 @@ static api_result_t connection_instance_find(uint16_t   conn_handle,
 
     for (index = 0; index < DEVICE_MANAGER_MAX_CONNECTIONS; index++)
     {
-        //Search only based on state.
+        //Search only based on the state.
         if (state & m_connection_table[index].state)
         {
-            //Ignore connection handle.
+            //Ignore the connection handle.
             if ((conn_handle == BLE_CONN_HANDLE_INVALID) ||
                 (conn_handle == m_connection_table[index].conn_handle))
             {
@@ -651,7 +655,7 @@ static __INLINE api_result_t device_instance_allocate(uint8_t              * p_d
 }
 
 
-/**@brief Function for initialiasing peer device instance identified by 'index'.
+/**@brief Function for initialiasing the peer device instance identified by 'index'.
  *
  * @param[in] index Device identifier.
  */
@@ -662,16 +666,18 @@ static void peer_instance_init(uint32_t index)
     memset(m_peer_table[index].peer_addr.addr, 0, BLE_GAP_ADDR_LEN);
     memset(m_peer_table[index].irk.irk, 0, BLE_GAP_SEC_KEY_LEN);
 
-    //Initialize address type to invalid.
+    //Initialize the address type to invalid.
     m_peer_table[index].peer_addr.addr_type = INVALID_ADDR_TYPE;
-    //Initialize identification bit map to unassigned.
+    //Initialize the identification bit map to unassigned.
     m_peer_table[index].id_bitmap      = UNASSIGNED;
+    // Initialize diversifier.
+    m_peer_table[index].div            = DIV_INIT_VAL;
 
-    //Reset status bit.
+    //Reset the status bit.
     update_status_bit_reset(index);
 
 #if (DEVICE_MANAGER_APP_CONTEXT_SIZE != 0)
-    //Initialize application context for bond device.
+    //Initialize the application context for bond device.
     m_app_context_table[index] = NULL;
 #endif //DEVICE_MANAGER_APP_CONTEXT_SIZE
 }
@@ -688,7 +694,7 @@ static __INLINE api_result_t device_instance_free(uint32_t device_index)
     api_result_t      err_code;
     pstorage_handle_t block_handle;
 
-    //Get block handle.
+    //Get the block handle.
     err_code = pstorage_block_identifier_get(&m_storage_handle, device_index, &block_handle);
 
     if (err_code == NRF_SUCCESS)
@@ -716,7 +722,7 @@ static __INLINE api_result_t device_instance_free(uint32_t device_index)
  * @retval NRF_SUCCESS         Operation success.
  * @retval NRF_ERROR_NOT_FOUND Operation failure.
  */
-static api_result_t device_instance_find(ble_gap_addr_t const * p_addr, uint32_t * p_device_index)
+static api_result_t device_instance_find(ble_gap_addr_t const * p_addr, uint32_t * p_device_index, uint16_t div)
 {
     api_result_t err_code;
     uint32_t     index;
@@ -735,7 +741,8 @@ static api_result_t device_instance_find(ble_gap_addr_t const * p_addr, uint32_t
                m_peer_table[index].peer_addr.addr[2], m_peer_table[index].peer_addr.addr[3],
                m_peer_table[index].peer_addr.addr[4], m_peer_table[index].peer_addr.addr[5]);
 
-        if (memcmp(&m_peer_table[index].peer_addr, p_addr, sizeof(ble_gap_addr_t)) == 0)
+        if (((NULL == p_addr) && (div == m_peer_table[index].div)) ||
+            ((NULL != p_addr) && (memcmp(&m_peer_table[index].peer_addr, p_addr, sizeof(ble_gap_addr_t)) == 0)))
         {
             DM_LOG("[DM]: Found device at instance 0x%02X\r\n", index);
 
@@ -789,8 +796,8 @@ static void connection_instance_init(uint32_t index)
 }
 
 
-/**@brief Function for freeing instance. Instance identifier is provided in parameter 'p_instance'
- *        in case routine succeeds.
+/**@brief Function for freeing instance. Instance identifier is provided in the parameter
+ *        'p_instance' in case the routine succeeds.
  *
  * @param[in] p_instance Connection instance.
  */
@@ -810,7 +817,7 @@ static __INLINE void connection_instance_free(uint32_t const * p_instance)
  *
  * @param[in] p_dest Destination address where data is to be stored persistently.
  * @param[in] p_src  Source address containing data to be stored. API assumes this to be resident
- *                    memory and no intermediate copy of data is made by the API.
+ *                   memory and no intermediate copy of data is made by the API.
  * @param[in] size   Size of data to be stored expressed in bytes. Should be word aligned.
  * @param[in] offset Offset in bytes to be applied when writing to the block.
  *                   For example, if within a block of 100 bytes, application wishes to
@@ -933,7 +940,7 @@ static __INLINE api_result_t gatts_context_store(pstorage_handle_t const * p_blo
 }
 
 
-/**@brief Dummy function, when there is no service registered.
+/**@brief Function for storing GATT Client context.
  *
  * @param[in] p_block_handle Storage block identifier.
  * @param[in] p_handle       Device handle identifying device that is stored.
@@ -1347,7 +1354,7 @@ static void dm_pstorage_cb_handler(pstorage_handle_t * p_handle,
                             app_notify                         = true;
                             dm_event.event_param.p_app_context = &context_data;
 
-                            //Verify if device is connected, if yes set connection instance.
+                            //Verify if the device is connected, if yes set connection instance.
                             for (uint32_t index = 0;
                                  index < DEVICE_MANAGER_MAX_CONNECTIONS;
                                  index++)
@@ -1838,9 +1845,9 @@ api_result_t dm_application_context_set(dm_handle_t const              * p_handl
     NULL_PARAM_CHECK(p_handle);
     NULL_PARAM_CHECK(p_context);
     NULL_PARAM_CHECK(p_context->p_data);
-    SIZE_CHECK_APP_CONTEXT(p_context->len);
     VERIFY_APP_REGISTERED(p_handle->appl_id);
     VERIFY_DEVICE_INSTANCE(p_handle->device_id);
+    SIZE_CHECK_APP_CONTEXT(p_context->len);
 
     DM_MUTEX_LOCK();
 
@@ -2063,7 +2070,7 @@ uint32_t dm_handle_initialize(dm_handle_t * p_handle)
 }
 
 
-/**@brief Function for saving device context persistently.
+/**@brief Function for saving the device context persistently.
  *
  * @param[in] p_handle Device handle identifying device.
  * @param[in] state    Device store state.
@@ -2108,7 +2115,7 @@ static void device_context_store(dm_handle_t const * p_handle, device_store_stat
             store_fn = storage_operation_dummy_handler;
         }
 
-        //Store peer id.
+        //Store the peer id.
         err_code = store_fn(&block_handle,
                             (uint8_t *)&m_peer_table[p_handle->device_id],
                             PEER_ID_SIZE,
@@ -2118,7 +2125,7 @@ static void device_context_store(dm_handle_t const * p_handle, device_store_stat
         {
             m_connection_table[p_handle->connection_id].state &= (~STATE_BOND_INFO_UPDATE);
 
-            //Store bond information.
+            //Store the bond information.
             err_code = store_fn(&block_handle,
                                 (uint8_t *)&m_bond_table[p_handle->connection_id],
                                 BOND_SIZE,
@@ -2134,7 +2141,7 @@ static void device_context_store(dm_handle_t const * p_handle, device_store_stat
 
         if (state != UPDATE_PEER_ADDR)
         {
-            //Store service information.
+            //Store the service information.
             err_code = m_service_context_store[m_application_table[p_handle->appl_id].service]
                         (
                             &block_handle,
@@ -2272,6 +2279,67 @@ static __INLINE uint32_t connection_instance_allocate(uint32_t * p_instance)
 }
 
 
+/**@brief Function for loading bond information for a connection instance.
+ */
+void bond_data_load(dm_handle_t * p_handle)
+{
+    pstorage_handle_t block_handle;
+
+    uint32_t err_code = pstorage_block_identifier_get(&m_storage_handle,
+                                                       p_handle->device_id,
+                                                       &block_handle);
+    if (err_code == NRF_SUCCESS)
+    {
+        DM_LOG(
+            "[DM]:[%02X]:[Block ID 0x%08X]:Loading bond information at %p, size 0x%08X, offset 0x%08X.\r\n",
+            index,
+            block_handle.block_id,
+            &m_bond_table[index],
+            BOND_SIZE,
+            BOND_STORAGE_OFFSET);
+
+        err_code = pstorage_load((uint8_t *)&m_bond_table[p_handle->connection_id],
+                                 &block_handle,
+                                 BOND_SIZE,
+                                 BOND_STORAGE_OFFSET);
+
+        if (err_code != NRF_SUCCESS)
+        {
+            DM_ERR("[DM]:[%02X]: Failed to load Bond information, reason %08X\r\n",
+                   index,
+                   err_code);
+        }
+
+        DM_LOG(
+            "[DM]:[%02X]:Loading service context at %p, size 0x%08X, offset 0x%08X.\r\n",
+            index,
+            &m_gatts_table[index],
+            sizeof(dm_gatts_context_t),
+            SERVICE_STORAGE_OFFSET);
+
+        err_code = m_service_context_load[m_application_table[0].service](
+            &block_handle,
+            p_handle);
+
+        if (err_code != NRF_SUCCESS)
+        {
+            DM_ERR(
+                "[DM]:[%02X]: Failed to load service information, reason %08X\r\n",
+                index,
+                err_code);
+        }
+    }
+    else
+    {
+        DM_ERR("[DM]:[%02X]: Failed to get block identifier for "
+               "device %08X, reason %08X.\r\n", index, device_index, err_code);
+    }
+}
+
+
+
+
+
 void dm_ble_evt_handler(ble_evt_t * p_ble_evt)
 {
     uint32_t    err_code;
@@ -2315,10 +2383,10 @@ void dm_ble_evt_handler(ble_evt_t * p_ble_evt)
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
-            //Allocate connection instance for new connection.
+            //Allocate connection instance for a new connection.
             err_code = connection_instance_allocate(&index);
 
-            //Connection instance successfully allocated.
+            //Connection instance is successfully allocated.
             if (err_code == NRF_SUCCESS)
             {
                 //Application notification related information.
@@ -2343,67 +2411,16 @@ void dm_ble_evt_handler(ble_evt_t * p_ble_evt)
                 {
                     //Use the device address to check if the device exists in bonded device list.
                     err_code = device_instance_find(&p_ble_evt->evt.gap_evt.params.connected.peer_addr,
-                                                    &device_index);
+                                                    &device_index, DIV_INIT_VAL);
                 }
 
                 if (err_code == NRF_SUCCESS)
                 {
-                    pstorage_handle_t block_handle;
-
                     m_connection_table[index].bonded_dev_id = device_index;
                     m_connection_table[index].state        |= STATE_BONDED;
                     handle.device_id                        = device_index;
 
-                    err_code = pstorage_block_identifier_get(&m_storage_handle,
-                                                             device_index,
-                                                             &block_handle);
-
-                    if (err_code == NRF_SUCCESS)
-                    {
-                        DM_LOG(
-                            "[DM]:[%02X]:[Block ID 0x%08X]:Loading bond information at %p, size 0x%08X, offset 0x%08X.\r\n",
-                            index,
-                            block_handle.block_id,
-                            &m_bond_table[index],
-                            BOND_SIZE,
-                            BOND_STORAGE_OFFSET);
-
-                        err_code = pstorage_load((uint8_t *)&m_bond_table[index],
-                                                 &block_handle,
-                                                 BOND_SIZE,
-                                                 BOND_STORAGE_OFFSET);
-
-                        if (err_code != NRF_SUCCESS)
-                        {
-                            DM_ERR("[DM]:[%02X]: Failed to load Bond information, reason %08X\r\n",
-                                   index,
-                                   err_code);
-                        }
-
-                        DM_LOG(
-                            "[DM]:[%02X]:Loading service context at %p, size 0x%08X, offset 0x%08X.\r\n",
-                            index,
-                            &m_gatts_table[index],
-                            sizeof(dm_gatts_context_t),
-                            SERVICE_STORAGE_OFFSET);
-
-                        err_code = m_service_context_load[m_application_table[0].service](
-                            &block_handle,
-                            &handle);
-
-                        if (err_code != NRF_SUCCESS)
-                        {
-                            DM_ERR(
-                                "[DM]:[%02X]: Failed to load service information, reason %08X\r\n",
-                                index,
-                                err_code);
-                        }
-                    }
-                    else
-                    {
-                        DM_ERR("[DM]:[%02X]: Failed to get block identifier for "
-                               "device %08X, reason %08X.\r\n", index, device_index, err_code);
-                    }
+                    bond_data_load(&handle);
                 }
             }
             break;
@@ -2418,12 +2435,15 @@ void dm_ble_evt_handler(ble_evt_t * p_ble_evt)
 
             if ((m_connection_table[index].state & STATE_BONDED) == STATE_BONDED)
             {
-                //Write bond information persistently.
-                device_context_store(&handle, STORE_ALL_CONTEXT);
+                if ((m_connection_table[index].state & STATE_LINK_ENCRYPTED) == STATE_LINK_ENCRYPTED)
+                {
+                    //Write bond information persistently.
+                    device_context_store(&handle, STORE_ALL_CONTEXT);
+                }
             }
             else
             {
-                //Free any allocated instanses for devices that is not bonded.
+                //Free any allocated instances for devices that is not bonded.
                 if (handle.device_id != DM_INVALID_ID)
                 {
                     peer_instance_init(handle.device_id);
@@ -2440,6 +2460,20 @@ void dm_ble_evt_handler(ble_evt_t * p_ble_evt)
             DM_LOG("[DM]: >> BLE_GAP_EVT_SEC_INFO_REQUEST\r\n");
 
             //If the device is already bonded, respond with existing info, else NULL.
+            if (m_connection_table[index].bonded_dev_id == DM_INVALID_ID)
+            {
+                //Find device based on div.
+                err_code = device_instance_find(NULL,&device_index, p_ble_evt->evt.gap_evt.params.sec_info_request.div);
+                if (err_code == NRF_SUCCESS)
+                {
+                    //Load needed bonding information.
+                    m_connection_table[index].bonded_dev_id = device_index;
+                    m_connection_table[index].state        |= STATE_BONDED;
+                    handle.device_id                        = device_index;
+                    bond_data_load(&handle);
+                }
+            }
+
             if (m_connection_table[index].bonded_dev_id != DM_INVALID_ID)
             {
                 p_enc_info = &m_bond_table[index].local_enc_info;
@@ -2534,19 +2568,14 @@ void dm_ble_evt_handler(ble_evt_t * p_ble_evt)
 
                             handle.device_id                        = device_index;
                             m_connection_table[index].bonded_dev_id = device_index;
+                            m_peer_table[device_index].div          = \
+                            p_ble_evt->evt.gap_evt.params.auth_status.periph_keys.enc_info.div;
 
                             if (p_ble_evt->evt.gap_evt.params.auth_status.central_kex.irk == 1)
                             {
-																m_peer_table[index].irk =
+                                                                m_peer_table[index].irk =
                                     p_ble_evt->evt.gap_evt.params.auth_status.central_keys.irk;
                                 m_peer_table[index].id_bitmap &= (~IRK_ENTRY);
-                            }
-
-                            if (p_ble_evt->evt.gap_evt.params.auth_status.central_kex.address == 1)
-                            {
-                                m_peer_table[index].peer_addr =
-                                    p_ble_evt->evt.gap_evt.params.auth_status.central_keys.id_info;
-                                m_peer_table[index].id_bitmap &= (~ADDR_ENTRY);
                             }
 
                             device_context_store(&handle, FIRST_BOND_STORE);
@@ -2566,7 +2595,7 @@ void dm_ble_evt_handler(ble_evt_t * p_ble_evt)
                 }
                 else
                 {
-                    //Pairing request, no need to touch bonding info.
+                    //Pairing request, no need to touch the bonding info.
                 }
             }
             break;
@@ -2606,10 +2635,10 @@ void dm_ble_evt_handler(ble_evt_t * p_ble_evt)
     {
         app_evt_notify(&handle, &event, event_result);
 
-        //Freeing the instance after an event is notified so the application can get the context.
+        //Freeing the instance after the event is notified so the application can get the context.
         if (event.event_id == DM_EVT_DISCONNECTION)
         {
-            //Free instance.
+            //Free the instance.
             connection_instance_free(&index);
         }
     }

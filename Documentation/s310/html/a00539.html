@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: Bootloader API.</title>
+<title>nRF51 SDK - S310 SoftDevice: SoftDevice Manager Error Codes</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,176 +97,38 @@ $(document).ready(function(){initNavTree('a00539.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Bootloader API.<div class="ingroups"><a class="el" href="a00717.html">Bootloader/DFU API</a></div></div>  </div>
+<div class="title">SoftDevice Manager Error Codes<div class="ingroups"><a class="el" href="a00538.html">SoftDevice Manager API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Bootloader module interface.  
+<p>Error definitions for the SDM API.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00540"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00540.html">Types and definitions.</a></td></tr>
-<tr class="memdesc:a00540"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bootloader module type and definitions. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gabd325fffda0cb29f1a8b917eb61d2494"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00539.html#gabd325fffda0cb29f1a8b917eb61d2494">bootloader_app_is_valid</a> (uint32_t app_addr)</td></tr>
-<tr class="memdesc:gabd325fffda0cb29f1a8b917eb61d2494"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for validating application region.  <a href="#gabd325fffda0cb29f1a8b917eb61d2494">More...</a><br/></td></tr>
-<tr class="separator:gabd325fffda0cb29f1a8b917eb61d2494"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf11a485218863db81385fe18437b5961"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00539.html#gaf11a485218863db81385fe18437b5961">bootloader_dfu_start</a> (void)</td></tr>
-<tr class="memdesc:gaf11a485218863db81385fe18437b5961"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for starting the Device Firmware Update.  <a href="#gaf11a485218863db81385fe18437b5961">More...</a><br/></td></tr>
-<tr class="separator:gaf11a485218863db81385fe18437b5961"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4fc5191d040a4abb9a23b52e22f56101"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00539.html#ga4fc5191d040a4abb9a23b52e22f56101">bootloader_app_start</a> (uint32_t app_addr)</td></tr>
-<tr class="memdesc:ga4fc5191d040a4abb9a23b52e22f56101"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for.  <a href="#ga4fc5191d040a4abb9a23b52e22f56101">More...</a><br/></td></tr>
-<tr class="separator:ga4fc5191d040a4abb9a23b52e22f56101"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a5868fa37d3f3ef4cdb3cd54cb81684"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00539.html#ga5a5868fa37d3f3ef4cdb3cd54cb81684">bootloader_settings_get</a> (<a class="el" href="a00259.html">bootloader_settings_t</a> *const p_settings)</td></tr>
-<tr class="memdesc:ga5a5868fa37d3f3ef4cdb3cd54cb81684"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for retrieving the bootloader settings.  <a href="#ga5a5868fa37d3f3ef4cdb3cd54cb81684">More...</a><br/></td></tr>
-<tr class="separator:ga5a5868fa37d3f3ef4cdb3cd54cb81684"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaebf46c5b600b9c2a5609c7f36954adef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00539.html#gaebf46c5b600b9c2a5609c7f36954adef">bootloader_dfu_update_process</a> (<a class="el" href="a00263.html">dfu_update_status_t</a> update_status)</td></tr>
-<tr class="memdesc:gaebf46c5b600b9c2a5609c7f36954adef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for processing DFU status update.  <a href="#gaebf46c5b600b9c2a5609c7f36954adef">More...</a><br/></td></tr>
-<tr class="separator:gaebf46c5b600b9c2a5609c7f36954adef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga987f38ed25beabe507da1d5dd31bbeae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga987f38ed25beabe507da1d5dd31bbeae"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00539.html#ga987f38ed25beabe507da1d5dd31bbeae">NRF_ERROR_SDM_LFCLK_SOURCE_UNKNOWN</a>&#160;&#160;&#160;(<a class="el" href="a00537.html#ga42709115c27b1a355561ae7060a6232f">NRF_ERROR_SDM_BASE_NUM</a> + 0)</td></tr>
+<tr class="memdesc:ga987f38ed25beabe507da1d5dd31bbeae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unknown lfclk source. <br/></td></tr>
+<tr class="separator:ga987f38ed25beabe507da1d5dd31bbeae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5e01566a9b1b0f6fdec349198401e5bd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5e01566a9b1b0f6fdec349198401e5bd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00539.html#ga5e01566a9b1b0f6fdec349198401e5bd">NRF_ERROR_SDM_INCORRECT_INTERRUPT_CONFIGURATION</a>&#160;&#160;&#160;(<a class="el" href="a00537.html#ga42709115c27b1a355561ae7060a6232f">NRF_ERROR_SDM_BASE_NUM</a> + 1)</td></tr>
+<tr class="memdesc:ga5e01566a9b1b0f6fdec349198401e5bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Incorrect interrupt configuration (can be caused by using illegal priority levels, or having enabled SoftDevice interrupts) <br/></td></tr>
+<tr class="separator:ga5e01566a9b1b0f6fdec349198401e5bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa612f324901ce4390c4010751c935d94"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa612f324901ce4390c4010751c935d94"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00539.html#gaa612f324901ce4390c4010751c935d94">NRF_ERROR_SDM_INCORRECT_CLENR0</a>&#160;&#160;&#160;(<a class="el" href="a00537.html#ga42709115c27b1a355561ae7060a6232f">NRF_ERROR_SDM_BASE_NUM</a> + 2)</td></tr>
+<tr class="memdesc:gaa612f324901ce4390c4010751c935d94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Incorrect CLENR0 (can be caused by erronous SoftDevice flashing) <br/></td></tr>
+<tr class="separator:gaa612f324901ce4390c4010751c935d94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Bootloader module interface. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gabd325fffda0cb29f1a8b917eb61d2494"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool bootloader_app_is_valid </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>app_addr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for validating application region. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">app_addr</td><td>Address to the region where the application is stored.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>If Application region is valid. </td></tr>
-    <tr><td class="paramname">false</td><td>If Application region is not valid. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4fc5191d040a4abb9a23b52e22f56101"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void bootloader_app_start </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>app_addr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">app_addr</td><td>Address to the region where the application is stored. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf11a485218863db81385fe18437b5961"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t bootloader_dfu_start </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for starting the Device Firmware Update. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If new appliction image was successfully transfered. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaebf46c5b600b9c2a5609c7f36954adef"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void bootloader_dfu_update_process </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00263.html">dfu_update_status_t</a>&#160;</td>
-          <td class="paramname"><em>update_status</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for processing DFU status update. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">update_status</td><td>DFU update status. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5a5868fa37d3f3ef4cdb3cd54cb81684"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void bootloader_settings_get </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00259.html">bootloader_settings_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_settings</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for retrieving the bootloader settings. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_settings</td><td>A copy of the current bootloader settings is returned in the structure provided. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
+<p>Error definitions for the SDM API. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:00 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:46 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,5 +1,4 @@
 var a00182 =
 [
-    [ "handle_range", "a00182.html#ab54f33f930899f4e27df1d5819670958", null ],
-    [ "uuid", "a00182.html#a3f00e5eb4b0f87085de2ea1e9464258b", null ]
+    [ "gatt_status", "a00182.html#a1e360fe54c33885b6e23e57c483f6959", null ]
 ];

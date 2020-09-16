@@ -1,7 +1,21 @@
 var a00763 =
 [
-    [ "BLE_GAP_ADDR_TYPE_PUBLIC", "a00763.html#gaa5e499423d88b16817efd4d5ec10fd6e", null ],
-    [ "BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE", "a00763.html#ga86fe5e506ba152ec4d60ac6daaca2aef", null ],
-    [ "BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE", "a00763.html#gae166d654401b0ed83ad7073f31467b70", null ],
-    [ "BLE_GAP_ADDR_TYPE_RANDOM_STATIC", "a00763.html#gabe27b8f22c3a52413fa064c2ee1e4fba", null ]
+    [ "GAP Advertisement", "a00764.html", null ],
+    [ "GAP Connection Establishment and Termination", "a00765.html", null ],
+    [ "GAP Connection Parameter Update", "a00766.html", null ],
+    [ "GAP RSSI", "a00767.html", null ],
+    [ "GAP Pairing: Just Works", "a00768.html", null ],
+    [ "GAP Bonding: Just Works", "a00769.html", null ],
+    [ "GAP Bonding: Passkey Entry, Peripheral displays", "a00770.html", null ],
+    [ "GAP Bonding: Passkey Entry (Central display) or OOB MSC", "a00771.html", null ],
+    [ "GAP Bonding: Passkey Entry (Peripheral uses static passkey) MSC", "a00772.html", null ],
+    [ "GAP Security Establishment using stored keys", "a00773.html", null ],
+    [ "GAP Peripheral Initiated Security Establishment", "a00774.html", null ],
+    [ "GAP Failed Pairing: Keysize out of supported range", "a00775.html", null ],
+    [ "GAP Failed Pairing: Keysize too small", "a00776.html", null ],
+    [ "GAP Failed Pairing: Pairing aborted by the application", "a00777.html", null ],
+    [ "GAP Failed Pairing: Confirm failed", "a00778.html", null ],
+    [ "GAP Failed Pairing: Pairing failed from master", "a00779.html", null ],
+    [ "GAP Failed Pairing: Timeout", "a00780.html", null ],
+    [ "GAP Authenticate request: Timeout", "a00781.html", null ]
 ];

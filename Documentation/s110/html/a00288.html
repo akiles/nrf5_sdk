@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_hts_init_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_rscs_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,93 +106,33 @@ $(document).ready(function(){initNavTree('a00288.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_hts_init_t Struct Reference<div class="ingroups"><a class="el" href="a00926.html">Health Thermometer Service</a></div></div>  </div>
+<div class="title">ble_rscs_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00870.html">Running Speed and Cadence Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Health Thermometer Service init structure. This contains all options and data needed for initialization of the service.  
+<p>Running Speed and Cadence Service event.  
  <a href="a00288.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_hts.h&gt;</code></p>
+<p><code>#include &lt;ble_rscs.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac6fbae8371e9336d3acb46b8903a8947"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00926.html#ga78edebed11dc6c480b65706199500862">ble_hts_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00288.html#ac6fbae8371e9336d3acb46b8903a8947">evt_handler</a></td></tr>
-<tr class="separator:ac6fbae8371e9336d3acb46b8903a8947"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c4a4bc737442da34f2b9cfd367bb5e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00317.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00288.html#a5c4a4bc737442da34f2b9cfd367bb5e8">hts_meas_attr_md</a></td></tr>
-<tr class="separator:a5c4a4bc737442da34f2b9cfd367bb5e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f216c81224e94f40db0d5b4aaa1898b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00319.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00288.html#a1f216c81224e94f40db0d5b4aaa1898b">hts_temp_type_attr_md</a></td></tr>
-<tr class="separator:a1f216c81224e94f40db0d5b4aaa1898b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ac11fedc2f4a022e482c6342880e30f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00288.html#a6ac11fedc2f4a022e482c6342880e30f">temp_type_as_characteristic</a></td></tr>
-<tr class="separator:a6ac11fedc2f4a022e482c6342880e30f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d233be4574d7bdd2f28c9afa8d0efc2"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00288.html#a7d233be4574d7bdd2f28c9afa8d0efc2">temp_type</a></td></tr>
-<tr class="separator:a7d233be4574d7bdd2f28c9afa8d0efc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71e160dc65fed82339dfbec7a0f3f78a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00870.html#gaed8352fbaf5d37687a3aa5751f4d23bd">ble_rscs_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00288.html#a71e160dc65fed82339dfbec7a0f3f78a">evt_type</a></td></tr>
+<tr class="separator:a71e160dc65fed82339dfbec7a0f3f78a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Health Thermometer Service init structure. This contains all options and data needed for initialization of the service. </p>
+<div class="textblock"><p>Running Speed and Cadence Service event. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ac6fbae8371e9336d3acb46b8903a8947"></a>
+<a class="anchor" id="a71e160dc65fed82339dfbec7a0f3f78a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00926.html#ga78edebed11dc6c480b65706199500862">ble_hts_evt_handler_t</a> ble_hts_init_t::evt_handler</td>
+          <td class="memname"><a class="el" href="a00870.html#gaed8352fbaf5d37687a3aa5751f4d23bd">ble_rscs_evt_type_t</a> ble_rscs_evt_t::evt_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Event handler to be called for handling events in the Health Thermometer Service. </p>
-
-</div>
-</div>
-<a class="anchor" id="a5c4a4bc737442da34f2b9cfd367bb5e8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00317.html">ble_srv_cccd_security_mode_t</a> ble_hts_init_t::hts_meas_attr_md</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Initial security level for health thermometer measurement attribute </p>
-
-</div>
-</div>
-<a class="anchor" id="a1f216c81224e94f40db0d5b4aaa1898b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00319.html">ble_srv_security_mode_t</a> ble_hts_init_t::hts_temp_type_attr_md</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Initial security level for health thermometer tempearture type attribute </p>
-
-</div>
-</div>
-<a class="anchor" id="a7d233be4574d7bdd2f28c9afa8d0efc2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_hts_init_t::temp_type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Temperature type if temperature characteristic is used </p>
-
-</div>
-</div>
-<a class="anchor" id="a6ac11fedc2f4a022e482c6342880e30f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_hts_init_t::temp_type_as_characteristic</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Set non-zero if temp type given as characteristic </p>
+<p>Type of event. </p>
 
 </div>
 </div>
@@ -201,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00288.html">ble_hts_init_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00288.html">ble_rscs_evt_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:37 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

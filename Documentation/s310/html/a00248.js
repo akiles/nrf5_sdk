@@ -1,5 +1,5 @@
 var a00248 =
 [
-    [ "current_val", "a00248.html#a607fd7c8e6f2f3e7bbe8dc5d5b44b54e", null ],
-    [ "is_increasing", "a00248.html#a21bddc380a89ed66e20f88dfd4da4c8a", null ]
+    [ "exponent", "a00248.html#a831aa262a275e9fe9b611e074ab357fe", null ],
+    [ "mantissa", "a00248.html#a3f8b946e6d4361fa7a8e427a1c5cc0ef", null ]
 ];

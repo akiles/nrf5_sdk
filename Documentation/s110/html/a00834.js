@@ -1,14 +1,12 @@
 var a00834 =
 [
-    [ "GATTC Primary Service Discovery", "a00835.html", null ],
-    [ "GATTC Relationship Discovery", "a00836.html", null ],
-    [ "GATTC Characteristic Discovery", "a00837.html", null ],
-    [ "GATTC Descriptor Discovery", "a00838.html", null ],
-    [ "GATTC Read Characteristic Value by UUID", "a00839.html", null ],
-    [ "GATTC Characteristic or Descriptor Value Read", "a00840.html", null ],
-    [ "GATTC Read Multiple Characteristic Values", "a00841.html", null ],
-    [ "GATTC Characteristic or Descriptor Value Write", "a00842.html", null ],
-    [ "GATTC Handle Value Indication", "a00843.html", null ],
-    [ "GATTC Handle Value Notification", "a00844.html", null ],
-    [ "GATTC Timeout", "a00845.html", null ]
+    [ "APP_SCHED_BUF_SIZE", "a00834.html#ga197748a0733d615e809ce71effa6dc48", null ],
+    [ "APP_SCHED_EVENT_HEADER_SIZE", "a00834.html#ga6ec6d3a526d13df66e0aff7d20049e20", null ],
+    [ "APP_SCHED_INIT", "a00834.html#gaa9670ed0053a67304c3d2d0cb3eb1333", null ],
+    [ "app_sched_event_handler_t", "a00834.html#gad36ea5cb15b82aa724a13f1ba24ef005", null ],
+    [ "app_sched_event_put", "a00834.html#ga49ec0ad278ece44b5dc56b86ac44489c", null ],
+    [ "app_sched_execute", "a00834.html#gab725820c32a8d05379db4567cf30e862", null ],
+    [ "app_sched_init", "a00834.html#gaf021e02dd6ca1767b428c250d1ded56c", null ],
+    [ "app_sched_pause", "a00834.html#ga28f2416fd3774200f9df9d9917058092", null ],
+    [ "app_sched_resume", "a00834.html#gae20d37e661d34108f6ceab290f4e9bbb", null ]
 ];

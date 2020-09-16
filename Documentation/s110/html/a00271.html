@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gls_meas_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_hts_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,138 +106,93 @@ $(document).ready(function(){initNavTree('a00271.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gls_meas_t Struct Reference<div class="ingroups"><a class="el" href="a00922.html">Glucose Service</a></div></div>  </div>
+<div class="title">ble_hts_init_t Struct Reference<div class="ingroups"><a class="el" href="a00866.html">Health Thermometer Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Glucose Measurement structure. This contains glucose measurement value.  
+<p>Health Thermometer Service init structure. This contains all options and data needed for initialization of the service.  
  <a href="a00271.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gls.h&gt;</code></p>
+<p><code>#include &lt;ble_hts.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:adaa211ee17f3d46654c641ab339b68db"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00271.html#adaa211ee17f3d46654c641ab339b68db">flags</a></td></tr>
-<tr class="separator:adaa211ee17f3d46654c641ab339b68db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e89e39efc4889fc00da13fa87efcbc2"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00271.html#a7e89e39efc4889fc00da13fa87efcbc2">sequence_number</a></td></tr>
-<tr class="separator:a7e89e39efc4889fc00da13fa87efcbc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50043eec02a9af09a81047f4eecfef33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00183.html">ble_date_time_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00271.html#a50043eec02a9af09a81047f4eecfef33">base_time</a></td></tr>
-<tr class="separator:a50043eec02a9af09a81047f4eecfef33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a820a55933ac2e9e047193a846efbaf5d"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00271.html#a820a55933ac2e9e047193a846efbaf5d">time_offset</a></td></tr>
-<tr class="separator:a820a55933ac2e9e047193a846efbaf5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d77eafd69ad69d3753fd043bdd31dc2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00365.html">sfloat_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00271.html#a8d77eafd69ad69d3753fd043bdd31dc2">glucose_concentration</a></td></tr>
-<tr class="separator:a8d77eafd69ad69d3753fd043bdd31dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e79195531cf78dfd880479a6404cb44"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00271.html#a4e79195531cf78dfd880479a6404cb44">type</a></td></tr>
-<tr class="separator:a4e79195531cf78dfd880479a6404cb44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21eed1c3fbda85ac65aa060787a589b4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00271.html#a21eed1c3fbda85ac65aa060787a589b4">sample_location</a></td></tr>
-<tr class="separator:a21eed1c3fbda85ac65aa060787a589b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a765f2b453e27775757271598452e2c8a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00271.html#a765f2b453e27775757271598452e2c8a">sensor_status_annunciation</a></td></tr>
-<tr class="separator:a765f2b453e27775757271598452e2c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6fbae8371e9336d3acb46b8903a8947"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00866.html#ga78edebed11dc6c480b65706199500862">ble_hts_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00271.html#ac6fbae8371e9336d3acb46b8903a8947">evt_handler</a></td></tr>
+<tr class="separator:ac6fbae8371e9336d3acb46b8903a8947"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c4a4bc737442da34f2b9cfd367bb5e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00297.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00271.html#a5c4a4bc737442da34f2b9cfd367bb5e8">hts_meas_attr_md</a></td></tr>
+<tr class="separator:a5c4a4bc737442da34f2b9cfd367bb5e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f216c81224e94f40db0d5b4aaa1898b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00299.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00271.html#a1f216c81224e94f40db0d5b4aaa1898b">hts_temp_type_attr_md</a></td></tr>
+<tr class="separator:a1f216c81224e94f40db0d5b4aaa1898b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ac11fedc2f4a022e482c6342880e30f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00271.html#a6ac11fedc2f4a022e482c6342880e30f">temp_type_as_characteristic</a></td></tr>
+<tr class="separator:a6ac11fedc2f4a022e482c6342880e30f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d233be4574d7bdd2f28c9afa8d0efc2"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00271.html#a7d233be4574d7bdd2f28c9afa8d0efc2">temp_type</a></td></tr>
+<tr class="separator:a7d233be4574d7bdd2f28c9afa8d0efc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Glucose Measurement structure. This contains glucose measurement value. </p>
+<div class="textblock"><p>Health Thermometer Service init structure. This contains all options and data needed for initialization of the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a50043eec02a9af09a81047f4eecfef33"></a>
+<a class="anchor" id="ac6fbae8371e9336d3acb46b8903a8947"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00183.html">ble_date_time_t</a> ble_gls_meas_t::base_time</td>
+          <td class="memname"><a class="el" href="a00866.html#ga78edebed11dc6c480b65706199500862">ble_hts_evt_handler_t</a> ble_hts_init_t::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Time stamp </p>
+<p>Event handler to be called for handling events in the Health Thermometer Service. </p>
 
 </div>
 </div>
-<a class="anchor" id="adaa211ee17f3d46654c641ab339b68db"></a>
+<a class="anchor" id="a5c4a4bc737442da34f2b9cfd367bb5e8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gls_meas_t::flags</td>
+          <td class="memname"><a class="el" href="a00297.html">ble_srv_cccd_security_mode_t</a> ble_hts_init_t::hts_meas_attr_md</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Flags </p>
+<p>Initial security level for health thermometer measurement attribute </p>
 
 </div>
 </div>
-<a class="anchor" id="a8d77eafd69ad69d3753fd043bdd31dc2"></a>
+<a class="anchor" id="a1f216c81224e94f40db0d5b4aaa1898b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00365.html">sfloat_t</a> ble_gls_meas_t::glucose_concentration</td>
+          <td class="memname"><a class="el" href="a00299.html">ble_srv_security_mode_t</a> ble_hts_init_t::hts_temp_type_attr_md</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Glucose concentration </p>
+<p>Initial security level for health thermometer tempearture type attribute </p>
 
 </div>
 </div>
-<a class="anchor" id="a21eed1c3fbda85ac65aa060787a589b4"></a>
+<a class="anchor" id="a7d233be4574d7bdd2f28c9afa8d0efc2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gls_meas_t::sample_location</td>
+          <td class="memname">uint8_t ble_hts_init_t::temp_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sample location </p>
+<p>Temperature type if temperature characteristic is used </p>
 
 </div>
 </div>
-<a class="anchor" id="a765f2b453e27775757271598452e2c8a"></a>
+<a class="anchor" id="a6ac11fedc2f4a022e482c6342880e30f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gls_meas_t::sensor_status_annunciation</td>
+          <td class="memname">uint8_t ble_hts_init_t::temp_type_as_characteristic</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sensor status annunciation </p>
-
-</div>
-</div>
-<a class="anchor" id="a7e89e39efc4889fc00da13fa87efcbc2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gls_meas_t::sequence_number</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Sequence number </p>
-
-</div>
-</div>
-<a class="anchor" id="a820a55933ac2e9e047193a846efbaf5d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int16_t ble_gls_meas_t::time_offset</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Time offset </p>
-
-</div>
-</div>
-<a class="anchor" id="a4e79195531cf78dfd880479a6404cb44"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gls_meas_t::type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Type </p>
+<p>Set non-zero if temp type given as characteristic </p>
 
 </div>
 </div>
@@ -246,8 +201,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00271.html">ble_gls_meas_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00271.html">ble_hts_init_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:37 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

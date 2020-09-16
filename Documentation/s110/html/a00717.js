@@ -1,8 +1,7 @@
 var a00717 =
 [
-    [ "simple_uart_config", "a00717.html#ga15ab88a2172a5ea02ff41ae9711bc0af", null ],
-    [ "simple_uart_get", "a00717.html#gabae30008064ce450ab819949a692c511", null ],
-    [ "simple_uart_get_with_timeout", "a00717.html#gad4e7d17833960c77c90db7a5cb309a68", null ],
-    [ "simple_uart_put", "a00717.html#ga6346f3ba3f0f1eaaa123064daa3df405", null ],
-    [ "simple_uart_putstring", "a00717.html#ga76e6bde269950e02affbff121c79d408", null ]
+    [ "BLE_GAP_ADV_TYPE_ADV_DIRECT_IND", "a00717.html#gafefde83f6b598e7fb14868e0610bdf43", null ],
+    [ "BLE_GAP_ADV_TYPE_ADV_IND", "a00717.html#ga6cc0db53453977ee0a31e59f07de2b86", null ],
+    [ "BLE_GAP_ADV_TYPE_ADV_NONCONN_IND", "a00717.html#ga8c86ca45ebffc3938fd97f9556daa49c", null ],
+    [ "BLE_GAP_ADV_TYPE_ADV_SCAN_IND", "a00717.html#ga594ca8490efef1702e8ccb6a28d2a1de", null ]
 ];

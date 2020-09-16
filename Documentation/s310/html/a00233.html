@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: ble_lls_evt_t Struct Reference</title>
+<title>nRF51 SDK - S310 SoftDevice: ble_tps_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,52 +106,48 @@ $(document).ready(function(){initNavTree('a00233.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_lls_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00678.html">Link Loss Service</a></div></div>  </div>
+<div class="title">ble_tps_t Struct Reference<div class="ingroups"><a class="el" href="a00615.html">TX Power Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Link Loss Service event.  
+<p>TX Power Service structure. This contains various status information for the service.  
  <a href="a00233.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_lls.h&gt;</code></p>
+<p><code>#include &lt;ble_tps.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a971a9cd94583dae76dcf5f94eb412686"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00678.html#ga94331ff0a90e8f8b61dcf230e1760ccf">ble_lls_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#a971a9cd94583dae76dcf5f94eb412686">evt_type</a></td></tr>
-<tr class="separator:a971a9cd94583dae76dcf5f94eb412686"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88cf99487169b2570c216d8b0b8df40f"><td class="memItemLeft" ><a class="anchor" id="a88cf99487169b2570c216d8b0b8df40f"></a>
-union {</td></tr>
-<tr class="memitem:aaa0a46b5a8a1c74c47acb97b768505b1"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00233.html#adaf4d087319007c776df8baf3673fe8a">alert_level</a></td></tr>
-<tr class="separator:aaa0a46b5a8a1c74c47acb97b768505b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88cf99487169b2570c216d8b0b8df40f"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:a88cf99487169b2570c216d8b0b8df40f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ebaa77023ad95d4ea1bb2a046b9ea80"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#a4ebaa77023ad95d4ea1bb2a046b9ea80">service_handle</a></td></tr>
+<tr class="separator:a4ebaa77023ad95d4ea1bb2a046b9ea80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b43774912f600a0069a22603c69bc48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00169.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00233.html#a6b43774912f600a0069a22603c69bc48">tx_power_level_handles</a></td></tr>
+<tr class="separator:a6b43774912f600a0069a22603c69bc48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Link Loss Service event. </p>
+<div class="textblock"><p>TX Power Service structure. This contains various status information for the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="adaf4d087319007c776df8baf3673fe8a"></a>
+<a class="anchor" id="a4ebaa77023ad95d4ea1bb2a046b9ea80"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_lls_evt_t::alert_level</td>
+          <td class="memname">uint16_t ble_tps_t::service_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>New Alert Level value. </p>
+<p>Handle of TX Power Service (as provided by the BLE stack). </p>
 
 </div>
 </div>
-<a class="anchor" id="a971a9cd94583dae76dcf5f94eb412686"></a>
+<a class="anchor" id="a6b43774912f600a0069a22603c69bc48"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00678.html#ga94331ff0a90e8f8b61dcf230e1760ccf">ble_lls_evt_type_t</a> ble_lls_evt_t::evt_type</td>
+          <td class="memname"><a class="el" href="a00169.html">ble_gatts_char_handles_t</a> ble_tps_t::tx_power_level_handles</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of event. </p>
+<p>Handles related to the TX Power Level characteristic. </p>
 
 </div>
 </div>
@@ -160,8 +156,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00233.html">ble_lls_evt_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:19 for nRF51 SDK - S310 SoftDevice by
+    <li class="navelem"><a class="el" href="a00233.html">ble_tps_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:47 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

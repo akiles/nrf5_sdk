@@ -1,5 +1,7 @@
 var a00316 =
 [
-    [ "current_val", "a00316.html#a607fd7c8e6f2f3e7bbe8dc5d5b44b54e", null ],
-    [ "is_increasing", "a00316.html#a21bddc380a89ed66e20f88dfd4da4c8a", null ]
+    [ "hfclk", "a00316.html#a5d6e28106247179b7cde2e289f0f9c39", null ],
+    [ "length_us", "a00316.html#a0495f3c5f7e2fd20663af081ca7e4c0b", null ],
+    [ "priority", "a00316.html#ad45d8189eff4584a13d7069d3c877a55", null ],
+    [ "timeout_us", "a00316.html#af56601d1b7ef92d49dbd1567bd1d39e0", null ]
 ];

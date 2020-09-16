@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: UICR Config Example</title>
+<title>nRF51 SDK - S110 SoftDevice: Direct Test Mode</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,78 +97,100 @@ $(document).ready(function(){initNavTree('a00054.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">UICR Config Example </div>  </div>
+<div class="title">Direct Test Mode </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This example shows how to include UICR values into the application hex file. Also, shows how to setup Keil to download and debug the hexfile generated.</p>
-<p>The project uses the "uicr_config.h" to define the User Information Configuration Registers (UICR) values to be included into the hex file.</p>
-<p>The file declares one variable per register of the UICR area and informs the linker where to place them. To include the desired value in the desired address, uncomment the variable with the proper address at the target area and update the assignment value. As shown below, the UICR register with address 0x10001080 will be assigned the value 0x12345678.</p>
-<div class="fragment"><div class="line"><span class="keyword">const</span> uint32_t UICR_ADDR_0x80 __attribute__((at(0x10001080))) __attribute__((used)) = 0x12345678;</div>
-<div class="line"><span class="comment">// const uint32_t UICR_ADDR_0x84 __attribute__((at(0x10001084))) __attribute__((used)) = 0xFFFFFFFF;</span></div>
-<div class="line"><span class="comment">// const uint32_t UICR_ADDR_0x88 __attribute__((at(0x10001088))) __attribute__((used)) = 0xFFFFFFFF;</span></div>
-</div><!-- fragment --><p>When compiling the project with the uicr_config.h stated above it will add the section shown below into the hex. The two lines (intel hex format) shows that we have successfully generated a hex file which will fill the value 0x12345678 into the UICR address. </p>
-<div class="fragment"><div class="line">:020000041000EA</div>
-<div class="line">:041080007856341258</div>
-</div><!-- fragment --><p>Note that UICR values are stored in a reserved area of the flash and should only be stored into when downloading a hex file. Do not use these defined variables to store data at run time.</p>
-<dl class="section note"><dt>Note</dt><dd>The file uses one non-standard attribute ("at"). It will only function with the ARMCC compiler toolset.</dd></dl>
-<p>The hex file generated when this file is included will fail to download when using the standard download algorithm provided by Nordic. How to configure Keil to download the hex is shown below.</p>
-<h1><a class="anchor" id="uicr_config_keil_config"></a>
-Keil Configuration</h1>
-<p>To configure Keil to not use the standard download algorithm follow these steps:</p>
+<div class="textblock"><h1><a class="anchor" id="project_dtm_intro"></a>
+Direct Test Mode</h1>
+<p>The DTM application enables the DTM test functions described in <em>Bluetooth</em> Specification Version 4.0, Vol. 6, Part F.</p>
+<p>The purpose of DTM is to test the operation of the radio at the physical level, such as</p>
 <ul>
-<li>Open "Target Options" by selecting the target in the project window, then pressing Alt+F7.</li>
-<li>Select the tab labeled "Utilities".</li>
-<li>Select the radio button "Use External Tool for Flash Programming".</li>
-<li>Fill in "nrfjprog.exe" in the "Command" text field.</li>
-<li>Fill "Arguments" according to the chip variant and use of SoftDevice (See below).</li>
+<li>transmission power and receiver sensitivity,</li>
+<li>frequency offset and drift,</li>
+<li>modulation characteristics,</li>
+<li>packet error rate, and</li>
+<li>intermodulation performance.</li>
 </ul>
-<p><code>nrfjprog.exe</code> is an extra tool installed with the SDK. And will be located in system path.</p>
-<h2><a class="anchor" id="uicr_config_example_ant"></a>
-nrf51422 256K with S210 SoftDevice (ANT)</h2>
+<p>Test procedures are defined the document "&lt;i&gt;Bluetooth&lt;/i&gt; Low Energy RF PHY Test Specification", Document no RF-PHY.TS/4.0.0. Conformance tests are carried out by dedicated test equipment (such as the Anritsu MT8852 or similar), the nRF51 with the DTM application as the DUT.</p>
+<p>The nRF51 DTM application includes two parts:</p>
+<ul>
+<li>ble_sdk_dtmlib_dtm library - Which manages the nRF radio and controlling the standard DTM procedures,</li>
+<li>an application providing an external interface to the library.</li>
+</ul>
+<p>The DTM application contains a driver for a 2-wire UART interface, mapping two-octet commands and events as specified by the BLE DTM specification to the dtmlib.</p>
+<p>Source code and project file for the DTM application can be found in the <code>&lt;InstallFolder&gt;\Nordic\nrf51\Board\nrf6310\direct_test_mode</code> folder.</p>
+<p>Source code and project file for the <code>ble_dtm.c</code> module can be found in the <code>&lt;InstallFolder&gt;\Nordic\nrf51\Source\ble</code> folder. The header file <code>ble_dtm.h</code> is found in the <code>&lt;InstallFolder&gt;\Nordic\nrf51\Include\ble</code> folder.</p>
 <div class="image">
-<img src="uicr_example_ant_aa.png" alt="uicr_example_ant_aa.png"/>
+<img src="DTM_DUT.png" alt="DTM_DUT.png"/>
 <div class="caption">
-Figure 1: Example settings for nrf51422.</div></div>
-<h2><a class="anchor" id="uicr_config_example_nrf51822_blank"></a>
-nrf51822 128K/256K without SoftDevice</h2>
+nRF51 with DTM as a DUT</div></div>
+<p>The implementation is self contained, and requires no BLE protocol stack for its operation. The MPU is initialized in the standard way (files <code>startup_nRF51502.s</code> and <code>system_nRF51502.c</code>. The <code>dtmlib</code> fuction <code>dtm_init()</code> will do all configuration of interrupts, timers and radio. Initialization of the UART is done by the <code>dtm_serial2w</code> code.</p>
+<p><code>main.c</code> may be replaced with other interface implementations, such as an HCI interface, USB or other interface required by the Upper Tester.</p>
+<p>The interface to the Lower Tester uses the antenna connector of the nRF51. While in principle an aerial may be used, conformance tests cover reading the transmission power delivered by the DUT; hence a coax connection between the DUT and the Lower Tester is employed for all conformance testing.</p>
+<dl class="section note"><dt>Note</dt><dd>The DTM application is stand-alone. Therefore the S110 SoftDevice must be erased in the nRF51822 device. Please refer to the the nRF51822 DK User Guide for information on how to program and erase using the nRFgo Studio.</dd></dl>
+<h1><a class="anchor" id="ble_sdk_dtm_lib_interface"></a>
+BLE DTM module interface</h1>
+<p><code>ble_dtm.c</code>, function <code>dtm_cmd()</code>, implements the four commands defined by the BLE standard</p>
+<ul>
+<li>RESET</li>
+<li>RECEIVER_TEST</li>
+<li>TRANSMITTER_TEST</li>
+<li>TEST_END</li>
+</ul>
+<p>In the <code>dtm_cmd()</code> interface, each of the parameters (<code>cmd</code>, <code>freq</code>, <code>length</code>, <code>payload</code>) is a word size value. Note that parameter values currently supported is limited to those defined for BLE. (HCI allows a greater value range for use with BR/EDR.)</p>
+<p>DTM events,</p>
+<ul>
+<li>PACKET_REPORTING_EVENT</li>
+<li>TEST_STATUS_EVENT [SUCCESS|FAIL]</li>
+</ul>
+<p>are polled using the <code>dtm_event_get()</code> function.</p>
 <div class="image">
-<img src="uicr_example_blank_aa_ab.png" alt="uicr_example_blank_aa_ab.png"/>
+<img src="dtm_engine.jpg" alt="dtm_engine.jpg"/>
 <div class="caption">
-Figure 2: Example settings for nrf51822 without SoftDevice.</div></div>
-<h2><a class="anchor" id="uicr_config_example_nrf51822_ble"></a>
-nrf51822 128K/256K with S110 SoftDevice (BLE)</h2>
-<div class="image">
-<img src="uicr_example_ble_aa_ab.png" alt="uicr_example_ble_aa_ab.png"/>
-<div class="caption">
-Figure 3: Example settings for nrf51822 with SoftDevice.</div></div>
-<h1><a class="anchor" id="uicr_trouble_sec"></a>
-Troubleshooting</h1>
-<p>This section covers some known issues and their solution for the UICR example project</p>
-<table class="doxtable">
-<tr>
-<th>Error </th><th>Solution</th></tr>
-<tr>
-<td>No Algorithm found for: 10001014H - 10001017H <br/>
- Partial Erase Done (areas with no algorithms skipped!) <br/>
- No Algorithm found for: 10001014H - 10001017H </td><td>Those error messages are seen when trying to flash with the J-Link Target Driver, as it does not support writing of UICR. Use <code>nrjjprog.exe</code> instead. </td></tr>
-<tr>
-<td>&mdash; Error: failed to execute '"nrfjprog.exe" ..... </td><td>nrfjprog.exe could not be found in windows path. Add nrfjprog.exe to windows %PATH% or specify full path to nrfjprog in Keil-'Options for Target'-'Utilities' as seen in the above figures. </td></tr>
-</table>
-<h1><a class="anchor" id="uicr_config_example_testing"></a>
-Testing</h1>
-<p>The UICR Configuration can be tested as follows:</p>
-<ol type="1">
-<li>Compile and program the application with the chip variant configuration as described in <a class="el" href="a00054.html#uicr_config_keil_config">Keil Configuration</a>.</li>
-<li>Verify that the UICR register with the address 0x10001080 has been assigned the value 0x12345678 with this nrfjprog command: <div class="fragment"><div class="line">nrfjprog --memrd 0x10001080 --n 4</div>
-</div><!-- fragment --> </li>
-</ol>
+State machine overview of the dtm engine.</div></div>
+<h1><a class="anchor" id="ble_sdk_dtm_proprietary"></a>
+Vendor Specific Packet Payload</h1>
+<p>The BLE 2-wire UART DTM interface standard reserves Packet Type (<code>payload</code> parameter) binary value '11' for a <em>Vendor Specific</em> Packet Payload. The <code>dtm_serial2w</code> adaptation layer maps this to value 0xFFF..FFF in the <code>dtm_cmd()</code> interface. The rationale for this mapping is to allow later extensions to a 4-bit Packet Type field, as specified in the HCI interface and in the DTM PDU layout.</p>
+<p>The <em>Vendor Specific</em> <code>payload</code> (parameter 4) is interpreted as follows:</p>
+<p>If <code>Command</code>, parameter 1, is set to Transmitter Test (binary '10') and parameter 4, <code>payload</code>, to <em>Vendor Specific</em> (binary '11' in the 2wire physical interface, all bits set to 1 in the <code>dtmlib</code> interface):</p>
+<ul>
+<li>If parameter 3 (<code>length</code>) is set to 0 (symbol <code>CARRIER_TEST</code>), an unmodulated carrier is turned on atthe channel indicated by parameter 2 (<code>freq</code>). It remains turned on until a <code>TEST_END</code> or <code>RESET</code> command is issued.</li>
+</ul>
+<ul>
+<li>Parameter 3 (<code>length</code>) equal to 1 (symbol <code>CARRIER_TEST_STUDIO</code>), is used by the nRFgo studio to indicate an unmodulated carrier is turned on at the channel. It remains turned on until a <code>TEST_END</code> or <code>RESET</code> command is issued.</li>
+</ul>
+<ul>
+<li>If parameter 3 (<code>length</code>) is set to 2 (symbol <code>SET_TX_POWER</code>), parameter 2 (<code>length</code>) sets the tx power in dBm, ranging from -40 to +4 in steps of 4, 0 dBm being the reset value. The tx power can only be modified while no Transmitter Test or Receiver Test is running.</li>
+</ul>
+<ul>
+<li>If parameter 3 (<code>freq</code>) is set to 3 (symbol <code>SELECT_TIMER</code>), parameter 2 (<code>length</code>) selects the timer to be used by dtmlib for Transmitter Test timing. Valid timer identifiers are 0, 1 and 2. Configuring the timer to be used allows dtmlib to be integrated in a larger test environment where other modules may be occupying the default timer (timer 0).</li>
+</ul>
+<ul>
+<li>All other values of parameter 2 (<code>freq</code>) and 4 (<code>length</code>) are reserved.</li>
+</ul>
+<h1><a class="anchor" id="ble_sdk_dtm_serial2w"></a>
+The DTM to Serial adaptation layer</h1>
+<p><code>main.c</code> is a sample adaptation layer, implementing the UART interface as specified in Volume 6, part F, chapter 3 of the <em>Bluetooth</em> specification.</p>
+<p>The default selection of GPIO pins are pin 16 for RX and pin 17 for TX which corresponds to the pin usage in the <a class="el" href="a00009.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a> and are defined in <code>boards/nrf6310.h</code> and can be changed by editing the values of the symbols <code>RX_PIN_NUMBER</code> and <code>TX_PIN_NUMBER</code>.</p>
+<h1><a class="anchor" id="ble_sdk_dtm_testing"></a>
+Running DTM tests</h1>
+<p>Conformance testing is done using a certified tester. The setup depends on the actual tester, and details about the test operation must be found from the tester documentation.</p>
+<p>The BLE DTM UART interface standard specifies</p>
+<ul>
+<li>8 data bits,</li>
+<li>No parity,</li>
+<li>1 stop bit,</li>
+<li>No flow control,</li>
+<li>A selection of bit rates from 1200 to 115200, one of which must be supported by the DUT.</li>
+</ul>
+<p>The default bit rate of the DTM UART driver is 19200 bps, which is supported by most certified testers. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00024.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:33 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

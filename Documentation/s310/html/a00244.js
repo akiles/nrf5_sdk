@@ -1,6 +1,6 @@
 var a00244 =
 [
-    [ "location_list", "a00244.html#afd78c23388141f9344bc5e6ffcaedb75", null ],
-    [ "opcode", "a00244.html#a155379662bc1d70f1006fdb6cb3993cb", null ],
-    [ "status", "a00244.html#a2879f0a89583e6148c81d3b8127fe520", null ]
+    [ "ciphertext", "a00244.html#a478942ae65d7433678164a95e4944115", null ],
+    [ "cleartext", "a00244.html#ad4c798195f0d6d399a7f75d09ef89793", null ],
+    [ "key", "a00244.html#aab4ea408dd38499ceff3935ecb5fa39f", null ]
 ];

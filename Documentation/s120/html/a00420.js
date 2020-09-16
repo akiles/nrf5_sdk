@@ -1,7 +1,8 @@
 var a00420 =
 [
-    [ "CRITICAL_REGION_ENTER", "a00420.html#ga61149a977f6ebdaeb8bdeed626dd9392", null ],
-    [ "CRITICAL_REGION_EXIT", "a00420.html#ga854878240b628e978f760f75aca4e1cc", null ],
-    [ "NRF_APP_PRIORITY_THREAD", "a00420.html#gac3db2bb99db38f42bf316a9d0d9ace99", null ],
-    [ "app_irq_priority_t", "a00420.html#ga1a193131d1d5911b1ec53f9541841b1b", null ]
+    [ "PSTORAGE_CLEAR_OP_CODE", "a00420.html#gaf2ce8b4e460358a23ae82516167df79c", null ],
+    [ "PSTORAGE_ERROR_OP_CODE", "a00420.html#ga31c301088ac2d5534ebdc5ed44bd3b55", null ],
+    [ "PSTORAGE_LOAD_OP_CODE", "a00420.html#ga4e04e36e3adf60869073dce4af46b7d5", null ],
+    [ "PSTORAGE_STORE_OP_CODE", "a00420.html#gad1415b8815fc4e0ba8f4f6bc2d8e3ce6", null ],
+    [ "PSTORAGE_UPDATE_OP_CODE", "a00420.html#gae66936fc791b79a9f85a7058ea83423a", null ]
 ];

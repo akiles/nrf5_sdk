@@ -1,7 +1,9 @@
 var a00099 =
 [
-    [ "alert_category", "a00099.html#afa8fc29bec3beb7c27a5b8638273c811", null ],
-    [ "alert_category_count", "a00099.html#a92d6452f642f4010d2a45eaa6e2de420", null ],
-    [ "alert_msg_length", "a00099.html#afdc318698fc9128ebe8f068b6350c4ec", null ],
-    [ "p_alert_msg_buf", "a00099.html#aa8b8813b3a0e089e79b4c48d05d46001", null ]
+    [ "conn_handle", "a00099.html#acb6ea6f96806c80017f6d80a65fa1c40", null ],
+    [ "evt_handler", "a00099.html#ad503c598af64ae0973fcbd69c2564f6c", null ],
+    [ "feature", "a00099.html#ab6a6c9882bfb4ca35a22b2b46e6cc342", null ],
+    [ "feature_handles", "a00099.html#ad7b6cace6c499b77b40be59b7d9ed843", null ],
+    [ "meas_handles", "a00099.html#ab61b1c5af5765ac4f24f617a24a81cd0", null ],
+    [ "service_handle", "a00099.html#a08ca745c921f74e622b3226b74a5453a", null ]
 ];

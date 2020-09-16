@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: SDK Error codes</title>
+<title>nRF51 SDK - S110 SoftDevice: Bluetooth status codes</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,56 +97,100 @@ $(document).ready(function(){initNavTree('a00743.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">SDK Error codes<div class="ingroups"><a class="el" href="a00967.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">Bluetooth status codes<div class="ingroups"><a class="el" href="a00704.html">BLE SoftDevice Common</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00744"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00744.html">Base defined for SDK Modules</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00745"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00745.html">Codes reserved as identification for module where the error occurred.</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00746"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00746.html">Codes reserved as identification for common errors.</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00747"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00747.html">Error / status codes specific to device manager.</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga981ace296dd50082e82b56dc820295a9"><td class="memItemLeft" align="right" valign="top">typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00743.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a></td></tr>
-<tr class="memdesc:ga981ace296dd50082e82b56dc820295a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">API Result.  <a href="#ga981ace296dd50082e82b56dc820295a9">More...</a><br/></td></tr>
-<tr class="separator:ga981ace296dd50082e82b56dc820295a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga2a4e1ac74fc8805c1c78879a100f0a99"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2a4e1ac74fc8805c1c78879a100f0a99"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_SUCCESS</b>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga2a4e1ac74fc8805c1c78879a100f0a99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga632cc15e640e9f1796535199ccca015d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga632cc15e640e9f1796535199ccca015d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_UNKNOWN_BTLE_COMMAND</b>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga632cc15e640e9f1796535199ccca015d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga06ca2ee5c0059a51327d72c741411274"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga06ca2ee5c0059a51327d72c741411274"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_UNKNOWN_CONNECTION_IDENTIFIER</b>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:ga06ca2ee5c0059a51327d72c741411274"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1901d4785752421de0733f3488e5b653"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1901d4785752421de0733f3488e5b653"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_AUTHENTICATION_FAILURE</b>&#160;&#160;&#160;0x05</td></tr>
+<tr class="separator:ga1901d4785752421de0733f3488e5b653"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5006ec78f9d9101a1d1d8b72ae98ad20"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5006ec78f9d9101a1d1d8b72ae98ad20"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_PIN_OR_KEY_MISSING</b>&#160;&#160;&#160;0x06</td></tr>
+<tr class="separator:ga5006ec78f9d9101a1d1d8b72ae98ad20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga01a03c53e51db6f2ca548fdce8fc7c38"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga01a03c53e51db6f2ca548fdce8fc7c38"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_MEMORY_CAPACITY_EXCEEDED</b>&#160;&#160;&#160;0x07</td></tr>
+<tr class="separator:ga01a03c53e51db6f2ca548fdce8fc7c38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1bb212e3f0e4f2ef6bd02afa644b92fb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1bb212e3f0e4f2ef6bd02afa644b92fb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_CONNECTION_TIMEOUT</b>&#160;&#160;&#160;0x08</td></tr>
+<tr class="separator:ga1bb212e3f0e4f2ef6bd02afa644b92fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacc41d1b3990aebe5067d627b552522da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gacc41d1b3990aebe5067d627b552522da"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_COMMAND_DISALLOWED</b>&#160;&#160;&#160;0x0C</td></tr>
+<tr class="separator:gacc41d1b3990aebe5067d627b552522da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10365b1c8ba16281285e4d0be1b68d83"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga10365b1c8ba16281285e4d0be1b68d83"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_INVALID_BTLE_COMMAND_PARAMETERS</b>&#160;&#160;&#160;0x12</td></tr>
+<tr class="separator:ga10365b1c8ba16281285e4d0be1b68d83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4caeb4bcc901a4f1b00068c498a090c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad4caeb4bcc901a4f1b00068c498a090c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION</b>&#160;&#160;&#160;0x13</td></tr>
+<tr class="separator:gad4caeb4bcc901a4f1b00068c498a090c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga99f0a6b01dc8b232cf8c6472425b2ab2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga99f0a6b01dc8b232cf8c6472425b2ab2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_REMOTE_DEV_TERMINATION_DUE_TO_LOW_RESOURCES</b>&#160;&#160;&#160;0x14</td></tr>
+<tr class="separator:ga99f0a6b01dc8b232cf8c6472425b2ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e8d65cb65b560a8bbb66c7b77c413bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2e8d65cb65b560a8bbb66c7b77c413bf"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_REMOTE_DEV_TERMINATION_DUE_TO_POWER_OFF</b>&#160;&#160;&#160;0x15</td></tr>
+<tr class="separator:ga2e8d65cb65b560a8bbb66c7b77c413bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b7bcbe31925c6d2c305ba4f0ff9889b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0b7bcbe31925c6d2c305ba4f0ff9889b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_LOCAL_HOST_TERMINATED_CONNECTION</b>&#160;&#160;&#160;0x16</td></tr>
+<tr class="separator:ga0b7bcbe31925c6d2c305ba4f0ff9889b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4f79594f915b1ee5fca90008254a957"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa4f79594f915b1ee5fca90008254a957"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_UNSUPPORTED_REMOTE_FEATURE</b>&#160;&#160;&#160;0x1A</td></tr>
+<tr class="separator:gaa4f79594f915b1ee5fca90008254a957"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8dcf12cdc7a9ee6aec5eca3a89b140e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8dcf12cdc7a9ee6aec5eca3a89b140e5"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_INVALID_LMP_PARAMETERS</b>&#160;&#160;&#160;0x1E</td></tr>
+<tr class="separator:ga8dcf12cdc7a9ee6aec5eca3a89b140e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9f8658a4e455b41aab4031fb3d95d4e6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9f8658a4e455b41aab4031fb3d95d4e6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_UNSPECIFIED_ERROR</b>&#160;&#160;&#160;0x1F</td></tr>
+<tr class="separator:ga9f8658a4e455b41aab4031fb3d95d4e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga91c40ef8a7c61f6a3a036eac70956491"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga91c40ef8a7c61f6a3a036eac70956491"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_LMP_RESPONSE_TIMEOUT</b>&#160;&#160;&#160;0x22</td></tr>
+<tr class="separator:ga91c40ef8a7c61f6a3a036eac70956491"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga234093c4696a6c19390b17043431004e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga234093c4696a6c19390b17043431004e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_STATUS_CODE_LMP_PDU_NOT_ALLOWED</b>&#160;&#160;&#160;0x24</td></tr>
+<tr class="separator:ga234093c4696a6c19390b17043431004e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaed9fe75c54693c578cfab501206bc41a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaed9fe75c54693c578cfab501206bc41a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_INSTANT_PASSED</b>&#160;&#160;&#160;0x28</td></tr>
+<tr class="separator:gaed9fe75c54693c578cfab501206bc41a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1698ee903c812256fa56b2c14a34e06c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1698ee903c812256fa56b2c14a34e06c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_PAIRING_WITH_UNIT_KEY_UNSUPPORTED</b>&#160;&#160;&#160;0x29</td></tr>
+<tr class="separator:ga1698ee903c812256fa56b2c14a34e06c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga87bc369584c1295fdca7b38696f6f4b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga87bc369584c1295fdca7b38696f6f4b8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_DIFFERENT_TRANSACTION_COLLISION</b>&#160;&#160;&#160;0x2A</td></tr>
+<tr class="separator:ga87bc369584c1295fdca7b38696f6f4b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b78923a6494dcb520a604fb7cb63f37"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2b78923a6494dcb520a604fb7cb63f37"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_CONTROLLER_BUSY</b>&#160;&#160;&#160;0x3A</td></tr>
+<tr class="separator:ga2b78923a6494dcb520a604fb7cb63f37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2050e416bf56097d8dfd499b268abcad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2050e416bf56097d8dfd499b268abcad"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_CONN_INTERVAL_UNACCEPTABLE</b>&#160;&#160;&#160;0x3B</td></tr>
+<tr class="separator:ga2050e416bf56097d8dfd499b268abcad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc453b379f477ef449e7474437f49c52"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabc453b379f477ef449e7474437f49c52"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_DIRECTED_ADVERTISER_TIMEOUT</b>&#160;&#160;&#160;0x3C</td></tr>
+<tr class="separator:gabc453b379f477ef449e7474437f49c52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafe4d349d8ff3edc71dad285d867c4d14"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafe4d349d8ff3edc71dad285d867c4d14"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_CONN_TERMINATED_DUE_TO_MIC_FAILURE</b>&#160;&#160;&#160;0x3D</td></tr>
+<tr class="separator:gafe4d349d8ff3edc71dad285d867c4d14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabee134870c9531f79dbb3dc1b4b9e479"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabee134870c9531f79dbb3dc1b4b9e479"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_HCI_CONN_FAILED_TO_BE_ESTABLISHED</b>&#160;&#160;&#160;0x3E</td></tr>
+<tr class="separator:gabee134870c9531f79dbb3dc1b4b9e479"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Error codes are 32-bit unsigned integers with the most significant 16-bit reserved for identifying the module where the error occurred while the least least significant LSB are used to provide the cause or nature of error. Each module is assigned a 16-bit unsigned integer. Which it will use to identify all errors that occurred in it. 16-bit LSB range is with module id as the MSB in the 32-bit error code is reserved for the module. As an example, if 0x8800 identifies a certain SDK module, all values from 0x88000000 - 0x8800FFFF are reserved for this module. It should be noted that common error reasons have been assigned values to make it possible to decode error reason easily. As an example, lets module uninitialized has been assigned an error code 0x000A0. Then, if application encounters an error code 0xZZZZ00A0, it knows that it accessing a certain module without initializing it. Apart from this, each module is allowed to define error codes that are not covered by the common ones, however, these values are defined in a range that does not conflict with common error values. For module, specific error however, it is possible that the same error value is used by two different modules to indicated errors of very different nature. If error is already defined by the NRF common error codes, these are reused. A range is reserved for application as well, it can use this range for defining application specific errors.</p>
-<dl class="section note"><dt>Note</dt><dd>Success code, NRF_SUCCESS, does not include any module identifier. </dd></dl>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga981ace296dd50082e82b56dc820295a9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef uint32_t <a class="el" href="a00743.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>API Result. </p>
-<p>Indicates success or failure of an API procedure. In case of failure, a comprehensive error code indicating cause or reason for failure is provided.</p>
-<p>Though called an API result, it could used in Asynchronous notifications callback along with asynchronous callback as event result. This mechanism is employed when an event marks the end of procedure initiated using API. API result, in this case, will only be an indicative of whether the procedure has been requested successfully. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:35 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:35 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

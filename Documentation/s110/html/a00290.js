@@ -1,9 +1,10 @@
 var a00290 =
 [
-    [ "conn_handle", "a00290.html#a71533de99d438bb326730e08da1d402a", null ],
-    [ "evt_handler", "a00290.html#ab0392a7012b01ace2dad863bc8f573cc", null ],
-    [ "meas_handles", "a00290.html#a6e3f96502d28802be863f09b2839817d", null ],
-    [ "service_handle", "a00290.html#ac62f9c0c453beef41d04c488c5d19ecc", null ],
-    [ "temp_type", "a00290.html#ad8e572095f9a6cecdf4bcde49c527aab", null ],
-    [ "temp_type_handles", "a00290.html#a514df962e0856554cd6eee1e2b11bf26", null ]
+    [ "inst_cadence", "a00290.html#ae0184379a72ca968be31624693859296", null ],
+    [ "inst_speed", "a00290.html#a2c67fcdf6c045252f8f2c19410ce93ce", null ],
+    [ "inst_stride_length", "a00290.html#a80d5e5ebfb6d4e01cf5a3716af83bf6f", null ],
+    [ "is_inst_stride_len_present", "a00290.html#ae051edb606a9de9cebc7ab7a6eef2ae0", null ],
+    [ "is_running", "a00290.html#a1b8f312b31cdc3a4b06f092ce7e2bd8e", null ],
+    [ "is_total_distance_present", "a00290.html#abd1ef1791fd6291c82c5b2f5d9bd289f", null ],
+    [ "total_distance", "a00290.html#a446576bd70deec710453a5e09ff1f7c2", null ]
 ];

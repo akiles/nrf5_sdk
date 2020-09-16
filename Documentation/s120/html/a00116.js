@@ -1,6 +1,7 @@
 var a00116 =
 [
-    [ "lv1", "a00116.html#ad5928e9ef7150d0ea5769a7a4ce6e0e9", null ],
-    [ "lv2", "a00116.html#a3a5ac21e29c1c675ad3b1ccf0db2fec6", null ],
-    [ "lv3", "a00116.html#a78aa0c3d2fee6fccf52f73e45cd66cf6", null ]
+    [ "addr_count", "a00116.html#a8f7d372587ed29005dbfd515103fa6fd", null ],
+    [ "irk_count", "a00116.html#a21922578ee2df66befd41e968f8d5af1", null ],
+    [ "pp_addrs", "a00116.html#a9316d95519c47512389b4696376556d0", null ],
+    [ "pp_irks", "a00116.html#ab78ecf15e25742a5ea56377cef1a8603", null ]
 ];

@@ -1,7 +1,6 @@
 var a00710 =
 [
-    [ "mpu6050_init", "a00710.html#ga69d0fa94f347b662e7312e313595773e", null ],
-    [ "mpu6050_register_read", "a00710.html#ga2a262546c837f7d4841c95099eb93c87", null ],
-    [ "mpu6050_register_write", "a00710.html#ga2435390ec63c2d17ab67c32a55ccc867", null ],
-    [ "mpu6050_verify_product_id", "a00710.html#ga3af875981ed613d4377fd457753f323d", null ]
+    [ "BLE_GAP_ROLE_CENTRAL", "a00710.html#ga6b9440660a70146392d27c849431fadb", null ],
+    [ "BLE_GAP_ROLE_INVALID", "a00710.html#ga8164b32f4fd65997d0523cd7c5735166", null ],
+    [ "BLE_GAP_ROLE_PERIPH", "a00710.html#ga12e431897d73a3ce88fab8a4dbd90497", null ]
 ];

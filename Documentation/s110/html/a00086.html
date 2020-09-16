@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Bootloader/DFU Architecture with SoftDevice update</title>
+<title>nRF51 SDK - S110 SoftDevice: BLE Serialization Codecs</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,65 +97,73 @@ $(document).ready(function(){initNavTree('a00086.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Bootloader/DFU Architecture with SoftDevice update </div>  </div>
+<div class="title">BLE Serialization Codecs </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="exp_dfu_bootloader_arch_sec"></a>
-Bootloader/DFU with SoftDevice Update Architectural Overview</h1>
-<p>The Bootloader/DFU example makes it possible to receive a SoftDevice, Bootloader, and Application image and write it to the internal flash of the nRF51.</p>
-<p>The image can be transferred over BLE.</p>
-<p>During system start-up, the Bootloader/DFU will be started and during start-up it will determine if a valid application is present in bank 0. Location of bank 0 is following the kocation of SoftDevice. For SoftDevice v7.0.0 this address is <code>0x00016000</code> (see also Dual Bank Flash Layout for detailed description). If a valid application is present in Bank 0 the Bootloader will start the application, otherwise the Bootloader will be in DFU mode expecting a Device Firmware Update. If it is desired to put a device with an existing application, restart with device with Button 7 pressed.</p>
-<p>A schematic overview of the blocks in Bootloader/DFU is seen in <b>Figure 1.</b></p>
+<div class="textblock"><h1><a class="anchor" id="packet_encoding_format"></a>
+Packet Encoding Format</h1>
 <div class="image">
-<img src="exp_dfu_bootloader_overview.png" alt="exp_dfu_bootloader_overview.png"/>
+<img src="frame_general.png" alt="frame_general.png"/>
 <div class="caption">
-Figure 1: Architectural overview of Bootloader/DFU.</div></div>
-<h1><a class="anchor" id="exp_dfu_bootloader_ble_transport_sec"></a>
-Bootloader/DFU BLE Transfer</h1>
-<p>The Bootloader/DFU supports transferring of an image using BLE.</p>
-<p>The DFU BLE Transport uses a BLE Service for data transfer (see DFU Service). The BLE DFU Service relies on S110 SoftDevice for data transfer. The DFU Bank Handling will ensure the writing of received data packets to flash.</p>
-<p><b>Figure 2</b> shows a schematic overview of the Bootloader/DFU project with BLE Support.</p>
+Figure 1: Frame format.</div></div>
+<p>For an architectural overview of Serialized <em>Bluetooth</em> Application, please see the <a class="el" href="a00083.html#nrf51_arch_serialization">Architecture</a> module. <br/>
+</p>
+<h2><a class="anchor" id="packet_encoding_format_commands"></a>
+Commands and responses</h2>
 <div class="image">
-<img src="exp_dfu_transfer_ble_overview.png" alt="exp_dfu_transfer_ble_overview.png"/>
+<img src="command_and_response_diagram.png" alt="command_and_response_diagram.png"/>
 <div class="caption">
-Figure 2: Architectural overview of Bootloader/DFU supporting BLE transfer.</div></div>
-<h1><a class="anchor" id="exp_dfu_bootloader_state_machine_sec"></a>
-The DFU State Machine</h1>
-<p>The DFU bootloader has an internal state machine independent of the transport layer used. All initializing and writing to non-volatile memory is controlled by the DFU module.</p>
-<p><b>Figure 3</b> illustrates the transitions in the state machine: </p>
-<div class="image">
-<img src="DFU_state_machine.png" alt="DFU_state_machine.png"/>
-<div class="caption">
-Figure 3: State machine transitions in the DFU.</div></div>
-<p><b>Entry point</b> indicates that the bootloader is started up, and would initialize the DFU. In this initialization the DFU would prepare the non-volatile memory region for the new application. Either using all available memory overwriting the old image, or using banked memory where the old application is retained until a new application is uploaded and validated. Also the selected transport layer would be initialized in this phase.</p>
-<h2><a class="anchor" id="exp_dfu_bootloader_event_message_subsec"></a>
-DFU Event Message Types</h2>
+Figure 2: Command and Response packet course.</div></div>
+<p><br/>
+</p>
 <table class="doxtable">
 <tr>
-<th>Message type </th><th>Description</th></tr>
+<th>Packet Type </th><th>Description</th></tr>
 <tr>
-<td>- dfu_init </td><td>Message initializing the Device Firmware Update module. </td></tr>
+<td>0x00 Command </td><td>The packet is sent from the application chip to the BLE S110 Connectivity Chip, where it will be decoded and the corresponding <a class="el" href="a00093.html">function</a> in the S110 SoftDevice is executed. </td></tr>
 <tr>
-<td>- dfu_image_size_set </td><td>Message setting the DFU image size. </td></tr>
+<td>0x01 Command Response </td><td>After a function in the S110 SoftDevice is received, the <a class="el" href="a00093.html">response</a> is encoded in the BLE S110 Connectivity Chip and a response packet is sent to the application chip. </td></tr>
 <tr>
-<td>- dfu_data_pkt_handle </td><td>Message containing a portion of the new application. </td></tr>
+<td>0x03 DTM Command </td><td>The packet is sent from the application chip to the BLE S110 Connectivity Chip, where it will be decoded and the chip will enter in the DTM mode. </td></tr>
 <tr>
-<td>- dfu_init_pkt_handle </td><td>Message for optional customer specific data. </td></tr>
-<tr>
-<td>- dfu_image_validate </td><td>Message triggering validation of the new application. </td></tr>
-<tr>
-<td>- dfu_image_activate </td><td>Message activating the transferred image after validation has successfully completed </td></tr>
-<tr>
-<td>- dfu_sys_reset </td><td>Can occur any time, making the DFU go into a reset of the chip. <br/>
- A bootloader time-out or an external message can trigger the system reset. </td></tr>
+<td>0x04 DTM Command Response </td><td>Before BLE S110 Connectivity Chip enter in the DTM mode it sends response packet to the application chip. </td></tr>
 </table>
+<p><b>Note:</b> If the length field is invalid for the specific command, the call will return error code NRF_ERROR_INVALID_LENGTH from the codec in the Application Chip. <br/>
+</p>
+<h2><a class="anchor" id="packet_encoding_format_events"></a>
+Events</h2>
+<div class="image">
+<img src="event_send_diagram.png" alt="event_send_diagram.png"/>
+<div class="caption">
+Figure 3: Event packet course.</div></div>
+<p><br/>
+</p>
+<table class="doxtable">
+<tr>
+<th>Packet Type </th><th>Description</th></tr>
+<tr>
+<td>0x02 Event </td><td>If an <a class="el" href="a00088.html">event</a> is triggered in the S110 SoftDevice, an event packet is is sent from the BLE S110 Connectivity Chip to the application chip. </td></tr>
+</table>
+<p><br/>
+</p>
+<p><a class="el" href="a00088.html">BLE S110 Events</a></p>
+<p><a class="el" href="a00089.html">BLE S110 GAP Events</a></p>
+<p><a class="el" href="a00090.html">BLE S110 GATTC Events</a></p>
+<p><a class="el" href="a00091.html">BLE S110 GATTS Events</a></p>
+<p><a class="el" href="a00092.html">BLE S110 L2CAP Events</a></p>
+<p><a class="el" href="a00093.html">BLE S110 Functions</a></p>
+<p><a class="el" href="a00094.html">BLE S110 GAP Functions</a></p>
+<p><a class="el" href="a00095.html">BLE S110 GATTC Functions</a></p>
+<p><a class="el" href="a00096.html">BLE S110 GATTS Functions</a></p>
+<p><a class="el" href="a00097.html">BLE S110 L2CAP Functions</a></p>
+<p><a class="el" href="a00087.html">BLE DTM</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00023.html">Experimental</a></li><li class="navelem"><a class="el" href="a00067.html">Bootloader/DFU - SoftDevice update support</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:33 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00083.html">S110 Serialization</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Motor Control Example</title>
+<title>nRF51 SDK - S110 SoftDevice: SPI master example application to be used with the SPI slave example application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,40 +97,42 @@ $(document).ready(function(){initNavTree('a00046.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Motor Control Example </div>  </div>
+<div class="title">SPI master example application to be used with the SPI slave example application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Motor Control Example project shows a PWM waveform generation where the timer resets after each full period. It generates a variable duty cycle pulse train on selected GPIO pin. By default the PWN waveform generation will have a duty cycle of 1/256. If Button 1 is pressed the duty cycle is set to 224/256. If only Button 0 is pressed duty cycle is set to 32/256. This example application could be controlling a step motor. It uses the hardware delivered in the nRF51822 Development Kit.</p>
-<p>The application starts with configuring the GPIOTE by setting inputs and outputs, and setting channel 0 to toggle pin 8 (LED 0). The PPI peripheral is configured to toggle pin 8 (LED 0) on every Timer 2 COMPARE[0] and COMPARE[1] match. The Timer 2 is initialized and the interrupts are enabled.</p>
-<h1><a class="anchor" id="simple_motor_control_setup"></a>
+<div class="textblock"><p>The SPI master example has been created specifically for verifying the SPI connectivity link for the SPI slave example application. The SPI master example can only be used with a nRF51822 Development Kit board that is running the SPI slave example application and it only tests SPI0. The application executes SPI transactions every 100 ms and uses the LEDs to indicate the status of the SPI transaction.</p>
+<h1><a class="anchor" id="spi_master_example_with_spi_slave_setup"></a>
 Setup</h1>
 <p>Instructions on how to set up the nRFgo Motherboard: <a class="el" href="a00009.html#nrf51_setup_nrf6310">nRFgo Motherboard Setup (nRF6310)</a>. <br/>
 </p>
+<p>Used SPI master pin configurations:<br/>
+</p>
+<ul>
+<li>MOSI0 (Pin 20, P2.4).</li>
+<li>MISO0 (Pin 22, P2.6).</li>
+<li>SS0 (Pin 21, P2.5).</li>
+<li>SCK0 (Pin 23, P2.7).</li>
+</ul>
 <p>LED assignments:</p>
 <ul>
-<li>LED 0 is used to show the generated duty cycle.</li>
+<li>LED 0 is used to show that an application is running.</li>
+<li>LED 1 is toggled everytime a single SPI transaction has completed successfully.</li>
+<li>LED 2 is used to show if an SPI transaction error has ocurred.</li>
 </ul>
-<p>Buttons assignments:</p>
-<ul>
-<li>Button 0 is used to set the duty cycle to 224/256.</li>
-<li>Button 1 is used to set the duty cycle to 32/256.</li>
-</ul>
-<h1><a class="anchor" id="simple_motor_control_testing"></a>
+<h1><a class="anchor" id="spi_master_example_with_spi_slave_testing"></a>
 Testing</h1>
-<p>The Motor Control Example Application can be tested as follows:</p>
+<p>The example application can be tested as follows:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Observe that LED 0 is lit with a very low light intensity.</li>
-<li>By pressing Button 0, LED 0 should light with a higher intensity.</li>
-<li>By pressing Button 1, LED 0 should light with an even higher intensity. </li>
+<li>Observe that the LED 0 is lit and LED 1 is toggled every 100ms. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00024.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:33 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00023.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

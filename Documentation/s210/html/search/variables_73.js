@@ -16,7 +16,6 @@ var searchData=
   ['spi_5fpriorityirq',['SPI_PriorityIRQ',['../structspi__master__config__t.html#ae73b65ac984bdc5b1855cb026009ff0e',1,'spi_master_config_t']]],
   ['state',['state',['../structantfs__states__t.html#aabea6be923bd627e1c87efd7f3517dd5',1,'antfs_states_t']]],
   ['status',['status',['../unionantfs__beacon__status__byte1__t.html#af790c38f19ec740f60ec72151cb66161',1,'antfs_beacon_status_byte1_t']]],
-  ['status_5fcode',['status_code',['../structdfu__update__status__t.html#ac8f74ba3fe25a5db401c156ad55360b1',1,'dfu_update_status_t']]],
   ['sub_5fstate',['sub_state',['../structantfs__states__t.html#a303291475c4af59d33a9665ee0683760',1,'antfs_states_t']]],
   ['sw_5frevision',['sw_revision',['../structpage81__data__t.html#a7b92af01cd0379eb59f79c7dde15bdc6',1,'page81_data_t']]],
   ['sw_5fversion',['sw_version',['../structhrm__page3__data__t.html#a978310165128e6b2c87dba16ca5df1f2',1,'hrm_page3_data_t']]],

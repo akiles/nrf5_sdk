@@ -1,5 +1,10 @@
 var a00095 =
 [
-    [ "company_identifier", "a00095.html#a82bb52823dc2e6f1d5da1103e90eb34f", null ],
-    [ "data", "a00095.html#ac19b78af581334531c4b7eff27494ea3", null ]
+    [ "battery_level_handles", "a00095.html#ade3d3767c6bec8d2c8fc37ed8303d4fb", null ],
+    [ "battery_level_last", "a00095.html#a90db9b31ace864a1952fd520957cb831", null ],
+    [ "conn_handle", "a00095.html#a4906d1aa3c702704f4392d90cd8102f0", null ],
+    [ "evt_handler", "a00095.html#a84827e57e33bae7cf628c4c5826b1ac4", null ],
+    [ "is_notification_supported", "a00095.html#a877690be6248d047f102fc238ab0c527", null ],
+    [ "report_ref_handle", "a00095.html#a70d124cbed946045d133aa76acd9581a", null ],
+    [ "service_handle", "a00095.html#af8c61a4fe0b938cc1b47989d67a20c4c", null ]
 ];

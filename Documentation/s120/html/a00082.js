@@ -1,4 +1,5 @@
 var a00082 =
 [
-    [ "count", "a00082.html#a2f0ff85ec5add11dad58af0a0ba5a5a8", null ]
+    [ "addr", "a00082.html#a7e756ddbde7ebf78f17a043d7ebe602c", null ],
+    [ "addr_type", "a00082.html#ad056845594972dd031a09700194d660c", null ]
 ];

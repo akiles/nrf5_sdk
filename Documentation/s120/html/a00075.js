@@ -1,5 +1,7 @@
 var a00075 =
 [
-    [ "cccd_handle", "a00075.html#a7ec4f43c4adba9c33d6c52fa6637540b", null ],
-    [ "characteristic", "a00075.html#ac1bd337f6b1acc35a908b13ee4877a88", null ]
+    [ "bl_cccd_handle", "a00075.html#a2ea89dfa950963404b32410a8e42a04f", null ],
+    [ "bl_handle", "a00075.html#a58c7f1553ce38426e3656bd61bd21748", null ],
+    [ "conn_handle", "a00075.html#a97ef9e28546757bc5c42fc566e331380", null ],
+    [ "evt_handler", "a00075.html#a13ed1988cc9320c7eaad37ec21272201", null ]
 ];

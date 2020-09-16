@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_ias_c_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_rscs_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,29 +106,118 @@ $(document).ready(function(){initNavTree('a00291.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ias_c_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00928.html">Immediate Alert Service Client</a></div></div>  </div>
+<div class="title">ble_rscs_s Struct Reference<div class="ingroups"><a class="el" href="a00870.html">Running Speed and Cadence Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Immediate Alert Service client event.  
+<p>Running Speed and Cadence Service structure. This contains various status information for the service.  
  <a href="a00291.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_ias_c.h&gt;</code></p>
+<p><code>#include &lt;ble_rscs.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:gaa03cb513eb320bde9c8f800162a7142f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00928.html#ga1363ef6107e67c26fd0ace31f6afa7cd">ble_ias_c_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00928.html#gaa03cb513eb320bde9c8f800162a7142f">evt_type</a></td></tr>
-<tr class="separator:gaa03cb513eb320bde9c8f800162a7142f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad91d85a84b9d6728223af53cebf8bbf4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00870.html#ga04b6f149d88df65ebffd5b8297bd657f">ble_rscs_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00291.html#ad91d85a84b9d6728223af53cebf8bbf4">evt_handler</a></td></tr>
+<tr class="separator:ad91d85a84b9d6728223af53cebf8bbf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefd6488d6d70f2a4d85c98504eb876d1"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00291.html#aefd6488d6d70f2a4d85c98504eb876d1">service_handle</a></td></tr>
+<tr class="separator:aefd6488d6d70f2a4d85c98504eb876d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5963b22a3c9a202db1248b6a2c3af6fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00291.html#a5963b22a3c9a202db1248b6a2c3af6fd">meas_handles</a></td></tr>
+<tr class="separator:a5963b22a3c9a202db1248b6a2c3af6fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ca692ca7b98730826f4e7bebfa07a72"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00291.html#a9ca692ca7b98730826f4e7bebfa07a72">feature_handles</a></td></tr>
+<tr class="separator:a9ca692ca7b98730826f4e7bebfa07a72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa54416b00fd0d29dbf8c4ce28324a644"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00291.html#aa54416b00fd0d29dbf8c4ce28324a644">conn_handle</a></td></tr>
+<tr class="separator:aa54416b00fd0d29dbf8c4ce28324a644"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaba73d58a013e5aab5a1f79583d414e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00291.html#aeaba73d58a013e5aab5a1f79583d414e">feature</a></td></tr>
+<tr class="separator:aeaba73d58a013e5aab5a1f79583d414e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Immediate Alert Service client event. </p>
-</div></div><!-- contents -->
+<div class="textblock"><p>Running Speed and Cadence Service structure. This contains various status information for the service. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="aa54416b00fd0d29dbf8c4ce28324a644"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_rscs_s::conn_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
+
+</div>
+</div>
+<a class="anchor" id="ad91d85a84b9d6728223af53cebf8bbf4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00870.html#ga04b6f149d88df65ebffd5b8297bd657f">ble_rscs_evt_handler_t</a> ble_rscs_s::evt_handler</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event handler to be called for handling events in the Running Speed and Cadence Service. </p>
+
+</div>
+</div>
+<a class="anchor" id="aeaba73d58a013e5aab5a1f79583d414e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_rscs_s::feature</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Bit mask of features available on sensor. </p>
+
+</div>
+</div>
+<a class="anchor" id="a9ca692ca7b98730826f4e7bebfa07a72"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00236.html">ble_gatts_char_handles_t</a> ble_rscs_s::feature_handles</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handles related to the Running Speed and Cadence feature characteristic. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5963b22a3c9a202db1248b6a2c3af6fd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00236.html">ble_gatts_char_handles_t</a> ble_rscs_s::meas_handles</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handles related to the Running Speed and Cadence Measurement characteristic. </p>
+
+</div>
+</div>
+<a class="anchor" id="aefd6488d6d70f2a4d85c98504eb876d1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_rscs_s::service_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle of Running Speed and Cadence Service (as provided by the BLE stack). </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00291.html">ble_ias_c_evt_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00291.html">ble_rscs_s</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:37 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

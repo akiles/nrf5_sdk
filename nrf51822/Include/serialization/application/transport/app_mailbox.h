@@ -87,4 +87,16 @@ uint32_t app_mailbox_put (app_mailbox_id_t mailbox_id, void *mail);
  */
 uint32_t app_mailbox_get (app_mailbox_id_t mailbox_id, void * mail);
 
+/**
+ * @brief Getting current length of the mailbox queue.
+ *
+ * @param[in]  mailbox_id  Queue identifier.
+ * @param[out] p_len       Pointer to length.
+ *
+ * @retval ::NRF_SUCCESS              Item enqueued.
+ * @retval ::NRF_ERROR_NULL           Null pointer provided.
+ *
+ */
+uint32_t app_mailbox_get_length (app_mailbox_id_t mailbox_id, uint32_t *p_len);
+
 #endif //_APP_MAILBOX_H

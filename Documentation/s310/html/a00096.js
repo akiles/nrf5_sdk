@@ -1,5 +1,4 @@
 var a00096 =
 [
-    [ "data", "a00096.html#a401ea8c0aad582a93685a929677b7111", null ],
-    [ "service_uuid", "a00096.html#a45ecd97813de71e19a317ee6e0d8e20a", null ]
+    [ "evt_type", "a00096.html#a83328e50ff25cb6d23ccd0922452590d", null ]
 ];

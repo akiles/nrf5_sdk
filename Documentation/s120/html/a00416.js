@@ -1,8 +1,12 @@
 var a00416 =
 [
-    [ "PSTORAGE_CLEAR_OP_CODE", "a00416.html#gaf2ce8b4e460358a23ae82516167df79c", null ],
-    [ "PSTORAGE_ERROR_OP_CODE", "a00416.html#ga31c301088ac2d5534ebdc5ed44bd3b55", null ],
-    [ "PSTORAGE_LOAD_OP_CODE", "a00416.html#ga4e04e36e3adf60869073dce4af46b7d5", null ],
-    [ "PSTORAGE_STORE_OP_CODE", "a00416.html#gad1415b8815fc4e0ba8f4f6bc2d8e3ce6", null ],
-    [ "PSTORAGE_UPDATE_OP_CODE", "a00416.html#gae66936fc791b79a9f85a7058ea83423a", null ]
+    [ "Memory Pool Internal", "a00417.html", "a00417" ],
+    [ "hci_mem_pool_close", "a00416.html#ga46bf92027fa4fe402e53a8764713c99f", null ],
+    [ "hci_mem_pool_open", "a00416.html#gaadd0dcc9a737d2401c05dbd0cd350a13", null ],
+    [ "hci_mem_pool_rx_consume", "a00416.html#ga961c95e86995f3a6ad1a14822745c368", null ],
+    [ "hci_mem_pool_rx_data_size_set", "a00416.html#ga7aae0da2e09ccedb4deb30e01940c303", null ],
+    [ "hci_mem_pool_rx_extract", "a00416.html#gaf29059c4fa6204e2313069e90e7db51a", null ],
+    [ "hci_mem_pool_rx_produce", "a00416.html#ga06c527499f6006d354a540268b4ea124", null ],
+    [ "hci_mem_pool_tx_alloc", "a00416.html#gad1da3c1e38317a5c312650396d9da6e8", null ],
+    [ "hci_mem_pool_tx_free", "a00416.html#ga44dd78500f42bf6cddc5f90a03abd7af", null ]
 ];

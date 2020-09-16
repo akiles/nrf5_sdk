@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: DFU Transport Layers</title>
+<title>nRF51 SDK - S110 SoftDevice: BLE S110 Events</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,32 +97,50 @@ $(document).ready(function(){initNavTree('a00088.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">DFU Transport Layers </div>  </div>
+<div class="title">BLE S110 Events </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="exp_dfu_transport_layer_sec"></a>
-DFU Transport Layers</h1>
-<p>DFU itself is designed to be transport agnostic, and assumes the transport to be reliable. Since all transports have fix a maximum data unit, it is possible for DFU to reassemble the binary firmware in smaller fragments. The transport may create multiple logical channels, for example in BLE, two logical end points are created one for control packets (DFU messages) and the other for data packets (Init Data and Binary Firmware fragments). However, the DFU expects the transport to submit it one Data Unit at time. For example, if the transport has multiple DFU Packets, the transport should ensure that only one packet is submitted to the DFU at any given point of time and in the correct chronological order. DFU does not detect out-of-sequence packets. It expects the transport to ensure this.</p>
-<p>The Bootloader/DFU with SoftDevice update example supports a single transport layer</p>
-<ul>
-<li><em>Bluetooth</em> Low Energy, BLE</li>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#nrf51_evt_tx_complete_encoding">0x01 - BLE_EVT_TX_COMPLETE</a><ul><li class="level2"><a href="#nrf51_evt_tx_complete_encoding_sec">Event encoding</a></li>
+<li class="level2"><a href="#nrf51_evt_tx_complete_encoding_sub_a">Packet layout</a></li>
 </ul>
-<p>The BLE Transport Layer is described in DFU Service Specification and DFU Profile Specification.</p>
-<p>The DFU module supports only binary data images on transferring. This means that an application in HEX or AXF (ELF) file format must be converted into a binary file for the DFU to be able to process the image.</p>
-<p>The binary image can be transferred in multiple data packets over BLE.</p>
+</li>
+</ul>
+</div>
+<div class="textblock"><h1><a class="anchor" id="nrf51_evt_tx_complete_encoding"></a>
+0x01 - BLE_EVT_TX_COMPLETE</h1>
+<h2><a class="anchor" id="nrf51_evt_tx_complete_encoding_sec"></a>
+Event encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00905.html#ggaa55e423bfea45f03764a636f2cec7a8ba408a77f131a2d314fbf477cdb2d1e0f6">BLE_EVT_TX_COMPLETE</a> packet.</p>
+<p>Event ID = 0x01 for BLE_EVT_TX_COMPLETE</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The event contains a connection handle, and for the BLE TX complete, the <a class="el" href="a00179.html">ble_evt_tx_complete_t</a> is encoded after connection handle as seen in Figure 1.</p>
+<p>The order of the encoding is:</p>
 <table class="doxtable">
 <tr>
-<th>Section </th><th>Description</th></tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td><a class="el" href="a00090.html">DFU BLE Transport</a> </td><td>Description of the DFU BLE transport layer </td></tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00162.html#ad7c997d8d0c6e0d3d24de3ecad426645">ble_common_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Count </td><td>see <a class="el" href="a00179.html">ble_evt_tx_complete_t</a> </td></tr>
 </table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_evt_tx_complete_encoding_sub_a"></a>
+Packet layout</h2>
+<div class="image">
+<img src="event_tx_complete.png" alt="event_tx_complete.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE_EVT_TX_COMPLETE event.</div></div>
+<p> <br/>
+ </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00023.html">Experimental</a></li><li class="navelem"><a class="el" href="a00067.html">Bootloader/DFU - SoftDevice update support</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:33 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00083.html">S110 Serialization</a></li><li class="navelem"><a class="el" href="a00086.html">BLE Serialization Codecs</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

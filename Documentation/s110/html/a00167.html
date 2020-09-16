@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_bas_init_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_cscs_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,108 +106,138 @@ $(document).ready(function(){initNavTree('a00167.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_bas_init_t Struct Reference<div class="ingroups"><a class="el" href="a00916.html">Battery Service</a></div></div>  </div>
+<div class="title">ble_cscs_s Struct Reference<div class="ingroups"><a class="el" href="a00858.html">Cycling Speed and Cadence Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Battery Service init structure. This contains all options and data needed for initialization of the service.  
+<p>Cycling Speed and Cadence Service structure. This contains various status information for the service.  
  <a href="a00167.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_bas.h&gt;</code></p>
+<p><code>#include &lt;ble_cscs.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a84932ecefd721efa23840b01ca3ce7eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00916.html#ga07fd95f8afa679110161bb8391496abd">ble_bas_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#a84932ecefd721efa23840b01ca3ce7eb">evt_handler</a></td></tr>
-<tr class="separator:a84932ecefd721efa23840b01ca3ce7eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4f3272ae66ece4ee5a4b8c3ff7fba88"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#ad4f3272ae66ece4ee5a4b8c3ff7fba88">support_notification</a></td></tr>
-<tr class="separator:ad4f3272ae66ece4ee5a4b8c3ff7fba88"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcbdf538aff06891b6f0057015b5c6e0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00318.html">ble_srv_report_ref_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#afcbdf538aff06891b6f0057015b5c6e0">p_report_ref</a></td></tr>
-<tr class="separator:afcbdf538aff06891b6f0057015b5c6e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22993ab4d63fdbd764624856605d1b7f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#a22993ab4d63fdbd764624856605d1b7f">initial_batt_level</a></td></tr>
-<tr class="separator:a22993ab4d63fdbd764624856605d1b7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba436d52b264fb93a74de510a9e7ef07"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00317.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#aba436d52b264fb93a74de510a9e7ef07">battery_level_char_attr_md</a></td></tr>
-<tr class="separator:aba436d52b264fb93a74de510a9e7ef07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07135d9b12640710f520ef87d7a4f1be"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00202.html">ble_gap_conn_sec_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#a07135d9b12640710f520ef87d7a4f1be">battery_level_report_read_perm</a></td></tr>
-<tr class="separator:a07135d9b12640710f520ef87d7a4f1be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2e6ecdcdab44250a58bebd85104143b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00858.html#ga10281fbc8ffe1192d6047d3e9fa0ddc0">ble_cscs_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#ac2e6ecdcdab44250a58bebd85104143b">evt_handler</a></td></tr>
+<tr class="separator:ac2e6ecdcdab44250a58bebd85104143b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3850255dd1cc2f89b7086771201eb8e0"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#a3850255dd1cc2f89b7086771201eb8e0">service_handle</a></td></tr>
+<tr class="separator:a3850255dd1cc2f89b7086771201eb8e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9596e5fc4db125abaae55fc329982dfd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#a9596e5fc4db125abaae55fc329982dfd">meas_handles</a></td></tr>
+<tr class="separator:a9596e5fc4db125abaae55fc329982dfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a967fca5b0492cbf671183eed800fcd3a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#a967fca5b0492cbf671183eed800fcd3a">feature_handles</a></td></tr>
+<tr class="separator:a967fca5b0492cbf671183eed800fcd3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3572c357aed7775240aee4a217ddaf60"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#a3572c357aed7775240aee4a217ddaf60">sensor_loc_handles</a></td></tr>
+<tr class="separator:a3572c357aed7775240aee4a217ddaf60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84ba1f5c9a2f30359b12cc4dcbda3478"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#a84ba1f5c9a2f30359b12cc4dcbda3478">conn_handle</a></td></tr>
+<tr class="separator:a84ba1f5c9a2f30359b12cc4dcbda3478"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32ce63e283663bde451653a25fc5b4bd"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#a32ce63e283663bde451653a25fc5b4bd">feature</a></td></tr>
+<tr class="separator:a32ce63e283663bde451653a25fc5b4bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90f150d8ecb3b79596f1ec3807867f1a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00871.html#ga8bb52c78ed33425b1167829728f5c259">ble_sc_ctrlpt_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#a90f150d8ecb3b79596f1ec3807867f1a">ctrl_pt</a></td></tr>
+<tr class="separator:a90f150d8ecb3b79596f1ec3807867f1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Battery Service init structure. This contains all options and data needed for initialization of the service. </p>
+<div class="textblock"><p>Cycling Speed and Cadence Service structure. This contains various status information for the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aba436d52b264fb93a74de510a9e7ef07"></a>
+<a class="anchor" id="a84ba1f5c9a2f30359b12cc4dcbda3478"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00317.html">ble_srv_cccd_security_mode_t</a> ble_bas_init_t::battery_level_char_attr_md</td>
+          <td class="memname">uint16_t ble_cscs_s::conn_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial security level for battery characteristics attribute </p>
+<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
 
 </div>
 </div>
-<a class="anchor" id="a07135d9b12640710f520ef87d7a4f1be"></a>
+<a class="anchor" id="a90f150d8ecb3b79596f1ec3807867f1a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00202.html">ble_gap_conn_sec_mode_t</a> ble_bas_init_t::battery_level_report_read_perm</td>
+          <td class="memname"><a class="el" href="a00871.html#ga8bb52c78ed33425b1167829728f5c259">ble_sc_ctrlpt_t</a> ble_cscs_s::ctrl_pt</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial security level for battery report read attribute </p>
+<p>data for speed and cadence control point </p>
 
 </div>
 </div>
-<a class="anchor" id="a84932ecefd721efa23840b01ca3ce7eb"></a>
+<a class="anchor" id="ac2e6ecdcdab44250a58bebd85104143b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00916.html#ga07fd95f8afa679110161bb8391496abd">ble_bas_evt_handler_t</a> ble_bas_init_t::evt_handler</td>
+          <td class="memname"><a class="el" href="a00858.html#ga10281fbc8ffe1192d6047d3e9fa0ddc0">ble_cscs_evt_handler_t</a> ble_cscs_s::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Event handler to be called for handling events in the Battery Service. </p>
+<p>Event handler to be called for handling events in the Cycling Speed and Cadence Service. </p>
 
 </div>
 </div>
-<a class="anchor" id="a22993ab4d63fdbd764624856605d1b7f"></a>
+<a class="anchor" id="a32ce63e283663bde451653a25fc5b4bd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_bas_init_t::initial_batt_level</td>
+          <td class="memname">uint16_t ble_cscs_s::feature</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial battery level </p>
+<p>Bit mask of features available on sensor. </p>
 
 </div>
 </div>
-<a class="anchor" id="afcbdf538aff06891b6f0057015b5c6e0"></a>
+<a class="anchor" id="a967fca5b0492cbf671183eed800fcd3a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00318.html">ble_srv_report_ref_t</a>* ble_bas_init_t::p_report_ref</td>
+          <td class="memname"><a class="el" href="a00236.html">ble_gatts_char_handles_t</a> ble_cscs_s::feature_handles</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>If not NULL, a Report Reference descriptor with the specified value will be added to the Battery Level characteristic </p>
+<p>Handles related to the Cycling Speed and Cadence feature characteristic. </p>
 
 </div>
 </div>
-<a class="anchor" id="ad4f3272ae66ece4ee5a4b8c3ff7fba88"></a>
+<a class="anchor" id="a9596e5fc4db125abaae55fc329982dfd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool ble_bas_init_t::support_notification</td>
+          <td class="memname"><a class="el" href="a00236.html">ble_gatts_char_handles_t</a> ble_cscs_s::meas_handles</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TRUE if notification of Battery Level measurement is supported. </p>
+<p>Handles related to the Cycling Speed and Cadence Measurement characteristic. </p>
+
+</div>
+</div>
+<a class="anchor" id="a3572c357aed7775240aee4a217ddaf60"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00236.html">ble_gatts_char_handles_t</a> ble_cscs_s::sensor_loc_handles</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handles related to the Cycling Speed and Cadence Sensor Location characteristic. </p>
+
+</div>
+</div>
+<a class="anchor" id="a3850255dd1cc2f89b7086771201eb8e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_cscs_s::service_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle of Cycling Speed and Cadence Service (as provided by the BLE stack). </p>
 
 </div>
 </div>
@@ -216,8 +246,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00167.html">ble_bas_init_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00167.html">ble_cscs_s</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:36 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

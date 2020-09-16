@@ -1,5 +1,7 @@
 var a00292 =
 [
-    [ "error_handler", "a00928.html#ga83986799fa5972b6665f1dd70af89bca", null ],
-    [ "evt_handler", "a00928.html#ga53302faad4381a87101012bf06af6101", null ]
+    [ "cumulative_value", "a00292.html#ad226d0754bf0b129e4202d6468918de8", null ],
+    [ "evt_type", "a00292.html#a4ae317b0ff9170a27f7315dfb3c12bb6", null ],
+    [ "params", "a00292.html#aa9b38db69e5c8e140630cf82bff0d595", null ],
+    [ "update_location", "a00292.html#a64e560612783b28ce208966239c7ec07", null ]
 ];

@@ -1,5 +1,6 @@
 var a00281 =
 [
-    [ "char_handles", "a00281.html#a3f137cc3f92bf439d93a8491e4314d5a", null ],
-    [ "ref_handle", "a00281.html#a0209468bba2c298192f4500a652dd6d1", null ]
+    [ "conn_handle", "a00281.html#ab843f6e96efbaf3d2bffee8c92c62f1a", null ],
+    [ "params", "a00281.html#ac9beac1420f25dbd4bd49bb88bc2302d", null ],
+    [ "rx", "a00281.html#afc4cbc758b308e6698b16650310cc52b", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Command decoder in the connectivity chip</title>
+<title>nRF51 SDK - S110 SoftDevice: Bootloader/DFU API</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,75 +97,32 @@ $(document).ready(function(){initNavTree('a00897.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Command decoder in the connectivity chip<div class="ingroups"><a class="el" href="a01011.html">Connectivity application code</a></div></div>  </div>
+<div class="title">Bootloader/DFU API<div class="ingroups"><a class="el" href="a00891.html">nRF51 SDK</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Decoder for serialized commands from an Application Chip.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gab420730a43ded81ff7cfc50aa796329a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00897.html#gab420730a43ded81ff7cfc50aa796329a">ser_conn_command_process</a> (uint8_t *p_command, uint16_t command_len)</td></tr>
-<tr class="memdesc:gab420730a43ded81ff7cfc50aa796329a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function decodes an encoded command and sends a response to an Application Chip.  <a href="#gab420730a43ded81ff7cfc50aa796329a">More...</a><br/></td></tr>
-<tr class="separator:gab420730a43ded81ff7cfc50aa796329a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00898"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00898.html">Nrf_bootloader</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00899"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00899.html">Nrf_dfu</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00900"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00900.html">Nrf_dfu_transport</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00901"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00901.html">Nrf_bootloader_util</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00902"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00902.html">Ble_sdk_app_bootloader_main</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Decoder for serialized commands from an Application Chip. </p>
-<p>This file contains declaration of common function used for commands decoding and sending responses back to an Application Chip after a command is processed. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gab420730a43ded81ff7cfc50aa796329a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ser_conn_command_process </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_command</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>command_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function decodes an encoded command and sends a response to an Application Chip. </p>
-<p>The function decodes an encoded command and calls a SoftDevice API function when a command decoder was found or forms a common response with error code NRF_ERROR_NOT_SUPPORTED otherwise. Then the function sends a SoftDevice response or the response with NRF_ERROR_NOT_SUPPORTED error code to an Application Chip.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_command</td><td>The encoded command. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">command_len</td><td>Length of the encoded command including opcode.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INTERNAL</td><td>Operation failure. Internal error ocurred. . </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:47 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:36 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

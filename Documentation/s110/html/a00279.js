@@ -1,7 +1,6 @@
 var a00279 =
 [
-    [ "max_len", "a00279.html#a656fc246bd9f18026083e3efb640052e", null ],
-    [ "read_resp", "a00279.html#a49208f982abf135a1f8d5c76ee893995", null ],
-    [ "rep_ref", "a00279.html#aeb77c0bc0738fbb0be766e574ac173b5", null ],
-    [ "security_mode", "a00279.html#a757afd0e411e7e67224c94fefcf26bab", null ]
+    [ "alert_level_handles", "a00279.html#a67d6395f4804c00de308270dddf15b7e", null ],
+    [ "evt_handler", "a00279.html#a6304bcdac9c7d2758f64aa1dd5844959", null ],
+    [ "service_handle", "a00279.html#afa6a28eec3f1b9b4f7ea596af7ee2c29", null ]
 ];

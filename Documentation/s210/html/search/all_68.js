@@ -1,7 +1,6 @@
 var searchData=
 [
   ['heart_20rate',['Heart Rate',['../ant_examples_hrm.html',1,'examples_ant']]],
-  ['hci_20transport_20layer_20configuration',['HCI Transport Layer Configuration',['../group__ble__sdk__bootloader__hci__congfig.html',1,'']]],
   ['hardware_20peripheral_20examples',['Hardware Peripheral Examples',['../examples_hw_peripheral_devices.html',1,'examples']]],
   ['hardfault_5fhandler',['HardFault_Handler',['../group__ant__broadcast__rx__example.html#ga2bffc10d5bd4106753b7c30e86903bea',1,'HardFault_Handler(void):&#160;main_broadcast_rx.c'],['../group__nrf__ant__broadcast__tx__example.html#ga2bffc10d5bd4106753b7c30e86903bea',1,'HardFault_Handler(void):&#160;main_broadcast_tx.c']]],
   ['hardware_20drivers',['Hardware Drivers',['../hardware_drivers.html',1,'']]],
@@ -25,12 +24,6 @@ var searchData=
   ['hci_5fslip_5frx_5foverflow',['HCI_SLIP_RX_OVERFLOW',['../group__hci__slip.html#ggaf03d61e05dd64c3a61644580c29aa0b4acd2a18f379c0f764d52782bf13ae7f60',1,'hci_slip.h']]],
   ['hci_5fslip_5frx_5frdy',['HCI_SLIP_RX_RDY',['../group__hci__slip.html#ggaf03d61e05dd64c3a61644580c29aa0b4a518c3406525586d68bf2f476c1935eb9',1,'hci_slip.h']]],
   ['hci_5fslip_5ftx_5fdone',['HCI_SLIP_TX_DONE',['../group__hci__slip.html#ggaf03d61e05dd64c3a61644580c29aa0b4a507424cf2788c502b25b730450fa3c1b',1,'hci_slip.h']]],
-  ['hci_5fslip_5fuart_5fbaudrate',['HCI_SLIP_UART_BAUDRATE',['../group__ble__sdk__bootloader__hci__congfig.html#ga32bbc9330e57446dca60392c29857b89',1,'hci_transport_config.h']]],
-  ['hci_5fslip_5fuart_5fcts_5fpin_5fnumber',['HCI_SLIP_UART_CTS_PIN_NUMBER',['../group__ble__sdk__bootloader__hci__congfig.html#ga9b29fdaf1844f05115940fbf2401fd5f',1,'hci_transport_config.h']]],
-  ['hci_5fslip_5fuart_5fmode',['HCI_SLIP_UART_MODE',['../group__ble__sdk__bootloader__hci__congfig.html#ga3f2a196e8e6fd828a7408cbce3625a39',1,'hci_transport_config.h']]],
-  ['hci_5fslip_5fuart_5frts_5fpin_5fnumber',['HCI_SLIP_UART_RTS_PIN_NUMBER',['../group__ble__sdk__bootloader__hci__congfig.html#gabef88f732922a13c3dc4e3dd514c36fc',1,'hci_transport_config.h']]],
-  ['hci_5fslip_5fuart_5frx_5fpin_5fnumber',['HCI_SLIP_UART_RX_PIN_NUMBER',['../group__ble__sdk__bootloader__hci__congfig.html#ga563b2db0be6fc39f6bdc43275fce4a6c',1,'hci_transport_config.h']]],
-  ['hci_5fslip_5fuart_5ftx_5fpin_5fnumber',['HCI_SLIP_UART_TX_PIN_NUMBER',['../group__ble__sdk__bootloader__hci__congfig.html#ga37627f12f64e2d3a9ff5df63fd872003',1,'hci_transport_config.h']]],
   ['hci_5fslip_5fwrite',['hci_slip_write',['../group__hci__slip.html#gaba13b94dd501034bd33b1d10941ded4b',1,'hci_slip.h']]],
   ['hci_20transport',['HCI Transport',['../group__hci__transport.html',1,'']]],
   ['hci_5ftransport_5fclose',['hci_transport_close',['../group__hci__transport.html#ga1e88949d8bf4e67f16af9e2577750e70',1,'hal_transport.h']]],

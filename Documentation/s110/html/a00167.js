@@ -1,9 +1,11 @@
 var a00167 =
 [
-    [ "battery_level_char_attr_md", "a00167.html#aba436d52b264fb93a74de510a9e7ef07", null ],
-    [ "battery_level_report_read_perm", "a00167.html#a07135d9b12640710f520ef87d7a4f1be", null ],
-    [ "evt_handler", "a00167.html#a84932ecefd721efa23840b01ca3ce7eb", null ],
-    [ "initial_batt_level", "a00167.html#a22993ab4d63fdbd764624856605d1b7f", null ],
-    [ "p_report_ref", "a00167.html#afcbdf538aff06891b6f0057015b5c6e0", null ],
-    [ "support_notification", "a00167.html#ad4f3272ae66ece4ee5a4b8c3ff7fba88", null ]
+    [ "conn_handle", "a00167.html#a84ba1f5c9a2f30359b12cc4dcbda3478", null ],
+    [ "ctrl_pt", "a00167.html#a90f150d8ecb3b79596f1ec3807867f1a", null ],
+    [ "evt_handler", "a00167.html#ac2e6ecdcdab44250a58bebd85104143b", null ],
+    [ "feature", "a00167.html#a32ce63e283663bde451653a25fc5b4bd", null ],
+    [ "feature_handles", "a00167.html#a967fca5b0492cbf671183eed800fcd3a", null ],
+    [ "meas_handles", "a00167.html#a9596e5fc4db125abaae55fc329982dfd", null ],
+    [ "sensor_loc_handles", "a00167.html#a3572c357aed7775240aee4a217ddaf60", null ],
+    [ "service_handle", "a00167.html#a3850255dd1cc2f89b7086771201eb8e0", null ]
 ];

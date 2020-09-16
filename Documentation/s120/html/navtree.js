@@ -6,7 +6,6 @@ var NAVTREE =
     [ "Hardware Drivers", "a00002.html", "a00002" ],
     [ "Libraries", "a00003.html", "a00003" ],
     [ "Examples", "a00004.html", "a00004" ],
-    [ "Experimental", "a00022.html", "a00022" ],
     [ "API Reference", "modules.html", "modules" ],
     [ "Data Structures", null, [
       [ "Data Structures", "annotated.html", "annotated" ],
@@ -22,14 +21,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "a00001.html",
-"a00068.html#ab5c77995614a78b4a7baf6f5ab59bb5c",
-"a00128.html#a173be268109e2223c485a9a10a6a9ba3",
-"a00334.html",
-"a00371.html#gaf51ee5f68c7eea401ee79cd250c1fb16",
-"a00390.html#ga69d0fa94f347b662e7312e313595773e",
-"a00411.html#ga59e21e1c13ebf70dde8ec9c4449e3a4a",
-"a00507.html",
-"a00546.html#gaef6aabaa8887cb4d7265d7e21b3ec242"
+"a00078.html#a67ca1f9db570d1c2f196c0a316151af5",
+"a00137.html#adbbcf41424e48536f3c3e7f2665005fd",
+"a00345.html#gad18f5d40038aab7e5361e838799fbfd9",
+"a00379.html#ga9314db2b011127132215ede8f3e6660f",
+"a00398.html#ggaa1a5c145e334817f2d960317d64fcb3dada4c86d9760e81857ec0482c1cc78190",
+"a00418.html#gaf03d61e05dd64c3a61644580c29aa0b4",
+"a00538.html#ga265b4251110a15120d0aa97e5152163b",
+"a00566.html#gaa1ec46ac9de000227852834ec1ff86ea"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

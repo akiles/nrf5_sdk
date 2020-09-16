@@ -1,7 +1,5 @@
 var a00163 =
 [
-    [ "addr_count", "a00163.html#a8f7d372587ed29005dbfd515103fa6fd", null ],
-    [ "irk_count", "a00163.html#a21922578ee2df66befd41e968f8d5af1", null ],
-    [ "pp_addrs", "a00163.html#a9316d95519c47512389b4696376556d0", null ],
-    [ "pp_irks", "a00163.html#ab78ecf15e25742a5ea56377cef1a8603", null ]
+    [ "handle", "a00163.html#ab1f14809099e66b0dc7a4a70cb3dc124", null ],
+    [ "included_srvc", "a00163.html#a3342baabc3197898f17ce875e7a5ba80", null ]
 ];

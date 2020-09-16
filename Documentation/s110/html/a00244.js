@@ -1,8 +1,10 @@
 var a00244 =
 [
-    [ "data", "a00244.html#a1691be986d4b730bbe2ccc3d40c5a088", null ],
-    [ "handle", "a00244.html#ae8e1aafaf1cbc9b6f7b5fcd163dd5cac", null ],
-    [ "len", "a00244.html#a323a6805f77fe47c890cde179ea2f674", null ],
-    [ "offset", "a00244.html#a09d38782fd5d200a45146ae303614733", null ],
-    [ "write_op", "a00244.html#a7cbd3dd7ab5f53b8f14e023b9c0c2db6", null ]
+    [ "authorize_request", "a00244.html#a27802389d2c209e149fd644a35eae956", null ],
+    [ "conn_handle", "a00244.html#abeb8d79046f5ed809e6ac8b5fd40614d", null ],
+    [ "hvc", "a00244.html#a9be30265f4a80ba2d5982bc7eda48891", null ],
+    [ "params", "a00244.html#a8efeaa2eee88bd69cd626b32215361a3", null ],
+    [ "sys_attr_missing", "a00244.html#ab8c7e34509068fb9d8b78e4cdc2ab0f2", null ],
+    [ "timeout", "a00244.html#a5a5ade5ed126bc40ac43a302b4c7ae44", null ],
+    [ "write", "a00244.html#aaef77783fee30e58006d76bbc976bc9e", null ]
 ];

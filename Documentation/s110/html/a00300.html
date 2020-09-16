@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_lls_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_srv_utf8_str_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,52 +106,49 @@ $(document).ready(function(){initNavTree('a00300.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_lls_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00929.html">Link Loss Service</a></div></div>  </div>
+<div class="title">ble_srv_utf8_str_t Struct Reference<div class="ingroups"><a class="el" href="a00872.html">'Common service definitions'</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Link Loss Service event.  
+<p>UTF-8 string data type.  
  <a href="a00300.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_lls.h&gt;</code></p>
+<p><code>#include &lt;ble_srv_common.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a971a9cd94583dae76dcf5f94eb412686"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00929.html#ga94331ff0a90e8f8b61dcf230e1760ccf">ble_lls_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html#a971a9cd94583dae76dcf5f94eb412686">evt_type</a></td></tr>
-<tr class="separator:a971a9cd94583dae76dcf5f94eb412686"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d33bf54b424654f7a0e77492bffb476"><td class="memItemLeft" ><a class="anchor" id="a7d33bf54b424654f7a0e77492bffb476"></a>
-union {</td></tr>
-<tr class="memitem:a75f21b40ce44e585c0e270683952a8a5"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00300.html#adaf4d087319007c776df8baf3673fe8a">alert_level</a></td></tr>
-<tr class="separator:a75f21b40ce44e585c0e270683952a8a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d33bf54b424654f7a0e77492bffb476"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:a7d33bf54b424654f7a0e77492bffb476"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9238252fa096ecc458994d19aaf034d8"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html#a9238252fa096ecc458994d19aaf034d8">length</a></td></tr>
+<tr class="separator:a9238252fa096ecc458994d19aaf034d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b6d6d426c6ec244d1136b7ccf5deb30"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html#a8b6d6d426c6ec244d1136b7ccf5deb30">p_str</a></td></tr>
+<tr class="separator:a8b6d6d426c6ec244d1136b7ccf5deb30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Link Loss Service event. </p>
+<div class="textblock"><p>UTF-8 string data type. </p>
+<dl class="section note"><dt>Note</dt><dd>The type can only hold a pointer to the string data (i.e. not the actual data). </dd></dl>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="adaf4d087319007c776df8baf3673fe8a"></a>
+<a class="anchor" id="a9238252fa096ecc458994d19aaf034d8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_lls_evt_t::alert_level</td>
+          <td class="memname">uint16_t ble_srv_utf8_str_t::length</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>New Alert Level value. </p>
+<p>String length. </p>
 
 </div>
 </div>
-<a class="anchor" id="a971a9cd94583dae76dcf5f94eb412686"></a>
+<a class="anchor" id="a8b6d6d426c6ec244d1136b7ccf5deb30"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00929.html#ga94331ff0a90e8f8b61dcf230e1760ccf">ble_lls_evt_type_t</a> ble_lls_evt_t::evt_type</td>
+          <td class="memname">uint8_t* ble_srv_utf8_str_t::p_str</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of event. </p>
+<p>String data. </p>
 
 </div>
 </div>
@@ -160,8 +157,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00300.html">ble_lls_evt_t</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00300.html">ble_srv_utf8_str_t</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:37 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

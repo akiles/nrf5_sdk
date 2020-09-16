@@ -1,11 +1,13 @@
 var a00126 =
 [
-    [ "conn_handle", "a00126.html#a48a44e4e8cd1e67fbb32989de8a99b36", null ],
-    [ "dfu_ctrl_pt_handles", "a00126.html#a2b5f5316143335f6f2b8a41058097d17", null ],
-    [ "dfu_pkt_handles", "a00126.html#a759fe67aab5aa380ef2fb004b162fd7d", null ],
-    [ "dfu_status_rep_handles", "a00126.html#a458dbd2ff5429f61da7adb60e0905ba8", null ],
-    [ "error_handler", "a00126.html#a49fa8cfd9bce660ff46708670a6b0eef", null ],
-    [ "evt_handler", "a00126.html#a306430130c5f0868b715478449009be0", null ],
-    [ "service_handle", "a00126.html#abac31261d78df5dfec65e37ba3d456fb", null ],
-    [ "uuid_type", "a00126.html#a8e4c2d2d6901dc489294370ecff5632b", null ]
+    [ "central_keys_t", "a00238.html", "a00238" ],
+    [ "periph_keys_t", "a00245.html", "a00245" ],
+    [ "auth_status", "a00126.html#a7abaaec9ee09953586fa7ab79c106a25", null ],
+    [ "central_kex", "a00126.html#a34f900fc84efcc1757fbd2ecf5802b31", null ],
+    [ "central_keys", "a00126.html#af710ae2c150cb096e53f8f7bdfe4a022", null ],
+    [ "error_src", "a00126.html#aace68175dd43ad9be164097ef656e04e", null ],
+    [ "periph_kex", "a00126.html#ac9f3afdea91efe0bd86fe733682a4a25", null ],
+    [ "periph_keys", "a00126.html#a65076ff0c7e992d2c9871dd55c437126", null ],
+    [ "sm1_levels", "a00126.html#a6843023d29415f3ede4471a9fe359acf", null ],
+    [ "sm2_levels", "a00126.html#a29d62f41ca47daabc4098310ceffd4e1", null ]
 ];

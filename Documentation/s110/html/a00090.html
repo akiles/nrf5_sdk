@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: BLE</title>
+<title>nRF51 SDK - S110 SoftDevice: BLE S110 GATTC Events</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,197 +97,548 @@ $(document).ready(function(){initNavTree('a00090.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BLE </div>  </div>
+<div class="title">BLE S110 GATTC Events </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="exp_ota_intro_section"></a>
-Device Firmware Update over BLE</h1>
-<p>Example proprietary profile used to update firmware (application image) file using <em>Bluetooth</em> Low Energy. This is not a standard profile, and is defined by Nordic to demonstrate how a typical Device Firmware Update can be achieved.</p>
-<h1><a class="anchor" id="exp_ota_profile_section"></a>
-Device Firmware Update Profile</h1>
-<h2><a class="anchor" id="exp_ota_profile_intro"></a>
-Introduction</h2>
-<p>The Device Firmware Update (DFU) Profile is used to transfer an application image from a BLE central (example, PC or Smart Phone) to a peripheral (example, Heart Rate Sensor) that supports Device Firmware Updates using the DFU Service.</p>
-<h3><a class="anchor" id="exp_ota_profile_changes_sec"></a>
-Profile Changes</h3>
-<p>The following is an overview of the main changes to the profile in order to support update of SoftDevice and Bootloader over BLE.</p>
-<ul>
-<li>A Request Op Code has been added when writing 'Start DFU' to the DFU Control Point. <br/>
- The Request Op Code specifies the update procedure method, i.e. SoftDevice, Bootloader, or Application, see <a class="el" href="a00090.html#exp_ota_spec_control_state">DFU Control Point</a> for details.</li>
-<li>When writing 'Image Size' to the DFU Packet Characteristic it is now mandatory to write 12 bytes (3 times uint32) to indicate size of images being transfered, see <a class="el" href="a00090.html#exp_ota_spec_dfu_packet">DFU Packet</a> for details. Earlier versions of the DFU Service used 4 bytes (uint32)</li>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#nrf51_gattc_evt_prim_srvc_disc_rsp_encoding">0x30 - BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP</a><ul><li class="level2"><a href="#nrf51_gattc_evt_prim_srvc_disc_rsp_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_gattc_evt_prim_srvc_disc_rsp_encoding_sub_a">Encoding of BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP event</a></li>
+<li class="level2"><a href="#nrf51_gattc_evt_prim_srvc_disc_rsp_encoding_sub_b">Encoding of Service Data</a></li>
 </ul>
-<h3><a class="anchor" id="ota_profile_intro"></a>
-Profile Dependencies</h3>
-<p>This profile requires the Generic Attribute Profile (GATT).</p>
-<h2><a class="anchor" id="exp_ota_profile_conf"></a>
-Configuration</h2>
-<h3><a class="anchor" id="exp_ota_profile_roles"></a>
-Roles</h3>
-<p>The profile defines two roles: DFU Target and Client. The DFU Target is the device which receives an image from the DFU Controller.</p>
-<ul>
-<li>The DFU Target, implements a GATT Server. This is the device under update.</li>
-<li>The DFU Controller, implements a GATT client. This will be the device that uploads a new firmware image to the DFU Target.</li>
+</li>
+<li class="level1"><a href="#nrf51_gattc_evt_rel_disc_rsp_encoding">0x31 - BLE_GATTC_EVT_REL_DISC_RSP</a><ul><li class="level2"><a href="#nrf51_gattc_evt_rel_disc_rsp_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_gattc_evt_rel_disc_rsp_encoding_sub_a">Encoding of BLE_GATTC_EVT_REL_DISC_RSP event</a></li>
+<li class="level2"><a href="#nrf51_gattc_evt_rel_disc_rsp_encoding_sub_b">Encoding of Include Data</a></li>
 </ul>
-<h3><a class="anchor" id="exp_ota_profile_role_service"></a>
-Role/Service Relationships</h3>
-<p>The following diagram shows the relationships between services and the two profile roles.</p>
-<div class="image">
-<img src="ota_roles_overview.png" alt="ota_roles_overview.png"/>
-<div class="caption">
-Relationship between profile roles and services</div></div>
-<p> A DFU Target instantiates one instance of the DFU service.</p>
-<h2><a class="anchor" id="exp_ota_profile_updater_role_req"></a>
-DFU Controller Role Requirements</h2>
-<p>The DFU Controller shall support the <a class="el" href="a00062.html#ota_spec_sec">Device Firmware Update BLE Service</a>.</p>
-<table class="doxtable">
-<tr>
-<th>Service </th><th>DFU Controller</th></tr>
-<tr>
-<td>Device Firmware Update Service </td><td>M </td></tr>
-</table>
-<h3><a class="anchor" id="exp_ota_profile_dfu_controller_err_handling"></a>
-General Error Handling.</h3>
-<p>The DFU Controller shall also be tolerant when receiving the following ATT Error Code defined in CSS Part B, Section 1.2 of Supplement to the <em>Bluetooth</em> Core Specification, Version 3 or later:</p>
-<ul>
-<li>Client Characteristic Configuration Descriptor Improperly Configured</li>
+</li>
+<li class="level1"><a href="#nrf51_gattc_evt_char_disc_rsp_encoding">0x32 - BLE_GATTC_EVT_CHAR_DISC_RSP</a><ul><li class="level2"><a href="#nrf51_gattc_evt_char_disc_rsp_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_gattc_evt_char_disc_rsp_encoding_sub_a">Encoding of BLE_GATTC_EVT_CHAR_DISC_RSP event</a></li>
+<li class="level2"><a href="#nrf51_gattc_evt_prim_char_rsp_encoding_sub_b">Encoding of Characteristic data</a></li>
 </ul>
-<h3><a class="anchor" id="exp_ota_profile_updater_role_transfering"></a>
-DFU Image Transfer Procedure</h3>
-<p>The DFU Controller requests one of the procedures defined for Device Firmware Update using the <em>DFU Control Point</em>. Each procedure requested by the Controller is characterised by a request on the DFU Control Point, using the GATT Write Procedure. This may be followed by additional writes on the DFU packet characteristic based, followed by end of procedure marked by a response from the DFU Target for the procedure using GATT Notifications on the Control Point. Response code in the response packet determines the success or failure of the procedure. In case of failure, the response codes provide an indication on possible reason for failure. Refer to the detailed description for more details in the <em>DFU Control Point</em>. The DFU Target process one request at a time, therefore if a request is received on the Target when already processing one, an ATT Error Response with 'Procedure Already In Progress' is received on the DFU Controller. Asynchronous Status and Image Size received information are sent by the DFU Target as GATT Notifications on the control point.</p>
-<p>Below is small MSC to show a typical DFU Control Point Procedure</p>
-<div class="image">
-<img src="ota_dfu_typical_ctrl_pt_procedure.png" alt="ota_dfu_typical_ctrl_pt_procedure.png"/>
-<div class="caption">
-Typical DFU Control Point procedure</div></div>
-<p> DFU Procedures defined are listed below:</p>
+</li>
+<li class="level1"><a href="#nrf51_gattc_evt_desc_disc_rsp_encoding">0x33 - BLE_GATTC_EVT_DESC_DISC_RSP</a><ul><li class="level2"><a href="#nrf51_gattc_evt_desc_disc_rsp_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_gattc_evt_desc_disc_rsp_encoding_sub_a">Encoding of BLE_GATTC_EVT_DESC_DISC_RSP event</a></li>
+<li class="level2"><a href="#nrf51_gattc_evt_desc_disc_rsp_encoding_sub_b">Encoding of Descriptor data</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#nrf51_gattc_evt_char_val_by_uuid_read_rsp_encoding">0x34 - BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP</a><ul><li class="level2"><a href="#nrf51_gattc_evt_char_val_by_uuid_read_rsp_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_gattc_evt_char_val_by_uuid_read_rsp_encoding_sub_a">Encoding of BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP event</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#nrf51_gattc_evt_read_rsp_encoding">0x35 - BLE_GATTC_EVT_READ_RSP</a><ul><li class="level2"><a href="#nrf51_gattc_evt_read_rsp_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_gattc_evt_read_rsp_encoding_sub_a">Encoding of BLE_GATTC_EVT_READ_RSP event</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#nrf51_gattc_evt_char_vals_read_rsp_encoding">0x36 - BLE_GATTC_EVT_CHAR_VALS_READ_RSP</a><ul><li class="level2"><a href="#nrf51_gattc_evt_char_vals_read_rsp_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_gattc_evt_char_vals_read_rsp_encoding_sub_a">Encoding of BLE_GATTC_EVT_CHAR_VALS_READ_RSP event</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#nrf51_gattc_evt_write_rsp_encoding">0x37 - BLE_GATTC_EVT_WRITE_RSP</a><ul><li class="level2"><a href="#nrf51_gattc_evt_write_rsp_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_gattc_evt_write_rsp_encoding_sub_a">Encoding of BLE_GATTC_EVT_WRITE_RSP event</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#nrf51_gattc_evt_hvx_encoding">0x38 - BLE_GATTC_EVT_HVX</a><ul><li class="level2"><a href="#nrf51_gattc_evt_hvx_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_gattc_evt_hvx_encoding_sub_a">Encoding of BLE_GATTC_EVT_HVX event</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#nrf51_gattc_evt_timeout_encoding">0x39 - BLE_GATTC_EVT_TIMEOUT</a><ul><li class="level2"><a href="#nrf51_gattc_evt_timeout_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_gattc_evt_timeout_encoding_sub_a">Encoding of BLE GATTC Timeout event</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="textblock"><h1><a class="anchor" id="nrf51_gattc_evt_prim_srvc_disc_rsp_encoding"></a>
+0x30 - BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP</h1>
+<h2><a class="anchor" id="nrf51_gattc_evt_prim_srvc_disc_rsp_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00917.html#ggafd9b8b42eeb832d688e33f4561f97efcaa4ebe118aada0a7d38163ea11492f020">BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP</a> packet.</p>
+<p>Event ID = 0x30 for BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC Primary Service Discovery Response event, the <a class="el" href="a00222.html">ble_gattc_evt_prim_srvc_disc_rsp_t</a> is encoded after the GATTC Event header as seen in Figure 1 and 2.</p>
+<p>The order of the encoding is:</p>
 <table class="doxtable">
 <tr>
-<th>DFU Procedure </th><th>Description</th></tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>Start DFU </td><td>Procedure to prepare the device for a uploading the firmware. Size of firmware is provided in the request parameter. DFU Target response determines the device is ready for next stage of firmware update. The Start DFU must be followed by a byte indicating type of update, </td></tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00225.html#a26991e5deaf0de51e7b2413de1114c0e">ble_gattc_evt_t::conn_handle</a> </td></tr>
 <tr>
-<td>Receive Init Data </td><td>Optional procedure to exchange information necessary for firmware update that needs to be exchanged before upload of firmware. Hash exchange / Public key exchange etc are some examples of such information. In case this optional step is omitted the validation phase consists only of size validation. </td></tr>
+<td>2 bytes </td><td>GATT Status </td><td>see <a class="el" href="a00225.html#a844b25b255a6a17284b6285baa1fec6f">ble_gattc_evt_t::gatt_status</a> </td></tr>
 <tr>
-<td>Receive App Data </td><td>Procedure to upload firmware fragmented as DFU Packets. Maximum size of each packet is (ATT_MTU - 3) octets. DFU Packets can be of variable length with a minimum size of 1 octet. </td></tr>
+<td>2 bytes </td><td>Error Handle </td><td>see <a class="el" href="a00225.html#a3dd6ec7de3d6017e588120106e918bc9">ble_gattc_evt_t::error_handle</a> </td></tr>
 <tr>
-<td>Validate </td><td>Procedure to validate updated firmware image. Current implementation supports only CRC, provided in "Receive Init Data" procedure, optional validation (size validation is done always) </td></tr>
+<td>2 bytes </td><td>Service Count </td><td>see <a class="el" href="a00222.html#a742e7bdddc67ae7054c2758382973c2c">ble_gattc_evt_prim_srvc_disc_rsp_t::count</a> </td></tr>
 <tr>
-<td>Activate Image &amp; Reset </td><td>Procedure to activate the new firmware and restart the device with new firmware. This procedure results in a GAP Disconnect. </td></tr>
-<tr>
-<td>System Reset </td><td>Procedure to reset system. This procedure result in a GAP Disconnection Procedure. </td></tr>
-<tr>
-<td>Report Received Image Size </td><td>Procedure to request the size of image received. </td></tr>
-<tr>
-<td>Packet Receipt Notification</td><td>Procedure to request notification on receiving every 'n' packets. The number 'n' is requested by the controller. This is not a mandatory procedure for the Controller. </td></tr>
+<td>0 .. n byte(s) </td><td>Service Data </td><td>see <a class="el" href="a00222.html#ade86618d036b675b570e0f92d95e9755">ble_gattc_evt_prim_srvc_disc_rsp_t::services</a> (Encoding details can be seen in Figure 2) </td></tr>
 </table>
-<p>DFU Target in DFU mode, is in <b>GAP General Discoverable mode</b> and is <b>connectable</b>. 128-bit DFU Service UUID is advertised in the Advertisement Data, along with full name of <b>DfuTarg</b>.</p>
-<p>Once connected to the DFU Controller, DFU Procedure can be started by requesting a Start DFU Procedure. Size of new firmware is provided during this procedure. On successful <em>Start DFU</em> procedure, <em>Receive Init Data</em> is initiated to exchange CRC information. On success, this procedure is followed by upload of new firmware by requesting the <em>Receive App Data</em> Procedure. Currently, banked update is performed, implying, the old firmware can be restored in case firmware update procedure did not succeed at any stage of DFU Transfer. New firmware transferred is validated using the <em>Validate Procedure</em>. Validated firmware can be activated by issuing the <em>Activate Image &amp; Reset Procedure</em>. It is possible to reset the system at any stage using the <em>System Reset</em> procedure. When this procedure is requested, the system will restart with old firmware in case the device had a firmware; in case the device did not have any existing application firmware the system will restart in DFU mode.</p>
-<p>Firmware being updated is expected in binary format. It is possible to request the size of received firmware by requesting the <em>Report Received Image Size</em> procedure. This procedure is particularly useful on reconnection after a link loss. See <a class="el" href="a00062.html#ota_profile_ll_behavior">Link Loss Procedure</a> for more details. It is also possible for the Controller to request notification of acknowledge for every 'n' packets received using the <em>Packet Receipt Notification</em> procedure.</p>
-<p>MSC below describes a typical firmware update exchange between a DFU Controller and DFU Target.</p>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gattc_evt_prim_srvc_disc_rsp_encoding_sub_a"></a>
+Encoding of BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP event</h2>
 <div class="image">
-<img src="exp_ota_dfu_transfer.png" alt="exp_ota_dfu_transfer.png"/>
+<img src="event_gattc_evt_prim_srvc_disc_rsp.png" alt="event_gattc_evt_prim_srvc_disc_rsp.png"/>
 <div class="caption">
-Transfer of an image to the DFU Target.</div></div>
- <h3><a class="anchor" id="exp_ota_idle_mode_procedure"></a>
-Idle Mode Procedures</h3>
-<p>In case no connection is established with the DFU Target after 60 seconds, Target device will restart in normal mode with old firmware, in case there was an existing application, else in DFU mode, in case there was no application on the device.</p>
-<h3><a class="anchor" id="exp_ota_image_validation_procedure"></a>
-Image Validation Procedure</h3>
-<p>Procedure validates the updated firmware image. Current Nordic implementation supports only CRC, provided in "Receive Init Data" procedure, optional validation additionally to size validation which is always performed.</p>
-<h3><a class="anchor" id="exp_ota_profile_idle_conn"></a>
-Idle Connection Procedure</h3>
-<p>When the Nordic bootloader application detects that the connection has been idle for a time period, meaning that the DFU Controller has not written any packet that will result in the progress of the firmware update, the update will be stopped, the connection will be terminated, and the previously valid application will be started. If no valid application exists in the flash, the application stays in bootloader mode waiting for a reconnection from the DFU Controller.</p>
-<h3><a class="anchor" id="exp_ota_profile_ll_behavior"></a>
-Link Loss Procedure</h3>
-<p>When the Nordic bootloader application detects a link loss, DFU state and image size is remembered. On reconnection to the Controller, the transfer can resume from where it had stopped. Controller can request size of received image using the <em>Report Received Image Size</em> Procedure and start transfer by applying the necessary offset. <a class="el" href="a00062.html#ota_idle_mode_procedure">Idle Mode Procedures</a> apply in the disconnected state on link loss.</p>
-<div class="image">
-<img src="exp_dfu_ota_link_loss.png" alt="exp_dfu_ota_link_loss.png"/>
-<div class="caption">
-Recovery after Link Loss.</div></div>
- <h3><a class="anchor" id="exp_ota_profile_pkt_rcpt_notif"></a>
-Packet Receipt Notification procedure</h3>
-<p>This feature allows the DFU Controller to subscribe for a notification from the DFU Target, each time a given number of firmware packets is received by the latter. To use this feature, the DFU Controller should write to the DFU Control Point, the Op Code 0x08 - <em>Packet Receipt Notification Request</em> followed by the <em>Number of packets</em>. If the <em>Number of packets</em> field is set to <em>N</em>, then the DFU Target will send a Notification of the DFU Control Point with Op Code = 0x11 - <em>Packet Receipt Notification</em>, each time it receives <em>N</em> number of firmware packets. The DFU Controller should wait for this notification each time it has finished sending <em>N</em> number of firmware packets.</p>
-<p>In <em>Packet Receipt Notification</em>, the DFU Target also sends the number of bytes of firmware data received until that point of time. This may be used for any consistency checks by the DFU Controller.</p>
-<div class="image">
-<img src="exp_dfu_ota_pkt_rcpt_notif_procedure.png" alt="exp_dfu_ota_pkt_rcpt_notif_procedure.png"/>
-<div class="caption">
-Packet Receipt Notification procedure.</div></div>
- <h2><a class="anchor" id="security_considerations"></a>
-Security Considerations</h2>
-<p>This section describes the security considerations for a DFU Target and DFU Controller.</p>
-<h2><a class="anchor" id="exp_ota_server_sec"></a>
-DFU Target Security Considerations</h2>
-<p>All supported characteristics specified by the DFU Service are set to Security Mode 1 and Security Level 1.</p>
-<h1><a class="anchor" id="exp_ota_spec_sec"></a>
-Device Firmware Update BLE Service</h1>
-<h2><a class="anchor" id="exp_ota_spec_abstract"></a>
-Overview</h2>
-<p>Nordic Device Firmware Update (DFU) Service exposes necessary information to perform Device Firmware Update on the device. NOTE: This is not a service defined by the <em>Bluetooth</em> SIG, a proprietary one to demonstrate a typical firmware update on an nRF51 device.</p>
-<p>DFU Service does not depend on any other service. Support for following GATT sub-procedures are mandatory for this service: a. Write Characteristic Value b. Notifications c. Read Characteristic Descriptors d. Write Characteristic Descriptors</p>
-<p>DFU GATT Service can operate on <em>Bluetooth</em> Low Energy as transport only.</p>
-<p>The Service does not define any new error codes for Attribute Protocol and data exchange in is little endian (LSB first) order.</p>
-<p>This service is instantiated as a primary service in the DFU mode.</p>
-<h2><a class="anchor" id="ota_spec_number"></a>
-Proprietary Service UUID</h2>
-<p>The Service UUID assigned is value 0x1531 over proprietary base, see table below.</p>
-<p>UUID For Nordic:</p>
+Figure 1: Encoding of BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP event.</div></div>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gattc_evt_prim_srvc_disc_rsp_encoding_sub_b"></a>
+Encoding of Service Data</h2>
+<p>Service Count field defines number of services in the Service Data. Each <a class="el" href="a00231.html">ble_gattc_service_t</a> from the Service Data is encoded in the following order:</p>
 <table class="doxtable">
 <tr>
-<th>Description </th><th>Number Base</th></tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>Company Identifier: </td><td>0x0059 </td></tr>
+<td>2 bytes </td><td>Service UUID </td><td>see <a class="el" href="a00305.html#ac9ccd46e82b1b51d561f17d49282348c">ble_uuid_t::uuid</a> </td></tr>
 <tr>
-<td>UUID Base: </td><td>0x23, 0xD1, 0xBC, 0xEA, 0x5F, 0x78, 0x23, 0x15, 0xDE, 0xEF, 0x12, 0x12, 0x00, 0x00, 0x00, 0x00 </td></tr>
+<td>1 byte </td><td>Service UUID Type </td><td>see <a class="el" href="a00305.html#ae233c47cdd5f63de456f413a158bb16f">ble_uuid_t::type</a> </td></tr>
 <tr>
-<td>Service UUID start: </td><td>0x1530 </td></tr>
+<td>2 bytes </td><td>Service Start Handle </td><td>see <a class="el" href="a00228.html#a091b1b8aeda9dcc211ec3f44d6832c51">ble_gattc_handle_range_t::start_handle</a> </td></tr>
 <tr>
-<td>Characteristic UUID start: </td><td>0x1531 </td></tr>
+<td>2 bytes </td><td>Service End Handle </td><td>see <a class="el" href="a00228.html#a7ef3ed6409b66e9b087a761bd6a2b747">ble_gattc_handle_range_t::end_handle</a> </td></tr>
 </table>
-<h2><a class="anchor" id="ota_spec_char"></a>
-Service Characteristics</h2>
-<p>DFU Service exposes one instance of characteristics listed in table below. This service does not impose any security requirements.</p>
+<p><br/>
+</p>
+<div class="image">
+<img src="event_gattc_evt_prim_srvc_disc_rsp_service_data.png" alt="event_gattc_evt_prim_srvc_disc_rsp_service_data.png"/>
+<div class="caption">
+Figure 2: Encoding of Service data.</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="nrf51_gattc_evt_rel_disc_rsp_encoding"></a>
+0x31 - BLE_GATTC_EVT_REL_DISC_RSP</h1>
+<h2><a class="anchor" id="nrf51_gattc_evt_rel_disc_rsp_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00917.html#ggafd9b8b42eeb832d688e33f4561f97efcac52e2f11dc65da2efe53f7041d0ead6b">BLE_GATTC_EVT_REL_DISC_RSP</a> packet.</p>
+<p>Event ID = 0x31 for BLE_GATTC_EVT_REL_DISC_RSP</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC Read multiple Response event, the <a class="el" href="a00224.html">ble_gattc_evt_rel_disc_rsp_t</a> is encoded after the GATTC Event header as seen in Figure 1.</p>
+<p>The order of the encoding is:</p>
 <table class="doxtable">
 <tr>
-<th>Characteristic Name </th><th>Requirement </th><th>Mandatory Properties </th><th>Descriptors </th><th>Description</th></tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>DFU Packet </td><td>M </td><td>WriteWithoutResponse </td><td></td><td>See <a class="el" href="a00062.html#ota_spec_dfu_packet">DFU Packet</a> </td></tr>
+<td>2 byte </td><td>Connection Handle </td><td>see <a class="el" href="a00225.html#a26991e5deaf0de51e7b2413de1114c0e">ble_gattc_evt_t::conn_handle</a> </td></tr>
 <tr>
-<td>DFU Control Point </td><td>M </td><td>Write, Notify </td><td></td><td>See <a class="el" href="a00062.html#ota_spec_control_state">DFU Control Point</a> </td></tr>
+<td>2 byte </td><td>GATT Status </td><td>see <a class="el" href="a00225.html#a3dd6ec7de3d6017e588120106e918bc9">ble_gattc_evt_t::error_handle</a> </td></tr>
+<tr>
+<td>2 byte </td><td>Error Handle </td><td>see <a class="el" href="a00225.html#a844b25b255a6a17284b6285baa1fec6f">ble_gattc_evt_t::gatt_status</a> </td></tr>
+<tr>
+<td>2 byte </td><td>Include Count </td><td>see <a class="el" href="a00224.html#a6d254feed32dd66c692ad6cdcec386b9">ble_gattc_evt_rel_disc_rsp_t::count</a> </td></tr>
+<tr>
+<td>0..<em>n</em> byte(s) </td><td>Include Data, variable length </td><td>see <a class="el" href="a00224.html#a46a0118ff8e260244d2cf342d249e7cc">ble_gattc_evt_rel_disc_rsp_t::includes</a> (Encoding details can be seen in Figure 2) </td></tr>
 </table>
-<h2><a class="anchor" id="exp_ota_spec_dfu_packet"></a>
-DFU Packet</h2>
-<h2><a class="anchor" id="exp_ota_spec_dfu_packet_number"></a>
-UUID: 0x1532 over proprietary base.</h2>
-<p>This characteristic receives firmware to nRF51 device as DFU Packets. The firmware is transferred by writing each fragment as DFU Packet to this characteristic. Size of each packet is in range of 1 to (ATT_MTU - 3).</p>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gattc_evt_rel_disc_rsp_encoding_sub_a"></a>
+Encoding of BLE_GATTC_EVT_REL_DISC_RSP event</h2>
 <div class="image">
-<img src="dfu_packet.png" alt="dfu_packet.png"/>
+<img src="event_gattc_evt_rel_disc_rsp.png" alt="event_gattc_evt_rel_disc_rsp.png"/>
 <div class="caption">
-DFU Packet</div></div>
- <dl class="section note"><dt>Note</dt><dd>When writing the 'Image Size' data to the Packet Characteristic after writing 'Start DFU' to the DFU Control Point this field must be written as: <br/>
- &lt;Length of SoftDevice&gt;&lt;Length of Bootloader&gt;&lt;Length of Application&gt; <br/>
- All lengths must be uint32. If a length is not present, e.g. when transferring only SoftDevice the value of the characteristic should be written as: <br/>
- &lt;Length of SoftDevice&gt; 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00</dd></dl>
-<h2><a class="anchor" id="exp_ota_spec_control_state"></a>
-DFU Control Point</h2>
-<p>All DFU Procedures are requested using this characteristic. A DFU Procedure request is initiated by writing to this characteristic. A Response, marking end of procedure is received as a notification. The Characteristic value or the DFU Control PDU has the following format</p>
-<h2><a class="anchor" id="exp_ota_spec_control_point_number"></a>
-UUID: 0x1531 over proprietary base.</h2>
-<p>The DFU Control Point characteristic is used to control the state of Device Firmware Update process.</p>
-<p>Table below summarizes control point procedure op-code and respective parameters.</p>
+Figure 1: Encoding of BLE_GATTC_EVT_REL_DISC_RSP event.</div></div>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gattc_evt_rel_disc_rsp_encoding_sub_b"></a>
+Encoding of Include Data</h2>
+<p>Include Count field defines number of includes in the Include Data. Each <a class="el" href="a00230.html">ble_gattc_include_t</a> from the Include Data is encoded in the following order:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Include Handle </td><td>see <a class="el" href="a00230.html#ab1f14809099e66b0dc7a4a70cb3dc124">ble_gattc_include_t::handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Included Service UUID </td><td>see <a class="el" href="a00305.html#ac9ccd46e82b1b51d561f17d49282348c">ble_uuid_t::uuid</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Included Service UUID Type </td><td>see <a class="el" href="a00305.html#ae233c47cdd5f63de456f413a158bb16f">ble_uuid_t::type</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Included Service Start Handle </td><td>see <a class="el" href="a00228.html#a091b1b8aeda9dcc211ec3f44d6832c51">ble_gattc_handle_range_t::start_handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Included Service End Handle </td><td>see <a class="el" href="a00228.html#a7ef3ed6409b66e9b087a761bd6a2b747">ble_gattc_handle_range_t::end_handle</a> </td></tr>
+</table>
+<p><br/>
+</p>
 <div class="image">
-<img src="exp_dfu_ctrl_pt.png" alt="exp_dfu_ctrl_pt.png"/>
+<img src="event_gattc_evt_rel_disc_rsp_include_data.png" alt="event_gattc_evt_rel_disc_rsp_include_data.png"/>
 <div class="caption">
-DFU Control Point</div></div>
- <h2><a class="anchor" id="exp_ota_spec_control_point_err_handling"></a>
-General Error Handling procedures</h2>
-<p>If an Op Code is written to the <em>DFU Control Point</em> characteristic and the Client Characteristic Configuration descriptors of either or both of the <em>DFU Control Point</em> or the <em>DFU Status Report</em> are not configured for notifications, the DFU Target will return an error response with the Attribute Protocol Application error code set to <em>Client Characteristic Configuration Descriptor Improperly Configured</em> as defined in CSS Part B, Section 1.2 of Supplement to the <em>Bluetooth</em> Core Specification, Version 3 or later. </p>
+Figure 2: Encoding of Include.</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="nrf51_gattc_evt_char_disc_rsp_encoding"></a>
+0x32 - BLE_GATTC_EVT_CHAR_DISC_RSP</h1>
+<h2><a class="anchor" id="nrf51_gattc_evt_char_disc_rsp_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00917.html#ggafd9b8b42eeb832d688e33f4561f97efcac385b5d8f35de9cfd0df5b5aea9cb310">BLE_GATTC_EVT_CHAR_DISC_RSP</a> packet.</p>
+<p>Event ID = 0x32 for BLE_GATTC_EVT_CHAR_DISC_RSP</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC Characteristics Discovery Response event, the <a class="el" href="a00217.html">ble_gattc_evt_char_disc_rsp_t</a> is encoded after the GATTC Event header as seen in Figure 1 and 2.</p>
+<p>The order of the encoding is:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00225.html#a26991e5deaf0de51e7b2413de1114c0e">ble_gattc_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>GATT Status </td><td>see <a class="el" href="a00225.html#a844b25b255a6a17284b6285baa1fec6f">ble_gattc_evt_t::gatt_status</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Error Handle </td><td>see <a class="el" href="a00225.html#a3dd6ec7de3d6017e588120106e918bc9">ble_gattc_evt_t::error_handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Characteristic count </td><td>see <a class="el" href="a00217.html#a91337d714a569e896c896a3b255db8ff">ble_gattc_evt_char_disc_rsp_t::count</a> </td></tr>
+<tr>
+<td>0..<em>n</em> byte(s) </td><td>Characteristic Data, variable length </td><td>see <a class="el" href="a00217.html#aae5e676db57239ee9cfe89c13f603dd0">ble_gattc_evt_char_disc_rsp_t::chars</a> (Encoding details can be seen in Figure 2) </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gattc_evt_char_disc_rsp_encoding_sub_a"></a>
+Encoding of BLE_GATTC_EVT_CHAR_DISC_RSP event</h2>
+<div class="image">
+<img src="event_gattc_evt_char_disc_rsp.png" alt="event_gattc_evt_char_disc_rsp.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE_GATTC_EVT_CHAR_DISC_RSP event.</div></div>
+<p><br/>
+</p>
+<p>Characteristic Count field defines number of characteristics in the Characteristic Data. Each <a class="el" href="a00215.html">ble_gattc_char_t</a> from the Characteristic Data is encoded in the following order:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Characteristic UUID </td><td>see <a class="el" href="a00305.html#ac9ccd46e82b1b51d561f17d49282348c">ble_uuid_t::uuid</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Characteristic UUID Type </td><td>see <a class="el" href="a00305.html#ae233c47cdd5f63de456f413a158bb16f">ble_uuid_t::type</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Characteristic Properties (bitfields) </td><td>see <a class="el" href="a00215.html#ae68a35f9169191539d6910f11be6eced">ble_gattc_char_t::char_props</a> (Encoding order of the bitfields is shown in the table below) </td></tr>
+<tr>
+<td>1 byte </td><td>Characteristic Extended Properties Present (bitfield)</td><td>see <a class="el" href="a00215.html#a0399fb7726aec8438c535400f5f1f4b1">ble_gattc_char_t::char_ext_props</a> (Encoding order of the bitfields is shown in the table below) </td></tr>
+<tr>
+<td>2 bytes </td><td>Characteristic Declaration Handle </td><td>see <a class="el" href="a00215.html#a2ba0a3bc741d666e765ca29285946de8">ble_gattc_char_t::handle_decl</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Characteristic Value Handle </td><td>see <a class="el" href="a00215.html#af595827dab88a0b110f49e47a64b45dd">ble_gattc_char_t::handle_value</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<p>Characteristic Properties bitfields are encoded in a single byte in the following order: </p>
+<table class="doxtable">
+<tr>
+<th>Bit number </th><th>Field name </th><th>Value</th></tr>
+<tr>
+<td>bit 0 </td><td>Broadcast </td><td>see <a class="el" href="a00214.html#a66788f87aed20bf98b81af57051e9795">ble_gatt_char_props_t::broadcast</a> </td></tr>
+<tr>
+<td>bit 1 </td><td>Read </td><td>see <a class="el" href="a00214.html#a1da688e4cfacf724ee7636dbf534716f">ble_gatt_char_props_t::read</a> </td></tr>
+<tr>
+<td>bit 2 </td><td>Write wo resp </td><td>see <a class="el" href="a00214.html#a61fdb334c11f2a62accb48f297fb46ef">ble_gatt_char_props_t::write_wo_resp</a> </td></tr>
+<tr>
+<td>bit 3 </td><td>Write </td><td>see <a class="el" href="a00214.html#ae0ef9c3f220f06e735b534d232cb9108">ble_gatt_char_props_t::write</a> </td></tr>
+<tr>
+<td>bit 4 </td><td>Notify </td><td>see <a class="el" href="a00214.html#a9dd91c1e55995665ef09ec4c5bd5eaf7">ble_gatt_char_props_t::notify</a> </td></tr>
+<tr>
+<td>bit 5 </td><td>Indicate </td><td>see <a class="el" href="a00214.html#a256d8d59b59f7f1a079e962196e026dd">ble_gatt_char_props_t::indicate</a> </td></tr>
+<tr>
+<td>bit 6 </td><td>Auth signed write </td><td>see <a class="el" href="a00214.html#ad021e4c1c66a2595cb430d1e0598bc0d">ble_gatt_char_props_t::auth_signed_wr</a> </td></tr>
+<tr>
+<td>bit 7 </td><td>Not used </td><td></td></tr>
+</table>
+<p><br/>
+</p>
+<p>Characteristic Extended Properties Present bitfields are encoded in a single byte in the following order:</p>
+<table class="doxtable">
+<tr>
+<th>Bit number </th><th>Field name </th><th>Value</th></tr>
+<tr>
+<td>bit 0 </td><td>Extended properties present </td><td>See <a class="el" href="a00215.html#a0399fb7726aec8438c535400f5f1f4b1">ble_gattc_char_t::char_ext_props</a> </td></tr>
+<tr>
+<td>bits 1-7 </td><td>Not used </td><td></td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gattc_evt_prim_char_rsp_encoding_sub_b"></a>
+Encoding of Characteristic data</h2>
+<div class="image">
+<img src="event_gattc_evt_char_disc_rsp_char_data.png" alt="event_gattc_evt_char_disc_rsp_char_data.png"/>
+<div class="caption">
+Figure 2: Encoding of Service data.</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="nrf51_gattc_evt_desc_disc_rsp_encoding"></a>
+0x33 - BLE_GATTC_EVT_DESC_DISC_RSP</h1>
+<h2><a class="anchor" id="nrf51_gattc_evt_desc_disc_rsp_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00917.html#ggafd9b8b42eeb832d688e33f4561f97efca990d593e0c54f813ee6d6bb7fad619a2">BLE_GATTC_EVT_DESC_DISC_RSP</a> packet.</p>
+<p>Event ID = 0x33 for BLE_GATTC_EVT_DESC_DISC_RSP</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC Descriptor Discovery Response event, the <a class="el" href="a00220.html">ble_gattc_evt_desc_disc_rsp_t</a> is encoded after the GATTC Event header as seen in Figure 1 and 2.</p>
+<p>The order of the encoding is:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00225.html#a26991e5deaf0de51e7b2413de1114c0e">ble_gattc_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>GATT Status </td><td>see <a class="el" href="a00225.html#a844b25b255a6a17284b6285baa1fec6f">ble_gattc_evt_t::gatt_status</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Error Handle </td><td>see <a class="el" href="a00225.html#a3dd6ec7de3d6017e588120106e918bc9">ble_gattc_evt_t::error_handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Descriptor count </td><td>see <a class="el" href="a00220.html#a50815a26acf0eaa4a6d7ef9bebf7f58d">ble_gattc_evt_desc_disc_rsp_t::count</a> </td></tr>
+<tr>
+<td>0..<em>n</em> byte(s) </td><td>Descriptor Data, variable length </td><td>see <a class="el" href="a00220.html#a3d41c7255fa19fa2b55acd6962be26ee">ble_gattc_evt_desc_disc_rsp_t::descs</a> (Encoding details can be seen in Figure 2) </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gattc_evt_desc_disc_rsp_encoding_sub_a"></a>
+Encoding of BLE_GATTC_EVT_DESC_DISC_RSP event</h2>
+<div class="image">
+<img src="event_gattc_evt_desc_disc_rsp.png" alt="event_gattc_evt_desc_disc_rsp.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE_GATTC_EVT_DESC_DISC_RSP event.</div></div>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gattc_evt_desc_disc_rsp_encoding_sub_b"></a>
+Encoding of Descriptor data</h2>
+<p>Descriptor Count field defines number of descriptors in the Descriptor Data. Each <a class="el" href="a00216.html">ble_gattc_desc_t</a> from the Descriptor Data is encoded in the following order:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Descriptor Handle </td><td>see <a class="el" href="a00216.html#ada1f0c9228867fd73fd596d6d7241c67">ble_gattc_desc_t::handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Descriptor UUID </td><td>see <a class="el" href="a00305.html#ac9ccd46e82b1b51d561f17d49282348c">ble_uuid_t::uuid</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Descriptor UUID Type </td><td>see <a class="el" href="a00305.html#ae233c47cdd5f63de456f413a158bb16f">ble_uuid_t::type</a> </td></tr>
+</table>
+<div class="image">
+<img src="event_gattc_evt_desc_disc_rsp_desc_data.png" alt="event_gattc_evt_desc_disc_rsp_desc_data.png"/>
+<div class="caption">
+Figure 2: Encoding of Descriptor data.</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="nrf51_gattc_evt_char_val_by_uuid_read_rsp_encoding"></a>
+0x34 - BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP</h1>
+<h2><a class="anchor" id="nrf51_gattc_evt_char_val_by_uuid_read_rsp_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00917.html#ggafd9b8b42eeb832d688e33f4561f97efca9741363d5e934220a35f1c01f62a194c">BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP</a> packet.</p>
+<p>Event ID = 0x34 for BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC Read multiple Response event, the <a class="el" href="a00218.html">ble_gattc_evt_char_val_by_uuid_read_rsp_t</a> is encoded after the GATTC Event header as seen in Figure 1.</p>
+<p>The order of the encoding is:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 byte </td><td>Connection Handle </td><td>see <a class="el" href="a00225.html#a26991e5deaf0de51e7b2413de1114c0e">ble_gattc_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>2 byte </td><td>GATT Status </td><td>see <a class="el" href="a00225.html#a844b25b255a6a17284b6285baa1fec6f">ble_gattc_evt_t::gatt_status</a> </td></tr>
+<tr>
+<td>2 byte </td><td>Error Handle </td><td>see <a class="el" href="a00225.html#a3dd6ec7de3d6017e588120106e918bc9">ble_gattc_evt_t::error_handle</a> </td></tr>
+<tr>
+<td>2 byte </td><td>Number of Handle-Value pair </td><td>see <a class="el" href="a00218.html#a50e19076a010925f0ec9c71d40c33eff">ble_gattc_evt_char_val_by_uuid_read_rsp_t::count</a> </td></tr>
+<tr>
+<td>2 byte </td><td>Length of Value pair </td><td>see <a class="el" href="a00218.html#a91e554093e8f445960abff9c0015193c">ble_gattc_evt_char_val_by_uuid_read_rsp_t::value_len</a> </td></tr>
+<tr>
+<td>0..<em>n</em> byte(s) </td><td>Handle-Value pairs </td><td>see <a class="el" href="a00229.html">ble_gattc_handle_value_t</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gattc_evt_char_val_by_uuid_read_rsp_encoding_sub_a"></a>
+Encoding of BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP event</h2>
+<div class="image">
+<img src="event_gattc_evt_char_val_by_uuid_read_rsp.png" alt="event_gattc_evt_char_val_by_uuid_read_rsp.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP event.</div></div>
+<p><br/>
+</p>
+<p><a class="el" href="a00229.html">ble_gattc_handle_value_t</a> is encoded in the following order (also shown on Figure 2):</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 byte </td><td>Handle </td><td>see <a class="el" href="a00229.html#af1b50c1fd1d5be05d0d0cf25e0925fd0">ble_gattc_handle_value_t::handle</a> </td></tr>
+<tr>
+<td>0..<em>byte(s)</em> </td><td>Value </td><td>see <a class="el" href="a00229.html#a6e842e1c975c50acf7eec947baa405e8">ble_gattc_handle_value_t::p_value</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<div class="image">
+<img src="ble_gattc_handle_value.png" alt="ble_gattc_handle_value.png"/>
+<div class="caption">
+Figure 2: Encoding of ble_gattc_handle_value_t</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="nrf51_gattc_evt_read_rsp_encoding"></a>
+0x35 - BLE_GATTC_EVT_READ_RSP</h1>
+<h2><a class="anchor" id="nrf51_gattc_evt_read_rsp_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00917.html#ggafd9b8b42eeb832d688e33f4561f97efca2355be2e3b5c9bd1c235f7abbc56ef6d">BLE_GATTC_EVT_READ_RSP</a> packet.</p>
+<p>Event ID = 0x35 for BLE_GATTC_EVT_READ_RSP</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC Read Response event, the <a class="el" href="a00223.html">ble_gattc_evt_read_rsp_t</a> is encoded after the GATTC Event header as seen in Figure 1.</p>
+<p>The order of the encoding is:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00225.html#a26991e5deaf0de51e7b2413de1114c0e">ble_gattc_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>GATT Status </td><td>see <a class="el" href="a00225.html#a844b25b255a6a17284b6285baa1fec6f">ble_gattc_evt_t::gatt_status</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Error Handle </td><td>see <a class="el" href="a00225.html#a3dd6ec7de3d6017e588120106e918bc9">ble_gattc_evt_t::error_handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Attribute Handle </td><td>see <a class="el" href="a00223.html#a54644f05780b15248eba975decdd4e48">ble_gattc_evt_read_rsp_t::handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Attribute Offset </td><td>see <a class="el" href="a00223.html#a1ed66c83e153fd6471056d19b10fac67">ble_gattc_evt_read_rsp_t::offset</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Attribute Data Length </td><td>see <a class="el" href="a00223.html#a5131e80ad4da52f707a84aed7240f2ee">ble_gattc_evt_read_rsp_t::len</a> </td></tr>
+<tr>
+<td>0..<em>n</em> byte(s) </td><td>Attribute Data, variable length </td><td>see <a class="el" href="a00223.html#adaf3ed862b2c96947da60d9b576b31c9">ble_gattc_evt_read_rsp_t::data</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gattc_evt_read_rsp_encoding_sub_a"></a>
+Encoding of BLE_GATTC_EVT_READ_RSP event</h2>
+<div class="image">
+<img src="event_gattc_evt_read_rsp.png" alt="event_gattc_evt_read_rsp.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE_GATTC_EVT_READ_RSP event.</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="nrf51_gattc_evt_char_vals_read_rsp_encoding"></a>
+0x36 - BLE_GATTC_EVT_CHAR_VALS_READ_RSP</h1>
+<h2><a class="anchor" id="nrf51_gattc_evt_char_vals_read_rsp_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00917.html#ggafd9b8b42eeb832d688e33f4561f97efcaab8322d0d775f2726cfc0215ef63f298">BLE_GATTC_EVT_CHAR_VALS_READ_RSP</a> packet.</p>
+<p>Event ID = 0x36 for BLE_GATTC_EVT_CHAR_VALS_READ_RSP</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC Read multiple Response event, the <a class="el" href="a00219.html">ble_gattc_evt_char_vals_read_rsp_t</a> is encoded after the GATTC Event header as seen in Figure 1.</p>
+<p>The order of the encoding is:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 byte </td><td>Connection Handle </td><td>see <a class="el" href="a00225.html#a26991e5deaf0de51e7b2413de1114c0e">ble_gattc_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>2 byte </td><td>GATT Status </td><td>see <a class="el" href="a00225.html#a844b25b255a6a17284b6285baa1fec6f">ble_gattc_evt_t::gatt_status</a> </td></tr>
+<tr>
+<td>2 byte </td><td>Error Handle </td><td>see <a class="el" href="a00225.html#a3dd6ec7de3d6017e588120106e918bc9">ble_gattc_evt_t::error_handle</a> </td></tr>
+<tr>
+<td>2 byte </td><td>Concatenated Attribute Values Length </td><td>see <a class="el" href="a00219.html#a6ece59636f724d7a7759d4bc11cec8d9">ble_gattc_evt_char_vals_read_rsp_t::len</a> </td></tr>
+<tr>
+<td>0..<em>n</em> byte(s) </td><td>Attribute Values </td><td>see <a class="el" href="a00219.html#ac586dcb02b8f378127157ee8c45abea9">ble_gattc_evt_char_vals_read_rsp_t::values</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gattc_evt_char_vals_read_rsp_encoding_sub_a"></a>
+Encoding of BLE_GATTC_EVT_CHAR_VALS_READ_RSP event</h2>
+<div class="image">
+<img src="event_gattc_evt_char_vals_read_rsp.png" alt="event_gattc_evt_char_vals_read_rsp.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE_GATTC_EVT_CHAR_VALS_READ_RSP event.</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="nrf51_gattc_evt_write_rsp_encoding"></a>
+0x37 - BLE_GATTC_EVT_WRITE_RSP</h1>
+<h2><a class="anchor" id="nrf51_gattc_evt_write_rsp_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00917.html#ggafd9b8b42eeb832d688e33f4561f97efca6a70fe83b91997c8d3cd47b6cd98a91a">BLE_GATTC_EVT_WRITE_RSP</a> packet.</p>
+<p>Event ID = 0x37 for BLE_GATTC_EVT_WRITE_RSP</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC Write Response event, the <a class="el" href="a00227.html">ble_gattc_evt_write_rsp_t</a> is encoded after the GATTC Event header as seen in Figure 1.</p>
+<p>The order of the encoding is:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>ee <a class="el" href="a00225.html#a26991e5deaf0de51e7b2413de1114c0e">ble_gattc_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>GATT Status </td><td>see <a class="el" href="a00225.html#a844b25b255a6a17284b6285baa1fec6f">ble_gattc_evt_t::gatt_status</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Error Handle </td><td>see <a class="el" href="a00225.html#a3dd6ec7de3d6017e588120106e918bc9">ble_gattc_evt_t::error_handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Attribute Handle </td><td>see <a class="el" href="a00227.html#ae8e1aafaf1cbc9b6f7b5fcd163dd5cac">ble_gattc_evt_write_rsp_t::handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Write Operation </td><td>see <a class="el" href="a00227.html#a7cbd3dd7ab5f53b8f14e023b9c0c2db6">ble_gattc_evt_write_rsp_t::write_op</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Attribute Offset </td><td>see <a class="el" href="a00227.html#a09d38782fd5d200a45146ae303614733">ble_gattc_evt_write_rsp_t::offset</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Attribute Data Length </td><td>see <a class="el" href="a00227.html#a323a6805f77fe47c890cde179ea2f674">ble_gattc_evt_write_rsp_t::len</a> </td></tr>
+<tr>
+<td>0..<em>n</em> byte(s) </td><td>Attribute Data, variable length </td><td>see <a class="el" href="a00227.html#a1691be986d4b730bbe2ccc3d40c5a088">ble_gattc_evt_write_rsp_t::data</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gattc_evt_write_rsp_encoding_sub_a"></a>
+Encoding of BLE_GATTC_EVT_WRITE_RSP event</h2>
+<div class="image">
+<img src="event_gattc_evt_write_rsp.png" alt="event_gattc_evt_write_rsp.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE_GATTC_EVT_WRITE_RSP event.</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="nrf51_gattc_evt_hvx_encoding"></a>
+0x38 - BLE_GATTC_EVT_HVX</h1>
+<h2><a class="anchor" id="nrf51_gattc_evt_hvx_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00917.html#ggafd9b8b42eeb832d688e33f4561f97efca0f71b4e016b2049dfbd74fa2e46b9cd3">BLE_GATTC_EVT_HVX</a> packet.</p>
+<p>Event ID = 0x38 for BLE_GATTC_EVT_HVX</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC HVX event, the <a class="el" href="a00221.html">ble_gattc_evt_hvx_t</a> is encoded after the GATTC Event header as seen in Figure 1.</p>
+<p>The order of the encoding is:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00225.html#a26991e5deaf0de51e7b2413de1114c0e">ble_gattc_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>GATT Status </td><td>see <a class="el" href="a00225.html#a844b25b255a6a17284b6285baa1fec6f">ble_gattc_evt_t::gatt_status</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Error Handle </td><td>see <a class="el" href="a00225.html#a3dd6ec7de3d6017e588120106e918bc9">ble_gattc_evt_t::error_handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Attribute Handle </td><td>see <a class="el" href="a00221.html#a96ee6ce1546af608cf4b3b9d81cd7f09">ble_gattc_evt_hvx_t::handle</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Type (Indication or Notification)</td><td>see <a class="el" href="a00221.html#ac1de2368e40b7e4c7eab1fcb770605f2">ble_gattc_evt_hvx_t::type</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Attribute Data Length </td><td>see <a class="el" href="a00221.html#a173be268109e2223c485a9a10a6a9ba3">ble_gattc_evt_hvx_t::len</a> </td></tr>
+<tr>
+<td>0..<em>n</em> byte(s) </td><td>Attribute Data, variable length </td><td>see <a class="el" href="a00221.html#af239b9ba3cff6d1fc678f3f71711a2f3">ble_gattc_evt_hvx_t::data</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gattc_evt_hvx_encoding_sub_a"></a>
+Encoding of BLE_GATTC_EVT_HVX event</h2>
+<div class="image">
+<img src="event_gattc_evt_hvx.png" alt="event_gattc_evt_hvx.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE_GATTC_EVT_HVX event.</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="nrf51_gattc_evt_timeout_encoding"></a>
+0x39 - BLE_GATTC_EVT_TIMEOUT</h1>
+<h2><a class="anchor" id="nrf51_gattc_evt_timeout_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00917.html#ggafd9b8b42eeb832d688e33f4561f97efcacdb80367c0f97c95db04e19665ebf2fc">BLE_GATTC_EVT_TIMEOUT</a> packet.</p>
+<p>Event ID = 0x39 for BLE_GATTC_EVT_TIMEOUT</p>
+<p>All BLE Events, <a class="el" href="a00178.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00177.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The BLE GATTC event contains a connection handle, and for the BLE GATTC Timeout event, the <a class="el" href="a00226.html">ble_gattc_evt_timeout_t</a> is encoded after connection handle as seen in Figure 1.</p>
+<p>The order of the encoding is:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00225.html#a26991e5deaf0de51e7b2413de1114c0e">ble_gattc_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Timeout Source </td><td>see <a class="el" href="a00226.html#a445daba867e5aef62f251e31e8972d63">ble_gattc_evt_timeout_t::src</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_gattc_evt_timeout_encoding_sub_a"></a>
+Encoding of BLE GATTC Timeout event</h2>
+<div class="image">
+<img src="gattc_event_timeout.png" alt="gattc_event_timeout.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE GATTC Timeout event.</div></div>
+<p> <br/>
+ </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00023.html">Experimental</a></li><li class="navelem"><a class="el" href="a00067.html">Bootloader/DFU - SoftDevice update support</a></li><li class="navelem"><a class="el" href="a00088.html">DFU Transport Layers</a></li>
-    <li class="footer">Generated on Tue Jul 1 2014 13:27:33 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00083.html">S110 Serialization</a></li><li class="navelem"><a class="el" href="a00086.html">BLE Serialization Codecs</a></li>
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:34 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

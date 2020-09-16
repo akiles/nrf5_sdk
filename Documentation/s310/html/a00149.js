@@ -1,4 +1,5 @@
 var a00149 =
 [
-    [ "passkey", "a00149.html#a1966df5e1f2fc8e4c30f0af7b16b71c2", null ]
+    [ "handle", "a00149.html#ada1f0c9228867fd73fd596d6d7241c67", null ],
+    [ "uuid", "a00149.html#a039854704d107784b185fb11b00b1258", null ]
 ];

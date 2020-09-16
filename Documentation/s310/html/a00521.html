@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S310 SoftDevice: CRC compute</title>
+<title>nRF51 SDK - S310 SoftDevice: SVC return values specific to GATTS</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,65 +97,44 @@ $(document).ready(function(){initNavTree('a00521.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">CRC compute<div class="ingroups"><a class="el" href="a00522.html">HCI Transport</a></div></div>  </div>
+<div class="title">SVC return values specific to GATTS<div class="ingroups"><a class="el" href="a00647.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>This module implements the CRC-16 calculation in the blocks.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga8708f07a37b9c76f74f69dd00db983b6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00521.html#ga8708f07a37b9c76f74f69dd00db983b6">crc16_compute</a> (const uint8_t *p_data, uint32_t size, const uint16_t *p_crc)</td></tr>
-<tr class="memdesc:ga8708f07a37b9c76f74f69dd00db983b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for calculating CRC-16 in blocks.  <a href="#ga8708f07a37b9c76f74f69dd00db983b6">More...</a><br/></td></tr>
-<tr class="separator:ga8708f07a37b9c76f74f69dd00db983b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga050988950fb5cfb9e64b1f91f8872b45"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00521.html#ga050988950fb5cfb9e64b1f91f8872b45">BLE_ERROR_GATTS_INVALID_ATTR_TYPE</a>&#160;&#160;&#160;(<a class="el" href="a00494.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x000)</td></tr>
+<tr class="separator:ga050988950fb5cfb9e64b1f91f8872b45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d0833ac31d0c319e5286623b6301d0a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00521.html#ga1d0833ac31d0c319e5286623b6301d0a">BLE_ERROR_GATTS_SYS_ATTR_MISSING</a>&#160;&#160;&#160;(<a class="el" href="a00494.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x001)</td></tr>
+<tr class="separator:ga1d0833ac31d0c319e5286623b6301d0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>This module implements the CRC-16 calculation in the blocks. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga8708f07a37b9c76f74f69dd00db983b6"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga050988950fb5cfb9e64b1f91f8872b45"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t crc16_compute </td>
-          <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>p_data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint16_t *&#160;</td>
-          <td class="paramname"><em>p_crc</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define BLE_ERROR_GATTS_INVALID_ATTR_TYPE&#160;&#160;&#160;(<a class="el" href="a00494.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x000)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Invalid attribute type. </p>
 
-<p>Function for calculating CRC-16 in blocks. </p>
-<p>Feed each consecutive data block into this function, along with the current value of p_crc as returned by the previous call of this function. The first call of this function should pass NULL as the initial value of the crc in p_crc.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>The input data block for computation. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The size of the input data block in bytes. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_crc</td><td>The previous calculated CRC-16 value or NULL if first call.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The updated CRC-16 value, based on the input supplied. </dd></dl>
+</div>
+</div>
+<a class="anchor" id="ga1d0833ac31d0c319e5286623b6301d0a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_ERROR_GATTS_SYS_ATTR_MISSING&#160;&#160;&#160;(<a class="el" href="a00494.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x001)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>System Attributes missing. </p>
 
 </div>
 </div>
@@ -164,7 +143,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Jul 1 2014 13:29:00 for nRF51 SDK - S310 SoftDevice by
+    <li class="footer">Generated on Fri Aug 29 2014 16:26:46 for nRF51 SDK - S310 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

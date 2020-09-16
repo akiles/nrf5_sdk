@@ -1,9 +1,7 @@
 var a00223 =
 [
-    [ "conn_handle", "a00223.html#a71533de99d438bb326730e08da1d402a", null ],
-    [ "evt_handler", "a00223.html#ab0392a7012b01ace2dad863bc8f573cc", null ],
-    [ "meas_handles", "a00223.html#a6e3f96502d28802be863f09b2839817d", null ],
-    [ "service_handle", "a00223.html#ac62f9c0c453beef41d04c488c5d19ecc", null ],
-    [ "temp_type", "a00223.html#ad8e572095f9a6cecdf4bcde49c527aab", null ],
-    [ "temp_type_handles", "a00223.html#a514df962e0856554cd6eee1e2b11bf26", null ]
+    [ "cumulative_value", "a00223.html#ad226d0754bf0b129e4202d6468918de8", null ],
+    [ "evt_type", "a00223.html#a4ae317b0ff9170a27f7315dfb3c12bb6", null ],
+    [ "params", "a00223.html#a06793bc2d27aac408b9e6d216338036c", null ],
+    [ "update_location", "a00223.html#a64e560612783b28ce208966239c7ec07", null ]
 ];

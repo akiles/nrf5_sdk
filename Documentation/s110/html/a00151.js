@@ -1,7 +1,9 @@
 var a00151 =
 [
-    [ "rx_buf", "a00151.html#ab5c77995614a78b4a7baf6f5ab59bb5c", null ],
-    [ "rx_buf_size", "a00151.html#a42c5f8c78ee123d84c7de5da43f703e0", null ],
-    [ "tx_buf", "a00151.html#a1073bbd41b6d0ddc55e7ec432cf517dd", null ],
-    [ "tx_buf_size", "a00151.html#a8a0ff8a830eadfc972a4d44e1340e392", null ]
+    [ "alert", "a00151.html#a1516abb33b9dfe3d7ea721f893f3cc7e", null ],
+    [ "data", "a00151.html#a6cabb51ddf35c15bdfcf70ce1039d4fb", null ],
+    [ "error_code", "a00151.html#ab6e81a948852e8f1c27d25166815c9eb", null ],
+    [ "evt_type", "a00151.html#a933154cfde918e82cccf331250f23251", null ],
+    [ "settings", "a00151.html#af0183eb636b54d11dedd0b44471ecf68", null ],
+    [ "uuid", "a00151.html#a5291a39d334459d01eb8c359ce40eaf6", null ]
 ];

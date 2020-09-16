@@ -1,5 +1,5 @@
 var a00299 =
 [
-    [ "cid", "a00299.html#a6e40f192db4382919b6c1f3db8e70d46", null ],
-    [ "len", "a00299.html#a754900407e75298f4af89a59febed5b8", null ]
+    [ "read_perm", "a00299.html#ac08fb7f662817574a3792609f0d92637", null ],
+    [ "write_perm", "a00299.html#aca8d641cf8e5b5811aa2a2c68035c395", null ]
 ];

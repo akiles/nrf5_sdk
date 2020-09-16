@@ -1,7 +1,5 @@
 var a00160 =
 [
-    [ "conn_handle", "a00160.html#ab8700a2ae7c425ac15d6622e66967f74", null ],
-    [ "evt_handler", "a00160.html#ad1c46431c0465c0d35c17aef3e184a07", null ],
-    [ "hrm_cccd_handle", "a00160.html#aa39c35324a4a66fc088ca76085d2a932", null ],
-    [ "hrm_handle", "a00160.html#a77ef344286d863fa38ebd60dc06e5e62", null ]
+    [ "cid", "a00160.html#a6e40f192db4382919b6c1f3db8e70d46", null ],
+    [ "len", "a00160.html#a754900407e75298f4af89a59febed5b8", null ]
 ];

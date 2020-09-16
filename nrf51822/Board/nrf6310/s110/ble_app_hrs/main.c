@@ -33,6 +33,8 @@
 #include "ble_bas.h"
 #include "ble_hrs.h"
 #include "ble_dis.h"
+#include "ble_dfu.h"
+#include "dfu_app_handler.h"
 #include "ble_conn_params.h"
 #include "boards.h"
 #include "ble_sensorsim.h"
@@ -43,8 +45,6 @@
 #include "ble_debug_assert_handler.h"
 #include "pstorage.h"
 #include "app_trace.h"
-
-
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT     0                                           /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
@@ -61,7 +61,7 @@
 #define APP_ADV_TIMEOUT_IN_SECONDS           180                                        /**< The advertising timeout in units of seconds. */
 
 #define APP_TIMER_PRESCALER                  0                                          /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS                 5                                          /**< Maximum number of simultaneously created timers. */
+#define APP_TIMER_MAX_TIMERS                 6                                          /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE              4                                          /**< Size of timer operation queues. */
 
 #define BATTERY_LEVEL_MEAS_INTERVAL          APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER) /**< Battery level measurement interval (ticks). */
@@ -122,8 +122,11 @@ static app_timer_id_t                        m_sensor_contact_timer_id;         
 static dm_application_instance_t             m_app_handle;                              /**< Application identifier allocated by device manager */
 
 static bool                                  m_memory_access_in_progress = false;       /**< Flag to keep track of ongoing operations on persistent memory. */
+#ifdef BLE_DFU_APP_SUPPORT    
+static ble_dfu_t                             m_dfus;                                    /**< Structure used to identify the DFU service. */
+#endif // BLE_DFU_APP_SUPPORT    
 
-
+#if 0
 /**@brief Function for error handling, which is called when an error has occurred.
  *
  * @warning This handler is an example only and does not fit a final product. You need to analyze
@@ -149,7 +152,32 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
     // On assert, the system can only recover with a reset.
     NVIC_SystemReset();
 }
+#else
+#include "app_util_platform.h"
 
+//uint32_t m_error_code;
+//uint32_t m_line_num;
+//const uint8_t *m_p_file_name;
+
+void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
+{
+    // disable INTs
+    CRITICAL_REGION_ENTER();
+    /* Light a LED on error or warning. */
+    nrf_gpio_cfg_output(SER_CONN_ASSERT_LED_PIN);
+    nrf_gpio_pin_set(SER_CONN_ASSERT_LED_PIN);
+
+//    m_p_file_name = p_file_name;
+//    m_error_code = error_code;
+//    m_line_num = line_num;
+
+    /* To be able to see function parameters in a debugger. */
+    uint32_t temp = 1;
+    while(temp);
+    CRITICAL_REGION_EXIT();    
+}
+
+#endif
 
 /**@brief Callback function for asserts in the SoftDevice.
  *
@@ -401,6 +429,45 @@ static void advertising_init(void)
 }
 
 
+#ifdef BLE_DFU_APP_SUPPORT    
+static void advertising_stop(void)
+{
+    uint32_t err_code;
+
+    err_code = sd_ble_gap_adv_stop();
+    APP_ERROR_CHECK(err_code);
+
+    nrf_gpio_pin_clear(ADVERTISING_LED_PIN_NO);
+}
+
+
+/** @snippet [DFU BLE Reset prepare] */
+static void reset_prepare(void)
+{
+    uint32_t err_code;
+    
+    if (m_conn_handle != BLE_CONN_HANDLE_INVALID)
+    {
+        // Disconnect from peer.
+        err_code = sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+        APP_ERROR_CHECK(err_code);
+    }
+    else
+    {
+        // If not connected, then the device will be advertising. Hence stop the advertising.
+        advertising_stop();
+    }
+
+    nrf_gpio_pin_clear(ADVERTISING_LED_PIN_NO);
+    nrf_gpio_pin_clear(CONNECTED_LED_PIN_NO);
+    
+    err_code = ble_conn_params_stop();
+    APP_ERROR_CHECK(err_code);
+}
+/** @snippet [DFU BLE Reset prepare] */
+#endif // BLE_DFU_APP_SUPPORT    
+
+
 /**@brief Function for initializing services that will be used by the application.
  *
  * @details Initialize the Heart Rate, Battery and Device Information services.
@@ -461,6 +528,23 @@ static void services_init(void)
 
     err_code = ble_dis_init(&dis_init);
     APP_ERROR_CHECK(err_code);
+    
+#ifdef BLE_DFU_APP_SUPPORT    
+    /** @snippet [DFU BLE Service initialization] */
+    ble_dfu_init_t   dfus_init;
+
+    // Initialize the Device Firmware Update Service.
+    memset(&dfus_init, 0, sizeof(dfus_init));
+
+    dfus_init.evt_handler    = dfu_app_on_dfu_evt;
+    dfus_init.error_handler  = NULL; //service_error_handler - Not used as only the switch from app to DFU mode is required and not full dfu service.
+
+    err_code = ble_dfu_init(&m_dfus, &dfus_init);
+    APP_ERROR_CHECK(err_code);
+    
+    dfu_app_reset_prepare_set(reset_prepare);
+    /** @snippet [DFU BLE Service initialization] */
+#endif // BLE_DFU_APP_SUPPORT    
 }
 
 
@@ -668,6 +752,11 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
     ble_hrs_on_ble_evt(&m_hrs, p_ble_evt);
     ble_bas_on_ble_evt(&m_bas, p_ble_evt);
     ble_conn_params_on_ble_evt(p_ble_evt);
+#ifdef BLE_DFU_APP_SUPPORT    
+    /** @snippet [Propagating BLE Stack events to DFU Service] */
+    ble_dfu_on_ble_evt(&m_dfus, p_ble_evt);
+    /** @snippet [Propagating BLE Stack events to DFU Service] */
+#endif // BLE_DFU_APP_SUPPORT    
     on_ble_evt(p_ble_evt);
 }
 
@@ -792,12 +881,12 @@ static void power_manage(void)
  */
 int main(void)
 {
-    // Initialize.
+
+  	// Initialize.
     leds_init();
     buttons_init();
-    ble_stack_init();
-    
     timers_init();
+	ble_stack_init();    
     device_manager_init();
     gap_params_init();
     advertising_init();

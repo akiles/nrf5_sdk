@@ -1,5 +1,6 @@
 var a00176 =
 [
-    [ "high_to_low", "a00176.html#ae5b08a4f0525b94727edf87267f57c0b", null ],
-    [ "low_to_high", "a00176.html#ab74530adb87a0c8728839d2bbdc0f8f0", null ]
+    [ "ciphertext", "a00176.html#a478942ae65d7433678164a95e4944115", null ],
+    [ "cleartext", "a00176.html#ad4c798195f0d6d399a7f75d09ef89793", null ],
+    [ "key", "a00176.html#aab4ea408dd38499ceff3935ecb5fa39f", null ]
 ];

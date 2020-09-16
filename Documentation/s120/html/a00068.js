@@ -1,7 +1,7 @@
 var a00068 =
 [
-    [ "rx_buf", "a00068.html#ab5c77995614a78b4a7baf6f5ab59bb5c", null ],
-    [ "rx_buf_size", "a00068.html#a42c5f8c78ee123d84c7de5da43f703e0", null ],
-    [ "tx_buf", "a00068.html#a1073bbd41b6d0ddc55e7ec432cf517dd", null ],
-    [ "tx_buf_size", "a00068.html#a8a0ff8a830eadfc972a4d44e1340e392", null ]
+    [ "active_state", "a00068.html#af55e02af042a4d038dac26a7658536f6", null ],
+    [ "button_handler", "a00068.html#ad06ea1e496c4b37802492b289b54a875", null ],
+    [ "pin_no", "a00068.html#af6a18934c420213be9eee710854e1ab9", null ],
+    [ "pull_cfg", "a00068.html#abf23ae362a2ecdfbc73c9f6736ce0ba8", null ]
 ];

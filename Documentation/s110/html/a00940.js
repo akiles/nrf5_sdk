@@ -1,5 +1,7 @@
 var a00940 =
 [
-    [ "DM_EVT_ERROR", "a00940.html#ga14b9e8a4e4dd9d6223d414bf25762f7b", null ],
-    [ "DM_EVT_RFU", "a00940.html#gad038033184e5745ddd4fef4d52bfcea4", null ]
+    [ "Application common codecs", "a00941.html", "a00941" ],
+    [ "Application s110 codecs", "a00942.html", "a00942" ],
+    [ "Connectivity common codecs", "a00945.html", "a00945" ],
+    [ "Connectivity s110 codecs", "a00946.html", "a00946" ]
 ];

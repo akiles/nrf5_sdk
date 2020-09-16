@@ -1,16 +1,8 @@
 var a00215 =
 [
-    [ "auth_key_request", "a00215.html#a827b90e4cb234420675c432827b961d6", null ],
-    [ "auth_status", "a00215.html#ab22eb46d193a17def1bc6f5c428cb0b9", null ],
-    [ "conn_handle", "a00215.html#a383034ae2da31295066f2111a0e5d542", null ],
-    [ "conn_param_update", "a00215.html#ab62bca2a14ee664c547c18b94ef37f4c", null ],
-    [ "conn_sec_update", "a00215.html#ab121574be4dcf3d9e36dbf41f35d9463", null ],
-    [ "connected", "a00215.html#aed4ff5d959e122d90234f582a66dc254", null ],
-    [ "disconnected", "a00215.html#a2649b3d6849778ddb1abd5addb7d2322", null ],
-    [ "params", "a00215.html#a0c995799ebc7f41972d037bae539a91a", null ],
-    [ "passkey_display", "a00215.html#a4cacbc06e6534520cb6af9e7b7abf3ed", null ],
-    [ "rssi_changed", "a00215.html#a68424d2efb955bc53522dc16d3a92643", null ],
-    [ "sec_info_request", "a00215.html#a6b31479c3bcd869dd5b0f7b276dfc163", null ],
-    [ "sec_params_request", "a00215.html#a81655f9c7ebe0619f5eeadbbf9df42b2", null ],
-    [ "timeout", "a00215.html#ae8165f09cf3e00673a15faa2051eaabe", null ]
+    [ "char_ext_props", "a00215.html#a0399fb7726aec8438c535400f5f1f4b1", null ],
+    [ "char_props", "a00215.html#ae68a35f9169191539d6910f11be6eced", null ],
+    [ "handle_decl", "a00215.html#a2ba0a3bc741d666e765ca29285946de8", null ],
+    [ "handle_value", "a00215.html#af595827dab88a0b110f49e47a64b45dd", null ],
+    [ "uuid", "a00215.html#a69ac665a39feea71fafac8a54ecf0a5e", null ]
 ];

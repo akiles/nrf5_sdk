@@ -4,9 +4,7 @@ var searchData=
   ['types_20definitions_20for_20ble_20support_20in_20softdevice_20handler_2e',['Types definitions for BLE support in SoftDevice handler.',['../group__ble__stack__handler__types.html',1,'']]],
   ['twi',['TWI',['../hardware_driver_twi.html',1,'hardware_drivers']]],
   ['timer_20library',['Timer library',['../lib_timer.html',1,'general_libraries']]],
-  ['types_20and_20definitions_2e',['Types and definitions.',['../group__nrf__bootloader__types.html',1,'']]],
   ['timer_20example',['Timer Example',['../nrf_dev_timer_example.html',1,'examples_hw_peripheral_devices']]],
-  ['types_20and_20definitions_2e',['Types and definitions.',['../group__nrf__dfu__types.html',1,'']]],
   ['types',['Types',['../group__t__s210___n_r_f___s_d_m___t_y_p_e_s.html',1,'']]],
   ['types',['Types',['../group__t__s210___n_r_f___s_o_c___t_y_p_e_s.html',1,'']]],
   ['tail',['tail',['../structantfs__event__queue__t.html#a4911aef088e83f7b0b7831df30246be0',1,'antfs_event_queue_t']]],
@@ -60,6 +58,6 @@ var searchData=
   ['twi_5fsda_5fread',['TWI_SDA_READ',['../group__lib__driver__twi__master.html#ga0a7e559c3bceb5b50ff3e51cabb21f73',1,'twi_master.h']]],
   ['tx_5famount',['tx_amount',['../structspi__slave__evt__t.html#a080b88a554c371f8220691fc28117ebd',1,'spi_slave_evt_t']]],
   ['tx_5fbuf',['tx_buf',['../structapp__uart__buffers__t.html#a1073bbd41b6d0ddc55e7ec432cf517dd',1,'app_uart_buffers_t']]],
-  ['tx_5fbuf_5fsize',['tx_buf_size',['../structapp__uart__buffers__t.html#a8a0ff8a830eadfc972a4d44e1340e392',1,'app_uart_buffers_t::tx_buf_size()'],['../group__memory__pool__internal.html#ga5d3fb1970e1e98050006978a14b3d95e',1,'TX_BUF_SIZE():&#160;hci_mem_pool_internal.h'],['../group__memory__pool__internal.html#ga5d3fb1970e1e98050006978a14b3d95e',1,'TX_BUF_SIZE():&#160;hci_mem_pool_internal.h'],['../group__memory__pool__internal.html#ga5d3fb1970e1e98050006978a14b3d95e',1,'TX_BUF_SIZE():&#160;hci_mem_pool_internal.h']]],
+  ['tx_5fbuf_5fsize',['tx_buf_size',['../structapp__uart__buffers__t.html#a8a0ff8a830eadfc972a4d44e1340e392',1,'app_uart_buffers_t::tx_buf_size()'],['../group__memory__pool__internal.html#ga5d3fb1970e1e98050006978a14b3d95e',1,'TX_BUF_SIZE():&#160;hci_mem_pool_internal.h']]],
   ['tx_5fpin_5fno',['tx_pin_no',['../structapp__uart__comm__params__t.html#a7153a5ce2ab2d164224a7a17d5b1c56c',1,'app_uart_comm_params_t']]]
 ];

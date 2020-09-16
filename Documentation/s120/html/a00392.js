@@ -1,25 +1,18 @@
 var a00392 =
 [
-    [ "TOUCHPAD_BUTTON_STATUS", "a00392.html#ga31521894e811710e49d5d9bb9abcecb8", null ],
-    [ "TOUCHPAD_COMMAND", "a00392.html#gaf471db4675c021cc375b84815f2c3561", null ],
-    [ "TOUCHPAD_CONTROL", "a00392.html#gaf5a2290d3919707171195ce78d02c091", null ],
-    [ "TOUCHPAD_FINGER0_REL", "a00392.html#gab981111abcb9a726d0963a0ad9099de0", null ],
-    [ "TOUCHPAD_GESTURE_FLAGS", "a00392.html#ga95556e3ba7e191db7a7c877501aa9a1d", null ],
-    [ "TOUCHPAD_INT_STATUS", "a00392.html#ga45323ee0dff39f598de4e6913ce06ef8", null ],
-    [ "TOUCHPAD_PAGESELECT", "a00392.html#ga40ad4ab55f47fb885452b74af1d61b06", null ],
-    [ "TOUCHPAD_PRODUCT_ID", "a00392.html#ga2fc2cf0bedd74903e7181acfe0df6941", null ],
-    [ "TOUCHPAD_RESET", "a00392.html#ga81cf02c11ea295d8110493005dd1babd", null ],
-    [ "TOUCHPAD_SCROLL", "a00392.html#ga62a3433c5a8ef739a8f0520247c70efd", null ],
-    [ "TouchpadSleepMode_t", "a00392.html#ga330fdbd5e3557a42f4c73c445d0f7337", [
-      [ "SleepmodeNormal", "a00392.html#gga330fdbd5e3557a42f4c73c445d0f7337a2529a190fc6b8b859b7248b35f83f391", null ],
-      [ "SleepmodeSensorSleep", "a00392.html#gga330fdbd5e3557a42f4c73c445d0f7337a689a10deefd36760eee23b59321bcadb", null ]
+    [ "CHERRY8x16_DEFAULT_KEY_LOOKUP_MATRIX", "a00392.html#gacb3e11a73fa9f827d1cb395d7474886b", null ],
+    [ "CHERRY8x16_MAX_NUM_OF_PRESSED_KEYS", "a00392.html#ga96705cbd765dd973315e95ac650c68e8", null ],
+    [ "KEY_PACKET_KEY_INDEX", "a00392.html#gaa44734bdd788259bfec3a2d020b88ae5", null ],
+    [ "KEY_PACKET_MAX_KEYS", "a00392.html#ga3a5a7559365a12f6ea3955768b8b5382", null ],
+    [ "KEY_PACKET_MODIFIER_KEY_INDEX", "a00392.html#ga41430f808d8d3b096877de667eb4d086", null ],
+    [ "KEY_PACKET_NO_KEY", "a00392.html#gaf91da4c4186290332d254c5f7aa1215a", null ],
+    [ "KEY_PACKET_RESERVED_INDEX", "a00392.html#ga6c26e14ce8c196c829b01213ebe2a257", null ],
+    [ "KEY_PACKET_SIZE", "a00392.html#ga61bbda0c3b4c6126d2dd65a0b2cdc3ea", null ],
+    [ "cherry8x16_status_t", "a00392.html#gabb88a2cc8f85ba70003398a2e9e26a5e", [
+      [ "CHERRY8x16_OK", "a00392.html#ggabb88a2cc8f85ba70003398a2e9e26a5ea7c38ac713571ced5641f27dc14091f8d", null ],
+      [ "CHERRY8x16_NOT_DETECTED", "a00392.html#ggabb88a2cc8f85ba70003398a2e9e26a5ea163e64073d78aae09ebdb9c5edcc634b", null ],
+      [ "CHERRY8x16_INVALID_PARAMETER", "a00392.html#ggabb88a2cc8f85ba70003398a2e9e26a5ea5d6d998931af38e703f9569f89858fcc", null ]
     ] ],
-    [ "touchpad_init", "a00392.html#ga56d2b2da22fd614a12dead51b86f5be8", null ],
-    [ "touchpad_interrupt_status_read", "a00392.html#ga22b2f1fbcc1c09d3fcb5dae98e7a7dd2", null ],
-    [ "touchpad_product_id_read", "a00392.html#ga32ff3519e36304ef6111a893730a22a8", null ],
-    [ "touchpad_product_id_verify", "a00392.html#ga64efe8dc563464be3110e139729c663b", null ],
-    [ "touchpad_read_register", "a00392.html#ga517f43a4e4520713f69f14b38efc927b", null ],
-    [ "touchpad_reset", "a00392.html#gac053ca9455c2ee583def58d2d826cd9c", null ],
-    [ "touchpad_set_sleep_mode", "a00392.html#gaeaf145b444000da6d332bf4f0333380c", null ],
-    [ "touchpad_write_register", "a00392.html#gad33761514312c640fc14e096069476b9", null ]
+    [ "cherry8x16_init", "a00392.html#ga4d88841d6f21173bb304d2bd41f67c91", null ],
+    [ "cherry8x16_new_packet", "a00392.html#ga0079fdc53514fc2c48f98779f0c24719", null ]
 ];

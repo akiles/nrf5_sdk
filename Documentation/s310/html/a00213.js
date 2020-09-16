@@ -1,7 +1,6 @@
 var a00213 =
 [
-    [ "max_len", "a00213.html#ac0cfa5494f231413123e5f9b18356591", null ],
-    [ "read_resp", "a00213.html#a9928aad36b7acb9a2d9202384b8d058e", null ],
-    [ "rep_ref", "a00213.html#a75349cbfb49b717b2fda5f70b2622775", null ],
-    [ "security_mode", "a00213.html#ac658edb5d68d2b14843f1d8274a48f60", null ]
+    [ "conn_handle", "a00213.html#ab843f6e96efbaf3d2bffee8c92c62f1a", null ],
+    [ "params", "a00213.html#ab63285db6028432fe959a66519f85139", null ],
+    [ "rx", "a00213.html#afc4cbc758b308e6698b16650310cc52b", null ]
 ];
