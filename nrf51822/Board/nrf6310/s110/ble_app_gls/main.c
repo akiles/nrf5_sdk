@@ -42,16 +42,19 @@
 #include "ble_sensorsim.h"
 #include "softdevice_handler.h"
 #include "app_timer.h"
-#include "ble_bondmngr.h"
+#include "device_manager.h"
 #include "app_gpiote.h"
 #include "app_button.h"
 #include "nrf6350.h"
 #include "ble_debug_assert_handler.h"
 #include "pstorage.h"
+#include "app_trace.h"
 
 
-#define KEY_PRESS_BUTTON_PIN_NO         BUTTON_0                                    /**< Button used for sending keyboard text. */
-#define BONDMNGR_DELETE_BUTTON_PIN_NO   BUTTON_1                                    /**< Button used for deleting all bonded centrals during startup. */
+#define IS_SRVC_CHANGED_CHARACT_PRESENT 0                                           /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
+
+#define KEY_PRESS_BUTTON_PIN_NO         BUTTON_0                                    /**< Button used for creating a new measurement text. */
+#define BOND_DELETE_ALL_BUTTON_ID       BUTTON_1                                    /**< Button used for deleting all bonded centrals during startup. */
 
 #define ADVERTISING_LED_PIN_NO          LED_0                                       /**< Is on when device is advertising. */
 #define CONNECTED_LED_PIN_NO            LED_1                                       /**< Is on when device has connected. */
@@ -77,8 +80,8 @@
 #define MAX_CONN_INTERVAL               MSEC_TO_UNITS(100, UNIT_1_25_MS)            /**< Maximum acceptable connection interval (100 ms) */
 #define SLAVE_LATENCY                   0                                           /**< Slave latency. */
 #define CONN_SUP_TIMEOUT                MSEC_TO_UNITS(4000, UNIT_10_MS)             /**< Connection supervisory timeout (4 seconds). */
-#define FIRST_CONN_PARAMS_UPDATE_DELAY  APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)  /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (15 seconds). */
-#define NEXT_CONN_PARAMS_UPDATE_DELAY   APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)  /**< Time between each call to sd_ble_gap_conn_param_update after the first call (5 seconds). */
+#define FIRST_CONN_PARAMS_UPDATE_DELAY  APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)  /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
+#define NEXT_CONN_PARAMS_UPDATE_DELAY   APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER) /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
 #define MAX_CONN_PARAM_UPDATE_COUNT     3                                           /**< Number of attempts before giving up the connection parameter negotiation. */
 
 #define APP_GPIOTE_MAX_USERS            1                                           /**< Maximum number of users of the GPIOTE handler. */
@@ -99,21 +102,25 @@
 
 #define DEAD_BEEF                       0xDEADBEEF                                  /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
-static uint16_t                         m_conn_handle = BLE_CONN_HANDLE_INVALID;    /**< Handle of the current connection. */
-static ble_gap_sec_params_t             m_sec_params;                               /**< Security requirements for this application. */
-static ble_gap_adv_params_t             m_adv_params;                               /**< Parameters to be passed to the stack when starting advertising. */
-static ble_bas_t                        m_bas;                                      /**< Structure used to identify the battery service. */
-static ble_gls_t                        m_gls;                                      /**< Structure used to identify the glucose service. */
 
-static ble_sensorsim_cfg_t              m_battery_sim_cfg;                          /**< Battery Level sensor simulator configuration. */
-static ble_sensorsim_state_t            m_battery_sim_state;                        /**< Battery Level sensor simulator state. */
+static uint16_t                        m_conn_handle = BLE_CONN_HANDLE_INVALID;    /**< Handle of the current connection. */
+static ble_gap_adv_params_t            m_adv_params;                               /**< Parameters to be passed to the stack when starting advertising. */
+static ble_bas_t                       m_bas;                                      /**< Structure used to identify the battery service. */
+static ble_gls_t                       m_gls;                                      /**< Structure used to identify the glucose service. */
 
-static app_timer_id_t                   m_battery_timer_id;                         /**< Battery timer. */
-static app_timer_id_t                   m_sec_req_timer_id;                         /**< Security Request timer. */
+static ble_sensorsim_cfg_t             m_battery_sim_cfg;                          /**< Battery Level sensor simulator configuration. */
+static ble_sensorsim_state_t           m_battery_sim_state;                        /**< Battery Level sensor simulator state. */
 
-static bool                             m_is_display_available;                     /**< indicates if the display was initialized correctly, if not do not use MITM*/
+static app_timer_id_t                  m_battery_timer_id;                         /**< Battery timer. */
+static app_timer_id_t                  m_sec_req_timer_id;                         /**< Security Request timer. */
 
+static bool                            m_is_display_available;                     /**< indicates if the display was initialized correctly, if not do not use MITM*/
 
+static dm_application_instance_t       m_app_handle;                               /**< Application identifier allocated by device manager. */
+
+static dm_handle_t                     m_dm_handle;                                /**< Device manager's instance handle. */
+
+static bool                            m_memory_access_in_progress = false;        /**< Flag to keep track of ongoing operations on persistent memory. */
 
 /**@brief Function for error handling, which is called when an error has occurred.
  *
@@ -134,10 +141,10 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
     //                It is intended STRICTLY for development/debugging purposes.
     //                The flash write will happen EVEN if the radio is active, thus interrupting
     //                any communication.
-    //                Use with care. Un-comment the line below to use.
+    //                Use with care. Uncomment the line below to use.
     // ble_debug_assert_handler(error_code, line_num, p_file_name);
 
-    // On assert, the system can only recover on reset.
+    // On assert, the system can only recover with a reset.
     NVIC_SystemReset();
 }
 
@@ -172,7 +179,8 @@ static void service_error_handler(uint32_t nrf_error)
 }
 
 
-/**@brief Function for performing a battery measurement, and update the Battery Level characteristic in the Battery Service.
+/**@brief Function for performing battery measurement and updating the Battery Level characteristic
+ *        in Battery Service.
  */
 static void battery_level_update(void)
 {
@@ -186,7 +194,7 @@ static void battery_level_update(void)
         (err_code != NRF_ERROR_INVALID_STATE) &&
         (err_code != BLE_ERROR_NO_TX_BUFFERS) &&
         (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
-    )
+       )
     {
         APP_ERROR_HANDLER(err_code);
     }
@@ -216,19 +224,18 @@ static void battery_level_meas_timeout_handler(void * p_context)
  */
 static void sec_req_timeout_handler(void * p_context)
 {
-    UNUSED_PARAMETER(p_context);
-    uint32_t err_code;
-    bool is_link_encrypted;
+    uint32_t             err_code;
+    dm_security_status_t status;
 
     if (m_conn_handle != BLE_CONN_HANDLE_INVALID)
     {
-        err_code = ble_bondmngr_is_link_encrypted(&is_link_encrypted);
+        err_code = dm_security_status_req(&m_dm_handle, &status);
         APP_ERROR_CHECK(err_code);
 
         // In case the link is secured by the peer during timeout, the request is not sent.
-        if (is_link_encrypted == false)
+        if (status == NOT_ENCRYPTED)
         {
-            err_code = sd_ble_gap_authenticate(m_conn_handle, &m_sec_params);
+            err_code = dm_security_setup_req(&m_dm_handle);
             APP_ERROR_CHECK(err_code);
         }
     }
@@ -245,7 +252,7 @@ static void read_glucose_measurement(void)
 
     static int16_t s_mantissa = 550;
     static int16_t s_exponent = -3;
-    static uint8_t s_secs = 5;
+    static uint8_t s_secs     = 5;
 
     // simulate the reading of a glucose measurement.
     rec.meas.flags                          = BLE_GLS_MEAS_FLAG_TIME_OFFSET   |
@@ -265,8 +272,8 @@ static void read_glucose_measurement(void)
     rec.meas.sensor_status_annunciation     = 0;
 
     // change values for next read.
-    s_mantissa += 23; 
-    if (s_mantissa  > 939)
+    s_mantissa += 23;
+    if (s_mantissa > 939)
     {
         s_mantissa -= 434;
     }
@@ -305,15 +312,15 @@ static void timers_init(void)
 {
     uint32_t err_code;
 
-    // Initialize timer module, making it use the scheduler.
+    // Initialize timer module.
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
 
-    // Create battery timer.
+    // Create timers.
     err_code = app_timer_create(&m_battery_timer_id,
                                 APP_TIMER_MODE_REPEATED,
                                 battery_level_meas_timeout_handler);
     APP_ERROR_CHECK(err_code);
-    
+
     // Create Security Request timer.
     err_code = app_timer_create(&m_sec_req_timer_id,
                                 APP_TIMER_MODE_SINGLE_SHOT,
@@ -324,7 +331,8 @@ static void timers_init(void)
 
 /**@brief Function for the GAP initialization.
  *
- * @details This function sets up all the necessary GAP (Generic Access Profile) parameters of the *          device including the device name, appearance, and the preferred connection parameters.
+ * @details This function sets up all the necessary GAP (Generic Access Profile) parameters of the
+ *          device including the device name, appearance, and the preferred connection parameters.
  */
 static void gap_params_init(void)
 {
@@ -334,7 +342,9 @@ static void gap_params_init(void)
 
     BLE_GAP_CONN_SEC_MODE_SET_OPEN(&sec_mode);
 
-    err_code = sd_ble_gap_device_name_set(&sec_mode, (const uint8_t *)DEVICE_NAME, strlen(DEVICE_NAME));
+    err_code = sd_ble_gap_device_name_set(&sec_mode,
+                                          (const uint8_t *)DEVICE_NAME,
+                                          strlen(DEVICE_NAME));
     APP_ERROR_CHECK(err_code);
 
     err_code = sd_ble_gap_appearance_set(BLE_APPEARANCE_GENERIC_GLUCOSE_METER);
@@ -387,7 +397,7 @@ static void advertising_init(void)
     memset(&m_adv_params, 0, sizeof(m_adv_params));
 
     m_adv_params.type        = BLE_GAP_ADV_TYPE_ADV_IND;
-    m_adv_params.p_peer_addr = NULL;                           // Undirected advertisement.
+    m_adv_params.p_peer_addr = NULL;  // Undirected advertisement.
     m_adv_params.fp          = BLE_GAP_ADV_FP_ANY;
     m_adv_params.interval    = APP_ADV_INTERVAL;
     m_adv_params.timeout     = APP_ADV_TIMEOUT_IN_SECONDS;
@@ -408,13 +418,13 @@ static void services_init(void)
     // Initialize Glucose Service - sample selection of feature bits.
     memset(&gls_init, 0, sizeof(gls_init));
 
-    gls_init.evt_handler           = NULL;
-    gls_init.error_handler         = service_error_handler;
-    gls_init.feature               = 0;
-    gls_init.feature              |= BLE_GLS_FEATURE_LOW_BATT;
-    gls_init.feature              |= BLE_GLS_FEATURE_TEMP_HIGH_LOW;
-    gls_init.feature              |= BLE_GLS_FEATURE_GENERAL_FAULT;
-    gls_init.is_context_supported  = false;
+    gls_init.evt_handler          = NULL;
+    gls_init.error_handler        = service_error_handler;
+    gls_init.feature              = 0;
+    gls_init.feature             |= BLE_GLS_FEATURE_LOW_BATT;
+    gls_init.feature             |= BLE_GLS_FEATURE_TEMP_HIGH_LOW;
+    gls_init.feature             |= BLE_GLS_FEATURE_GENERAL_FAULT;
+    gls_init.is_context_supported = false;
 
     err_code = ble_gls_init(&m_gls, &gls_init);
     APP_ERROR_CHECK(err_code);
@@ -463,20 +473,6 @@ static void sensor_sim_init(void)
 }
 
 
-/**@brief Function for initializing security parameters.
- */
-static void sec_params_init(void)
-{
-    m_sec_params.timeout      = SEC_PARAM_TIMEOUT;
-    m_sec_params.bond         = SEC_PARAM_BOND;
-    m_sec_params.mitm         = SEC_PARAM_MITM;
-    m_sec_params.io_caps      = SEC_PARAM_IO_CAPABILITIES;
-    m_sec_params.oob          = SEC_PARAM_OOB;
-    m_sec_params.min_key_size = SEC_PARAM_MIN_KEY_SIZE;
-    m_sec_params.max_key_size = SEC_PARAM_MAX_KEY_SIZE;
-}
-
-
 /**@brief Function for starting application timers.
  */
 static void application_timers_start(void)
@@ -494,6 +490,18 @@ static void application_timers_start(void)
 static void advertising_start(void)
 {
     uint32_t err_code;
+    uint32_t count;
+
+    // Verify if there is any flash access pending, if yes delay starting advertising until
+    // it's complete.
+    err_code = pstorage_access_status_get(&count);
+    APP_ERROR_CHECK(err_code);
+
+    if (count != 0)
+    {
+        m_memory_access_in_progress = true;
+        return;
+    }
 
     err_code = sd_ble_gap_adv_start(&m_adv_params);
     APP_ERROR_CHECK(err_code);
@@ -502,13 +510,13 @@ static void advertising_start(void)
 }
 
 
-/**@brief Function for handling the Connection Parameters Module.
+/**@brief Function for handling the Connection Parameter events.
  *
  * @details This function will be called for all events in the Connection Parameters Module which
  *          are passed to the application.
  *          @note All this function does is to disconnect. This could have been done by simply
- *                setting the disconnect_on_fail config parameter, but instead we use the event
- *                handler mechanism to demonstrate its use.
+ *                setting the disconnect_on_fail configuration parameter, but instead we use the
+ *                event handler mechanism to demonstrate its use.
  *
  * @param[in]   p_evt   Event received from the Connection Parameters Module.
  */
@@ -563,9 +571,9 @@ static void conn_params_init(void)
  */
 static void on_ble_evt(ble_evt_t * p_ble_evt)
 {
-    uint32_t err_code;
-    bool     success = true;
-    char *   p_passkey;
+    uint32_t err_code = NRF_SUCCESS;
+    bool     success  = true;
+    char   * p_passkey;
 
     switch (p_ble_evt->header.evt_id)
     {
@@ -573,10 +581,6 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             nrf_gpio_pin_set(CONNECTED_LED_PIN_NO);
             nrf_gpio_pin_clear(ADVERTISING_LED_PIN_NO);
             m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
-
-            // Start Security Request timer.
-            err_code = app_timer_start(m_sec_req_timer_id, SECURITY_REQUEST_DELAY, NULL);
-            APP_ERROR_CHECK(err_code);
 
             // Start handling button presses.
             err_code = app_button_enable();
@@ -591,24 +595,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             err_code = app_button_disable();
             APP_ERROR_CHECK(err_code);
 
-            // Since we are not in a connection and have not started advertising, store bonds.
-            err_code = ble_bondmngr_bonded_centrals_store();
-            APP_ERROR_CHECK(err_code);
-
             advertising_start();
-            break;
-
-        case BLE_GAP_EVT_SEC_PARAMS_REQUEST:
-            if (!m_is_display_available)
-            {
-                // If the display is not available, do not use MITM.
-                m_sec_params.mitm    = 0;
-                m_sec_params.io_caps = BLE_GAP_IO_CAPS_NONE;
-            }
-            err_code = sd_ble_gap_sec_params_reply(m_conn_handle,
-                                                   BLE_GAP_SEC_STATUS_SUCCESS,
-                                                   &m_sec_params);
-            APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_GAP_EVT_TIMEOUT:
@@ -625,11 +612,11 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                 nrf_gpio_cfg_sense_input(KEY_PRESS_BUTTON_PIN_NO,
                                          BUTTON_PULL,
                                          NRF_GPIO_PIN_SENSE_LOW);
-                
-                nrf_gpio_cfg_sense_input(BONDMNGR_DELETE_BUTTON_PIN_NO,
+
+                nrf_gpio_cfg_sense_input(BOND_DELETE_ALL_BUTTON_ID,
                                          BUTTON_PULL,
                                          NRF_GPIO_PIN_SENSE_LOW);
-                
+
                 // Go to system-off mode (this function will not return; wakeup will cause a reset).
                 err_code = sd_power_system_off();
                 APP_ERROR_CHECK(err_code);
@@ -637,7 +624,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             break;
 
         case BLE_GAP_EVT_PASSKEY_DISPLAY:
-            // Don't send delayed Security Request if security procedure is already in progress. 
+            // Don't send delayed Security Request if security procedure is already in progress.
             err_code = app_timer_stop(m_sec_req_timer_id);
             APP_ERROR_CHECK(err_code);
 
@@ -675,6 +662,29 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 }
 
 
+/**@brief Function for handling the Application's system events.
+ *
+ * @param[in]   sys_evt   system event.
+ */
+static void on_sys_evt(uint32_t sys_evt)
+{
+    switch (sys_evt)
+    {
+        case NRF_EVT_FLASH_OPERATION_SUCCESS:
+        case NRF_EVT_FLASH_OPERATION_ERROR:
+            if (m_memory_access_in_progress)
+            {
+                m_memory_access_in_progress = false;
+                advertising_start();
+            }
+            break;
+        default:
+            // No implementation needed.
+            break;
+    }
+}
+
+
 /**@brief Function for dispatching a BLE stack event to all modules with a BLE stack event handler.
  *
  * @details This function is called from the BLE Stack event interrupt handler after a BLE stack
@@ -684,7 +694,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
  */
 static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 {
-    ble_bondmngr_on_ble_evt(p_ble_evt);
+    dm_ble_evt_handler(p_ble_evt);
     ble_gls_on_ble_evt(&m_gls, p_ble_evt);
     ble_bas_on_ble_evt(&m_bas, p_ble_evt);
     ble_conn_params_on_ble_evt(p_ble_evt);
@@ -702,6 +712,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 static void sys_evt_dispatch(uint32_t sys_evt)
 {
     pstorage_sys_event_handler(sys_evt);
+    on_sys_evt(sys_evt);
 }
 
 
@@ -716,49 +727,95 @@ static void ble_stack_init(void)
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
 
+    // Enable BLE stack 
+    ble_enable_params_t ble_enable_params;
+    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
+    ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
+    err_code = sd_ble_enable(&ble_enable_params);
+    APP_ERROR_CHECK(err_code);
+
     // Register with the SoftDevice handler module for BLE events.
     err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
     APP_ERROR_CHECK(err_code);
-    
+
     // Register with the SoftDevice handler module for BLE events.
     err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
     APP_ERROR_CHECK(err_code);
 }
 
 
-
-/**@brief Function for handling a Bond Manager error.
+/**@brief Function for handling the Device Manager events.
  *
- * @param[in]   nrf_error   Error code containing information about what went wrong.
+ * @param[in]   p_evt   Data associated to the device manager event.
  */
-static void bond_manager_error_handler(uint32_t nrf_error)
+static uint32_t device_manager_evt_handler(dm_handle_t const    * p_handle,
+                                           dm_event_t const     * p_event,
+                                           api_result_t           event_result)
 {
-    APP_ERROR_HANDLER(nrf_error);
+    uint32_t err_code = NRF_SUCCESS;
+
+    m_dm_handle = *p_handle;
+    APP_ERROR_CHECK(event_result);
+    switch (p_event->event_id)
+    {
+        case DM_EVT_CONNECTION:
+            // Start Security Request timer.
+            if (m_dm_handle.device_id != DM_INVALID_ID)
+            {
+                err_code = app_timer_start(m_sec_req_timer_id, SECURITY_REQUEST_DELAY, NULL);
+                APP_ERROR_CHECK(err_code);
+            }
+            err_code = app_timer_start(m_sec_req_timer_id, SECURITY_REQUEST_DELAY, NULL);
+            APP_ERROR_CHECK(err_code);
+            break;
+        default:
+            break;
+    }
+    return NRF_SUCCESS;
 }
 
 
-/**@brief Function for the Bond Manager initialization.
+/**@brief Function for the Device Manager initialization.
  */
-static void bond_manager_init(void)
+static void device_manager_init(void)
 {
-    uint32_t            err_code;
-    ble_bondmngr_init_t bond_init_data;
-    bool                bonds_delete;
+    uint32_t               err_code;
+    dm_init_param_t        init_data;
+    dm_application_param_t register_param;
 
     // Initialize persistent storage module.
     err_code = pstorage_init();
     APP_ERROR_CHECK(err_code);
-    
+
     // Clear all bonded centrals if the Bonds Delete button is pushed.
-    err_code = app_button_is_pushed(BONDMNGR_DELETE_BUTTON_PIN_NO, &bonds_delete);
+    init_data.clear_persistent_data = (nrf_gpio_pin_read(BOND_DELETE_ALL_BUTTON_ID) == 0);
+
+    err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);
 
-    // Initialize the Bond Manager.
-    bond_init_data.evt_handler             = NULL;
-    bond_init_data.error_handler           = bond_manager_error_handler;
-    bond_init_data.bonds_delete            = bonds_delete;
+    memset(&register_param.sec_param, 0, sizeof(ble_gap_sec_params_t));
 
-    err_code = ble_bondmngr_init(&bond_init_data);
+    register_param.sec_param.timeout      = SEC_PARAM_TIMEOUT;
+    register_param.sec_param.bond         = SEC_PARAM_BOND;
+    register_param.sec_param.oob          = SEC_PARAM_OOB;
+    register_param.sec_param.min_key_size = SEC_PARAM_MIN_KEY_SIZE;
+    register_param.sec_param.max_key_size = SEC_PARAM_MAX_KEY_SIZE;
+    register_param.evt_handler            = device_manager_evt_handler;
+    register_param.service_type           = DM_PROTOCOL_CNTXT_GATT_SRVR_ID;
+
+    if (!m_is_display_available)
+    {
+        // If the display is not available, do not use MITM.
+        register_param.sec_param.mitm    = 0;
+        register_param.sec_param.io_caps = BLE_GAP_IO_CAPS_NONE;
+    }
+    else
+    {
+        register_param.sec_param.mitm    = SEC_PARAM_MITM;
+        register_param.sec_param.io_caps = SEC_PARAM_IO_CAPABILITIES;
+    }
+
+    err_code = dm_register(&m_app_handle, &register_param);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -799,8 +856,8 @@ static void buttons_init(void)
 {
     static app_button_cfg_t buttons[] =
     {
-        {KEY_PRESS_BUTTON_PIN_NO,       false, BUTTON_PULL, button_event_handler},
-        {BONDMNGR_DELETE_BUTTON_PIN_NO, false, BUTTON_PULL, NULL}
+        {KEY_PRESS_BUTTON_PIN_NO,   false, BUTTON_PULL, button_event_handler},
+        {BOND_DELETE_ALL_BUTTON_ID, false, BUTTON_PULL, NULL}
     };
 
     APP_BUTTON_INIT(buttons, sizeof(buttons) / sizeof(buttons[0]), BUTTON_DETECTION_DELAY, false);
@@ -842,19 +899,19 @@ void nrf6350_init(void)
 int main(void)
 {
     // Initialize.
+    app_trace_init();
     leds_init();
     timers_init();
     nrf6350_init();
     gpiote_init();
     buttons_init();
     ble_stack_init();
-    bond_manager_init();
+    device_manager_init();
     gap_params_init();
     advertising_init();
     services_init();
     sensor_sim_init();
     conn_params_init();
-    sec_params_init();
 
     // Start execution.
     application_timers_start();
@@ -866,7 +923,6 @@ int main(void)
         power_manage();
     }
 }
-
 
 /**
  * @}

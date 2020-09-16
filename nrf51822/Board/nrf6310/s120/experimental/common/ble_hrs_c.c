@@ -20,9 +20,9 @@
 #include "nrf_error.h"
 #include "ble_gattc.h"
 #include "app_util.h"
-#include "debug.h"
+#include "app_trace.h"
 
-#define LOG                     debug_log                        /**< Debug logger macro that will be used in this file to do logging of important information over UART. */
+#define LOG                     app_trace_log                    /**< Debug logger macro that will be used in this file to do logging of important information over UART. */
 
 #define HRM_FLAG_MASK_HR_16BIT  (0x01 << 0)                      /**< Bit mask used to extract the type of heart rate value. This is used to find if the received heart rate is a 16 bit value or an 8 bit value. */
 

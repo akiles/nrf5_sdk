@@ -2,7 +2,7 @@ TARGET_CHIP := NRF51822_QFAA_CA
 BOARD := BOARD_NRF6310
 
 C_SOURCE_FILES += main.c
-C_SOURCE_FILES += nRF6350.c
+C_SOURCE_FILES += nrf6350.c
 C_SOURCE_FILES += twi_hw_master.c
 
 OUTPUT_FILENAME := nRF6350_radio_configuration_example_gcc

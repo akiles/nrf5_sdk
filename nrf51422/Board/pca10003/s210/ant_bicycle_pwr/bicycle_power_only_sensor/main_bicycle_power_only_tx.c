@@ -22,6 +22,7 @@
 #include "app_gpiote.h"
 #include "boards.h"
 #include "nordic_common.h"
+#include "app_util.h"
 
 #define ANTPLUS_NETWORK_NUMBER        0                                         /**< Network number. */
 #define ANT_EVENT_MSG_BUFFER_MIN_SIZE 32u                                       /**< Minimum size of ANT event message buffer. */

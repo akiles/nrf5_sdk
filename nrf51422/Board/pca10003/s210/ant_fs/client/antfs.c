@@ -14,6 +14,7 @@ All rights reserved.
 #include "ant_parameters.h"
 #include "ant_interface.h"
 #include "crc.h"
+#include "app_util.h"
 #ifdef LEDDRIVER_ACTIVE                        
     #include "leddriver.h"
 #endif // LEDDRIVER_ACTIVE 

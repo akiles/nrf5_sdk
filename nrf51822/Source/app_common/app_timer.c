@@ -18,7 +18,7 @@
 #include "app_error.h"
 #include "nrf_delay.h"
 #include "app_util.h"
-
+#include "app_util_platform.h"
 
 #define RTC1_IRQ_PRI            APP_IRQ_PRIORITY_LOW                        /**< Priority of the RTC1 interrupt (used for checking for timeouts and executing timeout handlers). */
 #define SWI0_IRQ_PRI            APP_IRQ_PRIORITY_LOW                        /**< Priority of the SWI0 interrupt (used for updating the timer list). */
@@ -136,6 +136,7 @@ static uint32_t                      m_ticks_elapsed[CONTEXT_QUEUE_SIZE_MAX];   
 static uint8_t                       m_ticks_elapsed_q_read_ind;                /**< Timer internal elapsed ticks queue read index. */
 static uint8_t                       m_ticks_elapsed_q_write_ind;               /**< Timer internal elapsed ticks queue write index. */
 static app_timer_evt_schedule_func_t m_evt_schedule_func;                       /**< Pointer to function for propagating timeout events to the scheduler. */
+static bool                          m_rtc1_running;                            /**< Boolean indicating if RTC1 is running. */
 
 
 /**@brief Function for initializing the RTC1 counter.
@@ -161,6 +162,8 @@ static void rtc1_start(void)
 
     NRF_RTC1->TASKS_START = 1;
     nrf_delay_us(MAX_RTC_TASKS_DELAY);
+
+    m_rtc1_running = true;
 }
 
 
@@ -175,6 +178,12 @@ static void rtc1_stop(void)
 
     NRF_RTC1->TASKS_STOP = 1;
     nrf_delay_us(MAX_RTC_TASKS_DELAY);
+
+    NRF_RTC1->TASKS_CLEAR = 1;
+    m_ticks_latest        = 0;
+    nrf_delay_us(MAX_RTC_TASKS_DELAY);
+
+    m_rtc1_running = false;
 }
 
 
@@ -270,7 +279,7 @@ static void timer_list_remove(app_timer_id_t timer_id)
     app_timer_id_t current;
     uint32_t       timeout;
 
-    // Find the timer's position in timer list
+    // Find the timer's position in timer list.
     previous = m_timer_id_head;
     current  = previous;
     
@@ -284,7 +293,7 @@ static void timer_list_remove(app_timer_id_t timer_id)
         current  = mp_nodes[current].next;
     }
 
-    // Timer not in active list
+    // Timer not in active list.
     if (current == TIMER_NULL)
     {
         return;
@@ -294,15 +303,21 @@ static void timer_list_remove(app_timer_id_t timer_id)
     if (previous == current)
     {
         m_timer_id_head = mp_nodes[m_timer_id_head].next;
+
+        // No more timers in the list. Disable RTC1.
+        if (m_timer_id_head == TIMER_NULL)
+        {
+            rtc1_stop();
+        }
     }
 
-    // Remaining timeout between next timeout
+    // Remaining timeout between next timeout.
     timeout = mp_nodes[current].ticks_to_expire;
 
-    // Link previous timer with next of this timer, i.e. removing the timer from list
+    // Link previous timer with next of this timer, i.e. removing the timer from list.
     mp_nodes[previous].next = mp_nodes[current].next;
 
-    // If this is not the last timer, increment the next timer by this timer timeout
+    // If this is not the last timer, increment the next timer by this timer timeout.
     current = mp_nodes[previous].next;
     if (current != TIMER_NULL)
     {
@@ -357,16 +372,16 @@ static void timer_timeouts_check(void)
         uint32_t        ticks_elapsed;
         uint32_t        ticks_expired;
 
-        // Initialize actual elapsed ticks being consumed to 0 
+        // Initialize actual elapsed ticks being consumed to 0.
         ticks_expired = 0;
 
-        // ticks_elapsed is collected here, job will use it
+        // ticks_elapsed is collected here, job will use it.
         ticks_elapsed = ticks_diff_get(rtc1_counter_get(), m_ticks_latest);
 
-        // Auto variable containing the head of timers expiring 
+        // Auto variable containing the head of timers expiring.
         timer_id = m_timer_id_head;
 
-        // Expire all timers within ticks_elapsed and collect ticks_expired 
+        // Expire all timers within ticks_elapsed and collect ticks_expired.
         while (timer_id != TIMER_NULL)
         {
             timer_node_t * p_timer;
@@ -374,20 +389,20 @@ static void timer_timeouts_check(void)
             // Auto variable for current timer node 
             p_timer = &mp_nodes[timer_id];
 
-            // Do nothing if timer did not expire 
+            // Do nothing if timer did not expire.
             if (ticks_elapsed < p_timer->ticks_to_expire)
             {
                 break;
             }
 
-            // Decrement ticks_elapsed and collect expired ticks 
+            // Decrement ticks_elapsed and collect expired ticks.
             ticks_elapsed -= p_timer->ticks_to_expire;
             ticks_expired += p_timer->ticks_to_expire;
 
-            // Move to next timer 
+            // Move to next timer.
             timer_id = p_timer->next;
 
-            // Execute Task 
+            // Execute Task.
             timeout_handler_exec(p_timer);
         }
 
@@ -423,10 +438,10 @@ static void timer_timeouts_check(void)
  */
 static bool elapsed_ticks_acquire(uint32_t * p_ticks_elapsed)
 {
-    // Pick the elapsed value from queue 
+    // Pick the elapsed value from queue.
     if (m_ticks_elapsed_q_read_ind != m_ticks_elapsed_q_write_ind)
     {
-        // Dequeue elapsed value 
+        // Dequeue elapsed value.
         m_ticks_elapsed_q_read_ind++;
         if (m_ticks_elapsed_q_read_ind == CONTEXT_QUEUE_SIZE_MAX)
         {
@@ -442,7 +457,7 @@ static bool elapsed_ticks_acquire(uint32_t * p_ticks_elapsed)
     }
     else
     {
-        // No elapsed value in queue 
+        // No elapsed value in queue.
         *p_ticks_elapsed = 0;
         return false;
     }
@@ -458,7 +473,7 @@ static bool list_deletions_handler(void)
     app_timer_id_t timer_id_old_head;
     uint8_t        user_id;
 
-    // Remember the old head, so as to decide if new compare needs to be set
+    // Remember the old head, so as to decide if new compare needs to be set.
     timer_id_old_head = m_timer_id_head;
 
     user_id = m_user_array_size;
@@ -472,7 +487,7 @@ static bool list_deletions_handler(void)
             timer_node_t *    p_timer;
             timer_user_op_t * p_user_op = &p_user->p_user_op_queue[user_ops_first];
 
-            // Traverse to next operation in queue 
+            // Traverse to next operation in queue.
             user_ops_first++;
             if (user_ops_first == p_user->user_op_queue_size)
             {
@@ -482,7 +497,7 @@ static bool list_deletions_handler(void)
             switch (p_user_op->op_type)
             {
                 case TIMER_USER_OP_TYPE_STOP:
-                    // Delete node if timer is running
+                    // Delete node if timer is running.
                     p_timer = &mp_nodes[p_user_op->timer_id];
                     if (p_timer->is_running)
                     {
@@ -492,7 +507,7 @@ static bool list_deletions_handler(void)
                     break;
                     
                 case TIMER_USER_OP_TYPE_STOP_ALL:
-                    // Delete list of running timers, and mark all timers as not running
+                    // Delete list of running timers, and mark all timers as not running.
                     while (m_timer_id_head != TIMER_NULL)
                     {
                         timer_node_t * p_head = &mp_nodes[m_timer_id_head];
@@ -509,7 +524,7 @@ static bool list_deletions_handler(void)
         }
     }
 
-    // Detect change in head of the list
+    // Detect change in head of the list.
     return (m_timer_id_head != timer_id_old_head);
 }
 
@@ -531,7 +546,7 @@ static void expired_timers_handler(uint32_t         ticks_elapsed,
         timer_node_t * p_timer;
         app_timer_id_t id_expired;
 
-        // Auto variable for current timer node 
+        // Auto variable for current timer node.
         p_timer = &mp_nodes[m_timer_id_head];
 
         // Do nothing if timer did not expire 
@@ -541,19 +556,19 @@ static void expired_timers_handler(uint32_t         ticks_elapsed,
             break;
         }
 
-        // Decrement ticks_elapsed and collect expired ticks 
+        // Decrement ticks_elapsed and collect expired ticks.
         ticks_elapsed -= p_timer->ticks_to_expire;
         ticks_expired += p_timer->ticks_to_expire;
 
-        // Timer expired, set ticks_to_expire zero
+        // Timer expired, set ticks_to_expire zero.
         p_timer->ticks_to_expire = 0;
         p_timer->is_running      = false;
 
-        // Remove the expired timer from head 
+        // Remove the expired timer from head.
         id_expired      = m_timer_id_head;
         m_timer_id_head = p_timer->next;
 
-        // Timer will be restarted if periodic 
+        // Timer will be restarted if periodic.
         if (p_timer->ticks_periodic_interval != 0)
         {
             p_timer->ticks_at_start       = (ticks_previous + ticks_expired) & MAX_RTC_COUNTER_VAL;
@@ -576,7 +591,7 @@ static bool list_insertions_handler(app_timer_id_t restart_list_head)
     app_timer_id_t timer_id_old_head;
     uint8_t        user_id;
 
-    // Remember the old head, so as to decide if new compare needs to be set
+    // Remember the old head, so as to decide if new compare needs to be set.
     timer_id_old_head = m_timer_id_head;
 
     user_id = m_user_array_size;
@@ -584,7 +599,7 @@ static bool list_insertions_handler(app_timer_id_t restart_list_head)
     {
         timer_user_t * p_user = &mp_users[user_id];
 
-        // Handle insertions of timers 
+        // Handle insertions of timers.
         while ((restart_list_head != TIMER_NULL) || (p_user->first != p_user->last))
         {
             app_timer_id_t id_start;
@@ -671,7 +686,7 @@ static void compare_reg_update(app_timer_id_t timer_id_head_old)
         uint32_t cc              = m_ticks_latest;
         uint32_t ticks_elapsed   = ticks_diff_get(pre_counter_val, cc) + RTC_COMPARE_OFFSET_MIN;
 
-        if (timer_id_head_old == TIMER_NULL)
+        if (!m_rtc1_running)
         {
             // No timers were already running, start RTC
             rtc1_start();
@@ -1129,3 +1144,4 @@ uint32_t app_timer_cnt_diff_compute(uint32_t   ticks_to,
     *p_ticks_diff = ticks_diff_get(ticks_to, ticks_from);
     return NRF_SUCCESS;
 }
+

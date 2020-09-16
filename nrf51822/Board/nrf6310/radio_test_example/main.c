@@ -32,22 +32,22 @@
 #include "uart.h"
 #include "nrf51_bitfields.h"
 
-static uint8_t mode_            = RADIO_MODE_MODE_Nrf_2Mbit;
-static uint8_t txpower_         = RADIO_TXPOWER_TXPOWER_0dBm;
-static uint8_t channel_start_   = 0;
-static uint8_t channel_end_     = 80;
-static uint8_t delayms_         = 10;
+static uint8_t mode_          = RADIO_MODE_MODE_Nrf_2Mbit;
+static uint8_t txpower_       = RADIO_TXPOWER_TXPOWER_0dBm;
+static uint8_t channel_start_ = 0;
+static uint8_t channel_end_   = 80;
+static uint8_t delayms_       = 10;
 
 static bool sweep = false;
 
 typedef enum
 {
-  RADIO_TEST_NOP,               /**< No test running.      */
-  RADIO_TEST_TXCC,              /**< TX constant carrier.  */
-  RADIO_TEST_TXMC,              /**< TX modulated carrier. */
-  RADIO_TEST_TXSWEEP,           /**< TX sweep.             */
-  RADIO_TEST_RXC,               /**< RX constant carrier.  */
-  RADIO_TEST_RXSWEEP,           /**< RX sweep.             */
+    RADIO_TEST_NOP,      /**< No test running.      */
+    RADIO_TEST_TXCC,     /**< TX constant carrier.  */
+    RADIO_TEST_TXMC,     /**< TX modulated carrier. */
+    RADIO_TEST_TXSWEEP,  /**< TX sweep.             */
+    RADIO_TEST_RXC,      /**< RX constant carrier.  */
+    RADIO_TEST_RXSWEEP,  /**< RX sweep.             */
 } radio_tests_t;
 
 
@@ -59,7 +59,7 @@ typedef enum
 */
 static void init(void)
 {
-    NRF_RNG->TASKS_START            = 1;
+    NRF_RNG->TASKS_START = 1;
     
     // Start 16 MHz crystal oscillator
     NRF_CLOCK->EVENTS_HFCLKSTARTED  = 0;
@@ -102,7 +102,7 @@ static uint8_t get_dec2(void)
     uint8_t c;
   
     buf[0] = buf[1] = 0;
-    while(i < 2)
+    while (i < 2)
     {
         c = uart_get();
         if ((i > 0) && (c == BS))
@@ -133,7 +133,7 @@ void get_datarate(void)
     uint8_t c;
 
     uart_putstring((const uint8_t *)"Enter data rate ('0'=250 Kbit/s, '1'=1 Mbit/s and '2'=2 Mbit/s):");
-    while(true)
+    while (true)
     {
         c = uart_get();
         if ((c >= '0') && (c <= '2'))
@@ -169,7 +169,7 @@ void get_power(void)
     uint8_t c;
 
     uart_putstring((const uint8_t *)"Enter output power ('0'=+4 dBm, '1'=0 dBm,...,'7'=-30 dBm):");
-    while(true)
+    while (true)
     {
         c = uart_get();
         if ((c >= '0') && (c <= '7'))
@@ -306,8 +306,8 @@ void print_parameters(void)
  */
 int main(void)
 { 
-    radio_tests_t test      = RADIO_TEST_NOP;
-    radio_tests_t cur_test  = RADIO_TEST_NOP;
+    radio_tests_t test     = RADIO_TEST_NOP;
+    radio_tests_t cur_test = RADIO_TEST_NOP;
 
     init();
     uart_config(TX_PIN_NUMBER, RX_PIN_NUMBER);
@@ -316,13 +316,13 @@ int main(void)
     NVIC_EnableIRQ(TIMER0_IRQn);
     __enable_irq();
     
-    while(true)
+    while (true)
     {
         __WFI();
-        switch(uart_get())
+        switch (uart_get())
         {
             case 'a':
-                while(true)
+                while (true)
                 {
                     uart_putstring((const uint8_t *)"Enter start channel \
                                    (two decimal digits, 00 to 80):");
@@ -335,7 +335,7 @@ int main(void)
                 break;
 
             case 'b':
-                while(true)
+                while (true)
                 {
                     uart_putstring((const uint8_t *)"Enter end channel \
                                    (two decimal digits, 00 to 80):");
@@ -349,126 +349,126 @@ int main(void)
                 test = cur_test;
                 break;
 
-        case 'c':
-            test = RADIO_TEST_TXCC;
-            break;
+            case 'c':
+                test = RADIO_TEST_TXCC;
+                break;
 
-        case 'd':
-            while(true)
-            {
-                uart_putstring((const uint8_t *)"Enter delay in ms \
-                               (two decimal digits, 01 to 99):");
-                delayms_ = get_dec2();
-                if ((delayms_ > 0) && (delayms_ < 100))   
+            case 'd':
+                while (true)
                 {
-                    break;
+                    uart_putstring((const uint8_t *)"Enter delay in ms \
+                                   (two decimal digits, 01 to 99):");
+                    delayms_ = get_dec2();
+                    if ((delayms_ > 0) && (delayms_ < 100))   
+                    {
+                        break;
+                    }
+                    uart_putstring((const uint8_t *)"Delay must be between 1 and 99\r\n");
                 }
-                uart_putstring((const uint8_t *)"Delay must be between 1 and 99\r\n");
-            }
-            test = cur_test;
-            break;
+                test = cur_test;
+                break;
 
-        case 'e':
-            radio_sweep_end();
-            cur_test = RADIO_TEST_NOP;
-            break;
+            case 'e':
+                radio_sweep_end();
+                cur_test = RADIO_TEST_NOP;
+                break;
 
-        case 'm':
-            get_datarate();
-            test = cur_test;
-            break;
+            case 'm':
+                get_datarate();
+                test = cur_test;
+                break;
 
-        case 'o':
-            test = RADIO_TEST_TXMC;
-            uart_putstring((const uint8_t *)"TX modulated carrier\r\n");
-            break;
+            case 'o':
+                test = RADIO_TEST_TXMC;
+                uart_putstring((const uint8_t *)"TX modulated carrier\r\n");
+                break;
 
-        case 'p':
-            get_power();
-            test = cur_test;
-            break;
+            case 'p':
+                get_power();
+                test = cur_test;
+                break;
 
-        case 'r':
-            test = RADIO_TEST_RXSWEEP;
-            uart_putstring((const uint8_t *)"RX Sweep\r\n");
-            break;
+            case 'r':
+                test = RADIO_TEST_RXSWEEP;
+                uart_putstring((const uint8_t *)"RX Sweep\r\n");
+                break;
 
-        case 's':
-            print_parameters();
-            break;
+            case 's':
+                print_parameters();
+                break;
 
-        case 't':
-            test = RADIO_TEST_TXSWEEP;
-            uart_putstring((const uint8_t *)"TX Sweep\r\n");
-            break;
+            case 't':
+                test = RADIO_TEST_TXSWEEP;
+                uart_putstring((const uint8_t *)"TX Sweep\r\n");
+                break;
 
-        case 'x':
-            test = RADIO_TEST_RXC;
-            uart_putstring((const uint8_t *)"RX constant carrier\r\n");
-            break;
+            case 'x':
+                test = RADIO_TEST_RXC;
+                uart_putstring((const uint8_t *)"RX constant carrier\r\n");
+                break;
 
-        case 'h':
-            // Fall through.
+            case 'h':
+                // Fall through.
         
-        default:
-            help();
-            break;
+            default:
+                help();
+                break;
         }
     
-        switch(test)
+        switch (test)
         {
-        case RADIO_TEST_TXCC:
-            if (sweep)
-            {
-                radio_sweep_end();
-                sweep = false;
-            }
-            radio_tx_carrier(txpower_, mode_, channel_start_);
-            cur_test = test;
-            test     = RADIO_TEST_NOP;
-            break;
+            case RADIO_TEST_TXCC:
+                if (sweep)
+                {
+                    radio_sweep_end();
+                    sweep = false;
+                }
+                radio_tx_carrier(txpower_, mode_, channel_start_);
+                cur_test = test;
+                test     = RADIO_TEST_NOP;
+                break;
 
-        case RADIO_TEST_TXMC:
-            if (sweep)
-            {
-                radio_sweep_end();
-                sweep = false;
-            }
-            radio_modulated_tx_carrier(txpower_, mode_, channel_start_);
-            cur_test = test;
-            test     = RADIO_TEST_NOP;
-            break;
+            case RADIO_TEST_TXMC:
+                if (sweep)
+                {
+                    radio_sweep_end();
+                    sweep = false;
+                }
+                radio_modulated_tx_carrier(txpower_, mode_, channel_start_);
+                cur_test = test;
+                test     = RADIO_TEST_NOP;
+                break;
 
-        case RADIO_TEST_TXSWEEP:
-            radio_tx_sweep_start(txpower_, mode_, channel_start_, channel_end_, delayms_);
-            sweep    = true;
-            cur_test = test;
-            test     = RADIO_TEST_NOP;
-            break;
+            case RADIO_TEST_TXSWEEP:
+                radio_tx_sweep_start(txpower_, mode_, channel_start_, channel_end_, delayms_);
+                sweep    = true;
+                cur_test = test;
+                test     = RADIO_TEST_NOP;
+                break;
 
-        case RADIO_TEST_RXC:
-            if (sweep)
-            {
-                radio_sweep_end();
-                sweep = false;
-            }
-            radio_rx_carrier(mode_, channel_start_);
-            cur_test = test;
-            test     = RADIO_TEST_NOP;
-            break;  
+            case RADIO_TEST_RXC:
+                if (sweep)
+                {
+                    radio_sweep_end();
+                    sweep = false;
+                }
+                radio_rx_carrier(mode_, channel_start_);
+                cur_test = test;
+                test     = RADIO_TEST_NOP;
+                break;  
 
-        case RADIO_TEST_RXSWEEP:
-            radio_rx_sweep_start(mode_, channel_start_, channel_end_, delayms_);
-            sweep    = true;
-            cur_test = test;
-            test     = RADIO_TEST_NOP;
-            break;
+            case RADIO_TEST_RXSWEEP:
+                radio_rx_sweep_start(mode_, channel_start_, channel_end_, delayms_);
+                sweep    = true;
+                cur_test = test;
+                test     = RADIO_TEST_NOP;
+                break;
 
-        case RADIO_TEST_NOP:
-            // Fall through.
-        default:
-            // No implementation needed.
-            break;
+            case RADIO_TEST_NOP:
+                // Fall through.
+            default:
+                // No implementation needed.
+                break;
         }
     }
 }

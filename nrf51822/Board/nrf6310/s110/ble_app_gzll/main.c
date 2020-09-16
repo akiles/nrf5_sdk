@@ -10,7 +10,7 @@
  *
  */
 
-/** @file
+/**@file
  *
  * @defgroup ble_sdk_app_gzll_main main.c
  * @{
@@ -36,9 +36,9 @@
 #include "ble_error_log.h"
 #include "app_timer.h"
 #include "app_gpiote.h"
+#include "app_util.h"
 #include "ble_app_gzll_common.h"
 #include "ble_debug_assert_handler.h"
-
 
 #define DEAD_BEEF  0xDEADBEEF   /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 

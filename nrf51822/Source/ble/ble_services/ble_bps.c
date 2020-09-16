@@ -23,16 +23,16 @@
 #include "app_util.h"
 
 
-#define OPCODE_LENGTH  1                                                    /**< Length of opcode inside Blood Pressure Measurement packet. */
-#define HANDLE_LENGTH  2                                                    /**< Length of handle inside Blood Pressure Measurement packet. */
-#define MAX_BPM_LEN    (BLE_L2CAP_MTU_DEF - OPCODE_LENGTH - HANDLE_LENGTH)  /**< Maximum size of a transmitted Blood Pressure Measurement. */
+#define OPCODE_LENGTH 1                                                   /**< Length of opcode inside Blood Pressure Measurement packet. */
+#define HANDLE_LENGTH 2                                                   /**< Length of handle inside Blood Pressure Measurement packet. */
+#define MAX_BPM_LEN   (BLE_L2CAP_MTU_DEF - OPCODE_LENGTH - HANDLE_LENGTH) /**< Maximum size of a transmitted Blood Pressure Measurement. */
 
 // Blood Pressure Measurement Flags bits
-#define BPS_MEAS_BLOOD_PRESSURE_UNITS_FLAG_BIT      (0x01 << 0)             /**< Blood Pressure Units Flag bit. */
-#define BPS_MEAS_TIME_STAMP_FLAG_BIT                (0x01 << 1)             /**< Time Stamp Flag bit. */
-#define BPS_MEAS_PULSE_RATE_FLAG_BIT                (0x01 << 2)             /**< Pulse Rate Flag bit. */
-#define BPS_MEAS_USER_ID_FLAG_BIT                   (0x01 << 3)             /**< User ID Flag bit. */
-#define BPS_MEAS_MEASUREMENT_STATUS_FLAG_BIT        (0x01 << 4)             /**< Measurement Status Flag bit. */
+#define BPS_MEAS_BLOOD_PRESSURE_UNITS_FLAG_BIT (0x01 << 0)  /**< Blood Pressure Units Flag bit. */
+#define BPS_MEAS_TIME_STAMP_FLAG_BIT           (0x01 << 1)  /**< Time Stamp Flag bit. */
+#define BPS_MEAS_PULSE_RATE_FLAG_BIT           (0x01 << 2)  /**< Pulse Rate Flag bit. */
+#define BPS_MEAS_USER_ID_FLAG_BIT              (0x01 << 3)  /**< User ID Flag bit. */
+#define BPS_MEAS_MEASUREMENT_STATUS_FLAG_BIT   (0x01 << 4)  /**< Measurement Status Flag bit. */
 
 
 /**@brief Function for handling the Connect event.
@@ -71,7 +71,7 @@ static void on_cccd_write(ble_bps_t * p_bps, ble_gatts_evt_write_t * p_evt_write
         if (p_bps->evt_handler != NULL)
         {
             ble_bps_evt_t evt;
-            
+
             if (ble_srv_is_indication_enabled(p_evt_write->data))
             {
                 evt.evt_type = BLE_BPS_EVT_INDICATION_ENABLED;
@@ -80,7 +80,7 @@ static void on_cccd_write(ble_bps_t * p_bps, ble_gatts_evt_write_t * p_evt_write
             {
                 evt.evt_type = BLE_BPS_EVT_INDICATION_DISABLED;
             }
-            
+
             p_bps->evt_handler(p_bps, &evt);
         }
     }
@@ -95,7 +95,7 @@ static void on_cccd_write(ble_bps_t * p_bps, ble_gatts_evt_write_t * p_evt_write
 static void on_write(ble_bps_t * p_bps, ble_evt_t * p_ble_evt)
 {
     ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
-    
+
     if (p_evt_write->handle == p_bps->meas_handles.cccd_handle)
     {
         on_cccd_write(p_bps, p_evt_write);
@@ -117,7 +117,7 @@ static void on_hvc(ble_bps_t * p_bps, ble_evt_t * p_ble_evt)
     if (p_hvc->handle == p_bps->meas_handles.value_handle)
     {
         ble_bps_evt_t evt;
-        
+
         evt.evt_type = BLE_BPS_EVT_INDICATION_CONFIRMED;
         p_bps->evt_handler(p_bps, &evt);
     }
@@ -131,15 +131,15 @@ void ble_bps_on_ble_evt(ble_bps_t * p_bps, ble_evt_t * p_ble_evt)
         case BLE_GAP_EVT_CONNECTED:
             on_connect(p_bps, p_ble_evt);
             break;
-            
+
         case BLE_GAP_EVT_DISCONNECTED:
             on_disconnect(p_bps, p_ble_evt);
             break;
-            
+
         case BLE_GATTS_EVT_WRITE:
             on_write(p_bps, p_ble_evt);
             break;
-            
+
         case BLE_GATTS_EVT_HVC:
             on_hvc(p_bps, p_ble_evt);
             break;
@@ -159,9 +159,9 @@ void ble_bps_on_ble_evt(ble_bps_t * p_bps, ble_evt_t * p_ble_evt)
  *
  * @return      Size of encoded data.
  */
-static uint8_t bps_measurement_encode(ble_bps_t *      p_bps,
+static uint8_t bps_measurement_encode(ble_bps_t      * p_bps,
                                       ble_bps_meas_t * p_bps_meas,
-                                      uint8_t *        p_encoded_buffer)
+                                      uint8_t        * p_encoded_buffer)
 {
     uint8_t  flags = 0;
     uint8_t  len   = 1;
@@ -172,34 +172,34 @@ static uint8_t bps_measurement_encode(ble_bps_t *      p_bps,
     {
         flags |= BPS_MEAS_BLOOD_PRESSURE_UNITS_FLAG_BIT;
     }
-    
-    // Blood Pressure Measurement - Systolic 
+
+    // Blood Pressure Measurement - Systolic
     encoded_sfloat = ((p_bps_meas->blood_pressure_systolic.exponent << 12) & 0xF000) |
                      ((p_bps_meas->blood_pressure_systolic.mantissa <<  0) & 0x0FFF);
     len += uint16_encode(encoded_sfloat, &p_encoded_buffer[len]);
-            
-    // Blood Pressure Measurement - Diastolic  
+
+    // Blood Pressure Measurement - Diastolic
     encoded_sfloat = ((p_bps_meas->blood_pressure_diastolic.exponent << 12) & 0xF000) |
                      ((p_bps_meas->blood_pressure_diastolic.mantissa <<  0) & 0x0FFF);
     len += uint16_encode(encoded_sfloat, &p_encoded_buffer[len]);
-            
-    // Blood Pressure Measurement - Mean Arterial Pressure  
+
+    // Blood Pressure Measurement - Mean Arterial Pressure
     encoded_sfloat = ((p_bps_meas->mean_arterial_pressure.exponent << 12) & 0xF000) |
                      ((p_bps_meas->mean_arterial_pressure.mantissa <<  0) & 0x0FFF);
     len += uint16_encode(encoded_sfloat, &p_encoded_buffer[len]);
-    
+
     // Time Stamp field
     if (p_bps_meas->time_stamp_present)
     {
         flags |= BPS_MEAS_TIME_STAMP_FLAG_BIT;
         len   += ble_date_time_encode(&p_bps_meas->time_stamp, &p_encoded_buffer[len]);
     }
-    
+
     // Pulse Rate
     if (p_bps_meas->pulse_rate_present)
     {
         flags |= BPS_MEAS_PULSE_RATE_FLAG_BIT;
-        
+
         encoded_sfloat = ((p_bps_meas->pulse_rate.exponent << 12) & 0xF000) |
                          ((p_bps_meas->pulse_rate.mantissa <<  0) & 0x0FFF);
         len += uint16_encode(encoded_sfloat, &p_encoded_buffer[len]);
@@ -208,10 +208,10 @@ static uint8_t bps_measurement_encode(ble_bps_t *      p_bps,
     // User ID
     if (p_bps_meas->user_id_present)
     {
-        flags                   |= BPS_MEAS_USER_ID_FLAG_BIT;
-        p_encoded_buffer[len++]  = p_bps_meas->user_id;
+        flags                  |= BPS_MEAS_USER_ID_FLAG_BIT;
+        p_encoded_buffer[len++] = p_bps_meas->user_id;
     }
-    
+
     // Measurement Status
     if (p_bps_meas->measurement_status_present)
     {

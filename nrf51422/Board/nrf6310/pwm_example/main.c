@@ -33,8 +33,8 @@
 
 #define PWM_OUTPUT_PIN_NUMBER (LED_0)  /**< Pin number for PWM output. */
 
-#define MAX_SAMPLE_LEVELS (256UL)     /**< Maximum number of sample levels. */
-#define TIMER_PRESCALERS 6U           /**< Prescaler setting for timer. */
+#define MAX_SAMPLE_LEVELS (256UL)  /**< Maximum number of sample levels. */
+#define TIMER_PRESCALERS  6U       /**< Prescaler setting for timer. */
 
 /** @brief Function for getting the next sample.
  *  @return sample_value computed sample.
@@ -92,8 +92,8 @@ void TIMER2_IRQHandler(void)
 static void timer2_init(void)
 {
     // Start 16 MHz crystal oscillator .
-    NRF_CLOCK->EVENTS_HFCLKSTARTED  = 0;
-    NRF_CLOCK->TASKS_HFCLKSTART     = 1;
+    NRF_CLOCK->EVENTS_HFCLKSTARTED = 0;
+    NRF_CLOCK->TASKS_HFCLKSTART    = 1;
 
     // Wait for the external oscillator to start up.
     while (NRF_CLOCK->EVENTS_HFCLKSTARTED == 0) 
@@ -101,9 +101,9 @@ static void timer2_init(void)
         //Do nothing.
     }
 
-    NRF_TIMER2->MODE        = TIMER_MODE_MODE_Timer;
-    NRF_TIMER2->BITMODE     = TIMER_BITMODE_BITMODE_16Bit << TIMER_BITMODE_BITMODE_Pos;
-    NRF_TIMER2->PRESCALER   = TIMER_PRESCALERS;
+    NRF_TIMER2->MODE      = TIMER_MODE_MODE_Timer;
+    NRF_TIMER2->BITMODE   = TIMER_BITMODE_BITMODE_16Bit << TIMER_BITMODE_BITMODE_Pos;
+    NRF_TIMER2->PRESCALER = TIMER_PRESCALERS;
 
     // Clears the timer, sets it to 0.
     NRF_TIMER2->TASKS_CLEAR = 1;

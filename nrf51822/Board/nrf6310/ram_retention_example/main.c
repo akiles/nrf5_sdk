@@ -28,22 +28,21 @@
 #include "nrf_gpio.h"
 
 
-
-#define RAM_MEMORY_TEST_ADDRESS     (0x20002000UL)        /**< Address in RAM where test word (RAM_MEMORY_TEST_WORD) is written before System OFF and checked after System RESET.*/
-#define RAM_MEMORY_TEST_WORD        (0xFEEDBEEFUL)        /**< Test word that is written to RAM address RAM_MEMORY_TEST_ADDRESS. */
-#define RESET_MEMORY_TEST_BYTE      (0x0DUL)              /**< Known sequence written to a special register to check if this wake up is from System OFF. */
-#define MAX_TEST_ITERATIONS         (1)                   /**< Maximum number of iterations this example will run. */
-#define SUCCESS_OUTPUT_VALUE        (0xAB)                /**< If RAM retention is tested for MAX_TEST_ITERATIONS, this value will be given as output.*/
-#define PIN_GPIO_WAKEUP             (BUTTON_STOP)         /**< GPIO pin configured to wake up system from System OFF on falling edge. It can be connected to a button which is high when not pressed. */
+#define RAM_MEMORY_TEST_ADDRESS (0x20002000UL)  /**< Address in RAM where test word (RAM_MEMORY_TEST_WORD) is written before System OFF and checked after System RESET.*/
+#define RAM_MEMORY_TEST_WORD    (0xFEEDBEEFUL)  /**< Test word that is written to RAM address RAM_MEMORY_TEST_ADDRESS. */
+#define RESET_MEMORY_TEST_BYTE  (0x0DUL)        /**< Known sequence written to a special register to check if this wake up is from System OFF. */
+#define MAX_TEST_ITERATIONS     (1)             /**< Maximum number of iterations this example will run. */
+#define SUCCESS_OUTPUT_VALUE    (0xAB)          /**< If RAM retention is tested for MAX_TEST_ITERATIONS, this value will be given as output.*/
+#define PIN_GPIO_WAKEUP         (BUTTON_STOP)   /**< GPIO pin configured to wake up system from System OFF on falling edge. It can be connected to a button which is high when not pressed. */
 
 /** @brief Function for handling HardFaults. In case something went wrong
  * or System OFF did not work and reached the end of the program.
  */
 void HardFault_Handler()
 {
-        nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT1, 0xFF);
+    nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT1, 0xFF);
 
-    while(true)
+    while (true)
     {
         nrf_gpio_pin_toggle(LED_0);
         nrf_delay_ms(100);
@@ -70,7 +69,7 @@ static void display_failure(void)
     nrf_gpio_port_write(NRF_GPIO_PORT_SELECT_PORT1, 0XFF);
 
     // Loop forever.
-    while(true)
+    while (true)
     {
         //Do nothing.
     }
@@ -83,7 +82,7 @@ static void display_failure(void)
 int main(void)
 {
     uint32_t * volatile p_ram_test = (uint32_t *)RAM_MEMORY_TEST_ADDRESS;
-    uint32_t loop_count = 0;
+    uint32_t            loop_count = 0;
   
     // GPIO Configuration.
     gpio_config();
@@ -106,17 +105,17 @@ int main(void)
         loop_count          = (uint8_t)(NRF_POWER->GPREGRET & 0xFUL);
         NRF_POWER->GPREGRET = 0;
 
-        if(loop_count >= (uint8_t)MAX_TEST_ITERATIONS)
+        if (loop_count >= (uint8_t)MAX_TEST_ITERATIONS)
         {
             // clear GPREGRET register before exit.
             NRF_POWER->GPREGRET = 0;
             nrf_gpio_port_write(NRF_GPIO_PORT_SELECT_PORT1, SUCCESS_OUTPUT_VALUE);
-            while(true)
+            while (true)
             {
                 // Do nothing.
             }
         }
-        if(*p_ram_test != RAM_MEMORY_TEST_WORD )
+        if (*p_ram_test != RAM_MEMORY_TEST_WORD)
         {
             display_failure();
         }
@@ -124,7 +123,7 @@ int main(void)
         {
             // @note This loop is just to display that we have verified RAM retention after waking
             // up from System OFF, not needed in real application.
-            for(uint32_t i = 8; i > 0; i--)
+            for (uint32_t i = 8; i > 0; i--)
             {
                 nrf_gpio_port_write(NRF_GPIO_PORT_SELECT_PORT1, (uint8_t)(0X01 << i));
                 nrf_delay_ms(50);
@@ -136,14 +135,14 @@ int main(void)
 
     // Write the known sequence + loop_count to the GPREGRET register.
     loop_count++;
-    NRF_POWER->GPREGRET = ( (RESET_MEMORY_TEST_BYTE << 4) | loop_count );
+    NRF_POWER->GPREGRET = ( (RESET_MEMORY_TEST_BYTE << 4) | loop_count);
 
     // Write the known value to the known address in RAM, enable RAM retention, set System OFF, and wait
     // for GPIO wakeup from external source.
     // The LED lights up to indicate that the system will go to System OFF with RAM retention enabled.
     // @note This loop is just to display that we are preparing for system OFF and is not needed in a real
     // application.
-    for(uint32_t i = 0; i < 8; i++)
+    for (uint32_t i = 0; i < 8; i++)
     {
         nrf_gpio_port_write(NRF_GPIO_PORT_SELECT_PORT1, (uint8_t)(0X01 << i));
         nrf_delay_ms(50);

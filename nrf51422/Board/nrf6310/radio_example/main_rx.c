@@ -54,7 +54,7 @@ int main(void)
 
     nrf_gpio_port_write(NRF_GPIO_PORT_SELECT_PORT1, 0x55);
 
-    while(true)
+    while (true)
     {
         // Set payload pointer.
         NRF_RADIO->PACKETPTR    = (uint32_t)packet;
@@ -70,7 +70,7 @@ int main(void)
         NRF_RADIO->TASKS_START = 1U; // Start listening and wait for address received event.
 
         // Wait for the end of the packet.
-        while(NRF_RADIO->EVENTS_END == 0U)
+        while (NRF_RADIO->EVENTS_END == 0U)
         {
             // Do nothing.
         }
@@ -84,7 +84,7 @@ int main(void)
         NRF_RADIO->EVENTS_DISABLED = 0U;    
         NRF_RADIO->TASKS_DISABLE   = 1U;  // Disable the radio.
 
-        while(NRF_RADIO->EVENTS_DISABLED == 0U)
+        while (NRF_RADIO->EVENTS_DISABLED == 0U)
         {
             // Do nothing.
         }

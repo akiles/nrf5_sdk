@@ -13,7 +13,7 @@
 #include "ble_sensorsim.h"
 
 
-void ble_sensorsim_init(ble_sensorsim_state_t *     p_state,
+void ble_sensorsim_init(ble_sensorsim_state_t     * p_state,
                         const ble_sensorsim_cfg_t * p_cfg)
 {
     if (p_cfg->start_at_max)
@@ -29,7 +29,7 @@ void ble_sensorsim_init(ble_sensorsim_state_t *     p_state,
 }
 
 
-uint32_t ble_sensorsim_measure(ble_sensorsim_state_t *     p_state,
+uint32_t ble_sensorsim_measure(ble_sensorsim_state_t     * p_state,
                                const ble_sensorsim_cfg_t * p_cfg)
 {
     if (p_state->is_increasing)
@@ -58,3 +58,4 @@ uint32_t ble_sensorsim_measure(ble_sensorsim_state_t *     p_state,
     }
     return p_state->current_val;
 }
+

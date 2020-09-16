@@ -11,14 +11,19 @@
  */
  
 #include "spi_slave.h"
-#include "app_util.h"
+#include <stdbool.h>
+#include <stdio.h>
 #include "nrf51.h"
 #include "nrf_gpio.h"
 #include "app_error.h"
-#include <stdbool.h>
-#include <stdio.h>
+#include "app_util_platform.h"
 
-#define SPI1_TWI1_IRQ_PRI APP_IRQ_PRIORITY_LOW      /**< Priority of the SPI slave device interrupt. */
+#define SPI1_TWI1_IRQ_PRI           APP_IRQ_PRIORITY_LOW      /**< Priority of the SPI slave device interrupt. */
+#define DEFAULT_CS_PULLUP_CONFIG    GPIO_PIN_CNF_PULL_Disabled
+#define DEFAULT_DRIVE_CONFIG        GPIO_PIN_CNF_DRIVE_S0S1
+
+static uint32_t m_cs_pullup_config = DEFAULT_CS_PULLUP_CONFIG;
+static uint32_t m_drive_config = GPIO_PIN_CNF_DRIVE_S0S1;
 
 /**@brief States of the SPI transaction state machine. */
 typedef enum
@@ -37,7 +42,6 @@ static volatile spi_state_t m_spi_state;            /**< SPI slave state. */
 
 static spi_slave_event_handler_t m_event_callback;  /**< SPI slave event callback function. */
 
-
 uint32_t spi_slave_evt_handler_register(spi_slave_event_handler_t event_handler)
 {
     m_event_callback = event_handler;
@@ -45,6 +49,18 @@ uint32_t spi_slave_evt_handler_register(spi_slave_event_handler_t event_handler)
     return (m_event_callback != NULL) ? NRF_SUCCESS : NRF_ERROR_NULL;
 }
 
+
+void spi_slave_set_cs_pull_up_config(uint32_t alternate_config)
+{
+    m_cs_pullup_config = alternate_config;
+    return;
+}
+
+void spi_slave_set_drive_config(uint32_t alternate_config)
+{
+    m_drive_config = alternate_config;
+    return;
+}
 
 uint32_t spi_slave_init(const spi_slave_config_t * p_spi_slave_config)
 {    
@@ -59,7 +75,7 @@ uint32_t spi_slave_init(const spi_slave_config_t * p_spi_slave_config)
     // Configure the SPI pins for input.
     NRF_GPIO->PIN_CNF[p_spi_slave_config->pin_miso] = 
         (GPIO_PIN_CNF_SENSE_Disabled << GPIO_PIN_CNF_SENSE_Pos) |
-        (GPIO_PIN_CNF_DRIVE_S0S1 << GPIO_PIN_CNF_DRIVE_Pos)     |
+        (m_drive_config << GPIO_PIN_CNF_DRIVE_Pos)              |
         (GPIO_PIN_CNF_PULL_Disabled << GPIO_PIN_CNF_PULL_Pos)   |
         (GPIO_PIN_CNF_INPUT_Connect << GPIO_PIN_CNF_INPUT_Pos)  |
         (GPIO_PIN_CNF_DIR_Input << GPIO_PIN_CNF_DIR_Pos);
@@ -67,7 +83,7 @@ uint32_t spi_slave_init(const spi_slave_config_t * p_spi_slave_config)
     NRF_GPIO->PIN_CNF[p_spi_slave_config->pin_csn] = 
         (GPIO_PIN_CNF_SENSE_Disabled << GPIO_PIN_CNF_SENSE_Pos) |
         (GPIO_PIN_CNF_DRIVE_S0S1 << GPIO_PIN_CNF_DRIVE_Pos)     |
-        (GPIO_PIN_CNF_PULL_Disabled << GPIO_PIN_CNF_PULL_Pos)   |
+        (m_cs_pullup_config << GPIO_PIN_CNF_PULL_Pos)           |
         (GPIO_PIN_CNF_INPUT_Connect << GPIO_PIN_CNF_INPUT_Pos)  |
         (GPIO_PIN_CNF_DIR_Input << GPIO_PIN_CNF_DIR_Pos);
 
@@ -190,7 +206,7 @@ static __INLINE void state_entry_action_execute(void)
         case SPI_XFER_COMPLETED:        
             event.evt_type  = SPI_SLAVE_XFER_DONE;
             event.rx_amount = NRF_SPIS1->AMOUNTRX;
-            event.tx_amount = NRF_SPIS1->AMOUNTTX;    
+            event.tx_amount = NRF_SPIS1->AMOUNTTX;
             
             APP_ERROR_CHECK_BOOL(m_event_callback != NULL);
             m_event_callback(event);

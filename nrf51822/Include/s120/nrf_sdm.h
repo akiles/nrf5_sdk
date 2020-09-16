@@ -62,6 +62,11 @@ enum NRF_CLOCK_LFCLKSRCS
   NRF_CLOCK_LFCLKSRC_RC_250_PPM_2000MS_CALIBRATION,       /**< LFCLK RC oscillator, 2000ms calibration interval.*/
   NRF_CLOCK_LFCLKSRC_RC_250_PPM_4000MS_CALIBRATION,       /**< LFCLK RC oscillator, 4000ms calibration interval.*/
   NRF_CLOCK_LFCLKSRC_RC_250_PPM_8000MS_CALIBRATION,       /**< LFCLK RC oscillator, 8000ms calibration interval.*/
+  NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_1000MS_CALIBRATION,  /**< LFCLK RC oscillator. Temperature checked every 1000ms, if changed above a threshold, a calibration is done.*/
+  NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_2000MS_CALIBRATION,  /**< LFCLK RC oscillator. Temperature checked every 2000ms, if changed above a threshold, a calibration is done.*/
+  NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_4000MS_CALIBRATION,  /**< LFCLK RC oscillator. Temperature checked every 4000ms, if changed above a threshold, a calibration is done.*/
+  NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_8000MS_CALIBRATION,  /**< LFCLK RC oscillator. Temperature checked every 8000ms, if changed above a threshold, a calibration is done.*/
+  NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_16000MS_CALIBRATION, /**< LFCLK RC oscillator. Temperature checked every 16000ms, if changed above a threshold, a calibration is done.*/
 };
 
 /** @} */
@@ -146,13 +151,23 @@ SVCALL(SD_SOFTDEVICE_IS_ENABLED, uint32_t, sd_softdevice_is_enabled(uint8_t * p_
 /**@brief Start forwarding interrupts to application.
  * 
  * This function is only intended to be called when a bootloader is enabled.
- * The bootloader should call this right before it starts the application. 
+ * This function will tell the SoftDevice to start forwarding interrupts to the address in the parameter.
+ *
+ * To get interrupts forwarded to itself, the bootloader must first call MBR with command SD_MBR_START_SD,
+ * and then call this function with it's own start address as parameter.
+ * 
+ * To get interrupts forwarded to the application the bootloader must first call MBR with command SD_MBR_START_SD,
+ * and then call this function with the applications start address.
+ *
  * It is recommended that all interrupt sources are off when this is called, 
  * or you could end up having interrupts in the application being executed before main() of the application.
  *
+ *       
+ * @param[in] address The address at which to start forwarding interrupts.
+ 
  * @retval ::NRF_SUCCESS
  */
-SVCALL(SD_SOFTDEVICE_FORWARD_TO_APPLICATION, uint32_t, sd_softdevice_forward_to_application(void)); 
+SVCALL(SD_SOFTDEVICE_FORWARD_TO_APPLICATION, uint32_t, sd_softdevice_forward_to_application(uint32_t address)); 
 
 /** @} */
 

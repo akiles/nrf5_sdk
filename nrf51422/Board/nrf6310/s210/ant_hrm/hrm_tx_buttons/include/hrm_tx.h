@@ -21,7 +21,7 @@ All rights reserved.
 #include <stdint.h>
 
 #define HRM_DEVICE_NUMBER      49u     /**< ANT device number. */
-#define HRM_TRANSMISSION_TYPE  5u      /**< ANT transmission type. */
+#define HRM_TRANSMISSION_TYPE  1u      /**< ANT transmission type. */
 #define HRMTX_ANT_CHANNEL      1u      /**< Default ANT Channel. */
 
 #define HRMTX_MFG_ID           2u      /**< Manufacturer ID. */

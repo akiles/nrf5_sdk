@@ -3295,7 +3295,8 @@
             </field>
           </fields>
         </register>
-                
+        
+        
       </registers>
     </peripheral>
 
@@ -8965,6 +8966,7 @@
           <description>RX data.</description>
           <addressOffset>0x518</addressOffset>
           <access>read-only</access>
+          <readAction>modifyExternal</readAction>
           <fields>
             <field>
               <name>RXD</name>
@@ -9679,6 +9681,7 @@
           <description>RX data register.</description>
           <addressOffset>0x518</addressOffset>
           <access>read-only</access>
+          <readAction>modifyExternal</readAction>
           <fields>
             <field>
               <name>RXD</name>
@@ -15746,7 +15749,7 @@
       <registers>
         <cluster>
           <dim>4</dim>
-          <dimIncrement>0x04</dimIncrement>
+          <dimIncrement>0x08</dimIncrement>
           <dimIndex>0-3</dimIndex>
           <name>TASKS_CHG[%s]</name>
           <description>Channel group tasks.</description>
@@ -17722,7 +17725,7 @@
 
         <cluster>
           <dim>16</dim>
-          <dimIncrement>0x04</dimIncrement>
+          <dimIncrement>0x08</dimIncrement>
           <dimIndex>0-15</dimIndex>
           <name>CH[%s]</name>
           <description>PPI Channel.</description>
@@ -18258,7 +18261,6 @@
           <addressOffset>0x014</addressOffset>
         </register>
         
-
         <register>
           <name>CLENR0</name>
           <description>Length of code region 0 in bytes.</description>

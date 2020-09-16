@@ -16,14 +16,14 @@
 #include "ble_db_discovery.h"
 #include "nrf_error.h"
 #include "ble.h"
-#include "debug.h"
+#include "app_trace.h"
 #include "nordic_common.h"
 #include <stdlib.h>
 #include <string.h>
 
 #define SRV_DISC_START_HANDLE         0x0001                        /**< Start handle value used during service discovery. */
 #define DB_DISCOVERY_MAX_USERS        BLE_DB_DISCOVERY_MAX_SRV      /**< Maximum number of users/registrations allowed by this module. */
-#define DB_LOG                        debug_log                     /**< Macro used for debug logging. */
+#define DB_LOG                        app_trace_log                 /**< Debug logger macro that will be used in this file to do logging of important information over UART. */
 
 /**@brief Array of structures containing information about the registered application modules. */
 static struct

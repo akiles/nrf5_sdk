@@ -14,7 +14,7 @@
  *
  * @defgroup ant_stack_handler_types Types definitions for ANT support in SoftDevice handler.
  * @{
- * @ingroup  app_common
+ * @ingroup  softdevice_handler
  * @brief    This file contains the declarations of types required for ANT stack support. These
  *           types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined.
  */

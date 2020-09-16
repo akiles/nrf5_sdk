@@ -18,6 +18,7 @@
 #include "app_error.h"
 #include "app_timer.h"
 #include "nordic_common.h"
+#include "app_util.h"
 
 #define BUFFER_INDEX_MESG_ID                1u                                           /**< Index for Message ID. */
 #define BUFFER_INDEX_MESG_DATA              3u                                           /**< Index for Data. */

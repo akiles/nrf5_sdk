@@ -14,7 +14,6 @@
 #include <stdlib.h>
 #include "hci_transport_config.h"
 #include "app_uart.h"
-#include "boards.h"
 #include "nrf51_bitfields.h"
 
 #define APP_SLIP_END        0xC0                            /**< SLIP code for identifying the beginning and end of a packet frame.. */

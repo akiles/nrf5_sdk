@@ -1,3 +1,143 @@
+nRF51 SDK v. 6.0.0
+------------------
+
+Following toolchains/devices have been used for testing and verification:
+    - ARM: MDK-ARM Version 5.10.x/5.11.x
+    - GCC: gcc-arm-embedded 4.7 2013q1
+    - IAR: Embedded Workbench for ARM 6.60
+    - Windows XP SP3 32 bit
+    - Windows 7 SP1 64 bit
+    - Windows 8.0/8.1
+
+Tested with devices:
+
+    - nRF51822 QFAAG0
+    - nRF51822 QFAAGC 
+    - nRF51822 QFAAFA 
+    - nRF51422 QFAAE0
+    
+    For others devices, use SDK 4.x.x
+
+Supported SoftDevices:
+
+    - S110 7.0.0
+    - S120 1.0.0
+    - S210 3.0.0
+    - S310 1.0.0
+
+Supported boards:
+
+    - PCA10000 v1.0 (Only for use with Master Emulator)
+    - PCA10000 v2.1.0 and 2.2.0
+    - PCA10001 v2.1.0 and 2.2.0
+    - PCA10004 v2.1.0 
+    - PCA10005 v2.1.0 and 2.2.0
+    - PCA10003 v3.0.0 
+  
+    
+Changes:
+
+    - Added partial support for Keil 5 uvprojx files.
+
+    ANT
+        - None
+        
+    ANT + BLE (Dual stack)
+    
+    BLE
+        - New module device manager replaces bond manager for storing persistent data
+        - Experimental device manager support for s120 (BLE central)
+        - S110 serialization solution has been reworked
+            - 100% s110 BLE APIs are now serialized
+        - S110 support for application concurrent multiprotocol radio access
+        - Pstorage module: Added API for doing range updates 
+        - Experimental: Device firmware upgrade now supports updating both softdevice and bootloader for s110
+        
+    Proprietary
+        - Enhanced ShockBurst: Added nrf_esb_reuse_pid() function to API, giving "reuse payload" functionality.
+        - Gazell: Added "suspend" mode enabling sharing of radio and PPI. 
+        - Gazell: HW resources are released when Gazell is being disabled or entering suspend mode.
+        - Gazell: HW resources are reconfigured when Gazell is being enabled or exiting from suspend mode.
+    
+Fixed issues:
+    
+    - NRFFOSDK-2542 - SoftDevice related documentation for S110, S120 and S310 BLE stack is not consistent. When looking up SoftDevice application interface or message sequence charts, it is possible that one is looking at incorrect interface. Recommendation hence is to look at SoftDevice headers to ensure correct appplication interface. This is also applicable for Serialization library references. This will be fixed in next release.
+        - SDK documentation has been splitted into 4 seperate documents with a common index page.
+    
+    ANT
+        - None
+
+    ANT + BLE (Dual stack)
+        - S310 Heart Rate Relay Example: Bonding does not always function as expected. If bonding is enabled using compiler flag it is recommended to perform service discovery before bonding to minimize chances of unexpected behaviour.    
+
+    BLE
+        
+    Proprietary
+        - Enhanced ShockBurst/Gazell: Received packets in Host/PRX mode with CRC error can no longer return ACK to device.
+        - NRFFOSDK-2470: app_timer - Fixed issue where starting and stopping the timer repeatedly caused errors in the module
+
+Known issues:
+    
+    - When flashing from Keil 4, a pop-up might appear stating "Cannot Load Flash Device Description !".
+          Solution:
+            - Write new flash algorithm settings to the uvopt file. 
+                Press ALT+F7 to open "Options for Target" dialog.
+                Select "Options for Target" -> "Utilities".
+                Press "Settings" button to see flashing algorithms.
+                Verify that "nRF51xxx" is in the list of flashing algorithms, if not add it by pressing the "Add" button.
+                Exit and save settings by pressing "OK". This is also important to do if you did find the "nRF51xxx" in the list of flashing algorithms.
+
+    - If you have an existing KEIL project target set to use device variant "nRF51", a pop-up might appear stating that you have to "update your device selection".
+        Solution:
+            Press ALT+F7 to open "Options for Target" dialog.
+            Select "Options for Target" -> "Device".
+            Choose "Nordic nRF51 Series Devices" from the Database list.
+            Select the variant of the nRF51 chip that is used for the KEIL project target.
+    - When using J-Link software prior to version 4.66, a warning might appear when entering "Options for Target" -> "Debug" -> "Settings". The warning indicates that the device is unknown to the specific version of the J-Link software.
+        Solution: Upgrade J-Link software to version 4.66 or later.
+    - Segger J-Link software has some issues with Keil. See http://www.segger.com/IDE_Integration_Keil.html#knownproblems for more details.
+    - On some Windows XP machines, J-Link CDC installer fails producing an error message saying it could not find JLinkCDCDriver_x86.msi.
+        Solution: Try running the installer C:\Program Files\SEGGER\JLinkARM_V<version>\USBDriver\JLinkCDCInstaller_V1.2b.exe manually.
+    - NRFFOETT-205 - The nRF51822 installer will not run if no C:\ drive exists
+    - NRFFOSDK-236 - When the bundled J-Link OB CDC driver installation dialog appears, the error message "Failed to install driver (Timeout occurred)" might appear . Ignore it. 
+    - NRFFOSDK-362 - Reset button won't work after programming without cycling the target power.
+    - NRFFOSDK-363 - Flashing software using SEGGER is NOT possible when the device is in SYSTEM_OFF mode 
+        Solution: Wake-up the current application from SYSTEM_OFF before flashing a new application.
+    - The DFU over BLE example has been tested to work with a minimum connection interval of 11.25 ms. 
+      This application will not be able to handle connection intervals lower than 11.25 ms and may undergo a system reset in the middle of a firmware update. 
+      Workaround: If you face unexpected disconnects during firmware update process, consider increasing the connection interval used by the master.
+
+    ANT
+        - NRFFOSDK-366 - ANT-FS host: download sometimes fails when downloading a large file. 
+        - NRFFOSDK-755 - HRM TX buttons example may report wrong total elapsed time. 
+
+    BLE
+        - NRFFOSDK-119 - Only the "....\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\Nordic\nrf51822\Board\pca10001\ble\ble_app_proximity\ ", and "....\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
+        - S120 Examples: Flash clear operation may fail when connected. Impact of this in the S120 examples is that if peer loses the bond and a re-bonding occurs, flash clear fails, and DM_EVT_DEVICE_CONTEXT_STORED event is notified with a failure.
+        - Device manager has a few APIs unimplemented. Also documentation providing examples of how API can be used is missing.
+        - NRFFOSDK-2824: Device manager (pstorage) doesn't support update of bond split across two pages.
+        
+    Proprietary:
+        - NRFFOSDK-1769: Not all examples have makefiles, nor have they been tested with the new toolchain. Expect minor compilation issues.
+        - Using Keil versions 4.53 and older will not work unless you change configuration in jlinksettings.ini. See User Guide for more details.
+        - Temperature example does not give sane output values. This is hardware related issue described in PAN_028 and will be fixed in future silicon.
+        - The nRF24Lxx ESB examples found in the legacy nRFready SDKs do not work out of the box with the nRF51 ESB examples. This is due to:
+            - The legacy examples do not use "payload in ACK".
+            - The legacy examples use RF channel 2 (not 10 as the nRF51 examples).
+            - The examples do not use dynamic payload length.
+            The legacy examples need to add the following in order to work with the nRF51 examples:
+                hal_nrf_setup_dynamic_payload(0xFF);
+                hal_nrf_enable_dynamic_payload(true);
+                hal_nrf_enable_ack_payload(true);
+                hal_nrf_set_rf_channel(10);
+            In addition, the legacy PTX example must add code for handling the payloads received in ACK.  
+            
+        - The Gazell Link Layer examples are not fully "out of the box" compatible with the legacy Gazell examples provided in the nRFgo SDK for nRF24Lxx devices. The timeslot periods and channel tables require adjustment.
+        - Timeslot period: Edit gzll_params.h file used in the nRF24Lxx projects, or use the nrf_gzll_set_timeslot_period() function in the nRF51 projects (nRF51 Gazell timeslot period = 0.5*GZLL_RX_PERIOD).
+        - Channel table: Edit gzll_params.h file used in the nRF24Lxx projects, or use the nrf_gzll_set_channel_table() function in the nRF51 projects.
+        - Gazell does not support "Low Power Host mode" (Host mode 1).
+
+
 nRF51 SDK v. 5.2.0
 ------------------
 

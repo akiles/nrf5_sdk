@@ -118,11 +118,11 @@ typedef struct
 typedef struct
 {
   uint8_t    write_op;                 /**< Write Operation to be performed, see @ref BLE_GATT_WRITE_OPS. */
+  uint8_t    flags;                    /**< Flags, see @ref BLE_GATT_EXEC_WRITE_FLAGS. */
   uint16_t   handle;                   /**< Handle to the attribute to be written. */
   uint16_t   offset;                   /**< Offset in bytes. @note For WRITE_CMD and WRITE_REQ, offset must be 0. */
   uint16_t   len;                      /**< Length of data in bytes. */
   uint8_t   *p_value;                  /**< Pointer to the value data. */
-  uint8_t    flags;                    /**< Flags, see @ref BLE_GATT_EXEC_WRITE_FLAGS. */
 } ble_gattc_write_params_t;
 
 /**@brief Event structure for BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP. */
@@ -250,6 +250,7 @@ typedef struct
  *
  * @retval ::NRF_SUCCESS Successfully started or resumed the Primary Service Discovery procedure.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
+ * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection State.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied.
  * @retval ::NRF_ERROR_BUSY Client procedure already in progress.
  */
@@ -266,6 +267,7 @@ SVCALL(SD_BLE_GATTC_PRIMARY_SERVICES_DISCOVER, uint32_t, sd_ble_gattc_primary_se
  *
  * @retval ::NRF_SUCCESS Successfully started or resumed the Relationship Discovery procedure.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
+ * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection State.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied.
  * @retval ::NRF_ERROR_BUSY Client procedure already in progress.
@@ -286,6 +288,7 @@ SVCALL(SD_BLE_GATTC_RELATIONSHIPS_DISCOVER, uint32_t, sd_ble_gattc_relationships
  *
  * @retval ::NRF_SUCCESS Successfully started or resumed the Characteristic Discovery procedure.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
+ * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection State.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
  * @retval ::NRF_ERROR_BUSY Client procedure already in progress.
  */
@@ -302,6 +305,7 @@ SVCALL(SD_BLE_GATTC_CHARACTERISTICS_DISCOVER, uint32_t, sd_ble_gattc_characteris
  *
  * @retval ::NRF_SUCCESS Successfully started or resumed the Descriptor Discovery procedure.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
+ * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection State.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
  * @retval ::NRF_ERROR_BUSY Client procedure already in progress.
  */
@@ -319,6 +323,7 @@ SVCALL(SD_BLE_GATTC_DESCRIPTORS_DISCOVER, uint32_t, sd_ble_gattc_descriptors_dis
  *
  * @retval ::NRF_SUCCESS Successfully started or resumed the Read using Characteristic UUID procedure.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
+ * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection State.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
  * @retval ::NRF_ERROR_BUSY Client procedure already in progress.
  */
@@ -337,6 +342,7 @@ SVCALL(SD_BLE_GATTC_CHAR_VALUE_BY_UUID_READ, uint32_t, sd_ble_gattc_char_value_b
  *
  * @retval ::NRF_SUCCESS Successfully started or resumed the Read (Long) procedure.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
+ * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection State.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
  * @retval ::NRF_ERROR_BUSY Client procedure already in progress.
  */
@@ -353,6 +359,7 @@ SVCALL(SD_BLE_GATTC_READ, uint32_t, sd_ble_gattc_read(uint16_t conn_handle, uint
  *
  * @retval ::NRF_SUCCESS Successfully started the Read Multiple Characteristic Values procedure.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
+ * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection State.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
  * @retval ::NRF_ERROR_BUSY Client procedure already in progress.
  */
@@ -373,6 +380,7 @@ SVCALL(SD_BLE_GATTC_CHAR_VALUES_READ, uint32_t, sd_ble_gattc_char_values_read(ui
  *
  * @retval ::NRF_SUCCESS Successfully started the Write procedure.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
+ * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection State.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied.
  * @retval ::NRF_ERROR_DATA_SIZE Invalid data size(s) supplied.
@@ -389,7 +397,7 @@ SVCALL(SD_BLE_GATTC_WRITE, uint32_t, sd_ble_gattc_write(uint16_t conn_handle, bl
  *
  * @retval ::NRF_SUCCESS Successfully queued the Handle Value Confirmation for transmission.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
- * @retval ::NRF_ERROR_INVALID_STATE No Indication pending to be confirmed.
+ * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection State or no Indication pending to be confirmed.
  * @retval ::BLE_ERROR_INVALID_ATTR_HANDLE Invalid attribute handle.
  */
 SVCALL(SD_BLE_GATTC_HV_CONFIRM, uint32_t, sd_ble_gattc_hv_confirm(uint16_t conn_handle, uint16_t handle));

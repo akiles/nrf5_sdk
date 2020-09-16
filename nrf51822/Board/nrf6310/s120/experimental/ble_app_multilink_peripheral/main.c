@@ -26,46 +26,50 @@
 #include "pstorage.h"
 #include "device_manager.h"
 
-#define SEND_NOTIFICATION_BUTTON_PIN         (BUTTON_0)                                  /**< Send notification button. */
-#define BOND_DELETE_ALL_BUTTON_ID            (BUTTON_1)                                  /**< Delete bonds on start button. */
+#define IS_SRVC_CHANGED_CHARACT_PRESENT     0                                         /**< Include or not the service_changed characteristic. If not enabled, the server's database cannot be changed for the lifetime of the device. */
 
-#define DEVICE_NAME                          "Multilink"                                 /**< Name of device. Will be included in the advertising data. */
+#define SEND_NOTIFICATION_BUTTON_PIN       (BUTTON_0)                                 /**< Send notification button. */
+#define BOND_DELETE_ALL_BUTTON_ID          (BUTTON_1)                                 /**< Delete bonds on start button. */
 
-#define APP_TIMER_PRESCALER                  0                                           /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS                 1                                           /**< Maximum number of simultaneously created timers. */
-#define APP_TIMER_OP_QUEUE_SIZE              4                                           /**< Size of timer operation queues. */
+#define DEVICE_NAME                        "Multilink"                                /**< Name of device. Will be included in the advertising data. */
 
-#define APP_GPIOTE_MAX_USERS                 1                                           /**< Maximum number of users of the GPIOTE handler. */
+#define APP_TIMER_PRESCALER                0                                          /**< Value of the RTC1 PRESCALER register. */
+#define APP_TIMER_MAX_TIMERS               1                                          /**< Maximum number of simultaneously created timers. */
+#define APP_TIMER_OP_QUEUE_SIZE            4                                          /**< Size of timer operation queues. */
 
-#define BUTTON_DETECTION_DELAY               APP_TIMER_TICKS(50, APP_TIMER_PRESCALER)    /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
+#define APP_GPIOTE_MAX_USERS               1                                          /**< Maximum number of users of the GPIOTE handler. */
 
-#define APP_ADV_INTERVAL                     MSEC_TO_UNITS(50, UNIT_0_625_MS)            /**< The advertising interval (in units of 0.625 ms. This value corresponds to 40 ms). */
-#define APP_ADV_TIMEOUT_IN_SECONDS           180                                         /**< The advertising timeout (in units of seconds). */
+#define BUTTON_DETECTION_DELAY             APP_TIMER_TICKS(50, APP_TIMER_PRESCALER)   /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
 
-#define MIN_CONN_INTERVAL                    MSEC_TO_UNITS(500, UNIT_1_25_MS)            /**< Minimum acceptable connection interval (0.5 seconds). */
-#define MAX_CONN_INTERVAL                    MSEC_TO_UNITS(1000, UNIT_1_25_MS)           /**< Maximum acceptable connection interval (1 second). */
-#define SLAVE_LATENCY                        0                                           /**< Slave latency. */
-#define CONN_SUP_TIMEOUT                     MSEC_TO_UNITS(4000, UNIT_10_MS)             /**< Connection supervisory timeout (4 seconds). */
+#define APP_ADV_INTERVAL                   MSEC_TO_UNITS(50, UNIT_0_625_MS)           /**< The advertising interval (in units of 0.625 ms. This value corresponds to 40 ms). */
+#define APP_ADV_TIMEOUT_IN_SECONDS         180                                        /**< The advertising timeout (in units of seconds). */
 
-#define MULTILINK_PERIPHERAL_BASE_UUID       {0xB3, 0x58, 0x55, 0x40, 0x50, 0x60, 0x11, \
-                                              0xe3, 0x8f, 0x96, 0x08, 0x00, 0x00, 0x00, \
-                                              0x9a, 0x66}                                /**< 128bit UUID base used for example. */
-#define MULTILINK_PERIPHERAL_SERVICE_UUID    0x9001                                      /**< Serrvice UUID over the 128-bit base used for the example. */
-#define MULTILINK_PERIPHERAL_CHAR_UUID       0x900A                                      /**< Characteristic UUID over the 128-bit base used for the example. */
+#define MIN_CONN_INTERVAL                  MSEC_TO_UNITS(500, UNIT_1_25_MS)           /**< Minimum acceptable connection interval (0.5 seconds). */
+#define MAX_CONN_INTERVAL                  MSEC_TO_UNITS(1000, UNIT_1_25_MS)          /**< Maximum acceptable connection interval (1 second). */
+#define SLAVE_LATENCY                      0                                          /**< Slave latency. */
+#define CONN_SUP_TIMEOUT                   MSEC_TO_UNITS(4000, UNIT_10_MS)            /**< Connection supervisory timeout (4 seconds). */
 
-#define SEC_PARAM_TIMEOUT                    30                                          /**< Timeout for Pairing Request or Security Request (in seconds). */
-#define SEC_PARAM_BOND                       1                                           /**< Perform bonding. */
-#define SEC_PARAM_MITM                       0                                           /**< Man In The Middle protection not required. */
-#define SEC_PARAM_IO_CAPABILITIES            BLE_GAP_IO_CAPS_NONE                        /**< No I/O capabilities. */
-#define SEC_PARAM_OOB                        0                                           /**< Out Of Band data not available. */
-#define SEC_PARAM_MIN_KEY_SIZE               7                                           /**< Minimum encryption key size. */
-#define SEC_PARAM_MAX_KEY_SIZE               16
+#define MULTILINK_PERIPHERAL_BASE_UUID     {0xB3, 0x58, 0x55, 0x40, 0x50, 0x60, 0x11, \
+                                           0xe3, 0x8f, 0x96, 0x08, 0x00, 0x00, 0x00,  \
+                                           0x9a, 0x66}                                /**< 128bit UUID base used for example. */
+#define MULTILINK_PERIPHERAL_SERVICE_UUID  0x9001                                     /**< Serrvice UUID over the 128-bit base used for the example. */
+#define MULTILINK_PERIPHERAL_CHAR_UUID     0x900A                                     /**< Characteristic UUID over the 128-bit base used for the example. */
+
+#define SEC_PARAM_TIMEOUT                  30                                         /**< Timeout for Pairing Request or Security Request (in seconds). */
+#define SEC_PARAM_BOND                     1                                          /**< Perform bonding. */
+#define SEC_PARAM_MITM                     0                                          /**< Man In The Middle protection not required. */
+#define SEC_PARAM_IO_CAPABILITIES          BLE_GAP_IO_CAPS_NONE                       /**< No I/O capabilities. */
+#define SEC_PARAM_OOB                      0                                          /**< Out Of Band data not available. */
+#define SEC_PARAM_MIN_KEY_SIZE             7                                          /**< Minimum encryption key size. */
+#define SEC_PARAM_MAX_KEY_SIZE             16
 
 
-static uint16_t                    m_conn_handle = BLE_CONN_HANDLE_INVALID;              /**< Connection handle. */
-static ble_gatts_char_handles_t    m_char_handles;                                       /**< GATT characteristic definition handles. */
-static uint8_t                     m_base_uuid_type;                                     /**< UUID type. */
-static dm_application_instance_t   m_app_handle;                                         /**< Application instance allocated by device manager to the application. */
+static uint16_t                  m_conn_handle = BLE_CONN_HANDLE_INVALID;             /**< Connection handle. */
+static ble_gatts_char_handles_t  m_char_handles;                                      /**< GATT characteristic definition handles. */
+static uint8_t                   m_base_uuid_type;                                    /**< UUID type. */
+static dm_application_instance_t m_app_handle;                                        /**< Application instance allocated by device manager to the application. */
+
+static bool                      m_memory_access_in_progress = false;                 /**< Flag to keep track of ongoing operations on persistent memory. */
 
 
 /**@brief Function for error handling, which is called when an error has occurred.
@@ -196,6 +200,18 @@ static void advertising_start(void)
 {
     uint32_t             err_code;
     ble_gap_adv_params_t adv_params;
+    uint32_t             count;
+
+    // Verify if there is any flash access pending, if yes delay starting advertising until
+    // it's complete.
+    err_code = pstorage_access_status_get(&count);
+    APP_ERROR_CHECK(err_code);
+
+    if (count != 0)
+    {
+        m_memory_access_in_progress = true;
+        return;
+    }
 
     // Start advertising
     memset(&adv_params, 0, sizeof(adv_params));
@@ -244,7 +260,7 @@ static void services_init(void)
 
     uuid.uuid = MULTILINK_PERIPHERAL_CHAR_UUID;
 
-    memset(&attr,0,sizeof(ble_gatts_attr_t));
+    memset(&attr, 0, sizeof(ble_gatts_attr_t));
     attr.p_uuid    = &uuid;
     attr.p_attr_md = &attr_md;
     attr.max_len   = 1;
@@ -262,7 +278,7 @@ static void services_init(void)
     BLE_GAP_CONN_SEC_MODE_SET_ENC_NO_MITM(&cccd_md.write_perm);
     cccd_md.vloc = BLE_GATTS_VLOC_STACK;
 
-    memset(&char_md, 0,sizeof(ble_gatts_char_md_t));
+    memset(&char_md, 0, sizeof(ble_gatts_char_md_t));
     char_md.p_cccd_md               = &cccd_md;
     char_md.char_props.notify       = 1;
     char_md.char_props.indicate     = 1;
@@ -324,6 +340,29 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 }
 
 
+/**@brief Function for handling the Application's system events.
+ *
+ * @param[in]   sys_evt   system event.
+ */
+static void on_sys_evt(uint32_t sys_evt)
+{
+    switch (sys_evt)
+    {
+        case NRF_EVT_FLASH_OPERATION_SUCCESS:
+        case NRF_EVT_FLASH_OPERATION_ERROR:
+            if (m_memory_access_in_progress)
+            {
+                m_memory_access_in_progress = false;
+                advertising_start();
+            }
+            break;
+        default:
+            // No implementation needed.
+            break;
+    }
+}
+
+
 /**@brief Function for dispatching a BLE stack event to all modules with a BLE stack event handler.
  *
  * @details This function is called from the scheduler in the main loop after a BLE stack
@@ -348,6 +387,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 static void sys_evt_dispatch(uint32_t sys_evt)
 {
     pstorage_sys_event_handler(sys_evt);
+    on_sys_evt(sys_evt);
 }
 
 
@@ -361,6 +401,15 @@ static void ble_stack_init(void)
 
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+
+#ifdef S110
+    // Enable BLE stack. 
+    ble_enable_params_t ble_enable_params;
+    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
+    ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
+    err_code = sd_ble_enable(&ble_enable_params);
+    APP_ERROR_CHECK(err_code);
+#endif
 
     // Register with the SoftDevice handler module for BLE events.
     err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
@@ -378,6 +427,8 @@ static void ble_stack_init(void)
  */
 static void button_event_handler(uint8_t pin_no, uint8_t button_action)
 {
+    uint32_t err_code;
+
     switch (pin_no)
     {
         case SEND_NOTIFICATION_BUTTON_PIN:
@@ -386,7 +437,7 @@ static void button_event_handler(uint8_t pin_no, uint8_t button_action)
                 static uint8_t value = 0;
 
                 ble_gatts_hvx_params_t hvx_params;
-                uint16_t len = sizeof(uint8_t);
+                uint16_t               len = sizeof(uint8_t);
 
                 value = (value == 0) ? 1 : 0;
 
@@ -398,7 +449,8 @@ static void button_event_handler(uint8_t pin_no, uint8_t button_action)
                 hvx_params.p_len  = &len;
                 hvx_params.p_data = &value;
 
-                (void)sd_ble_gatts_hvx(m_conn_handle, &hvx_params);
+                err_code = sd_ble_gatts_hvx(m_conn_handle, &hvx_params);
+                APP_ERROR_CHECK(err_code);
 
                 if (value == 0)
                 {
@@ -450,9 +502,9 @@ static void buttons_init(void)
  *
  * @param[in]   p_evt   Data associated to the bond manager event.
  */
-static uint32_t device_manager_evt_handler(dm_handle_t const    * p_handle,
-                                           dm_event_t const     * p_event,
-                                           api_result_t           event_result)
+static uint32_t device_manager_evt_handler(dm_handle_t const * p_handle,
+                                           dm_event_t const  * p_event,
+                                           api_result_t        event_result)
 {
     switch(p_event->event_id)
     {
@@ -463,7 +515,7 @@ static uint32_t device_manager_evt_handler(dm_handle_t const    * p_handle,
             break;
 
         case DM_EVT_DISCONNECTION:
-            m_conn_handle    = BLE_CONN_HANDLE_INVALID;
+            m_conn_handle = BLE_CONN_HANDLE_INVALID;
             nrf_gpio_pin_clear(LED_1);
             advertising_start();
             break;
@@ -477,9 +529,9 @@ static uint32_t device_manager_evt_handler(dm_handle_t const    * p_handle,
  */
 static void device_manager_init(void)
 {
-    uint32_t                err_code;
-    dm_init_param_t         init_data;
-    dm_application_param_t  register_param;
+    uint32_t               err_code;
+    dm_init_param_t        init_data;
+    dm_application_param_t register_param;
 
     // Initialize persistent storage module.
     err_code = pstorage_init();

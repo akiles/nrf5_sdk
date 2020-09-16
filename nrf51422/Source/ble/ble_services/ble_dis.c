@@ -26,8 +26,8 @@
 #include "app_util.h"
 
 
-#define BLE_DIS_SYS_ID_LEN 8                    /**< Length of System ID Characteristic Value. */
-#define BLE_DIS_PNP_ID_LEN 7                    /**< Length of Pnp ID Characteristic Value. */
+#define BLE_DIS_SYS_ID_LEN 8  /**< Length of System ID Characteristic Value. */
+#define BLE_DIS_PNP_ID_LEN 7  /**< Length of Pnp ID Characteristic Value. */
 
 static uint16_t                 service_handle;
 static ble_gatts_char_handles_t manufact_name_handles;
@@ -71,16 +71,16 @@ static void sys_id_encode(uint8_t * p_encoded_buffer, const ble_dis_sys_id_t * p
 static void pnp_id_encode(uint8_t * p_encoded_buffer, const ble_dis_pnp_id_t * p_pnp_id)
 {
     uint8_t len = 0;
-    
+
     APP_ERROR_CHECK_BOOL(p_pnp_id != NULL);
     APP_ERROR_CHECK_BOOL(p_encoded_buffer != NULL);
 
     p_encoded_buffer[len++] = p_pnp_id->vendor_id_source;
-    
+
     len += uint16_encode(p_pnp_id->vendor_id, &p_encoded_buffer[len]);
     len += uint16_encode(p_pnp_id->product_id, &p_encoded_buffer[len]);
     len += uint16_encode(p_pnp_id->product_version, &p_encoded_buffer[len]);
-    
+
     APP_ERROR_CHECK_BOOL(len == BLE_DIS_PNP_ID_LEN);
 }
 
@@ -96,10 +96,10 @@ static void pnp_id_encode(uint8_t * p_encoded_buffer, const ble_dis_pnp_id_t * p
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
 static uint32_t char_add(uint16_t                        uuid,
-                         uint8_t *                       p_char_value,
+                         uint8_t                       * p_char_value,
                          uint16_t                        char_len,
                          const ble_srv_security_mode_t * dis_attr_md,
-                         ble_gatts_char_handles_t *      p_handles)
+                         ble_gatts_char_handles_t      * p_handles)
 {
     ble_uuid_t          ble_uuid;
     ble_gatts_char_md_t char_md;
@@ -108,7 +108,7 @@ static uint32_t char_add(uint16_t                        uuid,
 
     APP_ERROR_CHECK_BOOL(p_char_value != NULL);
     APP_ERROR_CHECK_BOOL(char_len > 0);
-    
+
     // The ble_gatts_char_md_t structure uses bit fields. So we reset the memory to zero.
     memset(&char_md, 0, sizeof(char_md));
 
@@ -120,7 +120,7 @@ static uint32_t char_add(uint16_t                        uuid,
     char_md.p_sccd_md        = NULL;
 
     BLE_UUID_BLE_ASSIGN(ble_uuid, uuid);
-    
+
     memset(&attr_md, 0, sizeof(attr_md));
 
     attr_md.read_perm  = dis_attr_md->read_perm;
@@ -129,15 +129,15 @@ static uint32_t char_add(uint16_t                        uuid,
     attr_md.rd_auth    = 0;
     attr_md.wr_auth    = 0;
     attr_md.vlen       = 0;
-    
+
     memset(&attr_char_value, 0, sizeof(attr_char_value));
 
-    attr_char_value.p_uuid       = &ble_uuid;
-    attr_char_value.p_attr_md    = &attr_md;
-    attr_char_value.init_len     = char_len;
-    attr_char_value.init_offs    = 0;
-    attr_char_value.max_len      = char_len;
-    attr_char_value.p_value      = p_char_value;
+    attr_char_value.p_uuid    = &ble_uuid;
+    attr_char_value.p_attr_md = &attr_md;
+    attr_char_value.init_len  = char_len;
+    attr_char_value.init_offs = 0;
+    attr_char_value.max_len   = char_len;
+    attr_char_value.p_value   = p_char_value;
 
     return sd_ble_gatts_characteristic_add(service_handle, &char_md, &attr_char_value, p_handles);
 }
@@ -161,7 +161,7 @@ uint32_t ble_dis_init(const ble_dis_init_t * p_dis_init)
     if (p_dis_init->manufact_name_str.length > 0)
     {
         err_code = char_add(BLE_UUID_MANUFACTURER_NAME_STRING_CHAR,
-                            p_dis_init->manufact_name_str.p_str, 
+                            p_dis_init->manufact_name_str.p_str,
                             p_dis_init->manufact_name_str.length,
                             &p_dis_init->dis_attr_md,
                             &manufact_name_handles);
@@ -173,7 +173,7 @@ uint32_t ble_dis_init(const ble_dis_init_t * p_dis_init)
     if (p_dis_init->model_num_str.length > 0)
     {
         err_code = char_add(BLE_UUID_MODEL_NUMBER_STRING_CHAR,
-                            p_dis_init->model_num_str.p_str, 
+                            p_dis_init->model_num_str.p_str,
                             p_dis_init->model_num_str.length,
                             &p_dis_init->dis_attr_md,
                             &model_num_handles);
@@ -185,7 +185,7 @@ uint32_t ble_dis_init(const ble_dis_init_t * p_dis_init)
     if (p_dis_init->serial_num_str.length > 0)
     {
         err_code = char_add(BLE_UUID_SERIAL_NUMBER_STRING_CHAR,
-                            p_dis_init->serial_num_str.p_str, 
+                            p_dis_init->serial_num_str.p_str,
                             p_dis_init->serial_num_str.length,
                             &p_dis_init->dis_attr_md,
                             &serial_num_handles);
@@ -197,8 +197,8 @@ uint32_t ble_dis_init(const ble_dis_init_t * p_dis_init)
     if (p_dis_init->hw_rev_str.length > 0)
     {
         err_code = char_add(BLE_UUID_HARDWARE_REVISION_STRING_CHAR,
-                            p_dis_init->hw_rev_str.p_str, 
-                            p_dis_init->hw_rev_str.length, 
+                            p_dis_init->hw_rev_str.p_str,
+                            p_dis_init->hw_rev_str.length,
                             &p_dis_init->dis_attr_md,
                             &hw_rev_handles);
         if (err_code != NRF_SUCCESS)
@@ -209,8 +209,8 @@ uint32_t ble_dis_init(const ble_dis_init_t * p_dis_init)
     if (p_dis_init->fw_rev_str.length > 0)
     {
         err_code = char_add(BLE_UUID_FIRMWARE_REVISION_STRING_CHAR,
-                            p_dis_init->fw_rev_str.p_str, 
-                            p_dis_init->fw_rev_str.length, 
+                            p_dis_init->fw_rev_str.p_str,
+                            p_dis_init->fw_rev_str.length,
                             &p_dis_init->dis_attr_md,
                             &fw_rev_handles);
         if (err_code != NRF_SUCCESS)
@@ -221,8 +221,8 @@ uint32_t ble_dis_init(const ble_dis_init_t * p_dis_init)
     if (p_dis_init->sw_rev_str.length > 0)
     {
         err_code = char_add(BLE_UUID_SOFTWARE_REVISION_STRING_CHAR,
-                            p_dis_init->sw_rev_str.p_str, 
-                            p_dis_init->sw_rev_str.length, 
+                            p_dis_init->sw_rev_str.p_str,
+                            p_dis_init->sw_rev_str.length,
                             &p_dis_init->dis_attr_md,
                             &sw_rev_handles);
         if (err_code != NRF_SUCCESS)
@@ -233,11 +233,11 @@ uint32_t ble_dis_init(const ble_dis_init_t * p_dis_init)
     if (p_dis_init->p_sys_id != NULL)
     {
         uint8_t encoded_sys_id[BLE_DIS_SYS_ID_LEN];
-        
+
         sys_id_encode(encoded_sys_id, p_dis_init->p_sys_id);
         err_code = char_add(BLE_UUID_SYSTEM_ID_CHAR,
-                            encoded_sys_id, 
-                            BLE_DIS_SYS_ID_LEN, 
+                            encoded_sys_id,
+                            BLE_DIS_SYS_ID_LEN,
                             &p_dis_init->dis_attr_md,
                             &sys_id_handles);
         if (err_code != NRF_SUCCESS)
@@ -260,11 +260,11 @@ uint32_t ble_dis_init(const ble_dis_init_t * p_dis_init)
     if (p_dis_init->p_pnp_id != NULL)
     {
         uint8_t encoded_pnp_id[BLE_DIS_PNP_ID_LEN];
-        
+
         pnp_id_encode(encoded_pnp_id, p_dis_init->p_pnp_id);
         err_code = char_add(BLE_UUID_PNP_ID_CHAR,
-                            encoded_pnp_id, 
-                            BLE_DIS_PNP_ID_LEN, 
+                            encoded_pnp_id,
+                            BLE_DIS_PNP_ID_LEN,
                             &p_dis_init->dis_attr_md,
                             &pnp_id_handles);
         if (err_code != NRF_SUCCESS)
@@ -272,6 +272,6 @@ uint32_t ble_dis_init(const ble_dis_init_t * p_dis_init)
             return err_code;
         }
     }
-    
+
     return NRF_SUCCESS;
 }

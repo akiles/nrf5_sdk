@@ -31,8 +31,8 @@
 
 /* File sdio_config.h contains pin configuration for SDIO clock and data. It is included by sdio.c. */
 
-#define MOTION_INTERRUPT_PIN_NUMBER  (26) /**< Pin number used for ADNS2080 motion interrupt. If you change this, you must change the pin configuration in the main function. */
-#define MOUSE_MOVEMENT_THRESHOLD     (10) /**< Deadzone for mouse movement before LEDs are lit. */
+#define MOTION_INTERRUPT_PIN_NUMBER (26) /**< Pin number used for ADNS2080 motion interrupt. If you change this, you must change the pin configuration in the main function. */
+#define MOUSE_MOVEMENT_THRESHOLD    (10) /**< Deadzone for mouse movement before LEDs are lit. */
 
 static int16_t m_delta_x = 0; /**< Variable to store mouse X-axis movement deltas. */
 static int16_t m_delta_y = 0; /**< Variable to store mouse Y-axis movement deltas. */
@@ -135,7 +135,7 @@ int main(void)
             }
             else
             {
-                nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT1,  0xFF);
+                nrf_gpio_port_clear(NRF_GPIO_PORT_SELECT_PORT1, 0xFF);
             }
         }
     }

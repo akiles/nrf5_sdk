@@ -21,8 +21,7 @@
 #include "ble_srv_common.h"
 #include "nordic_common.h"
 #include "nrf_assert.h"
-#include "ble_bondmngr.h"
-#include "ble_bondmngr_cfg.h"
+#include "device_manager.h"
 #include "pstorage.h"
 
 #define START_HANDLE_DISCOVER           0x0001                                             /**< Value of start handle during discovery. */
@@ -34,7 +33,7 @@
 #define TX_BUFFER_SIZE                  (TX_BUFFER_MASK + 1)                               /**< Size of send buffer, which is 1 higher than the mask. */
 #define WRITE_MESSAGE_LENGTH            2                                                  /**< Length of the write message for CCCD/control point. */
 
-#define BLE_ANS_MAX_DISCOVERED_CENTRALS  BLE_BONDMNGR_MAX_BONDED_CENTRALS                  /**< Maximum number of discovered services that can be stored in the flash. This number should be identical to maximum number of bonded centrals. */
+#define BLE_ANS_MAX_DISCOVERED_CENTRALS  DEVICE_MANAGER_MAX_BONDS                          /**< Maximum number of discovered services that can be stored in the flash. This number should be identical to maximum number of bonded centrals. */
 
 #define DISCOVERED_SERVICE_DB_SIZE \
     CEIL_DIV(sizeof(alert_service_t) * BLE_ANS_MAX_DISCOVERED_CENTRALS, sizeof(uint32_t))  /**< Size of bonded centrals database in word size (4 byte). */
@@ -182,7 +181,7 @@ static void service_disc_req_send(const ble_ans_c_t * p_ans)
 
 /**@brief Function for executing the Characteristic Discovery Procedure.
  */
-static void characteristic_disc_req_send(const ble_ans_c_t *              p_ans,
+static void characteristic_disc_req_send(const ble_ans_c_t              * p_ans,
                                          const ble_gattc_handle_range_t * p_handle)
 {
     uint32_t err_code;
@@ -213,14 +212,14 @@ static void descriptor_disc_req_send(const ble_ans_c_t * p_ans)
     if (m_service.new_alert.handle_cccd == BLE_ANS_INVALID_HANDLE)
     {
         descriptor_handle.start_handle = m_service.new_alert.handle_value + 1;
-        descriptor_handle.end_handle = m_service.new_alert.handle_value + 1;
+        descriptor_handle.end_handle   = m_service.new_alert.handle_value + 1;
 
         err_code = sd_ble_gattc_descriptors_discover(p_ans->conn_handle, &descriptor_handle);
     }
     else if (m_service.unread_alert_status.handle_cccd == BLE_ANS_INVALID_HANDLE)
     {
         descriptor_handle.start_handle = m_service.unread_alert_status.handle_value + 1;
-        descriptor_handle.end_handle = m_service.unread_alert_status.handle_value + 1;
+        descriptor_handle.end_handle   = m_service.unread_alert_status.handle_value + 1;
 
         err_code = sd_ble_gattc_descriptors_discover(p_ans->conn_handle, &descriptor_handle);
     }
@@ -261,7 +260,7 @@ static void connection_established(const ble_ans_c_t * p_ans)
         m_service.handle = INVALID_SERVICE_HANDLE_DISC;
     }
 
-    if (p_ans->central_handle != INVALID_CENTRAL_HANDLE &&
+    if (p_ans->central_handle != DM_INVALID_ID &&
         m_service.handle < INVALID_SERVICE_HANDLE_BASE)
     {
         uint32_t err_code = ble_ans_c_new_alert_notify(p_ans, ANS_TYPE_ALL_ALERTS);
@@ -305,7 +304,7 @@ static void event_connect(ble_ans_c_t * p_ans, const ble_evt_t * p_ble_evt)
 {
     p_ans->conn_handle = p_ble_evt->evt.gatts_evt.conn_handle;
 
-    if (p_ans->central_handle != INVALID_CENTRAL_HANDLE)
+    if (p_ans->central_handle != DM_INVALID_ID)
     {
         m_service = mp_service_db[p_ans->central_handle];
         encrypted_link_setup_wait(p_ans);
@@ -548,7 +547,7 @@ static void event_notify(ble_ans_c_t * p_ans, const ble_evt_t * p_ble_evt)
     uint32_t                       message_length;
     ble_ans_c_evt_t                event;
     ble_ans_alert_notification_t * p_alert = &event.data.alert;
-    const ble_gattc_evt_hvx_t *    p_notification = &p_ble_evt->evt.gattc_evt.params.hvx;
+    const ble_gattc_evt_hvx_t    * p_notification = &p_ble_evt->evt.gattc_evt.params.hvx;
 
     // Message is not valid -> ignore.
     event.evt_type = BLE_ANS_C_EVT_NOTIFICATION;
@@ -573,7 +572,7 @@ static void event_notify(ble_ans_c_t * p_ans, const ble_evt_t * p_ble_evt)
     }
 
     p_alert->alert_category       = p_notification->data[0];
-    p_alert->alert_category_count = p_notification->data[1];                            //lint !e415
+    p_alert->alert_category_count = p_notification->data[1];                       //lint !e415
     p_alert->alert_msg_length     = (message_length > p_ans->message_buffer_size)
                                     ? p_ans->message_buffer_size
                                     : message_length;
@@ -581,7 +580,7 @@ static void event_notify(ble_ans_c_t * p_ans, const ble_evt_t * p_ble_evt)
 
     memcpy(p_alert->p_alert_msg_buf,
            &p_notification->data[NOTIFICATION_DATA_LENGTH],
-           p_alert->alert_msg_length);                                                  //lint !e416
+           p_alert->alert_msg_length);                                             //lint !e416
 
     p_ans->evt_handler(&event);
 }
@@ -652,7 +651,7 @@ static void event_disconnect(ble_ans_c_t * p_ans)
     m_client_state = STATE_IDLE;
 
     if (m_service.handle == INVALID_SERVICE_HANDLE_DISC &&
-        p_ans->central_handle != INVALID_CENTRAL_HANDLE)
+        p_ans->central_handle != DM_INVALID_ID)
     {
         m_service.handle = p_ans->central_handle;
     }
@@ -667,7 +666,7 @@ static void event_disconnect(ble_ans_c_t * p_ans)
     m_service.handle      = INVALID_SERVICE_HANDLE;
     p_ans->service_handle = INVALID_SERVICE_HANDLE;
     p_ans->conn_handle    = BLE_CONN_HANDLE_INVALID;
-    p_ans->central_handle = INVALID_CENTRAL_HANDLE;
+    p_ans->central_handle = DM_INVALID_ID;
 
     // Only if our previous state was RUNNING, i.e. the client had fully initialized, then the
     // application should be notified of the DISCONNECT_COMPLETE.
@@ -679,20 +678,19 @@ static void event_disconnect(ble_ans_c_t * p_ans)
 }
 
 
-/**@brief Function for handling of Bond Manager events.
+/**@brief Function for handling of Device Manager events.
  */
-void ble_ans_c_on_bondmgmr_evt(ble_ans_c_t * p_ans, const ble_bondmngr_evt_t * p_bond_mgmr_evt)
+void ble_ans_c_on_device_manager_evt(ble_ans_c_t       * p_ans,
+                                     dm_handle_t const * p_handle,
+                                     dm_event_t const  * p_dm_evt)
 {
-    switch (p_bond_mgmr_evt->evt_type)
+    switch (p_dm_evt->event_id)
     {
-        case BLE_BONDMNGR_EVT_NEW_BOND:
-            p_ans->central_handle = p_bond_mgmr_evt->central_handle;
+        case DM_EVT_CONNECTION:
+            // Fall through.
+        case DM_EVT_SECURITY_SETUP_COMPLETE:
+            p_ans->central_handle = p_handle->device_id;
             break;
-
-        case BLE_BONDMNGR_EVT_CONN_TO_BONDED_CENTRAL:
-            p_ans->central_handle = p_bond_mgmr_evt->central_handle;
-            break;
-
         default:
             // Do nothing.
             break;
@@ -827,19 +825,19 @@ uint32_t ble_ans_c_init(ble_ans_c_t * p_ans, const ble_ans_c_init_t * p_ans_init
     p_ans->evt_handler         = p_ans_init->evt_handler;
     p_ans->error_handler       = p_ans_init->error_handler;
     p_ans->service_handle      = INVALID_SERVICE_HANDLE;
-    p_ans->central_handle      = INVALID_CENTRAL_HANDLE;
+    p_ans->central_handle      = DM_INVALID_ID;
     p_ans->service_handle      = 0;
     p_ans->message_buffer_size = p_ans_init->message_buffer_size;
     p_ans->p_message_buffer    = p_ans_init->p_message_buffer;
     p_ans->conn_handle         = BLE_CONN_HANDLE_INVALID;
-    
+
     m_ans_c_obj = p_ans;
 
     memset(&m_service, 0, sizeof(alert_service_t));
     memset(m_tx_buffer, 0, TX_BUFFER_SIZE);
 
-    m_service.handle  = INVALID_SERVICE_HANDLE;
-    m_client_state    = STATE_IDLE;
+    m_service.handle = INVALID_SERVICE_HANDLE;
+    m_client_state   = STATE_IDLE;
 
     param.block_count = 1;
     param.block_size  = DISCOVERED_SERVICE_DB_SIZE * sizeof(uint32_t); // uint32_t array.
@@ -916,7 +914,7 @@ uint32_t ble_ans_c_disable_notif_unread_alert(const ble_ans_c_t * p_ans)
 }
 
 
-uint32_t ble_ans_c_control_point_write(const ble_ans_c_t *             p_ans,
+uint32_t ble_ans_c_control_point_write(const ble_ans_c_t             * p_ans,
                                        const ble_ans_control_point_t * p_control_point)
 {
     tx_message_t * p_msg;
@@ -948,8 +946,8 @@ uint32_t ble_ans_c_new_alert_read(const ble_ans_c_t * p_ans)
 {
     tx_message_t * msg;
 
-    msg                  = &m_tx_buffer[m_tx_insert_index++];
-    m_tx_insert_index   &= TX_BUFFER_MASK;
+    msg                = &m_tx_buffer[m_tx_insert_index++];
+    m_tx_insert_index &= TX_BUFFER_MASK;
 
     msg->req.read_handle = m_service.suported_new_alert_cat.handle_value;
     msg->conn_handle     = p_ans->conn_handle;

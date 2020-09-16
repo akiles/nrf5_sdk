@@ -29,7 +29,7 @@
 #include "nrf_gpio.h"
 #include "pstorage.h"
 #include "device_manager.h"
-#include "debug.h"
+#include "app_trace.h"
 #include "app_util.h"
 
 #define BOND_DELETE_ALL_BUTTON_ID        BUTTON_1                                       /**< Button used for deleting all bonded centrals during startup. */
@@ -38,7 +38,7 @@
 #define CONNECTED_LED_PIN_NO             LED_1                                          /**< Is on when device has connected. */
 #define ASSERT_LED_PIN_NO                LED_7                                          /**< Is on when application has asserted. */
 
-#define APPL_LOG                         debug_log                                      /**< Debug logger macro that will be used in this file to do logging of debug information over UART. */
+#define APPL_LOG                         app_trace_log                                  /**< Debug logger macro that will be used in this file to do logging of debug information over UART. */
 
 #define SEC_PARAM_BOND                   1                                              /**< Perform bonding. */
 #define SEC_PARAM_MITM                   1                                              /**< Man In The Middle protection not required. */
@@ -58,16 +58,18 @@
 #define TARGET_DEV_NAME                  "Multilink"                                    /**< Target device name that application is looking for. */
 #define MAX_PEER_COUNT                   DEVICE_MANAGER_MAX_CONNECTIONS                 /**< Maximum number of peer's application intends to manage. */
 
+
 /**@brief Variable length data encapsulation in terms of length and pointer to data */
 typedef struct
 {
-    uint8_t               * p_data;          /**< Pointer to data. */
-    uint16_t                data_len;        /**< Length of data. */
+    uint8_t     * p_data;                                                      /**< Pointer to data. */
+    uint16_t      data_len;                                                    /**< Length of data. */
 }data_t;
 
-static dm_application_instance_t          m_dm_app_id;              /**< Application identifier. */
-static uint8_t                            m_peer_count = 0;         /**< Number of peer's connected. */
+static dm_application_instance_t          m_dm_app_id;                         /**< Application identifier. */
+static uint8_t                            m_peer_count = 0;                    /**< Number of peer's connected. */
 
+static bool                               m_memory_access_in_progress = false; /**< Flag to keep track of ongoing operations on persistent memory. */
 
 /**
  * @brief Scan parameters requested for scanning and connection.
@@ -195,9 +197,16 @@ static api_result_t device_manager_event_handler(const dm_handle_t    * p_handle
             APPL_LOG("[APPL]:[0x%02X] << DM_EVT_DISCONNECTION\r\n", p_handle->connection_id);
             break;
         case DM_EVT_SECURITY_SETUP:
+        {
+            dm_handle_t handle = (*p_handle);
             APPL_LOG("[APPL]:[0x%02X] >> DM_EVT_SECURITY_SETUP\r\n", p_handle->connection_id);
+            // Slave securtiy request received from peer, if from a non bonded device, 
+            // initiate security setup, else, wait for encryption to complete.
+            err_code = dm_security_setup_req(&handle);
+            APP_ERROR_CHECK(err_code);
             APPL_LOG("[APPL]:[0x%02X] << DM_EVT_SECURITY_SETUP\r\n", p_handle->connection_id);
             break;
+        }
         case DM_EVT_SECURITY_SETUP_COMPLETE:
             APPL_LOG("[APPL]:[0x%02X] >> DM_EVT_SECURITY_SETUP_COMPLETE, result 0x%08X\r\n",
                       p_handle->connection_id, event_result);
@@ -339,6 +348,29 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 }
 
 
+/**@brief Function for handling the Application's system events.
+ *
+ * @param[in]   sys_evt   system event.
+ */
+static void on_sys_evt(uint32_t sys_evt)
+{
+    switch(sys_evt)
+    {
+        case NRF_EVT_FLASH_OPERATION_SUCCESS:
+        case NRF_EVT_FLASH_OPERATION_ERROR:
+            if (m_memory_access_in_progress)
+            {
+                m_memory_access_in_progress = false;
+                scan_start();
+            }
+            break;
+        default:
+            // No implementation needed.
+            break;
+    }
+}
+
+
 /**@brief Function for dispatching a BLE stack event to all modules with a BLE stack event handler.
  *
  * @details This function is called from the scheduler in the main loop after a BLE stack event has
@@ -364,6 +396,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 static void sys_evt_dispatch(uint32_t sys_evt)
 {
     pstorage_sys_event_handler(sys_evt);
+    on_sys_evt(sys_evt);
 }
 
 
@@ -468,7 +501,19 @@ static void power_manage(void)
  */
 static void scan_start(void)
 {
-    uint32_t err_code = sd_ble_gap_scan_start(&m_scan_param);
+    uint32_t err_code;
+    uint32_t count;
+    // Verify if there is any flash access pending, if yes delay starting scanning until 
+    // it's complete.
+    err_code = pstorage_access_status_get(&count);
+    APP_ERROR_CHECK(err_code);
+    
+    if (count != 0)
+    {
+        m_memory_access_in_progress = true;
+        return;
+    }
+    err_code = sd_ble_gap_scan_start(&m_scan_param);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -477,7 +522,7 @@ static void scan_start(void)
 int main(void)
 {
     // Initialization of various modules.
-    debug_init();
+    app_trace_init();
     leds_init();
     buttons_init();
     ble_stack_init();

@@ -32,22 +32,22 @@ static uint8_t packet[4];  ///< Packet to transmit
 
 void init(void)
 {
-  /* Start 16 MHz crystal oscillator */
-  NRF_CLOCK->EVENTS_HFCLKSTARTED = 0;
-  NRF_CLOCK->TASKS_HFCLKSTART = 1;
+    /* Start 16 MHz crystal oscillator */
+    NRF_CLOCK->EVENTS_HFCLKSTARTED = 0;
+    NRF_CLOCK->TASKS_HFCLKSTART    = 1;
 
-  /* Wait for the external oscillator to start up */
-  while (NRF_CLOCK->EVENTS_HFCLKSTARTED == 0) 
-  {
-  }
+    /* Wait for the external oscillator to start up */
+    while (NRF_CLOCK->EVENTS_HFCLKSTARTED == 0) 
+    {
+    }
 
-  // Set radio configuration parameters
-  radio_configure();
+    // Set radio configuration parameters
+    radio_configure();
   
-  // Set payload pointer
-  NRF_RADIO->PACKETPTR = (uint32_t)packet;
+    // Set payload pointer
+    NRF_RADIO->PACKETPTR = (uint32_t)packet;
   
-  nrf_gpio_range_cfg_input(BUTTON_START, BUTTON_STOP, BUTTON_PULL);
+    nrf_gpio_range_cfg_input(BUTTON_START, BUTTON_STOP, BUTTON_PULL);
 }
 
 /**
@@ -56,51 +56,51 @@ void init(void)
  */
 int main(void)
 {
-  init();
+    init();
   
-  uint8_t btn0_nstate;                              // Store new (current) state of button 0
-  uint8_t btn1_nstate;                              // Store new (current) state of button 1
-  uint8_t btn0_ostate = nrf_gpio_pin_read(BUTTON_0); // Store old (previous) state of button 0
-  uint8_t btn1_ostate = nrf_gpio_pin_read(BUTTON_1); // Store old (previous) state of button 1
+    uint8_t btn0_nstate;                              // Store new (current) state of button 0
+    uint8_t btn1_nstate;                              // Store new (current) state of button 1
+    uint8_t btn0_ostate = nrf_gpio_pin_read(BUTTON_0); // Store old (previous) state of button 0
+    uint8_t btn1_ostate = nrf_gpio_pin_read(BUTTON_1); // Store old (previous) state of button 1
   
-  while(true)
-  {
-    uint8_t btns = 0;
-    btn0_nstate = nrf_gpio_pin_read(BUTTON_0);
-    btn1_nstate = nrf_gpio_pin_read(BUTTON_1);
-    if ((btn0_ostate == 1) && (btn0_nstate == 0))
+    while (true)
     {
-      btns |= 1;
-    }
+        uint8_t btns = 0;
+        btn0_nstate = nrf_gpio_pin_read(BUTTON_0);
+        btn1_nstate = nrf_gpio_pin_read(BUTTON_1);
+        if ((btn0_ostate == 1) && (btn0_nstate == 0))
+        {
+            btns |= 1;
+        }
      
-    if ((btn1_ostate == 1) && (btn1_nstate == 0))
-    {
-      btns |= 2;
-    }
+        if ((btn1_ostate == 1) && (btn1_nstate == 0))
+        {
+            btns |= 2;
+        }
     
-    btn0_ostate = btn0_nstate;
-    btn1_ostate = btn1_nstate;
+        btn0_ostate = btn0_nstate;
+        btn1_ostate = btn1_nstate;
     
-    // Place the read buttons in the payload, enable the radio and
-    // send the packet:
-    packet[0] = btns;
-    NRF_RADIO->EVENTS_READY = 0U;
-    NRF_RADIO->TASKS_TXEN = 1;
-    while (NRF_RADIO->EVENTS_READY == 0U)
-    {
+        // Place the read buttons in the payload, enable the radio and
+        // send the packet:
+        packet[0]               = btns;
+        NRF_RADIO->EVENTS_READY = 0U;
+        NRF_RADIO->TASKS_TXEN   = 1;
+        while (NRF_RADIO->EVENTS_READY == 0U)
+        {
+        }
+        NRF_RADIO->TASKS_START = 1U;
+        NRF_RADIO->EVENTS_END  = 0U;  
+        while (NRF_RADIO->EVENTS_END == 0U)
+        {
+        }
+        NRF_RADIO->EVENTS_DISABLED = 0U;
+        // Disable radio
+        NRF_RADIO->TASKS_DISABLE = 1U;
+        while (NRF_RADIO->EVENTS_DISABLED == 0U)
+        {
+        }
     }
-    NRF_RADIO->TASKS_START = 1U;
-    NRF_RADIO->EVENTS_END = 0U;  
-    while(NRF_RADIO->EVENTS_END == 0U)
-    {
-    }
-    NRF_RADIO->EVENTS_DISABLED = 0U;
-    // Disable radio
-    NRF_RADIO->TASKS_DISABLE = 1U;
-    while(NRF_RADIO->EVENTS_DISABLED == 0U)
-    {
-    }
-  }
 }
 
 /**

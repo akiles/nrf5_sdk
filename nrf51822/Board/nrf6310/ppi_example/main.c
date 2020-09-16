@@ -68,13 +68,13 @@ static void timer1_init(void)
     // PRESCALER = 9
     // The overflow occurs every 0xFFFF/(SysClk/2^PRESCALER).
     // = 65535/31250 = 2.097 sec
-    NRF_TIMER1->BITMODE     = (TIMER_BITMODE_BITMODE_16Bit << TIMER_BITMODE_BITMODE_Pos);
-    NRF_TIMER1->PRESCALER   = 9;
-    NRF_TIMER1->SHORTS      = (TIMER_SHORTS_COMPARE0_CLEAR_Enabled << TIMER_SHORTS_COMPARE0_CLEAR_Pos);
+    NRF_TIMER1->BITMODE   = (TIMER_BITMODE_BITMODE_16Bit << TIMER_BITMODE_BITMODE_Pos);
+    NRF_TIMER1->PRESCALER = 9;
+    NRF_TIMER1->SHORTS    = (TIMER_SHORTS_COMPARE0_CLEAR_Enabled << TIMER_SHORTS_COMPARE0_CLEAR_Pos);
 
     // Trigger interrupt for compare[0] event.
-    NRF_TIMER1->MODE        = TIMER_MODE_MODE_Timer;
-    NRF_TIMER1->CC[0]       = 0xFFFFUL;  // Match at even number of seconds
+    NRF_TIMER1->MODE  = TIMER_MODE_MODE_Timer;
+    NRF_TIMER1->CC[0] = 0xFFFFUL;  // Match at even number of seconds
 }
 
 
@@ -92,13 +92,13 @@ static void timer2_init(void)
     // PRESCALER = 9
     // now the overflow occurs every 0xFFFF/(SysClk/2^PRESCALER)
     // = 65535/31250 = 2.097 sec */
-    NRF_TIMER2->BITMODE     = (TIMER_BITMODE_BITMODE_16Bit << TIMER_BITMODE_BITMODE_Pos);
-    NRF_TIMER2->PRESCALER   = 9;
-    NRF_TIMER2->SHORTS      = (TIMER_SHORTS_COMPARE0_CLEAR_Enabled << TIMER_SHORTS_COMPARE0_CLEAR_Pos);
+    NRF_TIMER2->BITMODE   = (TIMER_BITMODE_BITMODE_16Bit << TIMER_BITMODE_BITMODE_Pos);
+    NRF_TIMER2->PRESCALER = 9;
+    NRF_TIMER2->SHORTS    = (TIMER_SHORTS_COMPARE0_CLEAR_Enabled << TIMER_SHORTS_COMPARE0_CLEAR_Pos);
 
     // Trigger interrupt for compare[0] event.
-    NRF_TIMER2->MODE        = TIMER_MODE_MODE_Timer;
-    NRF_TIMER2->CC[0]       = 0x7FFFUL;  // Match at odd number of seconds.
+    NRF_TIMER2->MODE  = TIMER_MODE_MODE_Timer;
+    NRF_TIMER2->CC[0] = 0x7FFFUL;  // Match at odd number of seconds.
 }
 
 
@@ -132,8 +132,8 @@ int main(void)
     while (true)
     {
         /* increment the counter */
-        NRF_TIMER0->TASKS_COUNT         = 1;
-        NRF_TIMER0->TASKS_CAPTURE[0]    = 1;
+        NRF_TIMER0->TASKS_COUNT      = 1;
+        NRF_TIMER0->TASKS_CAPTURE[0] = 1;
 
         nrf_gpio_port_write(NRF_GPIO_PORT_SELECT_PORT1, (uint8_t)NRF_TIMER0->CC[0]);
 

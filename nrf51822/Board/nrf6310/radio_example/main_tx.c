@@ -58,7 +58,7 @@ int main(void)
     // Set payload pointer.
     NRF_RADIO->PACKETPTR = (uint32_t)packet;
 
-    while(true)
+    while (true)
     {
         // Read Data to send, button signals are default high, and low when pressed.
         packet[0]               = ~(nrf_gpio_port_read(NRF_GPIO_PORT_SELECT_PORT0));  // Write GPIO to payload byte 0.
@@ -74,7 +74,7 @@ int main(void)
         NRF_RADIO->TASKS_START = 1U;
         NRF_RADIO->EVENTS_END  = 0U;
     
-        while(NRF_RADIO->EVENTS_END == 0U) // Wait for end of the transmission packet.
+        while (NRF_RADIO->EVENTS_END == 0U) // Wait for end of the transmission packet.
         {
             // Do nothing.
         }
@@ -85,7 +85,7 @@ int main(void)
         NRF_RADIO->EVENTS_DISABLED = 0U;
         NRF_RADIO->TASKS_DISABLE   = 1U; // Disable the radio.
 
-        while(NRF_RADIO->EVENTS_DISABLED == 0U)
+        while (NRF_RADIO->EVENTS_DISABLED == 0U)
         {
             // Do nothing.
         }

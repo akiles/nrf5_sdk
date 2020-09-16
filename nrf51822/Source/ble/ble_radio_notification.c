@@ -13,8 +13,8 @@
 #include <stdlib.h>
 
 
-static bool                                 m_radio_active = false;     /**< Current radio state. */
-static ble_radio_notification_evt_handler_t m_evt_handler  = NULL;      /**< Application event handler for handling Radio Notification events. */
+static bool                                 m_radio_active = false;  /**< Current radio state. */
+static ble_radio_notification_evt_handler_t m_evt_handler  = NULL;   /**< Application event handler for handling Radio Notification events. */
 
 
 void SWI1_IRQHandler(void)
@@ -32,7 +32,7 @@ uint32_t ble_radio_notification_init(nrf_app_irq_priority_t               irq_pr
                                      ble_radio_notification_evt_handler_t evt_handler)
 {
     uint32_t err_code;
-    
+
     m_evt_handler = evt_handler;
 
     // Initialize Radio Notification software interrupt

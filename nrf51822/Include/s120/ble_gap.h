@@ -283,7 +283,7 @@ enum BLE_GAP_OPTS
 #define BLE_GAP_CP_MAX_CONN_INTVL_NONE           0xFFFF  /**< No new maximum connction interval specified in connect parameters. */
 #define BLE_GAP_CP_MAX_CONN_INTVL_MIN            0x0006  /**< Lowest maximum connection interval permitted, in units of 1.25 ms, i.e. 7.5 ms. */
 #define BLE_GAP_CP_MAX_CONN_INTVL_MAX            0x0C80  /**< Highest maximum connection interval permitted, in units of 1.25 ms, i.e. 4 s. */
-#define BLE_GAP_CP_SLAVE_LATENCY_MAX             0x03E8  /**< Highest slave latency permitted, in connection events. */
+#define BLE_GAP_CP_SLAVE_LATENCY_MAX             0x01F3  /**< Highest slave latency permitted, in connection events. */
 #define BLE_GAP_CP_CONN_SUP_TIMEOUT_NONE         0xFFFF  /**< No new supervision timeout specified in connect parameters. */
 #define BLE_GAP_CP_CONN_SUP_TIMEOUT_MIN          0x000A  /**< Lowest supervision timeout permitted, in units of 10 ms, i.e. 100 ms. */
 #define BLE_GAP_CP_CONN_SUP_TIMEOUT_MAX          0x0C80  /**< Highest supervision timeout permitted, in units of 10 ms, i.e. 32 s. */
@@ -349,6 +349,12 @@ typedef struct
  *
  * @note  When ble_conn_params_t is received in an event, both min_conn_interval and
  *        max_conn_interval will be equal to the connection interval set by the central.
+ *
+ * @note If both conn_sup_timeout and max_conn_interval are specified, then the following constraint applies:
+ *       conn_sup_timeout * 4 > (1 + slave_latency) * max_conn_interval
+ *       that corresponds to the following BT Spec 4.1 Vol 2 Part E, Section 7.8.12 requirement:
+ *       The Supervision_Timeout in milliseconds shall be larger than
+ *       (1 + Conn_Latency) * Conn_Interval_Max * 2, where Conn_Interval_Max is given in milliseconds.
  */
 typedef struct
 {
@@ -489,7 +495,7 @@ typedef struct
 /** @brief Event data for disconnected event. */
 typedef struct
 {
-  uint8_t reason;                               /**< HCI error code. */
+  uint8_t reason;                               /**< HCI error code, see @ref BLE_HCI_STATUS_CODES. */
 } ble_gap_evt_disconnected_t;
 
 
@@ -533,7 +539,7 @@ typedef struct
 
 
 /** @brief Security levels supported.
- *  @note See Bluetooth Specification Version 4.0 Volume 3, Chapter 10.
+ *  @note See Bluetooth Specification Version 4.1 Volume 3, Part C, Chapter 10.
 */
 typedef struct
 {
@@ -661,7 +667,26 @@ typedef struct
 } ble_gap_evt_t;
 
 
-/** @brief Channel Map option. */
+/** @brief Channel Map option.
+ *         Used with @ref sd_ble_opt_get to get the current channel map 
+ *         or @ref sd_ble_opt_set to set a new channel map. When setting the
+ *         channel map, it applies to all current and future connections. When getting the 
+ *         current channel map, it applies to a single connection and the connection handle 
+ *         must be supplied.
+ *
+ *  @note  Setting the channel map may take some time, depending on connection parameters.
+ *         The time taken may be different for each connection and the get operation will 
+ *         return the previous channel map until the new one has taken effect.
+ *
+ *  @note  After setting the channel map, by spec it can not be set again until at least 1 s has passed.
+ *         See Bluetooth Specification Version 4.1 Volume 2, Part E, Section 7.3.46.
+ *
+ *  @retval ::NRF_SUCCESS Get or set successful.
+ *  @retval ::NRF_ERROR_BUSY Channel map was set again before enough time had passed.
+ *  @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation.
+ *  @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid connection handle supplied for get.
+ *
+ */
 typedef struct
 {
   uint16_t conn_handle;                   /**< Connection Handle (only applicable for get) */
@@ -671,7 +696,7 @@ typedef struct
 /**@brief Option structure for GAP options. */
 typedef union
 {
-  ble_gap_opt_ch_map_t           ch_map;            /**< Channel Map. */
+  ble_gap_opt_ch_map_t ch_map;            /**< Channel Map. */
 } ble_gap_opt_t;
 
 /** @} */
@@ -759,9 +784,6 @@ SVCALL(SD_BLE_GAP_ADV_STOP, uint32_t, sd_ble_gap_adv_stop(void));
  *
  * @details This function can be used both to reply to a @ref BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST or to start the procedure unrequested.
  *
- * @note If both a connection supervision timeout and a maximum connection interval are specified, then the following constraint
- *       applies: (conn_sup_timeout * 8) >= (max_conn_interval * (slave_latency + 1))
- *
  * @param[in] conn_handle Connection handle.
  * @param[in] p_conn_params  Pointer to desired connection parameters. If NULL is provided on a peripheral role,
  *                           the parameters in the PPCP characteristic of the GAP service will be used instead.
@@ -789,7 +811,7 @@ SVCALL(SD_BLE_GAP_CONN_PARAM_UPDATE, uint32_t, sd_ble_gap_conn_param_update(uint
  * @retval ::NRF_SUCCESS The disconnection procedure has been started successfully.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid connection handle supplied.
- * @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation (disconnection is already in progress or not connected at all).
+ * @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation (disconnection is already in progress).
  */
 SVCALL(SD_BLE_GAP_DISCONNECT, uint32_t, sd_ble_gap_disconnect(uint16_t conn_handle, uint8_t hci_status_code));
 

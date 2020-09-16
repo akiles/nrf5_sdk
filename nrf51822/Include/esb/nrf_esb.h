@@ -8,9 +8,8 @@
  * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
  * the file.
  *
- * $LastChangedRevision: 19572 $
+ * $LastChangedRevision: 39629 $
  */
-
 
 /**
  * @file
@@ -44,7 +43,6 @@ typedef enum
   NRF_ESB_MODE_PRX,         ///< Primary Receiver mode
 } nrf_esb_mode_t;
 
-
 /**
  * @enum nrf_esb_packet_t 
  * @brief Enumerator used for selecting TX packet type used in
@@ -55,7 +53,7 @@ typedef enum
   NRF_ESB_PACKET_USE_ACK,         ///< PTX packet requires ACK.
   NRF_ESB_PACKET_NO_ACK,          ///< PTX packet does not require ACK.
 } nrf_esb_packet_t ;
-
+   
 
 /**
  * @enum nrf_esb_base_address_length_t
@@ -116,8 +114,8 @@ typedef enum
  */
 typedef enum
 {
-	NRF_ESB_XOSC_CTL_AUTO,		///< Switch XOSC on/off automatically
-	NRF_ESB_XOSC_CTL_MANUAL	    ///< Switch XOSC on/off manually
+    NRF_ESB_XOSC_CTL_AUTO,      ///< Switch XOSC on/off automatically
+    NRF_ESB_XOSC_CTL_MANUAL     ///< Switch XOSC on/off manually
 } nrf_esb_xosc_ctl_t;
 
 /******************************************************************************/
@@ -356,6 +354,25 @@ void nrf_esb_flush_rx_fifo(uint32_t pipe);
  */
 uint16_t nrf_esb_get_tx_attempts(void);
 
+
+/**
+* @brief Specify that the previous used 2 bit packet ID (PID) shall be reused for
+* a given pipe.
+*
+* This function can be used for continue retransmitting a packet that previously failed 
+* to be transmitted.
+
+* Example:
+* 1. Upload initial packet:
+*    nrf_esb_add_packet_to_tx_fifo(PIPE_NUMBER, my_tx_payload, TX_PAYLOAD_LENGTH, NRF_ESB_PACKET_USE_ACK);
+* 2. If the initial packet fails to be transmitted, specify the PID to be reused:
+*    nrf_esb_reuse_pid(PIPE_NUMBER);
+* 3. Continue re-transmission of the packet by re-uploading it to the TX FIFO:
+*    nrf_esb_add_packet_to_tx_fifo(PIPE_NUMBER, my_tx_payload, TX_PAYLOAD_LENGTH, NRF_ESB_PACKET_USE_ACK);
+*
+* @param pipe is the pipe for which to reuse the PID.
+*/
+void nrf_esb_reuse_pid(uint32_t pipe);
 
 /** @} */
 

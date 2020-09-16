@@ -28,10 +28,10 @@
 #include "nrf_gpio.h"
 #include "boards.h"
 
-//#define ENABLE_LOOPBACK_TEST           /*!< if defined, then this example will be a loopback test, which means that TX should be connected to RX to get data loopback */
+//#define ENABLE_LOOPBACK_TEST          /*!< if defined, then this example will be a loopback test, which means that TX should be connected to RX to get data loopback */
 
-#define ERROR_PIN                (LED_0)   /*!< gpio pin number to show error if loopback is enabled */
-#define MAX_TEST_DATA_BYTES      (15U) /*!< max number of test bytes to be used for tx and rx */
+#define ERROR_PIN           (LED_0)   /*!< gpio pin number to show error if loopback is enabled */
+#define MAX_TEST_DATA_BYTES (15U)     /*!< max number of test bytes to be used for tx and rx */
 
 #ifndef ENABLE_LOOPBACK_TEST
 
@@ -40,7 +40,7 @@ Execution is blocked until UART peripheral detects all characters have been sent
  */
 static __INLINE void uart_quit()
 {
-  simple_uart_putstring((const uint8_t *)" \n\rExit!\n\r");
+    simple_uart_putstring((const uint8_t *)" \n\rExit!\n\r");
 }
 
 /** @brief Function for sending 'Start: ' string to UART.
@@ -48,7 +48,7 @@ Execution is blocked until UART peripheral detects all characters have been sent
  */
 static __INLINE void uart_start()
 {
-  simple_uart_putstring((const uint8_t *)" \n\rStart: ");
+    simple_uart_putstring((const uint8_t *)" \n\rStart: ");
 }
 
 #else
@@ -58,10 +58,10 @@ static __INLINE void uart_start()
  */
 static void show_error(void)
 {
-  nrf_gpio_pin_write(ERROR_PIN, 1);
-  while(true)
-  {
-  }
+    nrf_gpio_pin_write(ERROR_PIN, 1);
+    while(true)
+    {
+    }
 }
 
 
@@ -71,28 +71,28 @@ static void show_error(void)
  */
 static void uart_loopback_test()
 {
-  uint8_t tx_data[] = ("\n\r  LOOPBACK_TEST");
-  uint8_t rx_data[MAX_TEST_DATA_BYTES] = {0};
+    uint8_t tx_data[] = ("\n\r  LOOPBACK_TEST");
+    uint8_t rx_data[MAX_TEST_DATA_BYTES] = {0};
 
-  // Start sending one byte and see if you get the same
-  for(uint8_t i = 0; i < MAX_TEST_DATA_BYTES; i++)
-  {
-    bool status;
-    simple_uart_put(tx_data[i]);
-    if(!simple_uart_get_with_timeout(2, &rx_data[i]))
+    // Start sending one byte and see if you get the same
+    for(uint8_t i = 0; i < MAX_TEST_DATA_BYTES; i++)
     {
-        show_error();
+        bool status;
+        simple_uart_put(tx_data[i]);
+        if(!simple_uart_get_with_timeout(2, &rx_data[i]))
+        {
+            show_error();
+        }
     }
-  }
 
-  for(uint8_t i = 0; i < MAX_TEST_DATA_BYTES; i++)
-  {
-    if ((rx_data[i] != tx_data[i]))
+    for(uint8_t i = 0; i < MAX_TEST_DATA_BYTES; i++)
     {
-      show_error();
+      if ((rx_data[i] != tx_data[i]))
+      {
+          show_error();
+      }
     }
-  }
-  return; // Test passed
+    return; // Test passed
 }
 
 #endif
@@ -103,32 +103,32 @@ static void uart_loopback_test()
  */
 int main(void)
 {
-  simple_uart_config(RTS_PIN_NUMBER, TX_PIN_NUMBER, CTS_PIN_NUMBER, RX_PIN_NUMBER, HWFC);
+    simple_uart_config(RTS_PIN_NUMBER, TX_PIN_NUMBER, CTS_PIN_NUMBER, RX_PIN_NUMBER, HWFC);
 
 #ifndef ENABLE_LOOPBACK_TEST
 
-  uart_start();
-  while(true)
-  {
-    uint8_t cr = simple_uart_get();
-    simple_uart_put(cr);
-
-    if(cr == 'q' || cr == 'Q')
+    uart_start();
+    while (true)
     {
-      uart_quit();
-      while(1){}
+        uint8_t cr = simple_uart_get();
+        simple_uart_put(cr);
+
+      if (cr == 'q' || cr == 'Q')
+      {
+          uart_quit();
+          while (1){}
+      }
     }
-  }
 
 #else
   /* This part of the example is just for testing, can be removed if you do not have a loopback setup */
 
   // ERROR_PIN configure as output
-  nrf_gpio_cfg_output(ERROR_PIN);
-  while(true)
-  {
-    uart_loopback_test();
-  }
+    nrf_gpio_cfg_output(ERROR_PIN);
+    while(true)
+    {
+        uart_loopback_test();
+    }
 #endif
 }
 

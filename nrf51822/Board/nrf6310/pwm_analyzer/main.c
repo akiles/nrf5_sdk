@@ -28,8 +28,8 @@
 #include "nrf_gpio.h"
 #include "boards.h"
 
-#define INPUT_PIN_NUMBER (BUTTON_0)          /**< Pin number for the input. */
-#define DUTY_CYCLE_SCALE_VALUE (256UL)      /**< Defines the upper limit of the duty cycle value. */
+#define INPUT_PIN_NUMBER (BUTTON_0)    /**< Pin number for the input. */
+#define DUTY_CYCLE_SCALE_VALUE (256UL) /**< Defines the upper limit of the duty cycle value. */
 
 static void timer1_init(void);
 static void gpiote_init(void);
@@ -59,8 +59,8 @@ int main(void)
 static void timer1_init(void)
 {
     // Start 16 MHz crystal oscillator
-    NRF_CLOCK->EVENTS_HFCLKSTARTED  = 0;
-    NRF_CLOCK->TASKS_HFCLKSTART     = 1;
+    NRF_CLOCK->EVENTS_HFCLKSTARTED = 0;
+    NRF_CLOCK->TASKS_HFCLKSTART    = 1;
 
     // Wait for the external oscillator to start up
     while (NRF_CLOCK->EVENTS_HFCLKSTARTED == 0) 
@@ -82,10 +82,10 @@ static void timer1_init(void)
 void GPIOTE_IRQHandler(void)
 {
     static uint32_t prev_cc1 = 0;
-    uint32_t curr_cc1;
-    uint32_t cycle_duration;
-    uint32_t duty_cycle;
-    uint32_t active_time;
+    uint32_t        curr_cc1;
+    uint32_t        cycle_duration;
+    uint32_t        duty_cycle;
+    uint32_t        active_time;
     
     curr_cc1 = NRF_TIMER1->CC[1];
     

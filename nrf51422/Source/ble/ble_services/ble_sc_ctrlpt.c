@@ -25,7 +25,7 @@
 #define SC_CTRLPT_NACK_PROC_ALREADY_IN_PROGRESS   (BLE_GATT_STATUS_ATTERR_APP_BEGIN + 0)
 #define SC_CTRLPT_NACK_CCCD_IMPROPERLY_CONFIGURED (BLE_GATT_STATUS_ATTERR_APP_BEGIN + 1)
 
-uint32_t ble_sc_ctrlpt_init(ble_sc_ctrlpt_t *            p_sc_ctrlpt,
+uint32_t ble_sc_ctrlpt_init(ble_sc_ctrlpt_t            * p_sc_ctrlpt,
                             const ble_cs_ctrlpt_init_t * p_sc_ctrlpt_init)
 {
     ble_gatts_char_md_t char_md;
@@ -33,11 +33,12 @@ uint32_t ble_sc_ctrlpt_init(ble_sc_ctrlpt_t *            p_sc_ctrlpt,
     ble_gatts_attr_t    attr_char_value;
     ble_uuid_t          ble_uuid;
     ble_gatts_attr_md_t attr_md;
-    
+
     p_sc_ctrlpt->conn_handle      = BLE_CONN_HANDLE_INVALID;
     p_sc_ctrlpt->procedure_status = BLE_SCPT_NO_PROC_IN_PROGRESS;
 
     p_sc_ctrlpt->size_list_supported_locations = p_sc_ctrlpt_init->size_list_supported_locations;
+
     if ((p_sc_ctrlpt_init->size_list_supported_locations != 0) &&
         (p_sc_ctrlpt_init->list_supported_locations != NULL))
     {
@@ -56,10 +57,10 @@ uint32_t ble_sc_ctrlpt_init(ble_sc_ctrlpt_t *            p_sc_ctrlpt,
 
     BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cccd_md.read_perm);
     cccd_md.write_perm = p_sc_ctrlpt_init->sc_ctrlpt_attr_md.cccd_write_perm;
-    cccd_md.vloc = BLE_GATTS_VLOC_STACK;
+    cccd_md.vloc       = BLE_GATTS_VLOC_STACK;
 
     memset(&char_md, 0, sizeof(char_md));
-    
+
     char_md.char_props.indicate = 1;
     char_md.char_props.write    = 1;
     char_md.p_char_user_desc    = NULL;
@@ -67,9 +68,9 @@ uint32_t ble_sc_ctrlpt_init(ble_sc_ctrlpt_t *            p_sc_ctrlpt,
     char_md.p_user_desc_md      = NULL;
     char_md.p_cccd_md           = &cccd_md;
     char_md.p_sccd_md           = NULL;
-    
+
     BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_SC_CTRLPT_CHAR);
-    
+
     memset(&attr_md, 0, sizeof(attr_md));
 
     BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&attr_md.read_perm);
@@ -78,16 +79,16 @@ uint32_t ble_sc_ctrlpt_init(ble_sc_ctrlpt_t *            p_sc_ctrlpt,
     attr_md.rd_auth    = 0;
     attr_md.wr_auth    = 1;
     attr_md.vlen       = 1;
-    
+
     memset(&attr_char_value, 0, sizeof(attr_char_value));
-    
-    attr_char_value.p_uuid       = &ble_uuid;
-    attr_char_value.p_attr_md    = &attr_md;
-    attr_char_value.init_len     = 0;
-    attr_char_value.init_offs    = 0;
-    attr_char_value.max_len      = BLE_SC_CTRLPT_MAX_LEN;
-    attr_char_value.p_value      = 0;
-    
+
+    attr_char_value.p_uuid    = &ble_uuid;
+    attr_char_value.p_attr_md = &attr_md;
+    attr_char_value.init_len  = 0;
+    attr_char_value.init_offs = 0;
+    attr_char_value.max_len   = BLE_SC_CTRLPT_MAX_LEN;
+    attr_char_value.p_value   = 0;
+
     return sd_ble_gatts_characteristic_add(p_sc_ctrlpt->service_handle,
                                            &char_md,
                                            &attr_char_value,
@@ -101,7 +102,9 @@ uint32_t ble_sc_ctrlpt_init(ble_sc_ctrlpt_t *            p_sc_ctrlpt,
  * @param[in]    len            value length
  * @param[out]   decoded_ctrlpt decoded control point structure
  */
-static uint32_t sc_ctrlpt_decode(uint8_t * p_rcvd_val, uint8_t len, ble_sc_ctrlpt_val_t * p_write_val)
+static uint32_t sc_ctrlpt_decode(uint8_t             * p_rcvd_val,
+                                 uint8_t               len,
+                                 ble_sc_ctrlpt_val_t * p_write_val)
 {
     int pos = 0;
 
@@ -111,6 +114,7 @@ static uint32_t sc_ctrlpt_decode(uint8_t * p_rcvd_val, uint8_t len, ble_sc_ctrlp
     }
 
     p_write_val->opcode = (ble_scpt_operator_t) p_rcvd_val[pos++];
+
     switch (p_write_val->opcode)
     {
         case BLE_SCPT_REQUEST_SUPPORTED_SENSOR_LOCATIONS:
@@ -127,7 +131,7 @@ static uint32_t sc_ctrlpt_decode(uint8_t * p_rcvd_val, uint8_t len, ble_sc_ctrlp
             p_write_val->cumulative_value = uint32_decode(&(p_rcvd_val[pos]));
             break;
 
-        default :
+        default:
             return NRF_ERROR_INVALID_PARAM;
     }
     return NRF_SUCCESS;
@@ -141,9 +145,9 @@ static uint32_t sc_ctrlpt_decode(uint8_t * p_rcvd_val, uint8_t len, ble_sc_ctrlp
  * @param[out]  p_data        pointer where data needs to be written
  * @return                    size of encoded data
  */
-static int ctrlpt_rsp_encode(ble_sc_ctrlpt_t *     p_sc_ctrlpt,
+static int ctrlpt_rsp_encode(ble_sc_ctrlpt_t     * p_sc_ctrlpt,
                              ble_sc_ctrlpt_rsp_t * p_ctrlpt_rsp,
-                             uint8_t *             p_data)
+                             uint8_t             * p_data)
 {
     int len = 0;
 
@@ -232,9 +236,9 @@ static bool is_cccd_configured(ble_sc_ctrlpt_t * p_sc_ctrlpt)
  */
 static void sc_ctrlpt_resp_send(ble_sc_ctrlpt_t * p_sc_ctrlpt)
 {
-    uint16_t                              hvx_len;
-    ble_gatts_hvx_params_t                hvx_params;
-    uint32_t                              err_code;
+    uint16_t               hvx_len;
+    ble_gatts_hvx_params_t hvx_params;
+    uint32_t               err_code;
 
     if ((p_sc_ctrlpt->procedure_status == BLE_SCPT_INDICATION_PENDING))
     {
@@ -284,10 +288,10 @@ static void sc_ctrlpt_resp_send(ble_sc_ctrlpt_t * p_sc_ctrlpt)
  * @param[in]   p_sc_ctrlpt      SC Ctrlpt structure.
  * @param[in]   p_evt_write      WRITE event to be handled.
  */
-static void on_ctrlpt_write(ble_sc_ctrlpt_t *       p_sc_ctrlpt,
+static void on_ctrlpt_write(ble_sc_ctrlpt_t       * p_sc_ctrlpt,
                             ble_gatts_evt_write_t * p_evt_write)
 {
-    ble_sc_ctrlpt_val_t                   rcvd_ctrlpt;
+    ble_sc_ctrlpt_val_t                   rcvd_ctrlpt = { BLE_SCPT_RESPONSE_CODE , 0, BLE_SENSOR_LOCATION_OTHER };
     ble_sc_ctrlpt_rsp_t                   rsp;
     uint32_t                              err_code;
     ble_gatts_rw_authorize_reply_params_t auth_reply;
@@ -311,7 +315,7 @@ static void on_ctrlpt_write(ble_sc_ctrlpt_t *       p_sc_ctrlpt,
     {
         auth_reply.params.write.gatt_status = SC_CTRLPT_NACK_CCCD_IMPROPERLY_CONFIGURED;
     }
-    
+
     err_code = sd_ble_gatts_rw_authorize_reply(p_sc_ctrlpt->conn_handle, &auth_reply);
     if (err_code != NRF_SUCCESS)
     {
@@ -321,7 +325,7 @@ static void on_ctrlpt_write(ble_sc_ctrlpt_t *       p_sc_ctrlpt,
             p_sc_ctrlpt->error_handler(err_code);
         }
     }
-    
+
     if (auth_reply.params.write.gatt_status != BLE_GATT_STATUS_SUCCESS)
     {
         return;
@@ -329,7 +333,7 @@ static void on_ctrlpt_write(ble_sc_ctrlpt_t *       p_sc_ctrlpt,
 
     p_sc_ctrlpt->procedure_status = BLE_SCPT_INDICATION_PENDING;
     rsp.status                    = BLE_SCPT_OP_CODE_NOT_SUPPORTED;
-    
+
     err_code = sc_ctrlpt_decode(p_evt_write->data, p_evt_write->len, &rcvd_ctrlpt);
     if (err_code != NRF_SUCCESS)
     {
@@ -344,7 +348,7 @@ static void on_ctrlpt_write(ble_sc_ctrlpt_t *       p_sc_ctrlpt,
         {
             case BLE_SCPT_REQUEST_SUPPORTED_SENSOR_LOCATIONS:
                 if ((p_sc_ctrlpt->supported_functions & 
-                     BLE_SRV_SC_CTRLPT_SENSOR_LOCATIONS_OP_SUPPORTED) == 
+                     BLE_SRV_SC_CTRLPT_SENSOR_LOCATIONS_OP_SUPPORTED) ==
                      BLE_SRV_SC_CTRLPT_SENSOR_LOCATIONS_OP_SUPPORTED)
                 {
                     rsp.status = BLE_SCPT_SUCCESS;
@@ -357,13 +361,13 @@ static void on_ctrlpt_write(ble_sc_ctrlpt_t *       p_sc_ctrlpt,
 
             case BLE_SCPT_UPDATE_SENSOR_LOCATION:
                 if ((p_sc_ctrlpt->supported_functions & 
-                     BLE_SRV_SC_CTRLPT_SENSOR_LOCATIONS_OP_SUPPORTED) == 
+                     BLE_SRV_SC_CTRLPT_SENSOR_LOCATIONS_OP_SUPPORTED) ==
                      BLE_SRV_SC_CTRLPT_SENSOR_LOCATIONS_OP_SUPPORTED)
                 {
                     if (is_location_supported(p_sc_ctrlpt, rcvd_ctrlpt.location))
                     {
-                        uint8_t rcvd_location = (uint8_t)rcvd_ctrlpt.location;
-                        uint16_t set_len = sizeof(uint8_t);
+                        uint8_t  rcvd_location = (uint8_t)rcvd_ctrlpt.location;
+                        uint16_t set_len       = sizeof(uint8_t);
                         rsp.status = BLE_SCPT_SUCCESS;
 
                         evt.evt_type               = BLE_SC_CTRLPT_EVT_UPDATE_LOCATION;
@@ -399,10 +403,10 @@ static void on_ctrlpt_write(ble_sc_ctrlpt_t *       p_sc_ctrlpt,
                     rsp.status = BLE_SCPT_OP_CODE_NOT_SUPPORTED;
                 }
                 break;
-                
+
             case BLE_SCPT_SET_CUMULATIVE_VALUE:
                 if ((p_sc_ctrlpt->supported_functions &
-                     BLE_SRV_SC_CTRLPT_CUM_VAL_OP_SUPPORTED) == 
+                     BLE_SRV_SC_CTRLPT_CUM_VAL_OP_SUPPORTED) ==
                      BLE_SRV_SC_CTRLPT_CUM_VAL_OP_SUPPORTED)
                 {
                     rsp.status = BLE_SCPT_SUCCESS;
@@ -419,10 +423,10 @@ static void on_ctrlpt_write(ble_sc_ctrlpt_t *       p_sc_ctrlpt,
                     rsp.status = BLE_SCPT_OP_CODE_NOT_SUPPORTED;
                 }
                 break;
-                
+
             case BLE_SCPT_START_AUTOMATIC_CALIBRATION:
                 if ((p_sc_ctrlpt->supported_functions &
-                     BLE_SRV_SC_CTRLPT_START_CALIB_OP_SUPPORTED) == 
+                     BLE_SRV_SC_CTRLPT_START_CALIB_OP_SUPPORTED) ==
                      BLE_SRV_SC_CTRLPT_START_CALIB_OP_SUPPORTED)
                 {
                     p_sc_ctrlpt->procedure_status = BLE_SCPT_AUTOMATIC_CALIB_IN_PROGRESS;
@@ -432,7 +436,7 @@ static void on_ctrlpt_write(ble_sc_ctrlpt_t *       p_sc_ctrlpt,
                         rsp.status = p_sc_ctrlpt->evt_handler(p_sc_ctrlpt, &evt);
                         if (rsp.status != BLE_SCPT_SUCCESS)
                         {
-                            p_sc_ctrlpt->procedure_status = BLE_SCPT_INDICATION_PENDING;   //if the application returns an error, the response is to be sent right away and the calibration is considered as not started.
+                            p_sc_ctrlpt->procedure_status = BLE_SCPT_INDICATION_PENDING;  //if the application returns an error, the response is to be sent right away and the calibration is considered as not started.
                         }
                     }
                 }
@@ -441,8 +445,8 @@ static void on_ctrlpt_write(ble_sc_ctrlpt_t *       p_sc_ctrlpt,
                     rsp.status = BLE_SCPT_OP_CODE_NOT_SUPPORTED;
                 }
                 break;
-                
-            default :
+
+            default:
                 rsp.status = BLE_SCPT_OP_CODE_NOT_SUPPORTED;
                 break;
         }
@@ -548,11 +552,11 @@ void ble_sc_ctrlpt_on_ble_evt(ble_sc_ctrlpt_t * p_sc_ctrlpt, ble_evt_t * p_ble_e
         case BLE_GAP_EVT_CONNECTED:
             on_connect(p_sc_ctrlpt, p_ble_evt);
             break;
-             
+
         case BLE_GAP_EVT_DISCONNECTED:
             on_disconnect(p_sc_ctrlpt, p_ble_evt);
             break;
-           
+
         case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
             on_rw_authorize_request(p_sc_ctrlpt, &p_ble_evt->evt.gatts_evt);
             break;
@@ -564,8 +568,8 @@ void ble_sc_ctrlpt_on_ble_evt(ble_sc_ctrlpt_t * p_sc_ctrlpt, ble_evt_t * p_ble_e
         case BLE_EVT_TX_COMPLETE:
             on_tx_complete(p_sc_ctrlpt);
             break;
-        
-        default :
+
+        default:
             break;
     }
 }
@@ -585,7 +589,7 @@ uint32_t ble_sc_ctrlpt_rsp_send(ble_sc_ctrlpt_t * p_sc_ctrlpt, ble_scpt_response
     }
     rsp.status = response_status;
     rsp.opcode = BLE_SCPT_START_AUTOMATIC_CALIBRATION;
-    hvx_len = ctrlpt_rsp_encode(p_sc_ctrlpt, &rsp, encoded_ctrl_rsp);
+    hvx_len    = ctrlpt_rsp_encode(p_sc_ctrlpt, &rsp, encoded_ctrl_rsp);
 
     // Send indication
     memset(&hvx_params, 0, sizeof(hvx_params));

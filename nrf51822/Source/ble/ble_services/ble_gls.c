@@ -21,14 +21,14 @@
 #include "ble_gls_db.h"
 
 
-#define OPERAND_FILTER_TYPE_SEQ_NUM       0x01                              /**< Filter data using Sequence Number criteria. */
-#define OPERAND_FILTER_TYPE_FACING_TIME   0x02                              /**< Filter data using User Facing Time criteria. */
-#define OPERAND_FILTER_TYPE_RFU_START     0x07                              /**< Start of filter types reserved For Future Use range */
-#define OPERAND_FILTER_TYPE_RFU_END       0xFF                              /**< End of filter types reserved For Future Use range */
+#define OPERAND_FILTER_TYPE_SEQ_NUM     0x01                              /**< Filter data using Sequence Number criteria. */
+#define OPERAND_FILTER_TYPE_FACING_TIME 0x02                              /**< Filter data using User Facing Time criteria. */
+#define OPERAND_FILTER_TYPE_RFU_START   0x07                              /**< Start of filter types reserved For Future Use range */
+#define OPERAND_FILTER_TYPE_RFU_END     0xFF                              /**< End of filter types reserved For Future Use range */
 
-#define OPCODE_LENGTH  1                                                    /**< Length of opcode inside Glucose Measurement packet. */
-#define HANDLE_LENGTH  2                                                    /**< Length of handle inside Glucose Measurement packet. */
-#define MAX_GLM_LEN    (BLE_L2CAP_MTU_DEF - OPCODE_LENGTH - HANDLE_LENGTH)  /**< Maximum size of a transmitted Glucose Measurement. */
+#define OPCODE_LENGTH 1                                                    /**< Length of opcode inside Glucose Measurement packet. */
+#define HANDLE_LENGTH 2                                                    /**< Length of handle inside Glucose Measurement packet. */
+#define MAX_GLM_LEN   (BLE_L2CAP_MTU_DEF - OPCODE_LENGTH - HANDLE_LENGTH)  /**< Maximum size of a transmitted Glucose Measurement. */
 
 #define GLS_NACK_PROC_ALREADY_IN_PROGRESS   BLE_GATT_STATUS_ATTERR_APP_BEGIN + 0
 #define GLS_NACK_CCCD_IMPROPERLY_CONFIGURED BLE_GATT_STATUS_ATTERR_APP_BEGIN + 1
@@ -36,21 +36,21 @@
 /**@brief Glucose Service communication state. */
 typedef enum
 {
-    STATE_NO_COMM,                                                          /**< The service is not in a communicating state. */
-    STATE_RACP_PROC_ACTIVE,                                                 /**< Processing requested data. */
-    STATE_RACP_RESPONSE_PENDING,                                            /**< There is a RACP indication waiting to be sent. */
-    STATE_RACP_RESPONSE_IND_VERIF                                           /**< Waiting for a verification of a RACP indication. */
+    STATE_NO_COMM,                                                         /**< The service is not in a communicating state. */
+    STATE_RACP_PROC_ACTIVE,                                                /**< Processing requested data. */
+    STATE_RACP_RESPONSE_PENDING,                                           /**< There is a RACP indication waiting to be sent. */
+    STATE_RACP_RESPONSE_IND_VERIF                                          /**< Waiting for a verification of a RACP indication. */
 } gls_state_t;
 
-static gls_state_t      m_gls_state;                                        /**< Current communication state. */
-static uint16_t         m_next_seq_num;                                     /**< Sequence number of the next database record. */
-static uint8_t          m_racp_proc_operator;                               /**< Operator of current request. */
-static uint16_t         m_racp_proc_seq_num;                                /**< Sequence number of current request. */
-static uint8_t          m_racp_proc_record_ndx;                             /**< Current record index. */
-static uint8_t          m_racp_proc_records_reported;                       /**< Number of reported records. */
-static uint8_t          m_racp_proc_records_reported_since_txcomplete;      /**< Number of reported records since last TX_COMPLETE event. */
-static ble_racp_value_t m_pending_racp_response;                            /**< RACP response to be sent. */
-static uint8_t          m_pending_racp_response_operand[2];                 /**< Operand of RACP response to be sent. */
+static gls_state_t      m_gls_state;                                       /**< Current communication state. */
+static uint16_t         m_next_seq_num;                                    /**< Sequence number of the next database record. */
+static uint8_t          m_racp_proc_operator;                              /**< Operator of current request. */
+static uint16_t         m_racp_proc_seq_num;                               /**< Sequence number of current request. */
+static uint8_t          m_racp_proc_record_ndx;                            /**< Current record index. */
+static uint8_t          m_racp_proc_records_reported;                      /**< Number of reported records. */
+static uint8_t          m_racp_proc_records_reported_since_txcomplete;     /**< Number of reported records since last TX_COMPLETE event. */
+static ble_racp_value_t m_pending_racp_response;                           /**< RACP response to be sent. */
+static uint8_t          m_pending_racp_response_operand[2];                /**< Operand of RACP response to be sent. */
 
 
 /**@brief Function for setting the GLS communication state.
@@ -71,7 +71,7 @@ static uint32_t next_sequence_number_set(void)
 {
     uint16_t      num_records;
     ble_gls_rec_t rec;
-    
+
     num_records = ble_gls_db_num_records_get();
     if (num_records > 0)
     {
@@ -87,7 +87,7 @@ static uint32_t next_sequence_number_set(void)
     {
         m_next_seq_num = 0;
     }
-    
+
     return NRF_SUCCESS;
 }
 
@@ -102,34 +102,34 @@ static uint32_t next_sequence_number_set(void)
 static uint8_t gls_meas_encode(const ble_gls_meas_t * p_meas, uint8_t * p_encoded_buffer)
 {
     uint8_t len = 0;
-  
+
     p_encoded_buffer[len++] = p_meas->flags;
-    
+
     len += uint16_encode(p_meas->sequence_number, &p_encoded_buffer[len]);
     len += ble_date_time_encode(&p_meas->base_time, &p_encoded_buffer[len]);
-    
+
     if (p_meas->flags & BLE_GLS_MEAS_FLAG_TIME_OFFSET)
     {
         len += uint16_encode(p_meas->time_offset, &p_encoded_buffer[len]);
     }
-    
+
     if (p_meas->flags & BLE_GLS_MEAS_FLAG_CONC_TYPE_LOC)
-    {  
+    {
         uint16_t encoded_concentration;
-        
+
         encoded_concentration = ((p_meas->glucose_concentration.exponent << 12) & 0xF000) |
                                 ((p_meas->glucose_concentration.mantissa <<  0) & 0x0FFF);
-        
+
         p_encoded_buffer[len++] = (uint8_t)(encoded_concentration);
         p_encoded_buffer[len++] = (uint8_t)(encoded_concentration >> 8);
         p_encoded_buffer[len++] = (p_meas->sample_location << 4) | (p_meas->type & 0x0F);
     }
-    
+
     if (p_meas->flags & BLE_GLS_MEAS_FLAG_SENSOR_STATUS)
     {
         len += uint16_encode(p_meas->sensor_status_annunciation, &p_encoded_buffer[len]);
     }
-  
+
     return len;
 }
 
@@ -150,34 +150,32 @@ static uint32_t glucose_measurement_char_add(ble_gls_t * p_gls)
     ble_gls_rec_t       initial_gls_rec_value;
     uint8_t             encoded_gls_meas[MAX_GLM_LEN];
     uint8_t             num_recs;
-    
     memset(&cccd_md, 0, sizeof(cccd_md));
 
     BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cccd_md.read_perm);
     BLE_GAP_CONN_SEC_MODE_SET_ENC_NO_MITM(&cccd_md.write_perm);
     cccd_md.vloc = BLE_GATTS_VLOC_STACK;
-    
+
     memset(&char_md, 0, sizeof(char_md));
-    
+
     char_md.char_props.notify = 1;
     char_md.p_char_user_desc  = NULL;
     char_md.p_char_pf         = NULL;
     char_md.p_user_desc_md    = NULL;
     char_md.p_cccd_md         = &cccd_md;
     char_md.p_sccd_md         = NULL;
-    
+
     BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_GLUCOSE_MEASUREMENT_CHAR);
-    
     memset(&attr_md, 0, sizeof(attr_md));
 
     BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&attr_md.read_perm);
     BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&attr_md.write_perm);
 
-    attr_md.vloc       = BLE_GATTS_VLOC_STACK;
-    attr_md.rd_auth    = 0;
-    attr_md.wr_auth    = 0;
-    attr_md.vlen       = 1;
-    
+    attr_md.vloc    = BLE_GATTS_VLOC_STACK;
+    attr_md.rd_auth = 0;
+    attr_md.wr_auth = 0;
+    attr_md.vlen    = 1;
+
     memset(&attr_char_value, 0, sizeof(attr_char_value));
     memset(&initial_gls_rec_value, 0, sizeof(initial_gls_rec_value));
 
@@ -190,14 +188,14 @@ static uint32_t glucose_measurement_char_add(ble_gls_t * p_gls)
             return err_code;
         }
     }
-    
-    attr_char_value.p_uuid       = &ble_uuid;
-    attr_char_value.p_attr_md    = &attr_md;
-    attr_char_value.init_len     = gls_meas_encode(&initial_gls_rec_value.meas, encoded_gls_meas);
-    attr_char_value.init_offs    = 0;
-    attr_char_value.max_len      = MAX_GLM_LEN;
-    attr_char_value.p_value      = encoded_gls_meas;
-    
+
+    attr_char_value.p_uuid    = &ble_uuid;
+    attr_char_value.p_attr_md = &attr_md;
+    attr_char_value.init_len  = gls_meas_encode(&initial_gls_rec_value.meas, encoded_gls_meas);
+    attr_char_value.init_offs = 0;
+    attr_char_value.max_len   = MAX_GLM_LEN;
+    attr_char_value.p_value   = encoded_gls_meas;
+
     return sd_ble_gatts_characteristic_add(p_gls->service_handle,
                                            &char_md,
                                            &attr_char_value,
@@ -220,38 +218,38 @@ static uint32_t glucose_feature_char_add(ble_gls_t * p_gls)
     uint8_t             encoded_initial_feature[2];
 
     memset(&char_md, 0, sizeof(char_md));
-    
+
     char_md.char_props.read  = 1;    
     char_md.p_char_user_desc = NULL;
     char_md.p_char_pf        = NULL;
     char_md.p_user_desc_md   = NULL;
     char_md.p_cccd_md        = NULL;
     char_md.p_sccd_md        = NULL;
-    
+
     BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_GLUCOSE_FEATURE_CHAR);
-    
+
     memset(&attr_md, 0, sizeof(attr_md));
 
     BLE_GAP_CONN_SEC_MODE_SET_ENC_NO_MITM(&attr_md.read_perm);
     BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&attr_md.write_perm);
 
-    attr_md.vloc       = BLE_GATTS_VLOC_STACK;
-    attr_md.rd_auth    = 0;
-    attr_md.wr_auth    = 0;
-    attr_md.vlen       = 0;
-    
+    attr_md.vloc    = BLE_GATTS_VLOC_STACK;
+    attr_md.rd_auth = 0;
+    attr_md.wr_auth = 0;
+    attr_md.vlen    = 0;
+
     memset(&attr_char_value, 0, sizeof(attr_char_value));
-    
+
     encoded_initial_feature[0] = (uint8_t)(p_gls->feature);
     encoded_initial_feature[1] = (uint8_t)((p_gls->feature) >> 8);
-    
-    attr_char_value.p_uuid       = &ble_uuid;
-    attr_char_value.p_attr_md    = &attr_md;
-    attr_char_value.init_len     = sizeof(uint16_t);
-    attr_char_value.init_offs    = 0;
-    attr_char_value.max_len      = sizeof(uint16_t);
-    attr_char_value.p_value      = encoded_initial_feature;
-    
+
+    attr_char_value.p_uuid    = &ble_uuid;
+    attr_char_value.p_attr_md = &attr_md;
+    attr_char_value.init_len  = sizeof (uint16_t);
+    attr_char_value.init_offs = 0;
+    attr_char_value.max_len   = sizeof (uint16_t);
+    attr_char_value.p_value   = encoded_initial_feature;
+
     return sd_ble_gatts_characteristic_add(p_gls->service_handle,
                                            &char_md,
                                            &attr_char_value,
@@ -272,7 +270,7 @@ static uint32_t record_access_control_point_char_add(ble_gls_t * p_gls)
     ble_gatts_attr_t    attr_char_value;
     ble_uuid_t          ble_uuid;
     ble_gatts_attr_md_t attr_md;
-  
+
     memset(&cccd_md, 0, sizeof(cccd_md));
 
     BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cccd_md.read_perm);
@@ -280,7 +278,7 @@ static uint32_t record_access_control_point_char_add(ble_gls_t * p_gls)
     cccd_md.vloc = BLE_GATTS_VLOC_STACK;
 
     memset(&char_md, 0, sizeof(char_md));
-    
+
     char_md.char_props.indicate = 1;
     char_md.char_props.write    = 1;
     char_md.p_char_user_desc    = NULL;
@@ -288,28 +286,28 @@ static uint32_t record_access_control_point_char_add(ble_gls_t * p_gls)
     char_md.p_user_desc_md      = NULL;
     char_md.p_cccd_md           = &cccd_md;
     char_md.p_sccd_md           = NULL;
-    
+
     BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_RECORD_ACCESS_CONTROL_POINT_CHAR);
-    
+
     memset(&attr_md, 0, sizeof(attr_md));
 
     BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&attr_md.read_perm);
     BLE_GAP_CONN_SEC_MODE_SET_ENC_NO_MITM(&attr_md.write_perm);
 
-    attr_md.vloc       = BLE_GATTS_VLOC_STACK;
-    attr_md.rd_auth    = 0;
-    attr_md.wr_auth    = 1;
-    attr_md.vlen       = 1;
+    attr_md.vloc    = BLE_GATTS_VLOC_STACK;
+    attr_md.rd_auth = 0;
+    attr_md.wr_auth = 1;
+    attr_md.vlen    = 1;
     
     memset(&attr_char_value, 0, sizeof(attr_char_value));
     
-    attr_char_value.p_uuid       = &ble_uuid;
-    attr_char_value.p_attr_md    = &attr_md;
-    attr_char_value.init_len     = 0;
-    attr_char_value.init_offs    = 0;
-    attr_char_value.max_len      = BLE_L2CAP_MTU_DEF;
-    attr_char_value.p_value      = 0;
-    
+    attr_char_value.p_uuid    = &ble_uuid;
+    attr_char_value.p_attr_md = &attr_md;
+    attr_char_value.init_len  = 0;
+    attr_char_value.init_offs = 0;
+    attr_char_value.max_len   = BLE_L2CAP_MTU_DEF;
+    attr_char_value.p_value   = 0;
+
     return sd_ble_gatts_characteristic_add(p_gls->service_handle,
                                            &char_md,
                                            &attr_char_value,
@@ -336,17 +334,17 @@ uint32_t ble_gls_init(ble_gls_t * p_gls, const ble_gls_init_t * p_gls_init)
     }
 
     // Initialize service structure
-    p_gls->evt_handler             = p_gls_init->evt_handler;
-    p_gls->error_handler           = p_gls_init->error_handler;
-    p_gls->feature                 = p_gls_init->feature;
-    p_gls->is_context_supported    = p_gls_init->is_context_supported;
-    p_gls->conn_handle             = BLE_CONN_HANDLE_INVALID;
+    p_gls->evt_handler          = p_gls_init->evt_handler;
+    p_gls->error_handler        = p_gls_init->error_handler;
+    p_gls->feature              = p_gls_init->feature;
+    p_gls->is_context_supported = p_gls_init->is_context_supported;
+    p_gls->conn_handle          = BLE_CONN_HANDLE_INVALID;
 
- 
+
     // Initialize global variables
     state_set(STATE_NO_COMM);
     m_racp_proc_records_reported_since_txcomplete = 0;
-    
+
     // Add service
     BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_GLUCOSE_SERVICE);
 
@@ -355,14 +353,14 @@ uint32_t ble_gls_init(ble_gls_t * p_gls, const ble_gls_init_t * p_gls_init)
     {
         return err_code;
     }
-    
+
     // Add glucose measurement characteristic
     err_code = glucose_measurement_char_add(p_gls);
     if (err_code != NRF_SUCCESS)
     {
         return err_code;
     }
-    
+
     // Add glucose measurement feature characteristic
     err_code = glucose_feature_char_add(p_gls);
     if (err_code != NRF_SUCCESS)
@@ -376,7 +374,7 @@ uint32_t ble_gls_init(ble_gls_t * p_gls, const ble_gls_init_t * p_gls_init)
     {
         return err_code;
     }
-    
+
     return NRF_SUCCESS;
 }
 
@@ -393,31 +391,31 @@ static void racp_send(ble_gls_t * p_gls, ble_racp_value_t * p_racp_val)
     uint8_t                len;
     uint16_t               hvx_len;
     ble_gatts_hvx_params_t hvx_params;
-    
+
     if (
         (m_gls_state != STATE_RACP_RESPONSE_PENDING)
         &&
         (m_racp_proc_records_reported_since_txcomplete > 0)
-    )
+       )
     {
         state_set(STATE_RACP_RESPONSE_PENDING);
         return;
     }
-    
+
     // Send indication
     len     = ble_racp_encode(p_racp_val, encoded_resp);
     hvx_len = len;
 
     memset(&hvx_params, 0, sizeof(hvx_params));
 
-    hvx_params.handle   = p_gls->racp_handles.value_handle;
-    hvx_params.type     = BLE_GATT_HVX_INDICATION;
-    hvx_params.offset   = 0;
-    hvx_params.p_len    = &hvx_len;
-    hvx_params.p_data   = encoded_resp;
+    hvx_params.handle = p_gls->racp_handles.value_handle;
+    hvx_params.type   = BLE_GATT_HVX_INDICATION;
+    hvx_params.offset = 0;
+    hvx_params.p_len  = &hvx_len;
+    hvx_params.p_data = encoded_resp;
 
     err_code = sd_ble_gatts_hvx(p_gls->conn_handle, &hvx_params);
-    
+
     // Error handling
     if ((err_code == NRF_SUCCESS) && (hvx_len != len))
     {
@@ -429,17 +427,17 @@ static void racp_send(ble_gls_t * p_gls, ble_racp_value_t * p_racp_val)
             // Wait for HVC event
             state_set(STATE_RACP_RESPONSE_IND_VERIF);
             break;
-            
+
         case BLE_ERROR_NO_TX_BUFFERS:
             // Wait for TX_COMPLETE event to retry transmission
             state_set(STATE_RACP_RESPONSE_PENDING);
             break;
-            
+
         case NRF_ERROR_INVALID_STATE:
             // Make sure state machine returns to the default state
             state_set(STATE_NO_COMM);
             break;
-            
+
         default:
             // Report error to application
             if (p_gls->error_handler != NULL)
@@ -466,10 +464,10 @@ static void racp_response_code_send(ble_gls_t * p_gls, uint8_t opcode, uint8_t v
     m_pending_racp_response.operator    = RACP_OPERATOR_NULL;
     m_pending_racp_response.operand_len = 2;
     m_pending_racp_response.p_operand   = m_pending_racp_response_operand;
-    
+
     m_pending_racp_response_operand[0] = opcode;
     m_pending_racp_response_operand[1] = value;
-    
+
     racp_send(p_gls, &m_pending_racp_response);
 }
 
@@ -488,18 +486,18 @@ static uint32_t glucose_meas_send(ble_gls_t * p_gls, ble_gls_rec_t * p_rec)
     uint16_t               len;
     uint16_t               hvx_len;
     ble_gatts_hvx_params_t hvx_params;
-    
+
     len     = gls_meas_encode(&p_rec->meas, encoded_glm);
     hvx_len = len;
 
-    memset(&hvx_params, 0, sizeof(hvx_params));
-    
-    hvx_params.handle   = p_gls->glm_handles.value_handle;
-    hvx_params.type     = BLE_GATT_HVX_NOTIFICATION;
-    hvx_params.offset   = 0;
-    hvx_params.p_len    = &hvx_len;
-    hvx_params.p_data   = encoded_glm;
-    
+    memset(&hvx_params, 0, sizeof (hvx_params));
+
+    hvx_params.handle = p_gls->glm_handles.value_handle;
+    hvx_params.type   = BLE_GATT_HVX_NOTIFICATION;
+    hvx_params.offset = 0;
+    hvx_params.p_len  = &hvx_len;
+    hvx_params.p_data = encoded_glm;
+
     err_code = sd_ble_gatts_hvx(p_gls->conn_handle, &hvx_params);
     if (err_code == NRF_SUCCESS)
     {
@@ -528,7 +526,7 @@ static uint32_t glucose_meas_send(ble_gls_t * p_gls, ble_gls_rec_t * p_rec)
 static uint32_t racp_report_records_all(ble_gls_t * p_gls)
 {
     uint16_t total_records = ble_gls_db_num_records_get();
-    
+
     if (m_racp_proc_record_ndx >= total_records)
     {
         state_set(STATE_NO_COMM);
@@ -537,7 +535,7 @@ static uint32_t racp_report_records_all(ble_gls_t * p_gls)
     {
         uint32_t      err_code;
         ble_gls_rec_t rec;
-        
+
         err_code = ble_gls_db_record_get(m_racp_proc_record_ndx, &rec);
         if (err_code != NRF_SUCCESS)
         {
@@ -550,7 +548,7 @@ static uint32_t racp_report_records_all(ble_gls_t * p_gls)
             return err_code;
         }
     }
-    
+
     return NRF_SUCCESS;
 }
 
@@ -566,9 +564,9 @@ static uint32_t racp_report_records_first_last(ble_gls_t * p_gls)
     uint32_t      err_code;
     ble_gls_rec_t rec;
     uint16_t      total_records;
-    
+
     total_records = ble_gls_db_num_records_get();
-    
+
     if ((m_racp_proc_records_reported != 0) || (total_records == 0))
     {
         state_set(STATE_NO_COMM);
@@ -585,20 +583,20 @@ static uint32_t racp_report_records_first_last(ble_gls_t * p_gls)
         }
         else if (m_racp_proc_operator == RACP_OPERATOR_LAST)
         {
-            err_code = ble_gls_db_record_get(total_records - 1, &rec);                
+            err_code = ble_gls_db_record_get(total_records - 1, &rec);
             if (err_code != NRF_SUCCESS)
             {
                 return err_code;
             }
         }
-            
+
         err_code = glucose_meas_send(p_gls, &rec);
         if (err_code != NRF_SUCCESS)
         {
             return err_code;
         }
     }
-    
+
     return NRF_SUCCESS;
 }
 
@@ -612,13 +610,13 @@ static uint32_t racp_report_records_first_last(ble_gls_t * p_gls)
 static uint32_t racp_report_records_greater_or_equal(ble_gls_t * p_gls)
 {
     uint16_t total_records = ble_gls_db_num_records_get();
-    
+
     while (m_racp_proc_record_ndx < total_records)
     {
         uint32_t      err_code;
         ble_gls_rec_t rec;
 
-        err_code = ble_gls_db_record_get(m_racp_proc_record_ndx, &rec);            
+        err_code = ble_gls_db_record_get(m_racp_proc_record_ndx, &rec);
         if (err_code != NRF_SUCCESS)
         {
             return err_code;
@@ -635,11 +633,11 @@ static uint32_t racp_report_records_greater_or_equal(ble_gls_t * p_gls)
         }
         m_racp_proc_record_ndx++;
     }
-    if  (m_racp_proc_record_ndx == total_records)
+    if (m_racp_proc_record_ndx == total_records)
     {
         state_set(STATE_NO_COMM);
     }
-    
+
     return NRF_SUCCESS;
 }
 
@@ -651,7 +649,7 @@ static uint32_t racp_report_records_greater_or_equal(ble_gls_t * p_gls)
 static void racp_report_records_completed(ble_gls_t * p_gls)
 {
     uint8_t resp_code_value;
-    
+
     if (m_racp_proc_records_reported > 0)
     {
         resp_code_value = RACP_RESPONSE_SUCCESS;
@@ -660,7 +658,7 @@ static void racp_report_records_completed(ble_gls_t * p_gls)
     {
         resp_code_value = RACP_RESPONSE_NO_RECORDS_FOUND;
     }
-    
+
     racp_response_code_send(p_gls, RACP_OPCODE_REPORT_RECS, resp_code_value);
 }
 
@@ -672,7 +670,7 @@ static void racp_report_records_completed(ble_gls_t * p_gls)
 static void racp_report_records_procedure(ble_gls_t * p_gls)
 {
     uint32_t err_code;
-    
+
     while (m_gls_state == STATE_RACP_PROC_ACTIVE)
     {
         // Execute requested procedure
@@ -681,16 +679,16 @@ static void racp_report_records_procedure(ble_gls_t * p_gls)
             case RACP_OPERATOR_ALL:
                 err_code = racp_report_records_all(p_gls);
                 break;
-                
+
             case RACP_OPERATOR_FIRST:
             case RACP_OPERATOR_LAST:
                 err_code = racp_report_records_first_last(p_gls);
                 break;
-                
+
             case RACP_OPERATOR_GREATER_OR_EQUAL:
                 err_code = racp_report_records_greater_or_equal(p_gls);
                 break;
-                
+
             default:
                 // Report error to application
                 if (p_gls->error_handler != NULL)
@@ -716,16 +714,16 @@ static void racp_report_records_procedure(ble_gls_t * p_gls)
                     racp_report_records_completed(p_gls);
                 }
                 break;
-                
+
             case BLE_ERROR_NO_TX_BUFFERS:
                 // Wait for TX_COMPLETE event to resume transmission
                 return;
-                
+
             case NRF_ERROR_INVALID_STATE:
                 // Notification is probably not enabled. Ignore request.
                 state_set(STATE_NO_COMM);
                 return;
-                
+
             default:
                 // Report error to application
                 if (p_gls->error_handler != NULL)
@@ -753,11 +751,11 @@ static void racp_report_records_procedure(ble_gls_t * p_gls)
  *              returned to the central.
  */
 static bool is_request_to_be_executed(const ble_racp_value_t * p_racp_request,
-                                      uint8_t *                p_response_code)
+                                      uint8_t                * p_response_code)
 {
     *p_response_code = RACP_RESPONSE_RESERVED;
-    
-    if (p_racp_request->opcode == RACP_OPCODE_ABORT_OPERATION)  
+
+    if (p_racp_request->opcode == RACP_OPCODE_ABORT_OPERATION)
     {
         if (m_gls_state == STATE_RACP_PROC_ACTIVE)
         {
@@ -798,7 +796,7 @@ static bool is_request_to_be_executed(const ble_racp_value_t * p_racp_request,
                     *p_response_code = RACP_RESPONSE_INVALID_OPERAND;
                 }
                 break;
-                
+
             // operators WITH a filter
             case RACP_OPERATOR_GREATER_OR_EQUAL:
                 if (p_racp_request->p_operand[0] == OPERAND_FILTER_TYPE_SEQ_NUM)
@@ -821,19 +819,19 @@ static bool is_request_to_be_executed(const ble_racp_value_t * p_racp_request,
                     *p_response_code = RACP_RESPONSE_INVALID_OPERAND;
                 }
                 break;
-            
-            //  unsupported operators
+
+            // unsupported operators
             case RACP_OPERATOR_LESS_OR_EQUAL:
             case RACP_OPERATOR_RANGE:
-                    *p_response_code = RACP_RESPONSE_OPERATOR_UNSUPPORTED;
-                    break;
+                *p_response_code = RACP_RESPONSE_OPERATOR_UNSUPPORTED;
+                 break;
 
             // invalid operators
             case RACP_OPERATOR_NULL:
             default:
-                if(p_racp_request->operator >= RACP_OPERATOR_RFU_START)
+                if (p_racp_request->operator >= RACP_OPERATOR_RFU_START)
                 {
-                    *p_response_code = RACP_RESPONSE_OPERATOR_UNSUPPORTED; 
+                    *p_response_code = RACP_RESPONSE_OPERATOR_UNSUPPORTED;
                 }
                 else
                 {
@@ -845,14 +843,14 @@ static bool is_request_to_be_executed(const ble_racp_value_t * p_racp_request,
     // unsupported opcodes
     else if (p_racp_request->opcode == RACP_OPCODE_DELETE_RECS)
     {
-        *p_response_code = RACP_RESPONSE_OPCODE_UNSUPPORTED;        
+        *p_response_code = RACP_RESPONSE_OPCODE_UNSUPPORTED;
     }
     // unknown opcodes
     else
     {
         *p_response_code = RACP_RESPONSE_OPCODE_UNSUPPORTED;
     }
- 
+
     // NOTE: The computation of the return value will change slightly when deferred write has been
     //       implemented in the stack.
     return (*p_response_code == RACP_RESPONSE_RESERVED);
@@ -869,7 +867,7 @@ static void report_records_request_execute(ble_gls_t * p_gls, ble_racp_value_t *
     uint16_t seq_num = (p_racp_request->p_operand[2] << 8) | p_racp_request->p_operand[1];
 
     state_set(STATE_RACP_PROC_ACTIVE);
-    
+
     m_racp_proc_record_ndx       = 0;
     m_racp_proc_operator         = p_racp_request->operator;
     m_racp_proc_records_reported = 0;
@@ -888,10 +886,10 @@ static void report_num_records_request_execute(ble_gls_t * p_gls, ble_racp_value
 {
     uint16_t total_records;
     uint16_t num_records;
-    
+
     total_records = ble_gls_db_num_records_get();
     num_records   = 0;
-    
+
     if (p_racp_request->operator == RACP_OPERATOR_ALL)
     {
         num_records = total_records;
@@ -900,14 +898,14 @@ static void report_num_records_request_execute(ble_gls_t * p_gls, ble_racp_value
     {
         uint16_t seq_num;
         uint16_t i;
-        
+
         seq_num = (p_racp_request->p_operand[2] << 8) | p_racp_request->p_operand[1];
-        
+
         for (i = 0; i < total_records; i++)
         {
             uint32_t      err_code;
             ble_gls_rec_t rec;
-            
+
             err_code = ble_gls_db_record_get(i, &rec);
             if (err_code != NRF_SUCCESS)
             {
@@ -917,7 +915,7 @@ static void report_num_records_request_execute(ble_gls_t * p_gls, ble_racp_value
                 }
                 return;
             }
-            
+
             if (rec.meas.sequence_number >= seq_num)
             {
                 num_records++;
@@ -932,7 +930,7 @@ static void report_num_records_request_execute(ble_gls_t * p_gls, ble_racp_value
             num_records = 1;
         }
     }
-    
+
     m_pending_racp_response.opcode      = RACP_OPCODE_NUM_RECS_RESPONSE;
     m_pending_racp_response.operator    = RACP_OPERATOR_NULL;
     m_pending_racp_response.operand_len = sizeof(uint16_t);
@@ -957,7 +955,7 @@ uint32_t ble_gls_are_cccd_configured(ble_gls_t * p_gls, bool * p_are_cccd_config
     uint16_t len                   = BLE_CCCD_VALUE_LEN;
     bool     is_glm_notif_enabled  = false;
     bool     is_racp_indic_enabled = false;
-    
+
     err_code = sd_ble_gatts_value_get(p_gls->glm_handles.cccd_handle,
                                       0,
                                       &len,
@@ -967,7 +965,7 @@ uint32_t ble_gls_are_cccd_configured(ble_gls_t * p_gls, bool * p_are_cccd_config
         return err_code;
     }
     is_glm_notif_enabled = ble_srv_is_notification_enabled(cccd_value_buf);
-    
+
     err_code = sd_ble_gatts_value_get(p_gls->racp_handles.cccd_handle,
                                       0,
                                       &len,
@@ -1004,7 +1002,7 @@ static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt
 
     auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
 
-    err_code = ble_gls_are_cccd_configured(p_gls,&are_cccd_configured);
+    err_code = ble_gls_are_cccd_configured(p_gls, &are_cccd_configured);
     if (err_code != NRF_SUCCESS)
     {
         if (p_gls->error_handler != NULL)
@@ -1017,7 +1015,9 @@ static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt
     if (!are_cccd_configured)
     {
         auth_reply.params.write.gatt_status = GLS_NACK_CCCD_IMPROPERLY_CONFIGURED;
-        err_code = sd_ble_gatts_rw_authorize_reply(p_gls->conn_handle, &auth_reply);
+        err_code                            = sd_ble_gatts_rw_authorize_reply(p_gls->conn_handle,
+                                                                              &auth_reply);
+
         if (err_code != NRF_SUCCESS)
         {
             if (p_gls->error_handler != NULL)
@@ -1027,15 +1027,17 @@ static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt
         }
         return;
     }
-    
+
     // Decode request
     ble_racp_decode(p_evt_write->len, p_evt_write->data, &racp_request);
-    
+
     // Check if request is to be executed
     if (is_request_to_be_executed(&racp_request, &response_code))
     {
         auth_reply.params.write.gatt_status = BLE_GATT_STATUS_SUCCESS;
-        err_code = sd_ble_gatts_rw_authorize_reply(p_gls->conn_handle, &auth_reply);
+        err_code                            = sd_ble_gatts_rw_authorize_reply(p_gls->conn_handle,
+                                                                              &auth_reply);
+
         if (err_code != NRF_SUCCESS)
         {
             if (p_gls->error_handler != NULL)
@@ -1057,7 +1059,9 @@ static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt
     else if (response_code != RACP_RESPONSE_RESERVED)
     {
         auth_reply.params.write.gatt_status = BLE_GATT_STATUS_SUCCESS;
-        err_code = sd_ble_gatts_rw_authorize_reply(p_gls->conn_handle, &auth_reply);
+        err_code                            = sd_ble_gatts_rw_authorize_reply(p_gls->conn_handle,
+                                                                              &auth_reply);
+
         if (err_code != NRF_SUCCESS)
         {
             if (p_gls->error_handler != NULL)
@@ -1069,14 +1073,16 @@ static void on_racp_value_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt
 
         // Abort any running procedure
         state_set(STATE_NO_COMM);
-        
+
         // Respond with error code
         racp_response_code_send(p_gls, racp_request.opcode, response_code);
     }
     else
     {
         auth_reply.params.write.gatt_status = GLS_NACK_PROC_ALREADY_IN_PROGRESS;
-        err_code = sd_ble_gatts_rw_authorize_reply(p_gls->conn_handle, &auth_reply);
+        err_code                            = sd_ble_gatts_rw_authorize_reply(p_gls->conn_handle,
+                                                                              &auth_reply);
+
         if (err_code != NRF_SUCCESS)
         {
             if (p_gls->error_handler != NULL)
@@ -1109,7 +1115,7 @@ static void on_glm_cccd_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt_w
         {
             evt.evt_type = BLE_GLS_EVT_NOTIFICATION_DISABLED;
         }
-        
+
         if (p_gls->evt_handler != NULL)
         {
             p_gls->evt_handler(p_gls, &evt);
@@ -1128,7 +1134,7 @@ static void on_glm_cccd_write(ble_gls_t * p_gls, ble_gatts_evt_write_t * p_evt_w
 static void on_write(ble_gls_t * p_gls, ble_evt_t * p_ble_evt)
 {
     ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
-    
+
     if (p_evt_write->handle == p_gls->glm_handles.cccd_handle)
     {
         on_glm_cccd_write(p_gls, p_evt_write);
@@ -1191,6 +1197,7 @@ static void on_hvc(ble_gls_t * p_gls, ble_evt_t * p_ble_evt)
     }
 }
 
+
 static void on_rw_authorize_request(ble_gls_t * p_gls, ble_gatts_evt_t * p_gatts_evt)
 {
     ble_gatts_evt_rw_authorize_request_t * p_auth_req = &p_gatts_evt->params.authorize_request;
@@ -1211,23 +1218,23 @@ void ble_gls_on_ble_evt(ble_gls_t * p_gls, ble_evt_t * p_ble_evt)
             p_gls->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
             state_set(STATE_NO_COMM);
             break;
-            
+
         case BLE_GAP_EVT_DISCONNECTED:
             p_gls->conn_handle = BLE_CONN_HANDLE_INVALID;
             break;
-            
+
         case BLE_GATTS_EVT_WRITE:
             on_write(p_gls, p_ble_evt);
             break;
-            
+
         case BLE_EVT_TX_COMPLETE:
             on_tx_complete(p_gls, p_ble_evt);
             break;
-            
+
         case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
             on_rw_authorize_request(p_gls, &p_ble_evt->evt.gatts_evt);
             break;
-            
+
         case BLE_GATTS_EVT_HVC:
             on_hvc(p_gls, p_ble_evt);
             break;

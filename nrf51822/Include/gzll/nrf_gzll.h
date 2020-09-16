@@ -8,7 +8,7 @@
  * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
  * the file.
  *
- * $LastChangedRevision: 29442 $
+ * $LastChangedRevision: 39629 $
  */
 
 
@@ -41,6 +41,7 @@ typedef enum
 {
   NRF_GZLL_MODE_DEVICE,       ///< Device mode
   NRF_GZLL_MODE_HOST,         ///< Host mode
+  NRF_GZLL_MODE_SUSPEND,      ///< Suspend mode ("disabled with timer running")
 } nrf_gzll_mode_t;
 
 
@@ -202,7 +203,6 @@ bool nrf_gzll_init(nrf_gzll_mode_t mode);
  */
 bool nrf_gzll_enable(void);
 
-
 /**
  * @brief Disable Gazell.
  *
@@ -299,6 +299,15 @@ void nrf_gzll_host_rx_data_ready(uint32_t pipe, nrf_gzll_host_rx_info_t rx_info)
  * powered down.
  */
 void nrf_gzll_disabled(void);
+
+
+/** 
+ * @brief Mode changed callbackl. 
+ * 
+ * This function is called after the Gazell mode has been changed.
+ * This function can only be called when Gazell is enabled.
+ */
+void nrf_gzll_mode_changed(void);
 
 
 /** @} */
@@ -434,9 +443,13 @@ bool nrf_gzll_flush_rx_fifo(uint32_t pipe);
  *
  * @param mode The mode to be used. 
  *             See nrf_gzll_mode_t for a list of valid modes. 
+ * 
+ * It is allowed to change mode when Gazell is enabled. If the mode is
+ * being changed while Gazell is enabled, the mode will not change right away. 
+ * In this case the callback function nrf_gzll_mode_changed() will be called
+ * after the mdoe has changed.
  *
  * @retval true  If the parameter was set. 
- * @retval false If Gazell was enabled or the mode was invalid.
  */
 bool nrf_gzll_set_mode(nrf_gzll_mode_t mode);
 

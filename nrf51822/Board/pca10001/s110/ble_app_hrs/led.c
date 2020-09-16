@@ -35,7 +35,7 @@
 #define ADVERTISING_LED_PIN_NO               LED_0                                     /**< Is on when device is advertising. */
 
 #define PPI_CHAN0_TO_TOGGLE_LED              0                                         /**< The PPI Channel that connects CC0 compare event to the GPIOTE Task that toggles the Advertising LED. */
-#define GPIOTE_CHAN_FOR_LED_TASK             0                                         /**< The GPIOTE Channel used to perform write operation on the Advertising LED pin. */
+#define GPIOTE_CHAN_FOR_LED_TASK             3                                         /**< The GPIOTE Channel used to perform write operation on the Advertising LED pin. */
 #define TIMER_PRESCALER                      9                                         /**< Prescaler setting for timer. */
 #define CAPTURE_COMPARE_0_VALUE              0x1E84                                    /**< Capture compare value that corresponds to 250 ms. */
 
@@ -81,9 +81,8 @@ static void ppi_init(void)
     // Configure PPI channel 0 to toggle ADVERTISING_LED_PIN_NO on every TIMER1 COMPARE[0] match
     err_code = sd_ppi_channel_assign(PPI_CHAN0_TO_TOGGLE_LED,
                                      &(NRF_TIMER1->EVENTS_COMPARE[0]),
-                                     &(NRF_GPIOTE->TASKS_OUT[0]));
+                                     &(NRF_GPIOTE->TASKS_OUT[GPIOTE_CHAN_FOR_LED_TASK]));
     APP_ERROR_CHECK(err_code);
-
 
     // Enable PPI channel 0
     err_code = sd_ppi_channel_enable_set(PPI_CHEN_CH0_Msk);
@@ -96,7 +95,7 @@ static void gpiote_init(void)
     nrf_gpiote_task_config(GPIOTE_CHAN_FOR_LED_TASK,
                            ADVERTISING_LED_PIN_NO,
                            NRF_GPIOTE_POLARITY_TOGGLE,
-                           NRF_GPIOTE_INITIAL_VALUE_LOW);
+                           NRF_GPIOTE_INITIAL_VALUE_HIGH);
 }
 
 void led_start(void)
@@ -110,7 +109,6 @@ void led_start(void)
     NRF_TIMER1->TASKS_START = 1;
 }
 
-
 void led_stop(void)
 {
     // Disable the GPIOTE_CHAN_FOR_LED_TASK. This is because when an task has been configured
@@ -123,8 +121,6 @@ void led_stop(void)
 
     nrf_gpio_pin_clear(ADVERTISING_LED_PIN_NO);
 }
-
-
 
 /**
  * @}

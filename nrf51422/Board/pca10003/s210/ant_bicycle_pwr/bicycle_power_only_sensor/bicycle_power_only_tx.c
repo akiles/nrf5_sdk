@@ -15,6 +15,7 @@
 #include "ant_interface.h"
 #include "ant_parameters.h"
 #include "app_error.h"
+#include "app_util.h"
 
 #define HIGH_BYTE(word) (uint8_t)((word >> 8) & 0x00FFu)    /**< Get high byte of a uint16_t. */
 #define LOW_BYTE(word)  (uint8_t)(word & 0x00FFu)           /**< Get low byte of a uint16_t. */

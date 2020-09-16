@@ -27,8 +27,8 @@
 #include "nrf_gpio.h"
 #include "boards.h"
 
-#define TIMER_DELAY_MS               (100UL)   /**< Timer Delay in milli-seconds. */
-#define GPIO_TOGGLE_PIN              (LED_0)   /**< gpio pin to toggle after delay. */
+#define TIMER_DELAY_MS  (100UL)  /**< Timer Delay in milli-seconds. */
+#define GPIO_TOGGLE_PIN (LED_0)  /**< gpio pin to toggle after delay. */
 
 
 /** @def p_timer
@@ -36,9 +36,9 @@
  */
 typedef enum
 {
-  TIMER0 = 0,  /**< Timer 0 module, base address at 0x40008000. */
-  TIMER1,      /**< Timer 1 module, base address at 0x40009000. */
-  TIMER2       /**< Timer 2 module, base address at 0x4000A000. */
+    TIMER0 = 0,  /**< Timer 0 module, base address at 0x40008000. */
+    TIMER1,      /**< Timer 1 module, base address at 0x40009000. */
+    TIMER2       /**< Timer 2 module, base address at 0x4000A000. */
 } timer_t;
 
 static void nrf_timer_delay_ms(timer_t timer, uint_fast16_t volatile number_of_ms);
@@ -126,15 +126,15 @@ static void nrf_timer_delay_ms(timer_t timer, uint_fast16_t volatile number_of_m
         }
     }
 
-    p_timer->MODE           = TIMER_MODE_MODE_Timer;        // Set the timer in Timer Mode.
-    p_timer->PRESCALER      = 9;                            // Prescaler 9 produces 31250 Hz timer frequency => 1 tick = 32 us.
-    p_timer->BITMODE        = TIMER_BITMODE_BITMODE_16Bit;  // 16 bit mode.
-    p_timer->TASKS_CLEAR    = 1;                            // clear the task first to be usable for later.
+    p_timer->MODE        = TIMER_MODE_MODE_Timer;        // Set the timer in Timer Mode.
+    p_timer->PRESCALER   = 9;                            // Prescaler 9 produces 31250 Hz timer frequency => 1 tick = 32 us.
+    p_timer->BITMODE     = TIMER_BITMODE_BITMODE_16Bit;  // 16 bit mode.
+    p_timer->TASKS_CLEAR = 1;                            // clear the task first to be usable for later.
     
     // With 32 us ticks, we need to multiply by 31.25 to get milliseconds.
-    p_timer->CC[0]          = number_of_ms * 31;
-    p_timer->CC[0]         += number_of_ms / 4; 
-    p_timer->TASKS_START    = 1;                    // Start timer.
+    p_timer->CC[0]        = number_of_ms * 31;
+    p_timer->CC[0]       += number_of_ms / 4; 
+    p_timer->TASKS_START  = 1;  // Start timer.
 
     while (p_timer->EVENTS_COMPARE[0] == 0)
     {
@@ -142,6 +142,6 @@ static void nrf_timer_delay_ms(timer_t timer, uint_fast16_t volatile number_of_m
     }
 
     p_timer->EVENTS_COMPARE[0]  = 0;
-    p_timer->TASKS_STOP         = 1;                // Stop timer.
+    p_timer->TASKS_STOP         = 1;  // Stop timer.
 }
 /** @} */

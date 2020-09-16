@@ -26,7 +26,7 @@ static uint8_t txpower_;
 static uint8_t channel_start_;
 static uint8_t channel_end_;
 static uint8_t channel_;
-static bool sweep_tx_;
+static bool    sweep_tx_;
 
 /**
  * @brief Function for initializing Timer 0 in 24 bit timer mode with 1 us resolution.
@@ -55,11 +55,11 @@ static void timer0_init(uint8_t delayms)
 static uint32_t rnd8(void)
 {
     NRF_RNG->EVENTS_VALRDY = 0;
-    while(NRF_RNG->EVENTS_VALRDY == 0)
+    while (NRF_RNG->EVENTS_VALRDY == 0)
     {
         // Do nothing.
     }
-    return  NRF_RNG->VALUE;
+    return NRF_RNG->VALUE;
 }
 
 
@@ -68,13 +68,13 @@ static uint32_t rnd8(void)
 */
 static uint32_t rnd32(void)
 {
-    uint8_t i;
+    uint8_t  i;
     uint32_t val = 0;
 
-    for(i=0; i<4; i++)
+    for (i=0; i<4; i++)
     {
         val <<= 8;
-        val |= rnd8();
+        val  |= rnd8();
     }
     return val;
 }
@@ -94,8 +94,8 @@ static void generate_modulated_rf_packet(void)
     // Packet configuration:
     // S1 size = 0 bits, S0 size = 0 bytes, payload length size = 8 bits
     NRF_RADIO->PCNF0  = (0UL << RADIO_PCNF0_S1LEN_Pos) |
-                       (0UL << RADIO_PCNF0_S0LEN_Pos) |
-                       (8UL << RADIO_PCNF0_LFLEN_Pos);
+                        (0UL << RADIO_PCNF0_S0LEN_Pos) |
+                        (8UL << RADIO_PCNF0_LFLEN_Pos);
     // Packet configuration:
     // Bit 25: 1 Whitening enabled
     // Bit 24: 1 Big endian,
@@ -105,12 +105,12 @@ static void generate_modulated_rf_packet(void)
                         (RADIO_PCNF1_ENDIAN_Big << RADIO_PCNF1_ENDIAN_Pos) |
                         (4UL << RADIO_PCNF1_BALEN_Pos) |
                         (0UL << RADIO_PCNF1_STATLEN_Pos) |
-                       (255UL << RADIO_PCNF1_MAXLEN_Pos);
+                        (255UL << RADIO_PCNF1_MAXLEN_Pos);
     NRF_RADIO->CRCCNF = (RADIO_CRCCNF_LEN_Disabled << RADIO_CRCCNF_LEN_Pos);
     packet[0]         = 254;    // 254 byte payload.
   
     // Fill payload with random data.
-    for(i = 0; i < 254; i++)
+    for (i = 0; i < 254; i++)
     {
         packet[i+1] = rnd8();
     }
@@ -153,7 +153,7 @@ void radio_tx_carrier(uint8_t txpower, uint8_t mode, uint8_t channel)
     NRF_RADIO->MODE       = (mode << RADIO_MODE_MODE_Pos);
     NRF_RADIO->FREQUENCY  = channel;
     NRF_RADIO->TEST       = (RADIO_TEST_CONST_CARRIER_Enabled << RADIO_TEST_CONST_CARRIER_Pos) \
-                          | (RADIO_TEST_PLL_LOCK_Enabled << RADIO_TEST_PLL_LOCK_Pos);
+                            | (RADIO_TEST_PLL_LOCK_Enabled << RADIO_TEST_PLL_LOCK_Pos);
     NRF_RADIO->TASKS_TXEN = 1;
 }
 

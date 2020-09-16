@@ -107,18 +107,18 @@ static void flash_word_write(uint32_t *address, uint32_t value)
 int main(void)
 {
     uint32_t *addr;
-    uint8_t patwr;
-    uint8_t patrd;
-    uint8_t patold;
-    uint32_t i;
-    uint32_t pg_size;
-    uint32_t pg_num;
+    uint8_t   patwr;
+    uint8_t   patrd;
+    uint8_t   patold;
+    uint32_t  i;
+    uint32_t  pg_size;
+    uint32_t  pg_num;
 
     init();
     
     patold  = 0;
     pg_size = NRF_FICR->CODEPAGESIZE;
-    pg_num  = NRF_FICR->CODESIZE - 1;    // Use last page in flash
+    pg_num  = NRF_FICR->CODESIZE - 1;  // Use last page in flash
 
     while (true)
     {

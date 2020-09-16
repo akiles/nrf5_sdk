@@ -17,12 +17,12 @@
 #include "ble_srv_common.h"
 #include "nordic_common.h"
 #include "nrf_assert.h"
-#include "ble_bondmngr.h"
-#include "ble_bondmngr_cfg.h"
+#include "device_manager.h"
 #include "ble_flash.h"
 #include "pstorage.h"
 #include "nRF6350.h"
 #include "nrf_gpio.h"
+#include "app_error.h"
 
 #define START_HANDLE_DISCOVER            0x0001                                            /**< Value of start handle during discovery. */
 
@@ -33,7 +33,7 @@
 #define WRITE_MESSAGE_LENGTH             20                                                /**< Length of the write message for CCCD/control point. */
 #define BLE_CCCD_NOTIFY_BIT_MASK         0x0001                                            /**< Enable Notification bit. */
 
-#define BLE_ANCS_MAX_DISCOVERED_CENTRALS BLE_BONDMNGR_MAX_BONDED_CENTRALS                  /**< Maximum number of discovered services that can be stored in the flash. This number should be identical to maximum number of bonded masters. */
+#define BLE_ANCS_MAX_DISCOVERED_CENTRALS DEVICE_MANAGER_MAX_BONDS                          /**< Maximum number of discovered services that can be stored in the flash. This number should be identical to maximum number of bonded peer devices. */
 
 #define DISCOVERED_SERVICE_DB_SIZE \
     CEIL_DIV(sizeof(apple_service_t) * BLE_ANCS_MAX_DISCOVERED_CENTRALS, sizeof(uint32_t))  /**< Size of bonded masters database in word size (4 byte). */
@@ -336,9 +336,9 @@ static void event_connect(ble_ancs_c_t * p_ancs, const ble_evt_t * p_ble_evt)
 {
     p_ancs->conn_handle = p_ble_evt->evt.gatts_evt.conn_handle;
 
-    if (p_ancs->master_handle != INVALID_CENTRAL_HANDLE)
+    if (p_ancs->central_handle != DM_INVALID_ID)
     {
-        m_service = mp_service_db[p_ancs->master_handle];
+        m_service = mp_service_db[p_ancs->central_handle];
         encrypted_link_setup_wait(p_ancs);
     }
     else
@@ -713,9 +713,9 @@ static void event_disconnect(ble_ancs_c_t * p_ancs)
     m_client_state = STATE_IDLE;
 
     if (m_service.handle == INVALID_SERVICE_HANDLE_DISC &&
-        p_ancs->master_handle != INVALID_CENTRAL_HANDLE)
+        p_ancs->central_handle != DM_INVALID_ID)
     {
-        m_service.handle = p_ancs->master_handle;
+        m_service.handle = p_ancs->central_handle;
     }
 
     if (m_service.handle < BLE_ANCS_MAX_DISCOVERED_CENTRALS)
@@ -728,24 +728,23 @@ static void event_disconnect(ble_ancs_c_t * p_ancs)
     m_service.handle       = INVALID_SERVICE_HANDLE;
     p_ancs->service_handle = INVALID_SERVICE_HANDLE;
     p_ancs->conn_handle    = BLE_CONN_HANDLE_INVALID;
-    p_ancs->master_handle  = INVALID_CENTRAL_HANDLE;
+    p_ancs->central_handle  = DM_INVALID_ID;
 }
 
 
-/**@brief Function for handling of Bond Manager events. 
+/**@brief Function for handling of Device Manager events.
  */
-void ble_ancs_c_on_bondmgmr_evt(ble_ancs_c_t * p_ancs, const ble_bondmngr_evt_t * p_bond_mgmr_evt)
+void ble_ancs_c_on_device_manager_evt(ble_ancs_c_t      * p_ans,
+                                      dm_handle_t const * p_handle,
+                                      dm_event_t const  * p_dm_evt)
 {
-    switch (p_bond_mgmr_evt->evt_type)
+    switch (p_dm_evt->event_id)
     {
-        case BLE_BONDMNGR_EVT_NEW_BOND:
-            p_ancs->master_handle = p_bond_mgmr_evt->central_handle;
+        case DM_EVT_CONNECTION:
+            // Fall through.
+        case DM_EVT_SECURITY_SETUP_COMPLETE:
+            p_ans->central_handle = p_handle->device_id;
             break;
-
-        case BLE_BONDMNGR_EVT_CONN_TO_BONDED_CENTRAL:
-            p_ancs->master_handle = p_bond_mgmr_evt->central_handle;
-            break;
-
         default:
             // Do nothing.
             break;
@@ -873,7 +872,7 @@ uint32_t ble_ancs_c_init(ble_ancs_c_t * p_ancs, const ble_ancs_c_init_t * p_ancs
     p_ancs->evt_handler         = p_ancs_init->evt_handler;
     p_ancs->error_handler       = p_ancs_init->error_handler;
     p_ancs->service_handle      = INVALID_SERVICE_HANDLE;
-    p_ancs->master_handle       = INVALID_CENTRAL_HANDLE;
+    p_ancs->central_handle       = DM_INVALID_ID;
     p_ancs->service_handle      = 0;
     p_ancs->message_buffer_size = p_ancs_init->message_buffer_size;
     p_ancs->p_message_buffer    = p_ancs_init->p_message_buffer;
@@ -988,7 +987,7 @@ uint32_t ble_ancs_get_notification_attributes(const ble_ancs_c_t * p_ancs, uint8
       if (p_attr->attribute_len > 0)
       {
         p_msg->req.write_req.gattc_value[i++] = (uint8_t) (p_attr->attribute_len);
-        p_msg->req.write_req.gattc_value[i++] = (uint8_t) (p_attr->attribute_len << 8);
+        p_msg->req.write_req.gattc_value[i++] = (uint8_t) (p_attr->attribute_len >> 8);
       }
       p_attr++;
       num_attr--;

@@ -39,7 +39,7 @@ enum BLE_COMMON_SVCS
   SD_BLE_UUID_VS_ADD,                   /**< Add a Vendor Specific UUID. */
   SD_BLE_UUID_DECODE,                   /**< Decode UUID bytes. */
   SD_BLE_UUID_ENCODE,                   /**< Encode UUID bytes. */
-  SD_BLE_VERSION_GET,                   /**< Get the local version information (company id, LMP Version, LMP Subversion). */
+  SD_BLE_VERSION_GET,                   /**< Get the local version information (company id, Link Layer Version, Link Layer Subversion). */
   SD_BLE_USER_MEM_REPLY,                /**< User Memory Reply. */
   SD_BLE_OPT_SET,                       /**< Set a BLE option. */
   SD_BLE_OPT_GET,                       /**< Get a BLE option. */
@@ -147,9 +147,9 @@ typedef struct
  */
 typedef struct
 {
-  uint8_t   version_number;             /**< LMP Version number for BT 4.0 spec is 6 (https://www.bluetooth.org/technical/assignednumbers/link_layer.htm). */
+  uint8_t   version_number;             /**< Link Layer Version number for BT 4.1 spec is 7 (https://www.bluetooth.org/en-us/specification/assigned-numbers/link-layer). */
   uint16_t  company_id;                 /**< Company ID, Nordic Semiconductor's company ID is 89 (0x0059) (https://www.bluetooth.org/apps/content/Default.aspx?doc_id=49708). */
-  uint16_t  subversion_number;          /**< LMP Sub Version number corresponds to the SoftDevice Config ID. */
+  uint16_t  subversion_number;          /**< Link Layer Sub Version number, corresponds to the SoftDevice Config ID or Firmware ID (FWID). */
 } ble_version_t;
 
 /**@brief Common BLE Option type, wrapping the module specific options. */
@@ -191,10 +191,10 @@ typedef union
 SVCALL(SD_BLE_EVT_GET, uint32_t, sd_ble_evt_get(uint8_t *p_dest, uint16_t *p_len));
 
 
-/**@brief Get the total number of available application transmission buffers in the BLE stack.
+/**@brief Get the total number of available application transmission buffers per link in the BLE stack.
  *
  * @details This call allows the application to obtain the total number of
- *          transmission buffers available for application data. Please note that
+ *          transmission buffers available per link for application data. Please note that
  *          this does not give the number of free buffers, but rather the total amount of them.
  *          The application has two options to handle its own application transmission buffers:
  *          - Use a simple arithmetic calculation: at boot time the application should use this function
@@ -315,7 +315,7 @@ SVCALL(SD_BLE_VERSION_GET, uint32_t, sd_ble_version_get(ble_version_t *p_version
  *
  * @retval ::NRF_SUCCESS Successfully queued a response to the peer.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
- * @retval ::NRF_ERROR_INVALID_STATE No execute write request pending.
+ * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection state or no execute write request pending.
  * @retval ::NRF_ERROR_BUSY The stack is busy. Retry at later time.
  */
 SVCALL(SD_BLE_USER_MEM_REPLY, uint32_t, sd_ble_user_mem_reply(uint16_t conn_handle, ble_user_mem_block_t const *p_block));
@@ -333,7 +333,7 @@ SVCALL(SD_BLE_USER_MEM_REPLY, uint32_t, sd_ble_user_mem_reply(uint16_t conn_hand
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied, check parameter limits and constraints.
  * @retval ::NRF_ERROR_INVALID_STATE Unable to set the parameter at this time.
- * @retval ::NRF_ERROR_BUSY The stack is busy (typically doing a locally-initiated disconnection procedure).
+ * @retval ::NRF_ERROR_BUSY The stack is busy or the previous procedure has not completed.
  */
 SVCALL(SD_BLE_OPT_SET, uint32_t, sd_ble_opt_set(uint32_t opt_id, ble_opt_t const *p_opt));
 
@@ -349,7 +349,7 @@ SVCALL(SD_BLE_OPT_SET, uint32_t, sd_ble_opt_set(uint32_t opt_id, ble_opt_t const
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied, check parameter limits and constraints.
  * @retval ::NRF_ERROR_INVALID_STATE Unable to retrieve the parameter at this time.
- * @retval ::NRF_ERROR_BUSY The stack is busy (typically doing a locally-initiated disconnection procedure).
+ * @retval ::NRF_ERROR_BUSY The stack is busy or the previous procedure has not completed.
  */
 SVCALL(SD_BLE_OPT_GET, uint32_t, sd_ble_opt_get(uint32_t opt_id, ble_opt_t *p_opt));
 

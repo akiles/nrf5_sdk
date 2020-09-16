@@ -20,8 +20,6 @@
   #include "boards/pca10001.h"
 #elif defined(BOARD_PCA10003)
   #include "boards/pca10003.h"
-#elif defined(BOARD_PCA1000x)
-  #include "boards/pca1000x.h"
 #else
 #error "Board is not defined"
 #endif

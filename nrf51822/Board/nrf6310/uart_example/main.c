@@ -28,10 +28,10 @@
 #include "nrf_gpio.h"
 #include "boards.h"
 
-//#define ENABLE_LOOPBACK_TEST           /**< if defined, then this example will be a loopback test, which means that TX should be connected to RX to get data loopback. */
+//#define ENABLE_LOOPBACK_TEST  /**< if defined, then this example will be a loopback test, which means that TX should be connected to RX to get data loopback. */
 
-#define ERROR_PIN                (LED_0) /**< gpio pin number to show error if loopback is enabled. */
-#define MAX_TEST_DATA_BYTES      (15U)   /**< max number of test bytes to be used for tx and rx. */
+#define ERROR_PIN           (LED_0) /**< gpio pin number to show error if loopback is enabled. */
+#define MAX_TEST_DATA_BYTES (15U)   /**< max number of test bytes to be used for tx and rx. */
 
 #ifndef ENABLE_LOOPBACK_TEST
 
@@ -74,10 +74,10 @@ static void show_error(void)
 static void uart_loopback_test()
 {
     uint8_t *tx_data = (uint8_t *)("\n\rLOOPBACK_TEST");
-    uint8_t rx_data;
+    uint8_t  rx_data;
 
     // Start sending one byte and see if you get the same
-    for(uint32_t i = 0; i < MAX_TEST_DATA_BYTES; i++)
+    for (uint32_t i = 0; i < MAX_TEST_DATA_BYTES; i++)
     {
         bool status;
         simple_uart_put(tx_data[i]);
@@ -104,15 +104,15 @@ int main(void)
 
 #ifndef ENABLE_LOOPBACK_TEST
     uart_start();
-    while(true)
+    while (true)
     {
         uint8_t cr = simple_uart_get();
         simple_uart_put(cr);
 
-        if(cr == 'q' || cr == 'Q')
+        if (cr == 'q' || cr == 'Q')
         {
             uart_quit();
-            while(true)
+            while (true)
             {
                 // Do nothing.
             }

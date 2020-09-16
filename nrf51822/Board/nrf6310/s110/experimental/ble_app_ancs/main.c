@@ -35,20 +35,22 @@
 #include "nrf_gpio.h"
 #include "ble_srv_common.h"
 #include "ble_conn_params.h"
-#include "nrf_gpiote.h"
+#include "boards.h"
 #include "nrf51_bitfields.h"
-#include "ble_bondmngr.h"
+#include "device_manager.h"
 #include "app_gpiote.h"
 #include "app_button.h"
 #include "app_timer.h"
-#include "ble_radio_notification.h"
-#include "ble_flash.h"
 #include "ble_debug_assert_handler.h"
 #include "pstorage.h"
 #include "nrf_soc.h"
 #include "nRF6350.h"
 #include "boards.h"
 #include "softdevice_handler.h"
+#include "app_trace.h"
+
+
+#define IS_SRVC_CHANGED_CHARACT_PRESENT 0                                                    /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
 #define ERROR_PIN                       8                                                    /**< Pin that is active high when there is an error in this example */
 
@@ -61,7 +63,7 @@
 
 
 #define WAKEUP_BUTTON_PIN               BUTTON_0                                             /**< Button used to wake up the application. */
-#define BONDMNGR_DELETE_BUTTON_PIN_NO   BUTTON_1                                             /**< Button used for deleting all bonded masters/services during startup. */
+#define BOND_DELETE_ALL_BUTTON_ID       BUTTON_1                                             /**< Button used for deleting all bonded masters/services during startup. */
 #define DISPLAY_MESSAGE_BUTTON_PIN      BUTTON_5                                             /**< Button used to display message contents */
 #define SCROLL_ONE_BUTTON_PIN           BUTTON_6                                             /**< Button used to scroll one character */
 
@@ -80,8 +82,8 @@
 #define SLAVE_LATENCY                   0                                                    /**< Slave latency. */
 #define CONN_SUP_TIMEOUT                MSEC_TO_UNITS(4000, UNIT_10_MS)                      /**< Connection supervisory timeout (4 seconds). */
 
-#define FIRST_CONN_PARAMS_UPDATE_DELAY  APP_TIMER_TICKS(20 * 1000, APP_TIMER_PRESCALER)      /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (20 seconds). */
-#define NEXT_CONN_PARAMS_UPDATE_DELAY   APP_TIMER_TICKS(5 * 1000, APP_TIMER_PRESCALER)       /**< Time between each call to sd_ble_gap_conn_param_update after the first (5 seconds). */
+#define FIRST_CONN_PARAMS_UPDATE_DELAY  APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)           /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
+#define NEXT_CONN_PARAMS_UPDATE_DELAY   APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER)          /**< Time between each call to sd_ble_gap_conn_param_update after the first (30 seconds). */
 #define MAX_CONN_PARAMS_UPDATE_COUNT    3                                                    /**< Number of attempts before giving up the connection parameter negotiation. */
 
 #define MESSAGE_BUFFER_SIZE             18                                                   /**< Size of buffer holding optional messages in notifications. */
@@ -97,8 +99,6 @@
 #define SEC_PARAM_OOB                   0                                                    /**< Out Of Band data not available. */
 #define SEC_PARAM_MIN_KEY_SIZE          7                                                    /**< Minimum encryption key size. */
 #define SEC_PARAM_MAX_KEY_SIZE          16                                                   /**< Maximum encryption key size. */
-
-#define ANCS_FLASH_PAGE                 (BLE_FLASH_PAGE_END - 4)                             /**< Flash page used for Apple Notification Client. */
 
 #define DEAD_BEEF                       0xDEADBEEF                                           /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
@@ -139,37 +139,39 @@ static uint8_t                          m_apple_message_buffer[MESSAGE_BUFFER_SI
 static ble_gap_adv_params_t             m_adv_params;                                        /**< Parameters to be passed to the stack when starting advertising. */
 static ble_advertising_mode_t           m_advertising_mode;                                  /**< Variable to keep track of when we are advertising. */
 
-static ble_gap_sec_params_t             m_sec_params;                                        /**< Security requirements for this application. */
+
 
 static char                             display_title[DISPLAY_BUFFER_SIZE];
 static char                             display_message[DISPLAY_BUFFER_SIZE];
 static uint32_t                         display_offset = 0;
 static uint8_t                          m_ancs_uuid_type;
+static dm_application_instance_t        m_app_handle;                                        /**< Application identifier allocated by device manager. */
+static dm_handle_t                      m_peer_handle;                                       /**< Identifes the peer that is currently connected. */
 
 /**@brief Function for error handling, which is called when an error has occurred. 
  *
- * @warning This handler is an example only and does not fit a final product. You need to analyze 
+ * @warning This handler is an example only and does not fit a final product. You need to analyze
  *          how your product is supposed to react in case of error.
  *
  * @param[in] error_code  Error code supplied to the handler.
  * @param[in] line_num    Line number where the handler is called.
- * @param[in] p_file_name Pointer to the file name. 
+ * @param[in] p_file_name Pointer to the file name.
  */
 void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
 {
     nrf_gpio_pin_set(ASSERT_LED_PIN_NO);
 
-    // This call can be used for debug purposes during development of an application.
+    // This call can be used for debug purposes during application development.
     // @note CAUTION: Activating this code will write the stack to flash on an error.
     //                This function should NOT be used in a final product.
     //                It is intended STRICTLY for development/debugging purposes.
     //                The flash write will happen EVEN if the radio is active, thus interrupting
     //                any communication.
     //                Use with care. Un-comment the line below to use.
-    ble_debug_assert_handler(error_code, line_num, p_file_name);
+    // ble_debug_assert_handler(error_code, line_num, p_file_name);
 
     // On assert, the system can only recover on reset.
-    //NVIC_SystemReset();
+    NVIC_SystemReset();
 }
 
 
@@ -177,7 +179,7 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
  *
  * @details This function will be called in case of an assert in the SoftDevice.
  *
- * @warning This handler is an example only and does not fit a final product. You need to analyze 
+ * @warning This handler is an example only and does not fit a final product. You need to analyze
  *          how your product is supposed to react in case of Assert.
  * @warning On assert from the SoftDevice, the system can only recover on reset.
  *
@@ -190,7 +192,7 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 }
 
 
-/**@brief Function for setup of apple notifications in master.
+/**@brief Function for setup of apple notifications in central.
  *
  * @details This function will be called when a successful connection has been established.
  */
@@ -285,7 +287,7 @@ static void on_ancs_c_evt(ble_ancs_c_evt_t * p_evt)
     switch (p_evt->evt_type)
     {
         case BLE_ANCS_C_EVT_DISCOVER_COMPLETE:
-            err_code = sd_ble_gap_authenticate(m_ancs_c.conn_handle, &m_sec_params);
+            err_code = dm_security_setup_req(&m_peer_handle);
             APP_ERROR_CHECK(err_code);
             break;
 
@@ -301,19 +303,6 @@ static void on_ancs_c_evt(ble_ancs_c_evt_t * p_evt)
             //No implementation needed
             break;
     }
-}
-
-
-/**@brief Function for handling the Bond Manager.
- *
- * @details This function will be called for all events in the Bond Manager which
- *          are passed to the application.
- *
- * @param[in]   p_evt   Event received from the Bond Manager.
- */
-static void on_bond_mgmr_evt(ble_bondmngr_evt_t * p_evt)
-{
-    ble_ancs_c_on_bondmgmr_evt(&m_ancs_c, p_evt);
 }
 
 
@@ -419,7 +408,7 @@ static void advertising_start(void)
 
     // Initialize advertising parameters (used when starting advertising).
     memset(&m_adv_params, 0, sizeof(m_adv_params));
-    
+
     m_adv_params.type        = BLE_GAP_ADV_TYPE_ADV_IND;
     m_adv_params.p_peer_addr = NULL;                           // Undirected advertisement.
     m_adv_params.fp          = BLE_GAP_ADV_FP_ANY;
@@ -437,7 +426,7 @@ static void advertising_start(void)
 
     err_code = sd_ble_gap_adv_start(&m_adv_params);
     APP_ERROR_CHECK(err_code);
-    
+
     nrf_gpio_pin_set(ADVERTISING_LED_PIN_NO);
 }
 
@@ -485,53 +474,61 @@ static void conn_params_init(void)
 }
 
 
-/**@brief Function for initializing security parameters.
- */
-static void sec_params_init(void)
-{
-    m_sec_params.timeout      = SEC_PARAM_TIMEOUT;
-    m_sec_params.bond         = SEC_PARAM_BOND;
-    m_sec_params.mitm         = SEC_PARAM_MITM;
-    m_sec_params.io_caps      = SEC_PARAM_IO_CAPABILITIES;
-    m_sec_params.oob          = SEC_PARAM_OOB;  
-    m_sec_params.min_key_size = SEC_PARAM_MIN_KEY_SIZE;
-    m_sec_params.max_key_size = SEC_PARAM_MAX_KEY_SIZE;
-}
-
-
-/**@brief Function for handling a Bond Manager error.
+/**@brief Function for handling the Device Manager events.
  *
- * @param[in]   nrf_error   Error code containing information about what went wrong.
+ * @param[in]   p_evt   Data associated to the device manager event.
  */
-static void bond_manager_error_handler(uint32_t nrf_error)
+static uint32_t device_manager_evt_handler(dm_handle_t const    * p_handle,
+                                           dm_event_t const     * p_event,
+                                           api_result_t           event_result)
 {
-    APP_ERROR_HANDLER(nrf_error);
+    APP_ERROR_CHECK(event_result);
+    ble_ancs_c_on_device_manager_evt(&m_ancs_c, p_handle, p_event);
+    switch(p_event->event_id)
+    {
+        case DM_EVT_CONNECTION:
+            m_peer_handle = (*p_handle);
+            break;
+    }
+    return NRF_SUCCESS;
 }
 
 
-/**@brief Function for initializing the Bond Manager.
+/**@brief Function for the Device Manager initialization.
  */
-static void bond_manager_init(void)
+static void device_manager_init(void)
 {
-    uint32_t            err_code;
-    ble_bondmngr_init_t bond_init_data;
-    bool                bonds_delete;
+    uint32_t                err_code;
+    dm_init_param_t         init_data;
+    dm_application_param_t  register_param;
 
+    // Initialize persistent storage module.
     err_code = pstorage_init();
     APP_ERROR_CHECK(err_code);
-    
-    // Clear all bonded masters if the Bonds Delete button is pushed.
-    err_code = app_button_is_pushed(BONDMNGR_DELETE_BUTTON_PIN_NO, &bonds_delete);
+
+    // Clear all bonded centrals if the "delete all bonds" button is pushed.
+    err_code = app_button_is_pushed(BOND_DELETE_ALL_BUTTON_ID, &init_data.clear_persistent_data);
     APP_ERROR_CHECK(err_code);
 
-    // Initialize the Bond Manager.
-    bond_init_data.evt_handler             = on_bond_mgmr_evt;
-    bond_init_data.error_handler           = bond_manager_error_handler;
-    bond_init_data.bonds_delete            = bonds_delete;
+    err_code = dm_init(&init_data);
+    APP_ERROR_CHECK(err_code);
     
-    err_code = ble_bondmngr_init(&bond_init_data);
+    memset(&register_param.sec_param, 0, sizeof(ble_gap_sec_params_t));
+
+    register_param.sec_param.timeout      = SEC_PARAM_TIMEOUT;
+    register_param.sec_param.bond         = SEC_PARAM_BOND;
+    register_param.sec_param.mitm         = SEC_PARAM_MITM;
+    register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
+    register_param.sec_param.oob          = SEC_PARAM_OOB;
+    register_param.sec_param.min_key_size = SEC_PARAM_MIN_KEY_SIZE;
+    register_param.sec_param.max_key_size = SEC_PARAM_MAX_KEY_SIZE;
+    register_param.evt_handler            = device_manager_evt_handler;
+    register_param.service_type           = DM_PROTOCOL_CNTXT_GATT_SRVR_ID;
+
+    err_code = dm_register(&m_app_handle, &register_param);
     APP_ERROR_CHECK(err_code);
 }
+
 
 
 /**@brief Function for handling the Application's BLE Stack events.
@@ -551,7 +548,6 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             err_code = app_button_enable();
             m_advertising_mode = BLE_NO_ADVERTISING;
             m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
-
             break;
         
         case BLE_GAP_EVT_AUTH_STATUS:
@@ -567,25 +563,15 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             err_code = app_button_disable();
             APP_ERROR_CHECK(err_code);
 
-            // Since we are not in a connection and have not start to advertise either, store bonds.
-            err_code = ble_bondmngr_bonded_centrals_store();
-            APP_ERROR_CHECK(err_code);
-
             err_code = ble_ans_c_service_store();
             APP_ERROR_CHECK(err_code);
 
             advertising_start();
             break;
-            
-        case BLE_GAP_EVT_SEC_PARAMS_REQUEST:
-            err_code = sd_ble_gap_sec_params_reply(m_conn_handle, 
-                                                   BLE_GAP_SEC_STATUS_SUCCESS, 
-                                                   &m_sec_params);
-            break;
 
         case BLE_GAP_EVT_TIMEOUT:
             if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISEMENT)
-            { 
+            {
                 if (m_advertising_mode == BLE_FAST_ADVERTISING)
                 {
                     advertising_start();
@@ -595,32 +581,34 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                     nrf_gpio_pin_clear(ADVERTISING_LED_PIN_NO);
                     m_advertising_mode = BLE_NO_ADVERTISING;
 
-                    // Go to system-off mode (function will not return; wakeup will cause a reset).
+                    // Configure buttons with sense level low as wakeup source.
                     nrf_gpio_cfg_sense_input(WAKEUP_BUTTON_PIN, 
-                                             BUTTON_PULL, 
+                                             BUTTON_PULL,
                                              NRF_GPIO_PIN_SENSE_LOW);
                     
-                    nrf_gpio_cfg_sense_input(BONDMNGR_DELETE_BUTTON_PIN_NO, 
-                                             BUTTON_PULL, 
+                    nrf_gpio_cfg_sense_input(BOND_DELETE_ALL_BUTTON_ID, 
+                                             BUTTON_PULL,
                                              NRF_GPIO_PIN_SENSE_LOW);
                     
+                    // Go to system-off mode (function will not return; wakeup will cause a reset).
                     err_code = sd_power_system_off();
+                    APP_ERROR_CHECK(err_code);
                 }
             }
             break;
-            
+
         case BLE_GATTC_EVT_TIMEOUT:
         case BLE_GATTS_EVT_TIMEOUT:
             // Disconnect on GATT Server and Client timeout events.
-            err_code = sd_ble_gap_disconnect(m_conn_handle, 
+            err_code = sd_ble_gap_disconnect(m_conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+            APP_ERROR_CHECK(err_code);
             break;
 
         default:
-            //No implementation needed
+            // No implementation needed.
             break;
     }
-
     APP_ERROR_CHECK(err_code);
 }
 
@@ -663,14 +651,18 @@ static void gpiote_init(void)
  */
 static void buttons_init(void)
 {
+    // Configure the button used to send alert to the peer. Configure it as wake up button too.
+    // Configure Buttons. Buttons are used for:
+    // - Clearing of Alerts.
+    // - Configuration of Alerts (CCCD).
+    // - Wake-up application.
     static app_button_cfg_t buttons[] =
     {
-        {WAKEUP_BUTTON_PIN,             false, NRF_GPIO_PIN_NOPULL, NULL},
-        {BONDMNGR_DELETE_BUTTON_PIN_NO, false, NRF_GPIO_PIN_NOPULL, NULL},
-        {DISPLAY_MESSAGE_BUTTON_PIN,    false, NRF_GPIO_PIN_NOPULL, button_event_handler},
-        {SCROLL_ONE_BUTTON_PIN,         false, NRF_GPIO_PIN_NOPULL, button_event_handler}
+        {WAKEUP_BUTTON_PIN,          APP_BUTTON_ACTIVE_LOW, BUTTON_PULL, NULL},
+        {BOND_DELETE_ALL_BUTTON_ID,  APP_BUTTON_ACTIVE_LOW, BUTTON_PULL, NULL},
+        {DISPLAY_MESSAGE_BUTTON_PIN, APP_BUTTON_ACTIVE_LOW, BUTTON_PULL, button_event_handler},
+        {SCROLL_ONE_BUTTON_PIN,      APP_BUTTON_ACTIVE_LOW, BUTTON_PULL, button_event_handler}
     };
-    
     APP_BUTTON_INIT(buttons, sizeof(buttons) / sizeof(buttons[0]), BUTTON_DETECTION_DELAY, false);
 }
 
@@ -684,7 +676,7 @@ static void buttons_init(void)
  */
 static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 {
-    ble_bondmngr_on_ble_evt(p_ble_evt);
+    dm_ble_evt_handler(p_ble_evt);
     ble_conn_params_on_ble_evt(p_ble_evt);
     ble_ancs_c_on_ble_evt(&m_ancs_c, p_ble_evt);
     on_ble_evt(p_ble_evt);
@@ -714,7 +706,13 @@ static void ble_stack_init(void)
     
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
-    
+
+    // Enable BLE stack 
+    ble_enable_params_t ble_enable_params;
+    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
+    ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
+    err_code = sd_ble_enable(&ble_enable_params);
+    APP_ERROR_CHECK(err_code);
 
     // Register with the SoftDevice handler module for BLE events.
     err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
@@ -722,19 +720,6 @@ static void ble_stack_init(void)
     
     // Register with the SoftDevice handler module for System events.
     err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
-    APP_ERROR_CHECK(err_code);
-}
-
-
-/**@brief Function for initializing the Radio Notification event handler.
- */
-static void radio_notification_init(void)
-{
-    uint32_t err_code;
-
-    err_code = ble_radio_notification_init(NRF_APP_PRIORITY_HIGH,
-                                           NRF_RADIO_NOTIFICATION_DISTANCE_4560US,
-                                           ble_flash_on_radio_active_evt);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -778,7 +763,7 @@ static void service_add(void)
     APP_ERROR_CHECK(err_code);
     
     // Clear all discovered and stored services if the  "delete all bonds" button is pushed.
-    err_code = app_button_is_pushed(BONDMNGR_DELETE_BUTTON_PIN_NO, &services_delete);
+    err_code = app_button_is_pushed(BOND_DELETE_ALL_BUTTON_ID, &services_delete);
     APP_ERROR_CHECK(err_code);
 
     if (services_delete)
@@ -790,6 +775,7 @@ static void service_add(void)
     err_code = ble_ans_c_service_load(&m_ancs_c);
     APP_ERROR_CHECK(err_code);    
 }
+
 
 /** @brief Function for configuring ERROR_PIN as output for showing errors.
  */
@@ -812,19 +798,18 @@ int main(void)
     APP_ERROR_CHECK_BOOL(success);
 
     // Initialize.
+    app_trace_init();
     leds_init();
     timers_init();
     gpiote_init();
     buttons_init();
-    ble_stack_init();    
-    bond_manager_init();
+    ble_stack_init();
+    device_manager_init();
     gap_params_init();
-    service_add();    
+    service_add();
     advertising_init();
     conn_params_init();
-    sec_params_init();
-    radio_notification_init();
-    
+
     // Start execution.
     advertising_start();
 
@@ -836,10 +821,7 @@ int main(void)
 
 }
 
-
-
-
-/** 
+/**
  * @}
  */
 

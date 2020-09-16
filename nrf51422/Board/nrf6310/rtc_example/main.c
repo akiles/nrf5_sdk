@@ -31,16 +31,16 @@
 #define LFCLK_FREQUENCY           (32768UL)                               /**< LFCLK frequency in Hertz, constant. */
 #define RTC_FREQUENCY             (8UL)                                   /**< Required RTC working clock RTC_FREQUENCY Hertz. Changable. */
 #define COMPARE_COUNTERTIME       (3UL)                                   /**< Get Compare event COMPARE_TIME seconds after the counter starts from 0. */
-#define COUNTER_PRESCALER         ((LFCLK_FREQUENCY/RTC_FREQUENCY) - 1)   /* f = LFCLK/(prescaler + 1) */
+#define COUNTER_PRESCALER         ((LFCLK_FREQUENCY / RTC_FREQUENCY) - 1)   /* f = LFCLK/(prescaler + 1) */
 
 
 /** @brief Function starting the internal LFCLK XTAL oscillator.
  */
 static void lfclk_config(void)
 {
-    NRF_CLOCK->LFCLKSRC             = (CLOCK_LFCLKSRC_SRC_Xtal << CLOCK_LFCLKSRC_SRC_Pos);
-    NRF_CLOCK->EVENTS_LFCLKSTARTED  = 0;
-    NRF_CLOCK->TASKS_LFCLKSTART     = 1;
+    NRF_CLOCK->LFCLKSRC            = (CLOCK_LFCLKSRC_SRC_Xtal << CLOCK_LFCLKSRC_SRC_Pos);
+    NRF_CLOCK->EVENTS_LFCLKSTARTED = 0;
+    NRF_CLOCK->TASKS_LFCLKSTART    = 1;
     while (NRF_CLOCK->EVENTS_LFCLKSTARTED == 0)
     {
         //Do nothing.
@@ -53,17 +53,17 @@ static void lfclk_config(void)
  */
 static void rtc_config(void)
 {
-    NVIC_EnableIRQ(RTC0_IRQn);                                      // Enable Interrupt for the RTC in the core.
-    NRF_RTC0->PRESCALER     = COUNTER_PRESCALER;                    // Set prescaler to a TICK of RTC_FREQUENCY.
-    NRF_RTC0->CC[0]         = COMPARE_COUNTERTIME * RTC_FREQUENCY;  // Compare0 after approx COMPARE_COUNTERTIME seconds.
+    NVIC_EnableIRQ(RTC0_IRQn);                                  // Enable Interrupt for the RTC in the core.
+    NRF_RTC0->PRESCALER = COUNTER_PRESCALER;                    // Set prescaler to a TICK of RTC_FREQUENCY.
+    NRF_RTC0->CC[0]     = COMPARE_COUNTERTIME * RTC_FREQUENCY;  // Compare0 after approx COMPARE_COUNTERTIME seconds.
 
     // Enable TICK event and TICK interrupt:
-    NRF_RTC0->EVTENSET      = RTC_EVTENSET_TICK_Msk;
-    NRF_RTC0->INTENSET      = RTC_INTENSET_TICK_Msk;
+    NRF_RTC0->EVTENSET = RTC_EVTENSET_TICK_Msk;
+    NRF_RTC0->INTENSET = RTC_INTENSET_TICK_Msk;
 
     // Enable COMPARE0 event and COMPARE0 interrupt:
-    NRF_RTC0->EVTENSET      = RTC_EVTENSET_COMPARE0_Msk;
-    NRF_RTC0->INTENSET      = RTC_INTENSET_COMPARE0_Msk;
+    NRF_RTC0->EVTENSET = RTC_EVTENSET_COMPARE0_Msk;
+    NRF_RTC0->INTENSET = RTC_INTENSET_COMPARE0_Msk;
 }
 
 
@@ -84,14 +84,14 @@ static void gpio_config(void)
  */
 void RTC0_IRQHandler()
 {
-    if ((NRF_RTC0->EVENTS_TICK != 0) && 
+    if ((NRF_RTC0->EVENTS_TICK != 0) &&
         ((NRF_RTC0->INTENSET & RTC_INTENSET_TICK_Msk) != 0))
     {
         NRF_RTC0->EVENTS_TICK = 0;
         nrf_gpio_pin_toggle(GPIO_TOGGLE_TICK_EVENT);
     }
     
-    if ((NRF_RTC0->EVENTS_COMPARE[0] != 0) && 
+    if ((NRF_RTC0->EVENTS_COMPARE[0] != 0) &&
         ((NRF_RTC0->INTENSET & RTC_INTENSET_COMPARE0_Msk) != 0))
     {
         NRF_RTC0->EVENTS_COMPARE[0] = 0;

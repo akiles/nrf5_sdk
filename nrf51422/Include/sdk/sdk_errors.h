@@ -14,7 +14,7 @@
  *
  * @defgroup sdk_error SDK Error codes
  * @{
- * @ingroup experimental_api
+ * @ingroup app_common
  * @{
  * @details Error codes are 32-bit unsigned integers with the most significant 16-bit reserved for
  *          identifying the module where the error occurred while the least least significant LSB
@@ -68,6 +68,8 @@
 #define MUTEX_LOCK_FAILED          (SDK_COMMON_ERROR_BASE+0x0002)
 #define MUTEX_UNLOCK_FAILED        (SDK_COMMON_ERROR_BASE+0x0003)
 #define MUTEX_COND_INIT_FAILED     (SDK_COMMON_ERROR_BASE+0x0004)
+#define API_NOT_IMPLEMENTED        (SDK_COMMON_ERROR_BASE+0x0010)
+#define FEATURE_NOT_ENABLED        (SDK_COMMON_ERROR_BASE+0x0011)
 /* @} */
 
 
@@ -79,7 +81,6 @@
 #define DM_SERVICE_CONTEXT_NOT_APPLIED   (DEVICE_MANAGER_ERR_BASE+0x0041)
 #define DM_CONTEXT_INFO_LOST             (DEVICE_MANAGER_ERR_BASE+0x0042)
 #define DM_DEVICE_CONTEXT_FULL           (DEVICE_MANAGER_ERR_BASE+0x0043)
-#define DM_FEATURE_NOT_ENABLED           (DEVICE_MANAGER_ERR_BASE+0x0044)
 /* @} */
 
 /**

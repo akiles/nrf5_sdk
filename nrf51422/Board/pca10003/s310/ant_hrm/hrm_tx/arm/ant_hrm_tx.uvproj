@@ -141,7 +141,7 @@
             <RestoreTracepoints>0</RestoreTracepoints>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>7</TargetSelection>
+          <TargetSelection>6</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -357,7 +357,7 @@
               <MiscControls>--c99</MiscControls>
               <Define>NRF51 TX_PAGE1 TX_PAGE2 TX_PAGE3 BOARD_PCA10003</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\..\..\Include;..\..\..\..\..\..\Include\app_common;..\include;..\..\..\..\..\..\Include\s310</IncludePath>
+              <IncludePath>..\..\..\..\..\..\Include;..\..\..\..\..\..\Include\app_common;..\include;..\..\..\..\..\..\Include\s310;..\..\..\..\..\..\Include\sd_common</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

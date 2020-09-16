@@ -32,7 +32,8 @@
 #include "ble.h"
 #include "ble_gatts.h"
 #include "ble_types.h"
-#include "ble_bondmngr.h"
+#include "ble_srv_common.h"
+#include "device_manager.h"
 
 #define ANS_NB_OF_CHARACTERISTICS                   5                                     /**< Number of characteristics as defined by Alert Notification Service specification. */
 #define ANS_NB_OF_SERVICES                          1                                     /**< Number of services supported in one central. */
@@ -150,7 +151,7 @@ typedef struct ble_ans_c_s
     ble_ans_c_evt_handler_t             evt_handler;                                      /**< Event handler to be called for handling events in the Alert Notification Client Application. */
     ble_srv_error_handler_t             error_handler;                                    /**< Function to be called in case of an error. */
     uint16_t                            conn_handle;                                      /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
-    int8_t                              central_handle;                                   /**< Handle for the currently connected central if we have a bond in the bond manager. */
+    uint8_t                             central_handle;                                   /**< Handle for the currently connected central if peer is bonded. */
     uint8_t                             service_handle;                                   /**< Handle to the service in the database to use for this instance. */
     uint32_t                            message_buffer_size;                              /**< Size of message buffer to hold the additional text messages received on notifications. */
     uint8_t *                           p_message_buffer;                                 /**< Pointer to the buffer to be used for additional text message handling. */
@@ -177,7 +178,7 @@ typedef struct
 void ble_ans_c_on_ble_evt(ble_ans_c_t * p_ans, const ble_evt_t * p_ble_evt);
 
 
-/**@brief Function for handling the Alert Notification Client - Bond Manager stack event.
+/**@brief Function for handling the Alert Notification Client - Device Manager Event.
  *
  * @details Handles all events from the Bond Manager of interest to the Alert Notification Client.
  *          The Alert Notification Client will use the events of re-connection to existing central
@@ -187,7 +188,9 @@ void ble_ans_c_on_ble_evt(ble_ans_c_t * p_ans, const ble_evt_t * p_ble_evt);
  * @param[in]   p_ans            Alert Notification Client structure.
  * @param[in]   p_bond_mgmr_evt  Event received from the Bond Manager.
  */
-void ble_ans_c_on_bondmgmr_evt(ble_ans_c_t * p_ans, const ble_bondmngr_evt_t * p_bond_mgmr_evt);
+void ble_ans_c_on_device_manager_evt(ble_ans_c_t       * p_ans,
+                                     dm_handle_t const * p_handle,
+                                     dm_event_t const  * p_dm_evt);
 
 
 /**@brief Function for initializing the Alert Notification Client.

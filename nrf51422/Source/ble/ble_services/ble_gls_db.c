@@ -17,7 +17,7 @@ typedef struct
     bool          in_use_flag;
     ble_gls_rec_t record;
 } database_entry_t;
-  
+
 static database_entry_t m_database[BLE_GLS_DB_MAX_RECORDS];
 static uint8_t          m_database_crossref[BLE_GLS_DB_MAX_RECORDS];
 static uint16_t         m_num_records;
@@ -26,7 +26,7 @@ static uint16_t         m_num_records;
 uint32_t ble_gls_db_init(void)
 {
     int i;
-  
+
     for (i = 0; i < BLE_GLS_DB_MAX_RECORDS; i++)
     {
         m_database[i].in_use_flag = false;
@@ -34,7 +34,7 @@ uint32_t ble_gls_db_init(void)
     }
 
     m_num_records = 0;
-    
+
     return NRF_SUCCESS;
 }
 
@@ -62,12 +62,12 @@ uint32_t ble_gls_db_record_get(uint8_t rec_ndx, ble_gls_rec_t * p_rec)
 uint32_t ble_gls_db_record_add(ble_gls_rec_t * p_rec)
 {
     int i;
-  
+
     if (m_num_records == BLE_GLS_DB_MAX_RECORDS)
     {
         return NRF_ERROR_NO_MEM;
     }
-    
+
     // find next available database entry
     for (i = 0; i < BLE_GLS_DB_MAX_RECORDS; i++)
     {
@@ -75,10 +75,10 @@ uint32_t ble_gls_db_record_add(ble_gls_rec_t * p_rec)
         {
             m_database[i].in_use_flag = true;
             m_database[i].record      = *p_rec;
-              
+
             m_database_crossref[m_num_records] = i;
             m_num_records++;
-    
+
             return NRF_SUCCESS;
         }
     }
@@ -90,15 +90,15 @@ uint32_t ble_gls_db_record_add(ble_gls_rec_t * p_rec)
 uint32_t ble_gls_db_record_delete(uint8_t rec_ndx)
 {
     int i;
-  
+
     if (rec_ndx >= m_num_records)
     {
         return NRF_ERROR_NOT_FOUND;
     }
-    
+
     // free entry
     m_database[m_database_crossref[rec_ndx]].in_use_flag = false;
-  
+
     // decrease number of records
     m_num_records--;
 
@@ -107,6 +107,6 @@ uint32_t ble_gls_db_record_delete(uint8_t rec_ndx)
     {
         m_database_crossref[i] = m_database_crossref[i + 1];
     }
-    
+
     return NRF_SUCCESS;
 }

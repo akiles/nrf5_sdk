@@ -13,7 +13,7 @@
 #include "nrf.h"
 #include "app_error.h"
 #include "nrf_gpio.h"
-#include "debug.h"
+#include "app_trace.h"
 #include "ble_db_discovery.h"
 #include "ble_srv_common.h"
 

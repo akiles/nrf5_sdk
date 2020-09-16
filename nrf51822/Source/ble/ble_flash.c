@@ -121,14 +121,14 @@ static void flash_word_write(uint32_t * p_address, uint32_t value)
         // Do nothing (just wait for radio to become inactive).
         (void) sd_app_evt_wait();
     }
-    
+
     // Turn on flash write enable and wait until the NVMC is ready.
     NRF_NVMC->CONFIG = (NVMC_CONFIG_WEN_Wen << NVMC_CONFIG_WEN_Pos);
     while (NRF_NVMC->READY == NVMC_READY_READY_Busy)
     {
         // Do nothing.
     }
-    
+
     *p_address = value;
     // Wait flash write to finish
     while (NRF_NVMC->READY == NVMC_READY_READY_Busy)
@@ -154,7 +154,7 @@ uint32_t ble_flash_word_write(uint32_t * p_address, uint32_t value)
 uint32_t ble_flash_block_write(uint32_t * p_address, uint32_t * p_in_array, uint16_t word_count)
 {
     uint16_t i;
-    
+
     for (i = 0; i < word_count; i++)
     {
         flash_word_write(p_address, p_in_array[i]);
@@ -167,9 +167,9 @@ uint32_t ble_flash_block_write(uint32_t * p_address, uint32_t * p_in_array, uint
 
 uint32_t ble_flash_page_erase(uint8_t page_num)
 {
-    uint32_t * p_page = (uint32_t *)(BLE_FLASH_PAGE_SIZE * page_num);    
+    uint32_t * p_page = (uint32_t *)(BLE_FLASH_PAGE_SIZE * page_num);
     flash_page_erase(p_page);
-    
+
     return NRF_SUCCESS;
 }
 
@@ -190,11 +190,11 @@ uint32_t ble_flash_page_write(uint8_t page_num, uint32_t * p_in_array, uint8_t w
     in_data_crc = ble_flash_crc16_compute((uint8_t *)p_in_array,
                                           word_count * sizeof(uint32_t),
                                           NULL);
-    
+
     // Compare the calculated to the one in flash.
     flash_header = *p_curr_addr;
     flash_crc    = (uint16_t)flash_header;
-    
+
     if (flash_crc == in_data_crc)
     {
         // Data is the same as the data already stored in flash, return without modifying flash.
@@ -206,7 +206,7 @@ uint32_t ble_flash_page_write(uint8_t page_num, uint32_t * p_in_array, uint8_t w
 
     // Reserve space for magic number (for detecting if flash content is valid).
     p_curr_addr++;
-    
+
     // Reserve space for saving word_count.
     p_curr_addr++;
 
@@ -216,14 +216,14 @@ uint32_t ble_flash_page_write(uint8_t page_num, uint32_t * p_in_array, uint8_t w
         flash_word_unprotected_write(p_curr_addr, p_in_array[i]);
         p_curr_addr++;
     }
-    
+
     // Write number of elements.
     flash_word_write(p_page + 1, (uint32_t)(word_count));
-    
+
     // Write magic number and CRC to indicate that flash content is valid.
     flash_header = BLE_FLASH_MAGIC_NUMBER | (uint32_t)in_data_crc;
     flash_word_write(p_page, flash_header);
-    
+
     return NRF_SUCCESS;
 }
 
@@ -237,10 +237,10 @@ uint32_t ble_flash_page_read(uint8_t page_num, uint32_t * p_out_array, uint8_t *
     uint32_t   calc_header;
     uint16_t   calc_crc;
     uint32_t   tmp;
-    
+
     p_page      = (uint32_t *)(BLE_FLASH_PAGE_SIZE * page_num);    
     p_curr_addr = p_page;
-    
+
     // Check if block is valid
     flash_header = *p_curr_addr;
     tmp = flash_header & 0xFFFF0000;
@@ -254,22 +254,22 @@ uint32_t ble_flash_page_read(uint8_t page_num, uint32_t * p_out_array, uint8_t *
     // Read number of elements
     *p_word_count = (uint8_t)(*(p_curr_addr));
     p_curr_addr++;
-    
+
     // Read data
     byte_count = (*p_word_count) * sizeof(uint32_t);
     memcpy(p_out_array, p_curr_addr, byte_count);
-    
+
     // Check CRC
-    calc_crc  = ble_flash_crc16_compute((uint8_t *)p_out_array,
-                                        (*p_word_count) * sizeof(uint32_t),
-                                        NULL);
+    calc_crc = ble_flash_crc16_compute((uint8_t *)p_out_array,
+                                       (*p_word_count) * sizeof(uint32_t),
+                                       NULL);
     calc_header = BLE_FLASH_MAGIC_NUMBER | (uint32_t)calc_crc;
-    
+
     if (calc_header != flash_header)
     {
         return NRF_ERROR_NOT_FOUND;
     }
-    
+
     return NRF_SUCCESS;
 }
 

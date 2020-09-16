@@ -66,8 +66,8 @@ static void ppi_init(void)
 static void timer0_init(void)
 {
     // Start 16 MHz crystal oscillator.
-    NRF_CLOCK->EVENTS_HFCLKSTARTED  = 0;
-    NRF_CLOCK->TASKS_HFCLKSTART     = 1;
+    NRF_CLOCK->EVENTS_HFCLKSTARTED = 0;
+    NRF_CLOCK->TASKS_HFCLKSTART    = 1;
 
     // Wait for the external oscillator to start.
     while (NRF_CLOCK->EVENTS_HFCLKSTARTED == 0) 
@@ -92,11 +92,11 @@ static void timer0_init(void)
  */
 int main(void)
 {
-    gpiote_init();                  // Configure a GPIO to toggle on a GPIOTE task.
-    timer0_init();                  // Use TIMER0 to generate events every 200 ms.
-    ppi_init();                     // Use a PPI channel to connect the event to the task automatically.
+    gpiote_init();                // Configure a GPIO to toggle on a GPIOTE task.
+    timer0_init();                // Use TIMER0 to generate events every 200 ms.
+    ppi_init();                   // Use a PPI channel to connect the event to the task automatically.
 
-    NRF_TIMER0->TASKS_START = 1;    // Start event generation.
+    NRF_TIMER0->TASKS_START = 1;  // Start event generation.
 
     while (true)
     {

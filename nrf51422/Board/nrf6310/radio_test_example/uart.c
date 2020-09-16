@@ -29,7 +29,7 @@ static volatile uint8_t rxwp, rxrp, nrx;
 void uart_put(uint8_t cr)
 {
     NRF_UART0->TXD = cr;
-    while(NRF_UART0->EVENTS_TXDRDY!=1)
+    while (NRF_UART0->EVENTS_TXDRDY!=1)
     {
         // Do nothing.
     }
@@ -41,7 +41,7 @@ void uart_put(uint8_t cr)
  */
 uint8_t uart_get(void)
 {
-    while(nrx == 0)
+    while (nrx == 0)
     {
         // Do nothing.
     }
@@ -56,22 +56,22 @@ uint8_t uart_get(void)
  */ 
 void uart_config(uint8_t txd_pin_number, uint8_t rxd_pin_number)
 {
-    rxwp    = 0;
-    rxrp    = 0;
-    nrx     = 0;
+    rxwp = 0;
+    rxrp = 0;
+    nrx  = 0;
   
     nrf_gpio_cfg_output(txd_pin_number);
     nrf_gpio_cfg_input(rxd_pin_number, NRF_GPIO_PIN_NOPULL);  
     
-    NRF_UART0->PSELTXD          = txd_pin_number;
-    NRF_UART0->PSELRXD          = rxd_pin_number;
+    NRF_UART0->PSELTXD = txd_pin_number;
+    NRF_UART0->PSELRXD = rxd_pin_number;
 
-    NRF_UART0->BAUDRATE         = (UART_BAUDRATE_BAUDRATE_Baud38400 << UART_BAUDRATE_BAUDRATE_Pos);
-    NRF_UART0->ENABLE           = (UART_ENABLE_ENABLE_Enabled << UART_ENABLE_ENABLE_Pos);
-    NRF_UART0->TASKS_STARTTX    = 1;
-    NRF_UART0->TASKS_STARTRX    = 1;
-    NRF_UART0->EVENTS_RXDRDY    = 0;     
-    NRF_UART0->INTENSET        |= (UART_INTENSET_RXDRDY_Enabled << UART_INTENSET_RXDRDY_Pos );
+    NRF_UART0->BAUDRATE       = (UART_BAUDRATE_BAUDRATE_Baud38400 << UART_BAUDRATE_BAUDRATE_Pos);
+    NRF_UART0->ENABLE         = (UART_ENABLE_ENABLE_Enabled << UART_ENABLE_ENABLE_Pos);
+    NRF_UART0->TASKS_STARTTX  = 1;
+    NRF_UART0->TASKS_STARTRX  = 1;
+    NRF_UART0->EVENTS_RXDRDY  = 0;     
+    NRF_UART0->INTENSET      |= (UART_INTENSET_RXDRDY_Enabled << UART_INTENSET_RXDRDY_Pos );
     
     NVIC_EnableIRQ(UART0_IRQn);
 }
@@ -81,7 +81,7 @@ void uart_config(uint8_t txd_pin_number, uint8_t rxd_pin_number)
  */
 void uart_putstring(const uint8_t* str)
 {
-    while(*str)
+    while (*str)
     {
         uart_put(*str++);
     }
@@ -95,15 +95,15 @@ void UART0_IRQHandler(void)
     if (nrx > BUFFER_LENGTH)
     {
         uart_putstring((const uint8_t *)"BUFFER_OVERFLOW");
-        while(1)
+        while (1)
         {
             // Do nothing.
         }
     }
     nrx++;
-    rx_buffer[rxwp]             = NRF_UART0->RXD;
-    rxwp                        = (rxwp + 1) & (BUFFER_LENGTH - 1);
-    NRF_UART0->EVENTS_RXDRDY    = 0;
+    rx_buffer[rxwp]          = NRF_UART0->RXD;
+    rxwp                     = (rxwp + 1) & (BUFFER_LENGTH - 1);
+    NRF_UART0->EVENTS_RXDRDY = 0;
 }
 /** 
  * @}

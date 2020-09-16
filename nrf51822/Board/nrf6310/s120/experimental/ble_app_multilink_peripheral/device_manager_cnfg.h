@@ -59,6 +59,10 @@
  *          Minimum value : 1
  *          Maximum value : 254.
  *          Dependencies  : None.
+ * @note In case of GAP Peripheral role, the Device Manager will accept bonding procedure 
+ *       requests from peers even if this limit is reached, but bonding information will not 
+ *       be stored. In such cases, application will be notified with DM_DEVICE_CONTEXT_FULL 
+ *       as event result at the completion of the security procedure.
  */
 #define DEVICE_MANAGER_MAX_BONDS         2
 

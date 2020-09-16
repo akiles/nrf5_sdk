@@ -18,16 +18,16 @@
 
 #define DS1634_BASE_ADDRESS 0x90 //!< 4 MSBs of the DS1624 TWI address
 
-#define DS1624_ONESHOT_MODE 0x01 //!< Bit in configuration register for 1-shot mode 
+#define DS1624_ONESHOT_MODE    0x01 //!< Bit in configuration register for 1-shot mode 
 #define DS1624_CONVERSION_DONE 0x80 //!< Bit in configuration register to indicate completed temperature conversion
 
 static uint8_t m_device_address; //!< Device address in bits [7:1]
 
-const uint8_t command_access_memory = 0x17; //!< Reads or writes to 256-byte EEPROM memory
-const uint8_t command_access_config = 0xAC; //!< Reads or writes configuration data to configuration register 
-const uint8_t command_read_temp = 0xAA; //!< Reads last converted temperature value from temperature register
+const uint8_t command_access_memory      = 0x17; //!< Reads or writes to 256-byte EEPROM memory
+const uint8_t command_access_config      = 0xAC; //!< Reads or writes configuration data to configuration register 
+const uint8_t command_read_temp          = 0xAA; //!< Reads last converted temperature value from temperature register
 const uint8_t command_start_convert_temp = 0xEE; //!< Initiates temperature conversion.
-const uint8_t command_stop_convert_temp = 0x22; //!< Halts temperature conversion.
+const uint8_t command_stop_convert_temp  = 0x22; //!< Halts temperature conversion.
 
 /**
  * @brief Function for reading the current configuration of the sensor.
@@ -36,92 +36,92 @@ const uint8_t command_stop_convert_temp = 0x22; //!< Halts temperature conversio
  */
 static uint8_t ds1624_config_read(void)
 {
-  uint8_t config = 0;
-    
-  // Write: command protocol
-  if (twi_master_transfer(m_device_address, (uint8_t*)&command_access_config, 1, TWI_DONT_ISSUE_STOP))
-  {
-    if (twi_master_transfer(m_device_address | TWI_READ_BIT, &config, 1, TWI_ISSUE_STOP)) // Read: current configuration
-    {
-      // Read succeeded, configuration stored to variable "config"
-    }
-    else
-    {
-      // Read failed
-      config = 0;
-    }
-  } 
+    uint8_t config = 0;
 
-  return config;
+    // Write: command protocol
+    if (twi_master_transfer(m_device_address, (uint8_t*)&command_access_config, 1, TWI_DONT_ISSUE_STOP))
+    {
+        if (twi_master_transfer(m_device_address | TWI_READ_BIT, &config, 1, TWI_ISSUE_STOP)) // Read: current configuration
+        {
+            // Read succeeded, configuration stored to variable "config"
+        }
+        else
+        {
+            // Read failed
+            config = 0;
+        }
+    }
+
+    return config;
 }
 
 bool ds1624_init(uint8_t device_address)
 {
-  bool transfer_succeeded = true;
-  m_device_address = DS1634_BASE_ADDRESS + (uint8_t)(device_address << 1);
+    bool transfer_succeeded = true;
+    m_device_address = DS1634_BASE_ADDRESS + (uint8_t)(device_address << 1);
 
-  uint8_t config = ds1624_config_read();  
+    uint8_t config = ds1624_config_read();
 
-  if (config != 0)
-  {
-    // Configure DS1624 for 1SHOT mode if not done so already.
-    if (!(config & DS1624_ONESHOT_MODE))
+    if (config != 0)
     {
-      uint8_t data_buffer[2];
-  
-      data_buffer[0] = command_access_config;
-      data_buffer[1] = DS1624_ONESHOT_MODE;
-  
-      transfer_succeeded &= twi_master_transfer(m_device_address, data_buffer, 2, TWI_ISSUE_STOP);
-    }
-  }
-  else
-  {
-    transfer_succeeded = false;
-  }
+        // Configure DS1624 for 1SHOT mode if not done so already.
+        if (!(config & DS1624_ONESHOT_MODE))
+        {
+            uint8_t data_buffer[2];
 
-  return transfer_succeeded;
+            data_buffer[0] = command_access_config;
+            data_buffer[1] = DS1624_ONESHOT_MODE;
+
+            transfer_succeeded &= twi_master_transfer(m_device_address, data_buffer, 2, TWI_ISSUE_STOP);
+        }
+    }
+    else
+    {
+        transfer_succeeded = false;
+    }
+
+    return transfer_succeeded;
 }
 
 bool ds1624_start_temp_conversion(void)
 {
-  return twi_master_transfer(m_device_address, (uint8_t*)&command_start_convert_temp, 1, TWI_ISSUE_STOP);
+    return twi_master_transfer(m_device_address, (uint8_t*)&command_start_convert_temp, 1, TWI_ISSUE_STOP);
 }
 
 bool ds1624_is_temp_conversion_done(void)
 {
-  uint8_t config = ds1624_config_read();
+    uint8_t config = ds1624_config_read();
 
-  if (config & DS1624_CONVERSION_DONE)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+    if (config & DS1624_CONVERSION_DONE)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
-bool ds1624_temp_read(int8_t *temperature_in_celcius, int8_t *temperature_fraction)
+bool ds1624_temp_read(int8_t * temperature_in_celcius, int8_t * temperature_fraction)
 {
-  bool transfer_succeeded = false;
+    bool transfer_succeeded = false;
 
-  // Write: Begin read temperature command
-  if (twi_master_transfer(m_device_address, (uint8_t*)&command_read_temp, 1, TWI_DONT_ISSUE_STOP))
-  {
-    uint8_t data_buffer[2];
-
-    // Read: 2 temperature bytes to data_buffer
-    if (twi_master_transfer(m_device_address | TWI_READ_BIT, data_buffer, 2, TWI_ISSUE_STOP)) 
+    // Write: Begin read temperature command
+    if (twi_master_transfer(m_device_address, (uint8_t*)&command_read_temp, 1, TWI_DONT_ISSUE_STOP))
     {
-      *temperature_in_celcius = (int8_t)data_buffer[0];
-      *temperature_fraction = (int8_t)data_buffer[1];
-      
-      transfer_succeeded = true;
-    }
-  }
+        uint8_t data_buffer[2];
 
-  return transfer_succeeded;
+        // Read: 2 temperature bytes to data_buffer
+        if (twi_master_transfer(m_device_address | TWI_READ_BIT, data_buffer, 2, TWI_ISSUE_STOP)) 
+        {
+            *temperature_in_celcius = (int8_t)data_buffer[0];
+            *temperature_fraction   = (int8_t)data_buffer[1];
+
+            transfer_succeeded = true;
+        }
+    }
+
+    return transfer_succeeded;
 }
 
 /*lint --flb "Leave library region" */ 

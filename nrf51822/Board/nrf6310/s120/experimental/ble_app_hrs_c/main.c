@@ -30,38 +30,38 @@
 #include "nrf_gpio.h"
 #include "pstorage.h"
 #include "device_manager.h"
-#include "debug.h"
+#include "app_trace.h"
 #include "ble_hrs_c.h"
 #include "ble_bas_c.h"
 #include "app_util.h"
 
 
-#define BOND_DELETE_ALL_BUTTON_ID        BUTTON_1                                       /**< Button used for deleting all bonded centrals during startup. */
+#define BOND_DELETE_ALL_BUTTON_ID  BUTTON_1                           /**< Button used for deleting all bonded centrals during startup. */
 
-#define SCAN_LED_PIN_NO                 LED_0                     /**< Is on when device is scanning. */
-#define CONNECTED_LED_PIN_NO            LED_1                     /**< Is on when device has connected. */
-#define ASSERT_LED_PIN_NO               LED_7                     /**< Is on when application has asserted. */
+#define SCAN_LED_PIN_NO                  LED_0                                          /**< Is on when device is scanning. */
+#define CONNECTED_LED_PIN_NO             LED_1                                          /**< Is on when device has connected. */
+#define ASSERT_LED_PIN_NO                LED_7                                          /**< Is on when application has asserted. */
 
-#define APPL_LOG                         debug_log                                      /**< Debug logger macro that will be used in this file to do logging of debug information over UART. */
+#define APPL_LOG                         app_trace_log                                  /**< Debug logger macro that will be used in this file to do logging of debug information over UART. */
 
-#define SEC_PARAM_BOND                   1                                              /**< Perform bonding. */
-#define SEC_PARAM_MITM                   1                                              /**< Man In The Middle protection not required. */
-#define SEC_PARAM_IO_CAPABILITIES        BLE_GAP_IO_CAPS_NONE                           /**< No I/O capabilities. */
-#define SEC_PARAM_OOB                    0                                              /**< Out Of Band data not available. */
-#define SEC_PARAM_MIN_KEY_SIZE           7                                              /**< Minimum encryption key size. */
-#define SEC_PARAM_MAX_KEY_SIZE           16                                             /**< Maximum encryption key size. */
+#define SEC_PARAM_BOND             1                                  /**< Perform bonding. */
+#define SEC_PARAM_MITM             1                                  /**< Man In The Middle protection not required. */
+#define SEC_PARAM_IO_CAPABILITIES  BLE_GAP_IO_CAPS_NONE               /**< No I/O capabilities. */
+#define SEC_PARAM_OOB              0                                  /**< Out Of Band data not available. */
+#define SEC_PARAM_MIN_KEY_SIZE     7                                  /**< Minimum encryption key size. */
+#define SEC_PARAM_MAX_KEY_SIZE     16                                 /**< Maximum encryption key size. */
 
-#define SCAN_INTERVAL                    0x00A0                                         /**< Determines scan interval in units of 0.625 millisecond. */
-#define SCAN_WINDOW                      0x0050                                         /**< Determines scan window in units of 0.625 millisecond. */
+#define SCAN_INTERVAL              0x00A0                             /**< Determines scan interval in units of 0.625 millisecond. */
+#define SCAN_WINDOW                0x0050                             /**< Determines scan window in units of 0.625 millisecond. */
 
-#define MIN_CONNECTION_INTERVAL     MSEC_TO_UNITS(7.5, UNIT_1_25_MS)                    /**< Determines maximum connection interval in millisecond. */
-#define MAX_CONNECTION_INTERVAL     MSEC_TO_UNITS(30, UNIT_1_25_MS)                     /**< Determines maximum connection interval in millisecond. */
-#define SLAVE_LATENCY               0                                                   /**< Determines slave latency in counts of connection events. */
-#define SUPERVISION_TIMEOUT         MSEC_TO_UNITS(4000, UNIT_10_MS)                     /**< Determines supervision time-out in units of 10 millisecond. */
+#define MIN_CONNECTION_INTERVAL    MSEC_TO_UNITS(7.5, UNIT_1_25_MS)   /**< Determines maximum connection interval in millisecond. */
+#define MAX_CONNECTION_INTERVAL    MSEC_TO_UNITS(30, UNIT_1_25_MS)    /**< Determines maximum connection interval in millisecond. */
+#define SLAVE_LATENCY              0                                  /**< Determines slave latency in counts of connection events. */
+#define SUPERVISION_TIMEOUT        MSEC_TO_UNITS(4000, UNIT_10_MS)    /**< Determines supervision time-out in units of 10 millisecond. */
 
-#define TARGET_UUID                 0x180D                                              /**< Target device name that application is looking for. */
-#define MAX_PEER_COUNT              DEVICE_MANAGER_MAX_CONNECTIONS                      /**< Maximum number of peer's application intends to manage. */
-#define UUID16_SIZE                 2                                                   /**< Size of 16 bit UUID */
+#define TARGET_UUID                0x180D                             /**< Target device name that application is looking for. */
+#define MAX_PEER_COUNT             DEVICE_MANAGER_MAX_CONNECTIONS     /**< Maximum number of peer's application intends to manage. */
+#define UUID16_SIZE                2                                  /**< Size of 16 bit UUID */
 
 /**@breif Macro to unpack 16bit unsigned UUID from octet stream. */
 #define UUID16_EXTRACT(DST,SRC)                                                                  \
@@ -75,19 +75,27 @@
 /**@brief Variable length data encapsulation in terms of length and pointer to data */
 typedef struct
 {
-    uint8_t               * p_data;          /**< Pointer to data. */
-    uint16_t                data_len;        /**< Length of data. */
+    uint8_t     * p_data;                                         /**< Pointer to data. */
+    uint16_t      data_len;                                       /**< Length of data. */
 }data_t;
 
-static ble_db_discovery_t               m_ble_db_discovery;       /**< Structure used to identify the DB Discovery module. */
-static ble_hrs_c_t                      m_ble_hrs_c;              /**< Structure used to identify the heart rate client module. */
-static ble_bas_c_t                      m_ble_bas_c;              /**< Structure used to identify the Battery Service client module. */
-static ble_gap_scan_params_t            m_scan_param;             /**< Scan parameters requested for scanning and connection. */
-static dm_application_instance_t        m_dm_app_id;              /**< Application identifier. */
-static dm_handle_t                      m_dm_device_handle;       /**< Device Identifier identifier. */
-static uint8_t                          m_peer_count = 0;         /**< Number of peer's connected. */
-static bool                             m_whitelist_scan = true;  /**< Whitelist scanning being used or not. */
+typedef enum
+{
+    BLE_NO_SCAN,                                                  /**< No advertising running. */
+    BLE_WHITELIST_SCAN,                                           /**< Advertising with whitelist. */
+    BLE_FAST_SCAN,                                                /**< Fast advertising running. */
+} ble_advertising_mode_t;
 
+static ble_db_discovery_t           m_ble_db_discovery;                  /**< Structure used to identify the DB Discovery module. */
+static ble_hrs_c_t                  m_ble_hrs_c;                         /**< Structure used to identify the heart rate client module. */
+static ble_bas_c_t                  m_ble_bas_c;                         /**< Structure used to identify the Battery Service client module. */
+static ble_gap_scan_params_t        m_scan_param;                        /**< Scan parameters requested for scanning and connection. */
+static dm_application_instance_t    m_dm_app_id;                         /**< Application identifier. */
+static dm_handle_t                  m_dm_device_handle;                  /**< Device Identifier identifier. */
+static uint8_t                      m_peer_count = 0;                    /**< Number of peer's connected. */
+static uint8_t                      m_scan_mode;                         /**< Scan mode used by application. */
+
+static bool                         m_memory_access_in_progress = false; /**< Flag to keep track of ongoing operations on persistent memory. */
 
 /**
  * @brief Connection parameters requested for connection.
@@ -102,7 +110,7 @@ static const ble_gap_conn_params_t m_connection_param =
 
 static void scan_start(void);
 
-#define APPL_LOG                        debug_log                 /**< Debug logger macro that will be used in this file to do logging of debug information over UART. */
+#define APPL_LOG                        app_trace_log             /**< Debug logger macro that will be used in this file to do logging of debug information over UART. */
 
 // WARNING: The following macro MUST be un-defined (by commenting out the definition) if the user
 // does not have a nRF6350 Display unit. If this is not done, the application will not work.
@@ -244,10 +252,15 @@ static api_result_t device_manager_event_handler(const dm_handle_t    * p_handle
         }
         
         case DM_EVT_SECURITY_SETUP:
-            APPL_LOG("[APPL]: >> DM_EVT_SECURITY_SETUP\r\n");
-            APPL_LOG("[APPL]: << DM_EVT_SECURITY_SETUP\r\n");
+        {
+            APPL_LOG("[APPL]:[0x%02X] >> DM_EVT_SECURITY_SETUP\r\n", p_handle->connection_id);
+            // Slave securtiy request received from peer, if from a non bonded device, 
+            // initiate security setup, else, wait for encryption to complete.
+            err_code = dm_security_setup_req(&m_dm_device_handle);
+            APP_ERROR_CHECK(err_code);
+            APPL_LOG("[APPL]:[0x%02X] << DM_EVT_SECURITY_SETUP\r\n", p_handle->connection_id);
             break;
-            
+        }
         case DM_EVT_SECURITY_SETUP_COMPLETE:
         {
             APPL_LOG("[APPL]: >> DM_EVT_SECURITY_SETUP_COMPLETE\r\n");            
@@ -399,10 +412,10 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
         case BLE_GAP_EVT_TIMEOUT:
             if(p_gap_evt->params.timeout.src == BLE_GAP_TIMEOUT_SRC_SCAN)
             {
-                APPL_LOG("[APPL]: Scan Timedout.\r\n");
-                if (m_whitelist_scan ==  true)
+                APPL_LOG("[APPL]: Scan timed out.\r\n");
+                if (m_scan_mode ==  BLE_WHITELIST_SCAN)
                 {
-                    m_whitelist_scan = false;
+                    m_scan_mode = BLE_FAST_SCAN;
 
                     // Start non selective scanning.
                     scan_start();
@@ -410,7 +423,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             }
             else if (p_gap_evt->params.timeout.src == BLE_GAP_TIMEOUT_SRC_CONN)
             {
-                APPL_LOG("[APPL]: Connection Request Timedout.\r\n");
+                APPL_LOG("[APPL]: Connection Request timed out.\r\n");
             }
             break;
         case BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST:
@@ -424,7 +437,27 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
     }
 }
 
-
+/**@brief Function for handling the Application's system events.
+ *
+ * @param[in]   sys_evt   system event.
+ */
+static void on_sys_evt(uint32_t sys_evt)
+{
+    switch(sys_evt)
+    {
+        case NRF_EVT_FLASH_OPERATION_SUCCESS:
+        case NRF_EVT_FLASH_OPERATION_ERROR:
+            if (m_memory_access_in_progress)
+            {
+                m_memory_access_in_progress = false;
+                scan_start();
+            }
+            break;
+        default:
+            // No implementation needed.
+            break;
+    }
+}
 
 
 /**@brief Function for dispatching a BLE stack event to all modules with a BLE stack event handler.
@@ -454,6 +487,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 static void sys_evt_dispatch(uint32_t sys_evt)
 {
     pstorage_sys_event_handler(sys_evt);
+    on_sys_evt(sys_evt);
 }
 
 
@@ -719,7 +753,19 @@ static void scan_start(void)
     ble_gap_addr_t        * p_whitelist_addr[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
     ble_gap_irk_t         * p_whitelist_irk[BLE_GAP_WHITELIST_IRK_MAX_COUNT];
     uint32_t              err_code;
+    uint32_t              count;
 
+    // Verify if there is any flash access pending, if yes delay starting scanning until 
+    // it's complete.
+    err_code = pstorage_access_status_get(&count);
+    APP_ERROR_CHECK(err_code);
+    
+    if (count != 0)
+    {
+        m_memory_access_in_progress = true;
+        return;
+    }
+    
     // Initialize whitelist parameters.
     whitelist.addr_count = BLE_GAP_WHITELIST_ADDR_MAX_COUNT;
     whitelist.irk_count  = 0;
@@ -730,7 +776,8 @@ static void scan_start(void)
     err_code = dm_whitelist_create(&m_dm_app_id,&whitelist);
     APP_ERROR_CHECK(err_code);
 
-    if (((whitelist.addr_count == 0) && (whitelist.irk_count == 0)) || (m_whitelist_scan == false))
+    if (((whitelist.addr_count == 0) && (whitelist.irk_count == 0)) ||
+         (m_scan_mode != BLE_WHITELIST_SCAN))
     {
         // No devices in whitelist, hence non selective performed.
         m_scan_param.active       = 0;            // Active scanning set.
@@ -751,7 +798,7 @@ static void scan_start(void)
         m_scan_param.timeout      = 0x001E;       // 30 seconds timeout.
 
         // Set whitelist scanning state.
-        m_whitelist_scan = true;
+        m_scan_mode = BLE_WHITELIST_SCAN;
     }
 
     err_code = sd_ble_gap_scan_start(&m_scan_param);
@@ -769,7 +816,7 @@ static void scan_start(void)
 int main(void)
 {
     // Initialization of various modules.
-    debug_init();
+    app_trace_init();
     leds_init();
     buttons_init();
     nrf6350_init();

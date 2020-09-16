@@ -75,7 +75,8 @@ typedef enum
     BLE_HIDS_EVT_NOTIF_DISABLED,                    /**< Notification disabled event. */
     BLE_HIDS_EVT_REP_CHAR_WRITE,                    /**< A new value has been written to an Report characteristic. */
     BLE_HIDS_EVT_BOOT_MODE_ENTERED,                 /**< Boot mode entered. */
-    BLE_HIDS_EVT_REPORT_MODE_ENTERED                /**< Report mode entered. */
+    BLE_HIDS_EVT_REPORT_MODE_ENTERED,               /**< Report mode entered. */
+    BLE_HIDS_EVT_REPORT_READ                        /**< Read with response */
 } ble_hids_evt_type_t;
 
 /**@brief HID Service event. */
@@ -91,8 +92,16 @@ typedef struct
         struct
         {
             ble_hids_char_id_t char_id;             /**< Id of characteristic having been written. */
+            uint16_t           offset;              /**< Offset for the write operation. */
+            uint16_t           len;                 /**< Length of the incoming data. */
+            uint8_t*           data;                /**< Incoming data, variable length */            
         } char_write;
+        struct
+        {
+            ble_hids_char_id_t char_id;             /**< Id of characteristic being read. */
+        } char_auth_read;
     } params;
+    ble_evt_t * p_ble_evt;                          /**< corresponding received ble event, NULL if not relevant */
 } ble_hids_evt_t;
 
 // Forward declaration of the ble_hids_t type. 
@@ -117,6 +126,7 @@ typedef struct
     uint16_t                      max_len;          /**< Maximum length of characteristic value. */
     ble_srv_report_ref_t          rep_ref;          /**< Value of the Report Reference descriptor. */
     ble_srv_cccd_security_mode_t  security_mode;    /**< Security mode for the HID Input Report characteristic, including cccd. */
+    uint8_t                       read_resp : 1;    /**< Should application generate a response to read requests. */
 } ble_hids_inp_rep_init_t;
 
 /**@brief HID Service Output Report characteristic init structure. This contains all options and 
@@ -126,6 +136,7 @@ typedef struct
     uint16_t                      max_len;          /**< Maximum length of characteristic value. */
     ble_srv_report_ref_t          rep_ref;          /**< Value of the Report Reference descriptor. */
     ble_srv_cccd_security_mode_t  security_mode;    /**< Security mode for the HID Output Report characteristic, including cccd. */
+    uint8_t                       read_resp : 1;    /**< Should application generate a response to read requests. */
 } ble_hids_outp_rep_init_t;
 
 /**@brief HID Service Feature Report characteristic init structure. This contains all options and 
@@ -135,14 +146,16 @@ typedef struct
     uint16_t                      max_len;          /**< Maximum length of characteristic value. */
     ble_srv_report_ref_t          rep_ref;          /**< Value of the Report Reference descriptor. */
     ble_srv_cccd_security_mode_t  security_mode;    /**< Security mode for the HID Service Feature Report characteristic, including cccd. */
+    uint8_t                       read_resp : 1;    /**< Should application generate a response to read requests. */
 } ble_hids_feature_rep_init_t;
 
 /**@brief HID Service Report Map characteristic init structure. This contains all options and data 
  *        needed for initialization of the Report Map characteristic. */
 typedef struct
 {
-    uint8_t                       data_len;         /**< Length of report map data. */
     uint8_t *                     p_data;           /**< Report map data. */
+    uint16_t                      data_len;         /**< Length of report map data. */
+    uint8_t                       ext_rep_ref_num;  /**< Number of Optional External Report Reference descriptors. */
     ble_uuid_t *                  p_ext_rep_ref;    /**< Optional External Report Reference descriptor (will be added if != NULL). */
     ble_srv_security_mode_t       security_mode;    /**< Security mode for the HID Service Report Map characteristic. */
 } ble_hids_rep_map_init_t;

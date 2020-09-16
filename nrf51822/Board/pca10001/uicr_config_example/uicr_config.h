@@ -58,11 +58,9 @@
  * in any of the board example folders for an example of the recommended download method as well
  * as the documentation that follows with the SDK. nrfjprog can be used as normal.
  *
- * Please note as well that if you are using a SoftDevice the UICR_CLENR0 address will
- * already be in use. Do not uncomment that line.
  */
 
-// const uint32_t UICR_CLENR0    __attribute__((at(0x10001000))) __attribute__((used)) = 0xFFFFFFFF;   // WARNING: This address might be used by the SoftDevice. Use with care.
+// const uint32_t UICR_CLENR0    __attribute__((at(0x10001000))) __attribute__((used)) = 0xFFFFFFFF;
 // const uint32_t UICR_RBPCONF   __attribute__((at(0x10001004))) __attribute__((used)) = 0xFFFFFFFF;
 // const uint32_t UICR_XTALFREQ  __attribute__((at(0x10001008))) __attribute__((used)) = 0xFFFFFFFF;
 

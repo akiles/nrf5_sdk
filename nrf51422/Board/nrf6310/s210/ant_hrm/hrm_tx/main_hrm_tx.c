@@ -13,6 +13,7 @@ All rights reserved.
 #include "ant_interface.h"
 #include "ant_parameters.h"
 #include "app_error.h"
+#include "app_util.h"
 
 #define ANT_EVENT_MSG_BUFFER_MIN_SIZE 32u                 /**< Minimum size of ANT event message buffer. */
 

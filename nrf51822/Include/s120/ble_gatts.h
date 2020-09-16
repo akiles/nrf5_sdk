@@ -445,13 +445,13 @@ SVCALL(SD_BLE_GATTS_VALUE_GET, uint32_t, sd_ble_gatts_value_get(uint16_t handle,
  *
  * @retval ::NRF_SUCCESS Successfully queued a notification or indication for transmission, and optionally updated the attribute value.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
+ * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection State or notifications and/or indications not enabled in the CCCD.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied.
  * @retval ::BLE_ERROR_INVALID_ATTR_HANDLE Invalid attribute handle(s) supplied. Only attributes added directly by the application are available to notify and indicate.
  * @retval ::BLE_ERROR_GATTS_INVALID_ATTR_TYPE Invalid attribute type(s) supplied, only characteristic values may be notified and indicated.
  * @retval ::NRF_ERROR_NOT_FOUND Attribute not found.
  * @retval ::NRF_ERROR_DATA_SIZE Invalid data size(s) supplied.
- * @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation, notifications or indications must be enabled in the CCCD.
  * @retval ::NRF_ERROR_BUSY Procedure already in progress.
  * @retval ::BLE_ERROR_GATTS_SYS_ATTR_MISSING System attributes missing, use @ref sd_ble_gatts_sys_attr_set to set them to a known value.
  * @retval ::BLE_ERROR_NO_TX_BUFFERS There are no available buffers to send the data, applies only to notifications.
@@ -472,6 +472,7 @@ SVCALL(SD_BLE_GATTS_HVX, uint32_t, sd_ble_gatts_hvx(uint16_t conn_handle, ble_ga
  *
  * @retval ::NRF_SUCCESS Successfully queued the Service Changed indication for transmission.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
+ * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection State or notifications and/or indications not enabled in the CCCD.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied.
  * @retval ::BLE_ERROR_INVALID_ATTR_HANDLE Invalid attribute handle(s) supplied, handles must be in the range populated by the application.
  * @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation, notifications or indications must be enabled in the CCCD.
@@ -489,7 +490,7 @@ SVCALL(SD_BLE_GATTS_SERVICE_CHANGED, uint32_t, sd_ble_gatts_service_changed(uint
  *
  * @retval ::NRF_SUCCESS               Successfully queued a response to the peer, and in the case of a write operation, ATT table updated.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
- * @retval ::NRF_ERROR_INVALID_STATE   No authorization request pending.
+ * @retval ::NRF_ERROR_INVALID_STATE   Invalid Connection State or no authorization request pending.
  * @retval ::NRF_ERROR_INVALID_PARAM   Authorization op invalid,
  *                                         or for Read Authorization reply: requested handles not replied with,
  *                                         or for Write Authorization reply: handle supplied does not match requested handle.
@@ -521,6 +522,7 @@ SVCALL(SD_BLE_GATTS_RW_AUTHORIZE_REPLY, uint32_t, sd_ble_gatts_rw_authorize_repl
  *
  * @retval ::NRF_SUCCESS Successfully set the system attribute information.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
+ * @retval ::NRF_ERROR_INVALID_STATE   Invalid Connection State.
  * @retval ::NRF_ERROR_INVALID_DATA Invalid data supplied, the data should be exactly the same as retrieved with @ref sd_ble_gatts_sys_attr_get.
  * @retval ::NRF_ERROR_NO_MEM Not enough memory to complete operation.
  * @retval ::NRF_ERROR_BUSY The stack is busy. Retry at later time.

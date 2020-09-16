@@ -50,7 +50,7 @@ static const uint8_t volatile * const matrix_row_port = ((uint8_t*)(&NRF_GPIO->I
 static uint16_t * const matrix_column_port = ((uint16_t*)(&NRF_GPIO->OUT));
 
 #define KEYPAD_NUM_OF_COLUMNS 16 //!< Number of columns in the keyboard matrix.
-#define KEYPAD_NUM_OF_ROWS 8 //!< Number of rows in the keyboard matrix.
+#define KEYPAD_NUM_OF_ROWS    8  //!< Number of rows in the keyboard matrix.
 
 #ifdef USE_UART
 
@@ -82,8 +82,8 @@ static const uint8_t usb_hid2_ascii_look_up[KEYPAD_NUM_OF_COLUMNS*KEYPAD_NUM_OF_
  */
 static void uart_puthidstring(const char *str)
 {
-    uint_fast8_t i = 0;
-    char ch = str[i++];
+    uint_fast8_t i  = 0;
+    char         ch = str[i++];
     while (ch != '\0')
     {
         simple_uart_put(usb_hid2_ascii_look_up[(uint8_t)ch]);
@@ -100,7 +100,7 @@ static void uart_puthidstring(const char *str)
 int main(void)
 {
     const uint8_t *key_packet;
-    uint8_t key_packet_size;
+    uint8_t        key_packet_size;
 
 #ifdef USE_UART
     simple_uart_config(0, SIMPLE_UART_TXD_PIN_NUMBER, 0, SIMPLE_UART_RXD_PIN_NUMBER, false); // Hardware flow control not used in this example.
@@ -134,7 +134,7 @@ int main(void)
         {
 #ifdef USE_UART
             // Send the whole key packet over UART.
-            uart_puthidstring((char*)&key_packet[KEY_PACKET_KEY_INDEX]);
+            uart_puthidstring((char *)&key_packet[KEY_PACKET_KEY_INDEX]);
 #else
             // Show modifier key state using the LEDs. Note LED's use GPIO pins from 8 to 15.
         nrf_gpio_port_write(NRF_GPIO_PORT_SELECT_PORT3, key_packet[KEY_PACKET_MODIFIER_KEY_INDEX]);

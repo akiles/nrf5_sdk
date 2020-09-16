@@ -38,7 +38,7 @@ C:\Keil\ARM\BIN\CO-RV.LNT
 -d__dmb()=                   // defined to be compiler extension
 -d__enable_irq()=            // defined to be compiler extension
 -d__disable_irq()=           // defined to be compiler extension
--d__asm__()=                // define to be a compiler extension
+-d__asm__()=                 // defined to be compiler extension
 
 +rw(__asm)                   // activate this keyword
 +rw(__weak)                  // activate this keyword
@@ -64,6 +64,8 @@ C:\Keil\ARM\BIN\CO-RV.LNT
 
 -d__GNUC__=0
 
+-d__ARM_NO_DEPRECATED_FUNCTIONS=0
+
 // BLE additional settings
 -e641                        // Converting enum to int                                [We use enums for (named) limited range numerics]
 -e522                        // Highest function 'Name' lacks side-effects            [In our context this is practially always a false warning]
@@ -73,7 +75,9 @@ C:\Keil\ARM\BIN\CO-RV.LNT
 
 -esym(578,static_assert_failed) // Declaration of symbol 'static_assert_failed' hides symbol 'static_assert_failed'
 
+-esym(526,__INTADDR__)       // __INTADDR__ is an ARM intrinsic function only know by the compiler, thus Lint will issue a warning when using this function, even though it's valid. 
 -esym(526,__current_sp)      // __current_sp is an ARM intrinsic function only know by the compiler, thus Lint will issue a warning when using this function, even though it's valid. 
 -esym(628,__current_sp)      // __current_sp is an ARM intrinsic function only know by the compiler, thus Lint will issue a warning when using this function, even though it's valid.
 
 -e695                   // Inline function defined without a stroage class specifier (Keil's inlining ignores this).
+

@@ -56,12 +56,11 @@
 /**@brief Persistent Storage Error Reporting Callback
  *
  * @details Persistent Storage Error Reporting Callback that is used by the interface to report
- *          success or failure of a flash operation. Therefore, for store operation or clear
- *          operations, that take time, application can know when the procedure was complete.
- *          For store operation, since no data copy is made, receiving a success or failure
- *          notification, indicated by the reason parameter of callback is an indication that
- *          the resident memory could now be reused or freed, as the case may be.
- *          This callback is not received for load operation.
+ *          success or failure of a flash operation. Therefore, for any operations, application 
+ *          can know when the procedure was complete. For store operation, since no data copy 
+ *          is made, receiving a success or failure notification, indicated by the reason 
+ *          parameter of callback is an indication that the resident memory could now be reused 
+ *          or freed, as the case may be.
  * 
  * @param[in] handle   Identifies module and block for which callback is received.
  * @param[in] op_code  Identifies the operation for which the event is notified.

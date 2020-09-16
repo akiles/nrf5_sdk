@@ -21,28 +21,29 @@
 #include <string.h>
 #include <stddef.h>
 
-#define MAX_DFU_PKT_LEN            20                                               /**< Maximum length (in bytes) of the DFU Packet characteristic. */
-#define PKT_RCPT_NOTIF_REQ_LEN     3                                                /**< Length (in bytes) of the Packet Receipt Notification Request. */
-#define MAX_PKTS_RCPT_NOTIF_LEN    6                                                /**< Maximum length (in bytes) of the Packets Receipt Notification. */
-#define MAX_RESPONSE_LEN           7                                                /**< Maximum length (in bytes) of the response to a Control Point command. */
-#define MAX_NOTIF_BUFFER_LEN       MAX(MAX_PKTS_RCPT_NOTIF_LEN, MAX_RESPONSE_LEN)   /**< Maximum length (in bytes) of the buffer needed by DFU Service while sending notifications to peer. */
+#define MAX_DFU_PKT_LEN         20                                              /**< Maximum length (in bytes) of the DFU Packet characteristic. */
+#define PKT_START_DFU_PARAM_LEN 2                                               /**< Length (in bytes) of the parameters for Packet Start DFU Request. */
+#define PKT_RCPT_NOTIF_REQ_LEN  3                                               /**< Length (in bytes) of the Packet Receipt Notification Request. */
+#define MAX_PKTS_RCPT_NOTIF_LEN 6                                               /**< Maximum length (in bytes) of the Packets Receipt Notification. */
+#define MAX_RESPONSE_LEN        7                                               /**< Maximum length (in bytes) of the response to a Control Point command. */
+#define MAX_NOTIF_BUFFER_LEN    MAX(MAX_PKTS_RCPT_NOTIF_LEN, MAX_RESPONSE_LEN)  /**< Maximum length (in bytes) of the buffer needed by DFU Service while sending notifications to peer. */
 
 enum
 {
-    OP_CODE_START_DFU            = 1,                                               /**< Value of the Op code field for 'Start DFU' command.*/
-    OP_CODE_RECEIVE_INIT         = 2,                                               /**< Value of the Op code field for 'Initialize DFU parameters' command.*/
-    OP_CODE_RECEIVE_FW           = 3,                                               /**< Value of the Op code field for 'Receive firmware image' command.*/
-    OP_CODE_VALIDATE             = 4,                                               /**< Value of the Op code field for 'Validate firmware' command.*/
-    OP_CODE_ACTIVATE_N_RESET     = 5,                                               /**< Value of the Op code field for 'Activate & Reset' command.*/
-    OP_CODE_SYS_RESET            = 6,                                               /**< Value of the Op code field for 'Reset System' command.*/
-    OP_CODE_IMAGE_SIZE_REQ       = 7,                                               /**< Value of the Op code field for 'Report received image size' command.*/
-    OP_CODE_PKT_RCPT_NOTIF_REQ   = 8,                                               /**< Value of the Op code field for 'Request packet receipt notification.*/
-    OP_CODE_RESPONSE             = 16,                                              /**< Value of the Op code field for 'Response.*/
-    OP_CODE_PKT_RCPT_NOTIF       = 17                                               /**< Value of the Op code field for 'Packets Receipt Notification'.*/
+    OP_CODE_START_DFU          = 1,                                             /**< Value of the Op code field for 'Start DFU' command.*/
+    OP_CODE_RECEIVE_INIT       = 2,                                             /**< Value of the Op code field for 'Initialize DFU parameters' command.*/
+    OP_CODE_RECEIVE_FW         = 3,                                             /**< Value of the Op code field for 'Receive firmware image' command.*/
+    OP_CODE_VALIDATE           = 4,                                             /**< Value of the Op code field for 'Validate firmware' command.*/
+    OP_CODE_ACTIVATE_N_RESET   = 5,                                             /**< Value of the Op code field for 'Activate & Reset' command.*/
+    OP_CODE_SYS_RESET          = 6,                                             /**< Value of the Op code field for 'Reset System' command.*/
+    OP_CODE_IMAGE_SIZE_REQ     = 7,                                             /**< Value of the Op code field for 'Report received image size' command.*/
+    OP_CODE_PKT_RCPT_NOTIF_REQ = 8,                                             /**< Value of the Op code field for 'Request packet receipt notification.*/
+    OP_CODE_RESPONSE           = 16,                                            /**< Value of the Op code field for 'Response.*/
+    OP_CODE_PKT_RCPT_NOTIF     = 17                                             /**< Value of the Op code field for 'Packets Receipt Notification'.*/
 };
 
-static bool    m_is_dfu_service_initialized = false;                                /**< Variable to check if the DFU service was initialized by the application.*/
-static uint8_t m_notif_buffer[MAX_NOTIF_BUFFER_LEN];                                /**< Buffer used for sending notifications to peer. */
+static bool    m_is_dfu_service_initialized = false;                            /**< Variable to check if the DFU service was initialized by the application.*/
+static uint8_t m_notif_buffer[MAX_NOTIF_BUFFER_LEN];                            /**< Buffer used for sending notifications to peer. */
 
 
 /**@brief       Function for adding DFU Packet characteristic to the BLE Stack.
@@ -60,12 +61,12 @@ static uint32_t dfu_pkt_char_add(ble_dfu_t * const p_dfu)
 
     memset(&char_md, 0, sizeof(char_md));
 
-    char_md.char_props.write_wo_resp    = 1;
-    char_md.p_char_user_desc            = NULL;
-    char_md.p_char_pf                   = NULL;
-    char_md.p_user_desc_md              = NULL;
-    char_md.p_cccd_md                   = NULL;
-    char_md.p_sccd_md                   = NULL;
+    char_md.char_props.write_wo_resp = 1;
+    char_md.p_char_user_desc         = NULL;
+    char_md.p_char_pf                = NULL;
+    char_md.p_user_desc_md           = NULL;
+    char_md.p_cccd_md                = NULL;
+    char_md.p_sccd_md                = NULL;
 
     char_uuid.type = p_dfu->uuid_type;
     char_uuid.uuid = BLE_DFU_PKT_CHAR_UUID;
@@ -111,13 +112,13 @@ static uint32_t dfu_ctrl_pt_add(ble_dfu_t * const p_dfu)
 
     memset(&char_md, 0, sizeof(char_md));
 
-    char_md.char_props.write            = 1;
-    char_md.char_props.notify           = 1;
-    char_md.p_char_user_desc            = NULL;
-    char_md.p_char_pf                   = NULL;
-    char_md.p_user_desc_md              = NULL;
-    char_md.p_cccd_md                   = NULL;
-    char_md.p_sccd_md                   = NULL;
+    char_md.char_props.write  = 1;
+    char_md.char_props.notify = 1;
+    char_md.p_char_user_desc  = NULL;
+    char_md.p_char_pf         = NULL;
+    char_md.p_user_desc_md    = NULL;
+    char_md.p_cccd_md         = NULL;
+    char_md.p_sccd_md         = NULL;
 
     char_uuid.type = p_dfu->uuid_type;
     char_uuid.uuid = BLE_DFU_CTRL_PT_UUID;
@@ -127,19 +128,19 @@ static uint32_t dfu_ctrl_pt_add(ble_dfu_t * const p_dfu)
     BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&attr_md.read_perm);
     BLE_GAP_CONN_SEC_MODE_SET_OPEN(&attr_md.write_perm);
 
-    attr_md.vloc       = BLE_GATTS_VLOC_STACK;
-    attr_md.rd_auth    = 0;
-    attr_md.wr_auth    = 1;
-    attr_md.vlen       = 1;
+    attr_md.vloc    = BLE_GATTS_VLOC_STACK;
+    attr_md.rd_auth = 0;
+    attr_md.wr_auth = 1;
+    attr_md.vlen    = 1;
 
     memset(&attr_char_value, 0, sizeof(attr_char_value));
 
-    attr_char_value.p_uuid       = &char_uuid;
-    attr_char_value.p_attr_md    = &attr_md;
-    attr_char_value.init_len     = 0;
-    attr_char_value.init_offs    = 0;
-    attr_char_value.max_len      = BLE_L2CAP_MTU_DEF;
-    attr_char_value.p_value      = NULL;
+    attr_char_value.p_uuid    = &char_uuid;
+    attr_char_value.p_attr_md = &attr_md;
+    attr_char_value.init_len  = 0;
+    attr_char_value.init_offs = 0;
+    attr_char_value.max_len   = BLE_L2CAP_MTU_DEF;
+    attr_char_value.p_value   = NULL;
 
     return sd_ble_gatts_characteristic_add(p_dfu->service_handle,
                                            &char_md,
@@ -210,7 +211,7 @@ static uint32_t on_ctrl_pt_write(ble_dfu_t * p_dfu, ble_gatts_evt_write_t * p_bl
     {
         // Send an error response to the peer indicating that the CCCD is improperly configured.
         write_authorize_reply.params.write.gatt_status =
-                                                       BLE_GATT_STATUS_ATTERR_CPS_CCCD_CONFIG_ERROR;
+            BLE_GATT_STATUS_ATTERR_CPS_CCCD_CONFIG_ERROR;
 
         return (sd_ble_gatts_rw_authorize_reply(p_dfu->conn_handle, &write_authorize_reply));
 
@@ -235,6 +236,20 @@ static uint32_t on_ctrl_pt_write(ble_dfu_t * p_dfu, ble_gatts_evt_write_t * p_bl
     {
         case OP_CODE_START_DFU:
             ble_dfu_evt.ble_dfu_evt_type = BLE_DFU_START;
+
+            if (p_ble_write_evt->len < PKT_START_DFU_PARAM_LEN)
+            {
+                // For backward compatibility with olde Master Control Panels that doesn't specify
+                // Update type, the default type used if no update mode is specified is: 
+                // Application update. 
+                // This code can be removed if backward compability is not required.
+                ble_dfu_evt.evt.ble_dfu_pkt_write.len    = 0;
+            }
+            else
+            {
+                ble_dfu_evt.evt.ble_dfu_pkt_write.len    = 1;
+                ble_dfu_evt.evt.ble_dfu_pkt_write.p_data = &(p_ble_write_evt->data[1]);
+            }
 
             p_dfu->evt_handler(p_dfu, &ble_dfu_evt);
             break;
@@ -278,7 +293,7 @@ static uint32_t on_ctrl_pt_write(ble_dfu_t * p_dfu, ble_gatts_evt_write_t * p_bl
             }
 
             ble_dfu_evt.evt.pkt_rcpt_notif_req.num_of_pkts =
-                                                        uint16_decode(&(p_ble_write_evt->data[1]));
+                uint16_decode(&(p_ble_write_evt->data[1]));
 
             if (ble_dfu_evt.evt.pkt_rcpt_notif_req.num_of_pkts == 0)
             {
@@ -352,9 +367,9 @@ static void on_write(ble_dfu_t * p_dfu, ble_evt_t * p_ble_evt)
 
         ble_dfu_evt_t ble_dfu_evt;
 
-        ble_dfu_evt.ble_dfu_evt_type               = BLE_DFU_PACKET_WRITE;
-        ble_dfu_evt.evt.ble_dfu_pkt_write.len      = p_ble_evt->evt.gatts_evt.params.write.len;
-        ble_dfu_evt.evt.ble_dfu_pkt_write.p_data   = p_ble_evt->evt.gatts_evt.params.write.data;
+        ble_dfu_evt.ble_dfu_evt_type             = BLE_DFU_PACKET_WRITE;
+        ble_dfu_evt.evt.ble_dfu_pkt_write.len    = p_ble_evt->evt.gatts_evt.params.write.len;
+        ble_dfu_evt.evt.ble_dfu_pkt_write.p_data = p_ble_evt->evt.gatts_evt.params.write.data;
 
         p_dfu->evt_handler(p_dfu, &ble_dfu_evt);
     }
@@ -381,15 +396,15 @@ uint32_t ble_dfu_init(ble_dfu_t * p_dfu, ble_dfu_init_t * p_dfu_init)
 
     p_dfu->conn_handle = BLE_CONN_HANDLE_INVALID;
 
-    ble_uuid_t  service_uuid;
-    uint32_t    err_code;
+    ble_uuid_t service_uuid;
+    uint32_t   err_code;
 
     const ble_uuid128_t base_uuid128 =
     {
-       {
-           0x23, 0xD1, 0xBC, 0xEA, 0x5F, 0x78, 0x23, 0x15,
-           0xDE, 0xEF, 0x12, 0x12, 0x00, 0x00, 0x00, 0x00
-       }
+        {
+            0x23, 0xD1, 0xBC, 0xEA, 0x5F, 0x78, 0x23, 0x15,
+            0xDE, 0xEF, 0x12, 0x12, 0x00, 0x00, 0x00, 0x00
+        }
     };
 
     service_uuid.uuid = BLE_DFU_SERVICE_UUID;
@@ -476,12 +491,12 @@ uint32_t ble_dfu_bytes_rcvd_report(ble_dfu_t * p_dfu, uint32_t num_of_firmware_b
     {
         return NRF_ERROR_NULL;
     }
-    
+
     if ((p_dfu->conn_handle == BLE_CONN_HANDLE_INVALID) || !m_is_dfu_service_initialized)
     {
         return NRF_ERROR_INVALID_STATE;
     }
-    
+
     ble_gatts_hvx_params_t hvx_params;
     uint16_t               index = 0;
 
@@ -498,11 +513,11 @@ uint32_t ble_dfu_bytes_rcvd_report(ble_dfu_t * p_dfu, uint32_t num_of_firmware_b
 
     memset(&hvx_params, 0, sizeof(hvx_params));
 
-    hvx_params.handle   = p_dfu->dfu_ctrl_pt_handles.value_handle;
-    hvx_params.type     = BLE_GATT_HVX_NOTIFICATION;
-    hvx_params.offset   = 0;
-    hvx_params.p_len    = &index;
-    hvx_params.p_data   = m_notif_buffer;
+    hvx_params.handle = p_dfu->dfu_ctrl_pt_handles.value_handle;
+    hvx_params.type   = BLE_GATT_HVX_NOTIFICATION;
+    hvx_params.offset = 0;
+    hvx_params.p_len  = &index;
+    hvx_params.p_data = m_notif_buffer;
 
     return sd_ble_gatts_hvx(p_dfu->conn_handle, &hvx_params);
 }
@@ -529,19 +544,19 @@ uint32_t ble_dfu_pkts_rcpt_notify(ble_dfu_t * p_dfu, uint32_t num_of_firmware_by
 
     memset(&hvx_params, 0, sizeof(hvx_params));
 
-    hvx_params.handle   = p_dfu->dfu_ctrl_pt_handles.value_handle;
-    hvx_params.type     = BLE_GATT_HVX_NOTIFICATION;
-    hvx_params.offset   = 0;
-    hvx_params.p_len    = &index;
-    hvx_params.p_data   = m_notif_buffer;
+    hvx_params.handle = p_dfu->dfu_ctrl_pt_handles.value_handle;
+    hvx_params.type   = BLE_GATT_HVX_NOTIFICATION;
+    hvx_params.offset = 0;
+    hvx_params.p_len  = &index;
+    hvx_params.p_data = m_notif_buffer;
 
     return sd_ble_gatts_hvx(p_dfu->conn_handle, &hvx_params);
 }
 
 
-uint32_t ble_dfu_response_send(ble_dfu_t *          p_dfu,
-                               ble_dfu_procedure_t  dfu_proc,
-                               ble_dfu_resp_val_t   resp_val)
+uint32_t ble_dfu_response_send(ble_dfu_t         * p_dfu,
+                               ble_dfu_procedure_t dfu_proc,
+                               ble_dfu_resp_val_t  resp_val)
 {
     if (p_dfu == NULL)
     {
@@ -566,11 +581,11 @@ uint32_t ble_dfu_response_send(ble_dfu_t *          p_dfu,
 
     memset(&hvx_params, 0, sizeof(hvx_params));
 
-    hvx_params.handle   = p_dfu->dfu_ctrl_pt_handles.value_handle;
-    hvx_params.type     = BLE_GATT_HVX_NOTIFICATION;
-    hvx_params.offset   = 0;
-    hvx_params.p_len    = &index;
-    hvx_params.p_data   = m_notif_buffer;
+    hvx_params.handle = p_dfu->dfu_ctrl_pt_handles.value_handle;
+    hvx_params.type   = BLE_GATT_HVX_NOTIFICATION;
+    hvx_params.offset = 0;
+    hvx_params.p_len  = &index;
+    hvx_params.p_data = m_notif_buffer;
 
     return sd_ble_gatts_hvx(p_dfu->conn_handle, &hvx_params);
 }

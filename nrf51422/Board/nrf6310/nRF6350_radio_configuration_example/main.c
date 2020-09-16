@@ -26,29 +26,29 @@
 #include "nrf_delay.h"
 #include "boards.h"
 
-static uint8_t packet[256];                                                  /**< Data packet. */
-static bool sweep                   = false;                                 /**< Sweep enabled. */
-static uint8_t mode_                = RADIO_MODE_MODE_Nrf_2Mbit;             /**< Transfer mode. */
-static uint8_t data_rate_           = 0;                                     /**< Transfer data rate. */
-static uint8_t txpower_menu_        = RADIO_TXPOWER_TXPOWER_0dBm;            /**< TX power in dBm. */
-static uint8_t channel_             = 0;                                     /**< This is used in sweep and varies from channel_start_ to channel_end_. */
-static uint8_t channel_start_       = 0;                                     /**< Starting channel number. */
-static uint8_t channel_end_         = 80;                                    /**< End channel number. */
-static uint8_t delayms_             = 10;                                    /**< Delay in ms (0ms - 99ms). */
-static uint8_t js_state_last        = JS_BUTTON_NONE;                        /**< Previous Joystick state. */
-static uint8_t js_state             = JS_BUTTON_NONE;                        /**< Current Joystick state. */
-static bool sweep_tx_               = false;                                 /**< Boolean for TX Sweep. */
-static bool in_menu                 = true;                                  /**< Browsing menu if true and false while editing some value (defaults to true at power up). */
-static uint8_t current_menu_pos     = 0;                                     /**< Current menu option selected (defaults to first one in the list). */
-static uint8_t current_scroll_pos   = 0;                                     /**< Current scroll position in the selection text (defaults to first character). */
+static uint8_t packet[256];                                      /**< Data packet. */
+static bool    sweep              = false;                       /**< Sweep enabled. */
+static uint8_t mode_              = RADIO_MODE_MODE_Nrf_2Mbit;   /**< Transfer mode. */
+static uint8_t data_rate_         = 0;                           /**< Transfer data rate. */
+static uint8_t txpower_menu_      = RADIO_TXPOWER_TXPOWER_0dBm;  /**< TX power in dBm. */
+static uint8_t channel_           = 0;                           /**< This is used in sweep and varies from channel_start_ to channel_end_. */
+static uint8_t channel_start_     = 0;                           /**< Starting channel number. */
+static uint8_t channel_end_       = 80;                          /**< End channel number. */
+static uint8_t delayms_           = 10;                          /**< Delay in ms (0ms - 99ms). */
+static uint8_t js_state_last      = JS_BUTTON_NONE;              /**< Previous Joystick state. */
+static uint8_t js_state           = JS_BUTTON_NONE;              /**< Current Joystick state. */
+static bool    sweep_tx_          = false;                       /**< Boolean for TX Sweep. */
+static bool    in_menu            = true;                                 /**< Browsing menu if true and false while editing some value (defaults to true at power up). */
+static uint8_t current_menu_pos   = 0;                               /**< Current menu option selected (defaults to first one in the list). */
+static uint8_t current_scroll_pos = 0;                                     /**< Current scroll position in the selection text (defaults to first character). */
 
 
-#define MAX_MENU_OPTIONS                  (11UL)                             /**< Number of options in the main menu of the test */
-#define MAX_CHARACTERS_PER_LINE           (16UL)                             /**< Maximum characters that are visible in one line on nRF6350 display */
-#define MAX_CHARECTER_IN_MENU_OPTION      (60UL)                             /**< Maximum string length of display options text */
-#define MAX_CURSOR_POS_IN_STRING          (MAX_CHARECTER_IN_MENU_OPTION - \
-                                           MAX_CHARACTERS_PER_LINE)          /**< Maximum cursor position(string position that points to first letter in first line of display) on display */
-#define ERROR_PIN                         (LED_0)                            /**< Pin that is active high when there is an error in this example */
+#define MAX_MENU_OPTIONS             (11UL)                             /**< Number of options in the main menu of the test */
+#define MAX_CHARACTERS_PER_LINE      (16UL)                             /**< Maximum characters that are visible in one line on nRF6350 display */
+#define MAX_CHARECTER_IN_MENU_OPTION (60UL)                             /**< Maximum string length of display options text */
+#define MAX_CURSOR_POS_IN_STRING     (MAX_CHARECTER_IN_MENU_OPTION - \
+                                     MAX_CHARACTERS_PER_LINE)           /**< Maximum cursor position(string position that points to first letter in first line of display) on display */
+#define ERROR_PIN                    (LED_0)                            /**< Pin that is active high when there is an error in this example */
 
 /*
  * Output power is
@@ -61,7 +61,7 @@ static uint8_t current_scroll_pos   = 0;                                     /**
       6-->  -20 dBm
       7-->  -40 dBm
  */
-static uint8_t txpower_             = RADIO_TXPOWER_TXPOWER_0dBm;
+static uint8_t txpower_ = RADIO_TXPOWER_TXPOWER_0dBm;
 
 /* Do not change the order, it depends on menu order. */
 static uint32_t *p_variables[MAX_MENU_OPTIONS] =
@@ -80,13 +80,13 @@ static uint32_t *p_variables[MAX_MENU_OPTIONS] =
 };
 
 /* Text for menu options, fixed length strings. */
-static const char *help_menu[MAX_MENU_OPTIONS]    =
+static const char *help_menu[MAX_MENU_OPTIONS] =
 {
     "Enter start channel for Sweep/Channel for constant carrier",
     "Enter end channel for Sweep                               ",
     "Start TX carrier                                          ",
-    "Enter delay on each channel (1ms-99ms)                     ",
-    "Cancel Sweep/Carrier                                     ",
+    "Enter delay on each channel (1ms-99ms)                    ",
+    "Cancel Sweep/Carrier                                      ",
     "Enter data rate('0'=250 Kb/s, '1'=1 Mb/s and '2'=2 Mb/s)  ",
     "Start modulated TX carrier                                ",
     "Enter output Power('0'=+4 dBm, '1'=0 dBm,...,'7'=-40 dBm):",
@@ -98,12 +98,12 @@ static const char *help_menu[MAX_MENU_OPTIONS]    =
 /* Types of radio tests. */
 typedef enum
 {
-    RADIO_TEST_NOP,               /**< No test running      */
-    RADIO_TEST_TXCC,              /**< TX constant carrier  */
-    RADIO_TEST_TXMC,              /**< TX modulated carrier */
-    RADIO_TEST_TXSWEEP,           /**< TX sweep             */
-    RADIO_TEST_RXC,               /**< RX constant carrier  */
-    RADIO_TEST_RXSWEEP,           /**< RX sweep             */
+    RADIO_TEST_NOP,      /**< No test running      */
+    RADIO_TEST_TXCC,     /**< TX constant carrier  */
+    RADIO_TEST_TXMC,     /**< TX modulated carrier */
+    RADIO_TEST_TXSWEEP,  /**< TX sweep             */
+    RADIO_TEST_RXC,      /**< RX constant carrier  */
+    RADIO_TEST_RXSWEEP,  /**< RX sweep             */
 } radio_tests_t;
 
 
@@ -127,7 +127,7 @@ static void gpio_config(void)
 static void radio_init(void)
 {
     /*  Start the RNG. */
-    NRF_RNG->TASKS_START           = 1;
+    NRF_RNG->TASKS_START = 1;
   
     /* Start 16 MHz crystal oscillator. */
     NRF_CLOCK->EVENTS_HFCLKSTARTED = 0;
@@ -151,7 +151,7 @@ static void radio_init(void)
 static void show_error(void)
 {
     nrf_gpio_pin_set(ERROR_PIN);
-    while(true)
+    while (true)
     {
         // Do nothing.
     }
@@ -163,12 +163,12 @@ static void show_error(void)
 */
 static void wait_for_joystick_movement(void)
 {
-    while(js_state == js_state_last)
+    while (js_state == js_state_last)
     {
         radio_test();
 
         // Get the current status of the joystick
-        if(!nrf6350_js_get_status(&js_state))
+        if (!nrf6350_js_get_status(&js_state))
         {
             show_error();
         }
@@ -188,7 +188,7 @@ typedef enum
 /** @brief Function for identifying the change in menu position. */
 static void change_selected_variable(change_direction_t cd)
 {
-    switch(current_menu_pos)
+    switch (current_menu_pos)
     {
         case 0:
             if ((cd == decrement) && (channel_start_ > 0))  
@@ -232,7 +232,7 @@ static void change_selected_variable(change_direction_t cd)
             { 
                 ++data_rate_;
             }
-        break;
+            break;
         
         case 7:
             if ((cd == decrement) && (txpower_menu_ > 0))  
@@ -243,7 +243,7 @@ static void change_selected_variable(change_direction_t cd)
             { 
                 ++txpower_menu_; 
             }
-        break;
+            break;
         
         case 2: 
             // Fall through.
@@ -263,11 +263,11 @@ static void change_selected_variable(change_direction_t cd)
 static void joystick_wait_change_update_pos_variables(void)
 {
     wait_for_joystick_movement();
-    switch(js_state)
+    switch (js_state)
     {
         case JS_BUTTON_LEFT:
             // Browsing of options can be done while in the menu or in the menu selection browse mode.
-            if((in_menu) && (current_scroll_pos > 0))
+            if ((in_menu) && (current_scroll_pos > 0))
             {
                 --current_scroll_pos;
             }
@@ -279,7 +279,7 @@ static void joystick_wait_change_update_pos_variables(void)
         
         case JS_BUTTON_RIGHT:
             // browsing of options can be done while in the menu or in the menu selection browse mode.
-            if((in_menu) && (current_scroll_pos < (MAX_CURSOR_POS_IN_STRING - 1)))
+            if ((in_menu) && (current_scroll_pos < (MAX_CURSOR_POS_IN_STRING - 1)))
             {
                 ++current_scroll_pos;
             }
@@ -291,7 +291,7 @@ static void joystick_wait_change_update_pos_variables(void)
         
         case JS_BUTTON_PUSH:
             // change modes.
-            in_menu = !(in_menu);
+            in_menu            = !(in_menu);
             current_scroll_pos = 0; // reset the scroll position.
             break;
         
@@ -327,12 +327,12 @@ static void joystick_wait_change_update_pos_variables(void)
  */
 static void display_text(void)
 {
-    if(!nrf6350_lcd_clear())
+    if (!nrf6350_lcd_clear())
     {
         show_error();
     }
 
-    if(in_menu)
+    if (in_menu)
     {
         if(!nrf6350_lcd_write_string(&help_menu[current_menu_pos][current_scroll_pos],  \
                                      MAX_CHARACTERS_PER_LINE, LCD_UPPER_LINE, 0))
@@ -342,12 +342,12 @@ static void display_text(void)
     }
     else
     {
-        if(p_variables[current_menu_pos] != 0)
+        if (p_variables[current_menu_pos] != 0)
         {
             char buffer[3];
             sprintf(buffer, "%lu", (int32_t)(*(uint8_t *)p_variables[current_menu_pos]));
 
-            if(!nrf6350_lcd_write_string(buffer, 3, LCD_UPPER_LINE, 7))
+            if (!nrf6350_lcd_write_string(buffer, 3, LCD_UPPER_LINE, 7))
             {
                 show_error();
             }
@@ -363,7 +363,7 @@ static void display_text(void)
  */
 static void menu_help_testrun_when_idle(void)
 {
-    while(true)
+    while (true)
     {
         display_text();
         joystick_wait_change_update_pos_variables();
@@ -426,7 +426,7 @@ static void radio_tx_carrier(uint8_t txpower, uint8_t mode, uint8_t channel)
     NRF_RADIO->MODE       = ((uint32_t)mode << RADIO_MODE_MODE_Pos);
     NRF_RADIO->FREQUENCY  = channel;
     NRF_RADIO->TEST       = (RADIO_TEST_CONST_CARRIER_Enabled << RADIO_TEST_CONST_CARRIER_Pos)
-                          | (RADIO_TEST_PLL_LOCK_Enabled << RADIO_TEST_PLL_LOCK_Pos);
+                            | (RADIO_TEST_PLL_LOCK_Enabled << RADIO_TEST_PLL_LOCK_Pos);
     NRF_RADIO->TASKS_TXEN = 1;
 }
 
@@ -437,7 +437,7 @@ static void radio_tx_carrier(uint8_t txpower, uint8_t mode, uint8_t channel)
 static uint32_t rnd8(void)
 {
     NRF_RNG->EVENTS_VALRDY = 0;
-    while(NRF_RNG->EVENTS_VALRDY == 0)
+    while (NRF_RNG->EVENTS_VALRDY == 0)
     {
         // Do nothing.
     }
@@ -453,10 +453,10 @@ static uint32_t rnd32(void)
     uint8_t i;
     uint32_t val = 0;
 
-    for(i=0;i<4;i++)
+    for (i = 0; i < 4; i++)
     {
         val <<= 8;
-        val |= rnd8();
+        val  |= rnd8();
     }
     return val;
 }
@@ -476,24 +476,24 @@ static void generate_modulated_rf_packet(void)
     // Packet configuration.
     // S1 size = 0 bits, S0 size = 0 bytes, payload length size = 8 bits
     NRF_RADIO->PCNF0 = (0UL << RADIO_PCNF0_S1LEN_Pos)
-                     | (0UL << RADIO_PCNF0_S0LEN_Pos)
-                     | (8UL << RADIO_PCNF0_LFLEN_Pos);
+                       | (0UL << RADIO_PCNF0_S0LEN_Pos)
+                       | (8UL << RADIO_PCNF0_LFLEN_Pos);
     // Packet configuration.
     // Bit 25: 1 Whitening enabled,
     // Bit 24: 1 Big endian,
     // 4 byte base address length (5 byte full address length),
     // 0 byte static length, max 255 byte payload.
     NRF_RADIO->PCNF1 = (RADIO_PCNF1_WHITEEN_Enabled << RADIO_PCNF1_WHITEEN_Pos)
-                     | (RADIO_PCNF1_ENDIAN_Big << RADIO_PCNF1_ENDIAN_Pos)
-                     | (4UL << RADIO_PCNF1_BALEN_Pos)
-                     | (0UL << RADIO_PCNF1_STATLEN_Pos)
-                     | (255UL << RADIO_PCNF1_MAXLEN_Pos);
+                       | (RADIO_PCNF1_ENDIAN_Big << RADIO_PCNF1_ENDIAN_Pos)
+                       | (4UL << RADIO_PCNF1_BALEN_Pos)
+                       | (0UL << RADIO_PCNF1_STATLEN_Pos)
+                       | (255UL << RADIO_PCNF1_MAXLEN_Pos);
     NRF_RADIO->CRCCNF = (RADIO_CRCCNF_LEN_Disabled << RADIO_CRCCNF_LEN_Pos);
-    packet[0] = 254;    // 254 bytes payload.
+    packet[0] = 254;  // 254 bytes payload.
     // Fill payload with random data:
-    for(i=0;i<254;i++)
+    for ( i = 0 ; i < 254 ; i++)
     {
-        packet[i+1] = rnd8();
+        packet[i + 1] = rnd8();
     }
     NRF_RADIO->PACKETPTR = (uint32_t)packet;
 }
@@ -507,7 +507,9 @@ static void radio_modulated_tx_carrier(uint8_t txpower, uint8_t mode, uint8_t ch
 {
     radio_disable();
     generate_modulated_rf_packet();
-    NRF_RADIO->SHORTS     = RADIO_SHORTS_END_DISABLE_Msk | RADIO_SHORTS_READY_START_Msk | RADIO_SHORTS_DISABLED_TXEN_Msk;;
+    NRF_RADIO->SHORTS     = RADIO_SHORTS_END_DISABLE_Msk 
+                            | RADIO_SHORTS_READY_START_Msk 
+                            | RADIO_SHORTS_DISABLED_TXEN_Msk;
     NRF_RADIO->TXPOWER    = (txpower << RADIO_TXPOWER_TXPOWER_Pos);
     NRF_RADIO->MODE       = (mode << RADIO_MODE_MODE_Pos);
     NRF_RADIO->FREQUENCY  = channel;
@@ -556,8 +558,8 @@ static void radio_rx_sweep_start(uint8_t channel_start, uint8_t delayms)
 void TIMER0_IRQHandler(void)
 {
     // Check if Timer 0 interrupts are enabled and if this interrupt is generated by Timer 0.
-    if( (NRF_TIMER0->EVENTS_COMPARE[0] != 0) &&
-          (NRF_TIMER0->INTENSET | (TIMER_INTENSET_COMPARE0_Set << TIMER_INTENSET_COMPARE0_Pos)))
+    if ( (NRF_TIMER0->EVENTS_COMPARE[0] != 0) &&
+         (NRF_TIMER0->INTENSET | (TIMER_INTENSET_COMPARE0_Set << TIMER_INTENSET_COMPARE0_Pos)))
     {
         if (sweep_tx_)
         {
@@ -580,12 +582,12 @@ void TIMER0_IRQHandler(void)
 static void radio_test(void)
 {
     radio_tests_t test_radio = RADIO_TEST_NOP;   /*!< Continuous radio tests to run. */
-    radio_tests_t cur_test = RADIO_TEST_NOP;     /*!< Current selection of test. */
+    radio_tests_t cur_test   = RADIO_TEST_NOP;   /*!< Current selection of test. */
 
     // Do not change test while browsing the menu.
-    if(!in_menu)
+    if (!in_menu)
     {
-        switch(current_menu_pos)
+        switch (current_menu_pos)
         {
             case 0:  // Start Channel number.
             
@@ -611,80 +613,80 @@ static void radio_test(void)
                 test_radio = cur_test;
             break;
 
-        case 7:  // Power
-            switch(txpower_menu_)
-            {
-                case 0:
-                    txpower_ =  RADIO_TXPOWER_TXPOWER_Pos4dBm;
-                    break;
+            case 7:  // Power
+                switch(txpower_menu_)
+                {
+                    case 0:
+                        txpower_ =  RADIO_TXPOWER_TXPOWER_Pos4dBm;
+                        break;
                 
-                case 1:
-                    txpower_ =  RADIO_TXPOWER_TXPOWER_0dBm;
-                    break;
+                    case 1:
+                        txpower_ =  RADIO_TXPOWER_TXPOWER_0dBm;
+                        break;
                 
-                case 2:
-                    txpower_ = RADIO_TXPOWER_TXPOWER_Neg4dBm;
-                    break;
+                    case 2:
+                        txpower_ = RADIO_TXPOWER_TXPOWER_Neg4dBm;
+                        break;
                 
-                case 3:
-                    txpower_ = RADIO_TXPOWER_TXPOWER_Neg8dBm;
-                    break;
+                    case 3:
+                        txpower_ = RADIO_TXPOWER_TXPOWER_Neg8dBm;
+                        break;
                 
-                case 4:
-                    txpower_ = RADIO_TXPOWER_TXPOWER_Neg12dBm;
-                    break;
+                    case 4:
+                        txpower_ = RADIO_TXPOWER_TXPOWER_Neg12dBm;
+                        break;
                 
-                case 5:
-                    txpower_ = RADIO_TXPOWER_TXPOWER_Neg16dBm;
-                    break;
+                    case 5:
+                        txpower_ = RADIO_TXPOWER_TXPOWER_Neg16dBm;
+                        break;
                 
-                case 6:
-                    txpower_ = RADIO_TXPOWER_TXPOWER_Neg20dBm;
-                    break;
+                    case 6:
+                        txpower_ = RADIO_TXPOWER_TXPOWER_Neg20dBm;
+                        break;
                 
-                case 7:
-                    // Fall through.
-                default:
-                    txpower_ = RADIO_TXPOWER_TXPOWER_Neg30dBm;
-                    break;
-            }
+                    case 7:
+                        // Fall through.
+                    default:
+                        txpower_ = RADIO_TXPOWER_TXPOWER_Neg30dBm;
+                        break;
+                }
             test_radio = cur_test;
             break;
 
-        // START TX Carrier.
-        case 2:
-            test_radio = RADIO_TEST_TXCC;
-            break;
+            // START TX Carrier.
+            case 2:
+                test_radio = RADIO_TEST_TXCC;
+                break;
 
-        // Cancel Sweep/Carrier.
-        case 4:
-            radio_sweep_end();
-            cur_test = RADIO_TEST_NOP;
-            break;
+            // Cancel Sweep/Carrier.
+            case 4:
+                radio_sweep_end();
+                cur_test = RADIO_TEST_NOP;
+                break;
 
-        // Start modulated TX carrier.
-        case 6:
-            test_radio = RADIO_TEST_TXMC;
-            break;
+            // Start modulated TX carrier.
+            case 6:
+                test_radio = RADIO_TEST_TXMC;
+                break;
 
-        // Start RX Sweep.
-        case 8:
-            test_radio = RADIO_TEST_RXSWEEP;
-            break;
+            // Start RX Sweep.
+            case 8:
+                test_radio = RADIO_TEST_RXSWEEP;
+                break;
 
-        // Start RX Sweep.
-        case 9:
-            test_radio = RADIO_TEST_TXSWEEP;
-            break;
+            // Start RX Sweep.
+            case 9:
+                test_radio = RADIO_TEST_TXSWEEP;
+                break;
 
-        // Start RX carrier.
-        case 10:
-            test_radio = RADIO_TEST_RXC;
-            break;
+            // Start RX carrier.
+            case 10:
+                test_radio = RADIO_TEST_RXC;
+                break;
 
-        default:
-            // No implementation needed.
-            break;
+            default:
+                // No implementation needed.
+                break;
         }
     }
 
@@ -697,7 +699,7 @@ static void radio_test(void)
                 sweep = false;
             }
             radio_tx_carrier(txpower_, mode_, channel_start_);
-            cur_test = test_radio;
+            cur_test   = test_radio;
             test_radio = RADIO_TEST_NOP;
         break;
 
@@ -714,7 +716,7 @@ static void radio_test(void)
 
         case RADIO_TEST_TXSWEEP:
             radio_tx_sweep_start(channel_start_, delayms_);
-            sweep = true;
+            sweep    = true;
             cur_test = test_radio;
             test_radio = RADIO_TEST_NOP;
             break;
@@ -726,13 +728,13 @@ static void radio_test(void)
                 sweep = false;
             }
             radio_rx_carrier(channel_start_);
-            cur_test = test_radio;
+            cur_test   = test_radio;
             test_radio = RADIO_TEST_NOP;
             break;
 
         case RADIO_TEST_RXSWEEP:
             radio_rx_sweep_start(channel_start_, delayms_);
-            sweep = true;
+            sweep    = true;
             cur_test = test_radio;
             test_radio = RADIO_TEST_NOP;
             break;

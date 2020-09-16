@@ -1,4 +1,4 @@
-/* Copyright (c) 2009 Nordic Semiconductor. All Rights Reserved.
+/* Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
  *
  * The information contained herein is property of Nordic Semiconductor ASA.
  * Terms and conditions of usage are described in detail in NORDIC
@@ -21,138 +21,350 @@
 *
 */
 
-#include "spi_master.h"
 #include "nrf_delay.h"
-#include "common.h"
 #include "nrf_gpio.h"
-#include "boards.h"
-#include "spi_master_config.h"
+#include "common.h"
+#include "app_error.h"
+#include "app_util_platform.h"
+#include "spi_master.h"
+#include "example_config.h"
 
-static uint8_t tx_data[TX_RX_MSG_LENGTH]; /**< SPI TX buffer. */
-static uint8_t rx_data[TX_RX_MSG_LENGTH]; /**< SPI RX buffer. */
+#define DELAY_MS    100     /**< Timer Delay in milli-seconds. */
 
-#define DELAY_MS               100        /**< Timer Delay in milli-seconds. */
+#if defined(SPI_MASTER_0_ENABLE) || defined(SPI_MASTER_1_ENABLE)
 
-
-/** @brief Function for testing the SPI master.
- *  @param lsb_first[in] If true, the least significant bits are transferred first.
- *  @param mod_num[in] spi module to be used, either SPI0 or SPI1 from enumeration @ref SPIModuleNumber.
- *  @retval true 
- *  @retval false Error occurred
- */
-static bool test_spi_tx_rx(SPIModuleNumber mod_num, uint8_t lsb_first)
+typedef enum
 {
-    // Use SPI0, mode0 with lsb shifted as requested
-    uint32_t *spi_base_address = spi_master_init(mod_num, SPI_MODE0, (bool)lsb_first);
-    if (spi_base_address == 0)
+    TEST_STATE_SPI0_LSB,    /**< Test SPI0, bits order LSB */
+    TEST_STATE_SPI0_MSB,    /**< Test SPI0, bits order MSB */
+    TEST_STATE_SPI1_LSB,    /**< Test SPI1, bits order LSB */
+    TEST_STATE_SPI1_MSB     /**< Test SPI1, bits order MSB */
+} spi_master_ex_state_t;
+
+static uint8_t m_tx_data_spi[TX_RX_MSG_LENGTH]; /**< SPI master TX buffer. */
+static uint8_t m_rx_data_spi[TX_RX_MSG_LENGTH]; /**< SPI master RX buffer. */
+
+static volatile bool m_transfer_completed = true;
+
+#ifdef SPI_MASTER_0_ENABLE
+static spi_master_ex_state_t m_spi_master_ex_state = TEST_STATE_SPI0_LSB;
+#else
+static spi_master_ex_state_t m_spi_master_ex_state = TEST_STATE_SPI1_LSB;
+#endif
+
+/**@brief Function for error handling, which is called when an error has occurred. 
+ *
+ * @param[in] error_code  Error code supplied to the handler.
+ * @param[in] line_num    Line number where the handler is called.
+ * @param[in] p_file_name Pointer to the file name. 
+ */
+void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
+{
+    for (;;)
     {
-        return false;
+        //No implementation needed.
     }
-  
-    
-     /**@note If debug is enabled @ref DEBUG, then this function will configure @ref DEBUG_EVENT_READY_PIN to toggle (using GPIOTE) everytime
-     * READY_EVENTS are generated in the SPI
-     * @note This flag will configure GPIOTE CONFIG0 and PPI channel 0, do not enable DEBUG while using two spi modules in parallel
-     */
-#ifdef DEBUG
-    if (NRF_SPI0_BASE == (uint32_t)spi_base_address)
-    {
-        nrf_gpio_cfg_output(DEBUG_EVENT_READY_PIN0);
-        
-        /*lint -e{845} // A zero has been given as right argument to operator '|'" */
-        NRF_GPIOTE->CONFIG[0]   = (GPIOTE_CONFIG_POLARITY_Toggle << GPIOTE_CONFIG_POLARITY_Pos) |
-                                  (DEBUG_EVENT_READY_PIN0 << GPIOTE_CONFIG_PSEL_Pos) |
-                                  (GPIOTE_CONFIG_MODE_Task << GPIOTE_CONFIG_MODE_Pos);
+}
 
-        NRF_PPI->CH[0].EEP      = (uint32_t)&(((NRF_SPI_Type *)spi_base_address)->EVENTS_READY);
-        NRF_PPI->CH[0].TEP      = (uint32_t)&NRF_GPIOTE->TASKS_OUT[0];
-        NRF_PPI->CHEN          |= (PPI_CHEN_CH0_Enabled << PPI_CHEN_CH0_Pos);
+/**@brief The function initializes TX buffer to values to be sent and clears RX buffer.
+ *
+ * @note Function initializes TX buffer to values from 0 to (len - 1).
+ *       and clears RX buffer (fill by 0).
+ *
+ * @param[out] p_tx_data    A pointer to a buffer TX.
+ * @param[out] p_rx_data    A pointer to a buffer RX.
+ * @param[in] len           A length of the data buffers.
+ */
+static void init_buf(uint8_t * const p_tx_buf,
+                     uint8_t * const p_rx_buf,
+                     const uint16_t len)
+{
+    uint16_t i;
+    for (i = 0; i < len; i++)
+    {
+        p_tx_buf[i] = i;
+        p_rx_buf[i] = 0;
     }
+}
 
-    if (NRF_SPI1_BASE == (uint32_t)spi_base_address)
+/**@brief Function for checking if buffers are equal.
+ *
+ * @note Function compares each element of p_tx_buf with p_rx_buf.
+ *
+ * @param[in] p_tx_data     A pointer to a buffer TX.
+ * @param[in] p_rx_data     A pointer to a buffer RX.
+ * @param[in] len           A length of the data buffers.
+ *
+ * @retval true     Buffers are equal.
+ * @retval false    Buffers are different.
+ */
+static bool check_buf_equal(const uint8_t * const p_tx_buf,
+                            const uint8_t * const p_rx_buf,
+                            const uint16_t len)
+{
+    uint16_t i;
+    for (i = 0; i < len; i++)
     {
-        nrf_gpio_cfg_output(DEBUG_EVENT_READY_PIN1);
-
-        /*lint -e{845} // A zero has been given as right argument to operator '|'" */
-        NRF_GPIOTE->CONFIG[1]   = (GPIOTE_CONFIG_POLARITY_Toggle << GPIOTE_CONFIG_POLARITY_Pos) |
-                                  (DEBUG_EVENT_READY_PIN1 << GPIOTE_CONFIG_PSEL_Pos) |
-                                  (GPIOTE_CONFIG_MODE_Task << GPIOTE_CONFIG_MODE_Pos);
-
-        NRF_PPI->CH[1].EEP      = (uint32_t)&(((NRF_SPI_Type *)spi_base_address)->EVENTS_READY);
-        NRF_PPI->CH[1].TEP      = (uint32_t)&NRF_GPIOTE->TASKS_OUT[1];
-        NRF_PPI->CHEN          |= (PPI_CHEN_CH1_Enabled << PPI_CHEN_CH1_Pos);
-    }
-#endif /* DEBUG */
-
-    // Fill tx_data with some simple pattern, rx is filled with zero's so that after receiving from
-    // slave we verify rx_Data is same as tx_data.
-    for(uint32_t i = 0; i < TX_RX_MSG_LENGTH; i++)
-    {
-        tx_data[i] = i;
-        rx_data[i] = 0;
-    }
-
-    // Transmit TX_RX_MSG_LENGTH bytes from tx_data and receive same number of bytes and data into rx_data
-    if(!spi_master_tx_rx(spi_base_address, TX_RX_MSG_LENGTH, (const uint8_t *)tx_data, rx_data))
-    {
-        return false;
-    }
-
-    // Validate that we got all transmitted bytes back in the exact order
-    for(uint32_t i = 0; i < TX_RX_MSG_LENGTH; i++)
-    {
-        if( tx_data[i] != rx_data[i] )
-        return false;
+        if (p_tx_buf[i] != p_rx_buf[i])
+        {
+            return false;
+        }
     }
     return true;
 }
 
+/**@brief Handler for SPI0 master events.
+ *
+ * @param[in] spi_master_evt    SPI master event.
+ */
+void spi_master_0_event_handler(spi_master_evt_t spi_master_evt)
+{
+    bool result = false;
+    switch (spi_master_evt.evt_type)
+    {
+        case SPI_MASTER_EVT_TRANSFER_COMPLETED:
+            //Check if received data is correct.
+            result = check_buf_equal(m_tx_data_spi, m_rx_data_spi, TX_RX_MSG_LENGTH);
+            if (!result)
+            {
+                //Set LED high to indicate that error has occurred.
+                nrf_gpio_pin_set(ERROR_PIN_SPI0);
+            }
+            APP_ERROR_CHECK_BOOL(result);
+        
+            //Close SPI master.
+            spi_master_close(SPI_MASTER_0);
+        
+            m_transfer_completed = true;
+            break;
+        
+        default:
+            //No implementation needed.
+            break;
+    }
+}
+
+/**@brief Handler for SPI1 master events.
+ *
+ * @param[in] spi_master_evt    SPI master event.
+ */
+void spi_master_1_event_handler(spi_master_evt_t spi_master_evt)
+{
+    bool result = false;
+    switch (spi_master_evt.evt_type)
+    {
+        case SPI_MASTER_EVT_TRANSFER_COMPLETED:
+            //Check if received data is correct.
+            result = check_buf_equal(m_tx_data_spi, m_rx_data_spi, TX_RX_MSG_LENGTH);
+            if (!result)
+            {    
+                //Set LED high to indicate that error has occurred.
+                nrf_gpio_pin_set(ERROR_PIN_SPI1);
+            }
+            APP_ERROR_CHECK_BOOL(result);
+        
+            //Close SPI master.
+            spi_master_close(SPI_MASTER_1);
+        
+            m_transfer_completed = true;
+            break;
+        
+        default:
+            //No implementation needed.
+            break;
+    }
+}
+
+/**@brief Function for initializing a SPI master driver.
+ *
+ * @param[in] spi_master_instance       An instance of SPI master module.
+ * @param[in] spi_master_event_handler  An event handler for SPI master events.
+ * @param[in] lsb                       Bits order LSB if true, MSB if false.
+ */
+static void spi_master_init(spi_master_hw_instance_t spi_master_instance, 
+                            spi_master_event_handler_t spi_master_event_handler,
+                            const bool lsb)
+{
+    uint32_t err_code = NRF_SUCCESS;
+
+    //Configure SPI master.
+    spi_master_config_t spi_config = SPI_MASTER_INIT_DEFAULT;
+    
+    switch (spi_master_instance)
+    {
+        #ifdef SPI_MASTER_0_ENABLE
+        case SPI_MASTER_0:
+        {
+            spi_config.SPI_Pin_SCK = SPIM0_SCK_PIN;
+            spi_config.SPI_Pin_MISO = SPIM0_MISO_PIN;
+            spi_config.SPI_Pin_MOSI = SPIM0_MOSI_PIN;
+            spi_config.SPI_Pin_SS = SPIM0_SS_PIN;
+        }
+        break; 
+        #endif /* SPI_MASTER_0_ENABLE */
+
+        #ifdef SPI_MASTER_1_ENABLE
+        case SPI_MASTER_1:
+        {
+            spi_config.SPI_Pin_SCK = SPIM1_SCK_PIN;
+            spi_config.SPI_Pin_MISO = SPIM1_MISO_PIN;
+            spi_config.SPI_Pin_MOSI = SPIM1_MOSI_PIN;
+            spi_config.SPI_Pin_SS = SPIM1_SS_PIN;
+        }
+        break;
+        #endif /* SPI_MASTER_1_ENABLE */
+        
+        default:
+            break;
+    }
+    
+    spi_config.SPI_CONFIG_ORDER = (lsb ? SPI_CONFIG_ORDER_LsbFirst : SPI_CONFIG_ORDER_MsbFirst);
+    
+    err_code = spi_master_open(spi_master_instance, &spi_config);
+    APP_ERROR_CHECK(err_code);
+    
+    //Register event handler for SPI master.
+    spi_master_evt_handler_reg(spi_master_instance, spi_master_event_handler);
+}
+
+/**@brief Function for sending and receiving data.
+ *
+ * @param[in]   spi_master_hw_instance  SPI master instance.
+ * @param[in]   p_tx_data               A pointer to a buffer TX.
+ * @param[out]  p_rx_data               A pointer to a buffer RX.
+ * @param[in]   len                     A length of the data buffers.
+ */
+static void spi_send_recv(const spi_master_hw_instance_t spi_master_hw_instance,
+                          uint8_t * const p_tx_data,
+                          uint8_t * const p_rx_data,
+                          const uint16_t len)
+{
+    //Initalize buffers.
+    init_buf(p_tx_data, p_rx_data, len);
+    
+    //Start transfer.
+    uint32_t err_code = spi_master_send_recv(spi_master_hw_instance, p_tx_data, len, p_rx_data, len);
+    APP_ERROR_CHECK(err_code);
+}
+
+/**@brief Function for executing and switching state.
+ *
+ */
+static void switch_state(void)
+{
+    switch (m_spi_master_ex_state)
+    {
+        #ifdef SPI_MASTER_0_ENABLE
+        case TEST_STATE_SPI0_LSB:
+            spi_master_init(SPI_MASTER_0, spi_master_0_event_handler, true);
+        
+            spi_send_recv(SPI_MASTER_0, m_tx_data_spi, m_rx_data_spi, TX_RX_MSG_LENGTH);
+            m_spi_master_ex_state = TEST_STATE_SPI0_MSB;
+        
+            nrf_delay_ms(DELAY_MS);
+            break;
+        
+        case TEST_STATE_SPI0_MSB:
+            spi_master_init(SPI_MASTER_0, spi_master_0_event_handler, false);
+        
+            spi_send_recv(SPI_MASTER_0, m_tx_data_spi, m_rx_data_spi, TX_RX_MSG_LENGTH);
+        
+            #ifdef SPI_MASTER_1_ENABLE
+            m_spi_master_ex_state = TEST_STATE_SPI1_LSB;
+            #else
+            m_spi_master_ex_state = TEST_STATE_SPI0_LSB;
+            #endif /* SPI_MASTER_1_ENABLE */
+        
+            break;
+        #endif /* SPI_MASTER_0_ENABLE */
+        
+        #ifdef SPI_MASTER_1_ENABLE
+        case TEST_STATE_SPI1_LSB:
+            spi_master_init(SPI_MASTER_1, spi_master_1_event_handler, true);
+        
+            spi_send_recv(SPI_MASTER_1, m_tx_data_spi, m_rx_data_spi, TX_RX_MSG_LENGTH);
+            m_spi_master_ex_state = TEST_STATE_SPI1_MSB;
+        
+            nrf_delay_ms(DELAY_MS);
+            break;
+        
+        case TEST_STATE_SPI1_MSB:
+            spi_master_init(SPI_MASTER_1, spi_master_1_event_handler, false);
+        
+            spi_send_recv(SPI_MASTER_1, m_tx_data_spi, m_rx_data_spi, TX_RX_MSG_LENGTH);
+        
+            #ifdef SPI_MASTER_0_ENABLE
+            m_spi_master_ex_state = TEST_STATE_SPI0_LSB;
+            #else
+            m_spi_master_ex_state = TEST_STATE_SPI1_LSB;
+            #endif /* SPI_MASTER_0_ENABLE */
+        
+            break;
+        #endif /* SPI_MASTER_1_ENABLE */
+        
+        default:
+            break;
+    }
+}
+#endif /* defined(SPI_MASTER_0_ENABLE) || defined(SPI_MASTER_1_ENABLE) */
 
 /** @brief Function for main application entry.
  */
 int main(void)
 {
-    bool ret0, ret1;
+    //Setup error pins.
+    nrf_gpio_pin_clear(ERROR_PIN_SPI0);
+    nrf_gpio_pin_clear(ERROR_PIN_SPI1);
+    
+    nrf_gpio_cfg_output(ERROR_PIN_SPI0);
+    nrf_gpio_cfg_output(ERROR_PIN_SPI1);
 
-    nrf_gpio_pin_dir_set(ERROR_PIN_SPI0, NRF_GPIO_PIN_DIR_OUTPUT);
-    nrf_gpio_pin_dir_set(ERROR_PIN_SPI1, NRF_GPIO_PIN_DIR_OUTPUT);
-    while(true)
+#if defined(SPI_MASTER_0_ENABLE) || defined(SPI_MASTER_1_ENABLE)
+
+    /**@note If debug is enabled @ref DEBUG, then this function will configure @ref DEBUG_EVENT_READY_PIN 
+     * to toggle (using GPIOTE) everytime READY_EVENTS are generated in the SPI.
+     *
+     * @note This flag will configure GPIOTE CONFIG0 and PPI channel 0, do not enable DEBUG 
+     * while using two spi modules in parallel
+     */
+#ifdef DEBUG
+#ifdef SPI_MASTER_0_ENABLE
+    nrf_gpio_cfg_output(DEBUG_EVENT_READY_PIN0);
+    
+    /*lint -e{845} // A zero has been given as right argument to operator '|'" */
+    NRF_GPIOTE->CONFIG[0]   = (GPIOTE_CONFIG_POLARITY_Toggle << GPIOTE_CONFIG_POLARITY_Pos) |
+                              (DEBUG_EVENT_READY_PIN0 << GPIOTE_CONFIG_PSEL_Pos) |
+                              (GPIOTE_CONFIG_MODE_Task << GPIOTE_CONFIG_MODE_Pos);
+
+    NRF_PPI->CH[0].EEP      = (uint32_t)&(NRF_SPI0->EVENTS_READY);
+    NRF_PPI->CH[0].TEP      = (uint32_t)&NRF_GPIOTE->TASKS_OUT[0];
+    NRF_PPI->CHEN          |= (PPI_CHEN_CH0_Enabled << PPI_CHEN_CH0_Pos);
+#endif /* SPI_MASTER_0_ENABLE */
+
+#ifdef SPI_MASTER_1_ENABLE
+    nrf_gpio_cfg_output(DEBUG_EVENT_READY_PIN1);
+
+    /*lint -e{845} // A zero has been given as right argument to operator '|'" */
+    NRF_GPIOTE->CONFIG[1]   = (GPIOTE_CONFIG_POLARITY_Toggle << GPIOTE_CONFIG_POLARITY_Pos) |
+                              (DEBUG_EVENT_READY_PIN1 << GPIOTE_CONFIG_PSEL_Pos) |
+                              (GPIOTE_CONFIG_MODE_Task << GPIOTE_CONFIG_MODE_Pos);
+
+    NRF_PPI->CH[1].EEP      = (uint32_t)&(NRF_SPI1->EVENTS_READY);
+    NRF_PPI->CH[1].TEP      = (uint32_t)&NRF_GPIOTE->TASKS_OUT[1];
+    NRF_PPI->CHEN          |= (PPI_CHEN_CH1_Enabled << PPI_CHEN_CH1_Pos);
+#endif /* SPI_MASTER_1_ENABLE */
+#endif /* DEBUG */
+    
+    for (;;)
     {
-        // SPI0
-        ret0 = test_spi_tx_rx(SPI0, 1);   /** Test with shift Lsb first mode 0. */
-        if (ret0)
+        if (m_transfer_completed)
         {
-            // previous tx/rx was successful with lsb shifted first, try the same with lsb shifted last
-            nrf_delay_ms(DELAY_MS);   /** Delay for the events ready signal to be visually seen DEBUG flag is enabled.  */
-            ret0 = test_spi_tx_rx(SPI0, 0 );
-        }
-        else
-        {
-            // Set gpio pin number ERROR_PIN to convey error, this pin can be connected to LED for visual debug
-            NRF_GPIO->OUTSET = (1UL << ERROR_PIN_SPI0);
-        }
-
-        // SPI1
-        ret1 = test_spi_tx_rx(SPI1, 1 );   /** test with shift Lsb first mode 0 */
-        if (ret1)
-        {
-            // previous tx/rx was successful with lsb shifted first, try the same with lsb shifted last
-            nrf_delay_ms(DELAY_MS);   /** Delay for the events ready signal to be visually seen DEBUG flag is enabled.  */
-            ret1 = test_spi_tx_rx(SPI1, 0 );
-        }
-        else
-        {
-            // Set gpio pin number ERROR_PIN to convey error, this pin can be connected to LED for visual debug
-            NRF_GPIO->OUTSET = (1UL << ERROR_PIN_SPI1);
-        }
-
-        if (!ret0 && !ret1 )
-        {
-            while(true)
-            {
-                // Do nothing. Loop forever.
-            }
+            m_transfer_completed = false;
+            switch_state();
         }
     }
+    
+    #endif /* defined(SPI_MASTER_0_ENABLE) || defined(SPI_MASTER_1_ENABLE) */
 }
+
 /** @} */

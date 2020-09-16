@@ -30,6 +30,7 @@ All rights reserved.
 #include "app_timer.h"
 #include "app_button.h"
 #include "app_gpiote.h"
+#include "app_util.h"
 
 #if defined(TRACE_UART)
     #include "app_uart.h"

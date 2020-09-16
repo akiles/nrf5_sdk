@@ -20,5 +20,6 @@ include $(SDK_PATH)Source/templates/gcc/Makefile.common
 
 INCLUDEPATHS += -I"../include"
 INCLUDEPATHS += -I"$(SDK_PATH)Include/app_common"
+INCLUDEPATHS += -I"$(SDK_PATH)Include/sd_common"
 INCLUDEPATHS += -I"$(SDK_PATH)Include/s110"
 INCLUDEPATHS += -I"$(SDK_PATH)Include/s210"

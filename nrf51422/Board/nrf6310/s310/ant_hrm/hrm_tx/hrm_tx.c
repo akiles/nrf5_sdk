@@ -11,6 +11,7 @@ All rights reserved.
 #include "ant_parameters.h"
 #include "app_error.h"
 #include "app_timer.h"
+#include "app_util.h"
 
 #define HRMTX_MSG_PERIOD_IN_MSECS 246u                                                                              /**< HR TX message period in mseconds. */
 

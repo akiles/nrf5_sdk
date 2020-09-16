@@ -22,22 +22,22 @@
 
 
 // Made static to avoid the error_log to go on the stack.
-static ble_error_log_data_t   m_ble_error_log;            /**< . */
+static ble_error_log_data_t m_ble_error_log;  /**< . */
 //lint -esym(526,__Vectors)
-extern uint32_t             * __Vectors;                  /**< The initialization vector holds the address to __initial_sp that will be used when fetching the stack. */
+extern uint32_t * __Vectors;  /**< The initialization vector holds the address to __initial_sp that will be used when fetching the stack. */
 
 static void fetch_stack(ble_error_log_data_t * error_log)
 {
     uint32_t * p_stack;
     uint32_t * initial_sp;
     uint32_t   length;
-  
+
     initial_sp = (uint32_t *) __Vectors;
     p_stack    = (uint32_t *) GET_SP();
-  
+
     length = ((uint32_t) initial_sp) - ((uint32_t) p_stack);
-    memcpy(error_log->stack_info, 
-           p_stack, 
+    memcpy(error_log->stack_info,
+           p_stack,
            (length > STACK_DUMP_LENGTH) ? STACK_DUMP_LENGTH : length);
 }
 
@@ -51,7 +51,7 @@ uint32_t ble_error_log_write(uint32_t err_code, const uint8_t * p_message, uint1
     m_ble_error_log.message[ERROR_MESSAGE_LENGTH - 1] = '\0';
 
     fetch_stack(&m_ble_error_log);
-    
+
     // Write to flash removed, to be redone.
 
     return NRF_SUCCESS;

@@ -21,9 +21,9 @@
 #include "nrf_soc.h"
 #include "app_util.h"
 
-#define INVALID_OPCODE       0x00                            /**< Invalid op code identifier. */
-#define SOC_MAX_WRITE_SIZE   1024                            /**< Maximum write size allowed for a single call to \ref sd_flash_write as specified in the SoC API. */
-#define RAW_MODE_APP_ID      (PSTORAGE_MAX_APPLICATIONS + 1) /**< Application id for raw mode. */
+#define INVALID_OPCODE     0x00                            /**< Invalid op code identifier. */
+#define SOC_MAX_WRITE_SIZE 1024                            /**< Maximum write size allowed for a single call to \ref sd_flash_write as specified in the SoC API. */
+#define RAW_MODE_APP_ID    (PSTORAGE_MAX_APPLICATIONS + 1) /**< Application id for raw mode. */
 
 /**
  * @defgroup api_param_check API Parameters check macros.
@@ -139,15 +139,15 @@
 /** @brief States for the Update/Clear swap backup state machine. */
 typedef enum
 {
-    STATE_INIT,                  /**< State for indicating that swap can be used when using update/clear API. */
-    STATE_DATA_TO_SWAP_WRITE,    /**< State for doing backup of data page into the swap page when using update/clear API. */
-    STATE_DATA_ERASE,            /**< State for erasing data page when using update/clear API. */
-    STATE_HEAD_RESTORE,          /**< State for restoring head (beginning) of backed up data from swap to data page when using update/clear API. */
-    STATE_TAIL_RESTORE,          /**< State for restoring tail (end) of backed up data from swap to data page when using update/clear API. */
-    STATE_NEW_BODY_WRITE,        /**< State for writing body (middle) data to the data page when using update/clear API. */
-    STATE_SWAP_ERASE,            /**< State for erasing the swap page when using the update/clear API. */
-    STATE_COMPLETE,              /**< State for indicating that update/clear sequence is completed internal in the module when using the update/clear API. */
-    STATE_SWAP_DIRTY             /**< State for initializing the swap region on module initialization. */
+    STATE_INIT,                /**< State for indicating that swap can be used when using update/clear API. */
+    STATE_DATA_TO_SWAP_WRITE,  /**< State for doing backup of data page into the swap page when using update/clear API. */
+    STATE_DATA_ERASE,          /**< State for erasing data page when using update/clear API. */
+    STATE_HEAD_RESTORE,        /**< State for restoring head (beginning) of backed up data from swap to data page when using update/clear API. */
+    STATE_TAIL_RESTORE,        /**< State for restoring tail (end) of backed up data from swap to data page when using update/clear API. */
+    STATE_NEW_BODY_WRITE,      /**< State for writing body (middle) data to the data page when using update/clear API. */
+    STATE_SWAP_ERASE,          /**< State for erasing the swap page when using the update/clear API. */
+    STATE_COMPLETE,            /**< State for indicating that update/clear sequence is completed internal in the module when using the update/clear API. */
+    STATE_SWAP_DIRTY           /**< State for initializing the swap region on module initialization. */
 } swap_backup_state_t;
 
 
@@ -159,11 +159,11 @@ typedef enum
  */
 typedef struct
 {
-    pstorage_ntf_cb_t      cb;             /**< Callback registered with the module to be notified of result of flash access.  */
-    pstorage_block_t       base_id;        /**< Base block id assigned to the module. */
-    pstorage_size_t        block_size;     /**< Size of block for the module. */
-    pstorage_size_t        block_count;    /**< Number of block requested by application. */
-    pstorage_size_t        num_of_pages;   /**< Variable to remember how many pages have been allocated for this module. This information is used for clearing of block, so that application does not need to have knowledge of number of pages its using. */
+    pstorage_ntf_cb_t    cb;             /**< Callback registered with the module to be notified of result of flash access.  */
+    pstorage_block_t     base_id;        /**< Base block id assigned to the module. */
+    pstorage_size_t      block_size;     /**< Size of block for the module. */
+    pstorage_size_t      block_count;    /**< Number of block requested by application. */
+    pstorage_size_t      num_of_pages;   /**< Variable to remember how many pages have been allocated for this module. This information is used for clearing of block, so that application does not need to have knowledge of number of pages its using. */
 } pstorage_module_table_t;
 
 
@@ -189,11 +189,11 @@ typedef struct
  */
 typedef struct
 {
-    uint8_t                op_code;       /**< Identifies flash access operation being queued. Element is free if op-code is INVALID_OPCODE. */
-    pstorage_size_t        size;          /**< Identifies size in bytes requested for the operation. */
-    pstorage_size_t        offset;        /**< Offset requested by the application for access operation. */
-    pstorage_handle_t      storage_addr;  /**< Address/Identifier for persistent memory. */
-    uint8_t *              p_data_addr;   /**< Address/Identifier for data memory. This is assumed to be resident memory. */
+    uint8_t              op_code;       /**< Identifies flash access operation being queued. Element is free if op-code is INVALID_OPCODE. */
+    pstorage_size_t      size;          /**< Identifies size in bytes requested for the operation. */
+    pstorage_size_t      offset;        /**< Offset requested by the application for access operation. */
+    pstorage_handle_t    storage_addr;  /**< Address/Identifier for persistent memory. */
+    uint8_t *            p_data_addr;   /**< Address/Identifier for data memory. This is assumed to be resident memory. */
 } cmd_queue_element_t;
 
 
@@ -208,10 +208,10 @@ typedef struct
  */
 typedef struct
 {
-    uint8_t                rp;                           /**< Read pointer, pointing to flash access that is ongoing or to be requested next. */
-    uint8_t                count;                        /**< Number of elements in the queue.  */
-    bool                   flash_access;                 /**< Flag to ensure an flash event received is for an request issued by the module. */
-    cmd_queue_element_t    cmd[PSTORAGE_CMD_QUEUE_SIZE]; /**< Array to maintain flash access operation details. */
+    uint8_t              rp;                           /**< Read pointer, pointing to flash access that is ongoing or to be requested next. */
+    uint8_t              count;                        /**< Number of elements in the queue.  */
+    bool                 flash_access;                 /**< Flag to ensure an flash event received is for an request issued by the module. */
+    cmd_queue_element_t  cmd[PSTORAGE_CMD_QUEUE_SIZE]; /**< Array to maintain flash access operation details. */
 } cmd_queue_t;
 
 
@@ -223,10 +223,10 @@ static bool                m_module_initialized = false; /**< Flag for checking 
 static swap_backup_state_t m_swap_state;                 /**< Swap page state. */
 
 
-static pstorage_module_table_t     m_app_table[PSTORAGE_MAX_APPLICATIONS]; /**< Registered application information table. */
+static pstorage_module_table_t m_app_table[PSTORAGE_MAX_APPLICATIONS]; /**< Registered application information table. */
 
 #ifdef PSTORAGE_RAW_MODE_ENABLE
-static pstorage_raw_module_table_t m_raw_app_table;                        /**< Registered application information table for raw mode. */
+static pstorage_raw_module_table_t m_raw_app_table;                    /**< Registered application information table for raw mode. */
 #endif // PSTORAGE_RAW_MODE_ENABLE
 
 
@@ -243,7 +243,7 @@ static uint32_t cmd_process(void);
  *
  * @param[in] result Result of event being notified.
  */
-static void app_notify (uint32_t result);
+static void app_notify(uint32_t result);
 
 
 /**
@@ -277,7 +277,7 @@ static void cmd_queue_element_init(uint32_t index)
 /**
  * @brief Initializes command queue.
  */
-static void cmd_queue_init (void)
+static void cmd_queue_init(void)
 {
     uint32_t cmd_index;
 
@@ -287,7 +287,7 @@ static void cmd_queue_init (void)
     m_cmd_queue.count        = 0;
     m_cmd_queue.flash_access = false;
 
-    for(cmd_index = 0; cmd_index < PSTORAGE_CMD_QUEUE_SIZE; cmd_index++)
+    for (cmd_index = 0; cmd_index < PSTORAGE_CMD_QUEUE_SIZE; cmd_index++)
     {
         cmd_queue_element_init(cmd_index);
     }
@@ -309,7 +309,7 @@ static void cmd_queue_init (void)
  */
 static uint32_t cmd_queue_enqueue(uint8_t             opcode,
                                   pstorage_handle_t * p_storage_addr,
-                                  uint8_t *           p_data_addr,
+                                  uint8_t           * p_data_addr,
                                   pstorage_size_t     size,
                                   pstorage_size_t     offset)
 {
@@ -372,7 +372,7 @@ static uint32_t cmd_queue_dequeue(void)
             // acceptable, but any other error needs to be indicated to the bond manager.
             if (retval != NRF_ERROR_BUSY)
             {
-                app_notify (retval);
+                app_notify(retval);
             }
             else
             {
@@ -396,11 +396,11 @@ static uint32_t cmd_queue_dequeue(void)
  */
 static void app_notify(uint32_t result)
 {
-    pstorage_ntf_cb_t  ntf_cb;
-    uint8_t            op_code = m_cmd_queue.cmd[m_cmd_queue.rp].op_code;
+    pstorage_ntf_cb_t ntf_cb;
+    uint8_t           op_code = m_cmd_queue.cmd[m_cmd_queue.rp].op_code;
 
 #ifdef PSTORAGE_RAW_MODE_ENABLE
-    if(m_cmd_queue.cmd[m_cmd_queue.rp].storage_addr.module_id == RAW_MODE_APP_ID)
+    if (m_cmd_queue.cmd[m_cmd_queue.rp].storage_addr.module_id == RAW_MODE_APP_ID)
     {
         ntf_cb = m_raw_app_table.cb;
     }
@@ -464,54 +464,56 @@ void pstorage_sys_event_handler(uint32_t sys_evt)
         switch (sys_evt)
         {
             case NRF_EVT_FLASH_OPERATION_SUCCESS:
+            {
+                p_cmd = &m_cmd_queue.cmd[m_cmd_queue.rp];
+                m_round_val++;
+
+                const bool store_finished =
+                    ((p_cmd->op_code == PSTORAGE_STORE_OP_CODE) &&
+                     ((m_round_val * SOC_MAX_WRITE_SIZE) >= p_cmd->size));
+
+                const bool update_finished =
+                    ((p_cmd->op_code == PSTORAGE_UPDATE_OP_CODE) &&
+                     (m_swap_state == STATE_COMPLETE));
+
+                const bool clear_block_finished =
+                    ((p_cmd->op_code == PSTORAGE_CLEAR_OP_CODE) &&
+                     (m_swap_state == STATE_COMPLETE));
+
+                const bool clear_all_finished =
+                    ((p_cmd->op_code == PSTORAGE_CLEAR_OP_CODE) &&
+                     ((m_round_val * SOC_MAX_WRITE_SIZE) >= p_cmd->size) &&
+                     (m_swap_state == STATE_INIT));
+
+                if (update_finished ||
+                    clear_block_finished ||
+                    clear_all_finished ||
+                    store_finished)
                 {
-                    p_cmd = &m_cmd_queue.cmd[m_cmd_queue.rp];
-                    m_round_val++;
+                    m_swap_state = STATE_INIT;
 
-                    const bool store_finished =
-                        ((p_cmd->op_code == PSTORAGE_STORE_OP_CODE) &&
-                        ((m_round_val * SOC_MAX_WRITE_SIZE) >= p_cmd->size));
+                    app_notify(retval);
 
-                    const bool update_finished =
-                        ((p_cmd->op_code == PSTORAGE_UPDATE_OP_CODE) &&
-                        (m_swap_state == STATE_COMPLETE));
+                    // Initialize/free the element as it is now processed.
+                    cmd_queue_element_init(m_cmd_queue.rp);
+                    m_round_val = 0;
+                    m_cmd_queue.count--;
+                    m_cmd_queue.rp++;
 
-                    const bool clear_block_finished =
-                        ((p_cmd->op_code == PSTORAGE_CLEAR_OP_CODE) &&
-                        (m_swap_state == STATE_COMPLETE));
-
-                    const bool clear_all_finished =
-                        ((p_cmd->op_code == PSTORAGE_CLEAR_OP_CODE)         &&
-                        ((m_round_val * SOC_MAX_WRITE_SIZE) >= p_cmd->size) &&
-                        (m_swap_state == STATE_INIT));
-
-                    if  (update_finished      ||
-                         clear_block_finished ||
-                         clear_all_finished   ||
-                         store_finished)
+                    if (m_cmd_queue.rp >= PSTORAGE_CMD_QUEUE_SIZE)
                     {
-                        m_swap_state = STATE_INIT;
-
-                        app_notify(retval);
-
-                        // Initialize/free the element as it is now processed.
-                        cmd_queue_element_init(m_cmd_queue.rp);
-                        m_round_val = 0;
-                        m_cmd_queue.count--;
-                        m_cmd_queue.rp++;
-                        if (m_cmd_queue.rp >= PSTORAGE_CMD_QUEUE_SIZE)
-                        {
-                            m_cmd_queue.rp -= PSTORAGE_CMD_QUEUE_SIZE;
-                        }
-                    }
-                    // Schedule any queued flash access operations.
-                    retval = cmd_queue_dequeue();
-                    if (retval != NRF_SUCCESS)
-                    {
-                        app_notify(retval);
+                        m_cmd_queue.rp -= PSTORAGE_CMD_QUEUE_SIZE;
                     }
                 }
-                break;
+                // Schedule any queued flash access operations.
+                retval = cmd_queue_dequeue();
+
+                if (retval != NRF_SUCCESS)
+                {
+                    app_notify(retval);
+                }
+            }
+            break;
 
             case NRF_EVT_FLASH_OPERATION_ERROR:
                 app_notify(NRF_ERROR_TIMEOUT);
@@ -710,93 +712,93 @@ static uint32_t cmd_process(void)
     switch (p_cmd->op_code)
     {
         case PSTORAGE_STORE_OP_CODE:
+        {
+            uint32_t  size;
+            uint32_t  offset;
+            uint8_t * p_data_addr = p_cmd->p_data_addr;
+
+            offset        = (m_round_val * SOC_MAX_WRITE_SIZE);
+            size          = p_cmd->size - offset;
+            p_data_addr  += offset;
+            storage_addr += (p_cmd->offset + offset);
+
+            if (size < SOC_MAX_WRITE_SIZE)
             {
-                uint32_t size;
-                uint32_t offset;
-                uint8_t * p_data_addr = p_cmd->p_data_addr;
-
-                offset        = (m_round_val * SOC_MAX_WRITE_SIZE);
-                size          = p_cmd->size - offset;
-                p_data_addr  += offset;
-                storage_addr += (p_cmd->offset + offset);
-
-                if (size < SOC_MAX_WRITE_SIZE)
-                {
-                    retval = sd_flash_write(((uint32_t *)storage_addr),
-                                             (uint32_t *)p_data_addr,
-                                             size / sizeof(uint32_t));
-                }
-                else
-                {
-                    retval = sd_flash_write(((uint32_t *)storage_addr),
-                                             (uint32_t *)p_data_addr,
-                                             SOC_MAX_WRITE_SIZE / sizeof(uint32_t));
-                }
+                retval = sd_flash_write(((uint32_t *)storage_addr),
+                                        (uint32_t *)p_data_addr,
+                                        size / sizeof(uint32_t));
             }
-            break;
+            else
+            {
+                retval = sd_flash_write(((uint32_t *)storage_addr),
+                                        (uint32_t *)p_data_addr,
+                                        SOC_MAX_WRITE_SIZE / sizeof(uint32_t));
+            }
+        }
+        break;
 
         case PSTORAGE_CLEAR_OP_CODE:
+        {
+            // Calculate page number before clearing.
+            uint32_t page_number;
+
+            pstorage_size_t block_size =
+                m_app_table[p_cmd->storage_addr.module_id].block_size;
+
+            pstorage_size_t block_count =
+                m_app_table[p_cmd->storage_addr.module_id].block_count;
+
+            pstorage_block_t base_address =
+                m_app_table[p_cmd->storage_addr.module_id].base_id;
+
+            // If the whole module should be cleared.
+            if (((base_address == storage_addr) && (block_size * block_count == p_cmd->size)) ||
+                (p_cmd->storage_addr.module_id == RAW_MODE_APP_ID))
             {
-                // Calculate page number before clearing.
-                uint32_t page_number;
+                page_number = ((storage_addr / PSTORAGE_FLASH_PAGE_SIZE) + m_round_val);
 
-                pstorage_size_t  block_size =
-                    m_app_table[p_cmd->storage_addr.module_id].block_size;
-
-                pstorage_size_t  block_count =
-                    m_app_table[p_cmd->storage_addr.module_id].block_count;
-
-                pstorage_block_t base_address =
-                    m_app_table[p_cmd->storage_addr.module_id].base_id;
-
-                // If the whole module should be cleared.
-                if (((base_address == storage_addr) && (block_size * block_count == p_cmd->size)) ||
-                    (p_cmd->storage_addr.module_id == RAW_MODE_APP_ID))
-                {
-                    page_number = ((storage_addr / PSTORAGE_FLASH_PAGE_SIZE) + m_round_val);
-
-                    retval = sd_flash_page_erase(page_number);
-                }
-                // If one block is to be erased.
-                else
-                {
-                    page_number = (storage_addr / PSTORAGE_FLASH_PAGE_SIZE);
-
-                    uint32_t head_word_size =   (
-                                                storage_addr -
-                                                (page_number * PSTORAGE_FLASH_PAGE_SIZE)
-                                            ) / sizeof(uint32_t);
-
-                    uint32_t tail_word_size =   (
-                                                ((page_number + 1) * PSTORAGE_FLASH_PAGE_SIZE) -
-                                                (storage_addr + p_cmd->size)
-                                            ) / sizeof(uint32_t);
-
-                    retval = swap_state_process(p_cmd,
-                                                page_number,
-                                                head_word_size,
-                                                tail_word_size);
-                }
+                retval = sd_flash_page_erase(page_number);
             }
-            break;
+            // If one block is to be erased.
+            else
+            {
+                page_number = (storage_addr / PSTORAGE_FLASH_PAGE_SIZE);
+
+                uint32_t head_word_size = (
+                    storage_addr -
+                    (page_number * PSTORAGE_FLASH_PAGE_SIZE)
+                    ) / sizeof(uint32_t);
+
+                uint32_t tail_word_size = (
+                    ((page_number + 1) * PSTORAGE_FLASH_PAGE_SIZE) -
+                    (storage_addr + p_cmd->size)
+                    ) / sizeof(uint32_t);
+
+                retval = swap_state_process(p_cmd,
+                                            page_number,
+                                            head_word_size,
+                                            tail_word_size);
+            }
+        }
+        break;
 
         case PSTORAGE_UPDATE_OP_CODE:
-            {
-                uint32_t page_number =  (storage_addr / PSTORAGE_FLASH_PAGE_SIZE);
+        {
+            uint32_t page_number = (storage_addr / PSTORAGE_FLASH_PAGE_SIZE);
 
-                uint32_t head_word_size =   (
-                                                storage_addr + p_cmd->offset -
-                                                (page_number * PSTORAGE_FLASH_PAGE_SIZE)
-                                            ) / sizeof(uint32_t);
+            uint32_t head_word_size = (
+                storage_addr + p_cmd->offset -
+                (page_number * PSTORAGE_FLASH_PAGE_SIZE)
+                ) / sizeof(uint32_t);
 
-                uint32_t tail_word_size =   (
-                                                ((page_number + 1) * PSTORAGE_FLASH_PAGE_SIZE) -
-                                                (storage_addr + p_cmd->offset + p_cmd->size)
-                                            ) / sizeof(uint32_t);
+            uint32_t tail_word_size = (
+                ((page_number + 1) * PSTORAGE_FLASH_PAGE_SIZE) -
+                (storage_addr + p_cmd->offset + p_cmd->size)
+                ) / sizeof(uint32_t);
 
-                retval = swap_state_process(p_cmd, page_number, head_word_size, tail_word_size);
-            }
-            break;
+            retval = swap_state_process(p_cmd, page_number, head_word_size, tail_word_size);
+        }
+        break;
 
         default:
             // Should never reach here.
@@ -805,7 +807,7 @@ static uint32_t cmd_process(void)
 
     if (retval == NRF_SUCCESS)
     {
-       m_cmd_queue.flash_access = true;
+        m_cmd_queue.flash_access = true;
     }
 
     return retval;
@@ -943,8 +945,8 @@ uint32_t pstorage_store(pstorage_handle_t * p_dest,
     NULL_PARAM_CHECK(p_dest);
     MODULE_ID_RANGE_CHECK(p_dest);
     BLOCK_ID_RANGE_CHECK(p_dest);
-    SIZE_CHECK(p_dest,size);
-    OFFSET_CHECK(p_dest,offset,size);
+    SIZE_CHECK(p_dest, size);
+    OFFSET_CHECK(p_dest, offset,size);
 
     // Verify word alignment.
     if ((!is_word_aligned(p_src)) || (!is_word_aligned((void *)(uint32_t)offset)))
@@ -962,7 +964,7 @@ uint32_t pstorage_store(pstorage_handle_t * p_dest,
 
 
 uint32_t pstorage_update(pstorage_handle_t * p_dest,
-                         uint8_t *           p_src,
+                         uint8_t           * p_src,
                          pstorage_size_t     size,
                          pstorage_size_t     offset)
 {
@@ -971,8 +973,8 @@ uint32_t pstorage_update(pstorage_handle_t * p_dest,
     NULL_PARAM_CHECK(p_dest);
     MODULE_ID_RANGE_CHECK(p_dest);
     BLOCK_ID_RANGE_CHECK(p_dest);
-    SIZE_CHECK(p_dest,size);
-    OFFSET_CHECK(p_dest,offset,size);
+    SIZE_CHECK(p_dest, size);
+    OFFSET_CHECK(p_dest, offset, size);
 
     // Verify word alignment.
     if ((!is_word_aligned(p_src)) || (!is_word_aligned((void *)(uint32_t)offset)))
@@ -999,8 +1001,8 @@ uint32_t pstorage_load(uint8_t           * p_dest,
     NULL_PARAM_CHECK(p_dest);
     MODULE_ID_RANGE_CHECK(p_src);
     BLOCK_ID_RANGE_CHECK(p_src);
-    SIZE_CHECK(p_src,size);
-    OFFSET_CHECK(p_src,offset,size);
+    SIZE_CHECK(p_src, size);
+    OFFSET_CHECK(p_src, offset, size);
 
     // Verify word alignment.
     if ((!is_word_aligned(p_dest)) || (!is_word_aligned((void *)(uint32_t)offset)))
@@ -1014,6 +1016,8 @@ uint32_t pstorage_load(uint8_t           * p_dest,
     }
 
     memcpy(p_dest, (((uint8_t *)p_src->block_id) + offset), size);
+
+    m_app_table[p_src->module_id].cb(p_src, PSTORAGE_LOAD_OP_CODE, NRF_SUCCESS, p_dest, size);
 
     return NRF_SUCCESS;
 }
@@ -1034,9 +1038,9 @@ uint32_t pstorage_clear(pstorage_handle_t * p_dest, pstorage_size_t size)
     }
 
     if (
-           !(
-                ((p_dest->block_id - m_app_table[p_dest->module_id].base_id) %
-                m_app_table[p_dest->module_id].block_size) == 0
+        !(
+            ((p_dest->block_id - m_app_table[p_dest->module_id].base_id) %
+             m_app_table[p_dest->module_id].block_size) == 0
             )
         )
     {
@@ -1049,7 +1053,7 @@ uint32_t pstorage_clear(pstorage_handle_t * p_dest, pstorage_size_t size)
 }
 
 
-uint32_t pstorage_access_status_get (uint32_t * p_count)
+uint32_t pstorage_access_status_get(uint32_t * p_count)
 {
     VERIFY_MODULE_INITIALIZED();
     NULL_PARAM_CHECK(p_count);
@@ -1110,7 +1114,7 @@ uint32_t pstorage_raw_clear(pstorage_handle_t * p_dest, pstorage_size_t size)
     NULL_PARAM_CHECK(p_dest);
     MODULE_RAW_ID_RANGE_CHECK(p_dest);
 
-    retval = cmd_queue_enqueue(PSTORAGE_CLEAR_OP_CODE, p_dest, NULL , size, 0);
+    retval = cmd_queue_enqueue(PSTORAGE_CLEAR_OP_CODE, p_dest, NULL, size, 0);
 
     return retval;
 }

@@ -48,14 +48,18 @@
 #include "softdevice_handler.h"
 #include "app_timer.h"
 #include "app_gpiote.h"
-#include "ble_bondmngr.h"
+#include "device_manager.h"
 #include "ble_error_log.h"
 #include "app_button.h"
 #include "ble_debug_assert_handler.h"
 #include "pstorage.h"
+#include "app_trace.h"
+
+#define IS_SRVC_CHANGED_CHARACT_PRESENT  0                                              /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
 #define KEY_PRESS_BUTTON_PIN_NO          BUTTON_0                                       /**< Button used for sending keyboard text. */
-#define BONDMNGR_DELETE_BUTTON_PIN_NO    BUTTON_1                                       /**< Button used for deleting all bonded centrals during startup. */
+#define BOND_DELETE_ALL_BUTTON_ID        BUTTON_1                                       /**< Button used for deleting all bonded centrals during startup. */
+#define SHIFT_BUTTON                     BUTTON_2                                       /**< Button used as 'SHIFT' Key. */
 #define SHIFT_BUTTON                     BUTTON_2                                       /**< Button used as 'SHIFT' Key. */
 
 #define ADVERTISING_LED_PIN_NO           LED_0                                          /**< Is on when device is advertising. */
@@ -115,8 +119,8 @@
 #define OUTPUT_REPORT_MAX_LEN            1                                              /**< Maximum length of Output Report. */
 #define INPUT_REPORT_KEYS_INDEX          0                                              /**< Index of Input Report. */
 #define OUTPUT_REPORT_BIT_MASK_CAPS_LOCK 0x02                                           /**< CAPS LOCK bit in Output Report (based on 'LED Page (0x08)' of the Universal Serial Bus HID Usage Tables). */
-#define INPUT_REP_REF_ID                 1                                              /**< Id of reference to Keyboard Input Report. */
-#define OUTPUT_REP_REF_ID                1                                              /**< Id of reference to Keyboard Output Report. */
+#define INPUT_REP_REF_ID                 0                                              /**< Id of reference to Keyboard Input Report. */
+#define OUTPUT_REP_REF_ID                0                                              /**< Id of reference to Keyboard Output Report. */
 
 #define MAX_BUFFER_ENTRIES               5                                              /**< Number of elements that can be enqueued */
 
@@ -166,12 +170,12 @@
 
 typedef enum
 {
-    BLE_NO_ADV,                                                                         /**< No advertising running. */
-    BLE_DIRECTED_ADV,                                                                   /**< Direct advertising to the latest central. */
-    BLE_FAST_ADV_WHITELIST,                                                             /**< Advertising with whitelist. */
-    BLE_FAST_ADV,                                                                       /**< Fast advertising running. */
-    BLE_SLOW_ADV,                                                                       /**< Slow advertising running. */
-    BLE_SLEEP                                                                           /**< Go to system-off. */
+    BLE_NO_ADV,               /**< No advertising running. */
+    BLE_DIRECTED_ADV,         /**< Direct advertising to the latest central. */
+    BLE_FAST_ADV_WHITELIST,   /**< Advertising with whitelist. */
+    BLE_FAST_ADV,             /**< Fast advertising running. */
+    BLE_SLOW_ADV,             /**< Slow advertising running. */
+    BLE_SLEEP,                /**< Go to system-off. */
 } ble_advertising_mode_t;
 
 /** Abstracts buffer element */
@@ -198,7 +202,6 @@ STATIC_ASSERT(sizeof(buffer_list_t) % 4 == 0);
 
 static ble_hids_t                        m_hids;                                        /**< Structure used to identify the HID service. */
 static ble_bas_t                         m_bas;                                         /**< Structure used to identify the battery service. */
-static ble_gap_sec_params_t              m_sec_params;                                  /**< Security requirements for this application. */
 static bool                              m_in_boot_mode = false;                        /**< Current protocol mode. */
 
 static ble_sensorsim_cfg_t               m_battery_sim_cfg;                             /**< Battery Level sensor simulator configuration. */
@@ -206,11 +209,16 @@ static ble_sensorsim_state_t             m_battery_sim_state;                   
 
 static app_timer_id_t                    m_battery_timer_id;                            /**< Battery timer. */
 
-static ble_advertising_mode_t            m_advertising_mode;                            /**< Variable to keep track of when we are advertising. */
-static int8_t                            m_last_connected_central;                      /**< BondManager reference handle to the last connected central. */
+static uint8_t                           m_advertising_mode;                            /**< Variable to keep track of when we are advertising. */
+static dm_application_instance_t         m_app_handle;                                  /**< Application identifier allocated by device manager. */
+static dm_handle_t                       m_bonded_peer_handle;                          /**< Device reference handle to the current bonded central. */
 static uint8_t                           m_direct_adv_cnt;                              /**< Counter of direct advertisements. */
-static bool                              m_caps_on = false;                             /**< Variable to indicate if Caps Lock is turned on. */    
-static uint8_t m_sample_key_press_scan_str[] =                                           /**< Key pattern to be sent when the key press button has been pushed. */
+static bool                              m_caps_on = false;                             /**< Variable to indicate if Caps Lock is turned on. */
+static ble_gap_addr_t                    m_ble_addr;                                    /**< Variable for getting and setting of BLE device address. */ 
+
+static bool                              m_memory_access_in_progress = false;           /**< Flag to keep track of ongoing operations on persistent memory. */
+
+static uint8_t m_sample_key_press_scan_str[] =                                          /**< Key pattern to be sent when the key press button has been pushed. */
 {
     0x0b, /* Key h */
     0x08, /* Key e */
@@ -245,6 +253,7 @@ static uint8_t m_caps_off_key_scan_str[] =                                      
 static buffer_list_t buffer_list;
 
 
+
 static void on_hids_evt(ble_hids_t * p_hids, ble_hids_evt_t * p_evt);
 
 
@@ -267,10 +276,10 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
     //                It is intended STRICTLY for development/debugging purposes.
     //                The flash write will happen EVEN if the radio is active, thus interrupting
     //                any communication.
-    //                Use with care. Un-comment the line below to use.
+    //                Use with care. Uncomment the line below to use.
     // ble_debug_assert_handler(error_code, line_num, p_file_name);
 
-    // On assert, the system can only recover on reset.
+    // On assert, the system can only recover with a reset.
     NVIC_SystemReset();
 }
 
@@ -364,10 +373,10 @@ static void timers_init(void)
 {
     uint32_t err_code;
 
-    // Initialize timer module, making it use the scheduler
+    // Initialize timer module, making it use the scheduler.
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, true);
 
-    // Create battery timer
+    // Create battery timer.
     err_code = app_timer_create(&m_battery_timer_id,
                                 APP_TIMER_MODE_REPEATED,
                                 battery_level_meas_timeout_handler);
@@ -377,7 +386,8 @@ static void timers_init(void)
 
 /**@brief Function for the GAP initialization.
  *
- * @details This function sets up all the necessary GAP (Generic Access Profile) parameters of the *          device including the device name, appearance, and the preferred connection parameters.
+ * @details This function sets up all the necessary GAP (Generic Access Profile) parameters of the
+ *          device including the device name, appearance, and the preferred connection parameters.
  */
 static void gap_params_init(void)
 {
@@ -420,6 +430,12 @@ static void advertising_init(uint8_t adv_flags)
     ble_advdata_t advdata;
 
     ble_uuid_t adv_uuids[] = { { BLE_UUID_HUMAN_INTERFACE_DEVICE_SERVICE, BLE_UUID_TYPE_BLE } };
+
+    err_code = sd_ble_gap_address_get(&m_ble_addr);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = sd_ble_gap_address_set(BLE_GAP_ADDR_CYCLE_MODE_NONE, &m_ble_addr);
+    APP_ERROR_CHECK(err_code);
 
     // Build and set advertising data
     memset(&advdata, 0, sizeof(advdata));
@@ -504,7 +520,6 @@ static void hids_init(void)
         0x05, 0x01,                 // Usage Page (Generic Desktop)
         0x09, 0x06,                 // Usage (Keyboard)
         0xA1, 0x01,                 // Collection (Application)
-        0x85, 0x01,                 // Input Report - Report ID 1
         0x05, 0x07,                 //     Usage Page (Key Codes)
         0x19, 0xe0,                 //     Usage Minimum (224)
         0x29, 0xe7,                 //     Usage Maximum (231)
@@ -632,20 +647,6 @@ static void sensor_sim_init(void)
 }
 
 
-/**@brief Function for initializing security parameters.
- */
-static void sec_params_init(void)
-{
-    m_sec_params.timeout      = SEC_PARAM_TIMEOUT;
-    m_sec_params.bond         = SEC_PARAM_BOND;
-    m_sec_params.mitm         = SEC_PARAM_MITM;
-    m_sec_params.io_caps      = SEC_PARAM_IO_CAPABILITIES;
-    m_sec_params.oob          = SEC_PARAM_OOB;
-    m_sec_params.min_key_size = SEC_PARAM_MIN_KEY_SIZE;
-    m_sec_params.max_key_size = SEC_PARAM_MAX_KEY_SIZE;
-}
-
-
 /**@brief Function for handling a Connection Parameters error.
  *
  * @param[in]   nrf_error   Error code containing information about what went wrong.
@@ -698,6 +699,7 @@ static void advertising_start(void)
     ble_gap_adv_params_t adv_params;
     ble_gap_whitelist_t  whitelist;
     ble_gap_addr_t       peer_address;
+    uint32_t             count;
 
     // Clear all advertising LEDs
     nrf_gpio_pin_clear(ADVERTISING_LED_PIN_NO);
@@ -705,6 +707,16 @@ static void advertising_start(void)
     nrf_gpio_pin_clear(ADV_WHITELIST_LED_PIN_NO);
     nrf_gpio_pin_clear(ADV_INTERVAL_SLOW_LED_PIN_NO);
 
+    // Verify if there is any flash access pending, if yes delay starting advertising until 
+    // it's complete.
+    err_code = pstorage_access_status_get(&count);
+    APP_ERROR_CHECK(err_code);
+    
+    if (count != 0)
+    {
+        m_memory_access_in_progress = true;
+        return;
+    }
     // Initialize advertising parameters with defaults values
     memset(&adv_params, 0, sizeof(adv_params));
 
@@ -713,10 +725,10 @@ static void advertising_start(void)
     adv_params.fp          = BLE_GAP_ADV_FP_ANY;
     adv_params.p_whitelist = NULL;
 
-    // Configure advertisement according to current advertising state
+    // Configure advertisement according to current advertising state.
     if (m_advertising_mode == BLE_DIRECTED_ADV)
     {
-        err_code = ble_bondmngr_central_addr_get(m_last_connected_central, &peer_address);
+        err_code = dm_peer_addr_get(&m_bonded_peer_handle, &peer_address);
         if (err_code != NRF_SUCCESS)
         {
             m_advertising_mode = BLE_FAST_ADV_WHITELIST;
@@ -727,10 +739,19 @@ static void advertising_start(void)
     {
         case BLE_NO_ADV:
             m_advertising_mode = BLE_FAST_ADV_WHITELIST;
-            // fall through
+            // Fall through.
 
         case BLE_FAST_ADV_WHITELIST:
-            err_code = ble_bondmngr_whitelist_get(&whitelist);
+        {
+            ble_gap_addr_t       * p_whitelist_addr[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
+            ble_gap_irk_t        * p_whitelist_irk[BLE_GAP_WHITELIST_IRK_MAX_COUNT];
+            
+            whitelist.addr_count = BLE_GAP_WHITELIST_ADDR_MAX_COUNT;
+            whitelist.irk_count  = BLE_GAP_WHITELIST_IRK_MAX_COUNT;
+            whitelist.pp_addrs   = p_whitelist_addr;
+            whitelist.pp_irks    = p_whitelist_irk;
+            
+            err_code = dm_whitelist_create(&m_app_handle, &whitelist);
             APP_ERROR_CHECK(err_code);
 
             if ((whitelist.addr_count != 0) || (whitelist.irk_count != 0))
@@ -750,6 +771,7 @@ static void advertising_start(void)
             adv_params.interval = APP_ADV_INTERVAL_FAST;
             adv_params.timeout  = APP_FAST_ADV_TIMEOUT;
             break;
+        }
 
         case BLE_DIRECTED_ADV:
             adv_params.p_peer_addr = &peer_address;
@@ -787,7 +809,7 @@ static void advertising_start(void)
             break;
     }
 
-    // Start advertising
+    // Start advertising.
     err_code = sd_ble_gap_adv_start(&adv_params);
     APP_ERROR_CHECK(err_code);
 
@@ -1149,6 +1171,11 @@ static void on_hids_evt(ble_hids_t * p_hids, ble_hids_evt_t *p_evt)
 
         case BLE_HIDS_EVT_NOTIF_ENABLED:
         {
+            dm_service_context_t   service_context;
+            service_context.service_type = DM_PROTOCOL_CNTXT_GATT_SRVR_ID;
+            service_context.context_data.len = 0;
+            service_context.context_data.p_data = NULL;
+
             if (m_in_boot_mode)
             {
                 // Protocol mode is Boot Protocol mode.
@@ -1162,14 +1189,14 @@ static void on_hids_evt(ble_hids_t * p_hids, ble_hids_evt_t *p_evt)
                     // Save the system attribute (CCCD) information into the flash.
                     uint32_t err_code;
 
-                    err_code = ble_bondmngr_sys_attr_store();
+                    err_code = dm_service_context_set(&m_bonded_peer_handle, &service_context);
                     if (err_code != NRF_ERROR_INVALID_STATE)
                     {
                         APP_ERROR_CHECK(err_code);
                     }
                     else
                     {
-                        // The bond manager did not write the system attributes to the flash because
+                        // The system attributes could not be written to the flash because
                         // the connected central is not a new central. The system attributes
                         // will only be written to flash only when disconnected from this central.
                         // Do nothing now.
@@ -1187,14 +1214,14 @@ static void on_hids_evt(ble_hids_t * p_hids, ble_hids_evt_t *p_evt)
                 // attributes) into the flash.
                 uint32_t err_code;
 
-                err_code = ble_bondmngr_sys_attr_store();
+                err_code = dm_service_context_set(&m_bonded_peer_handle, &service_context);
                 if (err_code != NRF_ERROR_INVALID_STATE)
                 {
                     APP_ERROR_CHECK(err_code);
                 }
                 else
                 {
-                    // The bond manager did not write the system attributes to the flash because
+                    // The system attributes could not be written to the flash because
                     // the connected central is not a new central. The system attributes
                     // will only be written to flash only when disconnected from this central.
                     // Do nothing now.
@@ -1218,7 +1245,7 @@ static void on_hids_evt(ble_hids_t * p_hids, ble_hids_evt_t *p_evt)
 /**@brief Function for handling the Application's BLE Stack events.
  *
  * @param[in]   p_ble_evt   Bluetooth stack event.
-*/
+ */
 static void on_ble_evt(ble_evt_t * p_ble_evt)
 {
     uint32_t        err_code;
@@ -1262,21 +1289,10 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             err_code = app_button_disable();
             APP_ERROR_CHECK(err_code);
 
-            // Since we are not in a connection and have not started advertising, store bonds.
-            err_code = ble_bondmngr_bonded_centrals_store();
-            APP_ERROR_CHECK(err_code);
-
             m_advertising_mode = BLE_DIRECTED_ADV;
             m_direct_adv_cnt   = APP_DIRECTED_ADV_TIMEOUT;
 
             advertising_start();
-            break;
-
-        case BLE_GAP_EVT_SEC_PARAMS_REQUEST:
-            err_code = sd_ble_gap_sec_params_reply(m_conn_handle,
-                                                   BLE_GAP_SEC_STATUS_SUCCESS,
-                                                   &m_sec_params);
-            APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_GAP_EVT_TIMEOUT:
@@ -1296,7 +1312,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                                              BUTTON_PULL,
                                              NRF_GPIO_PIN_SENSE_LOW);
                     
-                    nrf_gpio_cfg_sense_input(BONDMNGR_DELETE_BUTTON_PIN_NO,
+                    nrf_gpio_cfg_sense_input(BOND_DELETE_ALL_BUTTON_ID,
                                              BUTTON_PULL,
                                              NRF_GPIO_PIN_SENSE_LOW);
                     
@@ -1327,6 +1343,29 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 }
 
 
+/**@brief Function for handling the Application's system events.
+ *
+ * @param[in]   sys_evt   system event.
+ */
+static void on_sys_evt(uint32_t sys_evt)
+{
+    switch(sys_evt)
+    {
+        case NRF_EVT_FLASH_OPERATION_SUCCESS:
+        case NRF_EVT_FLASH_OPERATION_ERROR:
+            if (m_memory_access_in_progress)
+            {
+                m_memory_access_in_progress = false;
+                advertising_start();
+            }
+            break;
+        default:
+            // No implementation needed.
+            break;
+    }
+}
+
+
 /**@brief   Function for dispatching a BLE stack event to all modules with a BLE stack event handler.
  *
  * @details This function is called from the scheduler in the main loop after a BLE stack
@@ -1336,7 +1375,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
  */
 static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 {
-    ble_bondmngr_on_ble_evt(p_ble_evt);
+    dm_ble_evt_handler(p_ble_evt);
     on_ble_evt(p_ble_evt);
     ble_conn_params_on_ble_evt(p_ble_evt);
     ble_hids_on_ble_evt(&m_hids, p_ble_evt);
@@ -1354,6 +1393,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 static void sys_evt_dispatch(uint32_t sys_evt)
 {
     pstorage_sys_event_handler(sys_evt);
+    on_sys_evt(sys_evt);
 }
 
 
@@ -1367,6 +1407,13 @@ static void ble_stack_init(void)
 
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, true);
+
+    // Enable BLE stack 
+    ble_enable_params_t ble_enable_params;
+    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
+    ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
+    err_code = sd_ble_enable(&ble_enable_params);
+    APP_ERROR_CHECK(err_code);
 
     // Register with the SoftDevice handler module for BLE events.
     err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
@@ -1432,57 +1479,73 @@ static void buttons_init(void)
 {
     static app_button_cfg_t buttons[] =
     {
-        {KEY_PRESS_BUTTON_PIN_NO,       false, BUTTON_PULL, button_event_handler},
-        {BONDMNGR_DELETE_BUTTON_PIN_NO, false, BUTTON_PULL, NULL},
-        {SHIFT_BUTTON,                  false, BUTTON_PULL, NULL}
+        {KEY_PRESS_BUTTON_PIN_NO,   false, BUTTON_PULL, button_event_handler},
+        {BOND_DELETE_ALL_BUTTON_ID, false, BUTTON_PULL, NULL},
+        {SHIFT_BUTTON,              false, BUTTON_PULL, NULL}
     };
 
     APP_BUTTON_INIT(buttons, sizeof(buttons) / sizeof(buttons[0]), BUTTON_DETECTION_DELAY, true);
 }
 
 
-/**@brief Function for handling a Bond Manager error.
+/**@brief Function for handling the Device Manager events.
  *
- * @param[in]   nrf_error   Error code containing information about what went wrong.
+ * @param[in]   p_evt   Data associated to the device manager event.
  */
-static void bond_manager_error_handler(uint32_t nrf_error)
+static uint32_t device_manager_evt_handler(dm_handle_t const    * p_handle,
+                                           dm_event_t const     * p_event,
+                                           api_result_t           event_result)
 {
-    APP_ERROR_HANDLER(nrf_error);
+    APP_ERROR_CHECK(event_result);
+
+    switch(p_event->event_id)
+    {
+        case DM_EVT_DEVICE_CONTEXT_LOADED: // Fall through.
+        case DM_EVT_SECURITY_SETUP_COMPLETE:
+            m_bonded_peer_handle = (*p_handle);
+            break;
+    }
+
+    return NRF_SUCCESS;
 }
 
 
-/**@brief Function for handling the Bond Manager events.
- *
- * @param[in]   p_evt   Data associated to the bond manager event.
+/**@brief Function for the Device Manager initialization.
  */
-static void bond_evt_handler(ble_bondmngr_evt_t * p_evt)
+static void device_manager_init(void)
 {
-    m_last_connected_central = p_evt->central_handle;
-}
+    uint32_t                err_code;
+    dm_init_param_t         init_data;
+    dm_application_param_t  register_param;
 
-
-/**@brief Function for the Bond Manager initialization.
- */
-static void bond_manager_init(void)
-{
-    uint32_t            err_code;
-    ble_bondmngr_init_t bond_init_data;
-    bool                bonds_delete;
-
+    // Initialize peer device handle.
+    err_code = dm_handle_initialize(&m_bonded_peer_handle);
+    APP_ERROR_CHECK(err_code);
+    
     // Initialize persistent storage module.
     err_code = pstorage_init();
     APP_ERROR_CHECK(err_code);
 
     // Clear all bonded centrals if the "delete all bonds" button is pushed.
-    err_code = app_button_is_pushed(BONDMNGR_DELETE_BUTTON_PIN_NO, &bonds_delete);
+    err_code = app_button_is_pushed(BOND_DELETE_ALL_BUTTON_ID, &init_data.clear_persistent_data);
     APP_ERROR_CHECK(err_code);
 
-    // Initialize the Bond Manager.
-    bond_init_data.evt_handler             = bond_evt_handler;
-    bond_init_data.error_handler           = bond_manager_error_handler;
-    bond_init_data.bonds_delete            = bonds_delete;
+    err_code = dm_init(&init_data);
+    APP_ERROR_CHECK(err_code);
+    
+    memset(&register_param.sec_param, 0, sizeof(ble_gap_sec_params_t));
 
-    err_code = ble_bondmngr_init(&bond_init_data);
+    register_param.sec_param.timeout      = SEC_PARAM_TIMEOUT;
+    register_param.sec_param.bond         = SEC_PARAM_BOND;
+    register_param.sec_param.mitm         = SEC_PARAM_MITM;
+    register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
+    register_param.sec_param.oob          = SEC_PARAM_OOB;
+    register_param.sec_param.min_key_size = SEC_PARAM_MIN_KEY_SIZE;
+    register_param.sec_param.max_key_size = SEC_PARAM_MAX_KEY_SIZE;
+    register_param.evt_handler            = device_manager_evt_handler;
+    register_param.service_type           = DM_PROTOCOL_CNTXT_GATT_SRVR_ID;
+
+    err_code = dm_register(&m_app_handle, &register_param);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -1501,19 +1564,19 @@ static void power_manage(void)
 int main(void)
 {
     // Initialize.
+    app_trace_init();
     leds_init();
     timers_init();
     gpiote_init();
     buttons_init();
     ble_stack_init();
     scheduler_init();
-    bond_manager_init();
+    device_manager_init();
     gap_params_init();
     advertising_init(BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE);
     services_init();
     sensor_sim_init();
     conn_params_init();
-    sec_params_init();
     buffer_init();
 
     // Start execution.

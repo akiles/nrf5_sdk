@@ -107,9 +107,6 @@ static __INLINE void nrf_gpiote_task_config(uint32_t channel_number, uint32_t pi
 /**
  * @brief Function for configuring GPIOTE channel as input, automatically clearing an event that appears in some cases under configuration.
  *
- * Note that the pin must be configured as connected input for this
- * function to have any effect.
- *
  * Note that when configuring the channel as input an event might be triggered. Care of disabling interrupts
  * for that channel is left to the user.
  *

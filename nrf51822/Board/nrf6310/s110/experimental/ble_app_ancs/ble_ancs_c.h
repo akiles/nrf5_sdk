@@ -25,8 +25,8 @@
 #define BLE_ANCS_C_H__
 
 #include "ble_types.h"
-#include "ble_bondmngr.h"
-#include "ble_bondmngr_cfg.h"
+#include "ble_srv_common.h"
+#include "device_manager.h"
 
 #define ANCS_NB_OF_CHARACTERISTICS                  5                                    /**< Number of characteristics as defined by Apple Notification Service specification. */
 #define ANCS_NB_OF_SERVICES                         1                                    /**< Number of services supported in one master. */
@@ -152,7 +152,7 @@ typedef struct ble_ancs_c_s
     ble_ancs_c_evt_handler_t            evt_handler;                                      /**< Event handler to be called for handling events in the Apple Notification Client Application. */
     ble_srv_error_handler_t             error_handler;                                    /**< Function to be called in case of an error. */
     uint16_t                            conn_handle;                                      /**< Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). */
-    int8_t                              master_handle;                                    /**< Handle for the currently connected master if we have a bond in the bond manager. */
+    uint8_t                             central_handle;                                   /**< Handle for the currently connected peer if we have a bond in the bond manager. */
     uint8_t                             service_handle;                                   /**< Handle to the service in the database to use for this instance. */
     uint32_t                            message_buffer_size;                              /**< Size of message buffer to hold the additional text messages received on notifications. */
     uint8_t *                           p_message_buffer;                                 /**< Pointer to the buffer to be used for additional text message handling. */
@@ -186,9 +186,9 @@ extern const ble_uuid128_t ble_ancs_ds_base_uuid128;                            
 void ble_ancs_c_on_ble_evt(ble_ancs_c_t * p_ancs, const ble_evt_t * p_ble_evt);
 
 
-/**@brief Function for handling the ANCS Client - Bond Manager stack event.
+/**@brief Function for handling the ANCS Client - Device Manager event.
  *
- * @details Handles all events from the Bond Manager of interest to the ANCS Client.
+ * @details Handles all events from the Device Manager of interest to the ANCS Client.
  *          The ANCS Client will use the events of re-connection to existing master
  *          and creation of new bonds for handling of service discovery and writing of the Apple
  *          Notification Control Point for re-send of New Apple and Unread Apple notifications.
@@ -196,7 +196,9 @@ void ble_ancs_c_on_ble_evt(ble_ancs_c_t * p_ancs, const ble_evt_t * p_ble_evt);
  * @param[in]   p_ancs           ANCS Client structure.
  * @param[in]   p_bond_mgmr_evt  Event received from the Bond Manager.
  */
-void ble_ancs_c_on_bondmgmr_evt(ble_ancs_c_t * p_ancs, const ble_bondmngr_evt_t * p_bond_mgmr_evt);
+void ble_ancs_c_on_device_manager_evt(ble_ancs_c_t      * p_ancs,
+                                      dm_handle_t const * p_handle,
+                                      dm_event_t const  * p_dm_evt);
 
 
 /**@brief Function for initializing the ANCS Client.

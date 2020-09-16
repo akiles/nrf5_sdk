@@ -29,15 +29,15 @@
 #include "nrf_gpio.h"
 
 
-#define DEBOUNCE_TIME_IN_MS             (50U)                                   /**< Debounce timer in milliseconds */
-#define DEBOUNCE_INPUT_SAMPLING_FREQ    (60U)                                   /**< Input sampling frequency in Hertz */
-#define TIMER0_PRESCALER                (9UL)                                   /**< Timer 0 prescaler */
-#define TIMER0_CLOCK                    (SystemCoreClock >> TIMER0_PRESCALER)   /**< Timer clock frequency */
-#define MS_TO_TIMER0_TICKS(ms)          ((1000000UL * ms) / (TIMER0_CLOCK))     /**< Converts milliseconds to timer ticks */
-#define MAX_BUTTONS                     (8U)                                    /**< Maximum number of buttons in use */
+#define DEBOUNCE_TIME_IN_MS          (50U)                                  /**< Debounce timer in milliseconds */
+#define DEBOUNCE_INPUT_SAMPLING_FREQ (60U)                                  /**< Input sampling frequency in Hertz */
+#define TIMER0_PRESCALER             (9UL)                                  /**< Timer 0 prescaler */
+#define TIMER0_CLOCK                 (SystemCoreClock >> TIMER0_PRESCALER)  /**< Timer clock frequency */
+#define MS_TO_TIMER0_TICKS(ms)       ((1000000UL * ms) / (TIMER0_CLOCK))    /**< Converts milliseconds to timer ticks */
+#define MAX_BUTTONS                  (8U)                                   /**< Maximum number of buttons in use */
 
-static uint_fast16_t timer0_cc0_period;     /**< Period between debouncer input reads. */
-static deb_t button[MAX_BUTTONS];           /**< Debounced button state holder */
+static uint_fast16_t timer0_cc0_period;          /**< Period between debouncer input reads. */
+static               deb_t button[MAX_BUTTONS];  /**< Debounced button state holder */
 
 
 /** @brief Interrupt handler function for the Timer 0 peripheral.

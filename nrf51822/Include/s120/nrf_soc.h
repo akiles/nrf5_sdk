@@ -29,18 +29,19 @@
 
 /**@brief The number of the lowest SVC number reserved for the SoC library. */
 #define SOC_SVC_BASE 0x20
+#define SOC_SVC_BASE_NOT_AVAILABLE 0x23
 
 /**@brief Guranteed time for application to process radio inactive notification. */
 #define NRF_RADIO_NOTIFICATION_INACTIVE_GUARANTEED_TIME_US   (62)
 
-#define SOC_ECB_KEY_LENGTH                   (16)                       /**< ECB key length. */
-#define SOC_ECB_CLEARTEXT_LENGTH             (16)                       /**< ECB cleartext length. */
-#define SOC_ECB_CIPHERTEXT_LENGTH            (SOC_ECB_CLEARTEXT_LENGTH) /**< ECB ciphertext length. */
+#define SOC_ECB_KEY_LENGTH            (16)                       /**< ECB key length. */
+#define SOC_ECB_CLEARTEXT_LENGTH      (16)                       /**< ECB cleartext length. */
+#define SOC_ECB_CIPHERTEXT_LENGTH     (SOC_ECB_CLEARTEXT_LENGTH) /**< ECB ciphertext length. */
 
-#define SD_EVT_IRQn                   (SWI2_IRQn)       /**< SoftDevice Event IRQ number. Used for both protocol events and SoC events. */
-#define SD_EVT_IRQHandler             (SWI2_IRQHandler) /**< SoftDevice Event IRQ handler. Used for both protocol events and SoC events. */
-#define RADIO_NOTIFICATION_IRQn       (SWI1_IRQn)       /**< The radio notification IRQ number. */
-#define RADIO_NOTIFICATION_IRQHandler (SWI1_IRQHandler) /**< The radio notification IRQ handler. */
+#define SD_EVT_IRQn                   (SWI2_IRQn)        /**< SoftDevice Event IRQ number. Used for both protocol events and SoC events. */
+#define SD_EVT_IRQHandler             (SWI2_IRQHandler)  /**< SoftDevice Event IRQ handler. Used for both protocol events and SoC events. */
+#define RADIO_NOTIFICATION_IRQn       (SWI1_IRQn)        /**< The radio notification IRQ number. */
+#define RADIO_NOTIFICATION_IRQHandler (SWI1_IRQHandler)  /**< The radio notification IRQ handler. */
 
 /** @} */
 
@@ -50,7 +51,10 @@
 /**@brief The SVC numbers used by the SVC functions in the SoC library. */
 enum NRF_SOC_SVCS
 {
-  SD_MUTEX_NEW = SOC_SVC_BASE,
+  SD_FLASH_PAGE_ERASE = SOC_SVC_BASE,
+  SD_FLASH_WRITE,
+  SD_FLASH_PROTECT,
+  SD_MUTEX_NEW = SOC_SVC_BASE_NOT_AVAILABLE,
   SD_MUTEX_ACQUIRE,
   SD_MUTEX_RELEASE,
   SD_NVIC_ENABLEIRQ,
@@ -98,9 +102,6 @@ enum NRF_SOC_SVCS
   SD_RESERVED3,
   SD_EVT_GET,
   SD_TEMP_GET,
-  SD_FLASH_PAGE_ERASE,
-  SD_FLASH_WRITE,
-  SD_FLASH_PROTECT,
   SVC_SOC_LAST
 };
 
@@ -169,10 +170,10 @@ enum NRF_RADIO_NOTIFICATION_TYPES
 /**@brief SoC Events. */
 enum NRF_SOC_EVTS
 {
-  NRF_EVT_HFCLKSTARTED,                       /**< Event indicating that the HFCLK has started. */
-  NRF_EVT_POWER_FAILURE_WARNING,              /**< Event indicating that a power failure warning has occurred. */
-  NRF_EVT_FLASH_OPERATION_SUCCESS,            /**< Event indicating that the ongoing flash operation has completed successfully. */
-  NRF_EVT_FLASH_OPERATION_ERROR,              /**< Event indicating that the ongoing flash operation has timed out with an error. */
+  NRF_EVT_HFCLKSTARTED,                         /**< Event indicating that the HFCLK has started. */
+  NRF_EVT_POWER_FAILURE_WARNING,                /**< Event indicating that a power failure warning has occurred. */
+  NRF_EVT_FLASH_OPERATION_SUCCESS,              /**< Event indicating that the ongoing flash operation has completed successfully. */
+  NRF_EVT_FLASH_OPERATION_ERROR,                /**< Event indicating that the ongoing flash operation has timed out with an error. */
   NRF_EVT_RESERVED1,
   NRF_EVT_RESERVED2,
   NRF_EVT_RESERVED3,
@@ -213,9 +214,9 @@ typedef uint8_t nrf_radio_notification_type_t;
 /**@brief AES ECB data structure */
 typedef struct
 {
-  uint8_t key[SOC_ECB_KEY_LENGTH];                /**< Encryption key. */
-  uint8_t cleartext[SOC_ECB_CLEARTEXT_LENGTH];    /**< Clear Text data. */
-  uint8_t ciphertext[SOC_ECB_CIPHERTEXT_LENGTH];  /**< Cipher Text data. */
+  uint8_t key[SOC_ECB_KEY_LENGTH];                  /**< Encryption key. */
+  uint8_t cleartext[SOC_ECB_CLEARTEXT_LENGTH];      /**< Clear Text data. */
+  uint8_t ciphertext[SOC_ECB_CIPHERTEXT_LENGTH];    /**< Cipher Text data. */
 } nrf_ecb_hal_data_t;
 
 /** @} */

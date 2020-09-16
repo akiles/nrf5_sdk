@@ -45,9 +45,9 @@ uint32_t app_fifo_put(app_fifo_t * p_fifo, uint8_t byte)
     {
         p_fifo->p_buf[p_fifo->write_pos & p_fifo->buf_size_mask] = byte;
         p_fifo->write_pos++;
-        return NRF_SUCCESS;    
+        return NRF_SUCCESS;
     }
-    
+
     return NRF_ERROR_NO_MEM;
 }
 
@@ -60,9 +60,9 @@ uint32_t app_fifo_get(app_fifo_t * p_fifo, uint8_t * p_byte)
         p_fifo->read_pos++;
         return NRF_SUCCESS;
     }
-    
+
     return NRF_ERROR_NOT_FOUND;
-    
+
 }
 
 uint32_t app_fifo_flush(app_fifo_t * p_fifo)

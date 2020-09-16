@@ -22,25 +22,25 @@
 /*lint ++flb "Enter library region" */
 
 /*lint -e717 -save "Suppress do {} while (0) for these macros" */
-#define SDIO_CLOCK_HIGH() do { NRF_GPIO->OUTSET = (1UL << SDIO_CONFIG_CLOCK_PIN_NUMBER); } while (0) /*!< Pulls SCL line high */
-#define SDIO_CLOCK_LOW() do { NRF_GPIO->OUTCLR = (1UL << SDIO_CONFIG_CLOCK_PIN_NUMBER); } while (0)/*!< Pulls SCL line low */
-#define SDIO_DATA_HIGH() do { NRF_GPIO->OUTSET = (1UL << SDIO_CONFIG_DATA_PIN_NUMBER); } while (0) /*!< Pulls SDA line high */
-#define SDIO_DATA_LOW() do { NRF_GPIO->OUTCLR = (1UL << SDIO_CONFIG_DATA_PIN_NUMBER); } while (0) /*!< Pulls SDA line low */
-#define SDIO_DATA_OUTPUT() do { NRF_GPIO->DIRSET = (1UL << SDIO_CONFIG_DATA_PIN_NUMBER); } while (0) /*!< Configures SDA pin as output */
+#define SDIO_CLOCK_HIGH()   do { NRF_GPIO->OUTSET = (1UL << SDIO_CONFIG_CLOCK_PIN_NUMBER); } while (0) /*!< Pulls SCL line high */
+#define SDIO_CLOCK_LOW()    do { NRF_GPIO->OUTCLR = (1UL << SDIO_CONFIG_CLOCK_PIN_NUMBER); } while (0) /*!< Pulls SCL line low */
+#define SDIO_DATA_HIGH()    do { NRF_GPIO->OUTSET = (1UL << SDIO_CONFIG_DATA_PIN_NUMBER); } while (0)  /*!< Pulls SDA line high */
+#define SDIO_DATA_LOW()     do { NRF_GPIO->OUTCLR = (1UL << SDIO_CONFIG_DATA_PIN_NUMBER); } while (0)  /*!< Pulls SDA line low */
+#define SDIO_DATA_OUTPUT()  do { NRF_GPIO->DIRSET = (1UL << SDIO_CONFIG_DATA_PIN_NUMBER); } while (0)  /*!< Configures SDA pin as output */
 #define SDIO_CLOCK_OUTPUT() do { NRF_GPIO->DIRSET = (1UL << SDIO_CONFIG_CLOCK_PIN_NUMBER); } while (0) /*!< Configures SCL pin as output */
 /*lint -restore */
 
 /*lint -emacro(845,SDIO_DATA_INPUT) // A zero has been given as right argument to operator '|'" */
 
-#define SDIO_DATA_INPUT() do {  \
-         nrf_gpio_cfg_input(25, NRF_GPIO_PIN_NOPULL);  \
+#define SDIO_DATA_INPUT() do {                       \
+        nrf_gpio_cfg_input(25, NRF_GPIO_PIN_NOPULL); \
 } while (0)
 
-#define SDIO_DATA_READ() ((NRF_GPIO->IN >> SDIO_CONFIG_DATA_PIN_NUMBER) & 0x1UL) /*!< Reads current state of SDA */
+#define SDIO_DATA_READ()  ((NRF_GPIO->IN >> SDIO_CONFIG_DATA_PIN_NUMBER) & 0x1UL)  /*!< Reads current state of SDA */
 #define SDIO_CLOCK_READ() ((NRF_GPIO->IN >> SDIO_CONFIG_CLOCK_PIN_NUMBER) & 0x1UL) /*!< Reads current state of SCL */
-#define SDIO_DELAY() nrf_delay_us(10) /*!< Time to wait when pin states are changed. For fast-mode the delay can be zero and for standard-mode 4 us delay is sufficient. */
+#define SDIO_DELAY()      nrf_delay_us(10)                                         /*!< Time to wait when pin states are changed. For fast-mode the delay can be zero and for standard-mode 4 us delay is sufficient. */
 
-    void sdio_init(void)
+void sdio_init(void)
 {
     SDIO_CLOCK_HIGH();
     SDIO_DATA_HIGH();
@@ -48,7 +48,7 @@
     SDIO_DATA_INPUT();
 
     // If slave is stuck in the middle of transfer, clock out bits until the slave ACKs the transfer
-    for (uint_fast8_t i=16; i--;)
+    for (uint_fast8_t i = 16; i--;)
     {
         SDIO_DELAY();
         SDIO_CLOCK_LOW();
@@ -62,7 +62,7 @@
         }
     }
 
-    for (uint_fast8_t i=5; i--;)
+    for (uint_fast8_t i = 5; i--;)
     {
         SDIO_DELAY();
         SDIO_CLOCK_LOW();
@@ -82,7 +82,7 @@ uint8_t sdio_read_byte(uint8_t address)
 
     SDIO_DATA_OUTPUT();
 
-    for (uint_fast8_t i=8; i--;)
+    for (uint_fast8_t i = 8; i--;)
     {
         SDIO_DELAY();
 
@@ -106,7 +106,7 @@ uint8_t sdio_read_byte(uint8_t address)
 
     SDIO_DATA_INPUT();
 
-    for (uint_fast8_t i=8; i--;)
+    for (uint_fast8_t i = 8; i--;)
     {
         SDIO_CLOCK_LOW();
         SDIO_DELAY();
@@ -123,7 +123,7 @@ uint8_t sdio_read_byte(uint8_t address)
     return data_byte;
 }
 
-void sdio_read_burst(uint8_t *target_buffer, uint8_t target_buffer_size)
+void sdio_read_burst(uint8_t * target_buffer, uint8_t target_buffer_size)
 {
     uint_fast8_t address = 0x63;
 
@@ -167,7 +167,7 @@ void sdio_write_byte(uint8_t address, uint8_t data_byte)
 
     SDIO_DATA_OUTPUT();
 
-    for (uint_fast8_t i=8; i--;)
+    for (uint_fast8_t i = 8; i--;)
     {
         SDIO_DELAY();
 
@@ -189,7 +189,7 @@ void sdio_write_byte(uint8_t address, uint8_t data_byte)
 
     SDIO_DELAY();
 
-    for (uint_fast8_t i=8; i--;)
+    for (uint_fast8_t i = 8; i--;)
     {
         SDIO_CLOCK_LOW();
 

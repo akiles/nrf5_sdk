@@ -11,6 +11,7 @@
  */
 
 #include "app_timer.h"
+#include "app_util_platform.h"
 #include <stdlib.h>
 #include "nrf51.h"
 #include "nrf51_bitfields.h"

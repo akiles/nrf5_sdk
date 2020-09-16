@@ -46,7 +46,7 @@ static bool twi_master_clear_bus(void);
 static bool twi_master_issue_startcondition(void);
 static bool twi_master_issue_stopcondition(void);
 static bool twi_master_clock_byte(uint_fast8_t databyte);
-static bool twi_master_clock_byte_in(uint8_t *databyte, bool ack);
+static bool twi_master_clock_byte_in(uint8_t * databyte, bool ack);
 static bool twi_master_wait_while_scl_low(void);
 
 bool twi_master_init(void)
@@ -66,7 +66,7 @@ bool twi_master_init(void)
     return twi_master_clear_bus();
 }
 
-bool twi_master_transfer(uint8_t address, uint8_t *data, uint8_t data_length, bool issue_stop_condition)
+bool twi_master_transfer(uint8_t address, uint8_t * data, uint8_t data_length, bool issue_stop_condition)
 {
     bool transfer_succeeded = true;
 
@@ -133,7 +133,7 @@ static bool twi_master_clear_bus(void)
     {
         bus_clear = false;
         // Clock max 18 pulses worst case scenario(9 for master to send the rest of command and 9 for slave to respond) to SCL line and wait for SDA come high
-        for (uint_fast8_t i=18; i--;)
+        for (uint_fast8_t i = 18; i--;)
         {
             TWI_SCL_LOW();
             TWI_DELAY();
@@ -315,12 +315,12 @@ static bool twi_master_clock_byte(uint_fast8_t databyte)
 {
     bool transfer_succeeded = true;
 
-    /** @snippet [TWI SW master write] */                    
+    /** @snippet [TWI SW master write] */
     // Make sure SDA is an output
     TWI_SDA_OUTPUT();
 
     // MSB first
-    for (uint_fast8_t i = 0x80; i != 0; i>>=1)
+    for (uint_fast8_t i = 0x80; i != 0; i >>= 1)
     {
         TWI_SCL_LOW();
         TWI_DELAY();
@@ -340,12 +340,12 @@ static bool twi_master_clock_byte(uint_fast8_t databyte)
             break;
         }
     }
-    
+
     // Finish last data bit by pulling SCL low
     TWI_SCL_LOW();
     TWI_DELAY();
-    
-    /** @snippet [TWI SW master write] */                    
+
+    /** @snippet [TWI SW master write] */
 
     // Configure TWI_SDA pin as input for receiving the ACK bit
     TWI_SDA_INPUT();
@@ -371,6 +371,7 @@ static bool twi_master_clock_byte(uint_fast8_t databyte)
     return transfer_succeeded;
 }
 
+
 /**
  * @brief Function for clocking one data byte in and sends ACK/NACK bit.
  *
@@ -386,17 +387,17 @@ static bool twi_master_clock_byte(uint_fast8_t databyte)
  */
 static bool twi_master_clock_byte_in(uint8_t *databyte, bool ack)
 {
-    uint_fast8_t byte_read = 0;
-    bool transfer_succeeded = true;
+    uint_fast8_t byte_read          = 0;
+    bool         transfer_succeeded = true;
 
-    /** @snippet [TWI SW master read] */                        
+    /** @snippet [TWI SW master read] */
     // Make sure SDA is an input
     TWI_SDA_INPUT();
 
     // SCL state is guaranteed to be high here
 
     // MSB first
-    for (uint_fast8_t i = 0x80; i != 0; i>>=1)
+    for (uint_fast8_t i = 0x80; i != 0; i >>= 1)
     {
         if (!twi_master_wait_while_scl_low())
         {
@@ -419,7 +420,7 @@ static bool twi_master_clock_byte_in(uint8_t *databyte, bool ack)
 
     // Make sure SDA is an output before we exit the function
     TWI_SDA_OUTPUT();
-    /** @snippet [TWI SW master read] */                            
+    /** @snippet [TWI SW master read] */
 
     *databyte = (uint8_t)byte_read;
 
@@ -451,6 +452,7 @@ static bool twi_master_clock_byte_in(uint8_t *databyte, bool ack)
 
     return transfer_succeeded;
 }
+
 
 /**
  * @brief Function for pulling SCL high and waits until it is high or timeout occurs.

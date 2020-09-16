@@ -295,10 +295,10 @@ void UART0_IRQHandler(void)
     if (NRF_UART0->EVENTS_RXDRDY != 0)
     {
         uint32_t err_code;
-        
+
         // Clear UART RX event flag
         NRF_UART0->EVENTS_RXDRDY = 0;
-        
+
         // Write received byte to FIFO
         err_code = app_fifo_put(&m_rx_fifo, (uint8_t)NRF_UART0->RXD);
         if (err_code != NRF_SUCCESS)
@@ -320,7 +320,7 @@ void UART0_IRQHandler(void)
             // Do nothing, only send event if first byte was added or overflow in FIFO occurred.
         }
     }
-    
+
     // Handle transmission.
     if (NRF_UART0->EVENTS_TXDRDY != 0)
     {
@@ -328,7 +328,7 @@ void UART0_IRQHandler(void)
         NRF_UART0->EVENTS_TXDRDY = 0;
         on_uart_event(ON_TX_READY);
     }
-    
+
     // Handle errors.
     if (NRF_UART0->EVENTS_ERROR != 0)
     {
@@ -337,7 +337,7 @@ void UART0_IRQHandler(void)
 
         // Clear UART ERROR event flag.
         NRF_UART0->EVENTS_ERROR = 0;
-        
+
         // Clear error source.
         error_source        = NRF_UART0->ERRORSRC;
         NRF_UART0->ERRORSRC = error_source;
@@ -445,9 +445,9 @@ uint32_t app_uart_init(const app_uart_comm_params_t * p_comm_params,
         nrf_gpio_cfg_output(p_comm_params->rts_pin_no);
         NRF_GPIO->OUT = 1 << p_comm_params->rts_pin_no;
 
-        NRF_UART0->PSELCTS  = UART_PIN_DISCONNECTED;
-        NRF_UART0->PSELRTS  = p_comm_params->rts_pin_no;
-        NRF_UART0->CONFIG  |= (UART_CONFIG_HWFC_Enabled << UART_CONFIG_HWFC_Pos);
+        NRF_UART0->PSELCTS = UART_PIN_DISCONNECTED;
+        NRF_UART0->PSELRTS = p_comm_params->rts_pin_no;
+        NRF_UART0->CONFIG |= (UART_CONFIG_HWFC_Enabled << UART_CONFIG_HWFC_Pos);
 
         // Setup the gpiote to handle pin events on cts-pin.
         // For the UART we want to detect both low->high and high->low transitions in order to
@@ -461,10 +461,10 @@ uint32_t app_uart_init(const app_uart_comm_params_t * p_comm_params,
 
         if (*p_app_uart_uid == UART_INSTANCE_ID_INVALID)
         {
-            err_code   = app_gpiote_user_register(&m_gpiote_uid,
-                                                  gpiote_pin_low_high_mask,
-                                                  gpiote_pin_high_low_mask,
-                                                  gpiote_uart_event_handler);
+            err_code = app_gpiote_user_register(&m_gpiote_uid,
+                                                gpiote_pin_low_high_mask,
+                                                gpiote_pin_high_low_mask,
+                                                gpiote_uart_event_handler);
             if (err_code != NRF_SUCCESS)
             {
                 return err_code;

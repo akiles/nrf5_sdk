@@ -37,9 +37,16 @@
  * macros on purpose. Use the ones defined in nrf51.h and nrf51_bitfields.h instead.
  */
 
+/* NVMC */
+/* The register ERASEPROTECTEDPAGE is called ERASEPCR0 in the documentation. */
+#define ERASEPCR0   ERASEPROTECTEDPAGE
+/* The register ERASEPAGE is also called ERASEPCR1 in the documentation. */
+#define ERASEPCR1   ERASEPAGE
+ 
 /* LPCOMP */
 /* The interrupt ISR was renamed. Adding old name to the macros. */
 #define LPCOMP_COMP_IRQHandler      LPCOMP_IRQHandler
+ 
  
 /* MPU */
 /* The field MPU.PERR0.LPCOMP_COMP was renamed. Added into deprecated in case somebody was using the macros defined for it. */

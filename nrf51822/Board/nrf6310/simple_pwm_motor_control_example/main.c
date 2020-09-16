@@ -30,12 +30,12 @@
 #include "nrf_gpiote.h"
 #include "boards.h"
 
-#define PWM_OUTPUT_PIN_NUMBER (LED_0)    /**< Pin number for PWM output. */
-#define TIMER_PRESCALER       (4)       /**< Prescaler setting for timers. */
-#define LED_INTENSITY_HIGH    (224U)    /**< High intensity. */
-#define LED_INTENSITY_LOW     (32U)     /**< Low intensity. */
-#define LED_OFF               (1U)      /**< Led off. */
-#define LED_INTENSITY_HALF    (128U)    /**< Half intensity. Used to calculate timer parameters. */
+#define PWM_OUTPUT_PIN_NUMBER (LED_0) /**< Pin number for PWM output. */
+#define TIMER_PRESCALER       (4)     /**< Prescaler setting for timers. */
+#define LED_INTENSITY_HIGH    (224U)  /**< High intensity. */
+#define LED_INTENSITY_LOW     (32U)   /**< Low intensity. */
+#define LED_OFF               (1U)    /**< Led off. */
+#define LED_INTENSITY_HALF    (128U)  /**< Half intensity. Used to calculate timer parameters. */
 
 
 /** @brief Function for setting the PWM duty cycle.
@@ -52,8 +52,8 @@ static void pwm_set(uint8_t new_setting)
 static void timer2_init(void)
 {
     /* Start 16 MHz crystal oscillator */
-    NRF_CLOCK->EVENTS_HFCLKSTARTED    = 0;
-    NRF_CLOCK->TASKS_HFCLKSTART       = 1;
+    NRF_CLOCK->EVENTS_HFCLKSTARTED = 0;
+    NRF_CLOCK->TASKS_HFCLKSTART    = 1;
   
     /* Wait for the external oscillator to start up */
     while (NRF_CLOCK->EVENTS_HFCLKSTARTED == 0)       
@@ -61,22 +61,22 @@ static void timer2_init(void)
         // Do nothing.
     }
   
-    NRF_TIMER2->MODE        = TIMER_MODE_MODE_Timer;
-    NRF_TIMER2->PRESCALER   = 4;
+    NRF_TIMER2->MODE      = TIMER_MODE_MODE_Timer;
+    NRF_TIMER2->PRESCALER = 4;
 
     /* Load initial values to Timer 2 CC registers */
     /* Set initial CC0 value to anything > 1 */
-    NRF_TIMER2->CC[0]       = LED_INTENSITY_LOW;
-    NRF_TIMER2->CC[1]       = (LED_INTENSITY_HALF*2);
+    NRF_TIMER2->CC[0] = LED_INTENSITY_LOW;
+    NRF_TIMER2->CC[1] = (LED_INTENSITY_HALF*2);
 
     /* Set up interrupt for CC2 */
     /* This interrupt is to force the change of CC0 to happen when it is safe */
     /* A safe time is after the highest possible CC0 value, but before the lowest one. */
-    NRF_TIMER2->CC[2]       = LED_INTENSITY_HIGH;
-    NRF_TIMER2->INTENSET    = TIMER_INTENSET_COMPARE2_Enabled << TIMER_INTENSET_COMPARE2_Pos;
+    NRF_TIMER2->CC[2]    = LED_INTENSITY_HIGH;
+    NRF_TIMER2->INTENSET = TIMER_INTENSET_COMPARE2_Enabled << TIMER_INTENSET_COMPARE2_Pos;
 
     /* Create an Event-Task shortcut to clear TIMER2 on COMPARE[1] event. */
-    NRF_TIMER2->SHORTS      = (TIMER_SHORTS_COMPARE1_CLEAR_Enabled << TIMER_SHORTS_COMPARE1_CLEAR_Pos);
+    NRF_TIMER2->SHORTS = (TIMER_SHORTS_COMPARE1_CLEAR_Enabled << TIMER_SHORTS_COMPARE1_CLEAR_Pos);
 }
 
 
@@ -84,9 +84,9 @@ static void timer2_init(void)
 */
 static void gpiote_init(void)
 {
-    NRF_GPIO->OUT       = 0x00000000UL;
-    NRF_GPIO->DIRSET    = 0x0000FF00UL;
-    NRF_GPIO->DIRCLR    = 0x000000FFUL;
+    NRF_GPIO->OUT    = 0x00000000UL;
+    NRF_GPIO->DIRSET = 0x0000FF00UL;
+    NRF_GPIO->DIRCLR = 0x000000FFUL;
 
     /* Configuring Button 0 as input */
     nrf_gpio_cfg_input(BUTTON_0, BUTTON_PULL);

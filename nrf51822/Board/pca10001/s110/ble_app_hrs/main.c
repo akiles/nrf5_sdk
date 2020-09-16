@@ -41,67 +41,72 @@
 #include "nrf_gpio.h"
 #include "led.h"
 #include "battery.h"
-#include "ble_bondmngr.h"
+#include "device_manager.h"
 #include "app_gpiote.h"
 #include "app_button.h"
 #include "ble_debug_assert_handler.h"
 #include "pstorage.h"
+#include "app_trace.h"
 
 
-#define HR_INC_BUTTON_PIN_NO                 BUTTON_0                                  /**< Button used to increment heart rate. */
-#define HR_DEC_BUTTON_PIN_NO                 BUTTON_1                                  /**< Button used to decrement heart rate. */
-#define BONDMNGR_DELETE_BUTTON_PIN_NO        HR_DEC_BUTTON_PIN_NO                      /**< Button used for deleting all bonded centrals during startup. */
 
-#define DEVICE_NAME                          "Nordic_HRM"                              /**< Name of device. Will be included in the advertising data. */
-#define MANUFACTURER_NAME                    "NordicSemiconductor"                     /**< Manufacturer. Will be passed to Device Information Service. */
-#define APP_ADV_INTERVAL                     40                                        /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
-#define APP_ADV_TIMEOUT_IN_SECONDS           180                                       /**< The advertising timeout in units of seconds. */
 
-#define APP_TIMER_PRESCALER                  0                                         /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS                 4                                         /**< Maximum number of simultaneously created timers. */
-#define APP_TIMER_OP_QUEUE_SIZE              5                                         /**< Size of timer operation queues. */
+#define IS_SRVC_CHANGED_CHARACT_PRESENT      0                                          /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
+                                                                             
+#define HR_INC_BUTTON_PIN_NO                 BUTTON_0                                   /**< Button used to increment heart rate. */
+#define HR_DEC_BUTTON_PIN_NO                 BUTTON_1                                   /**< Button used to decrement heart rate. */
+#define BOND_DELETE_ALL_BUTTON_ID            HR_DEC_BUTTON_PIN_NO                       /**< Button used for deleting all bonded centrals during startup. */
 
-#define BATTERY_LEVEL_MEAS_INTERVAL          APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER)/**< Battery level measurement interval (ticks). */
+#define DEVICE_NAME                          "Nordic_HRM"                               /**< Name of device. Will be included in the advertising data. */
+#define MANUFACTURER_NAME                    "NordicSemiconductor"                      /**< Manufacturer. Will be passed to Device Information Service. */
+#define APP_ADV_INTERVAL                     40                                         /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
+#define APP_ADV_TIMEOUT_IN_SECONDS           180                                        /**< The advertising timeout in units of seconds. */
 
-#define HEART_RATE_MEAS_INTERVAL             APP_TIMER_TICKS(1000, APP_TIMER_PRESCALER)/**< Heart rate measurement interval (ticks). */
-#define MIN_HEART_RATE                       60                                        /**< Minimum heart rate as returned by the simulated measurement function. */
-#define MAX_HEART_RATE                       300                                       /**< Maximum heart rate as returned by the simulated measurement function. */
-#define HEART_RATE_CHANGE                    2                                         /**< Value by which the heart rate is incremented/decremented during button press. */
+#define APP_TIMER_PRESCALER                  0                                          /**< Value of the RTC1 PRESCALER register. */
+#define APP_TIMER_MAX_TIMERS                 4                                          /**< Maximum number of simultaneously created timers. */
+#define APP_TIMER_OP_QUEUE_SIZE              5                                          /**< Size of timer operation queues. */
 
-#define APP_GPIOTE_MAX_USERS                 1                                         /**< Maximum number of users of the GPIOTE handler. */
+#define BATTERY_LEVEL_MEAS_INTERVAL          APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER) /**< Battery level measurement interval (ticks). */
 
-#define BUTTON_DETECTION_DELAY               APP_TIMER_TICKS(50, APP_TIMER_PRESCALER)  /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
+#define HEART_RATE_MEAS_INTERVAL             APP_TIMER_TICKS(1000, APP_TIMER_PRESCALER) /**< Heart rate measurement interval (ticks). */
+#define MIN_HEART_RATE                       60                                         /**< Minimum heart rate as returned by the simulated measurement function. */
+#define MAX_HEART_RATE                       300                                        /**< Maximum heart rate as returned by the simulated measurement function. */
+#define HEART_RATE_CHANGE                    2                                          /**< Value by which the heart rate is incremented/decremented during button press. */
 
-#define MIN_CONN_INTERVAL                    MSEC_TO_UNITS(500, UNIT_1_25_MS)          /**< Minimum acceptable connection interval (0.5 seconds). */
-#define MAX_CONN_INTERVAL                    MSEC_TO_UNITS(1000, UNIT_1_25_MS)         /**< Maximum acceptable connection interval (1 second). */
-#define SLAVE_LATENCY                        0                                         /**< Slave latency. */
-#define CONN_SUP_TIMEOUT                     MSEC_TO_UNITS(4000, UNIT_10_MS)           /**< Connection supervisory timeout (4 seconds). */
+#define APP_GPIOTE_MAX_USERS                 1                                          /**< Maximum number of users of the GPIOTE handler. */
 
-#define FIRST_CONN_PARAMS_UPDATE_DELAY       APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)/**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
-#define NEXT_CONN_PARAMS_UPDATE_DELAY        APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)/**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
-#define MAX_CONN_PARAMS_UPDATE_COUNT         3                                         /**< Number of attempts before giving up the connection parameter negotiation. */
+#define BUTTON_DETECTION_DELAY               APP_TIMER_TICKS(50, APP_TIMER_PRESCALER)   /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
 
-#define SEC_PARAM_TIMEOUT                    30                                        /**< Timeout for Pairing Request or Security Request (in seconds). */
-#define SEC_PARAM_BOND                       1                                         /**< Perform bonding. */
-#define SEC_PARAM_MITM                       0                                         /**< Man In The Middle protection not required. */
-#define SEC_PARAM_IO_CAPABILITIES            BLE_GAP_IO_CAPS_NONE                      /**< No I/O capabilities. */
-#define SEC_PARAM_OOB                        0                                         /**< Out Of Band data not available. */
-#define SEC_PARAM_MIN_KEY_SIZE               7                                         /**< Minimum encryption key size. */
-#define SEC_PARAM_MAX_KEY_SIZE               16                                        /**< Maximum encryption key size. */
+#define MIN_CONN_INTERVAL                    MSEC_TO_UNITS(500, UNIT_1_25_MS)           /**< Minimum acceptable connection interval (0.5 seconds). */
+#define MAX_CONN_INTERVAL                    MSEC_TO_UNITS(1000, UNIT_1_25_MS)          /**< Maximum acceptable connection interval (1 second). */
+#define SLAVE_LATENCY                        0                                          /**< Slave latency. */
+#define CONN_SUP_TIMEOUT                     MSEC_TO_UNITS(4000, UNIT_10_MS)            /**< Connection supervisory timeout (4 seconds). */
 
-#define DEAD_BEEF                            0xDEADBEEF                                /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
+#define FIRST_CONN_PARAMS_UPDATE_DELAY       APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER) /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
+#define NEXT_CONN_PARAMS_UPDATE_DELAY        APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER)/**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
+#define MAX_CONN_PARAMS_UPDATE_COUNT         3                                          /**< Number of attempts before giving up the connection parameter negotiation. */
 
-static ble_gap_sec_params_t                  m_sec_params;                             /**< Security requirements for this application. */
-static ble_gap_adv_params_t                  m_adv_params;                             /**< Parameters to be passed to the stack when starting advertising. */
-ble_bas_t                                    bas;                                      /**< Structure used to identify the battery service. */
-static ble_hrs_t                             m_hrs;                                    /**< Structure used to identify the heart rate service. */
-static volatile uint16_t                     m_cur_heart_rate;                         /**< Current heart rate value. */
+#define SEC_PARAM_TIMEOUT                    30                                         /**< Timeout for Pairing Request or Security Request (in seconds). */
+#define SEC_PARAM_BOND                       1                                          /**< Perform bonding. */
+#define SEC_PARAM_MITM                       0                                          /**< Man In The Middle protection not required. */
+#define SEC_PARAM_IO_CAPABILITIES            BLE_GAP_IO_CAPS_NONE                       /**< No I/O capabilities. */
+#define SEC_PARAM_OOB                        0                                          /**< Out Of Band data not available. */
+#define SEC_PARAM_MIN_KEY_SIZE               7                                          /**< Minimum encryption key size. */
+#define SEC_PARAM_MAX_KEY_SIZE               16                                         /**< Maximum encryption key size. */
 
-static app_timer_id_t                        m_battery_timer_id;                       /**< Battery timer. */
-static app_timer_id_t                        m_heart_rate_timer_id;                    /**< Heart rate measurement timer. */
-static bool                                  m_storage_in_progress = false;            /**< Indicates storage access is ongoing or not. */
-static bool                                  m_sys_off_pending     = false;            /**< Indicates system off is pending or not. */
+#define DEAD_BEEF                            0xDEADBEEF                                 /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
+
+
+static ble_gap_adv_params_t                  m_adv_params;                              /**< Parameters to be passed to the stack when starting advertising. */
+ble_bas_t                                    bas;                                       /**< Structure used to identify the battery service. */
+static ble_hrs_t                             m_hrs;                                     /**< Structure used to identify the heart rate service. */
+static volatile uint16_t                     m_cur_heart_rate;                          /**< Current heart rate value. */
+                                                                                       
+static app_timer_id_t                        m_battery_timer_id;                        /**< Battery timer. */
+static app_timer_id_t                        m_heart_rate_timer_id;                     /**< Heart rate measurement timer. */
+static bool                                  m_memory_access_in_progress = false;       /**< Flag to keep track of ongoing operations on persistent memory. */
+static dm_application_instance_t             m_app_handle;                              /**< Application identifier allocated by device manager */
 static void ble_evt_dispatch(ble_evt_t * p_ble_evt);
 
 static void sys_evt_dispatch(uint32_t sys_evt);
@@ -164,14 +169,6 @@ static void conn_params_error_handler(uint32_t nrf_error)
 }
 
 
-/**@brief Function for handling a Bond Manager error.
- *
- * @param[in]   nrf_error   Error code containing information about what went wrong.
- */
-static void bond_manager_error_handler(uint32_t nrf_error)
-{
-    APP_ERROR_HANDLER(nrf_error);
-}
 
 
 /*****************************************************************************
@@ -272,10 +269,10 @@ static void timers_init(void)
 {
     uint32_t err_code;
 
-    // Initialize timer module
+    // Initialize timer module.
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
 
-    // Create timers
+    // Create timers.
     err_code = app_timer_create(&m_battery_timer_id,
                                 APP_TIMER_MODE_REPEATED,
                                 battery_level_meas_timeout_handler);
@@ -301,7 +298,9 @@ static void gap_params_init(void)
 
     BLE_GAP_CONN_SEC_MODE_SET_OPEN(&sec_mode);
 
-    err_code = sd_ble_gap_device_name_set(&sec_mode, (const uint8_t *)DEVICE_NAME, strlen(DEVICE_NAME));
+    err_code = sd_ble_gap_device_name_set(&sec_mode,
+                                          (const uint8_t *)DEVICE_NAME,
+                                          strlen(DEVICE_NAME));
     APP_ERROR_CHECK(err_code);
 
     err_code = sd_ble_gap_appearance_set(BLE_APPEARANCE_HEART_RATE_SENSOR_HEART_RATE_BELT);
@@ -337,7 +336,7 @@ static void advertising_init(void)
         {BLE_UUID_DEVICE_INFORMATION_SERVICE, BLE_UUID_TYPE_BLE}
     };
 
-    // Build and set advertising data
+    // Build and set advertising data.
     memset(&advdata, 0, sizeof(advdata));
 
     advdata.name_type               = BLE_ADVDATA_FULL_NAME;
@@ -350,11 +349,11 @@ static void advertising_init(void)
     err_code = ble_advdata_set(&advdata, NULL);
     APP_ERROR_CHECK(err_code);
 
-    // Initialize advertising parameters (used when starting advertising)
+    // Initialize advertising parameters (used when starting advertising).
     memset(&m_adv_params, 0, sizeof(m_adv_params));
-    
+
     m_adv_params.type        = BLE_GAP_ADV_TYPE_ADV_IND;
-    m_adv_params.p_peer_addr = NULL;                           // Undirected advertisement
+    m_adv_params.p_peer_addr = NULL;                           // Undirected advertisement.
     m_adv_params.fp          = BLE_GAP_ADV_FP_ANY;
     m_adv_params.interval    = APP_ADV_INTERVAL;
     m_adv_params.timeout     = APP_ADV_TIMEOUT_IN_SECONDS;
@@ -373,11 +372,11 @@ static void services_init(void)
     ble_dis_init_t dis_init;
     uint8_t        body_sensor_location;
 
-    // Initialize Heart Rate Service
+    // Initialize Heart Rate Service.
     body_sensor_location = BLE_HRS_BODY_SENSOR_LOCATION_FINGER;
 
     memset(&hrs_init, 0, sizeof(hrs_init));
-    
+
     hrs_init.is_sensor_contact_supported = false;
     hrs_init.p_body_sensor_location      = &body_sensor_location;
 
@@ -392,7 +391,7 @@ static void services_init(void)
     err_code = ble_hrs_init(&m_hrs, &hrs_init);
     APP_ERROR_CHECK(err_code);
 
-    // Initialize Battery Service
+    // Initialize Battery Service.
     memset(&bas_init, 0, sizeof(bas_init));
 
     // Here the sec level for the Battery Service can be changed/increased.
@@ -423,18 +422,6 @@ static void services_init(void)
 }
 
 
-/**@brief Function for initializing the security parameters.
- */
-static void sec_params_init(void)
-{
-    m_sec_params.timeout      = SEC_PARAM_TIMEOUT;
-    m_sec_params.bond         = SEC_PARAM_BOND;
-    m_sec_params.mitm         = SEC_PARAM_MITM;
-    m_sec_params.io_caps      = SEC_PARAM_IO_CAPABILITIES;
-    m_sec_params.oob          = SEC_PARAM_OOB;  
-    m_sec_params.min_key_size = SEC_PARAM_MIN_KEY_SIZE;
-    m_sec_params.max_key_size = SEC_PARAM_MAX_KEY_SIZE;
-}
 
 
 /**@brief Function for initializing the Connection Parameters module.
@@ -460,28 +447,50 @@ static void conn_params_init(void)
 }
 
 
-/**@brief Function for the Bond Manager initialization.
+/**@brief Function for handling the Device Manager events.
+ *
+ * @param[in]   p_evt   Data associated to the device manager event.
  */
-static void bond_manager_init(void)
+static uint32_t device_manager_evt_handler(dm_handle_t const    * p_handle,
+                                           dm_event_t const     * p_event,
+                                           api_result_t           event_result)
 {
-    uint32_t            err_code;
-    ble_bondmngr_init_t bond_init_data;
-    bool                bonds_delete;
+    APP_ERROR_CHECK(event_result);
+    return NRF_SUCCESS;
+}
 
+
+/**@brief Function for the Device Manager initialization.
+ */
+static void device_manager_init(void)
+{
+    uint32_t                err_code;
+    dm_init_param_t         init_data;
+    dm_application_param_t  register_param;
+    
     // Initialize persistent storage module.
     err_code = pstorage_init();
     APP_ERROR_CHECK(err_code);
-    
-    // Clear all bonded centrals if the Bonds Delete button is pushed
-    err_code = app_button_is_pushed(BONDMNGR_DELETE_BUTTON_PIN_NO, &bonds_delete);
+
+    // Clear all bonded centrals if the Bonds Delete button is pushed.
+    init_data.clear_persistent_data = (nrf_gpio_pin_read(BOND_DELETE_ALL_BUTTON_ID) == 0);
+
+    err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);
 
-    // Initialize the Bond Manager
-    bond_init_data.evt_handler             = NULL;
-    bond_init_data.error_handler           = bond_manager_error_handler;
-    bond_init_data.bonds_delete            = bonds_delete;
+    memset(&register_param.sec_param, 0, sizeof(ble_gap_sec_params_t));
+    
+    register_param.sec_param.timeout      = SEC_PARAM_TIMEOUT;
+    register_param.sec_param.bond         = SEC_PARAM_BOND;
+    register_param.sec_param.mitm         = SEC_PARAM_MITM;
+    register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
+    register_param.sec_param.oob          = SEC_PARAM_OOB;
+    register_param.sec_param.min_key_size = SEC_PARAM_MIN_KEY_SIZE;
+    register_param.sec_param.max_key_size = SEC_PARAM_MAX_KEY_SIZE;
+    register_param.evt_handler            = device_manager_evt_handler;
+    register_param.service_type           = DM_PROTOCOL_CNTXT_GATT_SRVR_ID;
 
-    err_code = ble_bondmngr_init(&bond_init_data);
+    err_code = dm_register(&m_app_handle, &register_param);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -496,6 +505,13 @@ static void ble_stack_init(void)
     
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
+
+    // Enable BLE stack 
+    ble_enable_params_t ble_enable_params;
+    memset(&ble_enable_params, 0, sizeof(ble_enable_params));
+    ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
+    err_code = sd_ble_enable(&ble_enable_params);
+    APP_ERROR_CHECK(err_code);
 
     // Register with the SoftDevice handler module for BLE events.
     err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
@@ -568,17 +584,22 @@ static void advertising_start(void)
  */
 static void system_off_mode_enter(void)
 {
-    uint32_t err_code; 
+    uint32_t err_code;
+    uint32_t count;
     
-    if (m_storage_in_progress)
+    // Verify if there is any flash access pending, if yes delay starting advertising until 
+    // it's complete.
+    err_code = pstorage_access_status_get(&count);
+    APP_ERROR_CHECK(err_code);
+    
+    if (count != 0)
     {
-        m_sys_off_pending = true;    
+        m_memory_access_in_progress = true;
+        return;
     }
-    else
-    {
-        err_code = sd_power_system_off();
-        APP_ERROR_CHECK(err_code);
-    }
+
+    err_code = sd_power_system_off();
+    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -593,14 +614,11 @@ static void system_off_mode_enter(void)
 static void on_ble_evt(ble_evt_t * p_ble_evt)
 {
     uint32_t        err_code;
-    static uint16_t m_conn_handle = BLE_CONN_HANDLE_INVALID;
 
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
             led_stop();
-            
-            m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
             
             // Initialize the current heart rate to the average of max and min values. So that
             // everytime a new connection is made, the heart rate starts from the same value.
@@ -614,13 +632,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             APP_ERROR_CHECK(err_code);
             break;
 
-        case BLE_GAP_EVT_DISCONNECTED:
-            // Since we are not in a connection and have not started advertising, store bonds
-            err_code = ble_bondmngr_bonded_centrals_store();
-            APP_ERROR_CHECK(err_code);
-            
-            m_storage_in_progress = true;
-        
+        case BLE_GAP_EVT_DISCONNECTED:            
             // @note Flash access may not be complete on return of this API. System attributes are now
             // stored to flash when they are updated to ensure flash access on disconnect does not
             // result in system powering off before data was successfully written.
@@ -628,13 +640,6 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             // Go to system-off mode, should not return from this function, wakeup will trigger
             // a reset.
             system_off_mode_enter();
-            break;
-
-        case BLE_GAP_EVT_SEC_PARAMS_REQUEST:
-            err_code = sd_ble_gap_sec_params_reply(m_conn_handle, 
-                                                   BLE_GAP_SEC_STATUS_SUCCESS, 
-                                                   &m_sec_params);
-            APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_GAP_EVT_TIMEOUT:
@@ -661,6 +666,29 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 }
 
 
+/**@brief Function for handling the Application's system events.
+ *
+ * @param[in]   sys_evt   system event.
+ */
+static void on_sys_evt(uint32_t sys_evt)
+{
+    switch(sys_evt)
+    {
+        case NRF_EVT_FLASH_OPERATION_SUCCESS:
+        case NRF_EVT_FLASH_OPERATION_ERROR:
+            if (m_memory_access_in_progress)
+            {
+                m_memory_access_in_progress = false;
+                system_off_mode_enter();
+            }
+            break;
+        default:
+            // No implementation needed.
+            break;
+    }
+}
+
+
 /**@brief Function for dispatching a BLE stack event to all modules with a BLE stack event handler.
  *
  * @details This function is called from the BLE Stack event interrupt handler after a BLE stack
@@ -670,29 +698,13 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
  */
 static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 {
-    ble_bondmngr_on_ble_evt(p_ble_evt);
+    dm_ble_evt_handler(p_ble_evt);
     ble_hrs_on_ble_evt(&m_hrs, p_ble_evt);
     ble_bas_on_ble_evt(&bas, p_ble_evt);
     ble_conn_params_on_ble_evt(p_ble_evt);
     on_ble_evt(p_ble_evt);
 }
 
-
-/**@brief Handler for doing post actions on storage access complete 
-*/
-static void storage_access_complete_handler(void)
-{
-    uint32_t err_code;
-    
-    m_storage_in_progress = false;
-    
-    if (m_sys_off_pending == true)
-    {
-        err_code = sd_power_system_off();
-        APP_ERROR_CHECK(err_code);
-    }
-}
-    
 
 /**@brief Function for dispatching a system event to interested modules.
  *
@@ -704,16 +716,7 @@ static void storage_access_complete_handler(void)
 static void sys_evt_dispatch(uint32_t sys_evt)
 {
     pstorage_sys_event_handler(sys_evt);
-
-    uint32_t count;
-    uint32_t err_code;
-
-    // Check if storage access is in progress.
-    err_code = pstorage_access_status_get(&count);
-    if ((err_code == NRF_SUCCESS) && (count == 0))
-    {
-        storage_access_complete_handler();
-    }
+    on_sys_evt(sys_evt);
 }
 
 
@@ -731,19 +734,18 @@ int main(void)
     gpiote_init();
     buttons_init();
     ble_stack_init();
-    bond_manager_init();
+    device_manager_init();
 
-    // Initialize Bluetooth Stack parameters
+    // Initialize Bluetooth Stack parameters.
     gap_params_init();
     advertising_init();
     services_init();
     conn_params_init();
-    sec_params_init();
 
-    // Start advertising
+    // Start advertising.
     advertising_start();
 
-    // Enter main loop
+    // Enter main loop.
     for (;;)
     {
         // Switch to a low power state until an event is available for the application

@@ -23,18 +23,18 @@
 #include "app_util.h"
 
 
-#define OPCODE_LENGTH  1                                                    /**< Length of opcode inside Heart Rate Measurement packet. */
-#define HANDLE_LENGTH  2                                                    /**< Length of handle inside Heart Rate Measurement packet. */
-#define MAX_HRM_LEN    (BLE_L2CAP_MTU_DEF - OPCODE_LENGTH - HANDLE_LENGTH)  /**< Maximum size of a transmitted Heart Rate Measurement. */
+#define OPCODE_LENGTH 1                                                    /**< Length of opcode inside Heart Rate Measurement packet. */
+#define HANDLE_LENGTH 2                                                    /**< Length of handle inside Heart Rate Measurement packet. */
+#define MAX_HRM_LEN   (BLE_L2CAP_MTU_DEF - OPCODE_LENGTH - HANDLE_LENGTH)  /**< Maximum size of a transmitted Heart Rate Measurement. */
 
-#define INITIAL_VALUE_HRM                       0                           /**< Initial Heart Rate Measurement value. */
+#define INITIAL_VALUE_HRM                       0                          /**< Initial Heart Rate Measurement value. */
 
 // Heart Rate Measurement flag bits
-#define HRM_FLAG_MASK_HR_VALUE_16BIT            (0x01 << 0)                 /**< Heart Rate Value Format bit. */
-#define HRM_FLAG_MASK_SENSOR_CONTACT_DETECTED   (0x01 << 1)                 /**< Sensor Contact Detected bit. */
-#define HRM_FLAG_MASK_SENSOR_CONTACT_SUPPORTED  (0x01 << 2)                 /**< Sensor Contact Supported bit. */
-#define HRM_FLAG_MASK_EXPENDED_ENERGY_INCLUDED  (0x01 << 3)                 /**< Energy Expended Status bit. Feature Not Supported */
-#define HRM_FLAG_MASK_RR_INTERVAL_INCLUDED      (0x01 << 4)                 /**< RR-Interval bit. */
+#define HRM_FLAG_MASK_HR_VALUE_16BIT           (0x01 << 0)                 /**< Heart Rate Value Format bit. */
+#define HRM_FLAG_MASK_SENSOR_CONTACT_DETECTED  (0x01 << 1)                 /**< Sensor Contact Detected bit. */
+#define HRM_FLAG_MASK_SENSOR_CONTACT_SUPPORTED (0x01 << 2)                 /**< Sensor Contact Supported bit. */
+#define HRM_FLAG_MASK_EXPENDED_ENERGY_INCLUDED (0x01 << 3)                 /**< Energy Expended Status bit. Feature Not Supported */
+#define HRM_FLAG_MASK_RR_INTERVAL_INCLUDED     (0x01 << 4)                 /**< RR-Interval bit. */
 
 
 /**@brief Function for handling the Connect event.
@@ -73,7 +73,7 @@ static void on_hrm_cccd_write(ble_hrs_t * p_hrs, ble_gatts_evt_write_t * p_evt_w
         if (p_hrs->evt_handler != NULL)
         {
             ble_hrs_evt_t evt;
-            
+
             if (ble_srv_is_notification_enabled(p_evt_write->data))
             {
                 evt.evt_type = BLE_HRS_EVT_NOTIFICATION_ENABLED;
@@ -82,7 +82,7 @@ static void on_hrm_cccd_write(ble_hrs_t * p_hrs, ble_gatts_evt_write_t * p_evt_w
             {
                 evt.evt_type = BLE_HRS_EVT_NOTIFICATION_DISABLED;
             }
-            
+
             p_hrs->evt_handler(p_hrs, &evt);
         }
     }
@@ -97,7 +97,7 @@ static void on_hrm_cccd_write(ble_hrs_t * p_hrs, ble_gatts_evt_write_t * p_evt_w
 static void on_write(ble_hrs_t * p_hrs, ble_evt_t * p_ble_evt)
 {
     ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
-    
+
     if (p_evt_write->handle == p_hrs->hrm_handles.cccd_handle)
     {
         on_hrm_cccd_write(p_hrs, p_evt_write);
@@ -112,15 +112,15 @@ void ble_hrs_on_ble_evt(ble_hrs_t * p_hrs, ble_evt_t * p_ble_evt)
         case BLE_GAP_EVT_CONNECTED:
             on_connect(p_hrs, p_ble_evt);
             break;
-            
+
         case BLE_GAP_EVT_DISCONNECTED:
             on_disconnect(p_hrs, p_ble_evt);
             break;
-            
+
         case BLE_GATTS_EVT_WRITE:
             on_write(p_hrs, p_ble_evt);
             break;
-            
+
         default:
             // No implementation needed.
             break;
@@ -141,7 +141,7 @@ static uint8_t hrm_encode(ble_hrs_t * p_hrs, uint16_t heart_rate, uint8_t * p_en
     uint8_t flags = 0;
     uint8_t len   = 1;
     int     i;
-    
+
     // Set sensor contact related flags
     if (p_hrs->is_sensor_contact_supported)
     {
@@ -156,13 +156,13 @@ static uint8_t hrm_encode(ble_hrs_t * p_hrs, uint16_t heart_rate, uint8_t * p_en
     if (heart_rate > 0xff)
     {
         flags |= HRM_FLAG_MASK_HR_VALUE_16BIT;
-        len += uint16_encode(heart_rate, &p_encoded_buffer[len]);
+        len   += uint16_encode(heart_rate, &p_encoded_buffer[len]);
     }
     else
     {
         p_encoded_buffer[len++] = (uint8_t)heart_rate;
     }
-    
+
     // Encode rr_interval values
     if (p_hrs->rr_interval_count > 0)
     {
@@ -185,7 +185,7 @@ static uint8_t hrm_encode(ble_hrs_t * p_hrs, uint16_t heart_rate, uint8_t * p_en
 
     // Add flags
     p_encoded_buffer[0] = flags;
-    
+
     return len;
 }
 
@@ -197,7 +197,7 @@ static uint8_t hrm_encode(ble_hrs_t * p_hrs, uint16_t heart_rate, uint8_t * p_en
  *
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
-static uint32_t heart_rate_measurement_char_add(ble_hrs_t *            p_hrs,
+static uint32_t heart_rate_measurement_char_add(ble_hrs_t            * p_hrs,
                                                 const ble_hrs_init_t * p_hrs_init)
 {
     ble_gatts_char_md_t char_md;
@@ -206,24 +206,24 @@ static uint32_t heart_rate_measurement_char_add(ble_hrs_t *            p_hrs,
     ble_uuid_t          ble_uuid;
     ble_gatts_attr_md_t attr_md;
     uint8_t             encoded_initial_hrm[MAX_HRM_LEN];
-    
+
     memset(&cccd_md, 0, sizeof(cccd_md));
 
     BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cccd_md.read_perm);
     cccd_md.write_perm = p_hrs_init->hrs_hrm_attr_md.cccd_write_perm;
-    cccd_md.vloc = BLE_GATTS_VLOC_STACK;
+    cccd_md.vloc       = BLE_GATTS_VLOC_STACK;
 
     memset(&char_md, 0, sizeof(char_md));
-    
+
     char_md.char_props.notify = 1;
     char_md.p_char_user_desc  = NULL;
     char_md.p_char_pf         = NULL;
     char_md.p_user_desc_md    = NULL;
     char_md.p_cccd_md         = &cccd_md;
     char_md.p_sccd_md         = NULL;
-    
+
     BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_HEART_RATE_MEASUREMENT_CHAR);
-    
+
     memset(&attr_md, 0, sizeof(attr_md));
 
     attr_md.read_perm  = p_hrs_init->hrs_hrm_attr_md.read_perm;
@@ -232,16 +232,16 @@ static uint32_t heart_rate_measurement_char_add(ble_hrs_t *            p_hrs,
     attr_md.rd_auth    = 0;
     attr_md.wr_auth    = 0;
     attr_md.vlen       = 1;
-    
+
     memset(&attr_char_value, 0, sizeof(attr_char_value));
-    
-    attr_char_value.p_uuid       = &ble_uuid;
-    attr_char_value.p_attr_md    = &attr_md;
-    attr_char_value.init_len     = hrm_encode(p_hrs, INITIAL_VALUE_HRM, encoded_initial_hrm);
-    attr_char_value.init_offs    = 0;
-    attr_char_value.max_len      = MAX_HRM_LEN;
-    attr_char_value.p_value      = encoded_initial_hrm;
-    
+
+    attr_char_value.p_uuid    = &ble_uuid;
+    attr_char_value.p_attr_md = &attr_md;
+    attr_char_value.init_len  = hrm_encode(p_hrs, INITIAL_VALUE_HRM, encoded_initial_hrm);
+    attr_char_value.init_offs = 0;
+    attr_char_value.max_len   = MAX_HRM_LEN;
+    attr_char_value.p_value   = encoded_initial_hrm;
+
     return sd_ble_gatts_characteristic_add(p_hrs->service_handle,
                                            &char_md,
                                            &attr_char_value,
@@ -262,18 +262,18 @@ static uint32_t body_sensor_location_char_add(ble_hrs_t * p_hrs, const ble_hrs_i
     ble_gatts_attr_t    attr_char_value;
     ble_uuid_t          ble_uuid;
     ble_gatts_attr_md_t attr_md;
-    
+
     memset(&char_md, 0, sizeof(char_md));
-    
+
     char_md.char_props.read  = 1;
     char_md.p_char_user_desc = NULL;
     char_md.p_char_pf        = NULL;
     char_md.p_user_desc_md   = NULL;
     char_md.p_cccd_md        = NULL;
     char_md.p_sccd_md        = NULL;
-    
+
     BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_BODY_SENSOR_LOCATION_CHAR);
-    
+
     memset(&attr_md, 0, sizeof(attr_md));
 
     attr_md.read_perm  = p_hrs_init->hrs_bsl_attr_md.read_perm;
@@ -282,16 +282,16 @@ static uint32_t body_sensor_location_char_add(ble_hrs_t * p_hrs, const ble_hrs_i
     attr_md.rd_auth    = 0;
     attr_md.wr_auth    = 0;
     attr_md.vlen       = 0;
-    
+
     memset(&attr_char_value, 0, sizeof(attr_char_value));
-    
-    attr_char_value.p_uuid       = &ble_uuid;
-    attr_char_value.p_attr_md    = &attr_md;
-    attr_char_value.init_len     = sizeof(uint8_t);
-    attr_char_value.init_offs    = 0;
-    attr_char_value.max_len      = sizeof(uint8_t);
-    attr_char_value.p_value      = p_hrs_init->p_body_sensor_location;
-    
+
+    attr_char_value.p_uuid    = &ble_uuid;
+    attr_char_value.p_attr_md = &attr_md;
+    attr_char_value.init_len  = sizeof (uint8_t);
+    attr_char_value.init_offs = 0;
+    attr_char_value.max_len   = sizeof (uint8_t);
+    attr_char_value.p_value   = p_hrs_init->p_body_sensor_location;
+
     return sd_ble_gatts_characteristic_add(p_hrs->service_handle,
                                            &char_md,
                                            &attr_char_value,
@@ -310,23 +310,26 @@ uint32_t ble_hrs_init(ble_hrs_t * p_hrs, const ble_hrs_init_t * p_hrs_init)
     p_hrs->conn_handle                 = BLE_CONN_HANDLE_INVALID;
     p_hrs->is_sensor_contact_detected  = false;
     p_hrs->rr_interval_count           = 0;
-    
+
     // Add service
     BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_HEART_RATE_SERVICE);
 
-    err_code = sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY, &ble_uuid, &p_hrs->service_handle);
+    err_code = sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY,
+                                        &ble_uuid,
+                                        &p_hrs->service_handle);
+
     if (err_code != NRF_SUCCESS)
     {
         return err_code;
     }
-    
+
     // Add heart rate measurement characteristic
     err_code = heart_rate_measurement_char_add(p_hrs, p_hrs_init);
     if (err_code != NRF_SUCCESS)
     {
         return err_code;
     }
-    
+
     if (p_hrs_init->p_body_sensor_location != NULL)
     {
         // Add body sensor location characteristic
@@ -336,7 +339,7 @@ uint32_t ble_hrs_init(ble_hrs_t * p_hrs, const ble_hrs_init_t * p_hrs_init)
             return err_code;
         }
     }
-    
+
     return NRF_SUCCESS;
 }
 
@@ -344,7 +347,7 @@ uint32_t ble_hrs_init(ble_hrs_t * p_hrs, const ble_hrs_init_t * p_hrs_init)
 uint32_t ble_hrs_heart_rate_measurement_send(ble_hrs_t * p_hrs, uint16_t heart_rate)
 {
     uint32_t err_code;
-    
+
     // Send value if connected and notifying
     if (p_hrs->conn_handle != BLE_CONN_HANDLE_INVALID)
     {
@@ -352,18 +355,18 @@ uint32_t ble_hrs_heart_rate_measurement_send(ble_hrs_t * p_hrs, uint16_t heart_r
         uint16_t               len;
         uint16_t               hvx_len;
         ble_gatts_hvx_params_t hvx_params;
-        
+
         len     = hrm_encode(p_hrs, heart_rate, encoded_hrm);
         hvx_len = len;
 
         memset(&hvx_params, 0, sizeof(hvx_params));
-        
-        hvx_params.handle   = p_hrs->hrm_handles.value_handle;
-        hvx_params.type     = BLE_GATT_HVX_NOTIFICATION;
-        hvx_params.offset   = 0;
-        hvx_params.p_len    = &hvx_len;
-        hvx_params.p_data   = encoded_hrm;
-        
+
+        hvx_params.handle = p_hrs->hrm_handles.value_handle;
+        hvx_params.type   = BLE_GATT_HVX_NOTIFICATION;
+        hvx_params.offset = 0;
+        hvx_params.p_len  = &hvx_len;
+        hvx_params.p_data = encoded_hrm;
+
         err_code = sd_ble_gatts_hvx(p_hrs->conn_handle, &hvx_params);
         if ((err_code == NRF_SUCCESS) && (hvx_len != len))
         {
@@ -389,7 +392,7 @@ void ble_hrs_rr_interval_add(ble_hrs_t * p_hrs, uint16_t rr_interval)
                 (BLE_HRS_MAX_BUFFERED_RR_INTERVALS - 1) * sizeof(uint16_t));
         p_hrs->rr_interval_count--;
     }
-    
+
     // Add new value
     p_hrs->rr_interval[p_hrs->rr_interval_count++] = rr_interval;
 }

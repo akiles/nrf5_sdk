@@ -20,9 +20,9 @@
 #include "ble_gattc.h"
 #include "app_util.h"
 #include "nordic_common.h"
-#include "debug.h"
+#include "app_trace.h"
 
-#define LOG                  debug_log                           /**< Debug logger macro that will be used in this file to do logging of important information over UART. */
+#define LOG                  app_trace_log                       /**< Debug logger macro that will be used in this file to do logging of important information over UART. */
 #define TX_BUFFER_MASK       0x07                                /**< TX Buffer mask, must be a mask of contiguous zeroes, followed by contiguous sequence of ones: 000...111. */
 #define TX_BUFFER_SIZE       (TX_BUFFER_MASK + 1)                /**< Size of send buffer, which is 1 higher than the mask. */
 #define WRITE_MESSAGE_LENGTH BLE_CCCD_VALUE_LEN                  /**< Length of the write message for CCCD. */
