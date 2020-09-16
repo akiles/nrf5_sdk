@@ -6,7 +6,7 @@
  *           nRF51 from Nordic Semiconductor.
  *
  * @version  V522
- * @date     24. October 2014
+ * @date     31. October 2014
  *
  * @note     Generated with SVDConv V2.81d 
  *           from CMSIS SVD File 'nRF51.xml' Version 522,
@@ -155,6 +155,24 @@ typedef struct {
   __IO uint32_t  CCM;                               /*!< Configurable priority configuration register for CCM.                 */
   __IO uint32_t  AAR;                               /*!< Configurable priority configuration register for AAR.                 */
 } AMLI_RAMPRI_Type;
+
+typedef struct {
+  __IO uint32_t  SCK;                               /*!< Pin select for SCK.                                                   */
+  __IO uint32_t  MOSI;                              /*!< Pin select for MOSI.                                                  */
+  __IO uint32_t  MISO;                              /*!< Pin select for MISO.                                                  */
+} SPIM_PSEL_Type;
+
+typedef struct {
+  __IO uint32_t  PTR;                               /*!< Data pointer.                                                         */
+  __IO uint32_t  MAXCNT;                            /*!< Maximum number of buffer bytes to receive.                            */
+  __I  uint32_t  AMOUNT;                            /*!< Number of bytes received in the last transaction.                     */
+} SPIM_RXD_Type;
+
+typedef struct {
+  __IO uint32_t  PTR;                               /*!< Data pointer.                                                         */
+  __IO uint32_t  MAXCNT;                            /*!< Maximum number of buffer bytes to send.                               */
+  __I  uint32_t  AMOUNT;                            /*!< Number of bytes sent in the last transaction.                         */
+} SPIM_TXD_Type;
 
 typedef struct {
   __O  uint32_t  EN;                                /*!< Enable channel group.                                                 */
@@ -589,6 +607,59 @@ typedef struct {                                    /*!< SPIS Structure         
   __I  uint32_t  RESERVED14[654];
   __IO uint32_t  POWER;                             /*!< Peripheral power control.                                             */
 } NRF_SPIS_Type;
+
+
+/* ================================================================================ */
+/* ================                      SPIM                      ================ */
+/* ================================================================================ */
+
+
+/**
+  * @brief SPI master with easyDMA 1. (SPIM)
+  */
+
+typedef struct {                                    /*!< SPIM Structure                                                        */
+  __I  uint32_t  RESERVED0[4];
+  __O  uint32_t  TASKS_START;                       /*!< Start SPI transaction.                                                */
+  __O  uint32_t  TASKS_STOP;                        /*!< Stop SPI transaction.                                                 */
+  __I  uint32_t  RESERVED1;
+  __O  uint32_t  TASKS_SUSPEND;                     /*!< Suspend SPI transaction.                                              */
+  __O  uint32_t  TASKS_RESUME;                      /*!< Resume SPI transaction.                                               */
+  __I  uint32_t  RESERVED2[56];
+  __IO uint32_t  EVENTS_STOPPED;                    /*!< SPI transaction has stopped.                                          */
+  __I  uint32_t  RESERVED3[2];
+  __IO uint32_t  EVENTS_ENDRX;                      /*!< End of RXD buffer reached.                                            */
+  __I  uint32_t  RESERVED4;
+  __IO uint32_t  EVENTS_END;                        /*!< End of RXD buffer and TXD buffer reached.                             */
+  __I  uint32_t  RESERVED5;
+  __IO uint32_t  EVENTS_ENDTX;                      /*!< End of TXD buffer reached.                                            */
+  __I  uint32_t  RESERVED6[10];
+  __IO uint32_t  EVENTS_STARTED;                    /*!< Transaction started.                                                  */
+  __I  uint32_t  RESERVED7[44];
+  __IO uint32_t  SHORTS;                            /*!< Shortcuts for SPIM.                                                   */
+  __I  uint32_t  RESERVED8[64];
+  __IO uint32_t  INTENSET;                          /*!< Interrupt enable set register.                                        */
+  __IO uint32_t  INTENCLR;                          /*!< Interrupt enable clear register.                                      */
+  __I  uint32_t  RESERVED9[125];
+  __IO uint32_t  ENABLE;                            /*!< Enable SPIM.                                                          */
+  __I  uint32_t  RESERVED10;
+  SPIM_PSEL_Type PSEL;                              /*!< Pin select configuration.                                             */
+  __I  uint32_t  RESERVED11;
+  __I  uint32_t  RXDDATA;                           /*!< RXD register.                                                         */
+  __IO uint32_t  TXDDATA;                           /*!< TXD register.                                                         */
+  __I  uint32_t  RESERVED12;
+  __IO uint32_t  FREQUENCY;                         /*!< SPI frequency.                                                        */
+  __I  uint32_t  RESERVED13[3];
+  SPIM_RXD_Type RXD;                                /*!< RXD EasyDMA configuration and status.                                 */
+  __I  uint32_t  RESERVED14;
+  SPIM_TXD_Type TXD;                                /*!< TXD EasyDMA configuration and status.                                 */
+  __I  uint32_t  RESERVED15;
+  __IO uint32_t  CONFIG;                            /*!< Configuration register.                                               */
+  __I  uint32_t  RESERVED16[26];
+  __IO uint32_t  ORC;                               /*!< Over-read character.                                                  */
+  __I  uint32_t  RESERVED17[654];
+  __IO uint32_t  POWER;                             /*!< Peripheral power control.                                             */
+} NRF_SPIM_Type;
 
 
 /* ================================================================================ */
@@ -1165,6 +1236,7 @@ typedef struct {                                    /*!< GPIO Structure         
 #define NRF_SPI1_BASE                   0x40004000UL
 #define NRF_TWI1_BASE                   0x40004000UL
 #define NRF_SPIS1_BASE                  0x40004000UL
+#define NRF_SPIM1_BASE                  0x40004000UL
 #define NRF_GPIOTE_BASE                 0x40006000UL
 #define NRF_ADC_BASE                    0x40007000UL
 #define NRF_TIMER0_BASE                 0x40008000UL
@@ -1204,6 +1276,7 @@ typedef struct {                                    /*!< GPIO Structure         
 #define NRF_SPI1                        ((NRF_SPI_Type            *) NRF_SPI1_BASE)
 #define NRF_TWI1                        ((NRF_TWI_Type            *) NRF_TWI1_BASE)
 #define NRF_SPIS1                       ((NRF_SPIS_Type           *) NRF_SPIS1_BASE)
+#define NRF_SPIM1                       ((NRF_SPIM_Type           *) NRF_SPIM1_BASE)
 #define NRF_GPIOTE                      ((NRF_GPIOTE_Type         *) NRF_GPIOTE_BASE)
 #define NRF_ADC                         ((NRF_ADC_Type            *) NRF_ADC_BASE)
 #define NRF_TIMER0                      ((NRF_TIMER_Type          *) NRF_TIMER0_BASE)

@@ -1,3 +1,27 @@
+nRF51 SDK v. 7.0.1
+------------------
+This is a supplement to the nRF51 SDK v7.0.0 release notes.
+This release does not include any code changes compared to nRF51 SDK v7.0.0, except for a minor addition that is described in the "Changes" section.
+
+Fixed issues:
+
+    - Replaced DeviceFamilyPack v1.1.3, which has a wrong URL, with DeviceFamilyPack v1.1.4.
+    - Added a version field to Pack examples descriptions (NordicSemiconductor.nRF_Examples.pdsc).
+    - Added missing Nordic Semiconductor nRF51 MDK installer to the repository distribution (nRF51_SDK_x.x.x_xxxxxxx.zip).
+    - Added missing message sequence charts to the documentation.
+    - Changed incorrect description of supported SoftDevices in the release notes (see below for the correct list of supported SoftDevices).
+
+Changes:
+
+    - Added all the register and bitfields for the SPIM peripheral (present in the nRF51802 device) to the HAL header files and replaced the pack nRF_Drivers v1.0.0 with nRF_Drivers v1.1.0. 
+
+Supported SoftDevices:
+
+    - S110 7.1.0
+    - S120 1.0.1
+    - S130 0.5.0-1.alpha
+    - S210 4.0.1
+
 nRF51 SDK v. 7.0.0
 ------------------
 

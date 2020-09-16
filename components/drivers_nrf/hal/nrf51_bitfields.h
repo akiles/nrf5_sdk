@@ -5997,6 +5997,211 @@
 #define SPI_POWER_POWER_Enabled (1UL) /*!< Module power enabled. */
 
 
+/* Peripheral: SPIM */
+/* Description: SPI master with easyDMA 1. */
+
+/* Register: SPIM_SHORTS */
+/* Description: Shortcuts for SPIM. */
+
+/* Bit 17 : Shortcut between END event and START task. */
+#define SPIM_SHORTS_END_START_Pos (17UL) /*!< Position of END_START field. */
+#define SPIM_SHORTS_END_START_Msk (0x1UL << SPIM_SHORTS_END_START_Pos) /*!< Bit mask of END_START field. */
+#define SPIM_SHORTS_END_START_Disabled (0UL) /*!< Shortcut disabled. */
+#define SPIM_SHORTS_END_START_Enabled (1UL) /*!< Shortcut enabled. */
+
+/* Register: SPIM_INTENSET */
+/* Description: Interrupt enable set register. */
+
+/* Bit 19 : Enable interrupt on STARTED event. */
+#define SPIM_INTENSET_STARTED_Pos (19UL) /*!< Position of STARTED field. */
+#define SPIM_INTENSET_STARTED_Msk (0x1UL << SPIM_INTENSET_STARTED_Pos) /*!< Bit mask of STARTED field. */
+#define SPIM_INTENSET_STARTED_Disabled (0UL) /*!< Interrupt disabled. */
+#define SPIM_INTENSET_STARTED_Enabled (1UL) /*!< Interrupt enabled. */
+#define SPIM_INTENSET_STARTED_Set (1UL) /*!< Enable interrupt on write. */
+
+/* Bit 8 : Enable interrupt on ENDTX event. */
+#define SPIM_INTENSET_ENDTX_Pos (8UL) /*!< Position of ENDTX field. */
+#define SPIM_INTENSET_ENDTX_Msk (0x1UL << SPIM_INTENSET_ENDTX_Pos) /*!< Bit mask of ENDTX field. */
+#define SPIM_INTENSET_ENDTX_Disabled (0UL) /*!< Interrupt disabled. */
+#define SPIM_INTENSET_ENDTX_Enabled (1UL) /*!< Interrupt enabled. */
+#define SPIM_INTENSET_ENDTX_Set (1UL) /*!< Enable interrupt on write. */
+
+/* Bit 6 : Enable interrupt on END event. */
+#define SPIM_INTENSET_END_Pos (6UL) /*!< Position of END field. */
+#define SPIM_INTENSET_END_Msk (0x1UL << SPIM_INTENSET_END_Pos) /*!< Bit mask of END field. */
+#define SPIM_INTENSET_END_Disabled (0UL) /*!< Interrupt disabled. */
+#define SPIM_INTENSET_END_Enabled (1UL) /*!< Interrupt enabled. */
+#define SPIM_INTENSET_END_Set (1UL) /*!< Enable interrupt on write. */
+
+/* Bit 4 : Enable interrupt on ENDRX event. */
+#define SPIM_INTENSET_ENDRX_Pos (4UL) /*!< Position of ENDRX field. */
+#define SPIM_INTENSET_ENDRX_Msk (0x1UL << SPIM_INTENSET_ENDRX_Pos) /*!< Bit mask of ENDRX field. */
+#define SPIM_INTENSET_ENDRX_Disabled (0UL) /*!< Interrupt disabled. */
+#define SPIM_INTENSET_ENDRX_Enabled (1UL) /*!< Interrupt enabled. */
+#define SPIM_INTENSET_ENDRX_Set (1UL) /*!< Enable interrupt on write. */
+
+/* Bit 1 : Enable interrupt on STOPPED event. */
+#define SPIM_INTENSET_STOPPED_Pos (1UL) /*!< Position of STOPPED field. */
+#define SPIM_INTENSET_STOPPED_Msk (0x1UL << SPIM_INTENSET_STOPPED_Pos) /*!< Bit mask of STOPPED field. */
+#define SPIM_INTENSET_STOPPED_Disabled (0UL) /*!< Interrupt disabled. */
+#define SPIM_INTENSET_STOPPED_Enabled (1UL) /*!< Interrupt enabled. */
+#define SPIM_INTENSET_STOPPED_Set (1UL) /*!< Enable interrupt on write. */
+
+/* Register: SPIM_INTENCLR */
+/* Description: Interrupt enable clear register. */
+
+/* Bit 19 : Disable interrupt on STARTED event. */
+#define SPIM_INTENCLR_STARTED_Pos (19UL) /*!< Position of STARTED field. */
+#define SPIM_INTENCLR_STARTED_Msk (0x1UL << SPIM_INTENCLR_STARTED_Pos) /*!< Bit mask of STARTED field. */
+#define SPIM_INTENCLR_STARTED_Disabled (0UL) /*!< Interrupt disabled. */
+#define SPIM_INTENCLR_STARTED_Enabled (1UL) /*!< Interrupt enabled. */
+#define SPIM_INTENCLR_STARTED_Clear (1UL) /*!< Disable interrupt on write. */
+
+/* Bit 8 : Disable interrupt on ENDTX event. */
+#define SPIM_INTENCLR_ENDTX_Pos (8UL) /*!< Position of ENDTX field. */
+#define SPIM_INTENCLR_ENDTX_Msk (0x1UL << SPIM_INTENCLR_ENDTX_Pos) /*!< Bit mask of ENDTX field. */
+#define SPIM_INTENCLR_ENDTX_Disabled (0UL) /*!< Interrupt disabled. */
+#define SPIM_INTENCLR_ENDTX_Enabled (1UL) /*!< Interrupt enabled. */
+#define SPIM_INTENCLR_ENDTX_Clear (1UL) /*!< Disable interrupt on write. */
+
+/* Bit 6 : Disable interrupt on END event. */
+#define SPIM_INTENCLR_END_Pos (6UL) /*!< Position of END field. */
+#define SPIM_INTENCLR_END_Msk (0x1UL << SPIM_INTENCLR_END_Pos) /*!< Bit mask of END field. */
+#define SPIM_INTENCLR_END_Disabled (0UL) /*!< Interrupt disabled. */
+#define SPIM_INTENCLR_END_Enabled (1UL) /*!< Interrupt enabled. */
+#define SPIM_INTENCLR_END_Clear (1UL) /*!< Disable interrupt on write. */
+
+/* Bit 4 : Disable interrupt on ENDRX event. */
+#define SPIM_INTENCLR_ENDRX_Pos (4UL) /*!< Position of ENDRX field. */
+#define SPIM_INTENCLR_ENDRX_Msk (0x1UL << SPIM_INTENCLR_ENDRX_Pos) /*!< Bit mask of ENDRX field. */
+#define SPIM_INTENCLR_ENDRX_Disabled (0UL) /*!< Interrupt disabled. */
+#define SPIM_INTENCLR_ENDRX_Enabled (1UL) /*!< Interrupt enabled. */
+#define SPIM_INTENCLR_ENDRX_Clear (1UL) /*!< Disable interrupt on write. */
+
+/* Bit 1 : Disable interrupt on STOPPED event. */
+#define SPIM_INTENCLR_STOPPED_Pos (1UL) /*!< Position of STOPPED field. */
+#define SPIM_INTENCLR_STOPPED_Msk (0x1UL << SPIM_INTENCLR_STOPPED_Pos) /*!< Bit mask of STOPPED field. */
+#define SPIM_INTENCLR_STOPPED_Disabled (0UL) /*!< Interrupt disabled. */
+#define SPIM_INTENCLR_STOPPED_Enabled (1UL) /*!< Interrupt enabled. */
+#define SPIM_INTENCLR_STOPPED_Clear (1UL) /*!< Disable interrupt on write. */
+
+/* Register: SPIM_ENABLE */
+/* Description: Enable SPIM. */
+
+/* Bits 3..0 : Enable or disable SPIM. */
+#define SPIM_ENABLE_ENABLE_Pos (0UL) /*!< Position of ENABLE field. */
+#define SPIM_ENABLE_ENABLE_Msk (0xFUL << SPIM_ENABLE_ENABLE_Pos) /*!< Bit mask of ENABLE field. */
+#define SPIM_ENABLE_ENABLE_Disabled (0x00UL) /*!< Disabled SPIM. */
+#define SPIM_ENABLE_ENABLE_Enabled (0x07UL) /*!< Enable SPIM. */
+
+/* Register: SPIM_RXDDATA */
+/* Description: RXD register. */
+
+/* Bits 7..0 : RX data received. Double buffered. */
+#define SPIM_RXDDATA_RXD_Pos (0UL) /*!< Position of RXD field. */
+#define SPIM_RXDDATA_RXD_Msk (0xFFUL << SPIM_RXDDATA_RXD_Pos) /*!< Bit mask of RXD field. */
+
+/* Register: SPIM_TXDDATA */
+/* Description: TXD register. */
+
+/* Bits 7..0 : TX data to send. Double buffered. */
+#define SPIM_TXDDATA_TXD_Pos (0UL) /*!< Position of TXD field. */
+#define SPIM_TXDDATA_TXD_Msk (0xFFUL << SPIM_TXDDATA_TXD_Pos) /*!< Bit mask of TXD field. */
+
+/* Register: SPIM_FREQUENCY */
+/* Description: SPI frequency. */
+
+/* Bits 31..0 : SPI master data rate. */
+#define SPIM_FREQUENCY_FREQUENCY_Pos (0UL) /*!< Position of FREQUENCY field. */
+#define SPIM_FREQUENCY_FREQUENCY_Msk (0xFFFFFFFFUL << SPIM_FREQUENCY_FREQUENCY_Pos) /*!< Bit mask of FREQUENCY field. */
+#define SPIM_FREQUENCY_FREQUENCY_K125 (0x02000000UL) /*!< 125 kbps. */
+#define SPIM_FREQUENCY_FREQUENCY_K250 (0x04000000UL) /*!< 250 kbps. */
+#define SPIM_FREQUENCY_FREQUENCY_K500 (0x08000000UL) /*!< 500 kbps. */
+#define SPIM_FREQUENCY_FREQUENCY_M1 (0x10000000UL) /*!< 1 Mbps. */
+#define SPIM_FREQUENCY_FREQUENCY_M2 (0x20000000UL) /*!< 2 Mbps. */
+#define SPIM_FREQUENCY_FREQUENCY_M4 (0x40000000UL) /*!< 4 Mbps. */
+#define SPIM_FREQUENCY_FREQUENCY_M8 (0x80000000UL) /*!< 8 Mbps. */
+
+/* Register: SPIM_CONFIG */
+/* Description: Configuration register. */
+
+/* Bit 2 : Serial clock (SCK) polarity. */
+#define SPIM_CONFIG_CPOL_Pos (2UL) /*!< Position of CPOL field. */
+#define SPIM_CONFIG_CPOL_Msk (0x1UL << SPIM_CONFIG_CPOL_Pos) /*!< Bit mask of CPOL field. */
+#define SPIM_CONFIG_CPOL_ActiveHigh (0UL) /*!< Active high. */
+#define SPIM_CONFIG_CPOL_ActiveLow (1UL) /*!< Active low. */
+
+/* Bit 1 : Serial clock (SCK) phase. */
+#define SPIM_CONFIG_CPHA_Pos (1UL) /*!< Position of CPHA field. */
+#define SPIM_CONFIG_CPHA_Msk (0x1UL << SPIM_CONFIG_CPHA_Pos) /*!< Bit mask of CPHA field. */
+#define SPIM_CONFIG_CPHA_Leading (0UL) /*!< Sample on leading edge of the clock. Shift serial data on trailing edge. */
+#define SPIM_CONFIG_CPHA_Trailing (1UL) /*!< Sample on trailing edge of the clock. Shift serial data on leading edge. */
+
+/* Bit 0 : Bit order. */
+#define SPIM_CONFIG_ORDER_Pos (0UL) /*!< Position of ORDER field. */
+#define SPIM_CONFIG_ORDER_Msk (0x1UL << SPIM_CONFIG_ORDER_Pos) /*!< Bit mask of ORDER field. */
+#define SPIM_CONFIG_ORDER_MsbFirst (0UL) /*!< Most significant bit transmitted out first. */
+#define SPIM_CONFIG_ORDER_LsbFirst (1UL) /*!< Least significant bit transmitted out first. */
+
+/* Register: SPIM_ORC */
+/* Description: Over-read character. */
+
+/* Bits 7..0 : Over-read character. */
+#define SPIM_ORC_ORC_Pos (0UL) /*!< Position of ORC field. */
+#define SPIM_ORC_ORC_Msk (0xFFUL << SPIM_ORC_ORC_Pos) /*!< Bit mask of ORC field. */
+
+/* Register: SPIM_POWER */
+/* Description: Peripheral power control. */
+
+/* Bit 0 : Peripheral power control. */
+#define SPIM_POWER_POWER_Pos (0UL) /*!< Position of POWER field. */
+#define SPIM_POWER_POWER_Msk (0x1UL << SPIM_POWER_POWER_Pos) /*!< Bit mask of POWER field. */
+#define SPIM_POWER_POWER_Disabled (0UL) /*!< Module power disabled. */
+#define SPIM_POWER_POWER_Enabled (1UL) /*!< Module power enabled. */
+
+/* Register: SPIM_RXD_PTR */
+/* Description: Data pointer. */
+
+/* Bits 31..0 : Data pointer. */
+#define SPIM_RXD_PTR_PTR_Pos (0UL) /*!< Position of PTR field. */
+#define SPIM_RXD_PTR_PTR_Msk (0xFFFFFFFFUL << SPIM_RXD_PTR_PTR_Pos) /*!< Bit mask of PTR field. */
+
+/* Register: SPIM_RXD_MAXCNT */
+/* Description: Maximum number of buffer bytes to receive. */
+
+/* Bits 7..0 : Maximum number of buffer bytes to receive. */
+#define SPIM_RXD_MAXCNT_MAXCNT_Pos (0UL) /*!< Position of MAXCNT field. */
+#define SPIM_RXD_MAXCNT_MAXCNT_Msk (0xFFUL << SPIM_RXD_MAXCNT_MAXCNT_Pos) /*!< Bit mask of MAXCNT field. */
+
+/* Register: SPIM_RXD_AMOUNT */
+/* Description: Number of bytes received in the last transaction. */
+
+/* Bits 7..0 : Number of bytes received in the last transaction. */
+#define SPIM_RXD_AMOUNT_AMOUNT_Pos (0UL) /*!< Position of AMOUNT field. */
+#define SPIM_RXD_AMOUNT_AMOUNT_Msk (0xFFUL << SPIM_RXD_AMOUNT_AMOUNT_Pos) /*!< Bit mask of AMOUNT field. */
+
+/* Register: SPIM_TXD_PTR */
+/* Description: Data pointer. */
+
+/* Bits 31..0 : Data pointer. */
+#define SPIM_TXD_PTR_PTR_Pos (0UL) /*!< Position of PTR field. */
+#define SPIM_TXD_PTR_PTR_Msk (0xFFFFFFFFUL << SPIM_TXD_PTR_PTR_Pos) /*!< Bit mask of PTR field. */
+
+/* Register: SPIM_TXD_MAXCNT */
+/* Description: Maximum number of buffer bytes to send. */
+
+/* Bits 7..0 : Maximum number of buffer bytes to send. */
+#define SPIM_TXD_MAXCNT_MAXCNT_Pos (0UL) /*!< Position of MAXCNT field. */
+#define SPIM_TXD_MAXCNT_MAXCNT_Msk (0xFFUL << SPIM_TXD_MAXCNT_MAXCNT_Pos) /*!< Bit mask of MAXCNT field. */
+
+/* Register: SPIM_TXD_AMOUNT */
+/* Description: Number of bytes sent in the last transaction. */
+
+/* Bits 7..0 : Number of bytes sent in the last transaction. */
+#define SPIM_TXD_AMOUNT_AMOUNT_Pos (0UL) /*!< Position of AMOUNT field. */
+#define SPIM_TXD_AMOUNT_AMOUNT_Msk (0xFFUL << SPIM_TXD_AMOUNT_AMOUNT_Pos) /*!< Bit mask of AMOUNT field. */
+
+
 /* Peripheral: SPIS */
 /* Description: SPI slave 1. */
 
