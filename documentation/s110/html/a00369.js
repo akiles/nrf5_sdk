@@ -1,7 +1,7 @@
 var a00369 =
 [
-    [ "distance_us", "a00369.html#a34cb59c0e80b3698a3df265ab88b34b5", null ],
-    [ "hfclk", "a00369.html#a23b414675dc9b11671f55601075f541d", null ],
-    [ "length_us", "a00369.html#adf9603de0e582965d4bb1c0a42d8e88c", null ],
-    [ "priority", "a00369.html#a18cc5dd5dc34877572e42ee8102fcb82", null ]
+    [ "hfclk", "a00369.html#a5d6e28106247179b7cde2e289f0f9c39", null ],
+    [ "length_us", "a00369.html#a0495f3c5f7e2fd20663af081ca7e4c0b", null ],
+    [ "priority", "a00369.html#ad45d8189eff4584a13d7069d3c877a55", null ],
+    [ "timeout_us", "a00369.html#af56601d1b7ef92d49dbd1567bd1d39e0", null ]
 ];

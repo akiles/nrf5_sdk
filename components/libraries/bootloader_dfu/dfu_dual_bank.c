@@ -510,6 +510,8 @@ uint32_t dfu_data_pkt_handle(dfu_update_packet_t * p_packet)
 
 uint32_t dfu_init_pkt_complete(void)
 {
+    uint32_t err_code = NRF_ERROR_INVALID_STATE;
+    
     // DFU initialization has been done and a start packet has been received.
     if (IMAGE_WRITE_IN_PROGRESS())
     {
@@ -519,10 +521,17 @@ uint32_t dfu_init_pkt_complete(void)
     
     if (m_dfu_state == DFU_STATE_RX_INIT_PKT)
     {
-        m_dfu_state = DFU_STATE_RX_DATA_PKT;                
-        return dfu_init_prevalidate(m_init_packet, m_init_packet_length);
+        err_code = dfu_init_prevalidate(m_init_packet, m_init_packet_length);
+        if (err_code == NRF_SUCCESS)
+        {
+            m_dfu_state = DFU_STATE_RX_DATA_PKT;
+        }
+        else
+        {
+            m_init_packet_length = 0;
+        }
     }
-    return NRF_ERROR_INVALID_STATE;
+    return err_code;
 }
 
 
@@ -553,6 +562,11 @@ uint32_t dfu_init_pkt_handle(dfu_update_packet_t * p_packet)
             }
 
             length = p_packet->params.data_packet.packet_length * sizeof(uint32_t);
+            if ((m_init_packet_length + length) > sizeof(m_init_packet))
+            {
+                return NRF_ERROR_INVALID_LENGTH;
+            }
+
             memcpy(&m_init_packet[m_init_packet_length],
                    &p_packet->params.data_packet.p_data_packet[0],
                    length);

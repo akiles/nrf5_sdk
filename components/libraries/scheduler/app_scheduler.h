@@ -39,8 +39,10 @@
  *     scheduler's queue. The app_sched_execute() function will pull this event and call its
  *     handler in the main context.
  *
- * For an example usage of the scheduler, please see the implementations of
+ * @if (SD_S110 && !SD_S310)
+ * For an example usage of the scheduler, see the implementations of
  * @ref ble_sdk_app_hids_mouse and @ref ble_sdk_app_hids_keyboard.
+ * @endif
  *
  * @image html scheduler_working.jpg The high level design of the scheduler
  */

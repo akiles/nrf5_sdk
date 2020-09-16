@@ -12,6 +12,25 @@
 #ifndef _CONN_BLE_GAP_SEC_KEYS_H
 #define _CONN_BLE_GAP_SEC_KEYS_H
 
+/**
+ * @addtogroup ser_codecs Serialization codecs
+ * @ingroup ble_sdk_lib_serialization
+ */
+ 
+/**
+ * @addtogroup ser_conn_s120_codecs Connectivity s120 codecs
+ * @ingroup ser_codecs
+ */
+
+/**@file
+ *
+ * @defgroup conn_ble_gap_sec_keys GAP Functions for managing memory for security keys on connectivity device.
+ * @{
+ * @ingroup  ser_conn_s120_codecs
+ *
+ * @brief    GAP Connectivity auxiliary functions for providing static memory required by Soft Device. This memory is used to store GAP security keys. 
+ */
+ 
 #include "ble_gap.h"
 #include <stdint.h>
 
@@ -47,7 +66,7 @@ uint32_t conn_ble_gap_sec_context_create(uint32_t *p_index);
  *
  * @param[in]     conn_handle         conn_handle
  *
- * @retval NRF_SUCCESS                great success
+ * @retval NRF_SUCCESS                Context released.
  * @retval NRF_ERROR_NOT_FOUND        instance with conn_handle not found
  */
 uint32_t conn_ble_gap_sec_context_destroy(uint16_t conn_handle);
@@ -56,9 +75,12 @@ uint32_t conn_ble_gap_sec_context_destroy(uint16_t conn_handle);
  *
  * @param[in]     conn_handle         conn_handle
  *
- * @retval NRF_SUCCESS                great success
+ * @param[out]    p_index             Pointer to the index of entry in the context table corresponding to the given conn_handle
+ *
+ * @retval NRF_SUCCESS                Context table entry found
  * @retval NRF_ERROR_NOT_FOUND        instance with conn_handle not found
  */
 uint32_t conn_ble_gap_sec_context_find(uint16_t conn_handle, uint32_t *p_index);
+/** @} */
 
 #endif //_CONN_BLE_GAP_SEC_KEYS_H

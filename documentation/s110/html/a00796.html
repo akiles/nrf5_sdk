@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: General error codes</title>
+<title>nRF51 SDK - S110 SoftDevice: SVC return values specific to GAP</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,76 +99,57 @@ $(document).ready(function(){initNavTree('a00796.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">General error codes<div class="ingroups"><a class="el" href="a00793.html">BLE SoftDevice Common</a></div></div>  </div>
+<div class="title">SVC return values specific to GAP<div class="ingroups"><a class="el" href="a01047.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>General error code definitions for the BLE API.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga521db6a097589b80939d76cb453fad3c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00796.html#ga521db6a097589b80939d76cb453fad3c">BLE_ERROR_NOT_ENABLED</a>&#160;&#160;&#160;(<a class="el" href="a00841.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x001)</td></tr>
-<tr class="separator:ga521db6a097589b80939d76cb453fad3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabdc27cbc2ffac4a50640a0ce992c03af"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00796.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a>&#160;&#160;&#160;(<a class="el" href="a00841.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x002)</td></tr>
-<tr class="separator:gabdc27cbc2ffac4a50640a0ce992c03af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6346bb5ec3bcd4a25332dc782c1b7e01"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00796.html#ga6346bb5ec3bcd4a25332dc782c1b7e01">BLE_ERROR_INVALID_ATTR_HANDLE</a>&#160;&#160;&#160;(<a class="el" href="a00841.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x003)</td></tr>
-<tr class="separator:ga6346bb5ec3bcd4a25332dc782c1b7e01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga901e1bc3ccae29eff9fb31cabdbb5e02"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00796.html#ga901e1bc3ccae29eff9fb31cabdbb5e02">BLE_ERROR_NO_TX_BUFFERS</a>&#160;&#160;&#160;(<a class="el" href="a00841.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x004)</td></tr>
-<tr class="separator:ga901e1bc3ccae29eff9fb31cabdbb5e02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga996146eb2c3b244f044b5cd121f8b826"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00796.html#ga996146eb2c3b244f044b5cd121f8b826">BLE_ERROR_GAP_UUID_LIST_MISMATCH</a>&#160;&#160;&#160;(<a class="el" href="a00795.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x000)</td></tr>
+<tr class="separator:ga996146eb2c3b244f044b5cd121f8b826"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa65c2f6a6eba52654e2b6febc5c3ba8c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00796.html#gaa65c2f6a6eba52654e2b6febc5c3ba8c">BLE_ERROR_GAP_DISCOVERABLE_WITH_WHITELIST</a>&#160;&#160;&#160;(<a class="el" href="a00795.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x001)</td></tr>
+<tr class="separator:gaa65c2f6a6eba52654e2b6febc5c3ba8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3eda228736d6c1dcbcf9aba2bd059068"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00796.html#ga3eda228736d6c1dcbcf9aba2bd059068">BLE_ERROR_GAP_INVALID_BLE_ADDR</a>&#160;&#160;&#160;(<a class="el" href="a00795.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x002)</td></tr>
+<tr class="separator:ga3eda228736d6c1dcbcf9aba2bd059068"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>General error code definitions for the BLE API. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga6346bb5ec3bcd4a25332dc782c1b7e01"></a>
+<a class="anchor" id="gaa65c2f6a6eba52654e2b6febc5c3ba8c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_ERROR_INVALID_ATTR_HANDLE&#160;&#160;&#160;(<a class="el" href="a00841.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x003)</td>
+          <td class="memname">#define BLE_ERROR_GAP_DISCOVERABLE_WITH_WHITELIST&#160;&#160;&#160;(<a class="el" href="a00795.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x001)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Invalid attribute handle. </p>
+<p>Use of Whitelist not permitted with discoverable advertising. </p>
 
 </div>
 </div>
-<a class="anchor" id="gabdc27cbc2ffac4a50640a0ce992c03af"></a>
+<a class="anchor" id="ga3eda228736d6c1dcbcf9aba2bd059068"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_ERROR_INVALID_CONN_HANDLE&#160;&#160;&#160;(<a class="el" href="a00841.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x002)</td>
+          <td class="memname">#define BLE_ERROR_GAP_INVALID_BLE_ADDR&#160;&#160;&#160;(<a class="el" href="a00795.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x002)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Invalid connection handle. </p>
+<p>The upper two bits of the address do not correspond to the specified address type. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga901e1bc3ccae29eff9fb31cabdbb5e02"></a>
+<a class="anchor" id="ga996146eb2c3b244f044b5cd121f8b826"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_ERROR_NO_TX_BUFFERS&#160;&#160;&#160;(<a class="el" href="a00841.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x004)</td>
+          <td class="memname">#define BLE_ERROR_GAP_UUID_LIST_MISMATCH&#160;&#160;&#160;(<a class="el" href="a00795.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x000)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Buffer capacity exceeded. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga521db6a097589b80939d76cb453fad3c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_ERROR_NOT_ENABLED&#160;&#160;&#160;(<a class="el" href="a00841.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x001)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p><a class="el" href="a01043.html#ga0f632bec36100e4d2d74672ccbb4218b">sd_ble_enable</a> has not been called. </p>
+<p>UUID list does not contain an integral number of UUIDs. </p>
 
 </div>
 </div>
@@ -177,7 +158,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:19 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:05 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

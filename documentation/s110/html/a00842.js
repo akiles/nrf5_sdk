@@ -1,8 +1,7 @@
 var a00842 =
 [
-    [ "SoftDevice Manager Error Codes", "a00843.html", "a00843" ],
-    [ "Defines", "a01067.html", "a01067" ],
-    [ "Enumerations", "a01068.html", "a01068" ],
-    [ "Types", "a01069.html", "a01069" ],
-    [ "Functions", "a01070.html", "a01070" ]
+    [ "SoC Library Error Codes", "a00843.html", "a00843" ],
+    [ "Defines", "a01073.html", "a01073" ],
+    [ "Types", "a01074.html", "a01074" ],
+    [ "Functions", "a01075.html", "a01075" ]
 ];

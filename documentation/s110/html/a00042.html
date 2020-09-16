@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: BSP indication states</title>
+<title>nRF51 SDK - S110 SoftDevice: Running a serialized application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,76 +97,93 @@ $(document).ready(function(){initNavTree('a00042.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BSP indication states </div>  </div>
+<div class="title">Running a serialized application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>To abstract from the actual hardware that is used to run an example, some examples use BSP states instead of a fast assignment of LEDs to indicate states. In this way, examples can easily be tested on different boards, like the development board and the dongle. States are indicated in different ways depending on the hardware that is used.</p>
-<p>The following table lists how the BSP states are indicated on PCA10028 and PCA10031:</p>
-<table class="doxtable">
+<div class="textblock"><p>If you want to use a BLE SoftDevice in applications that cannot be ported to nRF51, for example because they use specific peripherals or need more resources like RAM, flash memory, or CPU speed, you should consider using serialization.</p>
+<p>The SDK provides a sample serialization setup consisting of two nRF51 Development boards. One of these boards serves as <b>application board</b> and hosts the actual <em>Bluetooth</em> application. The other board serves as <b>connectivity board</b> and supplies the radio connection. The application board with an nRF51 chip is provided as a reference only. You will need to port the serialized application to the microcontroller in the target system.</p>
+<h1><a class="anchor" id="serialization_hardware"></a>
+Serialization hardware setup</h1>
+<p>The sample serialization setup supports two physical transport interfaces: UART and SPI. See Figure 1 for an illustration of how to connect two development boards as an application board and a connectivity board supplying a UART connection.</p>
+<div class="image">
+<img src="UART_serialization.svg" alt="UART_serialization.svg"/>
+<div class="caption">
+Figure 1: Serialization UART</div></div>
+<p> Figure 2 illustrates how to connect two development boards as an application board and a connectivity board supplying an SPI connection.</p>
+<div class="image">
+<img src="SPI_serialization.svg" alt="SPI_serialization.svg"/>
+<div class="caption">
+Figure 2: Serialization SPI</div></div>
+ <h1><a class="anchor" id="serialization_software"></a>
+Serialization software setup</h1>
+<p>Prepare the connectivity board by performing the following steps:</p>
+<ol type="1">
+<li>Connect the board to the computer and make sure that the RESET wire is disconnected.</li>
+<li>Program the S110 SoftDevice on the connectivity board. See <a class="el" href="a00010.html">Running examples that use a SoftDevice</a> for instructions.</li>
+<li>In Keil, open the Connectivity Example for the physical transport layer that you want to use: <table class="doxtable">
 <tr>
-<th>BSP state </th><th>PCA10028 </th><th>PCA10031</th></tr>
+<th>Physical transport layer </th><th>Example name</th></tr>
 <tr>
-<td><a class="anchor" id="BSP_INDICATE_IDLE"></a>BSP_INDICATE_IDLE </td><td>All LEDs are off </td><td>All LEDs are off </td></tr>
+<td>UART </td><td>ble_connectivity_ s110_uart_pca10028 </td></tr>
 <tr>
-<td><a class="anchor" id="BSP_INDICATE_SCANNING"></a>BSP_INDICATE_SCANNING </td><td>LED 1 is blinking (period 2 sec, duty cycle: 10%) </td><td>Red LED is blinking (period 2 sec, duty cycle: 10%) </td></tr>
+<td>SPI </td><td>ble_connectivity_ s110_spi_pca10028 </td></tr>
 <tr>
-<td><a class="anchor" id="BSP_INDICATE_ADVERTISING"></a>BSP_INDICATE_ADVERTISING </td><td>LED 1 is blinking (period 2 sec, duty cycle: 10%) </td><td>Red LED is blinking (period 2 sec, duty cycle: 10%) </td></tr>
+<td>HCI (reliable UART) </td><td>ble_connectivity_ s110_hci_pca10028 </td></tr>
 <tr>
-<td><a class="anchor" id="BSP_INDICATE_ADVERTISING_WHITELIST"></a>BSP_INDICATE_ADVERTISING_WHITELIST </td><td>LED 1 is blinking fast (period 1 sec, duty cycle: 20%) </td><td>Red LED is blinking fast (period 1 sec, duty cycle: 20%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ADVERTISING_SLOW"></a>BSP_INDICATE_ADVERTISING_SLOW </td><td>LED 1 is blinking slowly (period 4.4 sec, duty cycle: 10%) </td><td>Red LED is is blinking slowly (period 4.4 sec, duty cycle: 10%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ADVERTISING_DIRECTED"></a>BSP_INDICATE_ADVERTISING_DIRECTED </td><td>LED 1 is blinking very fast (period 0.6 sec, duty cycle: 50%) </td><td>Red LED is blinking very fast (period 0.6 sec, duty cycle: 50%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_BONDING"></a>BSP_INDICATE_BONDING </td><td>LED 1 is blinking (period 200 msec, duty cycle: 50%) </td><td>Red LED is blinking (period 200 msec, duty cycle: 50%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_CONNECTED"></a>BSP_INDICATE_CONNECTED </td><td>LED 1 is on </td><td>Red LED is on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_SENT_OK"></a>BSP_INDICATE_SENT_OK </td><td>LED 2 is on for 100 msec </td><td>Green LED is on for 100 msec </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_SEND_ERROR"></a>BSP_INDICATE_SEND_ERROR </td><td>LED 2 is on for 500 msec </td><td>Green LED is on for 500 msec </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_RCV_OK"></a>BSP_INDICATE_RCV_OK </td><td>LED 2 is on for 100 msec </td><td>Green LED is on for 100 msec </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_RCV_ERROR"></a>BSP_INDICATE_RCV_ERROR </td><td>LED 2 is on for 500 msec </td><td>Green LED is on for 500 msec </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_FATAL_ERROR"></a>BSP_INDICATE_FATAL_ERROR </td><td>All LEDs are on </td><td>All LEDs are on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_OFF"></a>BSP_INDICATE_USER_STATE_OFF </td><td>All LEDs are off </td><td>All LEDs are off </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_0"></a>BSP_INDICATE_USER_STATE_0 </td><td>LEDs 2, 3, and 4 are off, LED 1 is on </td><td>Green and blue LEDs are off, red LED is on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_1"></a>BSP_INDICATE_USER_STATE_1 </td><td>LEDs 1, 3, and 4 are off, LED 2 is on </td><td>Red and blue LED are off, green LED is on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_2"></a>BSP_INDICATE_USER_STATE_2 </td><td>LEDs 3 and 4 are off, LEDs 1 and 2 are on </td><td>Blue LED is off, red and green LEDs are on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_3"></a>BSP_INDICATE_USER_STATE_3 </td><td>All LEDs are on </td><td>All LEDs are on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_ON"></a>BSP_INDICATE_USER_STATE_ON </td><td>All LEDs are on </td><td>All LEDs are on </td></tr>
+<td>STM_UART (only available for <a class="el" href="a00053.html">Heart Rate Application</a>) </td><td>ble_connectivity_s110_uart_stm_pca10028 </td></tr>
 </table>
-<p>The following BSP alerts can be indicated on top of the states described in the previous table: </p>
-<table class="doxtable">
+If you are not using the Keil Pack Installer, you can find all examples in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_connectivity</code> </li>
+<li>Compile the application and download the created .hex file to the connectivity board.</li>
+</ol>
+<p>The application board does not need a SoftDevice. Prepare the application board by performing the following steps:</p>
+<ol type="1">
+<li>Connect the board to the computer and make sure that the RESET wire is disconnected.</li>
+<li>Erase the chip on the application board as described in the nRF51 DK User Guide.</li>
+<li>In Keil, open one of the following serialized example projects: <table class="doxtable">
 <tr>
-<th>BSP alert </th><th>PCA10028 </th><th>PCA10031</th></tr>
+<th>Example </th><th>Example name </th><th>Physical transport layers</th></tr>
 <tr>
-<td><a class="anchor" id="BSP_INDICATE_ALERT_0"></a>BSP_INDICATE_ALERT_0 </td><td>LED 3 is blinking (period 1200 msec, duty cycle: 50%) </td><td>Blue LED is blinking (period 1200 msec, duty cycle: 50%) </td></tr>
+<td><a class="el" href="a00044.html">Alert Notification Application</a> </td><td>ble_app_alert_notification_s110_<em>TransportLayer</em>_pca10028 </td><td>UART, SPI, HCI </td></tr>
 <tr>
-<td><a class="anchor" id="BSP_INDICATE_ALERT_1"></a>BSP_INDICATE_ALERT_1 </td><td>LED 3 is blinking (period 800 msec, duty cycle: 50%) </td><td>Blue LED is blinking (period 800 msec, duty cycle: 50%) </td></tr>
+<td><a class="el" href="a00046.html">Beacon Transmitter Sample Application</a> </td><td>ble_app_beacon_s110_<em>TransportLayer</em>_pca10028 </td><td>UART, SPI, HCI </td></tr>
 <tr>
-<td><a class="anchor" id="BSP_INDICATE_ALERT_2"></a>BSP_INDICATE_ALERT_2 </td><td>LED 3 is blinking (period 400 msec, duty cycle: 50%) </td><td>Blue LED is blinking (period 400 msec, duty cycle: 50%) </td></tr>
+<td><a class="el" href="a00047.html">Blood Pressure Application</a> </td><td>ble_app_bps_s110_<em>TransportLayer</em>_pca10028 </td><td>UART, SPI, HCI </td></tr>
 <tr>
-<td><a class="anchor" id="BSP_INDICATE_ALERT_3"></a>BSP_INDICATE_ALERT_3 </td><td>LED 3 is on </td><td>Blue LED is on </td></tr>
+<td><a class="el" href="a00048.html">Cycling Speed and Cadence Application</a> </td><td>ble_app_cscs_s110_<em>TransportLayer</em>_pca10028 </td><td>UART, SPI, HCI </td></tr>
 <tr>
-<td><a class="anchor" id="BSP_INDICATE_ALERT_OFF"></a>BSP_INDICATE_ALERT_OFF </td><td>LED 3 is off </td><td>Blue LED is off </td></tr>
+<td><a class="el" href="a00049.html">Blood Glucose Application</a> </td><td>ble_app_gls_s110_<em>TransportLayer</em>_pca10028 </td><td>SPI </td></tr>
+<tr>
+<td><a class="el" href="a00051.html">HID Keyboard Application</a> </td><td>ble_app_hids_keyboard_s110_<em>TransportLayer</em>_pca10028 </td><td>UART, SPI, HCI </td></tr>
+<tr>
+<td><a class="el" href="a00052.html">HID Mouse Application</a> </td><td>ble_app_hids_mouse_s110_<em>TransportLayer</em>_pca10028 </td><td>UART, SPI, HCI </td></tr>
+<tr>
+<td><a class="el" href="a00053.html">Heart Rate Application</a> </td><td>ble_app_hrs_s110_<em>TransportLayer</em>_pca10028 </td><td>UART, SPI, HCI, UART_STM </td></tr>
+<tr>
+<td><a class="el" href="a00055.html">Health Thermometer Application</a> </td><td>ble_app_hts_s110_<em>TransportLayer</em>_pca10028 </td><td>UART, SPI, HCI </td></tr>
+<tr>
+<td><a class="el" href="a00056.html">Proximity Application</a> </td><td>ble_app_proximity_s110_<em>TransportLayer</em>_pca10028 </td><td>UART, SPI, HCI </td></tr>
+<tr>
+<td><a class="el" href="a00056.html">Proximity Application</a> (Low Power)</td><td>ble_app_proximity_low_power_s110_<em>TransportLayer</em>_pca10028 </td><td>UART, SPI, HCI </td></tr>
+<tr>
+<td><a class="el" href="a00057.html">Power Profiling Application</a> </td><td>ble_app_pwr_profiling_s110_<em>TransportLayer</em>_pca10028</td><td>UART, SPI, HCI </td></tr>
+<tr>
+<td><a class="el" href="a00058.html">Running Speed and Cadence Application</a> </td><td>ble_app_rscs_s110_<em>TransportLayer</em>_pca10028</td><td>UART, SPI, HCI </td></tr>
+<tr>
+<td><a class="el" href="a00045.html">Experimental: Apple Notification Center Service (ANCS) Client Application</a> </td><td>experimental_ble_app_ancs_s110_<em>TransportLayer</em>_pca10028</td><td>SPI </td></tr>
+<tr>
+<td><a class="el" href="a00040.html">Direct Test Mode</a> </td><td>ble_dtm_s110_<em>TransportLayer</em>_pca10028 </td><td>UART, SPI, HCI </td></tr>
 </table>
-<p>The states are defined in <a class="el" href="a00792.html#ga1e44400c2a8fe4979010bb62a6ca8a55">bsp_indication_t</a>. </p>
+Choose the example project for the same physical transport layer as on the connectivity board.</li>
+<li>Compile the application and download the created .hex file to the application board.</li>
+</ol>
+<p>See <a class="el" href="a00073.html">BLE Serialization</a> for further documentation on serialization. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:18 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00001.html">Getting Started</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:04 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

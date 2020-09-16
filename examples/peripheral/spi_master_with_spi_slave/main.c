@@ -56,22 +56,6 @@ static uint8_t m_rx_data[TX_RX_BUF_LENGTH] = {0}; /**< A buffer for incoming dat
 
 static volatile bool m_transfer_completed = true; /**< A flag to inform about completed transfer. */
 
-/**@brief Function for error handling, which is called when an error has occurred. 
- *
- * @param[in] error_code  Error code supplied to the handler.
- * @param[in] line_num    Line number where the handler is called.
- * @param[in] p_file_name Pointer to the file name. 
- */
-void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
-{
-    UNUSED_VARIABLE(bsp_indication_set(BSP_INDICATE_FATAL_ERROR));
-
-    for (;; )
-    {
-        // No implementation needed.
-    }
-}
-
 
 /**@brief Function for checking if data coming from a SPI slave are valid.
  *

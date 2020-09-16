@@ -1,7 +1,9 @@
 var a00260 =
 [
-    [ "cccd_handle", "a00260.html#a7764817bceb1a13dde2a2d614aaff900", null ],
-    [ "sccd_handle", "a00260.html#a0ebe446f83e8675203f224b1796939fa", null ],
-    [ "user_desc_handle", "a00260.html#a263781c226cad6bfeeb894e133b19c55", null ],
-    [ "value_handle", "a00260.html#a685865a59e73158fd661e9d64407e9d9", null ]
+    [ "init_len", "a00260.html#a7722e94b0c079f7571a0607a13d46bde", null ],
+    [ "init_offs", "a00260.html#aa24ec5661c2ba830f906201285ca941c", null ],
+    [ "max_len", "a00260.html#a5cc60017697406f2f2624e0b15dad294", null ],
+    [ "p_attr_md", "a00260.html#afc04d5311dcd31df52f7d9aac7c05ab1", null ],
+    [ "p_uuid", "a00260.html#a87b18c161a362b54bd349aebd2a45c85", null ],
+    [ "p_value", "a00260.html#abf26555ce0ad9b481c3f638f89dc329a", null ]
 ];

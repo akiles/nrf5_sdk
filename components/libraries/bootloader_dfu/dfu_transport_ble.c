@@ -57,9 +57,10 @@
 #define NEXT_CONN_PARAMS_UPDATE_DELAY        APP_TIMER_TICKS(500, APP_TIMER_PRESCALER)               /**< Time between each call to sd_ble_gap_conn_param_update after the first call (500 milliseconds). */
 #define MAX_CONN_PARAMS_UPDATE_COUNT         3                                                       /**< Number of attempts before giving up the connection parameter negotiation. */
 
-#define APP_ADV_INTERVAL                     400                                                     /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
+#define APP_ADV_INTERVAL                     MSEC_TO_UNITS(25, UNIT_0_625_MS)                        /**< The advertising interval (25 ms.). */
 #define APP_ADV_TIMEOUT_IN_SECONDS           BLE_GAP_ADV_TIMEOUT_GENERAL_UNLIMITED                   /**< The advertising timeout in units of seconds. This is set to @ref BLE_GAP_ADV_TIMEOUT_GENERAL_UNLIMITED so that the advertisement is done as long as there there is a call to @ref dfu_transport_close function.*/
 #define APP_DIRECTED_ADV_TIMEOUT             5                                                       /**< number of direct advertisement (each lasting 1.28seconds). */
+#define PEER_ADDRESS_TYPE_INVALID            0xFF                                                    /**< Value indicating that no valid peer address exists. This will be the case when a private resolvable address is used in which case there is no address available but instead an IRK is present. */   
 
 #define SEC_PARAM_TIMEOUT                    30                                                      /**< Timeout for Pairing Request or Security Request (in seconds). */
 #define SEC_PARAM_BOND                       1                                                       /**< Perform bonding. */
@@ -98,8 +99,8 @@ static bool                 m_pkt_rcpt_notif_enabled = false;                   
 static uint16_t             m_conn_handle            = BLE_CONN_HANDLE_INVALID;                      /**< Handle of the current connection. */
 static bool                 m_is_advertising         = false;                                        /**< Variable to indicate if advertising is ongoing.*/
 static dfu_ble_peer_data_t  m_ble_peer_data;                                                         /**< BLE Peer data exchanged from application on buttonless update mode. */
+static bool                 m_ble_peer_data_valid    = false;                                        /**< True if BLE Peer data has been exchanged from application. */
 static uint32_t             m_direct_adv_cnt         = APP_DIRECTED_ADV_TIMEOUT;                     /**< Counter of direct advertisements. */
-static ble_gap_addr_t       m_ble_addr;                                                              /**< Variable for getting and setting of BLE device address. */ 
 
 
 /**@brief     Function to convert an nRF51 error code to a DFU Response Value.
@@ -593,12 +594,6 @@ static void advertising_init(uint8_t adv_flags)
     service_uuid.type   = m_dfu.uuid_type;
     service_uuid.uuid   = BLE_DFU_SERVICE_UUID;
 
-    err_code = sd_ble_gap_address_get(&m_ble_addr);
-    APP_ERROR_CHECK(err_code);
-
-    err_code = sd_ble_gap_address_set(BLE_GAP_ADDR_CYCLE_MODE_NONE, &m_ble_addr);
-    APP_ERROR_CHECK(err_code);
-
     // Build and set advertising data.
     memset(&advdata, 0, sizeof(advdata));
 
@@ -625,16 +620,39 @@ static void advertising_start(void)
         // Initialize advertising parameters (used when starting advertising).
         memset(&m_adv_params, 0, sizeof(m_adv_params));
 
-        err_code = dfu_ble_get_peer_data(&m_ble_peer_data);
-
-        if (err_code == NRF_SUCCESS)
+        if (m_ble_peer_data_valid)
         {
-            advertising_init(BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE);
-            m_adv_params.type        = BLE_GAP_ADV_TYPE_ADV_DIRECT_IND;
-            m_adv_params.p_peer_addr = &m_ble_peer_data.addr;
-            m_adv_params.fp          = BLE_GAP_ADV_FP_ANY;
-            m_adv_params.interval    = 0;
-            m_adv_params.timeout     = 0;
+            if (m_ble_peer_data.addr.addr_type != PEER_ADDRESS_TYPE_INVALID)
+            {
+                advertising_init(BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE);
+                m_adv_params.type        = BLE_GAP_ADV_TYPE_ADV_DIRECT_IND;
+                m_adv_params.p_peer_addr = &m_ble_peer_data.addr;
+                m_adv_params.fp          = BLE_GAP_ADV_FP_ANY;
+                m_adv_params.interval    = 0;
+                m_adv_params.timeout     = 0;
+            }
+            else
+            {
+                ble_gap_irk_t      * p_irk[1];
+                ble_gap_addr_t     * p_addr[1];
+                
+                p_irk[0]  = &m_ble_peer_data.irk;
+                p_addr[0] = &m_ble_peer_data.addr;
+
+                ble_gap_whitelist_t  whitelist;
+                whitelist.addr_count = 0;
+                whitelist.pp_addrs   = p_addr;
+                whitelist.irk_count  = 1;
+                whitelist.pp_irks    = p_irk;
+
+                advertising_init(BLE_GAP_ADV_FLAG_BR_EDR_NOT_SUPPORTED);
+                m_adv_params.type        = BLE_GAP_ADV_TYPE_ADV_IND;
+                m_adv_params.fp          = BLE_GAP_ADV_FP_FILTER_CONNREQ;
+                m_adv_params.p_whitelist = &whitelist;
+
+                m_adv_params.interval    = APP_ADV_INTERVAL;
+                m_adv_params.timeout     = APP_ADV_TIMEOUT_IN_SECONDS;
+            }
         }
         else
         {
@@ -743,21 +761,17 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             }
             break;
 
-        case BLE_GATTS_EVT_SYS_ATTR_MISSING:
-            err_code = sd_ble_gatts_sys_attr_set(m_conn_handle, NULL, 0);
-            APP_ERROR_CHECK(err_code);
-            break;
-
         case BLE_GAP_EVT_SEC_INFO_REQUEST:
             err_code = sd_ble_gap_sec_info_reply(p_ble_evt->evt.gap_evt.conn_handle,
                                                  &m_ble_peer_data.enc_info,
                                                  NULL);
+            APP_ERROR_CHECK(err_code);
             break;
 
+        case BLE_GATTS_EVT_SYS_ATTR_MISSING:
         case BLE_GAP_EVT_CONN_SEC_UPDATE:
-            err_code = sd_ble_gatts_sys_attr_set(p_ble_evt->evt.gap_evt.conn_handle,
-                                                 NULL,
-                                                 0);
+            err_code = sd_ble_gatts_sys_attr_set(m_conn_handle, NULL, 0);
+            APP_ERROR_CHECK(err_code);
             break;
 
         default:
@@ -894,7 +908,13 @@ uint32_t dfu_transport_update_start()
     {
         return err_code;
     }
-    
+
+    err_code = dfu_ble_get_peer_data(&m_ble_peer_data);
+    if (err_code == NRF_SUCCESS)
+    {
+        m_ble_peer_data_valid = true;
+    }
+
     gap_params_init();
     services_init();
     conn_params_init();

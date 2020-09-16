@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_hids_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_hids_char_id_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,127 +106,63 @@ $(document).ready(function(){initNavTree('a00282.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_hids_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00967.html">Human Interface Device Service</a></div></div>  </div>
+<div class="title">ble_hids_char_id_t Struct Reference<div class="ingroups"><a class="el" href="a00968.html">Human Interface Device Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>HID Service event.  
+<p>HID Service characteristic id.  
  <a href="a00282.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_hids.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a51d0ccfb2582557e1863bb12d77e71dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00967.html#ga621d899fc96687c922a0c65010bfc063">ble_hids_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00282.html#a51d0ccfb2582557e1863bb12d77e71dc">evt_type</a></td></tr>
-<tr class="separator:a51d0ccfb2582557e1863bb12d77e71dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21070349687a218d6d093d94e95a3475"><td class="memItemLeft" ><a class="anchor" id="a21070349687a218d6d093d94e95a3475"></a>
-union {</td></tr>
-<tr class="memitem:ad6c7f4b6b87a13dd4bc7c63bc876bf53"><td class="memItemLeft" >&#160;&#160;&#160;struct {</td></tr>
-<tr class="memitem:a8f7a6a5c807631148f325cbfe21130ad"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;<a class="el" href="a00281.html">ble_hids_char_id_t</a>&#160;&#160;&#160;<a class="el" href="a00282.html#a778ecea962888dfc1e026fc52526a9a4">char_id</a></td></tr>
-<tr class="separator:a8f7a6a5c807631148f325cbfe21130ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6c7f4b6b87a13dd4bc7c63bc876bf53"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;&#160;&#160;<b>notification</b></td></tr>
-<tr class="separator:ad6c7f4b6b87a13dd4bc7c63bc876bf53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4685e5bf6e5982c3fc4bd0b38e5b571"><td class="memItemLeft" >&#160;&#160;&#160;struct {</td></tr>
-<tr class="memitem:a7b2c9521b36c6aea3867e2e5f2acf6b1"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;<a class="el" href="a00281.html">ble_hids_char_id_t</a>&#160;&#160;&#160;<a class="el" href="a00282.html#a778ecea962888dfc1e026fc52526a9a4">char_id</a></td></tr>
-<tr class="separator:a7b2c9521b36c6aea3867e2e5f2acf6b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fe8ce01b0e49d0c002115165868ae9e"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint16_t&#160;&#160;&#160;<a class="el" href="a00282.html#ab8048550dc2672f019c4e6278977efbc">offset</a></td></tr>
-<tr class="separator:a9fe8ce01b0e49d0c002115165868ae9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5f040eabbb96ba7f42b34962253329b"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint16_t&#160;&#160;&#160;<a class="el" href="a00282.html#ae218ffb7a01687ebe2557a2ab2d48bba">len</a></td></tr>
-<tr class="separator:ad5f040eabbb96ba7f42b34962253329b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e1959c0e45c21e24f740560a536e7ff"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint8_t *&#160;&#160;&#160;<a class="el" href="a00282.html#a8c305e6a62b2c26934d5be6e84dec0f5">data</a></td></tr>
-<tr class="separator:a9e1959c0e45c21e24f740560a536e7ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4685e5bf6e5982c3fc4bd0b38e5b571"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;&#160;&#160;<b>char_write</b></td></tr>
-<tr class="separator:ab4685e5bf6e5982c3fc4bd0b38e5b571"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f611d106631f64e1b3a6557fde5a6ed"><td class="memItemLeft" >&#160;&#160;&#160;struct {</td></tr>
-<tr class="memitem:a53df0e377e536df5d4d86f549670460a"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;<a class="el" href="a00281.html">ble_hids_char_id_t</a>&#160;&#160;&#160;<a class="el" href="a00282.html#a778ecea962888dfc1e026fc52526a9a4">char_id</a></td></tr>
-<tr class="separator:a53df0e377e536df5d4d86f549670460a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f611d106631f64e1b3a6557fde5a6ed"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;&#160;&#160;<b>char_auth_read</b></td></tr>
-<tr class="separator:a0f611d106631f64e1b3a6557fde5a6ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21070349687a218d6d093d94e95a3475"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:a21070349687a218d6d093d94e95a3475"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43346ee583a9d322a18716f188630a89"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00202.html">ble_evt_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00282.html#a43346ee583a9d322a18716f188630a89">p_ble_evt</a></td></tr>
-<tr class="separator:a43346ee583a9d322a18716f188630a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47c01b1e08f6757e61e2dd38dcb67044"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00282.html#a47c01b1e08f6757e61e2dd38dcb67044">uuid</a></td></tr>
+<tr class="separator:a47c01b1e08f6757e61e2dd38dcb67044"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affea5bdaeda61718d00cf34afa060f20"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00282.html#affea5bdaeda61718d00cf34afa060f20">rep_type</a></td></tr>
+<tr class="separator:affea5bdaeda61718d00cf34afa060f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06b63ec45cda32c75e842421f1235063"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00282.html#a06b63ec45cda32c75e842421f1235063">rep_index</a></td></tr>
+<tr class="separator:a06b63ec45cda32c75e842421f1235063"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>HID Service event. </p>
+<div class="textblock"><p>HID Service characteristic id. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a778ecea962888dfc1e026fc52526a9a4"></a>
+<a class="anchor" id="a06b63ec45cda32c75e842421f1235063"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00281.html">ble_hids_char_id_t</a> ble_hids_evt_t::char_id</td>
+          <td class="memname">uint8_t ble_hids_char_id_t::rep_index</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Id of characteristic for which notification has been started.</p>
-<p>Id of characteristic having been written.</p>
-<p>Id of characteristic being read. </p>
+<p>Index of the characteristic (only used for BLE_UUID_REPORT_CHAR). </p>
 
 </div>
 </div>
-<a class="anchor" id="a8c305e6a62b2c26934d5be6e84dec0f5"></a>
+<a class="anchor" id="affea5bdaeda61718d00cf34afa060f20"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* ble_hids_evt_t::data</td>
+          <td class="memname">uint8_t ble_hids_char_id_t::rep_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Incoming data, variable length </p>
+<p>Type of report (only used for BLE_UUID_REPORT_CHAR, see <a class="el" href="a00968.html#BLE_HIDS_REPORT_TYPE">BLE_HIDS_REPORT_TYPE</a>). </p>
 
 </div>
 </div>
-<a class="anchor" id="a51d0ccfb2582557e1863bb12d77e71dc"></a>
+<a class="anchor" id="a47c01b1e08f6757e61e2dd38dcb67044"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00967.html#ga621d899fc96687c922a0c65010bfc063">ble_hids_evt_type_t</a> ble_hids_evt_t::evt_type</td>
+          <td class="memname">uint16_t ble_hids_char_id_t::uuid</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of event. </p>
-
-</div>
-</div>
-<a class="anchor" id="ae218ffb7a01687ebe2557a2ab2d48bba"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_hids_evt_t::len</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Length of the incoming data. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab8048550dc2672f019c4e6278977efbc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_hids_evt_t::offset</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Offset for the write operation. </p>
-
-</div>
-</div>
-<a class="anchor" id="a43346ee583a9d322a18716f188630a89"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00202.html">ble_evt_t</a>* ble_hids_evt_t::p_ble_evt</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>corresponding received ble event, NULL if not relevant </p>
+<p>UUID of characteristic. </p>
 
 </div>
 </div>
@@ -235,8 +171,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00282.html">ble_hids_evt_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00282.html">ble_hids_char_id_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

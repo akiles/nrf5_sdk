@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Common application error handler</title>
+<title>nRF51 SDK - S110 SoftDevice: Debug Logger</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -100,148 +100,64 @@ $(document).ready(function(){initNavTree('a00781.html','');});
 <a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Common application error handler<div class="ingroups"><a class="el" href="a01037.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">Debug Logger<div class="ingroups"><a class="el" href="a01039.html">SDK Common Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Common application error handler and macros for utilizing a common error handler.  
+<p>Enables debug logs/ trace over UART.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gace6d059863761677dae5a6b1456a34ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00781.html#gace6d059863761677dae5a6b1456a34ba">APP_ERROR_HANDLER</a>(ERR_CODE)</td></tr>
-<tr class="memdesc:gace6d059863761677dae5a6b1456a34ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for calling error handler function.  <a href="#gace6d059863761677dae5a6b1456a34ba">More...</a><br/></td></tr>
-<tr class="separator:gace6d059863761677dae5a6b1456a34ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga82d00a810dcea7dcc6af469461fb254c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00781.html#ga82d00a810dcea7dcc6af469461fb254c">APP_ERROR_CHECK</a>(ERR_CODE)</td></tr>
-<tr class="memdesc:ga82d00a810dcea7dcc6af469461fb254c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.  <a href="#ga82d00a810dcea7dcc6af469461fb254c">More...</a><br/></td></tr>
-<tr class="separator:ga82d00a810dcea7dcc6af469461fb254c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9e67d9f4978caa34040b31f8fb9d4f58"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00781.html#ga9e67d9f4978caa34040b31f8fb9d4f58">APP_ERROR_CHECK_BOOL</a>(BOOLEAN_VALUE)</td></tr>
-<tr class="memdesc:ga9e67d9f4978caa34040b31f8fb9d4f58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for calling error handler function if supplied boolean value is false.  <a href="#ga9e67d9f4978caa34040b31f8fb9d4f58">More...</a><br/></td></tr>
-<tr class="separator:ga9e67d9f4978caa34040b31f8fb9d4f58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga731dcef3cb5915b230fd9f55067f69bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00781.html#ga731dcef3cb5915b230fd9f55067f69bb">app_trace_log</a>&#160;&#160;&#160;printf</td></tr>
+<tr class="memdesc:ga731dcef3cb5915b230fd9f55067f69bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log debug messages.  <a href="#ga731dcef3cb5915b230fd9f55067f69bb">More...</a><br/></td></tr>
+<tr class="separator:ga731dcef3cb5915b230fd9f55067f69bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gad8b5b293dfa06cbbfeb03aaaaa2772cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00781.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> (uint32_t error_code, uint32_t line_num, const uint8_t *p_file_name)</td></tr>
-<tr class="memdesc:gad8b5b293dfa06cbbfeb03aaaaa2772cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for error handling, which is called when an error has occurred.  <a href="#gad8b5b293dfa06cbbfeb03aaaaa2772cf">More...</a><br/></td></tr>
-<tr class="separator:gad8b5b293dfa06cbbfeb03aaaaa2772cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae7a95b63891d69936ff23995fdd9fa53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00781.html#gae7a95b63891d69936ff23995fdd9fa53">app_trace_init</a> (void)</td></tr>
+<tr class="memdesc:gae7a95b63891d69936ff23995fdd9fa53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module Initialization.  <a href="#gae7a95b63891d69936ff23995fdd9fa53">More...</a><br/></td></tr>
+<tr class="separator:gae7a95b63891d69936ff23995fdd9fa53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48cc2844a947c20ae7f00762dc69417e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00781.html#ga48cc2844a947c20ae7f00762dc69417e">app_trace_dump</a> (uint8_t *p_buffer, uint32_t len)</td></tr>
+<tr class="memdesc:ga48cc2844a947c20ae7f00762dc69417e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump auxiliary byte buffer to the debug trace.  <a href="#ga48cc2844a947c20ae7f00762dc69417e">More...</a><br/></td></tr>
+<tr class="separator:ga48cc2844a947c20ae7f00762dc69417e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Common application error handler and macros for utilizing a common error handler. </p>
+<p>Enables debug logs/ trace over UART. </p>
+<p>Enables debug logs/ trace over UART. Tracing is enabled only if ENABLE_DEBUG_LOG_SUPPORT is defined in the project. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga82d00a810dcea7dcc6af469461fb254c"></a>
+<a class="anchor" id="ga731dcef3cb5915b230fd9f55067f69bb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define APP_ERROR_CHECK</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">ERR_CODE</td><td>)</td>
-          <td></td>
+          <td class="memname">#define app_trace_log&#160;&#160;&#160;printf</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>                                                      \</div>
-<div class="line">    {                                                       \</div>
-<div class="line">        const uint32_t LOCAL_ERR_CODE = (ERR_CODE);         \</div>
-<div class="line">        if (LOCAL_ERR_CODE != <a class="code" href="a00840.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)                  \</div>
-<div class="line">        {                                                   \</div>
-<div class="line">            APP_ERROR_HANDLER(LOCAL_ERR_CODE);              \</div>
-<div class="line">        }                                                   \</div>
-<div class="line">    } <span class="keywordflow">while</span> (0)</div>
-</div><!-- fragment -->
-<p>Macro for calling error handler function if supplied error code any other than NRF_SUCCESS. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ERR_CODE</td><td>Error code supplied to the error handler. </td></tr>
-  </table>
-  </dd>
-</dl>
 
-</div>
-</div>
-<a class="anchor" id="ga9e67d9f4978caa34040b31f8fb9d4f58"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define APP_ERROR_CHECK_BOOL</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">BOOLEAN_VALUE</td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>                                                        \</div>
-<div class="line">    {                                                         \</div>
-<div class="line">        const uint32_t LOCAL_BOOLEAN_VALUE = (BOOLEAN_VALUE); \</div>
-<div class="line">        if (!LOCAL_BOOLEAN_VALUE)                             \</div>
-<div class="line">        {                                                     \</div>
-<div class="line">            APP_ERROR_HANDLER(0);                             \</div>
-<div class="line">        }                                                     \</div>
-<div class="line">    } <span class="keywordflow">while</span> (0)</div>
-</div><!-- fragment -->
-<p>Macro for calling error handler function if supplied boolean value is false. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">BOOLEAN_VALUE</td><td>Boolean value to be evaluated. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gace6d059863761677dae5a6b1456a34ba"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define APP_ERROR_HANDLER</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">ERR_CODE</td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>                                                      \</div>
-<div class="line">    {                                                       \</div>
-<div class="line">        app_error_handler((ERR_CODE), 0, 0);  \</div>
-<div class="line">    } <span class="keywordflow">while</span> (0)</div>
-</div><!-- fragment -->
-<p>Macro for calling error handler function. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">ERR_CODE</td><td>Error code supplied to the error handler. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Log debug messages. </p>
+<p>This API logs messages over UART. The module must be initialized before using this API.</p>
+<dl class="section note"><dt>Note</dt><dd>Though this is currently a macro, it should be used used and treated as function. </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gad8b5b293dfa06cbbfeb03aaaaa2772cf"></a>
+<a class="anchor" id="ga48cc2844a947c20ae7f00762dc69417e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void app_error_handler </td>
+          <td class="memname">void app_trace_dump </td>
           <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>error_code</em>, </td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>line_num</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>p_file_name</em>&#160;</td>
+          <td class="paramname"><em>len</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -251,15 +167,35 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for error handling, which is called when an error has occurred. </p>
+<p>Dump auxiliary byte buffer to the debug trace. </p>
+<p>This API logs messages over UART. The module must be initialized before using this API.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">error_code</td><td>Error code supplied to the handler. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">line_num</td><td>Line number where the handler is called. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_file_name</td><td>Pointer to the file name. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Buffer to be dumped on the debug trace. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Size of the buffer. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="gae7a95b63891d69936ff23995fdd9fa53"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void app_trace_init </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Module Initialization. </p>
+<p>Initializes the module to use UART as trace output.</p>
+<dl class="section warning"><dt>Warning</dt><dd>This function will configure UART using default board configuration. Do not call this function if UART is configured from a higher level in the application. </dd></dl>
 
 </div>
 </div>
@@ -268,7 +204,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:19 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:05 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

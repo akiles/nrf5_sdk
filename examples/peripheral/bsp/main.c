@@ -134,6 +134,7 @@ int main(void)
                        uart_error_handle, 
                        APP_IRQ_PRIORITY_LOW,
                        err_code);
+    APP_ERROR_CHECK(err_code);
     bsp_configuration();
 
     err_code = bsp_indication_text_set(actual_state,indications_list[actual_state]);

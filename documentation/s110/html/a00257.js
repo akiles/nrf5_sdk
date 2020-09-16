@@ -1,9 +1,9 @@
 var a00257 =
 [
-    [ "char_uuid", "a00257.html#adbbcf41424e48536f3c3e7f2665005fd", null ],
-    [ "desc_uuid", "a00257.html#a6d909918be5c3a58a93e3f345ad0ae5e", null ],
-    [ "srvc_handle", "a00257.html#a9ec74591a8b40af4354fed5c2ae33efd", null ],
-    [ "srvc_uuid", "a00257.html#a351c0654157494b748a0adcba003e42f", null ],
-    [ "type", "a00257.html#a59115313e869d01234cc2ed3ab2e25d9", null ],
-    [ "value_handle", "a00257.html#a770254b2ade294a3f24fa0db65a2d0fa", null ]
+    [ "flags", "a00257.html#ae9bf42dc0e530824c93ec423e6539220", null ],
+    [ "handle", "a00257.html#a4b5cec7a8b33f482114d99026b2ee92d", null ],
+    [ "len", "a00257.html#a068c40f218ed3932901529ac05b69c21", null ],
+    [ "offset", "a00257.html#a85d01254a43068218061ab21acabe980", null ],
+    [ "p_value", "a00257.html#a361b91f9ee1961598bc9c94520f8004b", null ],
+    [ "write_op", "a00257.html#a2c42a23118699b0fab8f49f1d9b4b386", null ]
 ];

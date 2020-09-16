@@ -46,7 +46,7 @@
 /** @name Configuration                                                      */
 /*****************************************************************************/
 #define UART_TX_BUF_SIZE 256                                        /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 1                          								/**< UART RX buffer size. */
+#define UART_RX_BUF_SIZE 1                                          /**< UART RX buffer size. */
 
 
 #define SEND_KEYBOARD_DATA_BUTTON_ID   0  ///< GPIO pin for reading from a button to emulate a keypress.
@@ -134,10 +134,10 @@ void uart_error_handle(app_uart_evt_t * p_event)
 int main()
 {
      bool init_ok = false;
-		uint32_t err_code;
+     uint32_t err_code;
 //lint -save -e514 Unusual use of a boolean expression (use of &= assignment).
 
-	 const app_uart_comm_params_t comm_params =
+    const app_uart_comm_params_t comm_params =
        {
            RX_PIN_NUMBER,
            TX_PIN_NUMBER,
@@ -158,7 +158,7 @@ int main()
     (void)err_code;
     UNUSED_VARIABLE(bsp_init(BSP_INIT_BUTTONS,0,NULL));
 
-		printf("Desktop emulator example\n");
+    printf("Desktop emulator example\n");
     // Initialize and enable "mouse sensor"
     init_ok = mouse_sensor_init(MOUSE_SENSOR_SAMPLE_PERIOD_8_MS);
     mouse_sensor_enable();
@@ -196,7 +196,9 @@ int main()
         while(1)
         {
             // If BUTTON_SEND_MOUSE_DATA button is pressed.
-            if( bsp_buttons_state_get() & (1<< SEND_MOUSE_DATA_BUTTON_ID))
+            bool send_mouse_data_button_pressed;
+            err_code = bsp_button_is_pressed(SEND_MOUSE_DATA_BUTTON_ID,&(send_mouse_data_button_pressed));
+            if( send_mouse_data_button_pressed)
             {
                 read_mouse_and_send();
             }
@@ -206,7 +208,9 @@ int main()
             }
 
             // If BUTTON_SEND_KEYBOARD_DATA button is pressed
-            if(bsp_buttons_state_get() & (1<< SEND_KEYBOARD_DATA_BUTTON_ID))
+            bool send_keyboard_data_button_pressed;
+            err_code = bsp_button_is_pressed(SEND_KEYBOARD_DATA_BUTTON_ID,&(send_keyboard_data_button_pressed));
+            if(send_keyboard_data_button_pressed)
             {
                 read_keyboard_and_send();
             }
@@ -339,8 +343,11 @@ static void read_keyboard_and_send(void)
         if(keyboard_send_ok)
         {
            // Wait until button is depressed.
-            while((bsp_buttons_state_get() & (1<< SEND_KEYBOARD_DATA_BUTTON_ID)))
-            {}
+           bool button_pressed;
+           do{
+						 UNUSED_VARIABLE(bsp_button_is_pressed(SEND_KEYBOARD_DATA_BUTTON_ID,&(button_pressed)));
+					 }while(button_pressed);
+
             // Send empty keyboard packet to release all keys.
             keyboard_get_empty_packet(keyboard_packet);
             keyboard_send_ok = gzp_crypt_data_send(keyboard_packet, NRFR_KEYBOARD_PACKET_LENGTH);

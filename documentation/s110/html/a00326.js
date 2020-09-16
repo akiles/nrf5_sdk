@@ -1,7 +1,6 @@
 var a00326 =
 [
-    [ "incr", "a00326.html#a62eecf0076b6555dd1cd98c22e9323e3", null ],
-    [ "max", "a00326.html#a706f772aefa1ba388ffa4d89182ed66c", null ],
-    [ "min", "a00326.html#a68d5bf12a9ad90af16abd75b5d2b63d3", null ],
-    [ "start_at_max", "a00326.html#ac1dc36256413535c9190580f7e263171", null ]
+    [ "cumulative_value", "a00326.html#a9dce1ef6b333542b081df12273229b2e", null ],
+    [ "location", "a00326.html#a27be823fda46c3deb2f3fd98a38bf29f", null ],
+    [ "opcode", "a00326.html#a000223ebda70c1ccce85e8746a7d8207", null ]
 ];

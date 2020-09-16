@@ -419,11 +419,12 @@ typedef enum
  *
  * @details This section describes APIs exposed by the module. The APIs have been categorized to provide
  *          better and specific look up for developers. Categories are:
- *          a. Set up APIs.
- *          b. Context Management APIs.
- *          c. Utility APIs.
+ *          - Set up APIs.
+ *          - Context Management APIs.
+ *          - Utility APIs.
  *
- *          MSCs describe usage of these APIs. See @mscfile dm_api.dox
+ *          MSCs describe usage of these APIs.  
+ *          See @ref dm_msc.
  * @{
  */
 /**

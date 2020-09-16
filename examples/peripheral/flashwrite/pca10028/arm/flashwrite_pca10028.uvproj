@@ -353,7 +353,7 @@
               <MiscControls>--c99</MiscControls>
               <Define> NRF51 BSP_DEFINES_ONLY BOARD_PCA10028</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\components\libraries\util;..\..\..\..\bsp;..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\components\libraries\gpiote</IncludePath>
+              <IncludePath>..\..\;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\components\libraries\fifo;..\..\..\..\bsp;..\..\..\..\..\components\libraries\util;..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\components\drivers_nrf\hal</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

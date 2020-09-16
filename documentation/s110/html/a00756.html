@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: GPIO abstraction</title>
+<title>nRF51 SDK - S110 SoftDevice: AES ECB encryption</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,199 +97,115 @@ $(document).ready(function(){initNavTree('a00756.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">GPIO abstraction<div class="ingroups"><a class="el" href="a01033.html">Peripheral Drivers</a></div></div>  </div>
+<div class="title">AES ECB encryption<div class="ingroups"><a class="el" href="a01035.html">Peripheral Drivers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GPIO pin abstraction and port abstraction for reading and writing byte-wise to GPIO ports.  
+<p>Driver for the nRF51 AES Electronic Code Book (ECB) peripheral.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga494d7ac30db1cbb6366e0b9ebd5b49b4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga494d7ac30db1cbb6366e0b9ebd5b49b4">nrf_gpio_port_dir_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00756.html#gga494d7ac30db1cbb6366e0b9ebd5b49b4a90b7ce7a76775cb7534487635755be3f">NRF_GPIO_PORT_DIR_OUTPUT</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00756.html#gga494d7ac30db1cbb6366e0b9ebd5b49b4a6ec5811669635e30b9dc014e1f494936">NRF_GPIO_PORT_DIR_INPUT</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga494d7ac30db1cbb6366e0b9ebd5b49b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerator used for setting the direction of a GPIO port.  <a href="a00756.html#ga494d7ac30db1cbb6366e0b9ebd5b49b4">More...</a><br/></td></tr>
-<tr class="separator:ga494d7ac30db1cbb6366e0b9ebd5b49b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4089fa9e3311c34d254d4d00029911bc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga4089fa9e3311c34d254d4d00029911bc">nrf_gpio_pin_dir_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00756.html#gga4089fa9e3311c34d254d4d00029911bcadcb15e081def4002ed564fd8abbaa29d">NRF_GPIO_PIN_DIR_INPUT</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00756.html#gga4089fa9e3311c34d254d4d00029911bca51b31d6f52c664433688ecc535e49f54">NRF_GPIO_PIN_DIR_OUTPUT</a>
-<br/>
- }</td></tr>
-<tr class="separator:ga4089fa9e3311c34d254d4d00029911bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1a5c145e334817f2d960317d64fcb3d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#gaa1a5c145e334817f2d960317d64fcb3d">nrf_gpio_port_select_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00756.html#ggaa1a5c145e334817f2d960317d64fcb3dada4c86d9760e81857ec0482c1cc78190">NRF_GPIO_PORT_SELECT_PORT0</a> = 0, 
-<br/>
-&#160;&#160;<a class="el" href="a00756.html#ggaa1a5c145e334817f2d960317d64fcb3da9209d7820d65eb58c7804e676581bf40">NRF_GPIO_PORT_SELECT_PORT1</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00756.html#ggaa1a5c145e334817f2d960317d64fcb3daf83f3be082e45a73102618f149448fc8">NRF_GPIO_PORT_SELECT_PORT2</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00756.html#ggaa1a5c145e334817f2d960317d64fcb3da9075a015252fd02d27ba7ca897aa564d">NRF_GPIO_PORT_SELECT_PORT3</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gaa1a5c145e334817f2d960317d64fcb3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerator used for selecting between port 0 - 3.  <a href="a00756.html#gaa1a5c145e334817f2d960317d64fcb3d">More...</a><br/></td></tr>
-<tr class="separator:gaa1a5c145e334817f2d960317d64fcb3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga07e0c8c0b30499cf0a7b79dbe62d3fcc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga07e0c8c0b30499cf0a7b79dbe62d3fcc">nrf_gpio_pin_pull_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00756.html#gga07e0c8c0b30499cf0a7b79dbe62d3fcca13ffcb94eb78be866c66b5f5b516af65">NRF_GPIO_PIN_NOPULL</a> = (0x00UL), 
-<br/>
-&#160;&#160;<a class="el" href="a00756.html#gga07e0c8c0b30499cf0a7b79dbe62d3fcca314d4b349d7e59ea3373a1ced4f32e4d">NRF_GPIO_PIN_PULLDOWN</a> = (0x01UL), 
-<br/>
-&#160;&#160;<a class="el" href="a00756.html#gga07e0c8c0b30499cf0a7b79dbe62d3fccad60f768c699495d9976a45fa7a9f51c6">NRF_GPIO_PIN_PULLUP</a> = (0x03UL)
-<br/>
- }</td></tr>
-<tr class="memdesc:ga07e0c8c0b30499cf0a7b79dbe62d3fcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerator used for selecting the pin to be pulled down or up at the time of pin configuration.  <a href="a00756.html#ga07e0c8c0b30499cf0a7b79dbe62d3fcc">More...</a><br/></td></tr>
-<tr class="separator:ga07e0c8c0b30499cf0a7b79dbe62d3fcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0708136c752d69015962a2ccb4c59fbd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga0708136c752d69015962a2ccb4c59fbd">nrf_gpio_pin_sense_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00756.html#gga0708136c752d69015962a2ccb4c59fbda60d9e9b3abe91c66a618e34d88444e95">NRF_GPIO_PIN_NOSENSE</a> = (0x00UL), 
-<br/>
-&#160;&#160;<a class="el" href="a00756.html#gga0708136c752d69015962a2ccb4c59fbda48aaaa3fc33a295d9c65f094e03aba24">NRF_GPIO_PIN_SENSE_LOW</a> = (0x03UL), 
-<br/>
-&#160;&#160;<a class="el" href="a00756.html#gga0708136c752d69015962a2ccb4c59fbda8fe882a266370654fa6d664be3e1ecce">NRF_GPIO_PIN_SENSE_HIGH</a> = (0x02UL)
-<br/>
- }</td></tr>
-<tr class="memdesc:ga0708136c752d69015962a2ccb4c59fbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerator used for selecting the pin to sense high or low level on the pin input.  <a href="a00756.html#ga0708136c752d69015962a2ccb4c59fbd">More...</a><br/></td></tr>
-<tr class="separator:ga0708136c752d69015962a2ccb4c59fbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gae9609bc1e796e528ca2f4ad3311662e4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#gae9609bc1e796e528ca2f4ad3311662e4">nrf_ecb_init</a> (void)</td></tr>
+<tr class="separator:gae9609bc1e796e528ca2f4ad3311662e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaa8745b5d94900452e525ba60f783cd0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#gaaa8745b5d94900452e525ba60f783cd0">nrf_ecb_crypt</a> (uint8_t *dst, const uint8_t *src)</td></tr>
+<tr class="separator:gaaa8745b5d94900452e525ba60f783cd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga69e4fcd00a7c2249c5c94210c1c21c90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00756.html#ga69e4fcd00a7c2249c5c94210c1c21c90">nrf_ecb_set_key</a> (const uint8_t *key)</td></tr>
+<tr class="separator:ga69e4fcd00a7c2249c5c94210c1c21c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>GPIO pin abstraction and port abstraction for reading and writing byte-wise to GPIO ports. </p>
-<p>Here, the GPIO ports are defined as follows:</p>
-<ul>
-<li>Port 0 -&gt; pin 0-7</li>
-<li>Port 1 -&gt; pin 8-15</li>
-<li>Port 2 -&gt; pin 16-23</li>
-<li>Port 3 -&gt; pin 24-31 </li>
-</ul>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga4089fa9e3311c34d254d4d00029911bc"></a>
+<p>Driver for the nRF51 AES Electronic Code Book (ECB) peripheral. </p>
+<p>In order to encrypt and decrypt data the peripheral must be powered on using <a class="el" href="a00756.html#gae9609bc1e796e528ca2f4ad3311662e4">nrf_ecb_init()</a> and then the key set using nrf_ecb_set_key. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gaaa8745b5d94900452e525ba60f783cd0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00756.html#ga4089fa9e3311c34d254d4d00029911bc">nrf_gpio_pin_dir_t</a></td>
+          <td class="memname">bool nrf_ecb_crypt </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>src</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pin direction definitions. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4089fa9e3311c34d254d4d00029911bcadcb15e081def4002ed564fd8abbaa29d"></a>NRF_GPIO_PIN_DIR_INPUT</em>&nbsp;</td><td class="fielddoc">
-<p>Input. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4089fa9e3311c34d254d4d00029911bca51b31d6f52c664433688ecc535e49f54"></a>NRF_GPIO_PIN_DIR_OUTPUT</em>&nbsp;</td><td class="fielddoc">
-<p>Output. </p>
-</td></tr>
-</table>
+<p>Encrypt/decrypt 16-byte data using current key.</p>
+<p>The function avoids unnecessary copying of data if the point to the correct locations in the ECB data structure.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dst</td><td>Result of encryption/decryption. 16 bytes will be written. </td></tr>
+    <tr><td class="paramname">src</td><td>Source with 16-byte data to be encrypted/decrypted.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>If the encryption operation completed. </td></tr>
+    <tr><td class="paramname">false</td><td>If the encryption operation did not complete. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga07e0c8c0b30499cf0a7b79dbe62d3fcc"></a>
+<a class="anchor" id="gae9609bc1e796e528ca2f4ad3311662e4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00756.html#ga07e0c8c0b30499cf0a7b79dbe62d3fcc">nrf_gpio_pin_pull_t</a></td>
+          <td class="memname">bool nrf_ecb_init </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Enumerator used for selecting the pin to be pulled down or up at the time of pin configuration. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga07e0c8c0b30499cf0a7b79dbe62d3fcca13ffcb94eb78be866c66b5f5b516af65"></a>NRF_GPIO_PIN_NOPULL</em>&nbsp;</td><td class="fielddoc">
-<p>Pin pullup resistor disabled. </p>
-<p>No pull. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga07e0c8c0b30499cf0a7b79dbe62d3fcca314d4b349d7e59ea3373a1ced4f32e4d"></a>NRF_GPIO_PIN_PULLDOWN</em>&nbsp;</td><td class="fielddoc">
-<p>Pin pulldown resistor enabled. </p>
-<p>Pulldown on pin. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga07e0c8c0b30499cf0a7b79dbe62d3fccad60f768c699495d9976a45fa7a9f51c6"></a>NRF_GPIO_PIN_PULLUP</em>&nbsp;</td><td class="fielddoc">
-<p>Pin pullup resistor enabled. </p>
-<p>Pullup on pin. </p>
-</td></tr>
-</table>
+<p>Initialize and power on the ECB peripheral.</p>
+<p>Allocates memory for the ECBDATAPTR. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>Initialization was successful. </td></tr>
+    <tr><td class="paramname">false</td><td>Powering up failed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga0708136c752d69015962a2ccb4c59fbd"></a>
+<a class="anchor" id="ga69e4fcd00a7c2249c5c94210c1c21c90"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00756.html#ga0708136c752d69015962a2ccb4c59fbd">nrf_gpio_pin_sense_t</a></td>
+          <td class="memname">void nrf_ecb_set_key </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Enumerator used for selecting the pin to sense high or low level on the pin input. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0708136c752d69015962a2ccb4c59fbda60d9e9b3abe91c66a618e34d88444e95"></a>NRF_GPIO_PIN_NOSENSE</em>&nbsp;</td><td class="fielddoc">
-<p>Pin sense level disabled. </p>
-<p>Disabled. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0708136c752d69015962a2ccb4c59fbda48aaaa3fc33a295d9c65f094e03aba24"></a>NRF_GPIO_PIN_SENSE_LOW</em>&nbsp;</td><td class="fielddoc">
-<p>Pin sense low level. </p>
-<p>Wakeup on low level. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0708136c752d69015962a2ccb4c59fbda8fe882a266370654fa6d664be3e1ecce"></a>NRF_GPIO_PIN_SENSE_HIGH</em>&nbsp;</td><td class="fielddoc">
-<p>Pin sense high level. </p>
-<p>Wakeup on high level. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga494d7ac30db1cbb6366e0b9ebd5b49b4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00756.html#ga494d7ac30db1cbb6366e0b9ebd5b49b4">nrf_gpio_port_dir_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Enumerator used for setting the direction of a GPIO port. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga494d7ac30db1cbb6366e0b9ebd5b49b4a90b7ce7a76775cb7534487635755be3f"></a>NRF_GPIO_PORT_DIR_OUTPUT</em>&nbsp;</td><td class="fielddoc">
-<p>Output. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga494d7ac30db1cbb6366e0b9ebd5b49b4a6ec5811669635e30b9dc014e1f494936"></a>NRF_GPIO_PORT_DIR_INPUT</em>&nbsp;</td><td class="fielddoc">
-<p>Input. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gaa1a5c145e334817f2d960317d64fcb3d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00756.html#gaa1a5c145e334817f2d960317d64fcb3d">nrf_gpio_port_select_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Enumerator used for selecting between port 0 - 3. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa1a5c145e334817f2d960317d64fcb3dada4c86d9760e81857ec0482c1cc78190"></a>NRF_GPIO_PORT_SELECT_PORT0</em>&nbsp;</td><td class="fielddoc">
-<p>Port 0 (GPIO pin 0-7) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa1a5c145e334817f2d960317d64fcb3da9209d7820d65eb58c7804e676581bf40"></a>NRF_GPIO_PORT_SELECT_PORT1</em>&nbsp;</td><td class="fielddoc">
-<p>Port 1 (GPIO pin 8-15) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa1a5c145e334817f2d960317d64fcb3daf83f3be082e45a73102618f149448fc8"></a>NRF_GPIO_PORT_SELECT_PORT2</em>&nbsp;</td><td class="fielddoc">
-<p>Port 2 (GPIO pin 16-23) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa1a5c145e334817f2d960317d64fcb3da9075a015252fd02d27ba7ca897aa564d"></a>NRF_GPIO_PORT_SELECT_PORT3</em>&nbsp;</td><td class="fielddoc">
-<p>Port 3 (GPIO pin 24-31) </p>
-</td></tr>
-</table>
+<p>Set the key to be used for encryption/decryption.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Pointer to key. 16 bytes will be read. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -298,7 +214,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:19 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:05 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

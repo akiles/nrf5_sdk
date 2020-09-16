@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: dfu_device_info_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dfu_data_packet_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,48 @@ $(document).ready(function(){initNavTree('a00344.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dfu_device_info_t Struct Reference<div class="ingroups"><a class="el" href="a00949.html">Init packet handling in DFU.</a></div></div>  </div>
+<div class="title">dfu_data_packet_t Struct Reference<div class="ingroups"><a class="el" href="a00949.html">Types and definitions.</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure holding basic device information settings.  
+<p>Structure holding a bootloader init/data packet received.  
  <a href="a00344.html#details">More...</a></p>
 
-<p><code>#include &lt;dfu_init.h&gt;</code></p>
+<p><code>#include &lt;dfu_types.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a1a77c3ef129c3527681c089fce4b95a5"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00344.html#a1a77c3ef129c3527681c089fce4b95a5">device_type</a></td></tr>
-<tr class="separator:a1a77c3ef129c3527681c089fce4b95a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35291383c3fc311def52bf828fc99386"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00344.html#a35291383c3fc311def52bf828fc99386">device_rev</a></td></tr>
-<tr class="separator:a35291383c3fc311def52bf828fc99386"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ad00469248e979253ea6df7e43e09f3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00344.html#a5ad00469248e979253ea6df7e43e09f3">packet_length</a></td></tr>
+<tr class="separator:a5ad00469248e979253ea6df7e43e09f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af89346860abb77469214502848213a43"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00344.html#af89346860abb77469214502848213a43">p_data_packet</a></td></tr>
+<tr class="separator:af89346860abb77469214502848213a43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure holding basic device information settings. </p>
+<div class="textblock"><p>Structure holding a bootloader init/data packet received. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a35291383c3fc311def52bf828fc99386"></a>
+<a class="anchor" id="af89346860abb77469214502848213a43"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t dfu_device_info_t::device_rev</td>
+          <td class="memname">uint32_t* dfu_data_packet_t::p_data_packet</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Device revision (2 bytes), for example major revision 1, minor revision 0. This number must be defined by the customer before production. It can be located in UICR or FICR. </p>
+<p>Data Packet received. Each data is a word size entry. </p>
 
 </div>
 </div>
-<a class="anchor" id="a1a77c3ef129c3527681c089fce4b95a5"></a>
+<a class="anchor" id="a5ad00469248e979253ea6df7e43e09f3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t dfu_device_info_t::device_type</td>
+          <td class="memname">uint32_t dfu_data_packet_t::packet_length</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Device type (2 bytes), for example Heart Rate. This number must be defined by the customer before production. It can be located in UICR or FICR. </p>
+<p>Packet length of the data packet. Each data is word size, meaning length of 4 is 4 words, not bytes. </p>
 
 </div>
 </div>
@@ -156,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00344.html">dfu_device_info_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00344.html">dfu_data_packet_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

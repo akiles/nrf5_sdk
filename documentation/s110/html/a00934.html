@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: L2CAP Connectivity event encoders</title>
+<title>nRF51 SDK - S110 SoftDevice: Command decoder in the connectivity chip</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,49 +99,38 @@ $(document).ready(function(){initNavTree('a00934.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">L2CAP Connectivity event encoders<div class="ingroups"><a class="el" href="a01081.html">Connectivity s110 codecs</a></div></div>  </div>
+<div class="title">Command decoder in the connectivity chip<div class="ingroups"><a class="el" href="a01084.html">Connectivity application code</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>L2CAP Connectivity event encoders.  
+<p>Decoder for serialized commands from an Application Chip.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga41dc0bac811680a35fccc7f8ba3ac0d9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00934.html#ga41dc0bac811680a35fccc7f8ba3ac0d9">ble_l2cap_evt_rx_enc</a> (<a class="el" href="a00202.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga41dc0bac811680a35fccc7f8ba3ac0d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes ble_l2cap_evt_rx event.  <a href="#ga41dc0bac811680a35fccc7f8ba3ac0d9">More...</a><br/></td></tr>
-<tr class="separator:ga41dc0bac811680a35fccc7f8ba3ac0d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab420730a43ded81ff7cfc50aa796329a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00934.html#gab420730a43ded81ff7cfc50aa796329a">ser_conn_command_process</a> (uint8_t *p_command, uint16_t command_len)</td></tr>
+<tr class="memdesc:gab420730a43ded81ff7cfc50aa796329a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function decodes an encoded command and sends a response to an Application Chip.  <a href="#gab420730a43ded81ff7cfc50aa796329a">More...</a><br/></td></tr>
+<tr class="separator:gab420730a43ded81ff7cfc50aa796329a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>L2CAP Connectivity event encoders. </p>
+<p>Decoder for serialized commands from an Application Chip. </p>
+<p>This file contains declaration of common function used for commands decoding and sending responses back to an Application Chip after a command is processed. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga41dc0bac811680a35fccc7f8ba3ac0d9"></a>
+<a class="anchor" id="gab420730a43ded81ff7cfc50aa796329a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_l2cap_evt_rx_enc </td>
+          <td class="memname">uint32_t ser_conn_command_process </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00202.html">ble_evt_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_event</em>, </td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_command</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>event_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>command_len</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -151,22 +140,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes ble_l2cap_evt_rx event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00093.html#nrf51_l2cap_evt_rx_encoding">0x70 - BLE_L2CAP_EVT_RX</a> for packet format.</dd></dl>
+<p>A function decodes an encoded command and sends a response to an Application Chip. </p>
+<p>The function decodes an encoded command and calls a SoftDevice API function when a command decoder was found or forms a common response with error code NRF_ERROR_NOT_SUPPORTED otherwise. Then the function sends a SoftDevice response or the response with NRF_ERROR_NOT_SUPPORTED error code to an Application Chip.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_event</td><td>Pointer to the <a class="el" href="a00202.html">ble_evt_t</a> buffer that shall be encoded. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_len</td><td>Size (in bytes) of <code>p_event</code> buffer. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of a buffer for encoded event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> Size (in bytes) of <code>p_buf</code> buffer. <code>out:</code> Length of encoded contents in <code>p_buf</code>.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_command</td><td>The encoded command. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">command_len</td><td>Length of the encoded command including opcode.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INTERNAL</td><td>Operation failure. Internal error ocurred. . </td></tr>
   </table>
   </dd>
 </dl>
@@ -178,7 +165,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

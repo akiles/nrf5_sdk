@@ -353,7 +353,7 @@
               <MiscControls>--c99</MiscControls>
               <Define> __HEAP_SIZE=0 __STACK_SIZE=1024 NRF51 RTX BSP_DEFINES_ONLY BOARD_PCA10028</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\libraries\util;..\..\..\..\..\external\rtx\include;..\..\..\..\bsp</IncludePath>
+              <IncludePath>..\..\;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\libraries\util;..\..\..\..\..\external\rtx\include;..\..\..\..\bsp</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

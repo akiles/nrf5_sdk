@@ -1,88 +1,44 @@
 var a00974 =
 [
-    [ "ble_sc_ctrlpt_evt_t", "a00321.html", [
-      [ "cumulative_value", "a00321.html#ad226d0754bf0b129e4202d6468918de8", null ],
-      [ "evt_type", "a00321.html#a4ae317b0ff9170a27f7315dfb3c12bb6", null ],
-      [ "params", "a00321.html#acd770df4b6ee2c4694f4a5bac2b5f875", null ],
-      [ "update_location", "a00321.html#a64e560612783b28ce208966239c7ec07", null ]
+    [ "ble_rscs_evt_t", "a00318.html", [
+      [ "evt_type", "a00318.html#a71e160dc65fed82339dfbec7a0f3f78a", null ]
     ] ],
-    [ "ble_sc_ctrlpt_val_t", "a00325.html", [
-      [ "cumulative_value", "a00325.html#a9dce1ef6b333542b081df12273229b2e", null ],
-      [ "location", "a00325.html#a27be823fda46c3deb2f3fd98a38bf29f", null ],
-      [ "opcode", "a00325.html#a000223ebda70c1ccce85e8746a7d8207", null ]
+    [ "ble_rscs_init_t", "a00319.html", [
+      [ "evt_handler", "a00319.html#ac8b3f40aba291bb2528c6e3d278e66bd", null ],
+      [ "feature", "a00319.html#afea901cdde73cddc72eb4cfe2f337c78", null ],
+      [ "rsc_feature_attr_md", "a00319.html#ada9c9294592f640a27a344965b22bc76", null ],
+      [ "rsc_meas_attr_md", "a00319.html#a4f33f2c4256a25ac20cdbb2b8fbc8538", null ]
     ] ],
-    [ "ble_sc_ctrlpt_rsp_t", "a00323.html", [
-      [ "location_list", "a00323.html#a860ef19c2966b3d1582be678aa301c26", null ],
-      [ "opcode", "a00323.html#a155379662bc1d70f1006fdb6cb3993cb", null ],
-      [ "status", "a00323.html#a2879f0a89583e6148c81d3b8127fe520", null ]
+    [ "ble_rscs_s", "a00321.html", [
+      [ "conn_handle", "a00321.html#aa54416b00fd0d29dbf8c4ce28324a644", null ],
+      [ "evt_handler", "a00321.html#ad91d85a84b9d6728223af53cebf8bbf4", null ],
+      [ "feature", "a00321.html#aeaba73d58a013e5aab5a1f79583d414e", null ],
+      [ "feature_handles", "a00321.html#a9ca692ca7b98730826f4e7bebfa07a72", null ],
+      [ "meas_handles", "a00321.html#a5963b22a3c9a202db1248b6a2c3af6fd", null ],
+      [ "service_handle", "a00321.html#aefd6488d6d70f2a4d85c98504eb876d1", null ]
     ] ],
-    [ "ble_cs_ctrlpt_init_t", "a00181.html", [
-      [ "error_handler", "a00181.html#a5840a1605a5459c4e82ef773ac9d2e24", null ],
-      [ "evt_handler", "a00181.html#a96de686937df25c7bdc23206170ae50a", null ],
-      [ "list_supported_locations", "a00181.html#a43e3dbaf04322020621f80634fb4ab11", null ],
-      [ "sc_ctrlpt_attr_md", "a00181.html#ace531100dc9ba6f0ff3f62d27fd220f8", null ],
-      [ "sensor_location_handle", "a00181.html#aff182ef403314ac9e5fb3d6964d4e862", null ],
-      [ "service_handle", "a00181.html#a14e10c317dd498dc5ac6d17f162cb01e", null ],
-      [ "size_list_supported_locations", "a00181.html#accef6d6a6a4d4a5365c2a6043850c22a", null ],
-      [ "supported_functions", "a00181.html#a64788d2708103f5bbc852e2e1835182c", null ]
+    [ "ble_rscs_meas_s", "a00320.html", [
+      [ "inst_cadence", "a00320.html#ae0184379a72ca968be31624693859296", null ],
+      [ "inst_speed", "a00320.html#a2c67fcdf6c045252f8f2c19410ce93ce", null ],
+      [ "inst_stride_length", "a00320.html#a80d5e5ebfb6d4e01cf5a3716af83bf6f", null ],
+      [ "is_inst_stride_len_present", "a00320.html#ae051edb606a9de9cebc7ab7a6eef2ae0", null ],
+      [ "is_running", "a00320.html#a1b8f312b31cdc3a4b06f092ce7e2bd8e", null ],
+      [ "is_total_distance_present", "a00320.html#abd1ef1791fd6291c82c5b2f5d9bd289f", null ],
+      [ "total_distance", "a00320.html#a446576bd70deec710453a5e09ff1f7c2", null ]
     ] ],
-    [ "ble_sc_ctrlpt_resp_t", "a00322.html", [
-      [ "encoded_ctrl_rsp", "a00322.html#adf17b1a0cd599ca5bd71dba42e318e06", null ],
-      [ "len", "a00322.html#afb2e07899dd914805f45b9da0694e0af", null ],
-      [ "status", "a00322.html#a978ed1543a79395ebdefc4f92233dfb7", null ]
+    [ "BLE_RSCS_FEATURE_CALIBRATION_PROCEDURE_BIT", "a00974.html#ga7699ff99de0293fa8183117ba09259c9", null ],
+    [ "BLE_RSCS_FEATURE_INSTANT_STRIDE_LEN_BIT", "a00974.html#gab7a0af47e661440ca6845c1f4a73ad87", null ],
+    [ "BLE_RSCS_FEATURE_MULTIPLE_SENSORS_BIT", "a00974.html#ga069fdb89d733f4bcffc62f9a42a19ffb", null ],
+    [ "BLE_RSCS_FEATURE_TOTAL_DISTANCE_BIT", "a00974.html#gaca7e41a2844d7508da269b933aba0edc", null ],
+    [ "BLE_RSCS_FEATURE_WALKING_OR_RUNNING_STATUS_BIT", "a00974.html#ga032860d4209d0f07f27cd7fb1b6643c3", null ],
+    [ "ble_rscs_evt_handler_t", "a00974.html#ga04b6f149d88df65ebffd5b8297bd657f", null ],
+    [ "ble_rscs_meas_t", "a00974.html#ga1b8b0a0d95abb5145cca3e5fb23a6352", null ],
+    [ "ble_rscs_t", "a00974.html#gac2d10efa222688b53fbe59ad5a9dab85", null ],
+    [ "ble_rscs_evt_type_t", "a00974.html#gaed8352fbaf5d37687a3aa5751f4d23bd", [
+      [ "BLE_RSCS_EVT_NOTIFICATION_ENABLED", "a00974.html#ggaed8352fbaf5d37687a3aa5751f4d23bda4e8e3e5e00758024939ee56a4d2d2418", null ],
+      [ "BLE_RSCS_EVT_NOTIFICATION_DISABLED", "a00974.html#ggaed8352fbaf5d37687a3aa5751f4d23bda36486aa0ec7024c5b29d2b6c2cbb89cd", null ]
     ] ],
-    [ "ble_sc_ctrlpt_s", "a00324.html", [
-      [ "conn_handle", "a00324.html#a521616c53ae38b73795cca328521ef42", null ],
-      [ "error_handler", "a00324.html#aaec55bf5a1343f070d446923693e5f12", null ],
-      [ "evt_handler", "a00324.html#ac210b0c8592add4d7affa83d70b3df08", null ],
-      [ "list_supported_locations", "a00324.html#acf7bc6fb38b8b55060d9576810b59e83", null ],
-      [ "procedure_status", "a00324.html#a785beee8dcd8f49f18b408337791e397", null ],
-      [ "response", "a00324.html#a706cd93a550c24bee3c5adfb6c0c9c5e", null ],
-      [ "sc_ctrlpt_handles", "a00324.html#acac883600df15bd18d45f56c7d859b6a", null ],
-      [ "sensor_location_handle", "a00324.html#a911a8cc3010ade3dc33e90a4cf907e4d", null ],
-      [ "service_handle", "a00324.html#a638b4208c1e4a00d43b955a43553b4ed", null ],
-      [ "size_list_supported_locations", "a00324.html#adb0d88b6ef155271629eeed8db295422", null ],
-      [ "supported_functions", "a00324.html#a258978b06152814aa7fb2bad9c3e4691", null ]
-    ] ],
-    [ "BLE_SC_CTRLPT_MAX_LEN", "a00974.html#gacb911ad074466b850c09980e643ce360", null ],
-    [ "BLE_SC_CTRLPT_MIN_LEN", "a00974.html#ga9601a487c3407d74cbcdb63974006d65", null ],
-    [ "BLE_SRV_SC_CTRLPT_CUM_VAL_OP_SUPPORTED", "a00974.html#ga057b47633228ff5da51d9c924f346637", null ],
-    [ "BLE_SRV_SC_CTRLPT_SENSOR_LOCATIONS_OP_SUPPORTED", "a00974.html#ga70169283f5203ae8eac233136d7d8bcb", null ],
-    [ "BLE_SRV_SC_CTRLPT_START_CALIB_OP_SUPPORTED", "a00974.html#gac5b9d61593d9037072ebf7a6202424f4", null ],
-    [ "SCPT_MAX_RESPONSE_SIZE", "a00974.html#ga6f8812caa5daad6e9bc90c1890ae92af", null ],
-    [ "SCPT_MIN_RESPONSE_SIZE", "a00974.html#ga6582ff2e8a97defbfd4f0334ff6c6a25", null ],
-    [ "SCPT_OPCODE_POS", "a00974.html#gaa23792d36a36edca20666e20244139de", null ],
-    [ "SCPT_PARAMETER_POS", "a00974.html#ga660362d5a50e4dada707620277e9731a", null ],
-    [ "SCPT_RESPONSE_CODE_POS", "a00974.html#ga4eb5f84145d6c4faf5498834e12c790b", null ],
-    [ "SCPT_RESPONSE_PARAMETER", "a00974.html#ga6f89ff967371cd896d2c532074dcc63d", null ],
-    [ "SCPT_RESPONSE_REQUEST_OPCODE_POS", "a00974.html#gad9c628600cce5d9a64755e5fe4822a84", null ],
-    [ "ble_sc_ctrlpt_evt_handler_t", "a00974.html#gad91610b2c3b5ca4bc187387d6bf61528", null ],
-    [ "ble_sc_ctrlpt_t", "a00974.html#ga8bb52c78ed33425b1167829728f5c259", null ],
-    [ "ble_sc_ctrlpt_evt_type_t", "a00974.html#gab3b9b97d8227deb568c21630514be078", [
-      [ "BLE_SC_CTRLPT_EVT_UPDATE_LOCATION", "a00974.html#ggab3b9b97d8227deb568c21630514be078ae4162e004b229cbe4a0c1cd063ac6bdd", null ],
-      [ "BLE_SC_CTRLPT_EVT_SET_CUMUL_VALUE", "a00974.html#ggab3b9b97d8227deb568c21630514be078a72c61ade80e354284f46b255f11abb79", null ],
-      [ "BLE_SC_CTRLPT_EVT_START_CALIBRATION", "a00974.html#ggab3b9b97d8227deb568c21630514be078a59069c22afe68d6277c1ac033f14f1c5", null ]
-    ] ],
-    [ "ble_scpt_operator_t", "a00974.html#ga605f2c97850a21288a45f5dec3cfe1cc", [
-      [ "BLE_SCPT_SET_CUMULATIVE_VALUE", "a00974.html#gga605f2c97850a21288a45f5dec3cfe1cca0ffdc0f7966d088240f02c725778fe08", null ],
-      [ "BLE_SCPT_START_AUTOMATIC_CALIBRATION", "a00974.html#gga605f2c97850a21288a45f5dec3cfe1ccabd8fbe16eb583683f54eee2ba4a7eff9", null ],
-      [ "BLE_SCPT_UPDATE_SENSOR_LOCATION", "a00974.html#gga605f2c97850a21288a45f5dec3cfe1ccaf3940da70749513b48c9c3f9ec0e9422", null ],
-      [ "BLE_SCPT_REQUEST_SUPPORTED_SENSOR_LOCATIONS", "a00974.html#gga605f2c97850a21288a45f5dec3cfe1cca82464f2fb4766e5f66142216b431a8e1", null ],
-      [ "BLE_SCPT_RESPONSE_CODE", "a00974.html#gga605f2c97850a21288a45f5dec3cfe1cca2228ca23f585ff5b874564467cbebf1f", null ]
-    ] ],
-    [ "ble_scpt_procedure_status_t", "a00974.html#gaf5547fc2afb40884fb0f08546095b24a", [
-      [ "BLE_SCPT_NO_PROC_IN_PROGRESS", "a00974.html#ggaf5547fc2afb40884fb0f08546095b24aafa5d417ca1e8c4b09d6a6170cd91cf0c", null ],
-      [ "BLE_SCPT_AUTOMATIC_CALIB_IN_PROGRESS", "a00974.html#ggaf5547fc2afb40884fb0f08546095b24aa5908875401047d3cc76eb79ce0b192db", null ],
-      [ "BLE_SCPT_INDICATION_PENDING", "a00974.html#ggaf5547fc2afb40884fb0f08546095b24aa941716ef61c3359924d4833e460d625f", null ],
-      [ "BLE_SCPT_IND_CONFIRM_PENDING", "a00974.html#ggaf5547fc2afb40884fb0f08546095b24aae5c3da08a26596dc609489be47783ecf", null ]
-    ] ],
-    [ "ble_scpt_response_t", "a00974.html#ga1c8be45ba4b09ec30229b4cfb4fd2d88", [
-      [ "BLE_SCPT_SUCCESS", "a00974.html#gga1c8be45ba4b09ec30229b4cfb4fd2d88a9d2f7be2c6444b1c4c198d689b57d4b9", null ],
-      [ "BLE_SCPT_OP_CODE_NOT_SUPPORTED", "a00974.html#gga1c8be45ba4b09ec30229b4cfb4fd2d88a933cfec6665f8e9f32d09bbc8152c418", null ],
-      [ "BLE_SCPT_INVALID_PARAMETER", "a00974.html#gga1c8be45ba4b09ec30229b4cfb4fd2d88a802db6e1b45802921c57759a867866ed", null ],
-      [ "BLE_SCPT_OPERATION_FAILED", "a00974.html#gga1c8be45ba4b09ec30229b4cfb4fd2d88a8d44788768dd599eb34ccb09d4bd7ac3", null ]
-    ] ],
-    [ "ble_sc_ctrlpt_init", "a00974.html#gab765eac778a9aa750f435335e2752368", null ],
-    [ "ble_sc_ctrlpt_on_ble_evt", "a00974.html#gaea4bf6a28f2f505d2ab475b48bcb35b1", null ],
-    [ "ble_sc_ctrlpt_rsp_send", "a00974.html#gaabf81487a67f728731c0358384452618", null ]
+    [ "ble_rscs_init", "a00974.html#gafd5591aad290232ba97ac0bc7aec8f7b", null ],
+    [ "ble_rscs_measurement_send", "a00974.html#ga16080f0b2880066d0e1f88fbe960079b", null ],
+    [ "ble_rscs_on_ble_evt", "a00974.html#ga23555a37f7903b50d65a818f32c362ec", null ]
 ];

@@ -353,7 +353,7 @@
               <MiscControls>--c99</MiscControls>
               <Define> NRF51 BSP_DEFINES_ONLY BOARD_PCA10028 BLE_STACK_SUPPORT_REQD S120 SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\ble\ble_dtm;..\..\..\..\..\bsp;..\..\..\..\..\..\components\softdevice\s120\headers</IncludePath>
+              <IncludePath>..\..\..\;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\ble\ble_dtm;..\..\..\..\..\bsp;..\..\..\..\..\..\components\softdevice\s120\headers</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

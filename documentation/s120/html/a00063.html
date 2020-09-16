@@ -111,7 +111,7 @@ $(document).ready(function(){initNavTree('a00063.html','');});
 0x01 - BLE_EVT_TX_COMPLETE</h1>
 <h2><a class="anchor" id="nrf51_evt_tx_complete_encoding_sec"></a>
 Event encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00740.html#ggaa55e423bfea45f03764a636f2cec7a8ba408a77f131a2d314fbf477cdb2d1e0f6">BLE_EVT_TX_COMPLETE</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00742.html#ggaa55e423bfea45f03764a636f2cec7a8ba408a77f131a2d314fbf477cdb2d1e0f6">BLE_EVT_TX_COMPLETE</a> packet.</p>
 <p>Event ID = 0x01 for BLE_EVT_TX_COMPLETE</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The event contains a connection handle, and for the BLE TX complete, the <a class="el" href="a00104.html">ble_evt_tx_complete_t</a> is encoded after connection handle as seen in Figure 1.</p>
@@ -140,7 +140,7 @@ Figure 1: Encoding of BLE_EVT_TX_COMPLETE event.</div></div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00056.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00058.html">Serialization Codecs</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

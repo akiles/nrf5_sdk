@@ -1,10 +1,7 @@
 var a00163 =
 [
-    [ "central_handle", "a00163.html#a0522feee52899c6d746fb496458c8681", null ],
-    [ "conn_handle", "a00163.html#aafc23bf2964f2476098f8841b808829a", null ],
-    [ "error_handler", "a00163.html#ad18e423fbc97fa13b4f5f99097b5c3e6", null ],
-    [ "evt_handler", "a00163.html#a5125f0b98f069ac8c455b109212d3d33", null ],
-    [ "message_buffer_size", "a00163.html#af58f6202418c1aab68d7224dcec9ba95", null ],
-    [ "p_message_buffer", "a00163.html#a12d3fef2b50b34a7cf6e42fbbc55308e", null ],
-    [ "service_handle", "a00163.html#ae696c92497734c92e20a628893a621b3", null ]
+    [ "error_handler", "a00163.html#a595f52194b0dbb3300a9e7dc0f0f360f", null ],
+    [ "evt_handler", "a00163.html#aad8ea29f7f384965a82424a4ca3c8e50", null ],
+    [ "message_buffer_size", "a00163.html#a0ac3fed59a0cbf329cc6611ab584ef69", null ],
+    [ "p_message_buffer", "a00163.html#a146d527b7a4824fb4e4f585e455b14f0", null ]
 ];

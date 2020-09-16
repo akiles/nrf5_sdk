@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: DFU BLE SVC</title>
+<title>nRF51 SDK - S110 SoftDevice: Init packet handling in DFU.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,117 +97,244 @@ $(document).ready(function(){initNavTree('a00947.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">DFU BLE SVC<div class="ingroups"><a class="el" href="a01038.html">Bootloader/DFU API</a></div></div>  </div>
+<div class="title">Init packet handling in DFU.<div class="ingroups"><a class="el" href="a01040.html">Bootloader/DFU API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>DFU BLE SVC in bootloader. The DFU BLE SuperVisor Calls allow an application to execute functions in the installed bootloader.  
+<p>Device Firmware Update module type and function declaration for init packet handling.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00948"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00948.html">DFU BLE SVC internal</a></td></tr>
-<tr class="memdesc:a00948"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU BLE SVC internal functions in bootloader. The DFU BLE SuperVisor Calls allow an application to execute functions in the installed bootloader. This interface provides internal Bootloader DFU functions for retrieving data exchanged through SuperVisor Calls. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html">dfu_ble_peer_data_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU Peer data structure.  <a href="a00342.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00346.html">dfu_init_packet_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure contained in an init packet. Contains information on device type, revision, and supported SoftDevices.  <a href="a00346.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html">dfu_device_info_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure holding basic device information settings.  <a href="a00345.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga40250c4367f60f8adf2f36ca02a620d2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00947.html#ga40250c4367f60f8adf2f36ca02a620d2">BOOTLOADER_SVC_BASE</a>&#160;&#160;&#160;0x0</td></tr>
-<tr class="separator:ga40250c4367f60f8adf2f36ca02a620d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gab61a9eaf497f22e66f7a0f76d8203133"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00947.html#gab61a9eaf497f22e66f7a0f76d8203133">BOOTLOADER_SVCS</a> { <br/>
-&#160;&#160;<a class="el" href="a00947.html#ggab61a9eaf497f22e66f7a0f76d8203133a343827596c1f6effeaf0ff0149cb5734">DFU_BLE_SVC_SET_PEER_DATA</a> = 0x0, 
-<br/>
-&#160;&#160;<b>BOOTLOADER_SVC_LAST</b>
-<br/>
- }</td></tr>
-<tr class="memdesc:gab61a9eaf497f22e66f7a0f76d8203133"><td class="mdescLeft">&#160;</td><td class="mdescRight">The SVC numbers used by the SVC functions in the SoC library.  <a href="a00947.html#gab61a9eaf497f22e66f7a0f76d8203133">More...</a><br/></td></tr>
-<tr class="separator:gab61a9eaf497f22e66f7a0f76d8203133"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7dbc00b26886d263bc3ff6fed3314df0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00947.html#ga7dbc00b26886d263bc3ff6fed3314df0">UICR_CUSTOMER_DEVICE_INFO_OFFSET</a>&#160;&#160;&#160;0x0</td></tr>
+<tr class="separator:ga7dbc00b26886d263bc3ff6fed3314df0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf398722d5fa37c34e7e1554a4c23b31f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00947.html#gaf398722d5fa37c34e7e1554a4c23b31f">UICR_CUSTOMER_RESERVED_OFFSET</a>&#160;&#160;&#160;0x80</td></tr>
+<tr class="separator:gaf398722d5fa37c34e7e1554a4c23b31f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacdac816b4730617eedc86394ca32f145"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00947.html#gacdac816b4730617eedc86394ca32f145">DFU_DEVICE_INFO_BASE</a></td></tr>
+<tr class="separator:gacdac816b4730617eedc86394ca32f145"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0739b7c5c51d4dd06d88df8fb562e186"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00947.html#ga0739b7c5c51d4dd06d88df8fb562e186">DFU_DEVICE_INFO</a>&#160;&#160;&#160;((<a class="el" href="a00345.html">dfu_device_info_t</a> *)<a class="el" href="a00947.html#gacdac816b4730617eedc86394ca32f145">DFU_DEVICE_INFO_BASE</a>)</td></tr>
+<tr class="separator:ga0739b7c5c51d4dd06d88df8fb562e186"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa80004af35800b51c972eb5441641b02"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00947.html#gaa80004af35800b51c972eb5441641b02">DFU_DEVICE_TYPE_EMPTY</a>&#160;&#160;&#160;((uint16_t)0xFFFF)</td></tr>
+<tr class="separator:gaa80004af35800b51c972eb5441641b02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5e1b5ab912c1a30149be52c8cea371d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00947.html#gab5e1b5ab912c1a30149be52c8cea371d">DFU_DEVICE_REVISION_EMPTY</a>&#160;&#160;&#160;((uint16_t)0xFFFF)</td></tr>
+<tr class="separator:gab5e1b5ab912c1a30149be52c8cea371d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga963498faf6af23086555c594504b4152"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00947.html#ga963498faf6af23086555c594504b4152">DFU_SOFTDEVICE_ANY</a>&#160;&#160;&#160;((uint16_t)0xFFFE)</td></tr>
+<tr class="separator:ga963498faf6af23086555c594504b4152"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga8d962d1d241de6a5778d01eaebfa0460"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00947.html#ga8d962d1d241de6a5778d01eaebfa0460">dfu_ble_svc_set_peer_data</a> (<a class="el" href="a00342.html">dfu_ble_peer_data_t</a> *p_peer_data)</td></tr>
-<tr class="memdesc:ga8d962d1d241de6a5778d01eaebfa0460"><td class="mdescLeft">&#160;</td><td class="mdescRight">SVC Function for setting peer data containing address, IRK, and LTK to establish bonded connection in DFU mode.  <a href="#ga8d962d1d241de6a5778d01eaebfa0460">More...</a><br/></td></tr>
-<tr class="separator:ga8d962d1d241de6a5778d01eaebfa0460"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga585131c480f3f4e51293e954b4c26aeb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00947.html#ga585131c480f3f4e51293e954b4c26aeb">dfu_init_prevalidate</a> (uint8_t *p_init_data, uint32_t init_data_len)</td></tr>
+<tr class="memdesc:ga585131c480f3f4e51293e954b4c26aeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU prevalidate call for pre-checking the received init packet.  <a href="#ga585131c480f3f4e51293e954b4c26aeb">More...</a><br/></td></tr>
+<tr class="separator:ga585131c480f3f4e51293e954b4c26aeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1926c2d8e3484641d16f9beb654ac5f1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00947.html#ga1926c2d8e3484641d16f9beb654ac5f1">dfu_init_postvalidate</a> (uint8_t *p_image, uint32_t image_len)</td></tr>
+<tr class="memdesc:ga1926c2d8e3484641d16f9beb654ac5f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU postvalidate call for post-checking the received image using the init packet.  <a href="#ga1926c2d8e3484641d16f9beb654ac5f1">More...</a><br/></td></tr>
+<tr class="separator:ga1926c2d8e3484641d16f9beb654ac5f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>DFU BLE SVC in bootloader. The DFU BLE SuperVisor Calls allow an application to execute functions in the installed bootloader. </p>
-<p>This module implements handling of SuperVisor Calls in the bootloader. SuperVisor Calls allow for an application to execute calls into the bootloader. Currently, it is possible to exchange bonding information (like keys) from the application to a bootloader supporting DFU OTA using BLE, so the update process can be done through an already existing bond.</p>
-<dl class="section note"><dt>Note</dt><dd>The application must make sure that all SuperVisor Calls (SVC) are forwarded to the bootloader to ensure correct behavior. Forwarding of SVCs to the bootloader is done using the SoftDevice SVC <a class="el" href="a01070.html#ga46d2ce943076d65947ea8919198be106">sd_softdevice_vector_table_base_set</a> with the value present in <code>NRF_UICR-&gt;BOOTLOADERADDR</code>. </dd></dl>
+<p>Device Firmware Update module type and function declaration for init packet handling. </p>
+<p>This header contains basic functionality for performing safety checks on software updates for nRF51 based devices. It provides a skeleton for pre-checking an init packet to ensure the following image is compatible with this device. A safety check should always be performed to prevent accidental flashing of unsupported applications or a wrong combination of application and SoftDevice. The device information contains information such as:</p>
+<ul>
+<li>Device type (2 bytes), for example Heart Rate. The device type is a number defined by the customer. It can be located in UICR or FICR.</li>
+<li>Device revision (2 bytes), for example major revision 1, minor revision 0. The device revision is a number defined by the customer. It can be located in UICR or FICR.</li>
+<li>List of SoftDevices supported by this application, for example 0x0049 = S110v6_0_0 0xFFFE = S110 development (any SoftDevice accepted),</li>
+<li>CRC or hash of firmware image</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>This module does not support security features such as image signing, but the corresponding implementation allows for such extensions. If the init packet is signed by a trusted source, it must be decrypted before it can be processed. </dd></dl>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga40250c4367f60f8adf2f36ca02a620d2"></a>
+<a class="anchor" id="ga0739b7c5c51d4dd06d88df8fb562e186"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BOOTLOADER_SVC_BASE&#160;&#160;&#160;0x0</td>
+          <td class="memname">#define DFU_DEVICE_INFO&#160;&#160;&#160;((<a class="el" href="a00345.html">dfu_device_info_t</a> *)<a class="el" href="a00947.html#gacdac816b4730617eedc86394ca32f145">DFU_DEVICE_INFO_BASE</a>)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The number of the lowest SVC number reserved for the bootloader. </p>
+<p>The memory mapped structure for device information data. </p>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gab61a9eaf497f22e66f7a0f76d8203133"></a>
+<a class="anchor" id="gacdac816b4730617eedc86394ca32f145"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00947.html#gab61a9eaf497f22e66f7a0f76d8203133">BOOTLOADER_SVCS</a></td>
+          <td class="memname">#define DFU_DEVICE_INFO_BASE</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">(NRF_UICR_BASE + \</div>
+<div class="line">                                             UICR_CUSTOMER_RESERVED_OFFSET + \</div>
+<div class="line">                                             UICR_CUSTOMER_DEVICE_INFO_OFFSET)</div>
+</div><!-- fragment --><p>The device information base address inside of UICR. </p>
 
-<p>The SVC numbers used by the SVC functions in the SoC library. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab61a9eaf497f22e66f7a0f76d8203133a343827596c1f6effeaf0ff0149cb5734"></a>DFU_BLE_SVC_SET_PEER_DATA</em>&nbsp;</td><td class="fielddoc">
-<p>The number of the lowest SVC number reserved for the bootloader. </p>
-</td></tr>
-</table>
+</div>
+</div>
+<a class="anchor" id="gab5e1b5ab912c1a30149be52c8cea371d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DFU_DEVICE_REVISION_EMPTY&#160;&#160;&#160;((uint16_t)0xFFFF)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Mask indicating no device revision is present in UICR. 0xFFFF is default flash pattern when not written with data. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaa80004af35800b51c972eb5441641b02"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DFU_DEVICE_TYPE_EMPTY&#160;&#160;&#160;((uint16_t)0xFFFF)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Mask indicating no device type is present in UICR. 0xFFFF is default flash pattern when not written with data. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga963498faf6af23086555c594504b4152"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DFU_SOFTDEVICE_ANY&#160;&#160;&#160;((uint16_t)0xFFFE)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Mask indicating that any SoftDevice is allowed for updating this application. Allows for easy development. Not to be used in production images. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga7dbc00b26886d263bc3ff6fed3314df0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define UICR_CUSTOMER_DEVICE_INFO_OFFSET&#160;&#160;&#160;0x0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The device info offset can be modified to place the device info settings at a different location. If the customer reserved UICR location is used for other application specific data, the offset must be updated to avoid collision with that data.[DFU UICR DEV offset] Device info offset inside the customer UICR reserved area. Customers may change this value to place the device information in a user-preferred location. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaf398722d5fa37c34e7e1554a4c23b31f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define UICR_CUSTOMER_RESERVED_OFFSET&#160;&#160;&#160;0x80</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>[DFU UICR DEV offset] Customer reserved area in the UICR. The area from UICR + 0x80 is reserved for customer usage. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga8d962d1d241de6a5778d01eaebfa0460"></a>
+<a class="anchor" id="ga1926c2d8e3484641d16f9beb654ac5f1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t dfu_ble_svc_set_peer_data </td>
+          <td class="memname">uint32_t dfu_init_postvalidate </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00342.html">dfu_ble_peer_data_t</a> *&#160;</td>
-          <td class="paramname"><em>p_peer_data</em></td><td>)</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_image</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>image_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>SVC Function for setting peer data containing address, IRK, and LTK to establish bonded connection in DFU mode. </p>
+<p>DFU postvalidate call for post-checking the received image using the init packet. </p>
+<p>Post-validation can verify the integrity check the firmware image received before activating the image. Checks performed can be:</p>
+<ul>
+<li>A simple CRC as shown in the corresponding implementation of this API in the file dfu_init_template.c</li>
+<li>A hash for better verification of the image.</li>
+<li>A signature to ensure the image originates from a trusted source. Checks are intended to be expanded for customer-specific requirements.</li>
+</ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_peer_data</td><td>Pointer to the peer data containing keys for the connection.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_image</td><td>Pointer to the received image. The init data provided in the call <a class="el" href="a00947.html#ga585131c480f3f4e51293e954b4c26aeb">dfu_init_prevalidate</a> will be used for validating the image. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">image_len</td><td>Length of the image data.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>If a NULL pointer was provided as argument. </td></tr>
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If the function completed successfully. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the post-validation succeeded, that meant the integrity of the image has been verified and the image originates from a trusted source (signing). </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>If the post-validation failed, that meant the post check of the image failed such as the CRC is not matching the image transfered or the verification of the image fails (signing). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga585131c480f3f4e51293e954b4c26aeb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t dfu_init_prevalidate </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_init_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>init_data_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>DFU prevalidate call for pre-checking the received init packet. </p>
+<p>Pre-validation will safety check the firmware image to be transfered in second stage. The function currently checks the device type, device revision, application firmware version, and supported SoftDevices. More checks should be added according to customer-specific requirements.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_init_data</td><td>Pointer to the init packet. If the init packet is encrypted or signed, it must first be decrypted before being checked. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">init_data_len</td><td>Length of the init data.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the pre-validation succeeded, that means the image is supported by the device and it is considered to come from a trusted source (signing). </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>If the pre-validation failed, that means the image is not supported by the device or comes from an un-trusted source (signing). </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>If the size of the init packet is not within the limits of the init packet handler. </td></tr>
   </table>
   </dd>
 </dl>
@@ -219,7 +346,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

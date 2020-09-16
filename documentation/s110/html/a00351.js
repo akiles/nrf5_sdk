@@ -1,5 +1,5 @@
 var a00351 =
 [
-    [ "enc_info", "a00351.html#a86cd792e42804720a97e6f64884d0fd4", null ],
-    [ "master_id", "a00351.html#a6d0dc86cbbad08e963a13c3a4070454d", null ]
+    [ "len", "a00351.html#a584d9c286a840f2aa29cf3f6e76362d4", null ],
+    [ "p_data", "a00351.html#acbcb29305bde09573e35ed7f4c214641", null ]
 ];

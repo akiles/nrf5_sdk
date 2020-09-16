@@ -1,16 +1,11 @@
 var a00761 =
 [
-    [ "ble_l2cap_header_t", "a00185.html", [
-      [ "cid", "a00185.html#a6e40f192db4382919b6c1f3db8e70d46", null ],
-      [ "len", "a00185.html#a754900407e75298f4af89a59febed5b8", null ]
+    [ "BLE_L2CAP_EVTS", "a00761.html#ga200c8684032d8e5fe10d295b2f3a1555", [
+      [ "BLE_L2CAP_EVT_RX", "a00761.html#gga200c8684032d8e5fe10d295b2f3a1555af6d68dde17c172258858ea9d9c4488e3", null ]
     ] ],
-    [ "ble_l2cap_evt_rx_t", "a00183.html", [
-      [ "data", "a00183.html#ad3df37c1998b3d1d213a6e7b5cfbcd5e", null ],
-      [ "header", "a00183.html#ac81a081355f3a10c8496cf16918ac23a", null ]
-    ] ],
-    [ "ble_l2cap_evt_t", "a00184.html", [
-      [ "conn_handle", "a00184.html#ab843f6e96efbaf3d2bffee8c92c62f1a", null ],
-      [ "params", "a00184.html#ac9beac1420f25dbd4bd49bb88bc2302d", null ],
-      [ "rx", "a00184.html#afc4cbc758b308e6698b16650310cc52b", null ]
+    [ "BLE_L2CAP_SVCS", "a00761.html#ga08e7b23691ec76610bbd89735c642322", [
+      [ "SD_BLE_L2CAP_CID_REGISTER", "a00761.html#gga08e7b23691ec76610bbd89735c642322a6168d9f18ea5916224c6b76a118ae076", null ],
+      [ "SD_BLE_L2CAP_CID_UNREGISTER", "a00761.html#gga08e7b23691ec76610bbd89735c642322ace8a5ba33631ecf722fd5ce033a413e8", null ],
+      [ "SD_BLE_L2CAP_TX", "a00761.html#gga08e7b23691ec76610bbd89735c642322a073ec8ef84fe64e4d3cfdb9538c70438", null ]
     ] ]
 ];

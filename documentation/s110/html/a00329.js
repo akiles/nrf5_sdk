@@ -1,5 +1,6 @@
 var a00329 =
 [
-    [ "report_id", "a00329.html#a4db26fdff00f44138f9f684ff1dfd149", null ],
-    [ "report_type", "a00329.html#a765872684206db6d91ad6de596599434", null ]
+    [ "cccd_write_perm", "a00329.html#a320070d4ad9b4f4948a8bba65f3853c0", null ],
+    [ "read_perm", "a00329.html#ab3203f11dcbf8bea6cbe1dcffbf68661", null ],
+    [ "write_perm", "a00329.html#ac8a8cd605d17911a751bf74d72412568", null ]
 ];

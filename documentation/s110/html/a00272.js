@@ -1,8 +1,8 @@
 var a00272 =
 [
-    [ "gatt_status", "a00272.html#a76066ec0dfed065ff7e58a709eaf8042", null ],
-    [ "len", "a00272.html#a5242203755359060a29308d0e64b6da7", null ],
-    [ "offset", "a00272.html#a7b823765dc8e01aa1dfc9a3124f92bc9", null ],
-    [ "p_data", "a00272.html#a777067adc297b1e3fa67a4671663ba2f", null ],
-    [ "update", "a00272.html#a27015e208127d98d0600657e4f9224fc", null ]
+    [ "handle", "a00272.html#a1a0552b266c588f67d3a6abc712bbfd6", null ],
+    [ "offset", "a00272.html#a07033f6e0e63974b67627ae84bc12fc9", null ],
+    [ "p_data", "a00272.html#a68325153be760c7742d1bec69da625cf", null ],
+    [ "p_len", "a00272.html#a8b0b2dadb3128b0838c71235661f8174", null ],
+    [ "type", "a00272.html#a2971c791821bea067f3bc2bbc35b9193", null ]
 ];

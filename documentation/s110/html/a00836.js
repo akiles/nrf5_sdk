@@ -1,5 +1,6 @@
 var a00836 =
 [
-    [ "BLE_CONN_HANDLE_ALL", "a00836.html#ga75e3958065c393f536bd316877892997", null ],
-    [ "BLE_CONN_HANDLE_INVALID", "a00836.html#gacf227b9b101dbcf08eccbbaba54e48f5", null ]
+    [ "BLE_UUID_TYPE_BLE", "a00836.html#gae549d14b15783ba52dae5fdd5f9ac959", null ],
+    [ "BLE_UUID_TYPE_UNKNOWN", "a00836.html#ga0dfc5e26324c8cd7226f3941acbf5b7e", null ],
+    [ "BLE_UUID_TYPE_VENDOR_BEGIN", "a00836.html#ga7bdcaea9ea91ab20be755d78833da46d", null ]
 ];

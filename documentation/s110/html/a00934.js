@@ -1,4 +1,4 @@
 var a00934 =
 [
-    [ "ble_l2cap_evt_rx_enc", "a00934.html#ga41dc0bac811680a35fccc7f8ba3ac0d9", null ]
+    [ "ser_conn_command_process", "a00934.html#gab420730a43ded81ff7cfc50aa796329a", null ]
 ];

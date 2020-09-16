@@ -1,18 +1,14 @@
 var a00945 =
 [
-    [ "Types and definitions.", "a00951.html", "a00951" ],
-    [ "dfu_callback_t", "a00945.html#gaacc31c43e887f7b9f1f462b39f5171c2", null ],
-    [ "dfu_bl_image_swap", "a00945.html#gaa5c719005d3cb149dc8af672c8782037", null ],
-    [ "dfu_bl_image_validate", "a00945.html#ga46075f420f41e2c6fe102a07e0def6e9", null ],
-    [ "dfu_data_pkt_handle", "a00945.html#gaedeca60961c137dbc070c9acba09126f", null ],
-    [ "dfu_image_activate", "a00945.html#gaaa8227795cc1e3d231d2114f79a9017c", null ],
-    [ "dfu_image_validate", "a00945.html#ga025b98379882ab47f9a2585dce60e34c", null ],
-    [ "dfu_init", "a00945.html#ga04aa562312c46cd022b4d4acc7318452", null ],
-    [ "dfu_init_pkt_complete", "a00945.html#ga7029a93e35d44f50a82aacd001069893", null ],
-    [ "dfu_init_pkt_handle", "a00945.html#ga0a7187ec97973d70e1f0d3d9a1747052", null ],
-    [ "dfu_register_callback", "a00945.html#gac459a6787392cac2da15bc87ce7b99c9", null ],
-    [ "dfu_reset", "a00945.html#ga3428f74b8abe841939414cd8669dc017", null ],
-    [ "dfu_sd_image_swap", "a00945.html#gac5f2b2c8faf704d6e2be18df05ceee1b", null ],
-    [ "dfu_sd_image_validate", "a00945.html#ga4d1fb87fd6d01940f8c69cfc08d74cb9", null ],
-    [ "dfu_start_pkt_handle", "a00945.html#ga3ca360d2f4d3e5847815e3b78ee00786", null ]
+    [ "DFU BLE SVC internal", "a00946.html", "a00946" ],
+    [ "dfu_ble_peer_data_t", "a00343.html", [
+      [ "addr", "a00343.html#a254efa46b45f5707510660ee0ae9edc3", null ],
+      [ "enc_info", "a00343.html#a8edc7904f78de5fddc021504d06ae029", null ],
+      [ "irk", "a00343.html#ac8c0e0d99c8c5cc39adfa07073253d58", null ]
+    ] ],
+    [ "BOOTLOADER_SVC_BASE", "a00945.html#ga40250c4367f60f8adf2f36ca02a620d2", null ],
+    [ "BOOTLOADER_SVCS", "a00945.html#gab61a9eaf497f22e66f7a0f76d8203133", [
+      [ "DFU_BLE_SVC_SET_PEER_DATA", "a00945.html#ggab61a9eaf497f22e66f7a0f76d8203133a343827596c1f6effeaf0ff0149cb5734", null ]
+    ] ],
+    [ "dfu_ble_svc_set_peer_data", "a00945.html#ga8d962d1d241de6a5778d01eaebfa0460", null ]
 ];

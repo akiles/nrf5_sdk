@@ -1,8 +1,10 @@
 var a00239 =
 [
-    [ "char_ext_props", "a00239.html#a0399fb7726aec8438c535400f5f1f4b1", null ],
-    [ "char_props", "a00239.html#ae68a35f9169191539d6910f11be6eced", null ],
-    [ "handle_decl", "a00239.html#a2ba0a3bc741d666e765ca29285946de8", null ],
-    [ "handle_value", "a00239.html#af595827dab88a0b110f49e47a64b45dd", null ],
-    [ "uuid", "a00239.html#a69ac665a39feea71fafac8a54ecf0a5e", null ]
+    [ "auth_signed_wr", "a00239.html#ad021e4c1c66a2595cb430d1e0598bc0d", null ],
+    [ "broadcast", "a00239.html#a66788f87aed20bf98b81af57051e9795", null ],
+    [ "indicate", "a00239.html#a256d8d59b59f7f1a079e962196e026dd", null ],
+    [ "notify", "a00239.html#a9dd91c1e55995665ef09ec4c5bd5eaf7", null ],
+    [ "read", "a00239.html#a1da688e4cfacf724ee7636dbf534716f", null ],
+    [ "write", "a00239.html#ae0ef9c3f220f06e735b534d232cb9108", null ],
+    [ "write_wo_resp", "a00239.html#a61fdb334c11f2a62accb48f297fb46ef", null ]
 ];

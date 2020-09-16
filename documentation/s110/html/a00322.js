@@ -1,6 +1,7 @@
 var a00322 =
 [
-    [ "encoded_ctrl_rsp", "a00322.html#adf17b1a0cd599ca5bd71dba42e318e06", null ],
-    [ "len", "a00322.html#afb2e07899dd914805f45b9da0694e0af", null ],
-    [ "status", "a00322.html#a978ed1543a79395ebdefc4f92233dfb7", null ]
+    [ "cumulative_value", "a00322.html#ad226d0754bf0b129e4202d6468918de8", null ],
+    [ "evt_type", "a00322.html#a4ae317b0ff9170a27f7315dfb3c12bb6", null ],
+    [ "params", "a00322.html#acd770df4b6ee2c4694f4a5bac2b5f875", null ],
+    [ "update_location", "a00322.html#a64e560612783b28ce208966239c7ec07", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: SOFTDEVICE_INFORMATION_Type Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: sfloat_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,108 +106,48 @@ $(document).ready(function(){initNavTree('a00391.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">SOFTDEVICE_INFORMATION_Type Struct Reference<div class="ingroups"><a class="el" href="a00951.html">Types and definitions.</a></div></div>  </div>
+<div class="title">sfloat_t Struct Reference<div class="ingroups"><a class="el" href="a00966.html">Glucose Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure holding SoftDevice information to be used by the Bootloader/DFU. Only size field is used.  
+<p>SFLOAT format (IEEE-11073 16-bit FLOAT, meaning 4 bits for exponent (base 10) and 12 bits mantissa)  
  <a href="a00391.html#details">More...</a></p>
 
-<p><code>#include &lt;dfu_types.h&gt;</code></p>
+<p><code>#include &lt;ble_gls.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a0dfa8dc981701b47ad619d778bb646bf"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00391.html#a0dfa8dc981701b47ad619d778bb646bf">info_size</a></td></tr>
-<tr class="separator:a0dfa8dc981701b47ad619d778bb646bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa17f21260d985fdbf5eeabd8ff4ab0ca"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00391.html#aa17f21260d985fdbf5eeabd8ff4ab0ca">reserved1</a> [3]</td></tr>
-<tr class="separator:aa17f21260d985fdbf5eeabd8ff4ab0ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e3c0ed915d2c32a3a486ce625155466"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00391.html#a8e3c0ed915d2c32a3a486ce625155466">magic_number</a></td></tr>
-<tr class="separator:a8e3c0ed915d2c32a3a486ce625155466"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab12be31117d5f9746bd9ea8920863540"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00391.html#ab12be31117d5f9746bd9ea8920863540">softdevice_size</a></td></tr>
-<tr class="separator:ab12be31117d5f9746bd9ea8920863540"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71d3fb8b5eb37e1b988cf4d24e83ff05"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00391.html#a71d3fb8b5eb37e1b988cf4d24e83ff05">firmware_id</a></td></tr>
-<tr class="separator:a71d3fb8b5eb37e1b988cf4d24e83ff05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3ab6d531e4101f61f2b86443d9abb06"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00391.html#ac3ab6d531e4101f61f2b86443d9abb06">reserved2</a> [2]</td></tr>
-<tr class="separator:ac3ab6d531e4101f61f2b86443d9abb06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a831aa262a275e9fe9b611e074ab357fe"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00391.html#a831aa262a275e9fe9b611e074ab357fe">exponent</a></td></tr>
+<tr class="separator:a831aa262a275e9fe9b611e074ab357fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f8b946e6d4361fa7a8e427a1c5cc0ef"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00391.html#a3f8b946e6d4361fa7a8e427a1c5cc0ef">mantissa</a></td></tr>
+<tr class="separator:a3f8b946e6d4361fa7a8e427a1c5cc0ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure holding SoftDevice information to be used by the Bootloader/DFU. Only size field is used. </p>
+<div class="textblock"><p>SFLOAT format (IEEE-11073 16-bit FLOAT, meaning 4 bits for exponent (base 10) and 12 bits mantissa) </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a71d3fb8b5eb37e1b988cf4d24e83ff05"></a>
+<a class="anchor" id="a831aa262a275e9fe9b611e074ab357fe"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t SOFTDEVICE_INFORMATION_Type::firmware_id</td>
+          <td class="memname">int8_t sfloat_t::exponent</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Firmware id. </p>
+<p>Base 10 exponent, should be using only 4 bits </p>
 
 </div>
 </div>
-<a class="anchor" id="a0dfa8dc981701b47ad619d778bb646bf"></a>
+<a class="anchor" id="a3f8b946e6d4361fa7a8e427a1c5cc0ef"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t SOFTDEVICE_INFORMATION_Type::info_size</td>
+          <td class="memname">int16_t sfloat_t::mantissa</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Not used. </p>
-
-</div>
-</div>
-<a class="anchor" id="a8e3c0ed915d2c32a3a486ce625155466"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t SOFTDEVICE_INFORMATION_Type::magic_number</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Not used. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa17f21260d985fdbf5eeabd8ff4ab0ca"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t SOFTDEVICE_INFORMATION_Type::reserved1[3]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Not used. </p>
-
-</div>
-</div>
-<a class="anchor" id="ac3ab6d531e4101f61f2b86443d9abb06"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t SOFTDEVICE_INFORMATION_Type::reserved2[2]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Not used. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab12be31117d5f9746bd9ea8920863540"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t SOFTDEVICE_INFORMATION_Type::softdevice_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size field containing the size of installed SoftDevice. </p>
+<p>Mantissa, should be using only 12 bits </p>
 
 </div>
 </div>
@@ -216,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00391.html">SOFTDEVICE_INFORMATION_Type</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00391.html">sfloat_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

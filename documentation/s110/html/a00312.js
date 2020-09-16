@@ -1,7 +1,6 @@
 var a00312 =
 [
-    [ "error_handler", "a00312.html#ad807ea2ae006260b7c63872abc7961a9", null ],
-    [ "evt_handler", "a00312.html#aba9fc4fcd56873873aa82aace5c804f7", null ],
-    [ "initial_alert_level", "a00312.html#a7e1cfca38578d65b9e40d1dffd69ebf6", null ],
-    [ "lls_attr_md", "a00312.html#a4107eb4f75941f56faea5db0b273c863", null ]
+    [ "alert_level", "a00312.html#adaf4d087319007c776df8baf3673fe8a", null ],
+    [ "evt_type", "a00312.html#a971a9cd94583dae76dcf5f94eb412686", null ],
+    [ "params", "a00312.html#a03bfd9896c9389b175cf494e4f548514", null ]
 ];

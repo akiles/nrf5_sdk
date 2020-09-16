@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gatts_evt_rw_authorize_request_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gatts_evt_read_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,67 +106,63 @@ $(document).ready(function(){initNavTree('a00266.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gatts_evt_rw_authorize_request_t Struct Reference<div class="ingroups"><a class="el" href="a01057.html">Structures</a></div></div>  </div>
+<div class="title">ble_gatts_evt_read_t Struct Reference<div class="ingroups"><a class="el" href="a01059.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event structure for BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST.  
+<p>Event structure for authorize read request.  
  <a href="a00266.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gatts.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a8de6fad49332e37d86887303f2bc28a8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#a8de6fad49332e37d86887303f2bc28a8">type</a></td></tr>
-<tr class="separator:a8de6fad49332e37d86887303f2bc28a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9612f4a88d4f51c576db0e5b565a0b27"><td class="memItemLeft" ><a class="anchor" id="a9612f4a88d4f51c576db0e5b565a0b27"></a>
-union {</td></tr>
-<tr class="memitem:ab3270c6725d12f2dab133e9c0a101e35"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00265.html">ble_gatts_evt_read_t</a>&#160;&#160;&#160;<a class="el" href="a00266.html#aa2fe207fe3fe3b8d5ff5e8fbbf65f495">read</a></td></tr>
-<tr class="separator:ab3270c6725d12f2dab133e9c0a101e35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12839e861eb41880aff54e17e7ae82d9"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00270.html">ble_gatts_evt_write_t</a>&#160;&#160;&#160;<a class="el" href="a00266.html#ae846e97ba3f096abf3f54e92fcb30049">write</a></td></tr>
-<tr class="separator:a12839e861eb41880aff54e17e7ae82d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9612f4a88d4f51c576db0e5b565a0b27"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>request</b></td></tr>
-<tr class="separator:a9612f4a88d4f51c576db0e5b565a0b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79c55f70b9d10f1e11b35bb2cc13fdbd"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#a79c55f70b9d10f1e11b35bb2cc13fdbd">handle</a></td></tr>
+<tr class="separator:a79c55f70b9d10f1e11b35bb2cc13fdbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66d632e13cd7d371036af6a90be224f4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00258.html">ble_gatts_attr_context_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#a66d632e13cd7d371036af6a90be224f4">context</a></td></tr>
+<tr class="separator:a66d632e13cd7d371036af6a90be224f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3c5c0c840625a5f28e90e9021eb2403"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00266.html#ac3c5c0c840625a5f28e90e9021eb2403">offset</a></td></tr>
+<tr class="separator:ac3c5c0c840625a5f28e90e9021eb2403"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event structure for BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST. </p>
+<div class="textblock"><p>Event structure for authorize read request. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aa2fe207fe3fe3b8d5ff5e8fbbf65f495"></a>
+<a class="anchor" id="a66d632e13cd7d371036af6a90be224f4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00265.html">ble_gatts_evt_read_t</a> ble_gatts_evt_rw_authorize_request_t::read</td>
+          <td class="memname"><a class="el" href="a00258.html">ble_gatts_attr_context_t</a> ble_gatts_evt_read_t::context</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Attribute Read Parameters. </p>
+<p>Attribute Context. </p>
 
 </div>
 </div>
-<a class="anchor" id="a8de6fad49332e37d86887303f2bc28a8"></a>
+<a class="anchor" id="a79c55f70b9d10f1e11b35bb2cc13fdbd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gatts_evt_rw_authorize_request_t::type</td>
+          <td class="memname">uint16_t ble_gatts_evt_read_t::handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of authorize operation, see <a class="el" href="a00831.html">GATT Server Authorization Types</a>. </p>
+<p>Attribute Handle. </p>
 
 </div>
 </div>
-<a class="anchor" id="ae846e97ba3f096abf3f54e92fcb30049"></a>
+<a class="anchor" id="ac3c5c0c840625a5f28e90e9021eb2403"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00270.html">ble_gatts_evt_write_t</a> ble_gatts_evt_rw_authorize_request_t::write</td>
+          <td class="memname">uint16_t ble_gatts_evt_read_t::offset</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Attribute Write Parameters. </p>
+<p>Offset for the read operation. </p>
 
 </div>
 </div>
@@ -175,8 +171,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00266.html">ble_gatts_evt_rw_authorize_request_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00266.html">ble_gatts_evt_read_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:12 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

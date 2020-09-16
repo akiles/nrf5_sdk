@@ -174,36 +174,36 @@ UART HCI SLIP driver</h1>
 </p>
 <ul>
 <li>In case of <a class="el" href="a00501.html#gga9346b21b144fd9499e24853bbf781e17a6ee822a8a07d1be09ac336495a5238d8">APP_UART_COMMUNICATION_ERROR</a> event, error source (taken from <a class="el" href="a00090.html">app_uart_evt_t</a> structure) is checked. If the source is parity or overrun error,<br/>
- then upper layer is notified with <a class="el" href="a00664.html#ggaef62df8feedfbe682684c6f1ea704061afad1fa7a81b1ed34ede87c0751125c4e">SER_PHY_EVT_HW_ERROR</a>. Error source is passed in error_code member of a <a class="el" href="a00222.html">ser_phy_evt_hw_error_params_t</a> structure.<br/>
+ then upper layer is notified with <a class="el" href="a00662.html#ggaef62df8feedfbe682684c6f1ea704061afad1fa7a81b1ed34ede87c0751125c4e">SER_PHY_EVT_HW_ERROR</a>. Error source is passed in error_code member of a <a class="el" href="a00222.html">ser_phy_evt_hw_error_params_t</a> structure.<br/>
 </li>
 <li><a class="el" href="a00501.html#gga9346b21b144fd9499e24853bbf781e17a9fa032c57eadcef66e102eb78a04c2d1">APP_UART_TX_EMPTY</a> indicates a TXDRDY interrupt. In such case a static function for transmission is called: 'ser_phy_hci_tx_byte()'<br/>
- Note: when transmission of a packet begins 'ser_phy_hci_tx_byte()' function is called for the first time in <a class="el" href="a00665.html#ga5b7bc3ebe9fde93d37fdf9300c7a0b6f" title="A function for transmitting a HCI SLIP packet.">ser_phy_hci_slip_tx_pkt_send()</a> function. Later it is only called in<br/>
+ Note: when transmission of a packet begins 'ser_phy_hci_tx_byte()' function is called for the first time in <a class="el" href="a00663.html#ga5b7bc3ebe9fde93d37fdf9300c7a0b6f" title="A function for transmitting a HCI SLIP packet.">ser_phy_hci_slip_tx_pkt_send()</a> function. Later it is only called in<br/>
  <a class="el" href="a00090.html">app_uart_evt_t</a> event callback.<br/>
 </li>
 <li><a class="el" href="a00501.html#gga9346b21b144fd9499e24853bbf781e17a5b4c2503e1e658ff28dcaad17eff6ac4">APP_UART_DATA</a> indicates a RXDRDY interrupt. In such case a static function for reception: 'ser_phi_hci_rx_byte()' is called with received byte as a parameter. Received byte<br/>
  is taken from <a class="el" href="a00090.html">app_uart_evt_t</a> structure.<br/>
 </li>
 </ul>
-<p>Following <a class="el" href="a00665.html#ga696fce5dc53c4c227b5fe54e832f09ec">ser_phy_hci_slip_evt_type_t</a> events are send to upper layer:</p>
+<p>Following <a class="el" href="a00663.html#ga696fce5dc53c4c227b5fe54e832f09ec">ser_phy_hci_slip_evt_type_t</a> events are send to upper layer:</p>
 <ul>
-<li><a class="el" href="a00665.html#gga696fce5dc53c4c227b5fe54e832f09ecac2bad55aa2e033e9cf1d26d1551da3bd">SER_PHY_HCI_SLIP_EVT_PKT_SENT</a> when all bytes of packet are transmitted.<br/>
+<li><a class="el" href="a00663.html#gga696fce5dc53c4c227b5fe54e832f09ecac2bad55aa2e033e9cf1d26d1551da3bd">SER_PHY_HCI_SLIP_EVT_PKT_SENT</a> when all bytes of packet are transmitted.<br/>
 </li>
-<li><a class="el" href="a00665.html#gga696fce5dc53c4c227b5fe54e832f09eca1e744b223073244f7e005771b3b0ab40">SER_PHY_HCI_SLIP_EVT_ACK_SENT</a> when all bytes of ACK packet are transmitted.<br/>
+<li><a class="el" href="a00663.html#gga696fce5dc53c4c227b5fe54e832f09eca1e744b223073244f7e005771b3b0ab40">SER_PHY_HCI_SLIP_EVT_ACK_SENT</a> when all bytes of ACK packet are transmitted.<br/>
 </li>
-<li><a class="el" href="a00665.html#gga696fce5dc53c4c227b5fe54e832f09eca11d423088fbb10597df19b68296d9dbd">SER_PHY_HCI_SLIP_EVT_PKT_RECEIVED</a> when all bytes have been received. This event indicates how many bytes have been received to which memory address.<br/>
+<li><a class="el" href="a00663.html#gga696fce5dc53c4c227b5fe54e832f09eca11d423088fbb10597df19b68296d9dbd">SER_PHY_HCI_SLIP_EVT_PKT_RECEIVED</a> when all bytes have been received. This event indicates how many bytes have been received to which memory address.<br/>
 </li>
-<li><a class="el" href="a00665.html#gga696fce5dc53c4c227b5fe54e832f09eca225618d1f1520ae3abb97334ea1c2c21">SER_PHY_HCI_SLIP_EVT_HW_ERROR</a> when a hardware error is reported by low-level driver<br/>
+<li><a class="el" href="a00663.html#gga696fce5dc53c4c227b5fe54e832f09eca225618d1f1520ae3abb97334ea1c2c21">SER_PHY_HCI_SLIP_EVT_HW_ERROR</a> when a hardware error is reported by low-level driver<br/>
 </li>
 </ul>
-<p>Function <a class="el" href="a00665.html#gae4f3889382e2f79d8a5c8583eb60e0c0" title="A function for opening and initializing a HCI SLIP PHY module.">ser_phy_hci_slip_open()</a> initializes UART using APP_UART_INIT macro with configuration structure of type <a class="el" href="a00089.html" title="UART communication structure holding configuration settings for the peripheral.">app_uart_comm_params_t</a> as input. It also registers SER_PHY_HCI_SLIP event callback.</p>
-<p>Function <a class="el" href="a00665.html#ga5e9d9e1deef7f917721c2ba100900961" title="A function for closing a PHY HCI module.">ser_phy_hci_slip_close()</a> closes UART using <a class="el" href="a00501.html#ga8b5b23229363aefa52be33360dfb5fde" title="Function for closing the UART module.">app_uart_close()</a> function. It also de-registers SER_PHY_HCI_SLIP event callback. </p>
+<p>Function <a class="el" href="a00663.html#gae4f3889382e2f79d8a5c8583eb60e0c0" title="A function for opening and initializing a HCI SLIP PHY module.">ser_phy_hci_slip_open()</a> initializes UART using APP_UART_INIT macro with configuration structure of type <a class="el" href="a00089.html" title="UART communication structure holding configuration settings for the peripheral.">app_uart_comm_params_t</a> as input. It also registers SER_PHY_HCI_SLIP event callback.</p>
+<p>Function <a class="el" href="a00663.html#ga5e9d9e1deef7f917721c2ba100900961" title="A function for closing a PHY HCI module.">ser_phy_hci_slip_close()</a> closes UART using <a class="el" href="a00501.html#ga8b5b23229363aefa52be33360dfb5fde" title="Function for closing the UART module.">app_uart_close()</a> function. It also de-registers SER_PHY_HCI_SLIP event callback. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00056.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00059.html">Serialization PHY</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

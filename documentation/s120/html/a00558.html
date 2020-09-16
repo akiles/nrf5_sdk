@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: SVC return values specific to GATTC</title>
+<title>nRF51 SDK - S120 SoftDevice: GATT Server Service Types</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,27 +99,57 @@ $(document).ready(function(){initNavTree('a00558.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">SVC return values specific to GATTC<div class="ingroups"><a class="el" href="a00752.html">Defines</a></div></div>  </div>
+<div class="title">GATT Server Service Types<div class="ingroups"><a class="el" href="a00758.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gaec4c26bdcc1235411c5feec6d38b3465"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00558.html#gaec4c26bdcc1235411c5feec6d38b3465">BLE_ERROR_GATTC_PROC_NOT_PERMITTED</a>&#160;&#160;&#160;(<a class="el" href="a00529.html#ga200400dc8ad79918acee9cd038336165">NRF_GATTC_ERR_BASE</a> + 0x000)</td></tr>
-<tr class="separator:gaec4c26bdcc1235411c5feec6d38b3465"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga07c49b0b262d0b5bd709d282b659436d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00558.html#ga07c49b0b262d0b5bd709d282b659436d">BLE_GATTS_SRVC_TYPE_INVALID</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga07c49b0b262d0b5bd709d282b659436d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga881b91f3ac789bf6fcefee7f815dcf7e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00558.html#ga881b91f3ac789bf6fcefee7f815dcf7e">BLE_GATTS_SRVC_TYPE_PRIMARY</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga881b91f3ac789bf6fcefee7f815dcf7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1aa1898278ef4d0034858d752eac29b0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00558.html#ga1aa1898278ef4d0034858d752eac29b0">BLE_GATTS_SRVC_TYPE_SECONDARY</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:ga1aa1898278ef4d0034858d752eac29b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gaec4c26bdcc1235411c5feec6d38b3465"></a>
+<a class="anchor" id="ga07c49b0b262d0b5bd709d282b659436d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_ERROR_GATTC_PROC_NOT_PERMITTED&#160;&#160;&#160;(<a class="el" href="a00529.html#ga200400dc8ad79918acee9cd038336165">NRF_GATTC_ERR_BASE</a> + 0x000)</td>
+          <td class="memname">#define BLE_GATTS_SRVC_TYPE_INVALID&#160;&#160;&#160;0x00</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Procedure not Permitted. </p>
+<p>Invalid Service Type. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga881b91f3ac789bf6fcefee7f815dcf7e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATTS_SRVC_TYPE_PRIMARY&#160;&#160;&#160;0x01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Primary Service. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga1aa1898278ef4d0034858d752eac29b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATTS_SRVC_TYPE_SECONDARY&#160;&#160;&#160;0x02</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Secondary Type. </p>
 
 </div>
 </div>
@@ -128,7 +158,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:32 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:18 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

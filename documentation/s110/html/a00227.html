@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_opt_local_conn_latency_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gap_master_id_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,83 +106,48 @@ $(document).ready(function(){initNavTree('a00227.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_opt_local_conn_latency_t Struct Reference<div class="ingroups"><a class="el" href="a00851.html">Generic Access Profile (GAP)</a></div></div>  </div>
+<div class="title">ble_gap_master_id_t Struct Reference<div class="ingroups"><a class="el" href="a01048.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Local connection latency option.  
+<p>GAP Master Identification.  
  <a href="a00227.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a2c0b8fc1f46e4360b34a1806061e828a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#a2c0b8fc1f46e4360b34a1806061e828a">conn_handle</a></td></tr>
-<tr class="separator:a2c0b8fc1f46e4360b34a1806061e828a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac06a0a4e53f12763e0966c9bff3e0545"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#ac06a0a4e53f12763e0966c9bff3e0545">requested_latency</a></td></tr>
-<tr class="separator:ac06a0a4e53f12763e0966c9bff3e0545"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a769493b896a8e6709956d5248aaa94d6"><td class="memItemLeft" align="right" valign="top">uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#a769493b896a8e6709956d5248aaa94d6">p_actual_latency</a></td></tr>
-<tr class="separator:a769493b896a8e6709956d5248aaa94d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a221a26308f709715e866c3111992ae9a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#a221a26308f709715e866c3111992ae9a">ediv</a></td></tr>
+<tr class="separator:a221a26308f709715e866c3111992ae9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5eed4e9e5a810616535ae08c4e860302"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00227.html#a5eed4e9e5a810616535ae08c4e860302">rand</a> [8]</td></tr>
+<tr class="separator:a5eed4e9e5a810616535ae08c4e860302"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Local connection latency option. </p>
-<pre class="fragment">    Local connection latency is a feature which enables the slave to improve
-    current consumption by ignoring the slave latency set by the peer. The
-    local connection latency can only be set to a multiple of the slave latency,
-    and cannot be longer than half of the supervision timeout.
-
-    Used with @ref sd_ble_opt_set to set the local connection latency. The
-    @ref sd_ble_opt_get is not supported for this option, but the actual 
-    local connection latency (unless set to NULL) is set as a return parameter
-    when setting the option.
-</pre><dl class="section note"><dt>Note</dt><dd>The latency set will be truncated down to the closest slave latency event multiple, or the nearest multiple before half of the supervision timeout.</dd>
-<dd>
-The local connection latency is default off, and needs to be set for new connections and whenever the connection is updated.</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00840.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Set successfully. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00840.html#gaacf52836cc3860c5ffd4e129f725f138" title="Not supported.">NRF_ERROR_NOT_SUPPORTED</a></td><td>Get is not supported. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00796.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a></td><td>Invalid connection handle parameter. </td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="textblock"><p>GAP Master Identification. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a2c0b8fc1f46e4360b34a1806061e828a"></a>
+<a class="anchor" id="a221a26308f709715e866c3111992ae9a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gap_opt_local_conn_latency_t::conn_handle</td>
+          <td class="memname">uint16_t ble_gap_master_id_t::ediv</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Connection Handle </p>
+<p>Encrypted Diversifier. </p>
 
 </div>
 </div>
-<a class="anchor" id="a769493b896a8e6709956d5248aaa94d6"></a>
+<a class="anchor" id="a5eed4e9e5a810616535ae08c4e860302"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t* ble_gap_opt_local_conn_latency_t::p_actual_latency</td>
+          <td class="memname">uint8_t ble_gap_master_id_t::rand[8]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to storage for the actual local connection latency (can be set to NULL to skip return value). </p>
-
-</div>
-</div>
-<a class="anchor" id="ac06a0a4e53f12763e0966c9bff3e0545"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gap_opt_local_conn_latency_t::requested_latency</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Requested local connection latency. </p>
+<p>Random Number. </p>
 
 </div>
 </div>
@@ -191,8 +156,8 @@ The local connection latency is default off, and needs to be set for new connect
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00227.html">ble_gap_opt_local_conn_latency_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:26 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00227.html">ble_gap_master_id_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:12 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,3 +1,79 @@
+nRF51 SDK v. 7.1.0
+------------------
+
+Following toolchains/devices have been used for testing and verification:
+    - ARM: MDK-ARM Version 5.12
+    - GCC: gcc-arm-embedded 4.7 2013q1
+    - IAR: no support in this release
+    - Windows XP SP3 32-bit
+    - Windows 7 SP1 64-bit
+    - Windows 8.1
+
+Tested with devices:
+    - nRF51422 QFACAB
+    
+    For others devices, use SDK 6.x.x.
+
+Supported SoftDevices:
+    - S110 7.1.0
+    - S120 1.0.1
+    - S130 0.5.0-1.alpha
+    - S210 4.0.1
+    - S310 2.0.0
+
+Supported boards:
+    - PCA10028
+    - PCA10031
+    - S110 connectivity support for Wavetek WT51822
+
+    For other boards, use SDK V6.x.x.
+
+Changes:
+    - Experimental support for over-the-air firmware update using the ANT radio protocol
+    - New experimental example ANT relay demo
+    - Support for S310 ANT+BLE version 2.0.0
+    - Re-introduce Device Firmware Update via UART
+    - BLE DFU single bank support for bootloader+softdevice update
+
+Fixed issues:
+    - NRFFOSDK-3119 Fixed issue in app_timer where issuing start/stop from interrupt context caused long delays
+
+Known issues:
+
+    - SEGGER J-Link software has some issues with Keil. See http://www.segger.com/IDE_Integration_Keil.html#knownproblems for more details.
+    - The DFU over BLE example has been tested to work with a minimum connection interval of 11.25 ms. The application cannot handle connection intervals lower than 11.25 ms and may undergo a system reset in the middle of a firmware update.
+         Workaround: If you face unexpected disconnects during the firmware update process, consider increasing the connection interval used by the master
+
+    ANT
+        - The OTA Updater application v.0.8 does not support hex files with code size larger than 65535 bytes.
+        - NRFFOSDK-366: ANT-FS host: download sometimes fails when downloading a large file
+        - NRFFOSDK-755: HRM TX buttons example may report wrong total elapsed time
+
+    BLE
+        - NRFFOSDK-3135: S120 examples: RAM is limited to 16 kB, because S120 V1.0.1 does not support utilizing the whole flash on the QFACAB chip
+        - NRFFOSDK-119: Only the ble_app_proximity_low_power and ble_app_hrs applications are power optimized
+        - S120 examples: Flash clear operation may fail when connected. Impact of this in the S120 examples is that if the peer loses the bond and a rebonding occurs, flash clear fails and a DM_EVT_DEVICE_CONTEXT_STORED event is notified with a failure.
+        - A few APIs of the Device Manager are not implemented. Also, documentation providing examples of how the API can be used is missing.
+        - NRFFOSDK-2824: Device Manager (pstorage) does not support update of bond split across two pages.
+
+    Proprietary:
+        - Temperature example does not give sane output values. This is a hardware-related issue described in PAN_028 and will be fixed in future silicon.
+        - The nRF24Lxx ESB examples found in the legacy nRFready SDKs do not work out of the box with the nRF51 ESB examples. This is due to:
+            - The legacy examples do not use "payload in ACK".
+            - The legacy examples use RF channel 2 (not 10 as the nRF51 examples).
+            - The examples do not use dynamic payload length.
+            The legacy examples need to add the following to work with the nRF51 examples:
+                hal_nrf_setup_dynamic_payload(0xFF);
+                hal_nrf_enable_dynamic_payload(true);
+                hal_nrf_enable_ack_payload(true);
+                hal_nrf_set_rf_channel(10);
+            In addition, the legacy PTX example must add code for handling the payloads received in ACK.
+        - The Gazell Link Layer examples are not fully "out of the box" compatible with the legacy Gazell examples provided in the nRFgo SDK for nRF24Lxx devices. The timeslot periods and channel tables require adjustment.
+            - Timeslot period: Edit the gzll_params.h file used in the nRF24Lxx projects or use the nrf_gzll_set_timeslot_period() function in the nRF51 projects (nRF51 Gazell timeslot period = 0.5*GZLL_RX_PERIOD).
+            - Channel table: Edit the gzll_params.h file used in the nRF24Lxx projects or use the nrf_gzll_set_channel_table() function in the nRF51 projects.
+        - Gazell does not support "Low Power Host mode" (Host mode 1).
+
+
 nRF51 SDK v. 7.0.1
 ------------------
 This is a supplement to the nRF51 SDK v7.0.0 release notes.

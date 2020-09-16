@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Enumerations</title>
+<title>nRF51 SDK - S110 SoftDevice: Database Discovery</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,58 +97,44 @@ $(document).ready(function(){initNavTree('a00994.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Enumerations<div class="ingroups"><a class="el" href="a00992.html">Database Discovery</a></div></div>  </div>
+<div class="title">Database Discovery<div class="ingroups"><a class="el" href="a01034.html">nRF51 SDK</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Database discovery module.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gaa16075c6c77a4f3f32fb567d5ce45462"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00994.html#gaa16075c6c77a4f3f32fb567d5ce45462">ble_db_discovery_evt_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00994.html#ggaa16075c6c77a4f3f32fb567d5ce45462ad6925ee73dada1191de4934d7891dc1f">BLE_DB_DISCOVERY_COMPLETE</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00994.html#ggaa16075c6c77a4f3f32fb567d5ce45462aca629cd78939015c22a44c9e3797043b">BLE_DB_DISCOVERY_ERROR</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00994.html#ggaa16075c6c77a4f3f32fb567d5ce45462a16f218739c505cfa820990dce92e412d">BLE_DB_DISCOVERY_SRV_NOT_FOUND</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gaa16075c6c77a4f3f32fb567d5ce45462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of the DB Discovery event.  <a href="a00994.html#gaa16075c6c77a4f3f32fb567d5ce45462">More...</a><br/></td></tr>
-<tr class="separator:gaa16075c6c77a4f3f32fb567d5ce45462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00995"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00995.html">Defines</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00996"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00996.html">Enumerations</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00997"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00997.html">Structures</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00998"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00998.html">Types</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00999"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00999.html">Functions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaa16075c6c77a4f3f32fb567d5ce45462"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00994.html#gaa16075c6c77a4f3f32fb567d5ce45462">ble_db_discovery_evt_type_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Type of the DB Discovery event. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa16075c6c77a4f3f32fb567d5ce45462ad6925ee73dada1191de4934d7891dc1f"></a>BLE_DB_DISCOVERY_COMPLETE</em>&nbsp;</td><td class="fielddoc">
-<p>Event indicating that the GATT Database discovery is complete. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa16075c6c77a4f3f32fb567d5ce45462aca629cd78939015c22a44c9e3797043b"></a>BLE_DB_DISCOVERY_ERROR</em>&nbsp;</td><td class="fielddoc">
-<p>Event indicating that an internal error has occurred in the DB Discovery module. This could typically be because of the SoftDevice API returning an error code during the DB discover. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa16075c6c77a4f3f32fb567d5ce45462a16f218739c505cfa820990dce92e412d"></a>BLE_DB_DISCOVERY_SRV_NOT_FOUND</em>&nbsp;</td><td class="fielddoc">
-<p>Event indicating that the service was not found at the peer. </p>
-</td></tr>
-</table>
-
+<p>Database discovery module. </p>
+<p>This module contains the APIs and types exposed by the DB Discovery module. These APIs and types can be used by the application to perform discovery of a service and its characteristics at the peer server. This module can also be used to discover the desired services in multiple remote devices. A typical use of this library is described in the figure below. </p>
+<div class="image">
+<img src="db_discovery.jpg" alt="db_discovery.jpg"/>
 </div>
-</div>
+<dl class="section warning"><dt>Warning</dt><dd>The maximum number of characteristics per service that can be discovered by this module is indicated by the value of <a class="el" href="a00995.html#gae17633bce497fe1c216826ed096ababd">BLE_DB_DISCOVERY_MAX_CHAR_PER_SRV</a>. If the peer has more than the supported number of characteristics, then the first found will be discovered and any further characteristics will be ignored. No descriptors other than Client Characteristic Configuration Descriptors will be searched for at the peer.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Presently only one instance of a Primary Service can be discovered by this module. If there are multiple instances of the service at the peer, only the first instance of it at the peer is fetched and returned to the application.</dd>
+<dd>
+The application must propagate BLE stack events to this module by calling <a class="el" href="a00999.html#ga60575c004188a08a78063884356bf15f" title="Function for handling the Application&#39;s BLE Stack events.">ble_db_discovery_on_ble_evt()</a>. </dd></dl>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

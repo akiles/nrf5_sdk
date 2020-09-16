@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Packets decoder in the connectivity chip</title>
+<title>nRF51 SDK - S120 SoftDevice: Battery Service Client</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,64 +97,36 @@ $(document).ready(function(){initNavTree('a00682.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Packets decoder in the connectivity chip<div class="ingroups"><a class="el" href="a00784.html">Connectivity application code</a></div></div>  </div>
+<div class="title">Battery Service Client<div class="ingroups"><a class="el" href="a00738.html">BLE Services</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Decoder for serialized packets from an Application Chip.  
+<p>Battery Service Client module.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gad559e91ce1be69927a87c644069154c0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gad559e91ce1be69927a87c644069154c0">ser_conn_received_pkt_process</a> (<a class="el" href="a00220.html">ser_hal_transport_evt_rx_pkt_received_params_t</a> *p_rx_pkt_params)</td></tr>
-<tr class="memdesc:gad559e91ce1be69927a87c644069154c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for dispatching packets from an Application Chip to an appropriate decoder.  <a href="#gad559e91ce1be69927a87c644069154c0">More...</a><br/></td></tr>
-<tr class="separator:gad559e91ce1be69927a87c644069154c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00683"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00683.html">Enumerations</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00684"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00684.html">Structures</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00685"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00685.html">Types</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00686"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00686.html">Functions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Decoder for serialized packets from an Application Chip. </p>
-<p>This file contains declaration of common function used for processing packets (packets dispatcher) received by the transport layer. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gad559e91ce1be69927a87c644069154c0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ser_conn_received_pkt_process </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00220.html">ser_hal_transport_evt_rx_pkt_received_params_t</a> *&#160;</td>
-          <td class="paramname"><em>p_rx_pkt_params</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function for dispatching packets from an Application Chip to an appropriate decoder. </p>
-<p>The function is called to process received packets from a transport layer. The function analyzes packet type and calls appropriate command decoder which among other things processes command and sends a response. Then a received packet is freed.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_rx_pkt_params</td><td>A pointer to a transport layer event of type <a class="el" href="a00220.html">ser_hal_transport_evt_rx_pkt_received_params_t</a>.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INTERNAL</td><td>Operation failure. Internal error ocurred. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
+<p>Battery Service Client module. </p>
+<p>This module contains APIs to read and interact with the Battery Service of a remote device.</p>
+<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to this module by calling <a class="el" href="a00691.html#ga062e0829a2ebd211d4e51a23c520ab1f" title="Function for handling BLE events from the SoftDevice.">ble_hrs_c_on_ble_evt()</a>. </dd></dl>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:25 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

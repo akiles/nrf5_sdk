@@ -351,9 +351,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define> TRACE_UART TRACE_HRM_PAGE_NMBR TRACE_HRM_PAGE_1 TRACE_HRM_PAGE_2 TRACE_HRM_PAGE_3 TRACE_HRM_PAGE_4 NRF51 BSP_DEFINES_ONLY ANT_STACK_SUPPORT_REQD SOFTDEVICE_PRESENT BOARD_PCA10028</Define>
+              <Define> TRACE_UART TRACE_HRM_PAGE_NMBR TRACE_HRM_PAGE_1 TRACE_HRM_PAGE_2 TRACE_HRM_PAGE_3 TRACE_HRM_PAGE_4 NRF51 BSP_DEFINES_ONLY ANT_STACK_SUPPORT_REQD S210 SOFTDEVICE_PRESENT BOARD_PCA10028</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\include;..\..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\..\components\toolchain;..\..\..\;..\..\..\..\..\..\bsp;..\..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\..\components\softdevice\s210\headers;..\..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\..\components\libraries\gpiote</IncludePath>
+              <IncludePath>..\..\..\include;..\..\..\..\..\..\..\components\toolchain;..\..\..\;..\..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\..\components\softdevice\s210\headers;..\..\..\..\..\..\bsp;..\..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\..\..\components\drivers_nrf\hal</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -367,7 +367,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define> TRACE_UART TRACE_HRM_PAGE_NMBR TRACE_HRM_PAGE_1 TRACE_HRM_PAGE_2 TRACE_HRM_PAGE_3 TRACE_HRM_PAGE_4 NRF51 BSP_DEFINES_ONLY ANT_STACK_SUPPORT_REQD SOFTDEVICE_PRESENT BOARD_PCA10028</Define>
+              <Define> TRACE_UART TRACE_HRM_PAGE_NMBR TRACE_HRM_PAGE_1 TRACE_HRM_PAGE_2 TRACE_HRM_PAGE_3 TRACE_HRM_PAGE_4 NRF51 BSP_DEFINES_ONLY ANT_STACK_SUPPORT_REQD S210 SOFTDEVICE_PRESENT BOARD_PCA10028</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

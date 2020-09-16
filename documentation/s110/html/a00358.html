@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: dm_service_context_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dm_sec_keyset_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,49 +106,48 @@ $(document).ready(function(){initNavTree('a00358.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dm_service_context_t Struct Reference<div class="ingroups"><a class="el" href="a00986.html">Device Manager Data Types</a></div></div>  </div>
+<div class="title">dm_sec_keyset_t Struct Reference<div class="ingroups"><a class="el" href="a00988.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Service Context.  
+<p>Device Manager security key set.  
  <a href="a00358.html#details">More...</a></p>
 
 <p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a9fa1bd3f934dbc782a82fcdffda7316e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00986.html#gaef588a149a4cc5b665658cfb032d6f6a">service_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00358.html#a9fa1bd3f934dbc782a82fcdffda7316e">service_type</a></td></tr>
-<tr class="separator:a9fa1bd3f934dbc782a82fcdffda7316e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6692f2d4301c1ef4dc4d967dff35782"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00350.html">dm_context_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00358.html#aa6692f2d4301c1ef4dc4d967dff35782">context_data</a></td></tr>
-<tr class="separator:aa6692f2d4301c1ef4dc4d967dff35782"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4488fee3125db8baa70ac98c3d2790bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00988.html#gaf399152e3dbaa0ac2e9a3384e056a16b">dm_sec_keys_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00358.html#a4488fee3125db8baa70ac98c3d2790bf">keys_periph</a></td></tr>
+<tr class="separator:a4488fee3125db8baa70ac98c3d2790bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ddb3932823918ebe433d5e53acdb4a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00988.html#gaf399152e3dbaa0ac2e9a3384e056a16b">dm_sec_keys_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00358.html#a9ddb3932823918ebe433d5e53acdb4a6">keys_central</a></td></tr>
+<tr class="separator:a9ddb3932823918ebe433d5e53acdb4a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Service Context. </p>
-<p>Service context data for a service identified by the 'service_type' field. </p>
+<div class="textblock"><p>Device Manager security key set. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aa6692f2d4301c1ef4dc4d967dff35782"></a>
+<a class="anchor" id="a9ddb3932823918ebe433d5e53acdb4a6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00350.html">dm_context_t</a> dm_service_context_t::context_data</td>
+          <td class="memname"><a class="el" href="a00988.html#gaf399152e3dbaa0ac2e9a3384e056a16b">dm_sec_keys_t</a> dm_sec_keyset_t::keys_central</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Contains length and pointer to context data </p>
+<p>Keys distributed by the device in the Central role. </p>
 
 </div>
 </div>
-<a class="anchor" id="a9fa1bd3f934dbc782a82fcdffda7316e"></a>
+<a class="anchor" id="a4488fee3125db8baa70ac98c3d2790bf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00986.html#gaef588a149a4cc5b665658cfb032d6f6a">service_type_t</a> dm_service_context_t::service_type</td>
+          <td class="memname"><a class="el" href="a00988.html#gaf399152e3dbaa0ac2e9a3384e056a16b">dm_sec_keys_t</a> dm_sec_keyset_t::keys_periph</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Identifies the service/protocol to which the context data is related. </p>
+<p>Keys distributed by the device in the Peripheral role. </p>
 
 </div>
 </div>
@@ -157,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00358.html">dm_service_context_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00358.html">dm_sec_keyset_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

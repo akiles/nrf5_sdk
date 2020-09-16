@@ -1,4 +1,4 @@
-/* Copyright (c) 2009 Nordic Semiconductor. All Rights Reserved.
+/* Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
  *
  * The information contained herein is property of Nordic Semiconductor ASA.
  * Terms and conditions of usage are described in detail in NORDIC
@@ -18,7 +18,6 @@
  *
  * This file contains the source code for a sample application using interrupts triggered by GPIO pins.
  *
- * @image html example_board_setup_a.jpg "Use board setup A for this example."
  */
 
 #include <stdbool.h>

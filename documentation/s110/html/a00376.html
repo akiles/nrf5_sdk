@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: sd_mbr_command_copy_bl_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: sd_mbr_command_compare_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,60 +106,70 @@ $(document).ready(function(){initNavTree('a00376.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">sd_mbr_command_copy_bl_t Struct Reference<div class="ingroups"><a class="el" href="a01065.html">Types</a></div></div>  </div>
+<div class="title">sd_mbr_command_compare_t Struct Reference<div class="ingroups"><a class="el" href="a01067.html">Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This command copies a new BootLoader. With this command, destination of BootLoader is always the address written in NRF_UICR-&gt;BOOTADDR.  
+<p>This command works like memcmp, but takes the length in words.  
  <a href="a00376.html#details">More...</a></p>
 
 <p><code>#include &lt;nrf_mbr.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a504481143eb43e52488288d7de70a6f1"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#a504481143eb43e52488288d7de70a6f1">bl_src</a></td></tr>
-<tr class="separator:a504481143eb43e52488288d7de70a6f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a197755f22bcc92adc7c8288f48bd9ef8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#a197755f22bcc92adc7c8288f48bd9ef8">bl_len</a></td></tr>
-<tr class="separator:a197755f22bcc92adc7c8288f48bd9ef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03e88994f8127e877c2fd08800e64768"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#a03e88994f8127e877c2fd08800e64768">ptr1</a></td></tr>
+<tr class="separator:a03e88994f8127e877c2fd08800e64768"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f670b76c31a7b6badf0bfadd1dc08b0"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#a3f670b76c31a7b6badf0bfadd1dc08b0">ptr2</a></td></tr>
+<tr class="separator:a3f670b76c31a7b6badf0bfadd1dc08b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7fb48410ecb00dec1dca60d45cbc606"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#ae7fb48410ecb00dec1dca60d45cbc606">len</a></td></tr>
+<tr class="separator:ae7fb48410ecb00dec1dca60d45cbc606"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This command copies a new BootLoader. With this command, destination of BootLoader is always the address written in NRF_UICR-&gt;BOOTADDR. </p>
-<p>Destination is erased by this function. If (destination+bl_len) is in the middle of a flash page, that whole flash page will be erased.</p>
-<p>This function will use PROTENSET to protect the flash that is not intended to be written.</p>
-<p>On Success, this function will not return. It will start the new BootLoader from reset-vector as normal.</p>
+<div class="textblock"><p>This command works like memcmp, but takes the length in words. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00840.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>indicates that something was wrong. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00840.html#gadf8b0c33ea15352808e5ac7f69c2be8a" title="Internal Error.">NRF_ERROR_INTERNAL</a></td><td>indicates an internal error that should not happen. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00840.html#ga85125dae5d7e9d4b9964acbc13f641b3" title="Forbidden Operation.">NRF_ERROR_FORBIDDEN</a></td><td>if NRF_UICR-&gt;BOOTADDR is not set </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00840.html#ga59fe2a8fe184005aefa0835c7ff400fd" title="Invalid Length.">NRF_ERROR_INVALID_LENGTH</a></td><td>is invalid. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00838.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>indicates that the contents of both memory blocks are equal. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00838.html#gaf6e08e45224ec612e6c95660eb1bcfa0" title="Null Pointer.">NRF_ERROR_NULL</a></td><td>indicates that the contents of the memory blocks are not equal. </td></tr>
   </table>
   </dd>
 </dl>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a197755f22bcc92adc7c8288f48bd9ef8"></a>
+<a class="anchor" id="ae7fb48410ecb00dec1dca60d45cbc606"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_mbr_command_copy_bl_t::bl_len</td>
+          <td class="memname">uint32_t sd_mbr_command_compare_t::len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of 32 bit words to copy for BootLoader </p>
+<p>Number of 32 bit words to compare </p>
 
 </div>
 </div>
-<a class="anchor" id="a504481143eb43e52488288d7de70a6f1"></a>
+<a class="anchor" id="a03e88994f8127e877c2fd08800e64768"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t* sd_mbr_command_copy_bl_t::bl_src</td>
+          <td class="memname">uint32_t* sd_mbr_command_compare_t::ptr1</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to the source of the Bootloader to be be copied. </p>
+<p>Pointer to block of memory </p>
+
+</div>
+</div>
+<a class="anchor" id="a3f670b76c31a7b6badf0bfadd1dc08b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t* sd_mbr_command_compare_t::ptr2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to block of memory </p>
 
 </div>
 </div>
@@ -168,8 +178,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00376.html">sd_mbr_command_copy_bl_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00376.html">sd_mbr_command_compare_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

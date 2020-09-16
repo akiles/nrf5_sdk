@@ -1,7 +1,6 @@
 var a00144 =
 [
-    [ "rx_buf", "a00144.html#ab5c77995614a78b4a7baf6f5ab59bb5c", null ],
-    [ "rx_buf_size", "a00144.html#a42c5f8c78ee123d84c7de5da43f703e0", null ],
-    [ "tx_buf", "a00144.html#a1073bbd41b6d0ddc55e7ec432cf517dd", null ],
-    [ "tx_buf_size", "a00144.html#a8a0ff8a830eadfc972a4d44e1340e392", null ]
+    [ "item_sz", "a00144.html#a6a6172b2fd1d922b2fdd786722b608f5", null ],
+    [ "pool", "a00144.html#abc2a8007d3403d94b1499961fff6402f", null ],
+    [ "queue_sz", "a00144.html#a3f57e40b294eedf373ebd56ebc48d871", null ]
 ];

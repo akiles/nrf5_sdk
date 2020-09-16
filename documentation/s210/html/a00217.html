@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Persistent Memory Interface Data Types</title>
+<title>nRF51 SDK - S210 SoftDevice: SDIO driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,49 +97,126 @@ $(document).ready(function(){initNavTree('a00217.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Persistent Memory Interface Data Types<div class="ingroups"><a class="el" href="a00215.html">Persistent Storage Interface</a></div></div>  </div>
+<div class="title">SDIO driver<div class="ingroups"><a class="el" href="a00264.html">Peripheral Drivers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Data Types needed for interfacing with persistent memory.  
+<p>2-wire serial interface driver.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html">pstorage_module_param_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gaac1d429f24eb2850da6d8f8773a14c47"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html#gaac1d429f24eb2850da6d8f8773a14c47">pstorage_ntf_cb_t</a> )(pstorage_handle_t *p_handle, uint8_t op_code, uint32_t result, uint8_t *p_data, uint32_t data_len)</td></tr>
-<tr class="memdesc:gaac1d429f24eb2850da6d8f8773a14c47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Persistent Storage Error Reporting Callback.  <a href="#gaac1d429f24eb2850da6d8f8773a14c47">More...</a><br/></td></tr>
-<tr class="separator:gaac1d429f24eb2850da6d8f8773a14c47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gafd362e60216c5346709cac28c7cc175b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafd362e60216c5346709cac28c7cc175b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html#gafd362e60216c5346709cac28c7cc175b">sdio_init</a> (void)</td></tr>
+<tr class="memdesc:gafd362e60216c5346709cac28c7cc175b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing 2-wire serial interface and trying to handle stuck slaves. <br/></td></tr>
+<tr class="separator:gafd362e60216c5346709cac28c7cc175b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ff0f4956042d92b01fc2dbeffe26284"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html#ga1ff0f4956042d92b01fc2dbeffe26284">sdio_read_byte</a> (uint8_t address)</td></tr>
+<tr class="memdesc:ga1ff0f4956042d92b01fc2dbeffe26284"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for reading a byte over 2-wire serial interface.  <a href="#ga1ff0f4956042d92b01fc2dbeffe26284">More...</a><br/></td></tr>
+<tr class="separator:ga1ff0f4956042d92b01fc2dbeffe26284"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga95ee69dbe058216ef73012a1ff04c077"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html#ga95ee69dbe058216ef73012a1ff04c077">sdio_read_burst</a> (uint8_t *target_buffer, uint8_t target_buffer_size)</td></tr>
+<tr class="memdesc:ga95ee69dbe058216ef73012a1ff04c077"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for reading several bytes over 2-wire serial interface using burst mode.  <a href="#ga95ee69dbe058216ef73012a1ff04c077">More...</a><br/></td></tr>
+<tr class="separator:ga95ee69dbe058216ef73012a1ff04c077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2e5d560f80ba374b7fe18f4e8a565ffd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html#ga2e5d560f80ba374b7fe18f4e8a565ffd">sdio_write_byte</a> (uint8_t address, uint8_t data_byte)</td></tr>
+<tr class="memdesc:ga2e5d560f80ba374b7fe18f4e8a565ffd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for writing a byte over 2-wire serial interface.  <a href="#ga2e5d560f80ba374b7fe18f4e8a565ffd">More...</a><br/></td></tr>
+<tr class="separator:ga2e5d560f80ba374b7fe18f4e8a565ffd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Data Types needed for interfacing with persistent memory. </p>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gaac1d429f24eb2850da6d8f8773a14c47"></a>
+<p>2-wire serial interface driver. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga95ee69dbe058216ef73012a1ff04c077"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* pstorage_ntf_cb_t)(pstorage_handle_t *p_handle, uint8_t op_code, uint32_t result, uint8_t *p_data, uint32_t data_len)</td>
+          <td class="memname">void sdio_read_burst </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>target_buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>target_buffer_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Persistent Storage Error Reporting Callback. </p>
-<p>Persistent Storage Error Reporting Callback that is used by the interface to report success or failure of a flash operation. Therefore, for any operations, application can know when the procedure was complete. For store operation, since no data copy is made, receiving a success or failure notification, indicated by the reason parameter of callback is an indication that the resident memory could now be reused or freed, as the case may be.</p>
+<p>Function for reading several bytes over 2-wire serial interface using burst mode. </p>
+<p>Developer needs to implement this function in a way that suits the hardware. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Identifies module and block for which callback is received. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">op_code</td><td>Identifies the operation for which the event is notified. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">result</td><td>Identifies the result of flash access operation. NRF_SUCCESS implies, operation succeeded. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Identifies the application data pointer. In case of store operation, this points to the resident source of application memory that application can now free or reuse. In case of clear, this is NULL as no application pointer is needed for this operation. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">data_len</td><td>Length data application had provided for the operation. </td></tr>
+    <tr><td class="paramname">target_buffer</td><td>Buffer location to store read bytes to </td></tr>
+    <tr><td class="paramname">target_buffer_size</td><td>Bytes allocated for target_buffer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1ff0f4956042d92b01fc2dbeffe26284"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t sdio_read_byte </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>address</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for reading a byte over 2-wire serial interface. </p>
+<p>Developer needs to implement this function in a way that suits the hardware. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Register address to read from </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Byte read </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2e5d560f80ba374b7fe18f4e8a565ffd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sdio_write_byte </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>data_byte</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for writing a byte over 2-wire serial interface. </p>
+<p>Developer needs to implement this function in a way that suits the hardware. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Register address to write to </td></tr>
+    <tr><td class="paramname">data_byte</td><td>Data byte to write </td></tr>
   </table>
   </dd>
 </dl>
@@ -151,7 +228,7 @@ Typedefs</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:42 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:29 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

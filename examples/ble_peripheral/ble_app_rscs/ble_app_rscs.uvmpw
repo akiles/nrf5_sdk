@@ -11,6 +11,9 @@
     <PathAndName>pca10028\s110\arm\ble_app_rscs_s110_pca10028.uvproj</PathAndName>
   </project>
    <project>
+    <PathAndName>pca10028\s310\arm\ble_app_rscs_s310_pca10028.uvproj</PathAndName>
+  </project>
+   <project>
     <PathAndName>pca10028\ser_s110_uart\arm\ble_app_rscs_s110_uart_pca10028.uvproj</PathAndName>
   </project>
    <project>

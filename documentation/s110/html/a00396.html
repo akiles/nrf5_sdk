@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: uint8_array_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: spi_slave_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,63 @@ $(document).ready(function(){initNavTree('a00396.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">uint8_array_t Struct Reference<div class="ingroups"><a class="el" href="a00782.html">Utility Functions and Definitions</a></div></div>  </div>
+<div class="title">spi_slave_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00768.html">Software controlled SPI Slave driver.</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Byte array type.  
+<p>Struct containing event context from the SPI slave driver.  
  <a href="a00396.html#details">More...</a></p>
 
-<p><code>#include &lt;app_util.h&gt;</code></p>
+<p><code>#include &lt;spi_slave.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a0ea03f9dd5df67309f05eeddf0b854ff"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00396.html#a0ea03f9dd5df67309f05eeddf0b854ff">size</a></td></tr>
-<tr class="separator:a0ea03f9dd5df67309f05eeddf0b854ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0aec898e61ff702225ab7cb8e81419a"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00396.html#af0aec898e61ff702225ab7cb8e81419a">p_data</a></td></tr>
-<tr class="separator:af0aec898e61ff702225ab7cb8e81419a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbc2e2d26c15219ff593c40aabab3815"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00768.html#ga8c080d3b9fbe05708273eadef309094e">spi_slave_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00396.html#acbc2e2d26c15219ff593c40aabab3815">evt_type</a></td></tr>
+<tr class="separator:acbc2e2d26c15219ff593c40aabab3815"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b54206d997d599a2c3ee5751c208c58"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00396.html#a7b54206d997d599a2c3ee5751c208c58">rx_amount</a></td></tr>
+<tr class="separator:a7b54206d997d599a2c3ee5751c208c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a080b88a554c371f8220691fc28117ebd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00396.html#a080b88a554c371f8220691fc28117ebd">tx_amount</a></td></tr>
+<tr class="separator:a080b88a554c371f8220691fc28117ebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Byte array type. </p>
+<div class="textblock"><p>Struct containing event context from the SPI slave driver. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="af0aec898e61ff702225ab7cb8e81419a"></a>
+<a class="anchor" id="acbc2e2d26c15219ff593c40aabab3815"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* uint8_array_t::p_data</td>
+          <td class="memname"><a class="el" href="a00768.html#ga8c080d3b9fbe05708273eadef309094e">spi_slave_evt_type_t</a> spi_slave_evt_t::evt_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to array entries. </p>
+<p>Type of event. </p>
 
 </div>
 </div>
-<a class="anchor" id="a0ea03f9dd5df67309f05eeddf0b854ff"></a>
+<a class="anchor" id="a7b54206d997d599a2c3ee5751c208c58"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t uint8_array_t::size</td>
+          <td class="memname">uint32_t spi_slave_evt_t::rx_amount</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of array entries. </p>
+<p>Number of bytes received in last transaction (parameter is only valid upon <a class="el" href="a00768.html#gga8c080d3b9fbe05708273eadef309094eabe9f17960cda631b4c223f50e09eff9c">SPI_SLAVE_XFER_DONE</a> event). </p>
+
+</div>
+</div>
+<a class="anchor" id="a080b88a554c371f8220691fc28117ebd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t spi_slave_evt_t::tx_amount</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Number of bytes transmitted in last transaction (parameter is only valid upon <a class="el" href="a00768.html#gga8c080d3b9fbe05708273eadef309094eabe9f17960cda631b4c223f50e09eff9c">SPI_SLAVE_XFER_DONE</a> event). </p>
 
 </div>
 </div>
@@ -156,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00396.html">uint8_array_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00396.html">spi_slave_evt_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

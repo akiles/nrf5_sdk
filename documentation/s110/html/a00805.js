@@ -1,6 +1,7 @@
 var a00805 =
 [
-    [ "BLE_GAP_ADV_INTERVAL_MAX", "a00805.html#gada06c7f328e5bcc50ce55f9f567129ca", null ],
-    [ "BLE_GAP_ADV_INTERVAL_MIN", "a00805.html#gaf61691584387648b33a032c934bcd094", null ],
-    [ "BLE_GAP_ADV_NONCON_INTERVAL_MIN", "a00805.html#gaf0853bcb2a170efd2bb58e3a6b3c8ca5", null ]
+    [ "BLE_GAP_ADV_FP_ANY", "a00805.html#ga0b0393df73db101d6cbfaede2dbb7ea6", null ],
+    [ "BLE_GAP_ADV_FP_FILTER_BOTH", "a00805.html#ga38ff579b96a5ad3abd2e4eb370dd1de6", null ],
+    [ "BLE_GAP_ADV_FP_FILTER_CONNREQ", "a00805.html#gac37d0158c7458cb4250f9bdfba593858", null ],
+    [ "BLE_GAP_ADV_FP_FILTER_SCANREQ", "a00805.html#gae2dcdb81f0e1e024b82b244058656d26", null ]
 ];

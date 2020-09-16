@@ -110,11 +110,41 @@ uint32_t ble_gap_authenticate_rsp_enc(uint32_t         return_code,
                                       uint8_t * const  p_buf,
                                       uint32_t * const p_buf_len);
 
+/**@brief Decodes @ref sd_ble_gap_address_set command request.
+ *
+ * @sa @ref nrf51_gap_address_set_encoding for packet format,
+ *     @ref ble_gap_address_set_rsp_enc for response encoding.
+ *
+ * @param[in] p_buf              Pointer to beginning of command request packet.
+ * @param[in] packet_len         Length (in bytes) of response packet.
+ * @param[out] p_addr_cycle_mode Pointer to address cycle mode
+ * @param[out] pp_addr           Pointer to pointer to address structure.
+ *
+ * @retval NRF_SUCCESS                Decoding success.
+ * @retval NRF_ERROR_NULL             Decoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Decoding failure. Incorrect buffer length.
+ * @retval NRF_ERROR_INVALID_PARAM    Decoding failure. Invalid operation type.
+ */
 uint32_t ble_gap_address_set_req_dec(uint8_t const * const    p_buf,
                                      uint32_t                 packet_len,
                                      uint8_t * const          p_addr_cycle_mode,
                                      ble_gap_addr_t * * const pp_addr);
 
+/**@brief Encodes @ref sd_ble_gap_address_set command response.
+ *
+ * @sa @ref nrf51_gap_address_set_encoding for packet format.
+ *     @ref ble_gap_address_set_req_dec for request decoding.
+ *
+ * @param[in] return_code         Return code indicating if command was successful or not.
+ * @param[out] p_buf              Pointer to buffer where encoded data command response will be
+ *                                returned.
+ * @param[in,out] p_buf_len       \c in: size of \p p_buf buffer.
+ *                                \c out: Length of encoded command response packet.
+ *
+ * @retval NRF_SUCCESS                Encoding success.
+ * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Encoding failure. Incorrect buffer length.
+ */
 uint32_t ble_gap_address_set_rsp_enc(uint32_t         return_code,
                                      uint8_t * const  p_buf,
                                      uint32_t * const p_buf_len);
@@ -217,6 +247,22 @@ uint32_t ble_gap_device_name_get_req_dec(uint8_t const * const p_buf,
                                          uint8_t * *           pp_dev_name,
                                          uint16_t * *          pp_dev_name_len);
 
+/**@brief Encodes @ref sd_ble_gap_device_name_get command response.
+ *
+ * @sa @ref nrf51_device_name_get_encoding for packet format.
+ *
+ * @param[in]      return_code    Return code indicating if command was successful or not.
+ * @param[in]      p_dev_name     Pointer to device name buffer.
+ * @param[in]      dev_name_len   Length of device name buffer.
+ * @param[in]      p_buf          Pointer to buffer where encoded data command response will be
+ *                                returned.
+ * @param[in, out] p_buflen      \c in: size of \p p_buf buffer.
+ *                                \c out: Length of encoded command response packet.
+ *
+ * @retval NRF_SUCCESS                Encoding success.
+ * @retval NRF_ERROR_NULL             Encoding failure. NULL pointer supplied.
+ * @retval NRF_ERROR_INVALID_LENGTH   Encoding failure. Incorrect buffer length.
+ */
 uint32_t ble_gap_device_name_get_rsp_enc(uint32_t              return_code,
                                          uint8_t const * const p_dev_name,
                                          uint16_t              dev_name_len,

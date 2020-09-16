@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Proximity Application</title>
+<title>nRF51 SDK - S110 SoftDevice: Power Profiling Application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,87 +97,64 @@ $(document).ready(function(){initNavTree('a00057.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Proximity Application </div>  </div>
+<div class="title">Power Profiling Application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Proximity Application is an example that implements the Proximity profile using the hardware delivered in the nRF51 Development Kit. The Proximity profile alerts the user when connected devices are too far apart.</p>
-<p>The application includes all three services in the Proximity profile:</p>
-<ul>
-<li><a class="el" href="a00972.html">Link Loss Service</a></li>
-<li><a class="el" href="a00970.html">Immediate Alert Service</a></li>
-<li><a class="el" href="a00979.html">TX Power Service</a></li>
-</ul>
-<p>In addition, use of the <a class="el" href="a00958.html">Battery Service</a> and <a class="el" href="a00980.html">Device Manager</a> are also demonstrated.</p>
-<p>At each power up and disconnect, the Proximity Application will do 20 seconds of fast advertising with whitelist followed by 40 seconds of fast advertising without whitelist. It will then switch to slow advertising mode, and the state <a class="el" href="a00042.html#BSP_INDICATE_ADVERTISING_WHITELIST">BSP_INDICATE_ADVERTISING_WHITELIST</a> is indicated. When the link is lost, or when an alert is signaled using the <a class="el" href="a00970.html">Immediate Alert Service</a>, an alert is indicated using the state <a class="el" href="a00042.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> or <a class="el" href="a00042.html#BSP_INDICATE_ALERT_1">BSP_INDICATE_ALERT_1</a>, depending on the value of the Alert Level characteristic.</p>
-<dl class="section note"><dt>Note</dt><dd>This application is not power optimized!</dd>
-<dd>
-<ul>
-<li>The device must be in bonded state to change any characteristic in this application. </li>
-<li>The TX Power Level characteristic is not writable. </li>
-<li>The application will stop advertising and go to system-off mode after 3 minutes and 30 seconds (if no advertising with whitelist was done) or after 4 minutes (if advertising with whitelist was done). Push button 1 to restart advertising, or push and hold button 1 for 5 seconds to erase all bonds and restart advertising. </li>
-<li>Upon disconnecting a bonded connection, the application will advertise with whitelist for ADV_INTERVAL_FAST_PERIOD seconds. After this time-out, the application will be able to bond to a new central.</li>
-</ul>
-</dd></dl>
-<h1><a class="anchor" id="project_proximity_setup"></a>
+<div class="textblock"><p>The Power Profiling Applicationis designed to be used to measure the current consumption of the nRF51822, loaded with S110 SoftDevice, during advertisement and data transmission. The user can change some of the parameters (listed below) of this application and measure current consumption.</p>
+<p>This application also demonstrates the use of Vendor Specific (128 bit) UUIDs.</p>
+<p>This application can be used in two different modes:</p>
+<p><b>1. Connectable mode:</b></p>
+<p>In this mode, the application advertises in connectable mode. It sets itself up with a service and a characteristic with 'Notify' property. This characteristic has a CCCD associated with it.</p>
+<p>Once the central enables notification of this characteristic (writes 0x0001 to this CCCD), the application starts sending notifications of this characteristic for a time interval equal to the value of APP_CFG_CHAR_NOTIF_TIMEOUT. The application will attempt to send one notification per connection interval, but this is not guaranteed. There is a possibility that in one connection interval there are no notifications but in the next there are two notifications. This depends on when exactly the repeating application timer expires. The total number of notifications sent by the application will be close to (APP_CFG_CHAR_NOTIF_TIMEOUT / (APP_CFG_CONNECTION_INTERVAL)). After sending these notifications, the application puts the chip in 'System Off' mode.</p>
+<p><b>2. Non-connectable mode:</b></p>
+<p>In this mode, the application advertises the given length of data (APP_CFG_ADV_DATA_LEN) for a given duration of time (APP_CFG_NON_CONN_ADV_TIMEOUT) in non-connectable mode and then puts the chip in System Off mode.</p>
+<dl class="section note"><dt>Note</dt><dd>In both modes, the device name does not show up in the advertisement packet as per design. The advertisement packet has only 'Flags' and 'Manufacturer specific data' fields. This is done to make the least possible size of an advertisement packet as 8 bytes.</dd></dl>
+<h1><a class="anchor" id="power_mgmt"></a>
+Power Management</h1>
+<p>The application demonstrates the use of two different power saving modes, namely CPU Sleep and System-Off mode. All sample applications delivered with the SDK use these two modes.</p>
+<p><b>Low Power Mode:</b></p>
+<p>The application uses the nrf_wait_for_app_event() function to enter CPU sleep mode. This will place the chip in 'Low Power' mode. The chip will wake up from this mode on application interrupts. Typically, any application should call nrf_wait_for_app_event() in an infinite loop in main. It will return when an application interrupt has occurred, thereby allowing the main thread to process it if needed.</p>
+<p><b>System OFF Mode:</b></p>
+<p>This is the deepest power saving mode the system can enter. In this mode, all core functionality is powered down, and most peripherals are therefore non-functional or non-responsive. The only mechanisms that are functional and responsive in this mode are the reset mechanism and the wakeup mechanism.</p>
+<p>This sample application starts up, configures wakeup buttons, and enters the Szstem OFF mode. On button presses, the application wakes up and goes into either 'Connectable mode' or 'Non-connectable mode' based on which button is pressed.</p>
+<p>For more information on both modes, see nrf_wait_for_app_event() and the nRF51 Series User Specification (Section: POWER - Power control).</p>
+<p><b>Compiler Optimization:</b></p>
+<p>This example is optimized for reduced power consumption. Therefore, the default optimization level for this example application is 'Level 3' (<code>-O3</code>) and 'Optimize for Time' (<code>-Otime</code>). If the Keil debugger is needed for debugging purposes, the optimization level should be changed to 'Level 0' (<code>-O0</code>), and 'Optimize for Time' should be removed to ease the use of the debugger.</p>
+<h1><a class="anchor" id="project_app_pwr_mgmt_setup"></a>
 Setup</h1>
-<p>The name of the example is <b>ble_app_proximity_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_proximity</code> </p>
-<p>There is also a power-optimized version of this example. The name of the example is <b>ble_app_proximity_low_power_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_proximity_low_power</code> </p>
+<p>The name of the example is <b>ble_app_pwr_profiling_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_pwr_profiling</code> </p>
+<p>The application does not use any LEDs.</p>
 <p>Button assignments:</p>
 <ul>
-<li>Button 1: Wake up from system-off and restart advertising. In connected state, this button is used to raise/clear High Alert to the central, which has an Immediate Alert Service instance.</li>
-<li>Button 2: Hold for 5 seconds to wake up from system-off, erase all bonds, and restart advertising.</li>
+<li>Button 1: Place the application in connectable mode.</li>
+<li>Button 2: Place the application in non-connectable mode.</li>
 </ul>
-<h1><a class="anchor" id="project_proximity_test"></a>
+<h1><a class="anchor" id="project_app_pwr_mgmt_test"></a>
 Testing</h1>
-<p>Test the Proximity Application with the nRF Toolbox app, which is available on both iOS (Apple Store) and Android (Google Play).</p>
-<p>You can also test the application with the Master Control Panel by performing the following steps:</p>
+<p>Test the Power Profiling Application with the Master Control Panel by performing the following steps:</p>
 <ol type="1">
-<li>Compile and program the application. Observe that the <a class="el" href="a00042.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
-<li>Connect to the device from Master Control Panel (the device will be advertising as 'Nordic_Prox'), then bond and perform service discovery. Observe that the <a class="el" href="a00042.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
-<li>Set the AlertLevel characteristic in <a class="el" href="a00970.html">Immediate Alert Service</a> to 1 (click the 'hex' radio button, enter '01' in the text box, and click the 'Send update' button), and observe the Mild alert (<a class="el" href="a00042.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a>).</li>
-<li>Change the AlertLevel value to 2 and observe the High alert (<a class="el" href="a00042.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a>).</li>
-<li>Change the AlertLevel value to 0 and observe <a class="el" href="a00042.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a>.</li>
-<li>Set the AlertLevel characteristic in <a class="el" href="a00972.html">Link Loss Service</a> to 1.</li>
-<li>Simulate a link loss situation (for example by shielding the Master Emulator) and observe that both <a class="el" href="a00042.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> and <a class="el" href="a00042.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> are indicated.</li>
-<li>Reconnect and observe that only the <a class="el" href="a00042.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
-<li>Set the AlertLevel characteristic in <a class="el" href="a00972.html">Link Loss Service</a> to 2.</li>
-<li>Simulate a link loss situation, for example by disconnecting the Master Emulator, and observe that the <a class="el" href="a00042.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a> and <a class="el" href="a00042.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> are indicated.</li>
-<li>Reconnect and observe that only the <a class="el" href="a00042.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
-<li>Select the TxPowerLevel characteristic in <a class="el" href="a00979.html">TX Power Service</a>, click the 'Read' button, and verify that it was successfully read.</li>
-<li>Click the 'Enable services' button to start notification of Battery Level and observe that the battery level is notified periodically.</li>
-<li>Disconnect from the Master Control Panel and observe that <a class="el" href="a00042.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> is indicated.</li>
-<li>Wait until the application goes to system-off (<a class="el" href="a00042.html#BSP_INDICATE_IDLE">BSP_INDICATE_IDLE</a>).</li>
-<li>Press button 1 and connect to the Master Control Panel. Observe that <a class="el" href="a00042.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> is indicated and that the battery level is notified periodically.</li>
-<li>Disconnect from the Master Control Panel.</li>
-<li>Connect with a different central and bond and disconnect.</li>
-<li>Wait until the application goes to system-off (<a class="el" href="a00042.html#BSP_INDICATE_IDLE">BSP_INDICATE_IDLE</a>).</li>
-<li>Press button 1 and reconnect to the first Master Control Panel. Observe that <a class="el" href="a00042.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> is indicated and that the battery level is notified periodically.</li>
-<li>Disconnect from the Master Control Panel.</li>
-<li>Connect with the second central and observe that the link encryption is on and that the battery level is not notified.</li>
-<li>Disconnect from the second central and wait for the application to go to system-off.</li>
-<li>Press and hold button 2 (erase bonds) for 5 seconds and connect with the first Master Control Panel. Observe that the link encryption is OFF and that no notifications are received.</li>
-<li>Disconnect from Master Control Panel.</li>
-</ol>
-<p>Test the Find Me locater (Immediate Alert Service Client) functionality by performing the following steps:</p>
-<ol type="1">
-<li>In the Master Control Panel, create the Immediate Alert Service (IAS) server by performing the following steps:<ul>
-<li>Click File -&gt; Server Setup. In the window that is displayed, click File -&gt; Load setup.</li>
-<li>In the resulting window, navigate to ble_app_proximity folder and load the file named findMeMasterServer.bin.</li>
-<li>Click the 'Stop Server' button and then 'Start Server'. This restarts the server with Immediate Alert Service configured.</li>
-<li>You must keep the 'Server Setup' window opened.</li>
-</ul>
-</li>
-<li>Go to the Master Control Panel main window and connect to the device.</li>
-<li>Press button 1 and observe that the AlertLevel value at the 'Server setup' window of the Master Control Panel changes to 02. This indicates that the device was able to signal a High Alert to the central.</li>
-<li>Press button 1 again and observe that the AlertLevel value changes to 00. This indicates that the device was able to clear the High Alert previously signalled to the central. </li>
+<li>Compile and program the application.</li>
+<li>Start Master Control Panel on the computer.</li>
+<li>Click File -&gt; Options. Verify that the connection interval value displayed in the 'Options' window is the same as APP_CFG_CONNECTION_INTERVAL.</li>
+<li>Close the Options window and click 'Start discovery' in the Master Control Panel main window.</li>
+<li>Push Button 1 on the board. Observe that the application is advertising in connectable mode.</li>
+<li>Connect to the device from Master Control Panel, click 'Service discovery', then click 'Enable Services'.</li>
+<li>Observe notifications of the characteristic being received by the central.</li>
+<li>After APP_CFG_CHAR_NOTIF_TIMEOUT, the Master control panel will lose connection with the chip because it enters System Off mode.</li>
+<li>Verify that the size of the characteristic value received in all the notifications was equal to APP_CFG_CHAR_LEN.</li>
+<li>Click the 'Back' button in the Master control panel, right click in the 'Discovered Devices' section in Master Control Panel, and click 'Clear list' to clear the list of devices.</li>
+<li>Verify that the device is not advertising.</li>
+<li>Push Button 2 on the board. Observe the application is advertising in non-connectable mode (the Adv. type field should be Non-Connectable).</li>
+<li>Verify that the number of bytes in the Manufacturer Specific Data in Adv. data is APP_CFG_ADV_DATA_LEN - 5.</li>
+<li>After APP_CFG_NON_CONN_ADV_TIMEOUT, clear the list of 'Discovered Devices'. Verify that the device is not advertising. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00044.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:18 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00043.html">BLE Peripheral</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:04 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

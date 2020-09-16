@@ -1,16 +1,13 @@
 var a00812 =
 [
-    [ "BLE_GAP_SEC_STATUS_AUTH_REQ", "a00812.html#gadf389ac11506ee7d7a0c6823d7c7cb5c", null ],
-    [ "BLE_GAP_SEC_STATUS_CONFIRM_VALUE", "a00812.html#ga9d1c29d319e7b1b77d8bbae74760cfe5", null ],
-    [ "BLE_GAP_SEC_STATUS_ENC_KEY_SIZE", "a00812.html#ga3e8868907178ada2854635f2d7ca8ab0", null ],
-    [ "BLE_GAP_SEC_STATUS_INVALID_PARAMS", "a00812.html#ga609204cf12de8edbeaf29077a1c17ba7", null ],
-    [ "BLE_GAP_SEC_STATUS_OOB_NOT_AVAILABLE", "a00812.html#gac29bfa067dbceb9b98e23aefcf0cc155", null ],
-    [ "BLE_GAP_SEC_STATUS_PAIRING_NOT_SUPP", "a00812.html#ga87ed8db7604006675930bdf5fa79ae70", null ],
-    [ "BLE_GAP_SEC_STATUS_PASSKEY_ENTRY_FAILED", "a00812.html#gab86b31f7e0c4a669cdffa4eb71bb0e89", null ],
-    [ "BLE_GAP_SEC_STATUS_PDU_INVALID", "a00812.html#ga6ba7df46db25ac8f2f2b1170106dda25", null ],
-    [ "BLE_GAP_SEC_STATUS_REPEATED_ATTEMPTS", "a00812.html#ga523c9c966eb5fa019fb265a9010775b0", null ],
-    [ "BLE_GAP_SEC_STATUS_SMP_CMD_UNSUPPORTED", "a00812.html#ga7eb7986157fca57470acee71e5940d77", null ],
-    [ "BLE_GAP_SEC_STATUS_SUCCESS", "a00812.html#gaa0334dea24e449e5c28c88bbe8a1d00f", null ],
-    [ "BLE_GAP_SEC_STATUS_TIMEOUT", "a00812.html#ga4bdb61f7294a378778fe478597b17e07", null ],
-    [ "BLE_GAP_SEC_STATUS_UNSPECIFIED", "a00812.html#ga7e767feadf3f8ccef76faff23e12e4c9", null ]
+    [ "BLE_GAP_CP_CONN_SUP_TIMEOUT_MAX", "a00812.html#ga1db7005189c241b0eba9209103bddc8d", null ],
+    [ "BLE_GAP_CP_CONN_SUP_TIMEOUT_MIN", "a00812.html#gad6c79a8455ea1155d03321f3379dd415", null ],
+    [ "BLE_GAP_CP_CONN_SUP_TIMEOUT_NONE", "a00812.html#ga86dea9b13bb39d0f50ee2c6e12184864", null ],
+    [ "BLE_GAP_CP_MAX_CONN_INTVL_MAX", "a00812.html#ga6bf5d65e6d586000cd5f7ba43c0d2e76", null ],
+    [ "BLE_GAP_CP_MAX_CONN_INTVL_MIN", "a00812.html#gac6071964ea94ef548da1beaf23f032da", null ],
+    [ "BLE_GAP_CP_MAX_CONN_INTVL_NONE", "a00812.html#gadda6e71a42de04bd48870afcad38a81c", null ],
+    [ "BLE_GAP_CP_MIN_CONN_INTVL_MAX", "a00812.html#ga6ec422217d939654d1dd252abd169d82", null ],
+    [ "BLE_GAP_CP_MIN_CONN_INTVL_MIN", "a00812.html#ga7995b13da25ea7cd40a21da59306def9", null ],
+    [ "BLE_GAP_CP_MIN_CONN_INTVL_NONE", "a00812.html#ga9b7880da1b563d33b45f68cfdd9f6d1d", null ],
+    [ "BLE_GAP_CP_SLAVE_LATENCY_MAX", "a00812.html#ga122ace1cb2bbc5e346ae167e48f7e07e", null ]
 ];

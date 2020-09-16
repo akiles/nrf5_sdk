@@ -1,11 +1,8 @@
 var a00218 =
 [
-    [ "pstorage_access_status_get", "a00218.html#ga1553a4d6d6d8ddf070d0eb4960b72d62", null ],
-    [ "pstorage_block_identifier_get", "a00218.html#gafdeeb475e4f2db19863226bc55d507b5", null ],
-    [ "pstorage_clear", "a00218.html#ga64d9814f864c3f771a99eb7574e87dd0", null ],
-    [ "pstorage_init", "a00218.html#ga729ef8b64fc0cb6bfdabb2543a565d32", null ],
-    [ "pstorage_load", "a00218.html#ga99402440650cc2d2ee63d8866760a25b", null ],
-    [ "pstorage_register", "a00218.html#ga0a57b964c8945eaca2d267835ef6688c", null ],
-    [ "pstorage_store", "a00218.html#ga12e52da12709de8d43bfb8389b80af6d", null ],
-    [ "pstorage_update", "a00218.html#ga0316f640da7481e9bd03ed51b29a3e65", null ]
+    [ "simple_uart_config", "a00218.html#ga15ab88a2172a5ea02ff41ae9711bc0af", null ],
+    [ "simple_uart_get", "a00218.html#gabae30008064ce450ab819949a692c511", null ],
+    [ "simple_uart_get_with_timeout", "a00218.html#gad4e7d17833960c77c90db7a5cb309a68", null ],
+    [ "simple_uart_put", "a00218.html#ga6346f3ba3f0f1eaaa123064daa3df405", null ],
+    [ "simple_uart_putstring", "a00218.html#ga76e6bde269950e02affbff121c79d408", null ]
 ];

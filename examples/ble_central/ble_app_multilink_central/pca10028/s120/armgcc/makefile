@@ -38,15 +38,15 @@ remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-ou
 
 #source common to all targets
 C_SOURCE_FILES += \
-../../../../../../components/libraries/fifo/app_fifo.c \
 ../../../../../../components/libraries/util/app_error.c \
 ../../../../../../components/libraries/gpiote/app_gpiote.c \
-../../../../../../components/libraries/util/nrf_assert.c \
 ../../../../../../components/libraries/trace/app_trace.c \
 ../../../../../../components/libraries/uart/retarget.c \
+../../../../../../components/libraries/fifo/app_fifo.c \
 ../../../../../../components/libraries/scheduler/app_scheduler.c \
-../../../../../../components/drivers_nrf/uart/app_uart_fifo.c \
+../../../../../../components/libraries/util/nrf_assert.c \
 ../../../../../../components/drivers_nrf/pstorage/pstorage.c \
+../../../../../../components/drivers_nrf/uart/app_uart_fifo.c \
 ../../../client_handling.c \
 ../../../main.c \
 ../../../../../../components/softdevice/common/softdevice_handler/softdevice_handler.c \
@@ -61,24 +61,24 @@ ASM_SOURCE_FILES  = ../../../../../../components/toolchain/gcc/gcc_startup_nrf51
 #includes common to all targets
 INC_PATHS  = -I../../../config
 INC_PATHS += -I../../../../../../components/toolchain/gcc
-INC_PATHS += -I../../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../../components/toolchain
 INC_PATHS += -I../../../
 INC_PATHS += -I../../../../../../components/ble/common
-INC_PATHS += -I../../../../../bsp
 INC_PATHS += -I../../../../../../components/ble/ble_db_discovery
 INC_PATHS += -I../../../../../../components/softdevice/s120/headers
-INC_PATHS += -I../../../../../../components/drivers_nrf/uart
-INC_PATHS += -I../../../../../../components/libraries/fifo
-INC_PATHS += -I../../../../../../components/libraries/util
+INC_PATHS += -I../../../../../bsp
 INC_PATHS += -I../../../../../../components/ble/device_manager
 INC_PATHS += -I../../../../../../components/ble/device_manager/config
 INC_PATHS += -I../../../../../../components/softdevice/common/softdevice_handler
 INC_PATHS += -I../../../../../../components/libraries/gpiote
+INC_PATHS += -I../../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../../components/drivers_nrf/pstorage
 INC_PATHS += -I../../../../../../components/drivers_nrf/pstorage/config
 INC_PATHS += -I../../../../../../components/libraries/trace
+INC_PATHS += -I../../../../../../components/drivers_nrf/uart
+INC_PATHS += -I../../../../../../components/libraries/fifo
 INC_PATHS += -I../../../../../../components/libraries/scheduler
+INC_PATHS += -I../../../../../../components/libraries/util
 
 OBJECT_DIRECTORY = _build
 LISTING_DIRECTORY = $(OBJECT_DIRECTORY)

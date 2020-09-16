@@ -1,28 +1,26 @@
 var a00972 =
 [
-    [ "ble_lls_evt_t", "a00311.html", [
-      [ "alert_level", "a00311.html#adaf4d087319007c776df8baf3673fe8a", null ],
-      [ "evt_type", "a00311.html#a971a9cd94583dae76dcf5f94eb412686", null ],
-      [ "params", "a00311.html#a03bfd9896c9389b175cf494e4f548514", null ]
+    [ "ble_ias_c_evt_t", "a00303.html", [
+      [ "evt_type", "a00303.html#aa03cb513eb320bde9c8f800162a7142f", null ]
     ] ],
-    [ "ble_lls_init_t", "a00312.html", [
-      [ "error_handler", "a00312.html#ad807ea2ae006260b7c63872abc7961a9", null ],
-      [ "evt_handler", "a00312.html#aba9fc4fcd56873873aa82aace5c804f7", null ],
-      [ "initial_alert_level", "a00312.html#a7e1cfca38578d65b9e40d1dffd69ebf6", null ],
-      [ "lls_attr_md", "a00312.html#a4107eb4f75941f56faea5db0b273c863", null ]
+    [ "ble_ias_c_s", "a00305.html", [
+      [ "alert_level_handle", "a00305.html#ad136ca554bce057fd4cd38ba0f796ea6", null ],
+      [ "conn_handle", "a00305.html#ad18ae38bccb88d086eedbc1647ce2386", null ],
+      [ "error_handler", "a00305.html#a6cecf3d78ec7d72912dd4215455720ed", null ],
+      [ "evt_handler", "a00305.html#ac306d48fcd140ddbffb4d4c64ca4d007", null ]
     ] ],
-    [ "ble_lls_s", "a00313.html", [
-      [ "alert_level_handles", "a00313.html#aee2e9a72478596b53d8d99a398360591", null ],
-      [ "error_handler", "a00313.html#a4a22ac8304ea3a4bc7dacb72a8d65bc0", null ],
-      [ "evt_handler", "a00313.html#a331d5f75c24c9f4be6b9f4464ce828c9", null ],
-      [ "service_handle", "a00313.html#ae8ad660b1350238c9bb1f4ff6e043ef7", null ]
+    [ "ble_ias_c_init_t", "a00304.html", [
+      [ "error_handler", "a00304.html#a83986799fa5972b6665f1dd70af89bca", null ],
+      [ "evt_handler", "a00304.html#a53302faad4381a87101012bf06af6101", null ]
     ] ],
-    [ "ble_lls_evt_handler_t", "a00972.html#ga2ff59fd3c572afa373d8731265a2daee", null ],
-    [ "ble_lls_t", "a00972.html#gae3a4320ff2f496c898601a41a9832a07", null ],
-    [ "ble_lls_evt_type_t", "a00972.html#ga94331ff0a90e8f8b61dcf230e1760ccf", [
-      [ "BLE_LLS_EVT_LINK_LOSS_ALERT", "a00972.html#gga94331ff0a90e8f8b61dcf230e1760ccfa2b53ad90d2e6afd7294ca052768d7438", null ]
+    [ "ble_ias_c_evt_handler_t", "a00972.html#ga96adb4273980cee3c28140485a07884f", null ],
+    [ "ble_ias_c_t", "a00972.html#ga4de8fe9971720f3186d60ea307026c54", null ],
+    [ "ble_ias_c_evt_type_t", "a00972.html#ga1363ef6107e67c26fd0ace31f6afa7cd", [
+      [ "BLE_IAS_C_EVT_SRV_DISCOVERED", "a00972.html#gga1363ef6107e67c26fd0ace31f6afa7cda108c1542b350d15f6acf09092cda957a", null ],
+      [ "BLE_IAS_C_EVT_SRV_NOT_FOUND", "a00972.html#gga1363ef6107e67c26fd0ace31f6afa7cdaccf3636bb38605fd6b836dc01c05459a", null ],
+      [ "BLE_IAS_C_EVT_DISCONN_COMPLETE", "a00972.html#gga1363ef6107e67c26fd0ace31f6afa7cdac1eac62d545a853750a6b3f5a8ceb3f5", null ]
     ] ],
-    [ "ble_lls_alert_level_get", "a00972.html#gac11e8cb48c16a1d07dd0c1d6c649fdad", null ],
-    [ "ble_lls_init", "a00972.html#ga7f1365b395cf05261b2f659dc3ed992b", null ],
-    [ "ble_lls_on_ble_evt", "a00972.html#ga8016405e451656f510b244e4cbe09653", null ]
+    [ "ble_ias_c_init", "a00972.html#gaf0c1bf8a8837220f03442c18448e50ad", null ],
+    [ "ble_ias_c_on_ble_evt", "a00972.html#ga7f98bafec49ce5bf78e444e46c628a1f", null ],
+    [ "ble_ias_c_send_alert_level", "a00972.html#gab37ce69f8533cd510dc5620effba4409", null ]
 ];

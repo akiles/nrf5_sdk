@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_db_discovery_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_db_discovery_char_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,82 +106,48 @@ $(document).ready(function(){initNavTree('a00188.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_db_discovery_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00995.html">Structures</a></div></div>  </div>
+<div class="title">ble_db_discovery_char_t Struct Reference<div class="ingroups"><a class="el" href="a00997.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure containing the event from the DB discovery module to the application.  
+<p>Structure for holding the characteristic and the handle of its CCCD found during the discovery process.  
  <a href="a00188.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_db_discovery.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:accba73434b8696cbafbe758022bb45ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00994.html#gaa16075c6c77a4f3f32fb567d5ce45462">ble_db_discovery_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00188.html#accba73434b8696cbafbe758022bb45ec">evt_type</a></td></tr>
-<tr class="separator:accba73434b8696cbafbe758022bb45ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38b408b3785dce063725d6fcc194b1c8"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00188.html#a38b408b3785dce063725d6fcc194b1c8">conn_handle</a></td></tr>
-<tr class="separator:a38b408b3785dce063725d6fcc194b1c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4acd4ae50b0d34689da113cb1ffa8b2b"><td class="memItemLeft" ><a class="anchor" id="a4acd4ae50b0d34689da113cb1ffa8b2b"></a>
-union {</td></tr>
-<tr class="memitem:a4ad9d00681b6414393685e099ceb84ed"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00189.html">ble_db_discovery_srv_t</a>&#160;&#160;&#160;<a class="el" href="a00188.html#a551f5595d71fa2887fa74dff31eb5f40">discovered_db</a></td></tr>
-<tr class="separator:a4ad9d00681b6414393685e099ceb84ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1979f0d75c5e16303ce987dcd0fda948"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="a00188.html#aade9f798ada6b7c0f601cb7dfac3d85f">err_code</a></td></tr>
-<tr class="separator:a1979f0d75c5e16303ce987dcd0fda948"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4acd4ae50b0d34689da113cb1ffa8b2b"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:a4acd4ae50b0d34689da113cb1ffa8b2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1bd337f6b1acc35a908b13ee4877a88"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00240.html">ble_gattc_char_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00188.html#ac1bd337f6b1acc35a908b13ee4877a88">characteristic</a></td></tr>
+<tr class="separator:ac1bd337f6b1acc35a908b13ee4877a88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ec4f43c4adba9c33d6c52fa6637540b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00188.html#a7ec4f43c4adba9c33d6c52fa6637540b">cccd_handle</a></td></tr>
+<tr class="separator:a7ec4f43c4adba9c33d6c52fa6637540b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure containing the event from the DB discovery module to the application. </p>
+<div class="textblock"><p>Structure for holding the characteristic and the handle of its CCCD found during the discovery process. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a38b408b3785dce063725d6fcc194b1c8"></a>
+<a class="anchor" id="a7ec4f43c4adba9c33d6c52fa6637540b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_db_discovery_evt_t::conn_handle</td>
+          <td class="memname">uint16_t ble_db_discovery_char_t::cccd_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of the connection for which this event has occurred. </p>
+<p>CCCD Handle value for this characteristic. This will be set to BLE_GATT_HANDLE_INVALID if a CCCD is not present at the server. </p>
 
 </div>
 </div>
-<a class="anchor" id="a551f5595d71fa2887fa74dff31eb5f40"></a>
+<a class="anchor" id="ac1bd337f6b1acc35a908b13ee4877a88"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00189.html">ble_db_discovery_srv_t</a> ble_db_discovery_evt_t::discovered_db</td>
+          <td class="memname"><a class="el" href="a00240.html">ble_gattc_char_t</a> ble_db_discovery_char_t::characteristic</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Structure containing the information about the GATT Database at the server. This will be filled when the event type is <a class="el" href="a00994.html#ggaa16075c6c77a4f3f32fb567d5ce45462ad6925ee73dada1191de4934d7891dc1f">BLE_DB_DISCOVERY_COMPLETE</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="aade9f798ada6b7c0f601cb7dfac3d85f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_db_discovery_evt_t::err_code</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>nRF Error code indicating the type of error which occurred in the DB Discovery module. This will be filled when the event type is <a class="el" href="a00994.html#ggaa16075c6c77a4f3f32fb567d5ce45462aca629cd78939015c22a44c9e3797043b">BLE_DB_DISCOVERY_ERROR</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="accba73434b8696cbafbe758022bb45ec"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00994.html#gaa16075c6c77a4f3f32fb567d5ce45462">ble_db_discovery_evt_type_t</a> ble_db_discovery_evt_t::evt_type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Type of event. </p>
+<p>Structure containing information about the characteristic. </p>
 
 </div>
 </div>
@@ -190,8 +156,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00188.html">ble_db_discovery_evt_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:26 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00188.html">ble_db_discovery_char_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:12 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,4 +1,8 @@
 var a00221 =
 [
-    [ "peer_params", "a00221.html#a575f88df4b97d4dadb73306725f343f7", null ]
+    [ "div", "a00221.html#acf2e9db014242631b9912048cfff21ff", null ],
+    [ "enc_info", "a00221.html#ad111ceb6802da6301dbe73a73b35a4a1", null ],
+    [ "id_info", "a00221.html#a301c28abac3bf1f2f38d2b95854695cd", null ],
+    [ "peer_addr", "a00221.html#a2c9e328ee5b20afe64224e8d807e0015", null ],
+    [ "sign_info", "a00221.html#ad6b652026333405eba289d528d220638", null ]
 ];

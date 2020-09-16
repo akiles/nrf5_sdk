@@ -36,6 +36,16 @@
 #define ADVERTISING_SLOW_LED_ON_INTERVAL       400
 #define ADVERTISING_SLOW_LED_OFF_INTERVAL      4000
 
+#define BONDING_INTERVAL                       100
+
+#define SENT_OK_INTERVAL                       100
+#define SEND_ERROR_INTERVAL                    500
+
+#define RCV_OK_INTERVAL                        100
+#define RCV_ERROR_INTERVAL                     500
+
+#define ALERT_INTERVAL                         200
+
 #if LEDS_NUMBER > 0 && !(defined BSP_SIMPLE)
 static bsp_indication_t m_stable_state        = BSP_INDICATE_IDLE;
 static uint32_t         m_app_ticks_per_100ms = 0;
@@ -100,12 +110,11 @@ static const app_button_cfg_t app_buttons[BUTTONS_NUMBER] =
 #define ALERT_LED_MASK BSP_LED_1_MASK
 #endif // LED_2_MASK
 
-/**@brief Returns buttons state.
- */
-uint32_t bsp_buttons_state_get(void)
+uint32_t bsp_buttons_state_get(uint32_t * p_buttons_state)
 {
     uint32_t result = NRF_SUCCESS;
 
+    *p_buttons_state = 0;
 #if BUTTONS_NUMBER > 0
     uint32_t buttons = ~NRF_GPIO->IN;
     uint32_t cnt;
@@ -114,11 +123,34 @@ uint32_t bsp_buttons_state_get(void)
     {
         if (buttons & (1 << m_buttons_list[cnt]))
         {
-            result |= 1 << cnt;
+            *p_buttons_state |= 1 << cnt;
         }
     }
 #endif // BUTTONS_NUMBER > 0
 
+    return result;
+}
+
+
+uint32_t bsp_button_is_pressed(uint32_t button, bool * p_state){
+
+    uint32_t result;
+
+#if BUTTONS_NUMBER > 0
+    if(button < BUTTONS_NUMBER)
+        {
+            uint32_t buttons = ~NRF_GPIO->IN;
+            result = NRF_SUCCESS;
+            *p_state = (buttons & (1 << m_buttons_list[button])) ? true : false;
+        }
+        else
+        {
+            result = NRF_ERROR_INVALID_PARAM;
+        }
+
+#else
+        result = NRF_ERROR_INVALID_PARAM;
+#endif // BUTTONS_NUMBER > 0
     return result;
 }
 
@@ -152,6 +184,8 @@ static void bsp_button_event_handler(uint8_t pin_no, uint8_t button_action)
         }
     }
 }
+
+
 #endif // (BUTTONS_NUMBER > 0) && !(defined BSP_SIMPLE)
 
 #if LEDS_NUMBER > 0 && !(defined BSP_SIMPLE)
@@ -171,74 +205,102 @@ static uint32_t bsp_led_indication(bsp_indication_t indicate)
             break;
 
         case BSP_INDICATE_SCANNING:
-
         case BSP_INDICATE_ADVERTISING:
             LEDS_OFF(LEDS_MASK & ~BSP_LED_0_MASK & ~ALERT_LED_MASK);
+
             // in advertising blink LED_0
             if (LED_IS_ON(BSP_LED_0_MASK))
             {
                 LEDS_OFF(BSP_LED_0_MASK);
-                next_delay = indicate == BSP_INDICATE_ADVERTISING ? ADVERTISING_LED_OFF_INTERVAL : ADVERTISING_SLOW_LED_OFF_INTERVAL;
+                next_delay = indicate ==
+                             BSP_INDICATE_ADVERTISING ? ADVERTISING_LED_OFF_INTERVAL :
+                             ADVERTISING_SLOW_LED_OFF_INTERVAL;
             }
             else
             {
                 LEDS_ON(BSP_LED_0_MASK);
-                next_delay = indicate == BSP_INDICATE_ADVERTISING ? ADVERTISING_LED_ON_INTERVAL : ADVERTISING_SLOW_LED_ON_INTERVAL;
+                next_delay = indicate ==
+                             BSP_INDICATE_ADVERTISING ? ADVERTISING_LED_ON_INTERVAL :
+                             ADVERTISING_SLOW_LED_ON_INTERVAL;
             }
 
             m_stable_state = indicate;
             err_code       = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(next_delay), NULL);
             break;
+
         case BSP_INDICATE_ADVERTISING_WHITELIST:
             LEDS_OFF(LEDS_MASK & ~BSP_LED_0_MASK & ~ALERT_LED_MASK);
+
             // in advertising quickly blink LED_0
             if (LED_IS_ON(BSP_LED_0_MASK))
             {
                 LEDS_OFF(BSP_LED_0_MASK);
-                next_delay = indicate == BSP_INDICATE_ADVERTISING_WHITELIST ? ADVERTISING_WHITELIST_LED_OFF_INTERVAL : ADVERTISING_SLOW_LED_OFF_INTERVAL;
+                next_delay = indicate ==
+                             BSP_INDICATE_ADVERTISING_WHITELIST ?
+                             ADVERTISING_WHITELIST_LED_OFF_INTERVAL :
+                             ADVERTISING_SLOW_LED_OFF_INTERVAL;
             }
             else
             {
                 LEDS_ON(BSP_LED_0_MASK);
-                next_delay = indicate == BSP_INDICATE_ADVERTISING_WHITELIST ? ADVERTISING_WHITELIST_LED_ON_INTERVAL : ADVERTISING_SLOW_LED_ON_INTERVAL;
+                next_delay = indicate ==
+                             BSP_INDICATE_ADVERTISING_WHITELIST ?
+                             ADVERTISING_WHITELIST_LED_ON_INTERVAL :
+                             ADVERTISING_SLOW_LED_ON_INTERVAL;
             }
             m_stable_state = indicate;
             err_code       = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(next_delay), NULL);
             break;
+
         case BSP_INDICATE_ADVERTISING_SLOW:
             LEDS_OFF(LEDS_MASK & ~BSP_LED_0_MASK & ~ALERT_LED_MASK);
+
             // in advertising slowly blink LED_0
             if (LED_IS_ON(BSP_LED_0_MASK))
             {
                 LEDS_OFF(BSP_LED_0_MASK);
-                next_delay = indicate == BSP_INDICATE_ADVERTISING_SLOW ? ADVERTISING_SLOW_LED_OFF_INTERVAL : ADVERTISING_SLOW_LED_OFF_INTERVAL;
+                next_delay = indicate ==
+                             BSP_INDICATE_ADVERTISING_SLOW ? ADVERTISING_SLOW_LED_OFF_INTERVAL :
+                             ADVERTISING_SLOW_LED_OFF_INTERVAL;
             }
             else
             {
                 LEDS_ON(BSP_LED_0_MASK);
-                next_delay = indicate == BSP_INDICATE_ADVERTISING_SLOW ? ADVERTISING_SLOW_LED_ON_INTERVAL : ADVERTISING_SLOW_LED_ON_INTERVAL;
+                next_delay = indicate ==
+                             BSP_INDICATE_ADVERTISING_SLOW ? ADVERTISING_SLOW_LED_ON_INTERVAL :
+                             ADVERTISING_SLOW_LED_ON_INTERVAL;
             }
             m_stable_state = indicate;
             err_code       = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(next_delay), NULL);
             break;
+
         case BSP_INDICATE_ADVERTISING_DIRECTED:
             LEDS_OFF(LEDS_MASK & ~BSP_LED_0_MASK & ~ALERT_LED_MASK);
+
             // in advertising very quickly blink LED_0
             if (LED_IS_ON(BSP_LED_0_MASK))
             {
                 LEDS_OFF(BSP_LED_0_MASK);
-                next_delay = indicate == BSP_INDICATE_ADVERTISING_DIRECTED ? ADVERTISING_DIRECTED_LED_OFF_INTERVAL : ADVERTISING_SLOW_LED_OFF_INTERVAL;
+                next_delay = indicate ==
+                             BSP_INDICATE_ADVERTISING_DIRECTED ?
+                             ADVERTISING_DIRECTED_LED_OFF_INTERVAL :
+                             ADVERTISING_SLOW_LED_OFF_INTERVAL;
             }
             else
             {
                 LEDS_ON(BSP_LED_0_MASK);
-                next_delay = indicate == BSP_INDICATE_ADVERTISING_DIRECTED ? ADVERTISING_DIRECTED_LED_ON_INTERVAL : ADVERTISING_SLOW_LED_ON_INTERVAL;
+                next_delay = indicate ==
+                             BSP_INDICATE_ADVERTISING_DIRECTED ?
+                             ADVERTISING_DIRECTED_LED_ON_INTERVAL :
+                             ADVERTISING_SLOW_LED_ON_INTERVAL;
             }
             m_stable_state = indicate;
             err_code       = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(next_delay), NULL);
             break;
+
         case BSP_INDICATE_BONDING:
             LEDS_OFF(LEDS_MASK & ~BSP_LED_0_MASK & ~ALERT_LED_MASK);
+
             // in bonding fast blink LED_0
             if (LED_IS_ON(BSP_LED_0_MASK))
             {
@@ -250,7 +312,8 @@ static uint32_t bsp_led_indication(bsp_indication_t indicate)
             }
 
             m_stable_state = indicate;
-            err_code       = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(100), NULL);
+            err_code       =
+                app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(BONDING_INTERVAL), NULL);
             break;
 
         case BSP_INDICATE_CONNECTED:
@@ -262,25 +325,25 @@ static uint32_t bsp_led_indication(bsp_indication_t indicate)
         case BSP_INDICATE_SENT_OK:
             // when sending shortly invert LED_1
             LEDS_INVERT(BSP_LED_1_MASK);
-            err_code = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(100), NULL);
+            err_code = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(SENT_OK_INTERVAL), NULL);
             break;
 
         case BSP_INDICATE_SEND_ERROR:
             // on receving error invert LED_1 for long time
             LEDS_INVERT(BSP_LED_1_MASK);
-            err_code = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(500), NULL);
+            err_code = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(SEND_ERROR_INTERVAL), NULL);
             break;
 
         case BSP_INDICATE_RCV_OK:
             // when receving shortly invert LED_1
             LEDS_INVERT(BSP_LED_1_MASK);
-            err_code = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(100), NULL);
+            err_code = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(RCV_OK_INTERVAL), NULL);
             break;
 
         case BSP_INDICATE_RCV_ERROR:
             // on receving error invert LED_1 for long time
             LEDS_INVERT(BSP_LED_1_MASK);
-            err_code = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(500), NULL);
+            err_code = app_timer_start(m_leds_timer_id, BSP_MS_TO_TICK(RCV_ERROR_INTERVAL), NULL);
             break;
 
         case BSP_INDICATE_FATAL_ERROR:
@@ -289,13 +352,9 @@ static uint32_t bsp_led_indication(bsp_indication_t indicate)
             break;
 
         case BSP_INDICATE_ALERT_0:
-
         case BSP_INDICATE_ALERT_1:
-
         case BSP_INDICATE_ALERT_2:
-
         case BSP_INDICATE_ALERT_3:
-
         case BSP_INDICATE_ALERT_OFF:
             err_code   = app_timer_stop(m_alert_timer_id);
             next_delay = (uint32_t)BSP_INDICATE_ALERT_OFF - (uint32_t)indicate;
@@ -306,7 +365,7 @@ static uint32_t bsp_led_indication(bsp_indication_t indicate)
                 if (next_delay > 1)
                 {
                     err_code = app_timer_start(m_alert_timer_id, BSP_MS_TO_TICK(
-                                                   (next_delay * 200)), NULL);
+                                                   (next_delay * ALERT_INTERVAL)), NULL);
                 }
                 LEDS_ON(ALERT_LED_MASK);
             }
@@ -346,7 +405,8 @@ static uint32_t bsp_led_indication(bsp_indication_t indicate)
             m_stable_state = indicate;
             break;
 
-        default: break;
+        default:
+            break;
     }
 
     return err_code;
@@ -354,10 +414,16 @@ static uint32_t bsp_led_indication(bsp_indication_t indicate)
 
 
 /**@brief Handle events from leds timer.
- * @note Timer handler does not support returning an error code. Errors from bsp_led_indication() are not propagated.
+ *
+ * @note Timer handler does not support returning an error code.
+ * Errors from bsp_led_indication() are not propagated.
+ *
+ * @param[in]   p_context   parameter registered in timer start function.
  */
 static void leds_timer_handler(void * p_context)
 {
+    UNUSED_PARAMETER(p_context);
+
     if (m_indication_type & BSP_INIT_LED)
     {
         UNUSED_VARIABLE(bsp_led_indication(m_stable_state));
@@ -366,9 +432,12 @@ static void leds_timer_handler(void * p_context)
 
 
 /**@brief Handle events from alert timer.
+ *
+ * @param[in]   p_context   parameter registered in timer start function.
  */
 static void alert_timer_handler(void * p_context)
 {
+    UNUSED_PARAMETER(p_context);
     LEDS_INVERT(ALERT_LED_MASK);
 }
 #endif // #if LEDS_NUMBER > 0 && !(defined BSP_SIMPLE)
@@ -388,21 +457,13 @@ uint32_t bsp_indication_set(bsp_indication_t indicate)
     }
 
 #endif // LEDS_NUMBER > 0 && !(defined BSP_SIMPLE)
-
-#ifdef BSP_UART_SUPPORT
-#endif // BSP_UART_SUPPORT
-
     return err_code;
 }
 
 
-/**@brief Configure indicators to required state.
- */
 uint32_t bsp_indication_text_set(bsp_indication_t indicate, char const * p_text)
 {
-    uint32_t err_code = NRF_SUCCESS;;
-
-    err_code = bsp_indication_set(indicate);
+    uint32_t err_code = bsp_indication_set(indicate);
 
 #ifdef BSP_UART_SUPPORT
     printf("%s", p_text);
@@ -412,9 +473,7 @@ uint32_t bsp_indication_text_set(bsp_indication_t indicate, char const * p_text)
 }
 
 
-/**@brief Initialize BSP.
- */
-uint32_t bsp_init(uint32_t type, uint32_t ticks_per_100ms, bsp_event_callback_t p_callback)
+uint32_t bsp_init(uint32_t type, uint32_t ticks_per_100ms, bsp_event_callback_t callback)
 {
     uint32_t err_code = NRF_SUCCESS;
 
@@ -426,7 +485,7 @@ uint32_t bsp_init(uint32_t type, uint32_t ticks_per_100ms, bsp_event_callback_t 
 #endif // LEDS_NUMBER > 0 && !(defined BSP_SIMPLE)
 
 #if (BUTTONS_NUMBER > 0) && !(defined BSP_SIMPLE)
-    m_registered_callback = p_callback;
+    m_registered_callback = callback;
 
     // BSP will support buttons and generate events
     if (type & BSP_INIT_BUTTONS)
@@ -437,7 +496,9 @@ uint32_t bsp_init(uint32_t type, uint32_t ticks_per_100ms, bsp_event_callback_t 
         {
             err_code = bsp_event_to_button_assign(cnt, (bsp_event_t)(BSP_EVENT_KEY_0 + cnt) );
         }
-        APP_BUTTON_INIT((app_button_cfg_t *)app_buttons, BUTTONS_NUMBER, ticks_per_100ms / 2, false);
+        APP_BUTTON_INIT((app_button_cfg_t *)app_buttons, BUTTONS_NUMBER, ticks_per_100ms / 2,
+                        false);
+
         if (err_code == NRF_SUCCESS)
         {
             err_code = app_button_enable();
@@ -469,12 +530,14 @@ uint32_t bsp_init(uint32_t type, uint32_t ticks_per_100ms, bsp_event_callback_t 
     // timers module must be already initialized!
     if (err_code == NRF_SUCCESS)
     {
-        err_code = app_timer_create(&m_leds_timer_id, APP_TIMER_MODE_SINGLE_SHOT, leds_timer_handler);
+        err_code =
+            app_timer_create(&m_leds_timer_id, APP_TIMER_MODE_SINGLE_SHOT, leds_timer_handler);
     }
 
     if (err_code == NRF_SUCCESS)
     {
-        err_code = app_timer_create(&m_alert_timer_id, APP_TIMER_MODE_REPEATED, alert_timer_handler);
+        err_code =
+            app_timer_create(&m_alert_timer_id, APP_TIMER_MODE_REPEATED, alert_timer_handler);
     }
 #endif // LEDS_NUMBER > 0 && !(defined BSP_SIMPLE)
 
@@ -537,3 +600,5 @@ uint32_t bsp_buttons_enable(uint32_t buttons)
 
     return NRF_SUCCESS;
 }
+
+

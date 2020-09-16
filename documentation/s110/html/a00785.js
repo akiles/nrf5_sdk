@@ -1,5 +1,8 @@
 var a00785 =
 [
-    [ "SDK_COMMON_ERROR_BASE", "a00785.html#ga1fa2dae6c4a22d6592184236f7f8ed4e", null ],
-    [ "SDK_ERROR_BASE", "a00785.html#ga3756b7defda416b28928be1af33c4257", null ]
+    [ "Base defined for SDK Modules", "a00786.html", "a00786" ],
+    [ "Codes reserved as identification for module where the error occurred.", "a00787.html", null ],
+    [ "Codes reserved as identification for common errors.", "a00788.html", null ],
+    [ "Error / status codes specific to device manager.", "a00789.html", null ],
+    [ "api_result_t", "a00785.html#ga981ace296dd50082e82b56dc820295a9", null ]
 ];

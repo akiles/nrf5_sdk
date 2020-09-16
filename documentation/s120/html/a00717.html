@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Context Management Events</title>
+<title>nRF51 SDK - S120 SoftDevice: General Events</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,152 +99,47 @@ $(document).ready(function(){initNavTree('a00717.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Context Management Events<div class="ingroups"><a class="el" href="a00714.html">Device Manager Events</a></div></div>  </div>
+<div class="title">General Events<div class="ingroups"><a class="el" href="a00716.html">Device Manager Events</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Context Management Events.  
+<p>General or miscellaneous events.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga0031b878e929a75ec8271ad0c94eef50"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00717.html#ga0031b878e929a75ec8271ad0c94eef50">DM_EVT_DEVICE_CONTEXT_LOADED</a>&#160;&#160;&#160;0x21</td></tr>
-<tr class="separator:ga0031b878e929a75ec8271ad0c94eef50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga914c5f8e7244019d80470eb488afe51c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00717.html#ga914c5f8e7244019d80470eb488afe51c">DM_EVT_DEVICE_CONTEXT_STORED</a>&#160;&#160;&#160;0x22</td></tr>
-<tr class="separator:ga914c5f8e7244019d80470eb488afe51c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac14de4b8aad6be951c60c421942eb7a7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00717.html#gac14de4b8aad6be951c60c421942eb7a7">DM_EVT_DEVICE_CONTEXT_DELETED</a>&#160;&#160;&#160;0x23</td></tr>
-<tr class="separator:gac14de4b8aad6be951c60c421942eb7a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5f701544ed21d80e9f5c6198bd0de3d1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00717.html#ga5f701544ed21d80e9f5c6198bd0de3d1">DM_EVT_SERVICE_CONTEXT_LOADED</a>&#160;&#160;&#160;0x31</td></tr>
-<tr class="separator:ga5f701544ed21d80e9f5c6198bd0de3d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4918299ce9ecf37463834a62e4cc28b0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00717.html#ga4918299ce9ecf37463834a62e4cc28b0">DM_EVT_SERVICE_CONTEXT_STORED</a>&#160;&#160;&#160;0x32</td></tr>
-<tr class="separator:ga4918299ce9ecf37463834a62e4cc28b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga45acfe7588e09f49236071ca79f123f7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00717.html#ga45acfe7588e09f49236071ca79f123f7">DM_EVT_SERVICE_CONTEXT_DELETED</a>&#160;&#160;&#160;0x33</td></tr>
-<tr class="separator:ga45acfe7588e09f49236071ca79f123f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4ce522c3a6565d1b96b94ae14bac67c5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00717.html#ga4ce522c3a6565d1b96b94ae14bac67c5">DM_EVT_APPL_CONTEXT_LOADED</a>&#160;&#160;&#160;0x41</td></tr>
-<tr class="separator:ga4ce522c3a6565d1b96b94ae14bac67c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaad12d77f6d3eccb97277869480549ee5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00717.html#gaad12d77f6d3eccb97277869480549ee5">DM_EVT_APPL_CONTEXT_STORED</a>&#160;&#160;&#160;0x42</td></tr>
-<tr class="separator:gaad12d77f6d3eccb97277869480549ee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1a76738f1010b5aa7c2e46c709821a27"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00717.html#ga1a76738f1010b5aa7c2e46c709821a27">DM_EVT_APPL_CONTEXT_DELETED</a>&#160;&#160;&#160;0x43</td></tr>
-<tr class="separator:ga1a76738f1010b5aa7c2e46c709821a27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad038033184e5745ddd4fef4d52bfcea4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00717.html#gad038033184e5745ddd4fef4d52bfcea4">DM_EVT_RFU</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:gad038033184e5745ddd4fef4d52bfcea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga14b9e8a4e4dd9d6223d414bf25762f7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00717.html#ga14b9e8a4e4dd9d6223d414bf25762f7b">DM_EVT_ERROR</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga14b9e8a4e4dd9d6223d414bf25762f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Context Management Events. </p>
-<p>These events notify the application of the status of context loading and storing. </p>
+<p>General or miscellaneous events. </p>
+<p>This category of events are general events not pertaining to a peer or context. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga1a76738f1010b5aa7c2e46c709821a27"></a>
+<a class="anchor" id="ga14b9e8a4e4dd9d6223d414bf25762f7b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_APPL_CONTEXT_DELETED&#160;&#160;&#160;0x43</td>
+          <td class="memname">#define DM_EVT_ERROR&#160;&#160;&#160;0x01</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Indicates that application context is deleted. </p>
+<p>Device Manager Event Error. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga4ce522c3a6565d1b96b94ae14bac67c5"></a>
+<a class="anchor" id="gad038033184e5745ddd4fef4d52bfcea4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_APPL_CONTEXT_LOADED&#160;&#160;&#160;0x41</td>
+          <td class="memname">#define DM_EVT_RFU&#160;&#160;&#160;0x00</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Indicates that application context for a peer is loaded. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaad12d77f6d3eccb97277869480549ee5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_APPL_CONTEXT_STORED&#160;&#160;&#160;0x42</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates that application context is stored persistently. </p>
-
-</div>
-</div>
-<a class="anchor" id="gac14de4b8aad6be951c60c421942eb7a7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_DEVICE_CONTEXT_DELETED&#160;&#160;&#160;0x23</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates that device context is deleted. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga0031b878e929a75ec8271ad0c94eef50"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_DEVICE_CONTEXT_LOADED&#160;&#160;&#160;0x21</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates that device context for a peer is loaded. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga914c5f8e7244019d80470eb488afe51c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_DEVICE_CONTEXT_STORED&#160;&#160;&#160;0x22</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates that device context is stored persistently. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga45acfe7588e09f49236071ca79f123f7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_SERVICE_CONTEXT_DELETED&#160;&#160;&#160;0x33</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates that service context is deleted. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga5f701544ed21d80e9f5c6198bd0de3d1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_SERVICE_CONTEXT_LOADED&#160;&#160;&#160;0x31</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates that service context for a peer is loaded. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga4918299ce9ecf37463834a62e4cc28b0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_SERVICE_CONTEXT_STORED&#160;&#160;&#160;0x32</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates that service context is stored persistently. </p>
+<p>Reserved for future use, is never notified. </p>
 
 </div>
 </div>
@@ -253,7 +148,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:39 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:25 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

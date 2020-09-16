@@ -1,6 +1,5 @@
 var a00554 =
 [
-    [ "BLE_GATT_HVX_INDICATION", "a00554.html#ga47f3222bcefb5eb4aed9a1dc7c796b1f", null ],
-    [ "BLE_GATT_HVX_INVALID", "a00554.html#gae454efaf8b3f8c6871dca5d2db5ac724", null ],
-    [ "BLE_GATT_HVX_NOTIFICATION", "a00554.html#gad5784996b45947f6d7f0cb81c9a4c9ed", null ]
+    [ "BLE_GATT_CPF_NAMESPACE_BTSIG", "a00554.html#ga2b4621b5720da826d9b41331af2c6232", null ],
+    [ "BLE_GATT_CPF_NAMESPACE_DESCRIPTION_UNKNOWN", "a00554.html#ga2639ceb9f7ea5333b153a5751558f6af", null ]
 ];

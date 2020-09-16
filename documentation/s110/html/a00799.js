@@ -1,6 +1,7 @@
 var a00799 =
 [
-    [ "BLE_GAP_ROLE_CENTRAL", "a00799.html#ga6b9440660a70146392d27c849431fadb", null ],
-    [ "BLE_GAP_ROLE_INVALID", "a00799.html#ga8164b32f4fd65997d0523cd7c5735166", null ],
-    [ "BLE_GAP_ROLE_PERIPH", "a00799.html#ga12e431897d73a3ce88fab8a4dbd90497", null ]
+    [ "BLE_GAP_ADDR_TYPE_PUBLIC", "a00799.html#gaa5e499423d88b16817efd4d5ec10fd6e", null ],
+    [ "BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE", "a00799.html#ga86fe5e506ba152ec4d60ac6daaca2aef", null ],
+    [ "BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE", "a00799.html#gae166d654401b0ed83ad7073f31467b70", null ],
+    [ "BLE_GAP_ADDR_TYPE_RANDOM_STATIC", "a00799.html#gabe27b8f22c3a52413fa064c2ee1e4fba", null ]
 ];

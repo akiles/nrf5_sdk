@@ -39,7 +39,7 @@
 #define UART_TX_BUF_SIZE 256                           /**< UART TX buffer size. */
 #define UART_RX_BUF_SIZE 1                             /**< UART RX buffer size. */
 
-static uint8_t                   packet[4];            /**< Packet to transmit. */
+static uint32_t                   packet;              /**< Packet to transmit. */
 
 void uart_error_handle(app_uart_evt_t * p_event)
 {
@@ -74,9 +74,9 @@ void clock_initialization()
 
 /**@brief Function for reading packet.
  */
-uint8_t read_packet()
+uint32_t read_packet()
 {
-    uint8_t result = 0;
+    uint32_t result = 0;
 
     NRF_RADIO->EVENTS_READY = 0U;
     // Enable radio and wait for ready
@@ -98,7 +98,7 @@ uint8_t read_packet()
 
     if (NRF_RADIO->CRCSTATUS == 1U)
     {
-        result = packet[0];
+        result = packet;
     }
     NRF_RADIO->EVENTS_DISABLED = 0U;
     // Disable radio
@@ -139,25 +139,25 @@ int main(void)
                        uart_error_handle, 
                        APP_IRQ_PRIORITY_LOW,
                        err_code);
-        
+    APP_ERROR_CHECK(err_code);
     err_code = bsp_init(BSP_INIT_LED, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
     APP_ERROR_CHECK(err_code);
 
     // Set radio configuration parameters
     radio_configure();
-    NRF_RADIO->PACKETPTR = (uint32_t)packet;
+    NRF_RADIO->PACKETPTR = (uint32_t)&packet;
 
     err_code = bsp_indication_text_set(BSP_INDICATE_USER_STATE_OFF, "Wait for first packet\n\r");
     APP_ERROR_CHECK(err_code);
 
     while (true)
     {
-        uint8_t received = read_packet();
+        uint32_t received = read_packet();
 
         err_code = bsp_indication_text_set(BSP_INDICATE_RCV_OK, "Packet was received\n\r");
         APP_ERROR_CHECK(err_code);
         
-        printf("The contents of the package is %d\n\r", (int) received);
+        printf("The contents of the package is %u\n\r", (unsigned int)received);
     }
 }
 

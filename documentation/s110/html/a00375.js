@@ -1,6 +1,6 @@
 var a00375 =
 [
-    [ "len", "a00375.html#ae7fb48410ecb00dec1dca60d45cbc606", null ],
-    [ "ptr1", "a00375.html#a03e88994f8127e877c2fd08800e64768", null ],
-    [ "ptr2", "a00375.html#a3f670b76c31a7b6badf0bfadd1dc08b0", null ]
+    [ "block_count", "a00375.html#a7bb96f4e9d1b68cb94fd5c75570e5a99", null ],
+    [ "block_size", "a00375.html#a95b58714824957d4c930a5da78d7109a", null ],
+    [ "cb", "a00375.html#a3495db72b9ff587f0c9ea0ab38d5e9f8", null ]
 ];

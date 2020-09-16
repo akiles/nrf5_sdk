@@ -1,7 +1,7 @@
 var a00347 =
 [
-    [ "data_packet", "a00347.html#acefd384a51f51514c417758c5d870a10", null ],
-    [ "packet_type", "a00347.html#ab181d68ce3f0f88e0f4020c1e07bb14d", null ],
-    [ "params", "a00347.html#a2c3103bae03f6af6824b7cf81834469f", null ],
-    [ "start_packet", "a00347.html#a3a677307c9b4796855cdc9d208cd8dee", null ]
+    [ "app_image_size", "a00347.html#ab5283e751eac2c4b317c3429f9138ea5", null ],
+    [ "bl_image_size", "a00347.html#a5a5a89e5964fb6ed069b9c790449848b", null ],
+    [ "dfu_update_mode", "a00347.html#a271c95e67d665b66ce9874ccf3c6bf06", null ],
+    [ "sd_image_size", "a00347.html#af2354b9f4313acad5c73ebd01107d68b", null ]
 ];

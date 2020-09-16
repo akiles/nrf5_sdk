@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: nrf_ecb_hal_data_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ieee_float32_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,48 @@ $(document).ready(function(){initNavTree('a00365.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_ecb_hal_data_t Struct Reference<div class="ingroups"><a class="el" href="a01072.html">Types</a></div></div>  </div>
+<div class="title">ieee_float32_t Struct Reference<div class="ingroups"><a class="el" href="a00970.html">Health Thermometer Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>AES ECB data structure.  
+<p>FLOAT format (IEEE-11073 32-bit FLOAT, defined as a 32-bit value with a 24-bit mantissa and an 8-bit exponent.  
  <a href="a00365.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_soc.h&gt;</code></p>
+<p><code>#include &lt;ble_hts.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aab4ea408dd38499ceff3935ecb5fa39f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00365.html#aab4ea408dd38499ceff3935ecb5fa39f">key</a> [(16)]</td></tr>
-<tr class="separator:aab4ea408dd38499ceff3935ecb5fa39f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4c798195f0d6d399a7f75d09ef89793"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00365.html#ad4c798195f0d6d399a7f75d09ef89793">cleartext</a> [(16)]</td></tr>
-<tr class="separator:ad4c798195f0d6d399a7f75d09ef89793"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a478942ae65d7433678164a95e4944115"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00365.html#a478942ae65d7433678164a95e4944115">ciphertext</a> [((16))]</td></tr>
-<tr class="separator:a478942ae65d7433678164a95e4944115"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2b0d21fa7152a4afd8d98ec81bbe15a"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00365.html#ad2b0d21fa7152a4afd8d98ec81bbe15a">exponent</a></td></tr>
+<tr class="separator:ad2b0d21fa7152a4afd8d98ec81bbe15a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af54051e1c850e7ca43fc5e7b49c91261"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00365.html#af54051e1c850e7ca43fc5e7b49c91261">mantissa</a></td></tr>
+<tr class="separator:af54051e1c850e7ca43fc5e7b49c91261"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>AES ECB data structure. </p>
+<div class="textblock"><p>FLOAT format (IEEE-11073 32-bit FLOAT, defined as a 32-bit value with a 24-bit mantissa and an 8-bit exponent. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a478942ae65d7433678164a95e4944115"></a>
+<a class="anchor" id="ad2b0d21fa7152a4afd8d98ec81bbe15a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_ecb_hal_data_t::ciphertext[((16))]</td>
+          <td class="memname">int8_t ieee_float32_t::exponent</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Cipher Text data. </p>
+<p>Base 10 exponent </p>
 
 </div>
 </div>
-<a class="anchor" id="ad4c798195f0d6d399a7f75d09ef89793"></a>
+<a class="anchor" id="af54051e1c850e7ca43fc5e7b49c91261"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_ecb_hal_data_t::cleartext[(16)]</td>
+          <td class="memname">int32_t ieee_float32_t::mantissa</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Clear Text data. </p>
-
-</div>
-</div>
-<a class="anchor" id="aab4ea408dd38499ceff3935ecb5fa39f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t nrf_ecb_hal_data_t::key[(16)]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Encryption key. </p>
+<p>Mantissa, should be using only 24 bits </p>
 
 </div>
 </div>
@@ -171,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00365.html">nrf_ecb_hal_data_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00365.html">ieee_float32_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

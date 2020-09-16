@@ -1,7 +1,6 @@
 var a00266 =
 [
-    [ "read", "a00266.html#aa2fe207fe3fe3b8d5ff5e8fbbf65f495", null ],
-    [ "request", "a00266.html#a9612f4a88d4f51c576db0e5b565a0b27", null ],
-    [ "type", "a00266.html#a8de6fad49332e37d86887303f2bc28a8", null ],
-    [ "write", "a00266.html#ae846e97ba3f096abf3f54e92fcb30049", null ]
+    [ "context", "a00266.html#a66d632e13cd7d371036af6a90be224f4", null ],
+    [ "handle", "a00266.html#a79c55f70b9d10f1e11b35bb2cc13fdbd", null ],
+    [ "offset", "a00266.html#ac3c5c0c840625a5f28e90e9021eb2403", null ]
 ];

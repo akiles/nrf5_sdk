@@ -1,8 +1,14 @@
 var a01060 =
 [
-    [ "SVC return values specific to L2CAP", "a00833.html", "a00833" ],
-    [ "BLE_L2CAP_CID_DYN_BASE", "a01060.html#ga04c14ff9adffadf03baad98d7632b620", null ],
-    [ "BLE_L2CAP_CID_DYN_MAX", "a01060.html#gacd843243997a3af18139d54258e6b7ba", null ],
-    [ "BLE_L2CAP_CID_INVALID", "a01060.html#gaf3346d406893055ab1cb3cf04ce094c6", null ],
-    [ "BLE_L2CAP_MTU_DEF", "a01060.html#gacc63c6e5847699642179a1ec792fe1c1", null ]
+    [ "sd_ble_gatts_characteristic_add", "a01060.html#ga685489d21a0958e17ce84434970f4d11", null ],
+    [ "sd_ble_gatts_descriptor_add", "a01060.html#ga8e6d075e51aa9d30eea059270376bf73", null ],
+    [ "sd_ble_gatts_hvx", "a01060.html#ga00ea603adee7561e8bdc00c8853a0ba8", null ],
+    [ "sd_ble_gatts_include_add", "a01060.html#ga7ed902a775d92af18e5887bb39a35e26", null ],
+    [ "sd_ble_gatts_rw_authorize_reply", "a01060.html#ga8480b85d786bd4d3fb935204844c82fe", null ],
+    [ "sd_ble_gatts_service_add", "a01060.html#ga846b1b86d54c1c6a4bd46dbbc63883f7", null ],
+    [ "sd_ble_gatts_service_changed", "a01060.html#ga2c8c90d73fa27ba6691ad82b4a960adc", null ],
+    [ "sd_ble_gatts_sys_attr_get", "a01060.html#gaeda9ee9cc4231a1eae4160f0b35fc8fb", null ],
+    [ "sd_ble_gatts_sys_attr_set", "a01060.html#gafc37f2050903a4dc91f4527b59e6457a", null ],
+    [ "sd_ble_gatts_value_get", "a01060.html#gae6200e20d54680a3b8914e4b07ae4afa", null ],
+    [ "sd_ble_gatts_value_set", "a01060.html#ga1fc08d39d3011a0a87c2812af9174b96", null ]
 ];

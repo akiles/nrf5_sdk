@@ -1,5 +1,5 @@
 var a00331 =
 [
-    [ "length", "a00331.html#a9238252fa096ecc458994d19aaf034d8", null ],
-    [ "p_str", "a00331.html#a8b6d6d426c6ec244d1136b7ccf5deb30", null ]
+    [ "read_perm", "a00331.html#ac08fb7f662817574a3792609f0d92637", null ],
+    [ "write_perm", "a00331.html#aca8d641cf8e5b5811aa2a2c68035c395", null ]
 ];

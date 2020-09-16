@@ -1,9 +1,8 @@
 var a00156 =
 [
-    [ "attribute", "a00156.html#af4097379f9a8a0f62da2cf2fab7d3875", null ],
-    [ "data", "a00156.html#aee69c1e62c33602752e5440a6ed0f8b9", null ],
-    [ "error_code", "a00156.html#af6c7c0fce10e07d23e7d1506c40dbbcf", null ],
-    [ "evt_type", "a00156.html#aa11f9ec43554a7e299bac599bcca39ff", null ],
-    [ "notification", "a00156.html#ae16f0c0016a9871d25437ca29ed3731a", null ],
-    [ "uuid", "a00156.html#a9b8853a2fa48267ea2e36eeedf0dbacf", null ]
+    [ "attribute_id", "a00156.html#a91ad99b533291a9bd4ace32d24b6c11e", null ],
+    [ "attribute_len", "a00156.html#ad4ba23bbecdf56110773a54e11c0305f", null ],
+    [ "command_id", "a00156.html#a8a8e2cd58a0a579159397ad4c4532ee5", null ],
+    [ "data", "a00156.html#a8ea2b73942a8314da74c64075ad076f2", null ],
+    [ "notification_uid", "a00156.html#a2de713787637343b123d4912cd0aa129", null ]
 ];

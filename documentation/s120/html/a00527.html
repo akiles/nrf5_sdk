@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: User Memory Types</title>
+<title>nRF51 SDK - S120 SoftDevice: SVC return values specific to GAP</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,42 +99,57 @@ $(document).ready(function(){initNavTree('a00527.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">User Memory Types<div class="ingroups"><a class="el" href="a00741.html">Defines</a></div></div>  </div>
+<div class="title">SVC return values specific to GAP<div class="ingroups"><a class="el" href="a00747.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga690838a139a17cdd21661c8045073277"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00527.html#ga690838a139a17cdd21661c8045073277">BLE_USER_MEM_TYPE_INVALID</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:ga690838a139a17cdd21661c8045073277"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga77c2aca2438a868f228f877cafb5b910"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00527.html#ga77c2aca2438a868f228f877cafb5b910">BLE_USER_MEM_TYPE_GATTS_QUEUED_WRITES</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:ga77c2aca2438a868f228f877cafb5b910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga996146eb2c3b244f044b5cd121f8b826"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00527.html#ga996146eb2c3b244f044b5cd121f8b826">BLE_ERROR_GAP_UUID_LIST_MISMATCH</a>&#160;&#160;&#160;(<a class="el" href="a00526.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x000)</td></tr>
+<tr class="separator:ga996146eb2c3b244f044b5cd121f8b826"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa65c2f6a6eba52654e2b6febc5c3ba8c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00527.html#gaa65c2f6a6eba52654e2b6febc5c3ba8c">BLE_ERROR_GAP_DISCOVERABLE_WITH_WHITELIST</a>&#160;&#160;&#160;(<a class="el" href="a00526.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x001)</td></tr>
+<tr class="separator:gaa65c2f6a6eba52654e2b6febc5c3ba8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3eda228736d6c1dcbcf9aba2bd059068"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00527.html#ga3eda228736d6c1dcbcf9aba2bd059068">BLE_ERROR_GAP_INVALID_BLE_ADDR</a>&#160;&#160;&#160;(<a class="el" href="a00526.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x002)</td></tr>
+<tr class="separator:ga3eda228736d6c1dcbcf9aba2bd059068"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga77c2aca2438a868f228f877cafb5b910"></a>
+<a class="anchor" id="gaa65c2f6a6eba52654e2b6febc5c3ba8c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_USER_MEM_TYPE_GATTS_QUEUED_WRITES&#160;&#160;&#160;0x01</td>
+          <td class="memname">#define BLE_ERROR_GAP_DISCOVERABLE_WITH_WHITELIST&#160;&#160;&#160;(<a class="el" href="a00526.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x001)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>User Memory for GATTS queued writes. </p>
+<p>Use of Whitelist not permitted with discoverable advertising. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga690838a139a17cdd21661c8045073277"></a>
+<a class="anchor" id="ga3eda228736d6c1dcbcf9aba2bd059068"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_USER_MEM_TYPE_INVALID&#160;&#160;&#160;0x00</td>
+          <td class="memname">#define BLE_ERROR_GAP_INVALID_BLE_ADDR&#160;&#160;&#160;(<a class="el" href="a00526.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x002)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Invalid User Memory Types. </p>
+<p>The upper two bits of the address do not correspond to the specified address type. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga996146eb2c3b244f044b5cd121f8b826"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_ERROR_GAP_UUID_LIST_MISMATCH&#160;&#160;&#160;(<a class="el" href="a00526.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a> + 0x000)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UUID list does not contain an integral number of UUIDs. </p>
 
 </div>
 </div>
@@ -143,7 +158,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:18 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

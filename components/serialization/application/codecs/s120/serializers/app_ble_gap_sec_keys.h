@@ -12,6 +12,25 @@
 #ifndef _APP_BLE_GAP_SEC_KEYS_H
 #define _APP_BLE_GAP_SEC_KEYS_H
 
+/**
+ * @addtogroup ser_codecs Serialization codecs
+ * @ingroup ble_sdk_lib_serialization
+ */
+
+/**
+ * @addtogroup ser_app_s120_codecs Application s120 codecs
+ * @ingroup ser_codecs
+ */
+
+ /**@file
+ *
+ * @defgroup app_ble_gap_sec_keys GAP Functions for managing memory for security keys in application device.
+ * @{
+ * @ingroup  ser_app_s120_codecs
+ *
+ * @brief    GAP Application auxiliary functions for synchronizing GAP security keys with the ones stored in the connectivity device. 
+ */
+
 #include "ble_gap.h"
 #include <stdint.h>
 
@@ -33,8 +52,8 @@ typedef struct
  * @param[in]     conn_handle         conn_handle
  * @param[out]    p_index             pointer to the index of allocated instance
  *
- * @retval NRF_SUCCESS                great success.
- * @retval NRF_ERROR_NO_MEM           no free instance available.
+ * @retval NRF_SUCCESS                Context allocated.
+ * @retval NRF_ERROR_NO_MEM           No free instance available.
  */
 uint32_t app_ble_gap_sec_context_create(uint16_t conn_handle, uint32_t *p_index);
 
@@ -42,7 +61,7 @@ uint32_t app_ble_gap_sec_context_create(uint16_t conn_handle, uint32_t *p_index)
  *
  * @param[in]     conn_handle         conn_handle
  *
- * @retval NRF_SUCCESS                great success
+ * @retval NRF_SUCCESS                Context released.
  * @retval NRF_ERROR_NOT_FOUND        instance with conn_handle not found
  */
 uint32_t app_ble_gap_sec_context_destroy(uint16_t conn_handle);
@@ -51,9 +70,12 @@ uint32_t app_ble_gap_sec_context_destroy(uint16_t conn_handle);
  *
  * @param[in]     conn_handle         conn_handle
  *
- * @retval NRF_SUCCESS                great success
+ * @param[out]    p_index             Pointer to the index of the entry in the context table corresponding to the given conn_handle
+ *
+ * @retval NRF_SUCCESS                Context found
  * @retval NRF_ERROR_NOT_FOUND        instance with conn_handle not found
  */
 uint32_t app_ble_gap_sec_context_find(uint16_t conn_handle, uint32_t *p_index);
+/** @} */
 
 #endif //_APP_BLE_GAP_SEC_KEYS_H

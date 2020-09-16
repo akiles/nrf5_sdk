@@ -1,5 +1,5 @@
 var a00149 =
 [
-    [ "company_identifier", "a00149.html#a82bb52823dc2e6f1d5da1103e90eb34f", null ],
-    [ "data", "a00149.html#ac19b78af581334531c4b7eff27494ea3", null ]
+    [ "max_conn_interval", "a00149.html#a4034c78595c1924aa231af3bf7be626f", null ],
+    [ "min_conn_interval", "a00149.html#ad146986f079ecc38844c525d0c8fc40b", null ]
 ];

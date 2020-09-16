@@ -258,6 +258,7 @@ var a00058 =
       [ "0x7E - sd_ble_gap_authenticate", "a00069.html#nrf51_ble_gap_authenticate_encoding", [
         [ "Function packet format", "a00069.html#nrf51_ble_gap_authenticate_function", null ],
         [ "Encoding of  Bond, MITM, IO Caps and OOB", "a00069.html#nrf51_ble_gap_authenticate_sub_e", null ],
+        [ "Encoding of Key Distribution Bitmaps", "a00069.html#nrf51_ble_gap_authenticate_sub_f", null ],
         [ "Response packet format", "a00069.html#nrf51_ble_gap_authenticate_response", null ]
       ] ],
       [ "0x7F - sd_ble_gap_sec_params_reply", "a00069.html#nrf51_sec_params_reply_encoding", [
@@ -299,9 +300,11 @@ var a00058 =
         [ "Function packet format", "a00069.html#nrf51_scan_stop_encoding_sec_function", null ],
         [ "Response packet format", "a00069.html#nrf51_scan_stop_encoding_sec_response", null ]
       ] ],
-      [ "0x89 - sd_ble_gap_connect_cancel", "a00069.html#nrf51_connect_encoding", [
+      [ "0x88 - sd_ble_gap_connect", "a00069.html#nrf51_connect_encoding", [
         [ "Function packet format", "a00069.html#nrf51_connect_encoding_sec_function", null ],
-        [ "Response packet format", "a00069.html#nrf51_connect_encoding_sec_response", null ],
+        [ "Response packet format", "a00069.html#nrf51_connect_encoding_sec_response", null ]
+      ] ],
+      [ "0x89 - sd_ble_gap_connect_cancel", "a00069.html#nrf51_connect_cancel_encoding", [
         [ "Function packet format", "a00069.html#nrf51_connect_cancel_encoding_sec_function", null ],
         [ "Response packet format", "a00069.html#nrf51_connect_cancel_encoding_sec_response", null ]
       ] ]

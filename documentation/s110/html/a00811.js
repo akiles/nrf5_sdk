@@ -1,6 +1,5 @@
 var a00811 =
 [
-    [ "BLE_GAP_AUTH_KEY_TYPE_NONE", "a00811.html#ga869af3b1376d25aec9ae236e5772d7f1", null ],
-    [ "BLE_GAP_AUTH_KEY_TYPE_OOB", "a00811.html#gaf9f173da3e04e3c8054cbbeaa488c3d1", null ],
-    [ "BLE_GAP_AUTH_KEY_TYPE_PASSKEY", "a00811.html#ga914a323fb165826d2995ef9d79b341e6", null ]
+    [ "BLE_GAP_SEC_STATUS_SOURCE_LOCAL", "a00811.html#ga7c6035361c3893781b15f788954ea564", null ],
+    [ "BLE_GAP_SEC_STATUS_SOURCE_REMOTE", "a00811.html#gacd7d314e3a27338396a80cf38c71f1e2", null ]
 ];

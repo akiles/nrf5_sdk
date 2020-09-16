@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: nrf_radio_request_earliest_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: nrf_gzll_host_rx_info_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,40 @@ $(document).ready(function(){initNavTree('a00368.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_radio_request_earliest_t Struct Reference<div class="ingroups"><a class="el" href="a01072.html">Types</a></div></div>  </div>
+<div class="title">nrf_gzll_host_rx_info_t Struct Reference<div class="ingroups"><a class="el" href="a00956.html">Gazell Link Layer</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Parameters for a request for a timeslot as early as possible.  
+<p>Data structure containing information about the last packet received.  
  <a href="a00368.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_soc.h&gt;</code></p>
+<p><code>#include &lt;nrf_gzll.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a5d6e28106247179b7cde2e289f0f9c39"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00368.html#a5d6e28106247179b7cde2e289f0f9c39">hfclk</a></td></tr>
-<tr class="separator:a5d6e28106247179b7cde2e289f0f9c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad45d8189eff4584a13d7069d3c877a55"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00368.html#ad45d8189eff4584a13d7069d3c877a55">priority</a></td></tr>
-<tr class="separator:ad45d8189eff4584a13d7069d3c877a55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0495f3c5f7e2fd20663af081ca7e4c0b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00368.html#a0495f3c5f7e2fd20663af081ca7e4c0b">length_us</a></td></tr>
-<tr class="separator:a0495f3c5f7e2fd20663af081ca7e4c0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af56601d1b7ef92d49dbd1567bd1d39e0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00368.html#af56601d1b7ef92d49dbd1567bd1d39e0">timeout_us</a></td></tr>
-<tr class="separator:af56601d1b7ef92d49dbd1567bd1d39e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b024afcc55a2672cc745ccdc1ed21b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b024afcc55a2672cc745ccdc1ed21b4"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00368.html#a0b024afcc55a2672cc745ccdc1ed21b4">packet_removed_from_tx_fifo</a></td></tr>
+<tr class="memdesc:a0b024afcc55a2672cc745ccdc1ed21b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">A payload was received in the ACK. <br/></td></tr>
+<tr class="separator:a0b024afcc55a2672cc745ccdc1ed21b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ca3a1e0fd3866095de97120ce876ac6"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00368.html#a5ca3a1e0fd3866095de97120ce876ac6">rssi</a></td></tr>
+<tr class="memdesc:a5ca3a1e0fd3866095de97120ce876ac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Received signal strength indicator in dBm.  <a href="#a5ca3a1e0fd3866095de97120ce876ac6">More...</a><br/></td></tr>
+<tr class="separator:a5ca3a1e0fd3866095de97120ce876ac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Parameters for a request for a timeslot as early as possible. </p>
+<div class="textblock"><p>Data structure containing information about the last packet received. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a5d6e28106247179b7cde2e289f0f9c39"></a>
+<a class="anchor" id="a5ca3a1e0fd3866095de97120ce876ac6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_radio_request_earliest_t::hfclk</td>
+          <td class="memname">int16_t nrf_gzll_host_rx_info_t::rssi</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>High frequency clock source, see <a class="el" href="a01072.html#gac7d87a0d58b5d7b5a619d7587cd139a4">NRF_RADIO_HFCLK_CFG</a>. </p>
 
-</div>
-</div>
-<a class="anchor" id="a0495f3c5f7e2fd20663af081ca7e4c0b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t nrf_radio_request_earliest_t::length_us</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The radio timeslot length (in the range 100 to 100,000] microseconds). </p>
-
-</div>
-</div>
-<a class="anchor" id="ad45d8189eff4584a13d7069d3c877a55"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t nrf_radio_request_earliest_t::priority</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The radio timeslot priority, see <a class="el" href="a01072.html#ga5026e138e16d9a9664b804608062e9a1">NRF_RADIO_PRIORITY</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="af56601d1b7ef92d49dbd1567bd1d39e0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t nrf_radio_request_earliest_t::timeout_us</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Longest acceptable delay until the start of the requested timeslot (up to <a class="el" href="a01071.html#gace6d931f266ad76277d7de831a6b45ee">NRF_RADIO_EARLIEST_TIMEOUT_MAX_US</a> microseconds). </p>
+<p>Received signal strength indicator in dBm. </p>
+<dl class="section see"><dt>See Also</dt><dd>nrf_gzll_enable_rssi(). </dd></dl>
 
 </div>
 </div>
@@ -186,8 +148,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00368.html">nrf_radio_request_earliest_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00368.html">nrf_gzll_host_rx_info_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

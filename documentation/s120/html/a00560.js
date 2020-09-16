@@ -1,5 +1,10 @@
 var a00560 =
 [
-    [ "BLE_GATTS_FIX_ATTR_LEN_MAX", "a00560.html#ga4cf6efe8134f1f771c088ff7d4c1d79a", null ],
-    [ "BLE_GATTS_VAR_ATTR_LEN_MAX", "a00560.html#gac2a12a8c74733f8a666083550b77dc09", null ]
+    [ "BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL", "a00560.html#gae298558aca1af7f9dc5ce38268418059", null ],
+    [ "BLE_GATTS_OP_EXEC_WRITE_REQ_NOW", "a00560.html#ga6b36a56316847e970cc728a68e5bb6f0", null ],
+    [ "BLE_GATTS_OP_INVALID", "a00560.html#gaefcca583b8fedfba89e3e8864f5fb392", null ],
+    [ "BLE_GATTS_OP_PREP_WRITE_REQ", "a00560.html#ga97ae5797d7a83c1df161626765ddb436", null ],
+    [ "BLE_GATTS_OP_SIGN_WRITE_CMD", "a00560.html#ga0c61bfea52333d5d0b1f8ede31b3f8ee", null ],
+    [ "BLE_GATTS_OP_WRITE_CMD", "a00560.html#gac567f652312a6f8bbb5e348f01ed3f77", null ],
+    [ "BLE_GATTS_OP_WRITE_REQ", "a00560.html#ga52cba338739e55ac2843c2ef92bef44b", null ]
 ];

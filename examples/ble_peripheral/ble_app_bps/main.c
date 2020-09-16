@@ -780,14 +780,6 @@ static void button_event_handler(bsp_event_t event)
 }
 
 
-/**@brief Function for initializing the GPIOTE handler module.
- */
-static void gpiote_init(void)
-{
-    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
-}
-
-
 /**@brief Function for handling the Device Manager events.
  *
  * @param[in]   p_evt   Data associated to the device manager event.
@@ -838,7 +830,8 @@ static void device_manager_init(void)
     APP_ERROR_CHECK(err_code);
 
     // Clear all bonded centrals if the Bonds Delete button is pushed.
-    init_data.clear_persistent_data = bsp_buttons_state_get() & (1 << BOND_DELETE_ALL_BUTTON_ID);
+    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID,&(init_data.clear_persistent_data));
+    APP_ERROR_CHECK(err_code);
 
     err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);
@@ -875,7 +868,7 @@ int main(void)
 {
     // Initialize.
     timers_init();
-    gpiote_init();
+    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
 
     uint32_t err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), button_event_handler);
     APP_ERROR_CHECK(err_code);

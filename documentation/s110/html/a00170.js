@@ -1,10 +1,9 @@
 var a00170 =
 [
-    [ "battery_level_handles", "a00170.html#ade3d3767c6bec8d2c8fc37ed8303d4fb", null ],
-    [ "battery_level_last", "a00170.html#a90db9b31ace864a1952fd520957cb831", null ],
-    [ "conn_handle", "a00170.html#a4906d1aa3c702704f4392d90cd8102f0", null ],
-    [ "evt_handler", "a00170.html#a84827e57e33bae7cf628c4c5826b1ac4", null ],
-    [ "is_notification_supported", "a00170.html#a877690be6248d047f102fc238ab0c527", null ],
-    [ "report_ref_handle", "a00170.html#a70d124cbed946045d133aa76acd9581a", null ],
-    [ "service_handle", "a00170.html#af8c61a4fe0b938cc1b47989d67a20c4c", null ]
+    [ "battery_level_char_attr_md", "a00170.html#aba436d52b264fb93a74de510a9e7ef07", null ],
+    [ "battery_level_report_read_perm", "a00170.html#a07135d9b12640710f520ef87d7a4f1be", null ],
+    [ "evt_handler", "a00170.html#a84932ecefd721efa23840b01ca3ce7eb", null ],
+    [ "initial_batt_level", "a00170.html#a22993ab4d63fdbd764624856605d1b7f", null ],
+    [ "p_report_ref", "a00170.html#afcbdf538aff06891b6f0057015b5c6e0", null ],
+    [ "support_notification", "a00170.html#ad4f3272ae66ece4ee5a4b8c3ff7fba88", null ]
 ];

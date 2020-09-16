@@ -1,6 +1,7 @@
 var a00143 =
 [
-    [ "item_sz", "a00143.html#a6a6172b2fd1d922b2fdd786722b608f5", null ],
-    [ "pool", "a00143.html#abc2a8007d3403d94b1499961fff6402f", null ],
-    [ "queue_sz", "a00143.html#a3f57e40b294eedf373ebd56ebc48d871", null ]
+    [ "buf_size_mask", "a00143.html#a03c6c7fcf087b5c1e0cfd5ce09661870", null ],
+    [ "p_buf", "a00143.html#a64eafd180a65260208be3b845f6acbf5", null ],
+    [ "read_pos", "a00143.html#aabcc538faf2ea4a374702c9896ae52d6", null ],
+    [ "write_pos", "a00143.html#a12631a6575aae2c98f1cca4034b38eaf", null ]
 ];

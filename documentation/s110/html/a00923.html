@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: HCI Serialization PHY</title>
+<title>nRF51 SDK - S110 SoftDevice: Connectivity command request decoders and command response encoders</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,277 +97,96 @@ $(document).ready(function(){initNavTree('a00923.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">HCI Serialization PHY<div class="ingroups"><a class="el" href="a01036.html">BLE Serialization</a></div></div>  </div>
+<div class="title">Connectivity command request decoders and command response encoders<div class="ingroups"><a class="el" href="a01083.html">Connectivity s110 codecs</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>HCI PHY layer for serialization.  
+<p>Connectivity command request decoders and command response encoders.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00388.html">ser_phy_hci_pkt_params_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A struct representing a PHY HCI packet.  <a href="a00388.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00387.html">ser_phy_hci_evt_hw_error_params_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A struct containing parameters of the event of type <a class="el" href="a00923.html#gga696fce5dc53c4c227b5fe54e832f09eca225618d1f1520ae3abb97334ea1c2c21">SER_PHY_HCI_SLIP_EVT_HW_ERROR</a>.  <a href="a00387.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00389.html">ser_phy_hci_slip_evt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A struct containing events from a Serialization PHY module.  <a href="a00389.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga2028cda219bb2476f7c8987084530533"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#ga2028cda219bb2476f7c8987084530533">ser_phy_hci_slip_event_handler_t</a> )(<a class="el" href="a00389.html">ser_phy_hci_slip_evt_t</a> *p_event)</td></tr>
-<tr class="memdesc:ga2028cda219bb2476f7c8987084530533"><td class="mdescLeft">&#160;</td><td class="mdescRight">A type of generic callback function handler to be used by all PHY HCI events.  <a href="#ga2028cda219bb2476f7c8987084530533">More...</a><br/></td></tr>
-<tr class="separator:ga2028cda219bb2476f7c8987084530533"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga696fce5dc53c4c227b5fe54e832f09ec"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#ga696fce5dc53c4c227b5fe54e832f09ec">ser_phy_hci_slip_evt_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00923.html#gga696fce5dc53c4c227b5fe54e832f09ecac2bad55aa2e033e9cf1d26d1551da3bd">SER_PHY_HCI_SLIP_EVT_PKT_SENT</a> = 0, 
-<br/>
-&#160;&#160;<a class="el" href="a00923.html#gga696fce5dc53c4c227b5fe54e832f09eca1e744b223073244f7e005771b3b0ab40">SER_PHY_HCI_SLIP_EVT_ACK_SENT</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00923.html#gga696fce5dc53c4c227b5fe54e832f09eca11d423088fbb10597df19b68296d9dbd">SER_PHY_HCI_SLIP_EVT_PKT_RECEIVED</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00923.html#gga696fce5dc53c4c227b5fe54e832f09eca225618d1f1520ae3abb97334ea1c2c21">SER_PHY_HCI_SLIP_EVT_HW_ERROR</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00923.html#gga696fce5dc53c4c227b5fe54e832f09ecafcc295f585e95c78d6a09aeb62e90521">SER_PHY_HCI_SLIP_EVT_TYPE_MAX</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga696fce5dc53c4c227b5fe54e832f09ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialization PHY HCI module events types.  <a href="a00923.html#ga696fce5dc53c4c227b5fe54e832f09ec">More...</a><br/></td></tr>
-<tr class="separator:ga696fce5dc53c4c227b5fe54e832f09ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gae4f3889382e2f79d8a5c8583eb60e0c0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#gae4f3889382e2f79d8a5c8583eb60e0c0">ser_phy_hci_slip_open</a> (<a class="el" href="a00923.html#ga2028cda219bb2476f7c8987084530533">ser_phy_hci_slip_event_handler_t</a> events_handler)</td></tr>
-<tr class="memdesc:gae4f3889382e2f79d8a5c8583eb60e0c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for opening and initializing a HCI SLIP PHY module.  <a href="#gae4f3889382e2f79d8a5c8583eb60e0c0">More...</a><br/></td></tr>
-<tr class="separator:gae4f3889382e2f79d8a5c8583eb60e0c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5b7bc3ebe9fde93d37fdf9300c7a0b6f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#ga5b7bc3ebe9fde93d37fdf9300c7a0b6f">ser_phy_hci_slip_tx_pkt_send</a> (const <a class="el" href="a00388.html">ser_phy_hci_pkt_params_t</a> *p_header, const <a class="el" href="a00388.html">ser_phy_hci_pkt_params_t</a> *p_payload, const <a class="el" href="a00388.html">ser_phy_hci_pkt_params_t</a> *p_crc)</td></tr>
-<tr class="memdesc:ga5b7bc3ebe9fde93d37fdf9300c7a0b6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for transmitting a HCI SLIP packet.  <a href="#ga5b7bc3ebe9fde93d37fdf9300c7a0b6f">More...</a><br/></td></tr>
-<tr class="separator:ga5b7bc3ebe9fde93d37fdf9300c7a0b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga68d41aff8d01462a192a39fee78dc1e1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#ga68d41aff8d01462a192a39fee78dc1e1">ser_phy_hci_slip_rx_buf_free</a> (uint8_t *p_buffer)</td></tr>
-<tr class="memdesc:ga68d41aff8d01462a192a39fee78dc1e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for freeing an RX buffer.  <a href="#ga68d41aff8d01462a192a39fee78dc1e1">More...</a><br/></td></tr>
-<tr class="separator:ga68d41aff8d01462a192a39fee78dc1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e9d9e1deef7f917721c2ba100900961"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#ga5e9d9e1deef7f917721c2ba100900961">ser_phy_hci_slip_close</a> (void)</td></tr>
-<tr class="memdesc:ga5e9d9e1deef7f917721c2ba100900961"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for closing a PHY HCI module.  <a href="#ga5e9d9e1deef7f917721c2ba100900961">More...</a><br/></td></tr>
-<tr class="separator:ga5e9d9e1deef7f917721c2ba100900961"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa121900a8514a2b7ef7fd67d777c349e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#gaa121900a8514a2b7ef7fd67d777c349e">ser_phy_hci_slip_interrupts_enable</a> (void)</td></tr>
-<tr class="memdesc:gaa121900a8514a2b7ef7fd67d777c349e"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for enabling a PHY HCI module interrupts.  <a href="#gaa121900a8514a2b7ef7fd67d777c349e">More...</a><br/></td></tr>
-<tr class="separator:gaa121900a8514a2b7ef7fd67d777c349e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43cf890f95e08d836af1ad0302a3eb70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#ga43cf890f95e08d836af1ad0302a3eb70">ser_phy_hci_slip_interrupts_disable</a> (void)</td></tr>
-<tr class="memdesc:ga43cf890f95e08d836af1ad0302a3eb70"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for disabling a PHY HCI module interrupts.  <a href="#ga43cf890f95e08d836af1ad0302a3eb70">More...</a><br/></td></tr>
-<tr class="separator:ga43cf890f95e08d836af1ad0302a3eb70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab209833145c75643045687ebb7724871"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#gab209833145c75643045687ebb7724871">ble_tx_buffer_count_get_req_dec</a> (uint8_t const *const p_buf, uint16_t packet_len, uint8_t **const pp_count)</td></tr>
+<tr class="memdesc:gab209833145c75643045687ebb7724871"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes <a class="el" href="a01045.html#ga37e443c585217475a97e40dfb443a1b6">sd_ble_tx_buffer_count_get</a> command request.  <a href="#gab209833145c75643045687ebb7724871">More...</a><br/></td></tr>
+<tr class="separator:gab209833145c75643045687ebb7724871"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac5be9179a08b2073176391145fb1aaed"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#gac5be9179a08b2073176391145fb1aaed">ble_tx_buffer_count_get_rsp_enc</a> (uint32_t return_code, uint8_t *const p_buf, uint32_t *const p_buf_len, uint8_t const *const p_count)</td></tr>
+<tr class="memdesc:gac5be9179a08b2073176391145fb1aaed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01045.html#ga37e443c585217475a97e40dfb443a1b6">sd_ble_tx_buffer_count_get</a> command response.  <a href="#gac5be9179a08b2073176391145fb1aaed">More...</a><br/></td></tr>
+<tr class="separator:gac5be9179a08b2073176391145fb1aaed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadfd5fb00c51316116c3ffc997be8ae1d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#gadfd5fb00c51316116c3ffc997be8ae1d">ble_event_enc</a> (<a class="el" href="a00203.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
+<tr class="memdesc:gadfd5fb00c51316116c3ffc997be8ae1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event encoding dispatcher.  <a href="#gadfd5fb00c51316116c3ffc997be8ae1d">More...</a><br/></td></tr>
+<tr class="separator:gadfd5fb00c51316116c3ffc997be8ae1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5cb83fed83e2b866d1c00bfabbe3a974"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#ga5cb83fed83e2b866d1c00bfabbe3a974">ble_version_get_req_dec</a> (uint8_t const *const p_buf, uint16_t packet_len, <a class="el" href="a00338.html">ble_version_t</a> **const pp_version)</td></tr>
+<tr class="memdesc:ga5cb83fed83e2b866d1c00bfabbe3a974"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes <a class="el" href="a01045.html#gab3ba7bb07fa809e8dccfd27cbba0210a">sd_ble_version_get</a> command request.  <a href="#ga5cb83fed83e2b866d1c00bfabbe3a974">More...</a><br/></td></tr>
+<tr class="separator:ga5cb83fed83e2b866d1c00bfabbe3a974"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga57be8d81f3957b9be3ebf1af21e51eee"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#ga57be8d81f3957b9be3ebf1af21e51eee">ble_version_get_rsp_enc</a> (uint32_t return_code, uint8_t *const p_buf, uint32_t *const p_buf_len, <a class="el" href="a00338.html">ble_version_t</a> const *const p_version)</td></tr>
+<tr class="memdesc:ga57be8d81f3957b9be3ebf1af21e51eee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01045.html#gab3ba7bb07fa809e8dccfd27cbba0210a">sd_ble_version_get</a> command response.  <a href="#ga57be8d81f3957b9be3ebf1af21e51eee">More...</a><br/></td></tr>
+<tr class="separator:ga57be8d81f3957b9be3ebf1af21e51eee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac91cd94882c03222bb820544e8ce2c3d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#gac91cd94882c03222bb820544e8ce2c3d">ble_opt_get_req_dec</a> (uint8_t const *const p_buf, uint16_t packet_len, uint32_t *const p_opt_id, <a class="el" href="a00315.html">ble_opt_t</a> **const pp_opt)</td></tr>
+<tr class="memdesc:gac91cd94882c03222bb820544e8ce2c3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes <a class="el" href="a01045.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> command request.  <a href="#gac91cd94882c03222bb820544e8ce2c3d">More...</a><br/></td></tr>
+<tr class="separator:gac91cd94882c03222bb820544e8ce2c3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga12cd98517d17f9bbb39cfebc1ca2eafd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#ga12cd98517d17f9bbb39cfebc1ca2eafd">ble_opt_get_rsp_enc</a> (uint32_t return_code, uint8_t *const p_buf, uint32_t *const p_buf_len, uint32_t opt_id, <a class="el" href="a00315.html">ble_opt_t</a> const *const p_opt)</td></tr>
+<tr class="memdesc:ga12cd98517d17f9bbb39cfebc1ca2eafd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01045.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> command response.  <a href="#ga12cd98517d17f9bbb39cfebc1ca2eafd">More...</a><br/></td></tr>
+<tr class="separator:ga12cd98517d17f9bbb39cfebc1ca2eafd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51ca27bb0e4d703dd9beca8c99f4eb12"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#ga51ca27bb0e4d703dd9beca8c99f4eb12">ble_opt_set_req_dec</a> (uint8_t const *const p_buf, uint16_t packet_len, uint32_t *const p_opt_id, <a class="el" href="a00315.html">ble_opt_t</a> **const pp_opt)</td></tr>
+<tr class="memdesc:ga51ca27bb0e4d703dd9beca8c99f4eb12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes <a class="el" href="a01045.html#ga511d431bc3d9ccf9bef09ad20cbf855a">sd_ble_opt_set</a> command request.  <a href="#ga51ca27bb0e4d703dd9beca8c99f4eb12">More...</a><br/></td></tr>
+<tr class="separator:ga51ca27bb0e4d703dd9beca8c99f4eb12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf40ae6207852b2a4a5adae167c91a5aa"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#gaf40ae6207852b2a4a5adae167c91a5aa">ble_opt_set_rsp_enc</a> (uint32_t return_code, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
+<tr class="memdesc:gaf40ae6207852b2a4a5adae167c91a5aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01045.html#ga511d431bc3d9ccf9bef09ad20cbf855a">sd_ble_opt_set</a> command response.  <a href="#gaf40ae6207852b2a4a5adae167c91a5aa">More...</a><br/></td></tr>
+<tr class="separator:gaf40ae6207852b2a4a5adae167c91a5aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga614300e335bade1c8e2cade41d1de60f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#ga614300e335bade1c8e2cade41d1de60f">ble_uuid_encode_req_dec</a> (uint8_t const *const p_buf, uint16_t packet_len, <a class="el" href="a00337.html">ble_uuid_t</a> **const pp_uuid, uint8_t **const pp_uuid_le_len, uint8_t **const pp_uuid_le)</td></tr>
+<tr class="memdesc:ga614300e335bade1c8e2cade41d1de60f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes <a class="el" href="a01045.html#gaa2f13b287633d17f7500f0f39851b682">sd_ble_uuid_encode</a> command request.  <a href="#ga614300e335bade1c8e2cade41d1de60f">More...</a><br/></td></tr>
+<tr class="separator:ga614300e335bade1c8e2cade41d1de60f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga060fa3ccfb88aafc4f322a53110aee24"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#ga060fa3ccfb88aafc4f322a53110aee24">ble_uuid_encode_rsp_enc</a> (uint32_t return_code, uint8_t *const p_buf, uint32_t *const p_buf_len, uint8_t uuid_le_len, uint8_t const *const p_uuid_le)</td></tr>
+<tr class="memdesc:ga060fa3ccfb88aafc4f322a53110aee24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01045.html#gaa2f13b287633d17f7500f0f39851b682">sd_ble_uuid_encode</a> command response.  <a href="#ga060fa3ccfb88aafc4f322a53110aee24">More...</a><br/></td></tr>
+<tr class="separator:ga060fa3ccfb88aafc4f322a53110aee24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab656a7b0cc66a22b1dac7e0aaa38fc29"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#gab656a7b0cc66a22b1dac7e0aaa38fc29">ble_uuid_decode_req_dec</a> (uint8_t const *const p_buf, uint32_t const buf_len, uint8_t *p_uuid_le_len, uint8_t **const pp_uuid_le, <a class="el" href="a00337.html">ble_uuid_t</a> **const pp_uuid)</td></tr>
+<tr class="memdesc:gab656a7b0cc66a22b1dac7e0aaa38fc29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes <a class="el" href="a01045.html#gac27814ac145d826cda33446a51ad04a2">sd_ble_uuid_decode</a> command request.  <a href="#gab656a7b0cc66a22b1dac7e0aaa38fc29">More...</a><br/></td></tr>
+<tr class="separator:gab656a7b0cc66a22b1dac7e0aaa38fc29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4d18be90c8b753aef8fd06686eff3656"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#ga4d18be90c8b753aef8fd06686eff3656">ble_uuid_decode_rsp_enc</a> (uint32_t return_code, uint8_t *const p_buf, uint32_t *const p_buf_len, <a class="el" href="a00337.html">ble_uuid_t</a> const *const p_uuid)</td></tr>
+<tr class="memdesc:ga4d18be90c8b753aef8fd06686eff3656"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01045.html#gac27814ac145d826cda33446a51ad04a2">sd_ble_uuid_decode</a> command response.  <a href="#ga4d18be90c8b753aef8fd06686eff3656">More...</a><br/></td></tr>
+<tr class="separator:ga4d18be90c8b753aef8fd06686eff3656"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3e34ac1543287346dd9a676b5868889b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#ga3e34ac1543287346dd9a676b5868889b">ble_uuid_vs_add_req_dec</a> (uint8_t const *const p_buf, uint16_t buf_len, <a class="el" href="a00336.html">ble_uuid128_t</a> **const pp_uuid, uint8_t **const pp_uuid_type)</td></tr>
+<tr class="memdesc:ga3e34ac1543287346dd9a676b5868889b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes <a class="el" href="a01045.html#gab3101ab721b427d1548b5f77bf5118cf">sd_ble_uuid_vs_add</a> command request.  <a href="#ga3e34ac1543287346dd9a676b5868889b">More...</a><br/></td></tr>
+<tr class="separator:ga3e34ac1543287346dd9a676b5868889b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9d47261b589083eda52114657fbd142f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#ga9d47261b589083eda52114657fbd142f">ble_uuid_vs_add_rsp_enc</a> (uint32_t return_code, uint8_t *const p_buf, uint32_t *const p_buf_len, uint8_t const *const p_uuid_type)</td></tr>
+<tr class="memdesc:ga9d47261b589083eda52114657fbd142f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01045.html#gab3101ab721b427d1548b5f77bf5118cf">sd_ble_uuid_vs_add</a> command response.  <a href="#ga9d47261b589083eda52114657fbd142f">More...</a><br/></td></tr>
+<tr class="separator:ga9d47261b589083eda52114657fbd142f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga07f97a7d0fb4248180bd315ea4dec673"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#ga07f97a7d0fb4248180bd315ea4dec673">ble_enable_req_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00200.html">ble_enable_params_t</a> **const pp_ble_enable_params)</td></tr>
+<tr class="memdesc:ga07f97a7d0fb4248180bd315ea4dec673"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes <a class="el" href="a01045.html#ga0f632bec36100e4d2d74672ccbb4218b">sd_ble_enable</a> command request.  <a href="#ga07f97a7d0fb4248180bd315ea4dec673">More...</a><br/></td></tr>
+<tr class="separator:ga07f97a7d0fb4248180bd315ea4dec673"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa9c071734b3fd3ca6c185daca95ea633"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#gaa9c071734b3fd3ca6c185daca95ea633">ble_enable_rsp_enc</a> (uint32_t return_code, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
+<tr class="memdesc:gaa9c071734b3fd3ca6c185daca95ea633"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01045.html#ga0f632bec36100e4d2d74672ccbb4218b">sd_ble_enable</a> command response.  <a href="#gaa9c071734b3fd3ca6c185daca95ea633">More...</a><br/></td></tr>
+<tr class="separator:gaa9c071734b3fd3ca6c185daca95ea633"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5c2ede67d9bdf4ba7bbd815fb224f50"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00923.html#gad5c2ede67d9bdf4ba7bbd815fb224f50">ble_opt_id_pre_dec</a> (uint8_t const *const p_buf, uint16_t packet_len, uint32_t *const p_opt_id)</td></tr>
+<tr class="memdesc:gad5c2ede67d9bdf4ba7bbd815fb224f50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pre-decodes opt_id of <a class="el" href="a00315.html">ble_opt_t</a> for middlware.  <a href="#gad5c2ede67d9bdf4ba7bbd815fb224f50">More...</a><br/></td></tr>
+<tr class="separator:gad5c2ede67d9bdf4ba7bbd815fb224f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>HCI PHY layer for serialization. </p>
-<p>This file contains declarations of functions and definitions of data structures and identifiers (typedef enum) used as API of the serialization HCI PHY layer. </p>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga2028cda219bb2476f7c8987084530533"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef void(* ser_phy_hci_slip_event_handler_t)(<a class="el" href="a00389.html">ser_phy_hci_slip_evt_t</a> *p_event)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A type of generic callback function handler to be used by all PHY HCI events. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>Serialization PHY HCI module event. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga696fce5dc53c4c227b5fe54e832f09ec"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00923.html#ga696fce5dc53c4c227b5fe54e832f09ec">ser_phy_hci_slip_evt_type_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Serialization PHY HCI module events types. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga696fce5dc53c4c227b5fe54e832f09ecac2bad55aa2e033e9cf1d26d1551da3bd"></a>SER_PHY_HCI_SLIP_EVT_PKT_SENT</em>&nbsp;</td><td class="fielddoc">
-<p>An event indicating that packet has been transmitted. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga696fce5dc53c4c227b5fe54e832f09eca1e744b223073244f7e005771b3b0ab40"></a>SER_PHY_HCI_SLIP_EVT_ACK_SENT</em>&nbsp;</td><td class="fielddoc">
-<p>An event indicating that ack packet has been transmitted. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga696fce5dc53c4c227b5fe54e832f09eca11d423088fbb10597df19b68296d9dbd"></a>SER_PHY_HCI_SLIP_EVT_PKT_RECEIVED</em>&nbsp;</td><td class="fielddoc">
-<p>An event indicating that packet has been received. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga696fce5dc53c4c227b5fe54e832f09eca225618d1f1520ae3abb97334ea1c2c21"></a>SER_PHY_HCI_SLIP_EVT_HW_ERROR</em>&nbsp;</td><td class="fielddoc">
-<p>An event indicating a hardware error in PHY HCI module. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga696fce5dc53c4c227b5fe54e832f09ecafcc295f585e95c78d6a09aeb62e90521"></a>SER_PHY_HCI_SLIP_EVT_TYPE_MAX</em>&nbsp;</td><td class="fielddoc">
-<p>Enumeration upper bound. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
+<p>Connectivity command request decoders and command response encoders. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga5e9d9e1deef7f917721c2ba100900961"></a>
+<a class="anchor" id="ga07f97a7d0fb4248180bd315ea4dec673"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ser_phy_hci_slip_close </td>
+          <td class="memname">uint32_t ble_enable_req_dec </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function for closing a PHY HCI module. </p>
-<dl class="section note"><dt>Note</dt><dd>The function disables hardware, resets internal module states and unregisters events callback function. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga43cf890f95e08d836af1ad0302a3eb70"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ser_phy_hci_slip_interrupts_disable </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function for disabling a PHY HCI module interrupts. </p>
-<dl class="section note"><dt>Note</dt><dd>The function disables all interrupts that are used by a PHY HCI module (and only those). </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa121900a8514a2b7ef7fd67d777c349e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ser_phy_hci_slip_interrupts_enable </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function for enabling a PHY HCI module interrupts. </p>
-<dl class="section note"><dt>Note</dt><dd>The function enables all interrupts that are used by a PHY HCI module (and only those). </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gae4f3889382e2f79d8a5c8583eb60e0c0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ser_phy_hci_slip_open </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00923.html#ga2028cda219bb2476f7c8987084530533">ser_phy_hci_slip_event_handler_t</a>&#160;</td>
-          <td class="paramname"><em>events_handler</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function for opening and initializing a HCI SLIP PHY module. </p>
-<dl class="section note"><dt>Note</dt><dd>The function initializes hardware and internal module states, and registers callback function to be used by all PHY HCI module events.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>If the function has been already called, the function <a class="el" href="a00923.html#ga5e9d9e1deef7f917721c2ba100900961">ser_phy_hci_slip_close</a> has to be called before ser_phy_hci_slip_open can be called again.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">events_handler</td><td>Generic callback function handler to be used by all PHY HCI module events.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Operation failure. The function has been already called. To call it again the function <a class="el" href="a00923.html#ga5e9d9e1deef7f917721c2ba100900961">ser_phy_hci_slip_close</a> has to be called previously. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Operation failure. Hardware initialization parameters are not supported. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga68d41aff8d01462a192a39fee78dc1e1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ser_phy_hci_slip_rx_buf_free </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_buffer</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A function for freeing an RX buffer. </p>
-<dl class="section note"><dt>Note</dt><dd>The function has to be called as a response for event <a class="el" href="a00923.html#gga696fce5dc53c4c227b5fe54e832f09eca11d423088fbb10597df19b68296d9dbd">SER_PHY_HCI_SLIP_EVT_PKT_RECEIVED</a> when RX packet has been processed. The function frees the RX buffer and therefore enables reception of next incoming data.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to an RX buffer which must be freed.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Operation failure. A buffer was already free. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5b7bc3ebe9fde93d37fdf9300c7a0b6f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ser_phy_hci_slip_tx_pkt_send </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00388.html">ser_phy_hci_pkt_params_t</a> *&#160;</td>
-          <td class="paramname"><em>p_header</em>, </td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00388.html">ser_phy_hci_pkt_params_t</a> *&#160;</td>
-          <td class="paramname"><em>p_payload</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>packet_len</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00388.html">ser_phy_hci_pkt_params_t</a> *&#160;</td>
-          <td class="paramname"><em>p_crc</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00200.html">ble_enable_params_t</a> **const&#160;</td>
+          <td class="paramname"><em>pp_ble_enable_params</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -377,22 +196,1006 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>A function for transmitting a HCI SLIP packet. </p>
-<dl class="section note"><dt>Note</dt><dd>The function adds a packet pointed by p_buffer parameter to a transmission queue and schedules generating an event of type <a class="el" href="a00923.html#gga696fce5dc53c4c227b5fe54e832f09ecac2bad55aa2e033e9cf1d26d1551da3bd">SER_PHY_HCI_SLIP_EVT_PKT_SENT</a> upon transmission completion.</dd></dl>
+<p>Decodes <a class="el" href="a01045.html#ga0f632bec36100e4d2d74672ccbb4218b">sd_ble_enable</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_enable_encoding">0x60 - sd_ble_enable</a> for packet format, <a class="el" href="a00923.html#gaa9c071734b3fd3ca6c185daca95ea633">ble_enable_rsp_enc</a> for response encoding.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_header</td><td>Pointer to <a class="el" href="a00388.html" title="A struct representing a PHY HCI packet.">ser_phy_hci_pkt_params_t</a> structure representing packet header. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_payload</td><td>Pointer to <a class="el" href="a00388.html" title="A struct representing a PHY HCI packet.">ser_phy_hci_pkt_params_t</a> structure representing packet payload. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_crc</td><td>Pointer to <a class="el" href="a00388.html" title="A struct representing a PHY HCI packet.">ser_phy_hci_pkt_params_t</a> structure representing packet crc.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command request packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_ble_enable_params</td><td>Pointer to pointer to <a class="el" href="a00200.html" title="BLE GATTS init options.">ble_enable_params_t</a>. <code>It</code> will be set to NULL if p_ble_enable_params is not present in the packet.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. Packet was added to the transmission queue and event will be send upon transmission completion. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied in p_header parameter. NULL pointer is allowed for p_payload and p_crc parameters. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Operation failure. Number of bytes to be send equal to 0. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_BUSY</td><td>Operation failure. Transmitting of a packet in progress. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa9c071734b3fd3ca6c185daca95ea633"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_enable_rsp_enc </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>return_code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_buf_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encodes <a class="el" href="a01045.html#ga0f632bec36100e4d2d74672ccbb4218b">sd_ble_enable</a> command response. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_enable_encoding">0x60 - sd_ble_enable</a> for packet format. <a class="el" href="a00923.html#ga07f97a7d0fb4248180bd315ea4dec673">ble_enable_req_dec</a> for request decoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">return_code</td><td>Return code indicating if command was successful or not. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command response will be returned. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command response packet.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gadfd5fb00c51316116c3ffc997be8ae1d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_event_enc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00203.html">ble_evt_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_event</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>event_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_buf_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Event encoding dispatcher. </p>
+<p>The event encoding dispatcher will route the event packet to the correct encoder which in turn encodes the contents of the event and updates the <code>p_buf</code> buffer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_event</td><td>Pointer to the <a class="el" href="a00203.html">ble_evt_t</a> buffer that shall be encoded. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event_len</td><td>Size (in bytes) of <code>p_event</code> buffer. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of a buffer for encoded event packet. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> Size (in bytes) of <code>p_buf</code> buffer. <code>out:</code> Length of encoded contents in <code>p_buf</code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NOT_SUPPORTED</td><td>Event encoder is not implemented. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac91cd94882c03222bb820544e8ce2c3d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_opt_get_req_dec </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>packet_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_opt_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00315.html">ble_opt_t</a> **const&#160;</td>
+          <td class="paramname"><em>pp_opt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decodes <a class="el" href="a01045.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_opt_get_encoding">0x69 - sd_ble_opt_get</a> for packet format, <a class="el" href="a00923.html#ga12cd98517d17f9bbb39cfebc1ca2eafd">ble_opt_get_rsp_enc</a> for response encoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command request packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_opt_id</td><td>Pointer to pointer to <a class="el" href="a00338.html">ble_version_t</a> address. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_opt</td><td>Pointer to pointer to <a class="el" href="a00315.html">ble_opt_t</a> address.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Decoding failure. Invalid operation type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga12cd98517d17f9bbb39cfebc1ca2eafd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_opt_get_rsp_enc </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>return_code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_buf_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>opt_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00315.html">ble_opt_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_opt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encodes <a class="el" href="a01045.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> command response. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_opt_get_encoding">0x69 - sd_ble_opt_get</a> for packet format. <a class="el" href="a00923.html#gac91cd94882c03222bb820544e8ce2c3d">ble_opt_get_req_dec</a> for request decoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">return_code</td><td>Return code indicating if command was successful or not. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command response will be returned. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command response packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">opt_id</td><td>identifies type of <a class="el" href="a00315.html" title="Common BLE Option type, wrapping the module specific options.">ble_opt_t</a> union </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_opt</td><td>Pointer to <a class="el" href="a00315.html">ble_opt_t</a> union.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad5c2ede67d9bdf4ba7bbd815fb224f50"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_opt_id_pre_dec </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>packet_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_opt_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Pre-decodes opt_id of <a class="el" href="a00315.html">ble_opt_t</a> for middlware. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_enable_encoding">0x60 - sd_ble_enable</a> for packet format. <a class="el" href="a00923.html#ga07f97a7d0fb4248180bd315ea4dec673">ble_enable_req_dec</a> for request decoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command response will be returned. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">packet_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command response packet. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_opt_id</td><td>Pointer to opt_id which identifies type of <a class="el" href="a00315.html">ble_opt_t</a> union.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga51ca27bb0e4d703dd9beca8c99f4eb12"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_opt_set_req_dec </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>packet_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_opt_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00315.html">ble_opt_t</a> **const&#160;</td>
+          <td class="paramname"><em>pp_opt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decodes <a class="el" href="a01045.html#ga511d431bc3d9ccf9bef09ad20cbf855a">sd_ble_opt_set</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_opt_set_encoding">0x68 - sd_ble_opt_set</a> for packet format, <a class="el" href="a00923.html#gaf40ae6207852b2a4a5adae167c91a5aa">ble_opt_set_rsp_enc</a> for response encoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command request packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_opt_id</td><td>Pointer to <a class="el" href="a00315.html">ble_opt_t</a> union type identifier. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_opt</td><td>Pointer to pointer to <a class="el" href="a00315.html">ble_opt_t</a> union.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Decoding failure. Invalid operation type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf40ae6207852b2a4a5adae167c91a5aa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_opt_set_rsp_enc </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>return_code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_buf_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encodes <a class="el" href="a01045.html#ga511d431bc3d9ccf9bef09ad20cbf855a">sd_ble_opt_set</a> command response. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_opt_set_encoding">0x68 - sd_ble_opt_set</a> for packet format. <a class="el" href="a00923.html#ga51ca27bb0e4d703dd9beca8c99f4eb12">ble_opt_set_req_dec</a> for request decoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">return_code</td><td>Return code indicating if command was successful or not. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command response will be returned. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command response packet.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab209833145c75643045687ebb7724871"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_tx_buffer_count_get_req_dec </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>packet_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t **const&#160;</td>
+          <td class="paramname"><em>pp_count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decodes <a class="el" href="a01045.html#ga37e443c585217475a97e40dfb443a1b6">sd_ble_tx_buffer_count_get</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_tx_buffer_count_get_encoding">0x62 - sd_ble_tx_buffer_count_get</a> for packet format, <a class="el" href="a00923.html#gac5be9179a08b2073176391145fb1aaed">ble_tx_buffer_count_get_rsp_enc</a> for response encoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command request packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_count</td><td>Pointer to pointer to location for count.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Decoding failure. Invalid operation type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac5be9179a08b2073176391145fb1aaed"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_tx_buffer_count_get_rsp_enc </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>return_code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_buf_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encodes <a class="el" href="a01045.html#ga37e443c585217475a97e40dfb443a1b6">sd_ble_tx_buffer_count_get</a> command response. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_tx_buffer_count_get_encoding">0x62 - sd_ble_tx_buffer_count_get</a> for packet format. <a class="el" href="a00923.html#gab209833145c75643045687ebb7724871">ble_tx_buffer_count_get_req_dec</a> for request decoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">return_code</td><td>Return code indicating if command was successful or not. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command response will be returned. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command response packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_count</td><td>Pointer to count value.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab656a7b0cc66a22b1dac7e0aaa38fc29"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_uuid_decode_req_dec </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t const&#160;</td>
+          <td class="paramname"><em>buf_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_uuid_le_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t **const&#160;</td>
+          <td class="paramname"><em>pp_uuid_le</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00337.html">ble_uuid_t</a> **const&#160;</td>
+          <td class="paramname"><em>pp_uuid</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decodes <a class="el" href="a01045.html#gac27814ac145d826cda33446a51ad04a2">sd_ble_uuid_decode</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_uuid_decode_encoding">0x64 - sd_ble_uuid_decode</a> for packet format, <a class="el" href="a00923.html#ga4d18be90c8b753aef8fd06686eff3656">ble_uuid_decode_rsp_enc</a> for response encoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command request packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf_len</td><td>Length (in bytes) of response packet. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_uuid_le_len</td><td>Pointer to the length of encoded UUID. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_uuid_le</td><td>Pointer to pointer to buffer where encoded UUID will be stored. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_uuid</td><td>Pointer to pointer to <a class="el" href="a00337.html">ble_uuid_t</a> structure. <code>It</code> will be set to NULL if p_uuid is not present in the packet.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4d18be90c8b753aef8fd06686eff3656"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_uuid_decode_rsp_enc </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>return_code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_buf_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00337.html">ble_uuid_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_uuid</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encodes <a class="el" href="a01045.html#gac27814ac145d826cda33446a51ad04a2">sd_ble_uuid_decode</a> command response. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_uuid_decode_encoding">0x64 - sd_ble_uuid_decode</a> for packet format. <a class="el" href="a00923.html#gab656a7b0cc66a22b1dac7e0aaa38fc29">ble_uuid_decode_req_dec</a> for request decoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">return_code</td><td>Return code indicating if command was successful or not. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command response will be returned. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command response packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_uuid</td><td>Pointer to the buffer with encoded UUID.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga614300e335bade1c8e2cade41d1de60f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_uuid_encode_req_dec </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>packet_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00337.html">ble_uuid_t</a> **const&#160;</td>
+          <td class="paramname"><em>pp_uuid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t **const&#160;</td>
+          <td class="paramname"><em>pp_uuid_le_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t **const&#160;</td>
+          <td class="paramname"><em>pp_uuid_le</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decodes <a class="el" href="a01045.html#gaa2f13b287633d17f7500f0f39851b682">sd_ble_uuid_encode</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_uuid_encode_encoding">0x65 - sd_ble_uuid_encode</a> for packet format, <a class="el" href="a00923.html#ga060fa3ccfb88aafc4f322a53110aee24">ble_uuid_encode_rsp_enc</a> for response encoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command request packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_uuid</td><td>Pointer to pointer to <a class="el" href="a00337.html">ble_uuid_t</a> structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_uuid_le_len</td><td>Pointer to pointer to the length of encoded UUID. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_uuid_le</td><td>Pointer to pointer to buffer where encoded UUID will be stored.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Decoding failure. Invalid operation type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga060fa3ccfb88aafc4f322a53110aee24"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_uuid_encode_rsp_enc </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>return_code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_buf_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>uuid_le_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_uuid_le</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encodes <a class="el" href="a01045.html#gaa2f13b287633d17f7500f0f39851b682">sd_ble_uuid_encode</a> command response. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_uuid_encode_encoding">0x65 - sd_ble_uuid_encode</a> for packet format. <a class="el" href="a00923.html#ga614300e335bade1c8e2cade41d1de60f">ble_uuid_encode_req_dec</a> for request decoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">return_code</td><td>Return code indicating if command was successful or not. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command response will be returned. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command response packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">uuid_le_len</td><td>Length of the encoded UUID. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_uuid_le</td><td>Pointer to the buffer with encoded UUID.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3e34ac1543287346dd9a676b5868889b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_uuid_vs_add_req_dec </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>buf_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00336.html">ble_uuid128_t</a> **const&#160;</td>
+          <td class="paramname"><em>pp_uuid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t **const&#160;</td>
+          <td class="paramname"><em>pp_uuid_type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decodes <a class="el" href="a01045.html#gab3101ab721b427d1548b5f77bf5118cf">sd_ble_uuid_vs_add</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_uuid_vs_add_encoding">0x63 - sd_ble_uuid_vs_add</a> for packet format, <a class="el" href="a00923.html#ga9d47261b589083eda52114657fbd142f">ble_uuid_vs_add_rsp_enc</a> for response encoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command request packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf_len</td><td>Length (in bytes) of response packet. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_uuid</td><td>Pointer to pointer to UUID. <code>It</code> will be set to NULL if p_uuid is not present in the packet. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_uuid_type</td><td>Pointer to pointer to UUID type. <code>It</code> will be set to NULL if p_uuid_type is not present in the packet.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9d47261b589083eda52114657fbd142f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_uuid_vs_add_rsp_enc </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>return_code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_buf_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_uuid_type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encodes <a class="el" href="a01045.html#gab3101ab721b427d1548b5f77bf5118cf">sd_ble_uuid_vs_add</a> command response. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_uuid_vs_add_encoding">0x63 - sd_ble_uuid_vs_add</a> for packet format. <a class="el" href="a00923.html#ga3e34ac1543287346dd9a676b5868889b">ble_uuid_vs_add_req_dec</a> for request decoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">return_code</td><td>Return code indicating if command was successful or not. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command response will be returned. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command response packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_uuid_type</td><td>Pointer to the UUID type.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5cb83fed83e2b866d1c00bfabbe3a974"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_version_get_req_dec </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>packet_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00338.html">ble_version_t</a> **const&#160;</td>
+          <td class="paramname"><em>pp_version</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decodes <a class="el" href="a01045.html#gab3ba7bb07fa809e8dccfd27cbba0210a">sd_ble_version_get</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_version_get_encoding">0x66 - sd_ble_version_get</a> for packet format, <a class="el" href="a00923.html#ga57be8d81f3957b9be3ebf1af21e51eee">ble_version_get_rsp_enc</a> for response encoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command request packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_version</td><td>Pointer to pointer to <a class="el" href="a00338.html">ble_version_t</a> address.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Decoding failure. Invalid operation type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga57be8d81f3957b9be3ebf1af21e51eee"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_version_get_rsp_enc </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>return_code</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_buf_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00338.html">ble_version_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_version</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encodes <a class="el" href="a01045.html#gab3ba7bb07fa809e8dccfd27cbba0210a">sd_ble_version_get</a> command response. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00085.html#nrf51_version_get_encoding">0x66 - sd_ble_version_get</a> for packet format. <a class="el" href="a00923.html#ga5cb83fed83e2b866d1c00bfabbe3a974">ble_version_get_req_dec</a> for request decoding.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">return_code</td><td>Return code indicating if command was successful or not. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command response will be returned. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command response packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_version</td><td>Pointer to <a class="el" href="a00338.html">ble_version_t</a> address.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
   </table>
   </dd>
 </dl>
@@ -404,7 +1207,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

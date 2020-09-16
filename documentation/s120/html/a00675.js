@@ -1,9 +1,17 @@
 var a00675 =
 [
-    [ "ble_l2cap_cid_register_req_dec", "a00675.html#ga0939d7679086e4cf90d92395f8003f8b", null ],
-    [ "ble_l2cap_cid_register_rsp_enc", "a00675.html#ga56728fe81880e3de4e1fb9d7c361cfef", null ],
-    [ "ble_l2cap_cid_unregister_req_dec", "a00675.html#gae9fd7441380df8b86cf902ced34ba26d", null ],
-    [ "ble_l2cap_cid_unregister_rsp_enc", "a00675.html#gad19b1ee15e56eb16f4daf7cae52984e0", null ],
-    [ "ble_l2cap_tx_req_dec", "a00675.html#ga00791d1b0aae2fbf2b5bed768c670ed5", null ],
-    [ "ble_l2cap_tx_rsp_enc", "a00675.html#ga48ac289f71995d001e4bc68d9a2d8910", null ]
+    [ "ser_ble_gap_conn_keyset_t", "a00218.html", [
+      [ "conn_active", "a00218.html#ab2ffd5cea85f3e138fde531940bfce7b", null ],
+      [ "conn_handle", "a00218.html#a771290844775fbb378c87293b9528c1e", null ],
+      [ "enc_key_central", "a00218.html#a202d425865c27c4f098dd334c9114fb6", null ],
+      [ "enc_key_periph", "a00218.html#ab7ecbc5914c8669c4748c620877ade60", null ],
+      [ "id_key_central", "a00218.html#a84ae66a50adbba99d09e7c89678a4616", null ],
+      [ "id_key_periph", "a00218.html#a35b059054cb1a08bf9d6b88134a7d5dd", null ],
+      [ "keyset", "a00218.html#ad9b98faa7a28fe60a445d275e497605c", null ],
+      [ "sign_key_central", "a00218.html#af96122063f2072e5aa2dbdcbae6b9fcd", null ],
+      [ "sign_key_periph", "a00218.html#a461fe2a460067db753c1ace4424f3ade", null ]
+    ] ],
+    [ "conn_ble_gap_sec_context_create", "a00675.html#ga1e23b738df1b767a50535a47f145d724", null ],
+    [ "conn_ble_gap_sec_context_destroy", "a00675.html#ga28de569724945daa8558dfad4a57b446", null ],
+    [ "conn_ble_gap_sec_context_find", "a00675.html#ga59d315ca793a01b33a607b530abfad5a", null ]
 ];

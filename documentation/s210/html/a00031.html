@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Random Number Generator Example</title>
+<title>nRF51 SDK - S210 SoftDevice: Real Time Counter Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,19 +97,26 @@ $(document).ready(function(){initNavTree('a00031.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Random Number Generator Example </div>  </div>
+<div class="title">Real Time Counter Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Random Number Generator (RNG) Example demonstrates the use of the RNG peripheral by obtaining a random number and printing it in a COM listener (for example PUTTY) using UART.</p>
-<p>The application starts by configuring simple_uart and starting the RNG peripheral. The main loop prints the random number and waits for 100 milliseconds.</p>
-<p>The name of the example is <b>rng_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\rng</code> </p>
-<h1><a class="anchor" id="rng_example_testing"></a>
+<div class="textblock"><p>The Real Time Counter Example enables the real-time clock (RTC) with a TICK frequency of 8 Hz. It also configures and enables the TICK- and the COMPARE0-interrupts. The compare interrupt handler is triggered three seconds after the RTC starts. The TICK interrupt handler clears the interrupt request and toggles PIN8 (LED 1). The COMPARE0 handler clears the interrupt request and sets PIN9 (LED 2) to 1.</p>
+<p>The application starts with configuring the GPIO and starting the internal low frequency clock oscillator (LFCLK XTAL oscillator). The RTC is configured with TICK for 8 Hz and COMPARE0 to 3 seconds.</p>
+<h1><a class="anchor" id="rtc_example_section_setup"></a>
+Setup</h1>
+<p>The name of the example is <b>rtc_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\rtc</code> </p>
+<p>LED assignments:</p>
+<ul>
+<li>LED 1 is used to show the 8 Hz tick.</li>
+<li>LED 2 is used to show the COMPARE0 event.</li>
+</ul>
+<h1><a class="anchor" id="rtc_example_testing"></a>
 Testing</h1>
-<p>Test the Random Number Generator Example application by performing the following steps:</p>
+<p>Test the Real Time Counter Example application by performing the following steps:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Start a COM listener like PUTTY and connect to the used COM port at 38400 baud rate.</li>
-<li>Observe that a random number is updated every 100 milliseconds. </li>
+<li>Observe that LED 1 toggles at the rate of 8 Hz.</li>
+<li>After 3 seconds, LED 2 turns on. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
@@ -117,7 +124,7 @@ Testing</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00018.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:42 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:29 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

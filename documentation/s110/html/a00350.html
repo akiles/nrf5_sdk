@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: dm_context_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dm_application_param_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,49 +106,64 @@ $(document).ready(function(){initNavTree('a00350.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dm_context_t Struct Reference<div class="ingroups"><a class="el" href="a00986.html">Device Manager Data Types</a></div></div>  </div>
+<div class="title">dm_application_param_t Struct Reference<div class="ingroups"><a class="el" href="a00988.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Definition of Data Context.  
+<p>Application Registration Parameters.  
  <a href="a00350.html#details">More...</a></p>
 
 <p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a584d9c286a840f2aa29cf3f6e76362d4"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#a584d9c286a840f2aa29cf3f6e76362d4">len</a></td></tr>
-<tr class="separator:a584d9c286a840f2aa29cf3f6e76362d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbcb29305bde09573e35ed7f4c214641"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#acbcb29305bde09573e35ed7f4c214641">p_data</a></td></tr>
-<tr class="separator:acbcb29305bde09573e35ed7f4c214641"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46b0eb7fa4e86eaa2c5f793b2750da38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00988.html#ga1d3589567c4e17c3d32ab53dcedf3fd2">dm_event_cb_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#a46b0eb7fa4e86eaa2c5f793b2750da38">evt_handler</a></td></tr>
+<tr class="separator:a46b0eb7fa4e86eaa2c5f793b2750da38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01e7f59d291d6e3962ab36b22a7d1683"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#a01e7f59d291d6e3962ab36b22a7d1683">service_type</a></td></tr>
+<tr class="separator:a01e7f59d291d6e3962ab36b22a7d1683"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a763895cc4380ab52a871637ad5156d94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00235.html">ble_gap_sec_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00350.html#a763895cc4380ab52a871637ad5156d94">sec_param</a></td></tr>
+<tr class="separator:a763895cc4380ab52a871637ad5156d94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Definition of Data Context. </p>
-<p>Defines contextual data format, it consists of context data length and pointer to data. </p>
+<div class="textblock"><p>Application Registration Parameters. </p>
+<p>Parameters needed by the module when registering with it. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a584d9c286a840f2aa29cf3f6e76362d4"></a>
+<a class="anchor" id="a46b0eb7fa4e86eaa2c5f793b2750da38"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t dm_context_t::len</td>
+          <td class="memname"><a class="el" href="a00988.html#ga1d3589567c4e17c3d32ab53dcedf3fd2">dm_event_cb_t</a> dm_application_param_t::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Length of data . </p>
+<p>Event Handler to be registered. It will receive asynchronous notification from the module, see <a class="el" href="a00984.html">Device Manager Events</a> for asynchronous events. </p>
 
 </div>
 </div>
-<a class="anchor" id="acbcb29305bde09573e35ed7f4c214641"></a>
+<a class="anchor" id="a763895cc4380ab52a871637ad5156d94"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* dm_context_t::p_data</td>
+          <td class="memname"><a class="el" href="a00235.html">ble_gap_sec_params_t</a> dm_application_param_t::sec_param</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to contextual data, a copy is made of the data. </p>
+<p>Security parameters to be used for the application. </p>
+
+</div>
+</div>
+<a class="anchor" id="a01e7f59d291d6e3962ab36b22a7d1683"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t dm_application_param_t::service_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Bit mask identifying services that the application intends to support for all peers. </p>
 
 </div>
 </div>
@@ -157,8 +172,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00350.html">dm_context_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00350.html">dm_application_param_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Nordic Semiconductor. All Rights Reserved.
+/* Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
  *
  * The information contained herein is property of Nordic Semiconductor ASA.
  * Terms and conditions of usage are described in detail in NORDIC
@@ -19,24 +19,25 @@
 *
 * This file contains the source code for a sample application using the NRF_RADIO, and is controlled through the serial port.
 *
-* @image html example_board_setup_a.jpg "Use board setup A for this example."
-*
 */
 
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include "bsp.h"
 #include "nrf.h"
 #include "radio_test.h"
-#include "simple_uart.h"
+#include "app_uart.h"
+#include "app_error.h"
 #include "nrf51_bitfields.h"
+#include "nordic_common.h"
 
 static uint8_t mode_          = RADIO_MODE_MODE_Nrf_2Mbit;
 static uint8_t txpower_       = RADIO_TXPOWER_TXPOWER_0dBm;
-static uint8_t channel_start_ = 0;
-static uint8_t channel_end_   = 80;
-static uint8_t delayms_       = 10;
+static int channel_start_     = 0;
+static int channel_end_       = 80;
+static int delayms_           = 10;
 
 static bool sweep = false;
 
@@ -52,8 +53,21 @@ typedef enum
 
 
 #define BELL 7 // Bell
-#define BS   8 // Backspace
 
+#define UART_TX_BUF_SIZE 512                                                          /**< UART TX buffer size. */
+#define UART_RX_BUF_SIZE 1                                                            /**< UART RX buffer size. */
+
+void uart_error_handle(app_uart_evt_t * p_event)
+{
+    if (p_event->evt_type == APP_UART_COMMUNICATION_ERROR)
+    {
+        APP_ERROR_HANDLER(p_event->data.error_communication);
+    }
+    else if (p_event->evt_type == APP_UART_FIFO_ERROR)
+    {
+        APP_ERROR_HANDLER(p_event->data.error_code);
+    }
+}
 
 /** @brief Function for configuring all peripherals used in this example.
 */
@@ -77,52 +91,19 @@ static void init(void)
 */
 static void help(void)
 {
-    simple_uart_putstring((const uint8_t *)"Usage:\r\n");
-    simple_uart_putstring((const uint8_t *)"a: Enter start channel for sweep/channel for constant carrier\r\n");
-    simple_uart_putstring((const uint8_t *)"b: Enter end channel for sweep\r\n");
-    simple_uart_putstring((const uint8_t *)"c: Start TX carrier\r\n");
-    simple_uart_putstring((const uint8_t *)"d: Enter time on each channel (1ms-99ms)\r\n");
-    simple_uart_putstring((const uint8_t *)"e: Cancel sweep/carrier\r\n");
-    simple_uart_putstring((const uint8_t *)"m: Enter data rate\r\n");
-    simple_uart_putstring((const uint8_t *)"o: Start modulated TX carrier\r\n");
-    simple_uart_putstring((const uint8_t *)"p: Enter output power\r\n");
-    simple_uart_putstring((const uint8_t *)"s: Print current delay, channels and so on\r\n");
-    simple_uart_putstring((const uint8_t *)"r: Start RX sweep\r\n");
-    simple_uart_putstring((const uint8_t *)"t: Start TX sweep\r\n");
-    simple_uart_putstring((const uint8_t *)"x: Start RX carrier\r\n");
-}
-
-
-/** @brief Function for reading two digit decimal numbers from the serial port. Backspace is supported on the first char.
-*/
-static uint8_t get_dec2(void)
-{
-    uint8_t buf[2];
-    uint8_t i = 0;
-    uint8_t c;
-  
-    buf[0] = buf[1] = 0;
-    while (i < 2)
-    {
-        c = simple_uart_get();
-        if ((i > 0) && (c == BS))
-        {
-            simple_uart_put(c);
-            i--;
-        }
-        else if ((c >= '0') && (c <= '9'))
-        {
-            simple_uart_put(c);
-            buf[i] = c - '0';
-            i++;
-        }
-        else
-        {
-            simple_uart_put(BELL);
-        }
-    }
-    simple_uart_putstring((const uint8_t *)"\r\n");
-    return buf[0] * 10 + buf[1];
+    printf("Usage:\r\n");
+    printf("a: Enter start channel for sweep/channel for constant carrier\r\n");
+    printf("b: Enter end channel for sweep\r\n");
+    printf("c: Start TX carrier\r\n");
+    printf("d: Enter time on each channel (1ms-99ms)\r\n");
+    printf("e: Cancel sweep/carrier\r\n");
+    printf("m: Enter data rate\r\n");
+    printf("o: Start modulated TX carrier\r\n");
+    printf("p: Enter output power\r\n");
+    printf("s: Print current delay, channels and so on\r\n");
+    printf("r: Start RX sweep\r\n");
+    printf("t: Start TX sweep\r\n");
+    printf("x: Start RX carrier\r\n");
 }
 
 
@@ -132,18 +113,18 @@ void get_datarate(void)
 {
     uint8_t c;
 
-    simple_uart_putstring((const uint8_t *)"Enter data rate ('0'=250 Kbit/s, '1'=1 Mbit/s and '2'=2 Mbit/s):");
+    printf("Enter data rate ('0'=250 Kbit/s, '1'=1 Mbit/s and '2'=2 Mbit/s):");
     while (true)
     {
-        c = simple_uart_get();
+        scanf("%c",&c);
         if ((c >= '0') && (c <= '2'))
         {
-            simple_uart_put(c);
+            printf("%c",c);
             break;
         }
         else
         {
-            simple_uart_put(BELL);
+            printf("%c",BELL);
         }
     }
     if (c == '0')
@@ -158,7 +139,7 @@ void get_datarate(void)
     {
         mode_ = RADIO_MODE_MODE_Nrf_2Mbit;
     }
-    simple_uart_putstring((const uint8_t *)"\r\n");
+    printf("\r\n");
 }
 
 
@@ -168,18 +149,18 @@ void get_power(void)
 {
     uint8_t c;
 
-    simple_uart_putstring((const uint8_t *)"Enter output power ('0'=+4 dBm, '1'=0 dBm,...,'7'=-30 dBm):");
+    printf("Enter output power ('0'=+4 dBm, '1'=0 dBm,...,'7'=-30 dBm):");
     while (true)
     {
-        c = simple_uart_get();
+        scanf("%c",&c);
         if ((c >= '0') && (c <= '7'))
         {
-            simple_uart_put(c);
+            UNUSED_VARIABLE(app_uart_put(c));
             break;
         }
         else
         {
-            simple_uart_put(BELL);
+            UNUSED_VARIABLE(app_uart_put(BELL));
         }
     }
     
@@ -220,16 +201,7 @@ void get_power(void)
             txpower_ = RADIO_TXPOWER_TXPOWER_Neg30dBm;
             break;
     }
-    simple_uart_putstring((const uint8_t *)"\r\n");
-}
-
-
-/** @brief Function for printing two digit decimal numbers.
-*/
-static void print_dec2(uint8_t val)
-{
-    simple_uart_put(val / 10 + '0');
-    simple_uart_put(val % 10 + '0');
+    printf("\r\n");
 }
 
 
@@ -237,54 +209,54 @@ static void print_dec2(uint8_t val)
 */
 void print_parameters(void)
 {
-    simple_uart_putstring((const uint8_t *)"Parameters:\r\n");
+    printf("Parameters:\r\n");
     switch(mode_)
     {
         case RADIO_MODE_MODE_Nrf_250Kbit:
-            simple_uart_putstring((const uint8_t *)"Data rate...........: 250 Kbit/s\r\n");
+            printf("Data rate...........: 250 Kbit/s\r\n");
             break;
         
         case RADIO_MODE_MODE_Nrf_1Mbit:
-            simple_uart_putstring((const uint8_t *)"Data rate...........: 1 Mbit/s\r\n");
+            printf("Data rate...........: 1 Mbit/s\r\n");
             break;
         
         case RADIO_MODE_MODE_Nrf_2Mbit:
-            simple_uart_putstring((const uint8_t *)"Data rate...........: 2 Mbit/s\r\n");
+            printf("Data rate...........: 2 Mbit/s\r\n");
             break;
     }
     
     switch(txpower_)
     {
         case RADIO_TXPOWER_TXPOWER_Pos4dBm:
-            simple_uart_putstring((const uint8_t *)"TX Power............: +4 dBm\r\n");
+            printf("TX Power............: +4 dBm\r\n");
             break;
         
         case RADIO_TXPOWER_TXPOWER_0dBm:
-            simple_uart_putstring((const uint8_t *)"TX Power............: 0 dBm\r\n");
+            printf("TX Power............: 0 dBm\r\n");
             break;
         
         case RADIO_TXPOWER_TXPOWER_Neg4dBm:
-            simple_uart_putstring((const uint8_t *)"TX Power............: -4 dBm\r\n");
+            printf("TX Power............: -4 dBm\r\n");
             break;
         
         case RADIO_TXPOWER_TXPOWER_Neg8dBm:
-            simple_uart_putstring((const uint8_t *)"TX Power............: -8 dBm\r\n");
+            printf("TX Power............: -8 dBm\r\n");
             break;
         
         case RADIO_TXPOWER_TXPOWER_Neg12dBm:
-            simple_uart_putstring((const uint8_t *)"TX Power............: -12 dBm\r\n");
+            printf("TX Power............: -12 dBm\r\n");
             break;
         
         case RADIO_TXPOWER_TXPOWER_Neg16dBm:
-            simple_uart_putstring((const uint8_t *)"TX Power............: -16 dBm\r\n");
+            printf("TX Power............: -16 dBm\r\n");
             break;
         
         case RADIO_TXPOWER_TXPOWER_Neg20dBm:
-            simple_uart_putstring((const uint8_t *)"TX Power............: -20 dBm\r\n");
+            printf("TX Power............: -20 dBm\r\n");
             break;
         
         case RADIO_TXPOWER_TXPOWER_Neg30dBm:
-            simple_uart_putstring((const uint8_t *)"TX Power............: -30 dBm\r\n");
+            printf("TX Power............: -30 dBm\r\n");
             break;
         
         default:
@@ -292,13 +264,10 @@ void print_parameters(void)
             break;
         
     }
-    simple_uart_putstring((const uint8_t *)"(Start) Channel.....: ");
-    print_dec2(channel_start_);
-    simple_uart_putstring((const uint8_t *)"\r\nEnd Channel.........: ");
-    print_dec2(channel_end_);
-    simple_uart_putstring((const uint8_t *)"\r\nTime on each channel: ");
-    print_dec2(delayms_);
-    simple_uart_putstring((const uint8_t *)" ms\r\n");
+    printf("(Start) Channel.....: %d",channel_start_);
+    printf("\r\nEnd Channel.........: %d",channel_end_);
+    printf("\r\nTime on each channel: %d",delayms_);
+    printf(" ms\r\n");
 }
 
 
@@ -306,29 +275,53 @@ void print_parameters(void)
  */
 int main(void)
 { 
+    uint32_t err_code;
     radio_tests_t test     = RADIO_TEST_NOP;
     radio_tests_t cur_test = RADIO_TEST_NOP;
 
     init();
-    simple_uart_config(RTS_PIN_NUMBER, TX_PIN_NUMBER, CTS_PIN_NUMBER, RX_PIN_NUMBER, HWFC);
-    simple_uart_putstring((const uint8_t *)"RF Test\r\n");
-    
+    const app_uart_comm_params_t comm_params =
+    {
+        RX_PIN_NUMBER,
+        TX_PIN_NUMBER,
+        RTS_PIN_NUMBER,
+        CTS_PIN_NUMBER,
+        APP_UART_FLOW_CONTROL_ENABLED,
+        false,
+        UART_BAUDRATE_BAUDRATE_Baud38400
+    };
+
+    APP_UART_FIFO_INIT(&comm_params,
+                         UART_RX_BUF_SIZE,
+                         UART_TX_BUF_SIZE,
+                         uart_error_handle,
+                         APP_IRQ_PRIORITY_LOW,
+                         err_code);
+
+    APP_ERROR_CHECK(err_code);
+    printf("RF Test\r\n");
     NVIC_EnableIRQ(TIMER0_IRQn);
     __enable_irq();
     
     while (true)
     {
-        switch (simple_uart_get())
+        uint8_t control;
+        scanf("%c",&control);
+        switch (control)
         {
             case 'a':
                 while (true)
                 {
-                    simple_uart_putstring((const uint8_t *)"Enter start channel \
+                    printf("Enter start channel \
                                    (two decimal digits, 00 to 80):");
-                    channel_start_ = get_dec2();
-                    if (channel_start_ <= 80)
-                    break;
-                    simple_uart_putstring((const uint8_t *)"Channel must be between 0 and 80\r\n");
+                    scanf("%d",&channel_start_);
+                    if ((channel_start_ <= 80)&&(channel_start_ >= 0))
+                    {
+                        printf("%d\r\n", channel_start_);
+                        break;
+                    }
+
+                    printf("Channel must be between 0 and 80\r\n");
                 }
                 test = cur_test;
                 break;
@@ -336,14 +329,15 @@ int main(void)
             case 'b':
                 while (true)
                 {
-                    simple_uart_putstring((const uint8_t *)"Enter end channel \
+                    printf("Enter end channel \
                                    (two decimal digits, 00 to 80):");
-                    channel_end_ = get_dec2();
-                    if (channel_end_ <= 80)
+                    scanf("%d",&channel_end_);
+                    if ((channel_end_ <= 80)&&(channel_start_ >= 0))
                     {
+                        printf("%d\r\n", channel_end_);
                         break;
                     }
-                simple_uart_putstring((const uint8_t *)"Channel must be between 0 and 80\r\n");
+                    printf("Channel must be between 0 and 80\r\n");
                 }
                 test = cur_test;
                 break;
@@ -355,14 +349,15 @@ int main(void)
             case 'd':
                 while (true)
                 {
-                    simple_uart_putstring((const uint8_t *)"Enter delay in ms \
+                    printf("Enter delay in ms \
                                    (two decimal digits, 01 to 99):");
-                    delayms_ = get_dec2();
+                    scanf("%d",&delayms_);
                     if ((delayms_ > 0) && (delayms_ < 100))   
                     {
+                        printf("%d\r\n", delayms_);
                         break;
                     }
-                    simple_uart_putstring((const uint8_t *)"Delay must be between 1 and 99\r\n");
+                    printf("Delay must be between 1 and 99\r\n");
                 }
                 test = cur_test;
                 break;
@@ -379,7 +374,7 @@ int main(void)
 
             case 'o':
                 test = RADIO_TEST_TXMC;
-                simple_uart_putstring((const uint8_t *)"TX modulated carrier\r\n");
+                printf("TX modulated carrier\r\n");
                 break;
 
             case 'p':
@@ -389,7 +384,7 @@ int main(void)
 
             case 'r':
                 test = RADIO_TEST_RXSWEEP;
-                simple_uart_putstring((const uint8_t *)"RX Sweep\r\n");
+                printf("RX Sweep\r\n");
                 break;
 
             case 's':
@@ -398,12 +393,12 @@ int main(void)
 
             case 't':
                 test = RADIO_TEST_TXSWEEP;
-                simple_uart_putstring((const uint8_t *)"TX Sweep\r\n");
+                printf("TX Sweep\r\n");
                 break;
 
             case 'x':
                 test = RADIO_TEST_RXC;
-                simple_uart_putstring((const uint8_t *)"RX constant carrier\r\n");
+                printf("RX constant carrier\r\n");
                 break;
 
             case 'h':

@@ -1,9 +1,6 @@
 var a00980 =
 [
-    [ "Service/Protocol Types", "a00981.html", "a00981" ],
-    [ "Device Manager Events", "a00982.html", "a00982" ],
-    [ "Device Manager Data Types", "a00986.html", "a00986" ],
-    [ "Device Module APIs", "a00987.html", "a00987" ],
-    [ "Device Manager Sequence Charts", "a01016.html", "a01016" ],
-    [ "DM_INVALID_ID", "a00980.html#gaffbf0ad98e25546a4645eb2cac9bef8a", null ]
+    [ "BLE_CHAR_ALERT_LEVEL_HIGH_ALERT", "a00980.html#ga9fc865fa1b7f643d40c5e43dc81c0556", null ],
+    [ "BLE_CHAR_ALERT_LEVEL_MILD_ALERT", "a00980.html#gaf4fb46aeec8acd50f37f0e6277e45cee", null ],
+    [ "BLE_CHAR_ALERT_LEVEL_NO_ALERT", "a00980.html#ga19af58d002f35b548719d7043562cee7", null ]
 ];

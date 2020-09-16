@@ -1,7 +1,7 @@
 var a01009 =
 [
-    [ "ble_hrs_c_evt_type_t", "a01009.html#ga1cb65f3c0928fd75d0e186c28fca8c0e", [
-      [ "BLE_HRS_C_EVT_DISCOVERY_COMPLETE", "a01009.html#gga1cb65f3c0928fd75d0e186c28fca8c0eaab184fc5978897e328792f1672f80011", null ],
-      [ "BLE_HRS_C_EVT_HRM_NOTIFICATION", "a01009.html#gga1cb65f3c0928fd75d0e186c28fca8c0ea8c95bb250aab94f4b82257bdeadfa673", null ]
-    ] ]
+    [ "ble_bas_c_bl_notif_enable", "a01009.html#ga16c5e2436be7c05afc7ea62868981c15", null ],
+    [ "ble_bas_c_bl_read", "a01009.html#gaaebe0b4cd8e0e09d54d18c1b8647d1dd", null ],
+    [ "ble_bas_c_init", "a01009.html#ga9d0ae2cdd0fefec37afe05d139739f1d", null ],
+    [ "ble_bas_c_on_ble_evt", "a01009.html#ga987c35a5606a6b0ea23f4f4187fcd2b0", null ]
 ];

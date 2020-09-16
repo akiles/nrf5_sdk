@@ -50,7 +50,7 @@
 #include "bsp.h"
 
 #define UART_TX_BUF_SIZE 256                                                        /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 1                                                                          /**< UART RX buffer size. */
+#define UART_RX_BUF_SIZE 1                                                          /**< UART RX buffer size. */
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT 0                                           /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
@@ -738,7 +738,8 @@ static void device_manager_init(void)
     APP_ERROR_CHECK(err_code);
 
     // Clear all bonded centrals if the Bonds Delete button is pushed.
-    init_data.clear_persistent_data = bsp_buttons_state_get() & (1 << BOND_DELETE_ALL_BUTTON_ID);
+    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID,&(init_data.clear_persistent_data));
+    APP_ERROR_CHECK(err_code);
 
     err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);
@@ -835,7 +836,7 @@ int main(void)
     // Enter main loop.
     for (;;)
     {
-        power_manage();                 
+        power_manage();
     }
 }
 

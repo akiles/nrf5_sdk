@@ -1,9 +1,15 @@
 var a00174 =
 [
-    [ "conn_handle", "a00174.html#acb6ea6f96806c80017f6d80a65fa1c40", null ],
-    [ "evt_handler", "a00174.html#ad503c598af64ae0973fcbd69c2564f6c", null ],
-    [ "feature", "a00174.html#ab6a6c9882bfb4ca35a22b2b46e6cc342", null ],
-    [ "feature_handles", "a00174.html#ad7b6cace6c499b77b40be59b7d9ed843", null ],
-    [ "meas_handles", "a00174.html#ab61b1c5af5765ac4f24f617a24a81cd0", null ],
-    [ "service_handle", "a00174.html#a08ca745c921f74e622b3226b74a5453a", null ]
+    [ "blood_pressure_diastolic", "a00174.html#aed7e0a29d6cda87a84a69f4f7551fb6c", null ],
+    [ "blood_pressure_systolic", "a00174.html#ab097c85436eecc592213cdb75435f596", null ],
+    [ "blood_pressure_units_in_kpa", "a00174.html#a3d4f46ef4a031f2c849bba6ac9d68ba3", null ],
+    [ "mean_arterial_pressure", "a00174.html#a2455e564b8569f3f3bc999420efa7c1d", null ],
+    [ "measurement_status", "a00174.html#aa825f66cc38338e2f8bb4f767cdc8805", null ],
+    [ "measurement_status_present", "a00174.html#a80874044508391d1569ff1c476a4b5a7", null ],
+    [ "pulse_rate", "a00174.html#a4cec6cfcf650361edada4efe2d612461", null ],
+    [ "pulse_rate_present", "a00174.html#adcd3739c6e00a92c9c9026894e4248b8", null ],
+    [ "time_stamp", "a00174.html#a5724947dd197246dea1db93935a24b32", null ],
+    [ "time_stamp_present", "a00174.html#a5ed42a9cdaf140e3e18dc44e1b1baa5b", null ],
+    [ "user_id", "a00174.html#a68b822db90d51c550cddfb74fec7b1a7", null ],
+    [ "user_id_present", "a00174.html#a48e9ed959366ea1e7c7c8bb284a01979", null ]
 ];

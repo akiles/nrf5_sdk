@@ -168,7 +168,7 @@ $(document).ready(function(){initNavTree('a00064.html','');});
 0x10 - BLE_GAP_EVT_CONNECTED</h1>
 <h2><a class="anchor" id="nrf51_evt_connected_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00744.html#ggada486dd3c0cce897b23a887bed284fefaa0b4789724d202a13a5e7eab85c52957">BLE_GAP_EVT_CONNECTED</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00746.html#ggada486dd3c0cce897b23a887bed284fefaa0b4789724d202a13a5e7eab85c52957">BLE_GAP_EVT_CONNECTED</a> packet.</p>
 <p>Event ID = 0x10 for BLE_GAP_EVT_CONNECTED.</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GAP event contains a connection handle, and for the BLE GAP Connected event, the <a class="el" href="a00120.html">ble_gap_evt_connected_t</a> is encoded after connection handle as seen in Figure 1.</p>
@@ -225,7 +225,7 @@ Figure 4: Encoding of GAP Connection Parameters inside the BLE GAP Connected eve
 0x11 - BLE_GAP_EVT_DISCONNECTED</h1>
 <h2><a class="anchor" id="nrf51_evt_disconnected_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00744.html#ggada486dd3c0cce897b23a887bed284fefa057001bbd6ea9e615f19ef93cc0831ee">BLE_GAP_EVT_DISCONNECTED</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00746.html#ggada486dd3c0cce897b23a887bed284fefa057001bbd6ea9e615f19ef93cc0831ee">BLE_GAP_EVT_DISCONNECTED</a> packet.</p>
 <p>Event ID = 0x11 for BLE_GAP_EVT_DISCONNECTED.</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GAP event contains a connection handle, and for the BLE GAP Disconnected event, the <a class="el" href="a00121.html">ble_gap_evt_disconnected_t</a> is encoded after connection handle as seen in Figure 1.</p>
@@ -252,7 +252,7 @@ Figure 1: Encoding of BLE GAP Disconnected event.</div></div>
 0x12 - BLE_GAP_EVT_CONN_PARAM_UPDATE</h1>
 <h2><a class="anchor" id="nrf51_evt_conn_param_update_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00744.html#ggada486dd3c0cce897b23a887bed284fefa9117fcf7efad580886dfad72e5d7cce7">BLE_GAP_EVT_CONN_PARAM_UPDATE</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00746.html#ggada486dd3c0cce897b23a887bed284fefa9117fcf7efad580886dfad72e5d7cce7">BLE_GAP_EVT_CONN_PARAM_UPDATE</a> packet.</p>
 <p>Event ID = 0x12 for BLE_GAP_EVT_CONN_PARAM_UPDATE</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GAP event contains a connection handle, and for the BLE GAP Connect Parameter Update event, the <a class="el" href="a00118.html">ble_gap_evt_conn_param_update_t</a> is encoded after connection handle as seen in Figure 1.</p>
@@ -279,7 +279,7 @@ Figure 1: Encoding of GAP Connection Parameter Update event.</div></div>
 0x13 - BLE_GAP_EVT_SEC_PARAMS_REQUEST</h1>
 <h2><a class="anchor" id="nrf51_evt_sec_param_request_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00744.html#ggada486dd3c0cce897b23a887bed284fefa6c5eefbcfabbc1ce4a8bcbf550c285ae">BLE_GAP_EVT_SEC_PARAMS_REQUEST</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00746.html#ggada486dd3c0cce897b23a887bed284fefa6c5eefbcfabbc1ce4a8bcbf550c285ae">BLE_GAP_EVT_SEC_PARAMS_REQUEST</a> packet.</p>
 <p>Event ID = 0x13 for BLE_GAP_EVT_SEC_PARAMS_REQUEST</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GAP event contains a connection handle, and for the BLE GAP Security Parameters Request event, the <a class="el" href="a00125.html">ble_gap_evt_sec_params_request_t</a> is encoded after connection handle as seen in Figure 1.</p>
@@ -342,7 +342,7 @@ Figure 3: Encoding of Key Distribution Bitmap inside a GAP Security Parameters R
 0x14 - BLE_GAP_EVT_SEC_INFO_REQUEST</h1>
 <h2><a class="anchor" id="nrf51_evt_sec_info_request_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00744.html#ggada486dd3c0cce897b23a887bed284fefaf1c60079f92820cb933ebdb66d2d8d7d">BLE_GAP_EVT_SEC_INFO_REQUEST</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00746.html#ggada486dd3c0cce897b23a887bed284fefaf1c60079f92820cb933ebdb66d2d8d7d">BLE_GAP_EVT_SEC_INFO_REQUEST</a> packet.</p>
 <p>Event ID = 0x14 for BLE_GAP_EVT_SEC_PARAMS_REQUEST</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GAP event contains a connection handle, and for the BLE GAP Security Info Request event, the <a class="el" href="a00124.html">ble_gap_evt_sec_info_request_t</a> is encoded after connection handle as seen in Figure 1.</p>
@@ -387,7 +387,7 @@ Figure 2: Encoding of Encryption info, Identity info, and Signing info inside a 
 0x15 - BLE_GAP_EVT_PASSKEY_DISPLAY</h1>
 <h2><a class="anchor" id="nrf51_evt_passkey_display_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00744.html#ggada486dd3c0cce897b23a887bed284fefaedc549f5a6853a542bf93ff5d155292a">BLE_GAP_EVT_PASSKEY_DISPLAY</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00746.html#ggada486dd3c0cce897b23a887bed284fefaedc549f5a6853a542bf93ff5d155292a">BLE_GAP_EVT_PASSKEY_DISPLAY</a> packet.</p>
 <p>Event ID = 0x15 for BLE_GAP_EVT_PASSKEY_DISPLAY.</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GAP event contains a connection handle, and for the BLE GAP Passkey display event, the <a class="el" href="a00122.html">ble_gap_evt_passkey_display_t</a> is encoded after connection handle as seen in Figure 1.</p>
@@ -414,7 +414,7 @@ Figure 1: Encoding of BLE GAP Passkey Display event.</div></div>
 0x16 - BLE_GAP_EVT_AUTH_KEY_REQUEST</h1>
 <h2><a class="anchor" id="nrf51_evt_auth_key_request_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00744.html#ggada486dd3c0cce897b23a887bed284fefa64d5d52e3ca8d8957bce011ad43d0f67">BLE_GAP_EVT_AUTH_KEY_REQUEST</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00746.html#ggada486dd3c0cce897b23a887bed284fefa64d5d52e3ca8d8957bce011ad43d0f67">BLE_GAP_EVT_AUTH_KEY_REQUEST</a> packet.</p>
 <p>Event ID = 0x16 for BLE_GAP_EVT_AUTH_KEY_REQUEST.</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GAP event contains a connection handle, and for the BLE GAP key request event, the <a class="el" href="a00115.html">ble_gap_evt_auth_key_request_t</a> is encoded after connection handle as seen in Figure 1.</p>
@@ -441,7 +441,7 @@ Figure 1: Encoding of BLE GAP auth key request event.</div></div>
 0x17 - BLE_GAP_EVT_AUTH_STATUS</h1>
 <h2><a class="anchor" id="nrf51_evt_auth_status_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00744.html#ggada486dd3c0cce897b23a887bed284fefa8958220152f7547da3b250b4f724877c">BLE_GAP_EVT_AUTH_STATUS</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00746.html#ggada486dd3c0cce897b23a887bed284fefa8958220152f7547da3b250b4f724877c">BLE_GAP_EVT_AUTH_STATUS</a> packet.</p>
 <p>Event ID = 0x17 for BLE_GAP_EVT_AUTH_STATUS</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GAP event contains a connection handle, and for the BLE GAP Authentication Status event, the <a class="el" href="a00116.html">ble_gap_evt_auth_status_t</a> is encoded after connection handle as seen in Figure 1.</p>
@@ -476,7 +476,7 @@ Figure 1: Encoding of GAP Authentication Status event.</div></div>
 0x18 - BLE_GAP_EVT_CONN_SEC_UPDATE</h1>
 <h2><a class="anchor" id="nrf51_evt_conn_sec_update_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00744.html#ggada486dd3c0cce897b23a887bed284fefa361bcc6098a88825333464335f6d22cc">BLE_GAP_EVT_CONN_SEC_UPDATE</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00746.html#ggada486dd3c0cce897b23a887bed284fefa361bcc6098a88825333464335f6d22cc">BLE_GAP_EVT_CONN_SEC_UPDATE</a> packet.</p>
 <p>Event ID = 0x18 for BLE_GAP_EVT_CONN_SEC_UPDATE</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GAP event contains a connection handle, and for the BLE GAP Security Info Request event, the <a class="el" href="a00119.html">ble_gap_evt_conn_sec_update_t</a> is encoded after connection handle as seen in Figure 1.</p>
@@ -516,7 +516,7 @@ Figure 2: Encoding of Security mode and Level inside a GAP Connection Security U
 0x19 - BLE_GAP_EVT_TIMEOUT</h1>
 <h2><a class="anchor" id="nrf51_evt_timeout_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00744.html#ggada486dd3c0cce897b23a887bed284fefa57e5d1061d9b3d1500fb3556a3fb8847">BLE_GAP_EVT_TIMEOUT</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00746.html#ggada486dd3c0cce897b23a887bed284fefa57e5d1061d9b3d1500fb3556a3fb8847">BLE_GAP_EVT_TIMEOUT</a> packet.</p>
 <p>Event ID = 0x19 for BLE_GAP_EVT_TIMEOUT</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GAP event contains a connection handle, and for the BLE GAP Timeout event, the <a class="el" href="a00128.html">ble_gap_evt_timeout_t</a> is encoded after connection handle as seen in Figure 1.</p>
@@ -543,7 +543,7 @@ Figure 1: Encoding of BLE GAP Timeout event.</div></div>
 0x1A - BLE_GAP_EVT_RSSI_CHANGED</h1>
 <h2><a class="anchor" id="nrf51_evt_rssi_changed_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00744.html#ggada486dd3c0cce897b23a887bed284fefa4d1c7d552ad87b09c53a4d4352fc91e6">BLE_GAP_EVT_RSSI_CHANGED</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00746.html#ggada486dd3c0cce897b23a887bed284fefa4d1c7d552ad87b09c53a4d4352fc91e6">BLE_GAP_EVT_RSSI_CHANGED</a> packet.</p>
 <p>Event ID = 0x1A for BLE_GAP_EVT_RSSI_CHANGED</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GAP event contains a connection handle, and for the BLE GAP RSSI Changed event, the <a class="el" href="a00123.html">ble_gap_evt_rssi_changed_t</a> is encoded after connection handle as seen in Figure 1.</p>
@@ -570,10 +570,10 @@ Figure 1: Encoding of BLE GAP RSSI Changed event.</div></div>
 0x1B - BLE_GAP_EVT_ADV_REPORT</h1>
 <h2><a class="anchor" id="nrf51_adv_report_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00744.html#ggada486dd3c0cce897b23a887bed284fefa41ba498a9fda3e1cd345f4454a582bd9">BLE_GAP_EVT_ADV_REPORT</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00746.html#ggada486dd3c0cce897b23a887bed284fefa41ba498a9fda3e1cd345f4454a582bd9">BLE_GAP_EVT_ADV_REPORT</a> packet.</p>
 <p>Event ID = 0x1B for BLE_GAP_EVT_ADV_REPORT</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
-<p>The BLE GAP event contains a connection handle, and for the BLE ADV REPORT event, the ble_gap_adv_report_t is encoded after connection handle as seen in Figure 1.</p>
+<p>The BLE GAP event contains a connection handle, and for the BLE ADV REPORT event, the <a class="el" href="a00114.html">ble_gap_evt_adv_report_t</a> is encoded after connection handle as seen in Figure 1.</p>
 <p>The order of the encoding is: </p>
 <table class="doxtable">
 <tr>
@@ -605,7 +605,7 @@ Figure 1: Encoding of BLE ADV REPORT event.</div></div>
 0x1C - BLE_GAP_EVT_SEC_REQUEST</h1>
 <h2><a class="anchor" id="nrf51_evt_sec_request_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00744.html#ggada486dd3c0cce897b23a887bed284fefa902037e30402a6dcacc8ed07830948b3">BLE_GAP_EVT_SEC_REQUEST</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00746.html#ggada486dd3c0cce897b23a887bed284fefa902037e30402a6dcacc8ed07830948b3">BLE_GAP_EVT_SEC_REQUEST</a> packet.</p>
 <p>Event ID = 0x1C for BLE_GAP_EVT_SEC_REQUEST</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GAP event contains a connection handle, and for the BLE GAP SEC Request event, the <a class="el" href="a00126.html">ble_gap_evt_sec_request_t</a> is encoded after connection handle as seen in Figure 1.</p>
@@ -632,7 +632,7 @@ Figure 1: Encoding of BLE GAP SEC Request event.</div></div>
 0x1D - BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST</h1>
 <h2><a class="anchor" id="nrf51_evt_conn_param_update_request_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00744.html#ggada486dd3c0cce897b23a887bed284fefaa06e32db1a202d1a9e2e21f202987039">BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00746.html#ggada486dd3c0cce897b23a887bed284fefaa06e32db1a202d1a9e2e21f202987039">BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST</a> packet.</p>
 <p>Event ID = 0x1D for BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GAP event contains a connection handle, and for the BLE GAP CONN PARAM Update Request event, the <a class="el" href="a00117.html">ble_gap_evt_conn_param_update_request_t</a> is encoded after connection handle as seen in Figure 1.</p>
@@ -661,7 +661,7 @@ Figure 1: Encoding of BLE GAP SEC CONN PARAM Update Request event.</div></div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00056.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00058.html">Serialization Codecs</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

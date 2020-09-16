@@ -1,5 +1,6 @@
 var a00354 =
 [
-    [ "id_addr_info", "a00354.html#a5dace1f70260c67a952b35558abe1848", null ],
-    [ "id_info", "a00354.html#a7a76b44b4742836f0dffd4ce52418faf", null ]
+    [ "event_id", "a00354.html#a2a75f3476e816a31085bef063855687e", null ],
+    [ "event_param", "a00354.html#a2dbb0e734ebc009dcc98b7c5055d7112", null ],
+    [ "event_paramlen", "a00354.html#a44a56d892899cd9a146cc4aaddd0d772", null ]
 ];

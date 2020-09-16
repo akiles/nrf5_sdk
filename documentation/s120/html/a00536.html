@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: GAP Advertising interval max and min</title>
+<title>nRF51 SDK - S120 SoftDevice: GAP Scan timeout max and min</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,57 +99,42 @@ $(document).ready(function(){initNavTree('a00536.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">GAP Advertising interval max and min<div class="ingroups"><a class="el" href="a00745.html">Defines</a></div></div>  </div>
+<div class="title">GAP Scan timeout max and min<div class="ingroups"><a class="el" href="a00747.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gaf61691584387648b33a032c934bcd094"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00536.html#gaf61691584387648b33a032c934bcd094">BLE_GAP_ADV_INTERVAL_MIN</a>&#160;&#160;&#160;0x0020</td></tr>
-<tr class="separator:gaf61691584387648b33a032c934bcd094"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf0853bcb2a170efd2bb58e3a6b3c8ca5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00536.html#gaf0853bcb2a170efd2bb58e3a6b3c8ca5">BLE_GAP_ADV_NONCON_INTERVAL_MIN</a>&#160;&#160;&#160;0x00A0</td></tr>
-<tr class="separator:gaf0853bcb2a170efd2bb58e3a6b3c8ca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gada06c7f328e5bcc50ce55f9f567129ca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00536.html#gada06c7f328e5bcc50ce55f9f567129ca">BLE_GAP_ADV_INTERVAL_MAX</a>&#160;&#160;&#160;0x4000</td></tr>
-<tr class="separator:gada06c7f328e5bcc50ce55f9f567129ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4baffc2a25f63a57ddf48babb53f2b5a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00536.html#ga4baffc2a25f63a57ddf48babb53f2b5a">BLE_GAP_SCAN_TIMEOUT_MIN</a>&#160;&#160;&#160;0x0001</td></tr>
+<tr class="separator:ga4baffc2a25f63a57ddf48babb53f2b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf9f03221006c77debca100889d5c59f4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00536.html#gaf9f03221006c77debca100889d5c59f4">BLE_GAP_SCAN_TIMEOUT_MAX</a>&#160;&#160;&#160;0xFFFF</td></tr>
+<tr class="separator:gaf9f03221006c77debca100889d5c59f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gada06c7f328e5bcc50ce55f9f567129ca"></a>
+<a class="anchor" id="gaf9f03221006c77debca100889d5c59f4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GAP_ADV_INTERVAL_MAX&#160;&#160;&#160;0x4000</td>
+          <td class="memname">#define BLE_GAP_SCAN_TIMEOUT_MAX&#160;&#160;&#160;0xFFFF</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Maximum Advertising interval in 625 us units, i.e. 10.24 s. </p>
+<p>Maximum Scan timeout in seconds. </p>
 
 </div>
 </div>
-<a class="anchor" id="gaf61691584387648b33a032c934bcd094"></a>
+<a class="anchor" id="ga4baffc2a25f63a57ddf48babb53f2b5a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GAP_ADV_INTERVAL_MIN&#160;&#160;&#160;0x0020</td>
+          <td class="memname">#define BLE_GAP_SCAN_TIMEOUT_MIN&#160;&#160;&#160;0x0001</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Minimum Advertising interval in 625 us units, i.e. 20 ms. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaf0853bcb2a170efd2bb58e3a6b3c8ca5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_GAP_ADV_NONCON_INTERVAL_MIN&#160;&#160;&#160;0x00A0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Minimum Advertising interval in 625 us units for non connectable mode, i.e. 100 ms. </p>
+<p>Minimum Scan timeout in seconds. </p>
 
 </div>
 </div>
@@ -158,7 +143,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:18 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

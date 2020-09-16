@@ -1,11 +1,7 @@
 var a00525 =
 [
-    [ "Events, type definitions and API calls", "a00526.html", "a00526" ],
-    [ "General error codes", "a00528.html", "a00528" ],
-    [ "Module specific error code subranges", "a00529.html", "a00529" ],
-    [ "Bluetooth status codes", "a00566.html", "a00566" ],
-    [ "Module specific SVC, event and option number subranges", "a00568.html", "a00568" ],
-    [ "Common types and macro definitions", "a00569.html", "a00569" ],
-    [ "Message Sequence Charts", "a00581.html", "a00581" ],
-    [ "SoftDevice Global Error Codes", "a00574.html", "a00574" ]
+    [ "BLE_ERROR_INVALID_ATTR_HANDLE", "a00525.html#ga6346bb5ec3bcd4a25332dc782c1b7e01", null ],
+    [ "BLE_ERROR_INVALID_CONN_HANDLE", "a00525.html#gabdc27cbc2ffac4a50640a0ce992c03af", null ],
+    [ "BLE_ERROR_INVALID_ROLE", "a00525.html#ga1d92ffe1952beeff89e5bf768657460f", null ],
+    [ "BLE_ERROR_NO_TX_BUFFERS", "a00525.html#ga901e1bc3ccae29eff9fb31cabdbb5e02", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gattc_service_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gattc_include_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,48 @@ $(document).ready(function(){initNavTree('a00255.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gattc_service_t Struct Reference<div class="ingroups"><a class="el" href="a01053.html">Structures</a></div></div>  </div>
+<div class="title">ble_gattc_include_t Struct Reference<div class="ingroups"><a class="el" href="a01055.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GATT service.  
+<p>GATT include.  
  <a href="a00255.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gattc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a3f00e5eb4b0f87085de2ea1e9464258b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html">ble_uuid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00255.html#a3f00e5eb4b0f87085de2ea1e9464258b">uuid</a></td></tr>
-<tr class="separator:a3f00e5eb4b0f87085de2ea1e9464258b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab54f33f930899f4e27df1d5819670958"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00252.html">ble_gattc_handle_range_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00255.html#ab54f33f930899f4e27df1d5819670958">handle_range</a></td></tr>
-<tr class="separator:ab54f33f930899f4e27df1d5819670958"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1f14809099e66b0dc7a4a70cb3dc124"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00255.html#ab1f14809099e66b0dc7a4a70cb3dc124">handle</a></td></tr>
+<tr class="separator:ab1f14809099e66b0dc7a4a70cb3dc124"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3342baabc3197898f17ce875e7a5ba80"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00256.html">ble_gattc_service_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00255.html#a3342baabc3197898f17ce875e7a5ba80">included_srvc</a></td></tr>
+<tr class="separator:a3342baabc3197898f17ce875e7a5ba80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GATT service. </p>
+<div class="textblock"><p>GATT include. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ab54f33f930899f4e27df1d5819670958"></a>
+<a class="anchor" id="ab1f14809099e66b0dc7a4a70cb3dc124"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00252.html">ble_gattc_handle_range_t</a> ble_gattc_service_t::handle_range</td>
+          <td class="memname">uint16_t ble_gattc_include_t::handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Service Handle Range. </p>
+<p>Include Handle. </p>
 
 </div>
 </div>
-<a class="anchor" id="a3f00e5eb4b0f87085de2ea1e9464258b"></a>
+<a class="anchor" id="a3342baabc3197898f17ce875e7a5ba80"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00336.html">ble_uuid_t</a> ble_gattc_service_t::uuid</td>
+          <td class="memname"><a class="el" href="a00256.html">ble_gattc_service_t</a> ble_gattc_include_t::included_srvc</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Service UUID. </p>
+<p>Handle of the included service. </p>
 
 </div>
 </div>
@@ -156,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00255.html">ble_gattc_service_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00255.html">ble_gattc_include_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:12 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

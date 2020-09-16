@@ -137,7 +137,8 @@ static uint8_t                       m_ticks_elapsed_q_read_ind;                
 static uint8_t                       m_ticks_elapsed_q_write_ind;               /**< Timer internal elapsed ticks queue write index. */
 static app_timer_evt_schedule_func_t m_evt_schedule_func;                       /**< Pointer to function for propagating timeout events to the scheduler. */
 static bool                          m_rtc1_running;                            /**< Boolean indicating if RTC1 is running. */
-
+static bool                          m_rtc1_reset;                              /**< Boolean indicating if RTC1 counter has been reset due to last timer removed from timer list during the timer list handling. */
+ 
 
 /**@brief Function for initializing the RTC1 counter.
  *
@@ -304,10 +305,12 @@ static void timer_list_remove(app_timer_id_t timer_id)
     {
         m_timer_id_head = mp_nodes[m_timer_id_head].next;
 
-        // No more timers in the list. Disable RTC1.
+        // No more timers in the list. Reset RTC1 in case Start timer operations are present in the queue.
         if (m_timer_id_head == TIMER_NULL)
         {
-            rtc1_stop();
+            NRF_RTC1->TASKS_CLEAR = 1;
+            m_ticks_latest        = 0;
+            m_rtc1_reset          = true;
         }
     }
 
@@ -633,9 +636,14 @@ static bool list_insertions_handler(app_timer_id_t restart_list_head)
                 p_timer->ticks_first_interval    = p_user_op->params.start.ticks_first_interval;
                 p_timer->ticks_periodic_interval = p_user_op->params.start.ticks_periodic_interval;
                 p_timer->p_context               = p_user_op->params.start.p_context;
+
+                if (m_rtc1_reset)
+                {
+                    p_timer->ticks_at_start = 0;
+                }
             }
 
-            // Prepare the node to be inserted 
+            // Prepare the node to be inserted.
             if (
                  ((p_timer->ticks_at_start - m_ticks_latest) & MAX_RTC_COUNTER_VAL)
                  <
@@ -760,6 +768,7 @@ static void timer_list_handler(void)
     {
         compare_reg_update(timer_id_head_old);
     }
+    m_rtc1_reset = false;
 }
 
 

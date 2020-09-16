@@ -8,7 +8,13 @@
   <WorkspaceName>WorkSpace</WorkspaceName>
  
    <project>
-    <PathAndName>pca10028\dual_bank_ble\arm\dfu_dual_bank_ble_pca10028.uvproj</PathAndName>
+    <PathAndName>pca10028\dual_bank_ble_s110\arm\dfu_dual_bank_ble_s110_pca10028.uvproj</PathAndName>
+  </project>
+   <project>
+    <PathAndName>pca10028\single_bank_serial\arm\dfu_single_bank_serial_s110_pca10028.uvproj</PathAndName>
+  </project>
+   <project>
+    <PathAndName>pca10028\dual_bank_serial\arm\dfu_dual_bank_serial_s110_pca10028.uvproj</PathAndName>
   </project>
 
 </ProjectWorkspace>

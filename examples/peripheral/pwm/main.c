@@ -19,7 +19,6 @@
  *
  * This file contains the source code for a sample application using PWM.
  *
- * @image html example_board_setup_a.jpg "Use board setup A for this example."
  *
  */
 

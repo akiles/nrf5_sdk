@@ -1,7 +1,6 @@
 var a00141 =
 [
-    [ "active_state", "a00141.html#af55e02af042a4d038dac26a7658536f6", null ],
-    [ "button_handler", "a00141.html#ad06ea1e496c4b37802492b289b54a875", null ],
-    [ "pin_no", "a00141.html#af6a18934c420213be9eee710854e1ab9", null ],
-    [ "pull_cfg", "a00141.html#abf23ae362a2ecdfbc73c9f6736ce0ba8", null ]
+    [ "channel", "a00141.html#a5e084957ed6c0f93b78203d74a268e36", null ],
+    [ "event", "a00141.html#a8449b66e97f4dfce737478dc751199e1", null ],
+    [ "evt_buffer", "a00141.html#a0945895af053724b710662f5beea9ed5", null ]
 ];

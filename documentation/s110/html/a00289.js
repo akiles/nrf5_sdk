@@ -1,8 +1,5 @@
 var a00289 =
 [
-    [ "data_len", "a00289.html#ad37a58093ba29da8205f825d524fde10", null ],
-    [ "ext_rep_ref_num", "a00289.html#a9dfff543d60774b7fe5bd69f23547e86", null ],
-    [ "p_data", "a00289.html#ac68f34bc812fb78bd16a11acf3931297", null ],
-    [ "p_ext_rep_ref", "a00289.html#a460e7c6bc062f9bd31fd72b4b696c2aa", null ],
-    [ "security_mode", "a00289.html#adcb39f07b266acfe8539c7ed9ed13532", null ]
+    [ "char_handles", "a00289.html#a3f137cc3f92bf439d93a8491e4314d5a", null ],
+    [ "ref_handle", "a00289.html#a0209468bba2c298192f4500a652dd6d1", null ]
 ];

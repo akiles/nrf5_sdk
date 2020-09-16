@@ -1,7 +1,9 @@
 var a00157 =
 [
-    [ "error_handler", "a00157.html#ad8e3c6df5e6184bca1f4da6ecc575a29", null ],
-    [ "evt_handler", "a00157.html#adef0c0882090715486d303e322622364", null ],
-    [ "message_buffer_size", "a00157.html#a53f8434f8f08f5df8dc1d82b39cb62bc", null ],
-    [ "p_message_buffer", "a00157.html#a0f4b5113723c0746889b91c82b476bac", null ]
+    [ "attribute", "a00157.html#af4097379f9a8a0f62da2cf2fab7d3875", null ],
+    [ "data", "a00157.html#aee69c1e62c33602752e5440a6ed0f8b9", null ],
+    [ "error_code", "a00157.html#af6c7c0fce10e07d23e7d1506c40dbbcf", null ],
+    [ "evt_type", "a00157.html#aa11f9ec43554a7e299bac599bcca39ff", null ],
+    [ "notification", "a00157.html#ae16f0c0016a9871d25437ca29ed3731a", null ],
+    [ "uuid", "a00157.html#a9b8853a2fa48267ea2e36eeedf0dbacf", null ]
 ];

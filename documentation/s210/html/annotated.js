@@ -1,6 +1,5 @@
 var annotated =
 [
-    [ "ant_evt_t", "a00050.html", "a00050" ],
     [ "app_button_cfg_t", "a00051.html", "a00051" ],
     [ "app_fifo_t", "a00052.html", "a00052" ],
     [ "app_uart_buffers_t", "a00053.html", "a00053" ],

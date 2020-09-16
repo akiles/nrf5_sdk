@@ -1,6 +1,9 @@
 var a00736 =
 [
-    [ "Battery Service Client", "a00683.html", "a00683" ],
-    [ "Heart Rate Service Client", "a00688.html", "a00688" ],
-    [ "Common service definitions", "a00729.html", "a00729" ]
+    [ "Database Discovery", "a00692.html", "a00692" ],
+    [ "Peripheral Drivers", "a00737.html", "a00737" ],
+    [ "BLE Services", "a00738.html", "a00738" ],
+    [ "BLE Libraries", "a00739.html", "a00739" ],
+    [ "BLE Serialization", "a00740.html", "a00740" ],
+    [ "SDK Common Libraries", "a00741.html", "a00741" ]
 ];

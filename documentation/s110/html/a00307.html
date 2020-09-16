@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_ias_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_ias_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,33 @@ $(document).ready(function(){initNavTree('a00307.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ias_s Struct Reference<div class="ingroups"><a class="el" href="a00970.html">Immediate Alert Service</a></div></div>  </div>
+<div class="title">ble_ias_init_t Struct Reference<div class="ingroups"><a class="el" href="a00971.html">Immediate Alert Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Immediate Alert Service structure. This contains various status information for the service.  
+<p>Immediate Alert Service init structure. This contains all options and data needed for initialization of the service.  
  <a href="a00307.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_ias.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a6304bcdac9c7d2758f64aa1dd5844959"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00970.html#gab059c5376beb245a8f876ee3d7b8480a">ble_ias_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00307.html#a6304bcdac9c7d2758f64aa1dd5844959">evt_handler</a></td></tr>
-<tr class="separator:a6304bcdac9c7d2758f64aa1dd5844959"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa6a28eec3f1b9b4f7ea596af7ee2c29"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00307.html#afa6a28eec3f1b9b4f7ea596af7ee2c29">service_handle</a></td></tr>
-<tr class="separator:afa6a28eec3f1b9b4f7ea596af7ee2c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67d6395f4804c00de308270dddf15b7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00260.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00307.html#a67d6395f4804c00de308270dddf15b7e">alert_level_handles</a></td></tr>
-<tr class="separator:a67d6395f4804c00de308270dddf15b7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e40f1f02a66e26a1da20bbf3e2a275a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00971.html#gab059c5376beb245a8f876ee3d7b8480a">ble_ias_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00307.html#a5e40f1f02a66e26a1da20bbf3e2a275a">evt_handler</a></td></tr>
+<tr class="separator:a5e40f1f02a66e26a1da20bbf3e2a275a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Immediate Alert Service structure. This contains various status information for the service. </p>
+<div class="textblock"><p>Immediate Alert Service init structure. This contains all options and data needed for initialization of the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a67d6395f4804c00de308270dddf15b7e"></a>
+<a class="anchor" id="a5e40f1f02a66e26a1da20bbf3e2a275a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00260.html">ble_gatts_char_handles_t</a> ble_ias_s::alert_level_handles</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handles related to the Alert Level characteristic. </p>
-
-</div>
-</div>
-<a class="anchor" id="a6304bcdac9c7d2758f64aa1dd5844959"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00970.html#gab059c5376beb245a8f876ee3d7b8480a">ble_ias_evt_handler_t</a> ble_ias_s::evt_handler</td>
+          <td class="memname"><a class="el" href="a00971.html#gab059c5376beb245a8f876ee3d7b8480a">ble_ias_evt_handler_t</a> ble_ias_init_t::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Event handler to be called for handling events in the Immediate Alert Service. </p>
-
-</div>
-</div>
-<a class="anchor" id="afa6a28eec3f1b9b4f7ea596af7ee2c29"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_ias_s::service_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle of Immediate Alert Service (as provided by the BLE stack). </p>
 
 </div>
 </div>
@@ -171,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00307.html">ble_ias_s</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00307.html">ble_ias_init_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

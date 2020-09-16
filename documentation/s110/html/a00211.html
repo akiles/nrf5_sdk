@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_enc_info_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gap_conn_sec_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,48 @@ $(document).ready(function(){initNavTree('a00211.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_enc_info_t Struct Reference<div class="ingroups"><a class="el" href="a01046.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_conn_sec_t Struct Reference<div class="ingroups"><a class="el" href="a01048.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GAP Encryption Information.  
+<p>GAP connection security status.  
  <a href="a00211.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a0dc14b60b260f4a68485429a0715f5a9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#a0dc14b60b260f4a68485429a0715f5a9">div</a></td></tr>
-<tr class="separator:a0dc14b60b260f4a68485429a0715f5a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a545fe8321eef3b128572882aa3997f7f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#a545fe8321eef3b128572882aa3997f7f">ltk</a> [16]</td></tr>
-<tr class="separator:a545fe8321eef3b128572882aa3997f7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f21ad24fa7cce2e56ae61beccdcb0b8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#a5f21ad24fa7cce2e56ae61beccdcb0b8">auth</a>: 1</td></tr>
-<tr class="separator:a5f21ad24fa7cce2e56ae61beccdcb0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91966f65c4bb6988f847a19ce0b1541e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#a91966f65c4bb6988f847a19ce0b1541e">ltk_len</a>: 7</td></tr>
-<tr class="separator:a91966f65c4bb6988f847a19ce0b1541e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada618e26f99059e7ccbe5be9f5d1049d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00210.html">ble_gap_conn_sec_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#ada618e26f99059e7ccbe5be9f5d1049d">sec_mode</a></td></tr>
+<tr class="separator:ada618e26f99059e7ccbe5be9f5d1049d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abca3beb1304d60fd03f5ae098495dd6f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00211.html#abca3beb1304d60fd03f5ae098495dd6f">encr_key_size</a></td></tr>
+<tr class="separator:abca3beb1304d60fd03f5ae098495dd6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GAP Encryption Information. </p>
+<div class="textblock"><p>GAP connection security status. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a5f21ad24fa7cce2e56ae61beccdcb0b8"></a>
+<a class="anchor" id="abca3beb1304d60fd03f5ae098495dd6f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_enc_info_t::auth</td>
+          <td class="memname">uint8_t ble_gap_conn_sec_t::encr_key_size</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Authenticated Key. </p>
+<p>Length of currently active encryption key, 7 to 16 octets (only applicable for bonding procedures). </p>
 
 </div>
 </div>
-<a class="anchor" id="a0dc14b60b260f4a68485429a0715f5a9"></a>
+<a class="anchor" id="ada618e26f99059e7ccbe5be9f5d1049d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gap_enc_info_t::div</td>
+          <td class="memname"><a class="el" href="a00210.html">ble_gap_conn_sec_mode_t</a> ble_gap_conn_sec_t::sec_mode</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Encryption Diversifier. </p>
-
-</div>
-</div>
-<a class="anchor" id="a545fe8321eef3b128572882aa3997f7f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_enc_info_t::ltk[16]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Long Term Key. </p>
-
-</div>
-</div>
-<a class="anchor" id="a91966f65c4bb6988f847a19ce0b1541e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_enc_info_t::ltk_len</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>LTK length in octets. </p>
+<p>Currently active security mode for this connection. </p>
 
 </div>
 </div>
@@ -186,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00211.html">ble_gap_enc_info_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:26 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00211.html">ble_gap_conn_sec_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:12 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

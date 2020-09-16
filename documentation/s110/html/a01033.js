@@ -1,18 +1,15 @@
 var a01033 =
 [
-    [ "ADNS2080 driver", "a00750.html", "a00750" ],
-    [ "Cherry 8x16 keyboard matrix driver", "a00751.html", "a00751" ],
-    [ "DS1624 digital temperature sensor driver", "a00752.html", "a00752" ],
-    [ "MPU6050 gyro/accelerometer driver", "a00753.html", "a00753" ],
-    [ "Synaptics Touchpad driver.", "a00754.html", "a00754" ],
-    [ "AES ECB encryption", "a00755.html", "a00755" ],
-    [ "GPIO abstraction", "a00756.html", "a00756" ],
-    [ "GPIOTE abstraction", "a00757.html", "a00757" ],
-    [ "Non-volatile memory controller", "a00758.html", "a00758" ],
-    [ "TEMP (temperature) abstraction", "a00759.html", null ],
-    [ "SDIO driver", "a00764.html", "a00764" ],
-    [ "Simple UART driver", "a00765.html", "a00765" ],
-    [ "SPI Master driver", "a00766.html", "a00766" ],
-    [ "Software controlled SPI Slave driver.", "a00767.html", "a00767" ],
-    [ "Software controlled TWI Master driver", "a00768.html", "a00768" ]
+    [ "BLE_FLASH_EMPTY_MASK", "a01033.html#ga0974ebbf4b324b9466b55c4e71db0453", null ],
+    [ "BLE_FLASH_MAGIC_NUMBER", "a01033.html#ga46bb6e7d63431e4de9be88ae5ac675e7", null ],
+    [ "BLE_FLASH_PAGE_END", "a01033.html#gaad80a1b31add453ba141177eddd972a1", null ],
+    [ "BLE_FLASH_PAGE_SIZE", "a01033.html#ga1c2559036356cf2f070afe1c7bc55654", null ],
+    [ "ble_flash_block_write", "a01033.html#gaa4b50767cf7b10946a93dfad85f92de3", null ],
+    [ "ble_flash_crc16_compute", "a01033.html#ga959dec85f479945f7155e4ae2d842bfb", null ],
+    [ "ble_flash_on_radio_active_evt", "a01033.html#ga84845060380a5f13275ce4e2e86615d0", null ],
+    [ "ble_flash_page_addr", "a01033.html#gacf4afc843c17b397cef7c853e462ce19", null ],
+    [ "ble_flash_page_erase", "a01033.html#gae065fb255456031f76773fac7cc98dc8", null ],
+    [ "ble_flash_page_read", "a01033.html#ga8947fe5a3927f5c5cd56009360c6cc9d", null ],
+    [ "ble_flash_page_write", "a01033.html#gaad9a06c84fd13e623c62f6f3fa513e3d", null ],
+    [ "ble_flash_word_write", "a01033.html#gae2b67af95fa40eef714e18488f926d86", null ]
 ];

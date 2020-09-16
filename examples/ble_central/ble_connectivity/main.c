@@ -36,12 +36,12 @@ int main(void)
     uint32_t err_code = NRF_SUCCESS;
 
 #if ( defined(SER_PHY_HCI_DEBUG_ENABLE) || defined(SER_PHY_DEBUG_APP_ENABLE))
-	debug_init(NULL);
-#endif	
+    debug_init(NULL);
+#endif
 
     /* Force constant latency mode to control SPI slave timing */
     NRF_POWER->TASKS_CONSTLAT = 1;
-	
+
     /* Initialize scheduler queue. */
     APP_SCHED_INIT(SER_CONN_SCHED_MAX_EVENT_DATA_SIZE, SER_CONN_SCHED_QUEUE_SIZE);
     /* Initialize SoftDevice.

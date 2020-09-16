@@ -1,7 +1,5 @@
 var a00368 =
 [
-    [ "hfclk", "a00368.html#a5d6e28106247179b7cde2e289f0f9c39", null ],
-    [ "length_us", "a00368.html#a0495f3c5f7e2fd20663af081ca7e4c0b", null ],
-    [ "priority", "a00368.html#ad45d8189eff4584a13d7069d3c877a55", null ],
-    [ "timeout_us", "a00368.html#af56601d1b7ef92d49dbd1567bd1d39e0", null ]
+    [ "packet_removed_from_tx_fifo", "a00368.html#a0b024afcc55a2672cc745ccdc1ed21b4", null ],
+    [ "rssi", "a00368.html#a5ca3a1e0fd3866095de97120ce876ac6", null ]
 ];

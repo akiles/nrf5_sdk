@@ -1,9 +1,11 @@
 var a00186 =
 [
-    [ "day", "a00186.html#a94bdc52cbceff5f14951b6f7e8c02263", null ],
-    [ "hours", "a00186.html#a5288a98f74703cf1c5f9d0b9b1119461", null ],
-    [ "minutes", "a00186.html#a1328373bafcaa7e7ed28e2a3f52ec6e4", null ],
-    [ "month", "a00186.html#a49262472d4a8f721997adc626ae4f693", null ],
-    [ "seconds", "a00186.html#a20bab791a65115383e5e355e97078e27", null ],
-    [ "year", "a00186.html#a469839121af0c966717424b7649e0532", null ]
+    [ "conn_handle", "a00186.html#a84ba1f5c9a2f30359b12cc4dcbda3478", null ],
+    [ "ctrl_pt", "a00186.html#a90f150d8ecb3b79596f1ec3807867f1a", null ],
+    [ "evt_handler", "a00186.html#ac2e6ecdcdab44250a58bebd85104143b", null ],
+    [ "feature", "a00186.html#a32ce63e283663bde451653a25fc5b4bd", null ],
+    [ "feature_handles", "a00186.html#a967fca5b0492cbf671183eed800fcd3a", null ],
+    [ "meas_handles", "a00186.html#a9596e5fc4db125abaae55fc329982dfd", null ],
+    [ "sensor_loc_handles", "a00186.html#a3572c357aed7775240aee4a217ddaf60", null ],
+    [ "service_handle", "a00186.html#a3850255dd1cc2f89b7086771201eb8e0", null ]
 ];

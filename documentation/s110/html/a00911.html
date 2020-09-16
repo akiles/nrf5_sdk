@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: GAP Application event decoders</title>
+<title>nRF51 SDK - S110 SoftDevice: GATTC Application event decoders</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,58 +99,55 @@ $(document).ready(function(){initNavTree('a00911.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">GAP Application event decoders<div class="ingroups"><a class="el" href="a01078.html">Application s110 codecs</a></div></div>  </div>
+<div class="title">GATTC Application event decoders<div class="ingroups"><a class="el" href="a01080.html">Application s110 codecs</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GAP Application event decoders.  
+<p>GATTC Application event decoders.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga693e65fbc3d089a0d14c425326258b17"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga693e65fbc3d089a0d14c425326258b17">ble_gap_evt_auth_key_request_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00202.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
-<tr class="memdesc:ga693e65fbc3d089a0d14c425326258b17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gap_evt_auth_key_request event.  <a href="#ga693e65fbc3d089a0d14c425326258b17">More...</a><br/></td></tr>
-<tr class="separator:ga693e65fbc3d089a0d14c425326258b17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabcd5e98ab720b8e96d47b88b24c6e113"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#gabcd5e98ab720b8e96d47b88b24c6e113">ble_gap_evt_auth_status_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00202.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
-<tr class="memdesc:gabcd5e98ab720b8e96d47b88b24c6e113"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gap_evt_auth_status event.  <a href="#gabcd5e98ab720b8e96d47b88b24c6e113">More...</a><br/></td></tr>
-<tr class="separator:gabcd5e98ab720b8e96d47b88b24c6e113"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga687fb4a5a0b627384104ddd6727eb677"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga687fb4a5a0b627384104ddd6727eb677">ble_gap_evt_conn_param_update_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00202.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
-<tr class="memdesc:ga687fb4a5a0b627384104ddd6727eb677"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gap_evt_conn_param_update event.  <a href="#ga687fb4a5a0b627384104ddd6727eb677">More...</a><br/></td></tr>
-<tr class="separator:ga687fb4a5a0b627384104ddd6727eb677"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6e9b588592d4f391381f8b47a85b54db"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga6e9b588592d4f391381f8b47a85b54db">ble_gap_evt_conn_sec_update_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00202.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
-<tr class="memdesc:ga6e9b588592d4f391381f8b47a85b54db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gap_evt_conn_sec_update event.  <a href="#ga6e9b588592d4f391381f8b47a85b54db">More...</a><br/></td></tr>
-<tr class="separator:ga6e9b588592d4f391381f8b47a85b54db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5966a819bec5c3214d723e11ad5d51c2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga5966a819bec5c3214d723e11ad5d51c2">ble_gap_evt_connected_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00202.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
-<tr class="memdesc:ga5966a819bec5c3214d723e11ad5d51c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gap_evt_connected event.  <a href="#ga5966a819bec5c3214d723e11ad5d51c2">More...</a><br/></td></tr>
-<tr class="separator:ga5966a819bec5c3214d723e11ad5d51c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaebeeb37390f8a76dbfba93e14e6519ec"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#gaebeeb37390f8a76dbfba93e14e6519ec">ble_gap_evt_disconnected_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00202.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
-<tr class="memdesc:gaebeeb37390f8a76dbfba93e14e6519ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gap_evt_disconnected event.  <a href="#gaebeeb37390f8a76dbfba93e14e6519ec">More...</a><br/></td></tr>
-<tr class="separator:gaebeeb37390f8a76dbfba93e14e6519ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9f6dd614f300f93f2bfa67edd9404d30"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga9f6dd614f300f93f2bfa67edd9404d30">ble_gap_evt_passkey_display_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00202.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
-<tr class="memdesc:ga9f6dd614f300f93f2bfa67edd9404d30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gap_evt_passkey_display event.  <a href="#ga9f6dd614f300f93f2bfa67edd9404d30">More...</a><br/></td></tr>
-<tr class="separator:ga9f6dd614f300f93f2bfa67edd9404d30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga80bcfe6475160bb165ec1228083f389d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga80bcfe6475160bb165ec1228083f389d">ble_gap_evt_rssi_changed_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00202.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
-<tr class="memdesc:ga80bcfe6475160bb165ec1228083f389d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gap_evt_rssi_changed event.  <a href="#ga80bcfe6475160bb165ec1228083f389d">More...</a><br/></td></tr>
-<tr class="separator:ga80bcfe6475160bb165ec1228083f389d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga29d1f1034644b85bafc55107dab9dfa3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga29d1f1034644b85bafc55107dab9dfa3">ble_gap_evt_sec_info_request_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00202.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
-<tr class="memdesc:ga29d1f1034644b85bafc55107dab9dfa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gap_evt_sec_info_request event.  <a href="#ga29d1f1034644b85bafc55107dab9dfa3">More...</a><br/></td></tr>
-<tr class="separator:ga29d1f1034644b85bafc55107dab9dfa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga44c8835ddaf4bda5dd88f202534e8f66"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga44c8835ddaf4bda5dd88f202534e8f66">ble_gap_evt_sec_params_request_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00202.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
-<tr class="memdesc:ga44c8835ddaf4bda5dd88f202534e8f66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gap_evt_sec_params_request event.  <a href="#ga44c8835ddaf4bda5dd88f202534e8f66">More...</a><br/></td></tr>
-<tr class="separator:ga44c8835ddaf4bda5dd88f202534e8f66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac095b1d4a029f107162abae5ed31d661"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#gac095b1d4a029f107162abae5ed31d661">ble_gap_evt_timeout_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00202.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
-<tr class="memdesc:gac095b1d4a029f107162abae5ed31d661"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gap_evt_timeout event.  <a href="#gac095b1d4a029f107162abae5ed31d661">More...</a><br/></td></tr>
-<tr class="separator:gac095b1d4a029f107162abae5ed31d661"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0d3c75d0b9f3a597d838ae7cf88e28db"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga0d3c75d0b9f3a597d838ae7cf88e28db">ble_gattc_evt_char_disc_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00203.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
+<tr class="memdesc:ga0d3c75d0b9f3a597d838ae7cf88e28db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gattc_evt_char_disc_rsp event.  <a href="#ga0d3c75d0b9f3a597d838ae7cf88e28db">More...</a><br/></td></tr>
+<tr class="separator:ga0d3c75d0b9f3a597d838ae7cf88e28db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa0d2c10356b7c2b6434009f9eff82618"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#gaa0d2c10356b7c2b6434009f9eff82618">ble_gattc_evt_char_val_by_uuid_read_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00203.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
+<tr class="memdesc:gaa0d2c10356b7c2b6434009f9eff82618"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gattc_evt_char_val_by_uuid_read_rsp event.  <a href="#gaa0d2c10356b7c2b6434009f9eff82618">More...</a><br/></td></tr>
+<tr class="separator:gaa0d2c10356b7c2b6434009f9eff82618"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa45af7a38642008e43f59e1c85c54e04"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#gaa45af7a38642008e43f59e1c85c54e04">ble_gattc_evt_char_vals_read_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00203.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
+<tr class="memdesc:gaa45af7a38642008e43f59e1c85c54e04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gattc_evt_char_vals_read_rsp event.  <a href="#gaa45af7a38642008e43f59e1c85c54e04">More...</a><br/></td></tr>
+<tr class="separator:gaa45af7a38642008e43f59e1c85c54e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadeb28e7d413e6b8c8bb0630fe22562b5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#gadeb28e7d413e6b8c8bb0630fe22562b5">ble_gattc_evt_desc_disc_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00203.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
+<tr class="memdesc:gadeb28e7d413e6b8c8bb0630fe22562b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gattc_evt_desc_disc_rsp event.  <a href="#gadeb28e7d413e6b8c8bb0630fe22562b5">More...</a><br/></td></tr>
+<tr class="separator:gadeb28e7d413e6b8c8bb0630fe22562b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3dba62373f3ad46797458c57b390f5dc"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga3dba62373f3ad46797458c57b390f5dc">ble_gattc_evt_hvx_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00203.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
+<tr class="memdesc:ga3dba62373f3ad46797458c57b390f5dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gattc_evt_hvx event.  <a href="#ga3dba62373f3ad46797458c57b390f5dc">More...</a><br/></td></tr>
+<tr class="separator:ga3dba62373f3ad46797458c57b390f5dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2a567ca90f98dc7143cb55040cc15022"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga2a567ca90f98dc7143cb55040cc15022">ble_gattc_evt_prim_srvc_disc_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00203.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
+<tr class="memdesc:ga2a567ca90f98dc7143cb55040cc15022"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gattc_evt_prim_srvc_disc_rsp event.  <a href="#ga2a567ca90f98dc7143cb55040cc15022">More...</a><br/></td></tr>
+<tr class="separator:ga2a567ca90f98dc7143cb55040cc15022"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga414e6d4beabd29402ebbee68a8002cb0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga414e6d4beabd29402ebbee68a8002cb0">ble_gattc_evt_read_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00203.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
+<tr class="memdesc:ga414e6d4beabd29402ebbee68a8002cb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gattc_evt_read_rsp event.  <a href="#ga414e6d4beabd29402ebbee68a8002cb0">More...</a><br/></td></tr>
+<tr class="separator:ga414e6d4beabd29402ebbee68a8002cb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92e263bf80453f7826115be24e041471"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga92e263bf80453f7826115be24e041471">ble_gattc_evt_rel_disc_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00203.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
+<tr class="memdesc:ga92e263bf80453f7826115be24e041471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gattc_evt_rel_disc_rsp_dec event.  <a href="#ga92e263bf80453f7826115be24e041471">More...</a><br/></td></tr>
+<tr class="separator:ga92e263bf80453f7826115be24e041471"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5057f23967c515c5fb3f625c0a95c766"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga5057f23967c515c5fb3f625c0a95c766">ble_gattc_evt_timeout_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00203.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
+<tr class="memdesc:ga5057f23967c515c5fb3f625c0a95c766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gattc_evt_timeout event.  <a href="#ga5057f23967c515c5fb3f625c0a95c766">More...</a><br/></td></tr>
+<tr class="separator:ga5057f23967c515c5fb3f625c0a95c766"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga99b4f39aecd2c709f7e93ddb3da6c6c1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00911.html#ga99b4f39aecd2c709f7e93ddb3da6c6c1">ble_gattc_evt_write_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00203.html">ble_evt_t</a> *const p_event, uint32_t *const p_event_len)</td></tr>
+<tr class="memdesc:ga99b4f39aecd2c709f7e93ddb3da6c6c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes ble_gattc_evt_write_rsp event.  <a href="#ga99b4f39aecd2c709f7e93ddb3da6c6c1">More...</a><br/></td></tr>
+<tr class="separator:ga99b4f39aecd2c709f7e93ddb3da6c6c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>GAP Application event decoders. </p>
+<p>GATTC Application event decoders. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga693e65fbc3d089a0d14c425326258b17"></a>
+<a class="anchor" id="ga0d3c75d0b9f3a597d838ae7cf88e28db"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_evt_auth_key_request_dec </td>
+          <td class="memname">uint32_t ble_gattc_evt_char_disc_rsp_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -164,7 +161,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00202.html">ble_evt_t</a> *const&#160;</td>
+          <td class="paramtype"><a class="el" href="a00203.html">ble_evt_t</a> *const&#160;</td>
           <td class="paramname"><em>p_event</em>, </td>
         </tr>
         <tr>
@@ -181,14 +178,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes ble_gap_evt_auth_key_request event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00090.html#nrf51_evt_auth_key_request_encoding">0x16 - BLE_GAP_EVT_AUTH_KEY_REQUEST</a> for packet format.</dd></dl>
+<p>Decodes ble_gattc_evt_char_disc_rsp event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00082.html#nrf51_gattc_evt_char_disc_rsp_encoding">0x32 - BLE_GATTC_EVT_CHAR_DISC_RSP</a> for packet format.</dd></dl>
 <p>If <code>p_event</code> is null, the required length of <code>p_event</code> is returned in <code>p_event_len</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of an event packet. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of the event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00202.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00203.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event_len</td><td><code>in:</code> Size (in bytes) of <code>p_event</code> buffer. <code>out:</code> Length of decoded contents of <code>p_event</code>.</td></tr>
   </table>
   </dd>
@@ -205,12 +202,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gabcd5e98ab720b8e96d47b88b24c6e113"></a>
+<a class="anchor" id="gaa0d2c10356b7c2b6434009f9eff82618"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_evt_auth_status_dec </td>
+          <td class="memname">uint32_t ble_gattc_evt_char_val_by_uuid_read_rsp_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -224,7 +221,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00202.html">ble_evt_t</a> *const&#160;</td>
+          <td class="paramtype"><a class="el" href="a00203.html">ble_evt_t</a> *const&#160;</td>
           <td class="paramname"><em>p_event</em>, </td>
         </tr>
         <tr>
@@ -241,14 +238,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes ble_gap_evt_auth_status event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00090.html#nrf51_evt_auth_status_encoding">0x17 - BLE_GAP_EVT_AUTH_STATUS</a> for packet format.</dd></dl>
+<p>Decodes ble_gattc_evt_char_val_by_uuid_read_rsp event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00082.html#nrf51_gattc_evt_char_val_by_uuid_read_rsp_encoding">0x34 - BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP</a> for packet format.</dd></dl>
 <p>If <code>p_event</code> is null, the required length of <code>p_event</code> is returned in <code>p_event_len</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of an event packet. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of the event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00202.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00203.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event_len</td><td><code>in:</code> Size (in bytes) of <code>p_event</code> buffer. <code>out:</code> Length of decoded contents of <code>p_event</code>.</td></tr>
   </table>
   </dd>
@@ -265,12 +262,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga687fb4a5a0b627384104ddd6727eb677"></a>
+<a class="anchor" id="gaa45af7a38642008e43f59e1c85c54e04"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_evt_conn_param_update_dec </td>
+          <td class="memname">uint32_t ble_gattc_evt_char_vals_read_rsp_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -284,7 +281,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00202.html">ble_evt_t</a> *const&#160;</td>
+          <td class="paramtype"><a class="el" href="a00203.html">ble_evt_t</a> *const&#160;</td>
           <td class="paramname"><em>p_event</em>, </td>
         </tr>
         <tr>
@@ -301,14 +298,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes ble_gap_evt_conn_param_update event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00090.html#nrf51_evt_conn_param_update_encoding">0x12 - BLE_GAP_EVT_CONN_PARAM_UPDATE</a> for packet format.</dd></dl>
+<p>Decodes ble_gattc_evt_char_vals_read_rsp event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00082.html#nrf51_gattc_evt_char_vals_read_rsp_encoding">0x36 - BLE_GATTC_EVT_CHAR_VALS_READ_RSP</a> for packet format.</dd></dl>
 <p>If <code>p_event</code> is null, the required length of <code>p_event</code> is returned in <code>p_event_len</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of an event packet. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of the event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00202.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00203.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event_len</td><td><code>in:</code> Size (in bytes) of <code>p_event</code> buffer. <code>out:</code> Length of decoded contents of <code>p_event</code>.</td></tr>
   </table>
   </dd>
@@ -325,12 +322,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga6e9b588592d4f391381f8b47a85b54db"></a>
+<a class="anchor" id="gadeb28e7d413e6b8c8bb0630fe22562b5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_evt_conn_sec_update_dec </td>
+          <td class="memname">uint32_t ble_gattc_evt_desc_disc_rsp_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -344,7 +341,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00202.html">ble_evt_t</a> *const&#160;</td>
+          <td class="paramtype"><a class="el" href="a00203.html">ble_evt_t</a> *const&#160;</td>
           <td class="paramname"><em>p_event</em>, </td>
         </tr>
         <tr>
@@ -361,14 +358,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes ble_gap_evt_conn_sec_update event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00090.html#nrf51_evt_conn_sec_update_encoding">0x18 - BLE_GAP_EVT_CONN_SEC_UPDATE</a> for packet format.</dd></dl>
+<p>Decodes ble_gattc_evt_desc_disc_rsp event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00082.html#nrf51_gattc_evt_desc_disc_rsp_encoding">0x33 - BLE_GATTC_EVT_DESC_DISC_RSP</a> for packet format.</dd></dl>
 <p>If <code>p_event</code> is null, the required length of <code>p_event</code> is returned in <code>p_event_len</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of an event packet. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of the event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00202.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00203.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event_len</td><td><code>in:</code> Size (in bytes) of <code>p_event</code> buffer. <code>out:</code> Length of decoded contents of <code>p_event</code>.</td></tr>
   </table>
   </dd>
@@ -385,12 +382,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga5966a819bec5c3214d723e11ad5d51c2"></a>
+<a class="anchor" id="ga3dba62373f3ad46797458c57b390f5dc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_evt_connected_dec </td>
+          <td class="memname">uint32_t ble_gattc_evt_hvx_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -404,7 +401,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00202.html">ble_evt_t</a> *const&#160;</td>
+          <td class="paramtype"><a class="el" href="a00203.html">ble_evt_t</a> *const&#160;</td>
           <td class="paramname"><em>p_event</em>, </td>
         </tr>
         <tr>
@@ -421,14 +418,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes ble_gap_evt_connected event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00090.html#nrf51_evt_connected_encoding">0x10 - BLE_GAP_EVT_CONNECTED</a> for packet format.</dd></dl>
+<p>Decodes ble_gattc_evt_hvx event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00082.html#nrf51_gattc_evt_hvx_encoding">0x38 - BLE_GATTC_EVT_HVX</a> for packet format.</dd></dl>
 <p>If <code>p_event</code> is null, the required length of <code>p_event</code> is returned in <code>p_event_len</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of an event packet. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of the event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00202.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00203.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event_len</td><td><code>in:</code> Size (in bytes) of <code>p_event</code> buffer. <code>out:</code> Length of decoded contents of <code>p_event</code>.</td></tr>
   </table>
   </dd>
@@ -445,12 +442,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaebeeb37390f8a76dbfba93e14e6519ec"></a>
+<a class="anchor" id="ga2a567ca90f98dc7143cb55040cc15022"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_evt_disconnected_dec </td>
+          <td class="memname">uint32_t ble_gattc_evt_prim_srvc_disc_rsp_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -464,7 +461,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00202.html">ble_evt_t</a> *const&#160;</td>
+          <td class="paramtype"><a class="el" href="a00203.html">ble_evt_t</a> *const&#160;</td>
           <td class="paramname"><em>p_event</em>, </td>
         </tr>
         <tr>
@@ -481,14 +478,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes ble_gap_evt_disconnected event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00090.html#nrf51_evt_disconnected_encoding">0x11 - BLE_GAP_EVT_DISCONNECTED</a> for packet format.</dd></dl>
+<p>Decodes ble_gattc_evt_prim_srvc_disc_rsp event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00082.html#nrf51_gattc_evt_prim_srvc_disc_rsp_encoding">0x30 - BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP</a> for packet format.</dd></dl>
 <p>If <code>p_event</code> is null, the required length of <code>p_event</code> is returned in <code>p_event_len</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of an event packet. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of the event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00202.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00203.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event_len</td><td><code>in:</code> Size (in bytes) of <code>p_event</code> buffer. <code>out:</code> Length of decoded contents of <code>p_event</code>.</td></tr>
   </table>
   </dd>
@@ -505,12 +502,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga9f6dd614f300f93f2bfa67edd9404d30"></a>
+<a class="anchor" id="ga414e6d4beabd29402ebbee68a8002cb0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_evt_passkey_display_dec </td>
+          <td class="memname">uint32_t ble_gattc_evt_read_rsp_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -524,7 +521,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00202.html">ble_evt_t</a> *const&#160;</td>
+          <td class="paramtype"><a class="el" href="a00203.html">ble_evt_t</a> *const&#160;</td>
           <td class="paramname"><em>p_event</em>, </td>
         </tr>
         <tr>
@@ -541,14 +538,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes ble_gap_evt_passkey_display event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00090.html#nrf51_evt_passkey_display">0x15 - BLE_GAP_EVT_PASSKEY_DISPLAY</a> for packet format.</dd></dl>
+<p>Decodes ble_gattc_evt_read_rsp event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00082.html#nrf51_gattc_evt_read_rsp_encoding">0x35 - BLE_GATTC_EVT_READ_RSP</a> for packet format.</dd></dl>
 <p>If <code>p_event</code> is null, the required length of <code>p_event</code> is returned in <code>p_event_len</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of an event packet. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of the event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00202.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00203.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event_len</td><td><code>in:</code> Size (in bytes) of <code>p_event</code> buffer. <code>out:</code> Length of decoded contents of <code>p_event</code>.</td></tr>
   </table>
   </dd>
@@ -565,12 +562,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga80bcfe6475160bb165ec1228083f389d"></a>
+<a class="anchor" id="ga92e263bf80453f7826115be24e041471"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_evt_rssi_changed_dec </td>
+          <td class="memname">uint32_t ble_gattc_evt_rel_disc_rsp_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -584,7 +581,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00202.html">ble_evt_t</a> *const&#160;</td>
+          <td class="paramtype"><a class="el" href="a00203.html">ble_evt_t</a> *const&#160;</td>
           <td class="paramname"><em>p_event</em>, </td>
         </tr>
         <tr>
@@ -601,14 +598,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes ble_gap_evt_rssi_changed event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00090.html#nrf51_evt_rssi_changed_encoding">0x1A - BLE_GAP_EVT_RSSI_CHANGED</a> for packet format.</dd></dl>
+<p>Decodes ble_gattc_evt_rel_disc_rsp_dec event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00082.html#nrf51_gattc_evt_rel_disc_rsp_encoding">0x31 - BLE_GATTC_EVT_REL_DISC_RSP</a> for packet format.</dd></dl>
 <p>If <code>p_event</code> is null, the required length of <code>p_event</code> is returned in <code>p_event_len</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of an event packet. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of the event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00202.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00203.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event_len</td><td><code>in:</code> Size (in bytes) of <code>p_event</code> buffer. <code>out:</code> Length of decoded contents of <code>p_event</code>.</td></tr>
   </table>
   </dd>
@@ -625,12 +622,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga29d1f1034644b85bafc55107dab9dfa3"></a>
+<a class="anchor" id="ga5057f23967c515c5fb3f625c0a95c766"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_evt_sec_info_request_dec </td>
+          <td class="memname">uint32_t ble_gattc_evt_timeout_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -644,7 +641,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00202.html">ble_evt_t</a> *const&#160;</td>
+          <td class="paramtype"><a class="el" href="a00203.html">ble_evt_t</a> *const&#160;</td>
           <td class="paramname"><em>p_event</em>, </td>
         </tr>
         <tr>
@@ -661,14 +658,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes ble_gap_evt_sec_info_request event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00090.html#nrf51_evt_sec_info_request_encoding">0x14 - BLE_GAP_EVT_SEC_INFO_REQUEST</a> for packet format.</dd></dl>
+<p>Decodes ble_gattc_evt_timeout event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00082.html#nrf51_gattc_evt_timeout_encoding">0x39 - BLE_GATTC_EVT_TIMEOUT</a> for packet format.</dd></dl>
 <p>If <code>p_event</code> is null, the required length of <code>p_event</code> is returned in <code>p_event_len</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of an event packet. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of the event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00202.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00203.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event_len</td><td><code>in:</code> Size (in bytes) of <code>p_event</code> buffer. <code>out:</code> Length of decoded contents of <code>p_event</code>.</td></tr>
   </table>
   </dd>
@@ -685,12 +682,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga44c8835ddaf4bda5dd88f202534e8f66"></a>
+<a class="anchor" id="ga99b4f39aecd2c709f7e93ddb3da6c6c1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_evt_sec_params_request_dec </td>
+          <td class="memname">uint32_t ble_gattc_evt_write_rsp_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -704,7 +701,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00202.html">ble_evt_t</a> *const&#160;</td>
+          <td class="paramtype"><a class="el" href="a00203.html">ble_evt_t</a> *const&#160;</td>
           <td class="paramname"><em>p_event</em>, </td>
         </tr>
         <tr>
@@ -721,74 +718,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes ble_gap_evt_sec_params_request event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00090.html#nrf51_evt_sec_param_request_encoding">0x13 - BLE_GAP_EVT_SEC_PARAMS_REQUEST</a> for packet format.</dd></dl>
+<p>Decodes ble_gattc_evt_write_rsp event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00082.html#nrf51_gattc_evt_write_rsp_encoding">0x37 - BLE_GATTC_EVT_WRITE_RSP</a> for packet format.</dd></dl>
 <p>If <code>p_event</code> is null, the required length of <code>p_event</code> is returned in <code>p_event_len</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of an event packet. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of the event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00202.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event_len</td><td><code>in:</code> Size (in bytes) of <code>p_event</code> buffer. <code>out:</code> Length of decoded contents of <code>p_event</code>.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_DATA_SIZE</td><td>Decoding failure. Length of <code>p_event</code> is too small to hold decoded event. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gac095b1d4a029f107162abae5ed31d661"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_evt_timeout_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00202.html">ble_evt_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_event</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_event_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decodes ble_gap_evt_timeout event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00090.html#nrf51_evt_timeout_encoding">0x19 - BLE_GAP_EVT_TIMEOUT</a> for packet format.</dd></dl>
-<p>If <code>p_event</code> is null, the required length of <code>p_event</code> is returned in <code>p_event_len</code>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of an event packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of the event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00202.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event</td><td>Pointer to a <a class="el" href="a00203.html">ble_evt_t</a> buffer where the decoded event will be stored. If NULL, required length will be returned in <code>p_event_len</code>. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_event_len</td><td><code>in:</code> Size (in bytes) of <code>p_event</code> buffer. <code>out:</code> Length of decoded contents of <code>p_event</code>.</td></tr>
   </table>
   </dd>
@@ -810,7 +747,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

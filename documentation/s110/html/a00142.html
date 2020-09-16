@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: app_fifo_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: app_button_cfg_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,78 @@ $(document).ready(function(){initNavTree('a00142.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">app_fifo_t Struct Reference<div class="ingroups"><a class="el" href="a00772.html">FIFO implementation</a></div></div>  </div>
+<div class="title">app_button_cfg_t Struct Reference<div class="ingroups"><a class="el" href="a00771.html">Button Handler</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the information about which memory is allocated for the buffer and its size. This needs to be initialized by <a class="el" href="a00772.html#gafc2ba3545e60f0134689fac2aa87f493" title="Function for initializing the FIFO.">app_fifo_init()</a> before use.  
+<p>Button configuration structure.  
  <a href="a00142.html#details">More...</a></p>
 
-<p><code>#include &lt;app_fifo.h&gt;</code></p>
+<p><code>#include &lt;app_button.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a64eafd180a65260208be3b845f6acbf5"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00142.html#a64eafd180a65260208be3b845f6acbf5">p_buf</a></td></tr>
-<tr class="separator:a64eafd180a65260208be3b845f6acbf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03c6c7fcf087b5c1e0cfd5ce09661870"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00142.html#a03c6c7fcf087b5c1e0cfd5ce09661870">buf_size_mask</a></td></tr>
-<tr class="separator:a03c6c7fcf087b5c1e0cfd5ce09661870"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabcc538faf2ea4a374702c9896ae52d6"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00142.html#aabcc538faf2ea4a374702c9896ae52d6">read_pos</a></td></tr>
-<tr class="separator:aabcc538faf2ea4a374702c9896ae52d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12631a6575aae2c98f1cca4034b38eaf"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00142.html#a12631a6575aae2c98f1cca4034b38eaf">write_pos</a></td></tr>
-<tr class="separator:a12631a6575aae2c98f1cca4034b38eaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6a18934c420213be9eee710854e1ab9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00142.html#af6a18934c420213be9eee710854e1ab9">pin_no</a></td></tr>
+<tr class="separator:af6a18934c420213be9eee710854e1ab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af55e02af042a4d038dac26a7658536f6"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00142.html#af55e02af042a4d038dac26a7658536f6">active_state</a></td></tr>
+<tr class="separator:af55e02af042a4d038dac26a7658536f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf23ae362a2ecdfbc73c9f6736ce0ba8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00757.html#ga07e0c8c0b30499cf0a7b79dbe62d3fcc">nrf_gpio_pin_pull_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00142.html#abf23ae362a2ecdfbc73c9f6736ce0ba8">pull_cfg</a></td></tr>
+<tr class="separator:abf23ae362a2ecdfbc73c9f6736ce0ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad06ea1e496c4b37802492b289b54a875"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00771.html#ga5c09451dc7c257a9d3846268e110cf8d">app_button_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00142.html#ad06ea1e496c4b37802492b289b54a875">button_handler</a></td></tr>
+<tr class="separator:ad06ea1e496c4b37802492b289b54a875"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the information about which memory is allocated for the buffer and its size. This needs to be initialized by <a class="el" href="a00772.html#gafc2ba3545e60f0134689fac2aa87f493" title="Function for initializing the FIFO.">app_fifo_init()</a> before use. </p>
+<div class="textblock"><p>Button configuration structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a03c6c7fcf087b5c1e0cfd5ce09661870"></a>
+<a class="anchor" id="af55e02af042a4d038dac26a7658536f6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t app_fifo_t::buf_size_mask</td>
+          <td class="memname">uint8_t app_button_cfg_t::active_state</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read/write index mask. Also used for size checking. </p>
+<p>APP_BUTTON_ACTIVE_HIGH or APP_BUTTON_ACTIVE_LOW. </p>
 
 </div>
 </div>
-<a class="anchor" id="a64eafd180a65260208be3b845f6acbf5"></a>
+<a class="anchor" id="ad06ea1e496c4b37802492b289b54a875"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* app_fifo_t::p_buf</td>
+          <td class="memname"><a class="el" href="a00771.html#ga5c09451dc7c257a9d3846268e110cf8d">app_button_handler_t</a> app_button_cfg_t::button_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to FIFO buffer memory. </p>
+<p>Handler to be called when button is pushed. </p>
 
 </div>
 </div>
-<a class="anchor" id="aabcc538faf2ea4a374702c9896ae52d6"></a>
+<a class="anchor" id="af6a18934c420213be9eee710854e1ab9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint32_t app_fifo_t::read_pos</td>
+          <td class="memname">uint8_t app_button_cfg_t::pin_no</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Next read position in the FIFO buffer. </p>
+<p>Pin to be used as a button. </p>
 
 </div>
 </div>
-<a class="anchor" id="a12631a6575aae2c98f1cca4034b38eaf"></a>
+<a class="anchor" id="abf23ae362a2ecdfbc73c9f6736ce0ba8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile uint32_t app_fifo_t::write_pos</td>
+          <td class="memname"><a class="el" href="a00757.html#ga07e0c8c0b30499cf0a7b79dbe62d3fcc">nrf_gpio_pin_pull_t</a> app_button_cfg_t::pull_cfg</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Next write position in the FIFO buffer. </p>
+<p>Pull-up or -down configuration. </p>
 
 </div>
 </div>
@@ -186,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00142.html">app_fifo_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:26 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00142.html">app_button_cfg_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:12 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

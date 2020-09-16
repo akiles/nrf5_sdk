@@ -129,10 +129,10 @@ UART driver</h1>
 </p>
 <ul>
 <li>In case of <a class="el" href="a00501.html#gga9346b21b144fd9499e24853bbf781e17a6ee822a8a07d1be09ac336495a5238d8">APP_UART_COMMUNICATION_ERROR</a> event, error source (taken from <a class="el" href="a00090.html">app_uart_evt_t</a> structure) is checked. If the source is parity or overrun error,<br/>
- then upper layer is notified with <a class="el" href="a00664.html#ggaef62df8feedfbe682684c6f1ea704061afad1fa7a81b1ed34ede87c0751125c4e">SER_PHY_EVT_HW_ERROR</a>. Error source is passed in error_code member of a <a class="el" href="a00222.html">ser_phy_evt_hw_error_params_t</a> structure.<br/>
+ then upper layer is notified with <a class="el" href="a00662.html#ggaef62df8feedfbe682684c6f1ea704061afad1fa7a81b1ed34ede87c0751125c4e">SER_PHY_EVT_HW_ERROR</a>. Error source is passed in error_code member of a <a class="el" href="a00222.html">ser_phy_evt_hw_error_params_t</a> structure.<br/>
 </li>
 <li><a class="el" href="a00501.html#gga9346b21b144fd9499e24853bbf781e17a9fa032c57eadcef66e102eb78a04c2d1">APP_UART_TX_EMPTY</a> indicates a TXDRDY interrupt. In such case a static function for transmission is called: 'ser_phy_uart_tx()'<br/>
- Note: when transmission of a packet begins 'ser_phy_uart_tx()' function is called for the first time in <a class="el" href="a00664.html#gaee7a0ca264b8eba6753fda021854fc4b" title="A function for transmitting a packet.">ser_phy_tx_pkt_send()</a> function. Later it is only called in<br/>
+ Note: when transmission of a packet begins 'ser_phy_uart_tx()' function is called for the first time in <a class="el" href="a00662.html#gaee7a0ca264b8eba6753fda021854fc4b" title="A function for transmitting a packet.">ser_phy_tx_pkt_send()</a> function. Later it is only called in<br/>
  <a class="el" href="a00090.html">app_uart_evt_t</a> event callback.<br/>
 </li>
 <li><a class="el" href="a00501.html#gga9346b21b144fd9499e24853bbf781e17a5b4c2503e1e658ff28dcaad17eff6ac4">APP_UART_DATA</a> indicates a RXDRDY interrupt. In such case a static function for reception: 'ser_phy_uart_rx()' is called with received byte as a parameter. Received byte<br/>
@@ -142,22 +142,22 @@ UART driver</h1>
 <p>Following <a class="el" href="a00225.html">ser_phy_evt_t</a> events are send to upper layer:<br/>
 </p>
 <ul>
-<li><a class="el" href="a00664.html#ggaef62df8feedfbe682684c6f1ea704061afad1fa7a81b1ed34ede87c0751125c4e">SER_PHY_EVT_HW_ERROR</a> when a hardware error is reported by low-level driver<br/>
+<li><a class="el" href="a00662.html#ggaef62df8feedfbe682684c6f1ea704061afad1fa7a81b1ed34ede87c0751125c4e">SER_PHY_EVT_HW_ERROR</a> when a hardware error is reported by low-level driver<br/>
 </li>
-<li><a class="el" href="a00664.html#ggaef62df8feedfbe682684c6f1ea704061a6586d0863748060b1f669ed34a0a0a77">SER_PHY_EVT_RX_BUF_REQUEST</a> when a header is received and therefore the payload length is known. From this point reception is paused until<br/>
- <a class="el" href="a00664.html#ga796b1fcdba5fbc0a38e32d20b14f21dd" title="A function for setting an RX buffer and enabling reception of data (the PHY flow).">ser_phy_rx_buf_set()</a> function is called by the upper layer, indicating whether a receive buffer has been allocated or not. Subsequently the packet payload is<br/>
+<li><a class="el" href="a00662.html#ggaef62df8feedfbe682684c6f1ea704061a6586d0863748060b1f669ed34a0a0a77">SER_PHY_EVT_RX_BUF_REQUEST</a> when a header is received and therefore the payload length is known. From this point reception is paused until<br/>
+ <a class="el" href="a00662.html#ga796b1fcdba5fbc0a38e32d20b14f21dd" title="A function for setting an RX buffer and enabling reception of data (the PHY flow).">ser_phy_rx_buf_set()</a> function is called by the upper layer, indicating whether a receive buffer has been allocated or not. Subsequently the packet payload is<br/>
  received or dropped.<br/>
 </li>
-<li><a class="el" href="a00664.html#ggaef62df8feedfbe682684c6f1ea704061ab7c2a10cee66d30f6f2502376857b387">SER_PHY_EVT_RX_PKT_RECEIVED</a> when all bytes have been received. This event indicates how many bytes have been received to which memory address.<br/>
+<li><a class="el" href="a00662.html#ggaef62df8feedfbe682684c6f1ea704061ab7c2a10cee66d30f6f2502376857b387">SER_PHY_EVT_RX_PKT_RECEIVED</a> when all bytes have been received. This event indicates how many bytes have been received to which memory address.<br/>
 </li>
-<li><a class="el" href="a00664.html#ggaef62df8feedfbe682684c6f1ea704061aea7698e3e5ecece789c5e24963180cca">SER_PHY_EVT_RX_PKT_DROPPED</a> when all bytes are clocked in, but the packet is discarded because no receive buffer was allocated by upper layers.<br/>
+<li><a class="el" href="a00662.html#ggaef62df8feedfbe682684c6f1ea704061aea7698e3e5ecece789c5e24963180cca">SER_PHY_EVT_RX_PKT_DROPPED</a> when all bytes are clocked in, but the packet is discarded because no receive buffer was allocated by upper layers.<br/>
 </li>
-<li><a class="el" href="a00664.html#ggaef62df8feedfbe682684c6f1ea704061aabf6bc1f9441d6955ab6651435c4ba1f">SER_PHY_EVT_TX_PKT_SENT</a> when all bytes are transmitted.<br/>
+<li><a class="el" href="a00662.html#ggaef62df8feedfbe682684c6f1ea704061aabf6bc1f9441d6955ab6651435c4ba1f">SER_PHY_EVT_TX_PKT_SENT</a> when all bytes are transmitted.<br/>
 </li>
 </ul>
-<p>Function <a class="el" href="a00664.html#ga8c29df24b03fb3809588033581bedbbd">ser_phy_open()</a> initializes UART using <a class="el" href="a00501.html#gab37ec15202892ba42f454daacaa38b7f">APP_UART_INIT</a> macro with configuration structure of type <a class="el" href="a00089.html">app_uart_comm_params_t</a> as input. It also registers<br/>
+<p>Function <a class="el" href="a00662.html#ga8c29df24b03fb3809588033581bedbbd">ser_phy_open()</a> initializes UART using <a class="el" href="a00501.html#gab37ec15202892ba42f454daacaa38b7f">APP_UART_INIT</a> macro with configuration structure of type <a class="el" href="a00089.html">app_uart_comm_params_t</a> as input. It also registers<br/>
  <b>SER_PHY</b> event callback.</p>
-<p>Function <a class="el" href="a00664.html#ga98a80424c3b4fdadc38f88360fc669ef">ser_phy_close()</a> closes UART using <a class="el" href="a00501.html#ga8b5b23229363aefa52be33360dfb5fde">app_uart_close()</a> function. It also de-registers <b>SER_PHY</b> event callback.<br/>
+<p>Function <a class="el" href="a00662.html#ga98a80424c3b4fdadc38f88360fc669ef">ser_phy_close()</a> closes UART using <a class="el" href="a00501.html#ga8b5b23229363aefa52be33360dfb5fde">app_uart_close()</a> function. It also de-registers <b>SER_PHY</b> event callback.<br/>
 </p>
 <p>Note: During initialization of UART, pin connected to the RX line is configured as pull-down until first byte is received. This is done to avoid false byte detection due to<br/>
  glitches on the line when the other side is turned off or starting up.<br/>
@@ -168,7 +168,7 @@ UART driver</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00056.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00059.html">Serialization PHY</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

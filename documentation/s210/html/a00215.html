@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Persistent Storage Interface</title>
+<title>nRF51 SDK - S210 SoftDevice: Persistent Memory Interface Data Types</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,36 +97,61 @@ $(document).ready(function(){initNavTree('a00215.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">Persistent Storage Interface<div class="ingroups"><a class="el" href="a00270.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">Persistent Memory Interface Data Types<div class="ingroups"><a class="el" href="a00213.html">Persistent Storage Interface</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Abstracted flash interface.  
+<p>Data Types needed for interfacing with persistent memory.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00216"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html">Persistent Storage Access Operation Codes</a></td></tr>
-<tr class="memdesc:a00216"><td class="mdescLeft">&#160;</td><td class="mdescRight">Persistent Storage Access Operation Codes. These are used to report any error during a persistent storage access operation or any general error that may occur in the interface. <br/></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00065.html">pstorage_module_param_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00217"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html">Persistent Memory Interface Data Types</a></td></tr>
-<tr class="memdesc:a00217"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data Types needed for interfacing with persistent memory. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00218"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00218.html">Persistent Storage Access Routines</a></td></tr>
-<tr class="memdesc:a00218"><td class="mdescLeft">&#160;</td><td class="mdescRight">Functions/Interface SDK modules use to persistently store data. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaac1d429f24eb2850da6d8f8773a14c47"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00215.html#gaac1d429f24eb2850da6d8f8773a14c47">pstorage_ntf_cb_t</a> )(pstorage_handle_t *p_handle, uint8_t op_code, uint32_t result, uint8_t *p_data, uint32_t data_len)</td></tr>
+<tr class="memdesc:gaac1d429f24eb2850da6d8f8773a14c47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Persistent Storage Error Reporting Callback.  <a href="#gaac1d429f24eb2850da6d8f8773a14c47">More...</a><br/></td></tr>
+<tr class="separator:gaac1d429f24eb2850da6d8f8773a14c47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Abstracted flash interface. </p>
-<p>In order to ensure that the SDK and application be moved to alternate persistent storage options other than the default provided with NRF solution, an abstracted interface is provided by the module to ensure SDK modules and application can be ported to alternate option with ease. </p>
+<p>Data Types needed for interfacing with persistent memory. </p>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gaac1d429f24eb2850da6d8f8773a14c47"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* pstorage_ntf_cb_t)(pstorage_handle_t *p_handle, uint8_t op_code, uint32_t result, uint8_t *p_data, uint32_t data_len)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Persistent Storage Error Reporting Callback. </p>
+<p>Persistent Storage Error Reporting Callback that is used by the interface to report success or failure of a flash operation. Therefore, for any operations, application can know when the procedure was complete. For store operation, since no data copy is made, receiving a success or failure notification, indicated by the reason parameter of callback is an indication that the resident memory could now be reused or freed, as the case may be.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Identifies module and block for which callback is received. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">op_code</td><td>Identifies the operation for which the event is notified. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">result</td><td>Identifies the result of flash access operation. NRF_SUCCESS implies, operation succeeded. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Identifies the application data pointer. In case of store operation, this points to the resident source of application memory that application can now free or reuse. In case of clear, this is NULL as no application pointer is needed for this operation. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data_len</td><td>Length data application had provided for the operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:42 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:29 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

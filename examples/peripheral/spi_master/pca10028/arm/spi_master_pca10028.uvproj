@@ -353,7 +353,7 @@
               <MiscControls>--c99</MiscControls>
               <Define> SPI_MASTER_0_ENABLE  SPI_MASTER_1_ENABLE  NRF51 BOARD_PCA10028</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\components\drivers_nrf\spi_master;..\..\..\..\bsp;..\..\..\..\..\components\libraries\button;..\..\..\..\..\components\libraries\util;..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\components\libraries\timer;..\..\..\..\..\components\libraries\scheduler</IncludePath>
+              <IncludePath>..\..\;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\drivers_nrf\spi_master;..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\components\libraries\button;..\..\..\..\bsp;..\..\..\..\..\components\libraries\timer;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\components\libraries\util</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_uuid_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_uuid128_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,58 +106,30 @@ $(document).ready(function(){initNavTree('a00336.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_uuid_t Struct Reference<div class="ingroups"><a class="el" href="a01062.html">Structures</a></div></div>  </div>
+<div class="title">ble_uuid128_t Struct Reference<div class="ingroups"><a class="el" href="a01064.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Bluetooth Low Energy UUID type, encapsulates both 16-bit and 128-bit UUIDs.  
+<p>128 bit UUID values.  
  <a href="a00336.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_types.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac9ccd46e82b1b51d561f17d49282348c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00336.html#ac9ccd46e82b1b51d561f17d49282348c">uuid</a></td></tr>
-<tr class="separator:ac9ccd46e82b1b51d561f17d49282348c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae233c47cdd5f63de456f413a158bb16f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00336.html#ae233c47cdd5f63de456f413a158bb16f">type</a></td></tr>
-<tr class="separator:ae233c47cdd5f63de456f413a158bb16f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13339a8ee220b2ad2f4b8e130e730407"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a13339a8ee220b2ad2f4b8e130e730407"></a>
+unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>uuid128</b> [16]</td></tr>
+<tr class="separator:a13339a8ee220b2ad2f4b8e130e730407"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Bluetooth Low Energy UUID type, encapsulates both 16-bit and 128-bit UUIDs. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ae233c47cdd5f63de456f413a158bb16f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_uuid_t::type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>UUID type, see <a class="el" href="a00838.html">Types of UUID</a>. If type is BLE_UUID_TYPE_UNKNOWN, the value of uuid is undefined. </p>
-
-</div>
-</div>
-<a class="anchor" id="ac9ccd46e82b1b51d561f17d49282348c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_uuid_t::uuid</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>16-bit UUID value or octets 12-13 of 128-bit UUID. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>128 bit UUID values. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00336.html">ble_uuid_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00336.html">ble_uuid128_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

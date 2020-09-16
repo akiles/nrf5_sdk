@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Functions</title>
+<title>nRF51 SDK - S120 SoftDevice: Types definitions for ANT support in SoftDevice handler.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,205 +97,103 @@ $(document).ready(function(){initNavTree('a00698.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Functions<div class="ingroups"><a class="el" href="a00693.html">Database Discovery</a></div></div>  </div>
+<div class="title">Types definitions for ANT support in SoftDevice handler.<div class="ingroups"><a class="el" href="a00700.html">SoftDevice Event Handler</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>This file contains the declarations of types required for ANT stack support. These types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00084.html">ant_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ANT stack event type.  <a href="a00084.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gafcf5a1211ca1625c5c111871c6139d79"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html#gafcf5a1211ca1625c5c111871c6139d79">ANT_STACK_EVT_MSG_BUF_SIZE</a>&#160;&#160;&#160;32</td></tr>
+<tr class="separator:gafcf5a1211ca1625c5c111871c6139d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga099e8f139d53724bf7238bb77c9e32e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html#ga099e8f139d53724bf7238bb77c9e32e0">ANT_STACK_EVT_STRUCT_SIZE</a>&#160;&#160;&#160;(sizeof(<a class="el" href="a00084.html">ant_evt_t</a>))</td></tr>
+<tr class="separator:ga099e8f139d53724bf7238bb77c9e32e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2b0ca4dbb952df8f26cb58d4e7341115"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a> )(<a class="el" href="a00084.html">ant_evt_t</a> *p_ant_evt)</td></tr>
+<tr class="memdesc:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application ANT stack event handler type. <br/></td></tr>
+<tr class="separator:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gadf327d19a60bf442f7151ae68b601c8a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html#gadf327d19a60bf442f7151ae68b601c8a">ble_db_discovery_init</a> (void)</td></tr>
-<tr class="memdesc:gadf327d19a60bf442f7151ae68b601c8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the DB Discovery module.  <a href="#gadf327d19a60bf442f7151ae68b601c8a">More...</a><br/></td></tr>
-<tr class="separator:gadf327d19a60bf442f7151ae68b601c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4f60f77194de81c2254b858e7773e17a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html#ga4f60f77194de81c2254b858e7773e17a">ble_db_discovery_close</a> (void)</td></tr>
-<tr class="memdesc:ga4f60f77194de81c2254b858e7773e17a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for closing the DB Discovery module.  <a href="#ga4f60f77194de81c2254b858e7773e17a">More...</a><br/></td></tr>
-<tr class="separator:ga4f60f77194de81c2254b858e7773e17a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad3a1e96c90efbe2cf4171d624bafd9cc"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html#gad3a1e96c90efbe2cf4171d624bafd9cc">ble_db_discovery_evt_register</a> (const <a class="el" href="a00193.html">ble_uuid_t</a> *const p_uuid, const <a class="el" href="a00697.html#gaaea9ce1a02e970ac3197820075062382">ble_db_discovery_evt_handler_t</a> evt_handler)</td></tr>
-<tr class="memdesc:gad3a1e96c90efbe2cf4171d624bafd9cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering with the DB Discovery module.  <a href="#gad3a1e96c90efbe2cf4171d624bafd9cc">More...</a><br/></td></tr>
-<tr class="separator:gad3a1e96c90efbe2cf4171d624bafd9cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad35f52c46e9942291e2d69e2743c4d45"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html#gad35f52c46e9942291e2d69e2743c4d45">ble_db_discovery_start</a> (<a class="el" href="a00100.html">ble_db_discovery_t</a> *const p_db_discovery, uint16_t conn_handle)</td></tr>
-<tr class="memdesc:gad35f52c46e9942291e2d69e2743c4d45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for starting the discovery of the GATT database at the server.  <a href="#gad35f52c46e9942291e2d69e2743c4d45">More...</a><br/></td></tr>
-<tr class="separator:gad35f52c46e9942291e2d69e2743c4d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga60575c004188a08a78063884356bf15f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html#ga60575c004188a08a78063884356bf15f">ble_db_discovery_on_ble_evt</a> (<a class="el" href="a00100.html">ble_db_discovery_t</a> *const p_db_discovery, const <a class="el" href="a00103.html">ble_evt_t</a> *const p_ble_evt)</td></tr>
-<tr class="memdesc:ga60575c004188a08a78063884356bf15f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling the Application's BLE Stack events.  <a href="#ga60575c004188a08a78063884356bf15f">More...</a><br/></td></tr>
-<tr class="separator:ga60575c004188a08a78063884356bf15f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac05d1d266aef077ae88818dff3775010"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html#gac05d1d266aef077ae88818dff3775010">softdevice_ant_evt_handler_set</a> (<a class="el" href="a00698.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a> ant_evt_handler)</td></tr>
+<tr class="memdesc:gac05d1d266aef077ae88818dff3775010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering for ANT events.  <a href="#gac05d1d266aef077ae88818dff3775010">More...</a><br/></td></tr>
+<tr class="separator:gac05d1d266aef077ae88818dff3775010"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>This file contains the declarations of types required for ANT stack support. These types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined. </p>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gafcf5a1211ca1625c5c111871c6139d79"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ANT_STACK_EVT_MSG_BUF_SIZE&#160;&#160;&#160;32</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size of ANT event message buffer. This will be provided to the SoftDevice while fetching an event. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga099e8f139d53724bf7238bb77c9e32e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ANT_STACK_EVT_STRUCT_SIZE&#160;&#160;&#160;(sizeof(<a class="el" href="a00084.html">ant_evt_t</a>))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size of the <a class="el" href="a00084.html">ant_evt_t</a> structure. This will be used by the <a class="el" href="a00700.html">SoftDevice Event Handler</a> to internal event buffer size needed. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga4f60f77194de81c2254b858e7773e17a"></a>
+<a class="anchor" id="gac05d1d266aef077ae88818dff3775010"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_db_discovery_close </td>
+          <td class="memname">uint32_t softdevice_ant_evt_handler_set </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="a00698.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a>&#160;</td>
+          <td class="paramname"><em>ant_evt_handler</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for closing the DB Discovery module. </p>
-<p>This function will clear up any internal variables and states maintained by the module. To re-use the module after calling this function, the function <a class="el" href="a00698.html#gadf327d19a60bf442f7151ae68b601c8a">ble_db_discovery_init</a> must be called again.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad3a1e96c90efbe2cf4171d624bafd9cc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_db_discovery_evt_register </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00193.html">ble_uuid_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_uuid</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00697.html#gaaea9ce1a02e970ac3197820075062382">ble_db_discovery_evt_handler_t</a>&#160;</td>
-          <td class="paramname"><em>evt_handler</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for registering with the DB Discovery module. </p>
-<p>The application can use this function to inform which service it is interested in discovering at the server.</p>
+<p>Function for registering for ANT events. </p>
+<p>The application should use this function to register for receiving ANT events from the SoftDevice. If the application does not call this function, then any ANT event that may be generated by the SoftDevice will NOT be fetched. Once the application has registered for the events, it is not possible to possible to cancel the registration. However, it is possible to register a different function for handling the events at any point of time.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_uuid</td><td>Pointer to the UUID of the service to be discovered at the server. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">evt_handler</td><td>Event handler to be called by the DB discovery module when any event related to discovery of the registered service occurs.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>The total number of services that can be discovered by this module is <a class="el" href="a00694.html#gaf1f2ccd6a3638aab1ef6a6a68866fe71">BLE_DB_DISCOVERY_MAX_SRV</a>. This effectively means that the maximum number of registrations possible is equal to the <a class="el" href="a00694.html#gaf1f2ccd6a3638aab1ef6a6a68866fe71">BLE_DB_DISCOVERY_MAX_SRV</a>.</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>When a NULL pointer is passed as input. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If this function is called without calling the <a class="el" href="a00698.html#gadf327d19a60bf442f7151ae68b601c8a">ble_db_discovery_init</a>. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NOT_SUPPORTED</td><td>The maximum number of registrations allowed by this module has been reached. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gadf327d19a60bf442f7151ae68b601c8a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_db_discovery_init </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for initializing the DB Discovery module. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>on successful initialization. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga60575c004188a08a78063884356bf15f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ble_db_discovery_on_ble_evt </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00100.html">ble_db_discovery_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_db_discovery</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00103.html">ble_evt_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_ble_evt</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for handling the Application's BLE Stack events. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_db_discovery</td><td>Pointer to the DB Discovery structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>Pointer to the BLE event received. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad35f52c46e9942291e2d69e2743c4d45"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_db_discovery_start </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00100.html">ble_db_discovery_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_db_discovery</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>conn_handle</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for starting the discovery of the GATT database at the server. </p>
-<dl class="section warning"><dt>Warning</dt><dd>p_db_discovery structure must be zero-initialized.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_db_discovery</td><td>Pointer to the DB Discovery structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>The handle of the connection for which the discovery should be started.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ant_evt_handler</td><td>Function to be called for each received ANT event.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>When a NULL pointer is passed as input. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If this function is called without calling the <a class="el" href="a00698.html#gadf327d19a60bf442f7151ae68b601c8a">ble_db_discovery_init</a>, or without calling <a class="el" href="a00698.html#gad3a1e96c90efbe2cf4171d624bafd9cc">ble_db_discovery_evt_register</a>. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_BUSY</td><td>If a discovery is already in progress for the current connection.</td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Successful registration. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Null pointer provided as input. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>This API propagates the error code returned by the SoftDevice API <a class="el" href="a00754.html#gaa778ccc1990e05fffa4aaf304c95e614">sd_ble_gattc_primary_services_discover</a>. </dd></dl>
 
 </div>
 </div>
@@ -304,7 +202,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:39 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:25 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

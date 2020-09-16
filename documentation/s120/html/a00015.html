@@ -144,7 +144,7 @@ Figure 2: GPIO Pin representation using 32-bit bitmask.</div></div>
 <div class="line">                                  high_to_low_bitmask,</div>
 <div class="line">                                  example_gpiote_event_handler);</div>
 <div class="line"></div>
-<div class="line"><span class="keywordflow">if</span> (retval != <a class="code" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span> (retval != <a class="code" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Failed to register with user with GPIO module!</span></div>
 <div class="line"></div>
@@ -189,7 +189,7 @@ Enable/Disable GPIOTE</h1>
 <div class="line"><span class="comment">// Enable notifications for example user module which is already registered.</span></div>
 <div class="line">retval = <a class="code" href="a00505.html#ga486576266f08b96279e514f080911350" title="Function for informing the GPIOTE module that the specified user is done using the GPIOTE module...">app_gpiote_user_disable</a>(m_example_user_id);</div>
 <div class="line"></div>
-<div class="line"><span class="keywordflow">if</span> (retval != <a class="code" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span> (retval != <a class="code" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Enabling notifications failed. Take corrective/needed action.</span></div>
 <div class="line">    .</div>
@@ -204,7 +204,7 @@ Enable/Disable GPIOTE</h1>
 <div class="line"><span class="comment">// Enable notifications for example user module which is already registered.</span></div>
 <div class="line">retval = <a class="code" href="a00505.html#ga50622a63550c442d6ad8a8a0d34b166d" title="Function for informing the GPIOTE module that the specified user wants to use the GPIOTE module...">app_gpiote_user_enable</a>(m_example_user_id);</div>
 <div class="line"></div>
-<div class="line"><span class="keywordflow">if</span> (retval != <a class="code" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span> (retval != <a class="code" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Enabling notifications failed. Take corrective/needed action.</span></div>
 <div class="line">    .</div>
@@ -217,7 +217,7 @@ Reading GPIOTE State</h1>
 <div class="line">uint32_t gpio_pin_state;</div>
 <div class="line"></div>
 <div class="line">retval = <a class="code" href="a00505.html#ga5eaa7bc1dcd21b11a809dbd13b714d75" title="Function for getting the state of the pins which are registered for the specified user...">app_gpiote_pins_state_get</a>(m_example_user_id,&amp;gpio_pin_state);</div>
-<div class="line"><span class="keywordflow">if</span> (retval != <a class="code" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span> (retval != <a class="code" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Failed to read state information. Take corrective action.</span></div>
 <div class="line">}</div>
@@ -238,7 +238,7 @@ Reading GPIOTE State</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

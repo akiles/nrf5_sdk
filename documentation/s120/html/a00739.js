@@ -1,20 +1,10 @@
 var a00739 =
 [
-    [ "Persistent Storage Interface", "a00492.html", "a00492" ],
-    [ "UART module", "a00501.html", "a00501" ],
-    [ "Button Handler", "a00502.html", "a00502" ],
-    [ "FIFO implementation", "a00504.html", "a00504" ],
-    [ "GPIOTE Handler", "a00505.html", "a00505" ],
-    [ "Memory pool", "a00507.html", "a00507" ],
-    [ "SLIP module", "a00508.html", "a00508" ],
-    [ "HCI Transport", "a00509.html", "a00509" ],
-    [ "Scheduler", "a00510.html", "a00510" ],
-    [ "Application Timer", "a00511.html", "a00511" ],
-    [ "Debug Logger", "a00512.html", "a00512" ],
-    [ "Common application error handler", "a00513.html", "a00513" ],
-    [ "Utility Functions and Definitions", "a00514.html", "a00514" ],
-    [ "Utility Functions and Definitions (Platform)", "a00515.html", "a00515" ],
-    [ "SDK Error codes", "a00516.html", "a00516" ],
-    [ "SoftDevice Event Handler", "a00523.html", "a00523" ],
-    [ "Board Support Package", "a00524.html", "a00524" ]
+    [ "Device Manager", "a00701.html", "a00701" ],
+    [ "Assert Handler for debug purposes.", "a00726.html", "a00726" ],
+    [ "DTM - Direct Test Mode", "a00727.html", "a00727" ],
+    [ "Error Log Module", "a00728.html", "a00728" ],
+    [ "Radio Notification Event Handler", "a00729.html", "a00729" ],
+    [ "BLE Date Time characteristic type", "a00730.html", "a00730" ],
+    [ "Flash Manager", "a00735.html", "a00735" ]
 ];

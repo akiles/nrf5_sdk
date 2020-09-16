@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: SLIP handling library</title>
+<title>nRF51 SDK - S110 SoftDevice: Serialization HAL Transport</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,20 +97,33 @@ $(document).ready(function(){initNavTree('a00078.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">SLIP handling library </div>  </div>
+<div class="title">Serialization HAL Transport </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>SLIP layer for supporting packet framing in HCI transport.</p>
-<p>This module implements SLIP packet framing as described in the <em>Bluetooth</em> Core Specification 4.0, Volume 4, Part D, Chapter 3 SLIP Layer.</p>
-<p>SLIP framing ensures that all packets sent on the UART are framed as: &lt;0xC0&gt; SLIP packet 1 &lt;0xC0&gt; &lt;0xC0&gt; SLIP packet 2 &lt;0xC0&gt;.</p>
-<p>The SLIP layer uses events to notify the upper layer when data transmission is complete and when a SLIP packet is received. </p>
+<div class="textblock"><p>This file contains declarations of functions and typedefs used as API of the HAL Transport layer for serialization. This layer is fully hardware independent. Currently the HAL Transport layer is responsible for controlling the PHY layer and memory management. In the future it is possible to add more feature to it as: crc, retransmission etc.</p>
+<p><br/>
+ <br/>
+ </p>
+<div class="image">
+<img src="ser_hal_transport_rx_state_machine.png" alt="ser_hal_transport_rx_state_machine.png"/>
+<div class="caption">
+RX state machine</div></div>
+<p><br/>
+ <br/>
+ </p>
+<div class="image">
+<img src="ser_hal_transport_tx_state_machine.png" alt="ser_hal_transport_tx_state_machine.png"/>
+<div class="caption">
+TX state machine</div></div>
+<p><br/>
+ </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00075.html">Transport Services</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:19 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00073.html">BLE Serialization</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:04 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

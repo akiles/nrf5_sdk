@@ -111,12 +111,12 @@ $(document).ready(function(){initNavTree('a00062.html','');});
 DTM - ble_dtm_init</h1>
 <h2><a class="anchor" id="nrf51_dtm_init_encoding_sec"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00649.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> packet.</p>
-<p>The <a class="el" href="a00649.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> is encoded without a operation code byte. Packet contains only DTM UART configuration (TX pin, RX pin and baud rate).</p>
+<p>Frame format encoding of the <a class="el" href="a00646.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> packet.</p>
+<p>The <a class="el" href="a00646.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> is encoded without a operation code byte. Packet contains only DTM UART configuration (TX pin, RX pin and baud rate).</p>
 <ul>
 <li>DTM UART transmit pin - <a class="el" href="a00091.html#aa13645e8ecb6cb1970dba53fabe08b40">app_uart_stream_comm_params_t::tx_pin_no</a>.</li>
 <li>DTM UART receive pin - <a class="el" href="a00091.html#a1bb6d6aa16efc7c4d2caee51d8058213">app_uart_stream_comm_params_t::rx_pin_no</a>.</li>
-<li>DTM UART baud rate - <a class="el" href="a00649.html#ga4f36ceda1498e6231fbd9a48ceebdb65">app_uart_stream_baud_rate_t</a>.</li>
+<li>DTM UART baud rate - <a class="el" href="a00646.html#ga4f36ceda1498e6231fbd9a48ceebdb65">app_uart_stream_baud_rate_t</a>.</li>
 </ul>
 <p>The order of the encoding is:</p>
 <table class="doxtable">
@@ -139,12 +139,12 @@ Figure 1: Encoding of ble_dtm_init.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_dtm_init_encoding_rsp_dec"></a>
 Response packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00649.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> response packet:</p>
+<p>Frame format encoding of the <a class="el" href="a00646.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00649.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00646.html#gaf82881609a5e3efe62e1b6e503eee0cd">ble_dtm_init</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -160,7 +160,7 @@ Figure 2: Packet format for ble_dtm_init response.</div></div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00056.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00058.html">Serialization Codecs</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

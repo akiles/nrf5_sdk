@@ -1,17 +1,13 @@
 var a00670 =
 [
-    [ "ble_gap_evt_adv_report_enc", "a00670.html#ga93048b4d80bc4ab11657fc788fdf1c6d", null ],
-    [ "ble_gap_evt_auth_key_request_enc", "a00670.html#ga78edc18d1b41cc5822a0e4904866b6c4", null ],
-    [ "ble_gap_evt_auth_status_enc", "a00670.html#ga65c8da4916eb3215bbf0c6e9e686fcc5", null ],
-    [ "ble_gap_evt_conn_param_update_enc", "a00670.html#ga6f9b07df6dcf798fa5386b8ca91df2b3", null ],
-    [ "ble_gap_evt_conn_param_update_request_enc", "a00670.html#ga7545e70f2c5fafe64c19f6d9a9800f0a", null ],
-    [ "ble_gap_evt_conn_sec_update_enc", "a00670.html#gae4cc5b956577e034254cbf7d3680dd6d", null ],
-    [ "ble_gap_evt_connected_enc", "a00670.html#ga6075662341210c9ac9692b60be637f93", null ],
-    [ "ble_gap_evt_disconnected_enc", "a00670.html#ga188a070d1b8cee4159d2693c31b3f52b", null ],
-    [ "ble_gap_evt_passkey_display_enc", "a00670.html#gaaeeb566daf25855c1ef83563c419e428", null ],
-    [ "ble_gap_evt_rssi_changed_enc", "a00670.html#gab5a232e2634b6b8a56aed120e3cf6278", null ],
-    [ "ble_gap_evt_sec_info_request_enc", "a00670.html#gaccb1bb5b85fca0bb6a7d21c1f4f5a043", null ],
-    [ "ble_gap_evt_sec_params_request_enc", "a00670.html#ga91b0141a4d30482b15226475ee6b63cc", null ],
-    [ "ble_gap_evt_sec_request_enc", "a00670.html#ga5d27f3934ff20db9034e30402db473fa", null ],
-    [ "ble_gap_evt_timeout_enc", "a00670.html#gab992ac9d69ab23d2fe48dc5675f2c755", null ]
+    [ "ble_gattc_evt_char_disc_rsp_enc", "a00670.html#gaf8c1a3eff3b637d8a9db2d44f67742eb", null ],
+    [ "ble_gattc_evt_char_val_by_uuid_read_rsp_enc", "a00670.html#gac26625716572381fea40c8d613f838dd", null ],
+    [ "ble_gattc_evt_char_vals_read_rsp_enc", "a00670.html#ga6ee65faef5d1af3f60fdc8477d12038e", null ],
+    [ "ble_gattc_evt_desc_disc_rsp_enc", "a00670.html#gae2e97cacaa4cbbbfb407ca12405cf95d", null ],
+    [ "ble_gattc_evt_hvx_enc", "a00670.html#gae1e4a71f425cd5536aa4b22c119f85ac", null ],
+    [ "ble_gattc_evt_prim_srvc_disc_rsp_enc", "a00670.html#gaa7c696cbff1b0d1b6538aca76789195f", null ],
+    [ "ble_gattc_evt_read_rsp_enc", "a00670.html#ga5808156fdb9bc6fccf7b0b3a711a5f7e", null ],
+    [ "ble_gattc_evt_rel_disc_rsp_enc", "a00670.html#gaf5abb2cfd5546226e3d2f16e65e098f9", null ],
+    [ "ble_gattc_evt_timeout_enc", "a00670.html#gad98cd947b04d0d25bc7179e92f0fd860", null ],
+    [ "ble_gattc_evt_write_rsp_enc", "a00670.html#ga606a63a12e8c05605a6ddea0214a13f8", null ]
 ];

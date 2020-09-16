@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['interrupt_2ddriven_20event_20retrieval',['Interrupt-driven Event Retrieval',['../a00582.html',1,'']]],
-  ['initialization_20and_20setup',['Initialization and Setup',['../a00706.html',1,'']]],
+  ['interrupt_2ddriven_20event_20retrieval',['Interrupt-driven Event Retrieval',['../a00579.html',1,'']]],
+  ['initialization_20and_20setup',['Initialization and Setup',['../a00708.html',1,'']]],
   ['id',['id',['../a00135.html#a6319f6981dbbcff973574420e81090ce',1,'ble_gap_sec_kdist_t']]],
   ['id_5faddr_5finfo',['id_addr_info',['../a00129.html#a1bd1659b09527f11f048c6e26cc7dfbe',1,'ble_gap_id_key_t::id_addr_info()'],['../a00201.html#a5dace1f70260c67a952b35558abe1848',1,'dm_id_key::id_addr_info()']]],
   ['id_5finfo',['id_info',['../a00124.html#a301c28abac3bf1f2f38d2b95854695cd',1,'ble_gap_evt_sec_info_request_t::id_info()'],['../a00129.html#afacb110ee8e9be828954f516a04008ad',1,'ble_gap_id_key_t::id_info()'],['../a00201.html#a7a76b44b4742836f0dffd4ce52418faf',1,'dm_id_key::id_info()']]],

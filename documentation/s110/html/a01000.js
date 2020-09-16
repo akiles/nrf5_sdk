@@ -1,14 +1,4 @@
 var a01000 =
 [
-    [ "ble_error_log_data_t", "a00200.html", [
-      [ "err_code", "a00200.html#a7399b78d2931ca67335028b94e40fd05", null ],
-      [ "failure", "a00200.html#a0cf6e103864e7945f14c1505b813e6d0", null ],
-      [ "line_number", "a00200.html#a9d8a550dba94f817123c14d6ca401156", null ],
-      [ "message", "a00200.html#aaa3ce88fed3cd597fbd326d647c1b6f8", null ],
-      [ "stack_info", "a00200.html#a4355c5cefad7e512433098a13cbcb706", null ]
-    ] ],
-    [ "ERROR_MESSAGE_LENGTH", "a01000.html#gad86bea2e9fcd0774bb5f9a891aa2bdb5", null ],
-    [ "FLASH_PAGE_ERROR_LOG", "a01000.html#ga8f48afb84b718eda14c45489906fce49", null ],
-    [ "STACK_DUMP_LENGTH", "a01000.html#gad65ee5b47c0b932f924210605a8d635e", null ],
-    [ "ble_error_log_write", "a01000.html#ga17047bf17f360d32faa6b06ba587f444", null ]
+    [ "ble_debug_assert_handler", "a01000.html#ga516d223d23265c3c1095e1543d3691ae", null ]
 ];

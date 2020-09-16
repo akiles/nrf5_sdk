@@ -1,4 +1,5 @@
 var a00704 =
 [
-    [ "Deleting one or all device context", "a00705.html", "a00705" ]
+    [ "GAP Central", "a00709.html", null ],
+    [ "GAP Peripheral", "a00710.html", null ]
 ];

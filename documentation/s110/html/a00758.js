@@ -1,8 +1,12 @@
 var a00758 =
 [
-    [ "nrf_nvmc_page_erase", "a00758.html#ga8cf428dbb2a28a342c3b57cc07869d9d", null ],
-    [ "nrf_nvmc_write_byte", "a00758.html#ga008c6a4096bda07d67f33294af00ad9b", null ],
-    [ "nrf_nvmc_write_bytes", "a00758.html#ga7d566edd65fdc5655ce7be3cd17faba0", null ],
-    [ "nrf_nvmc_write_word", "a00758.html#ga1347c44095f9486554be7c3d62737925", null ],
-    [ "nrf_nvmc_write_words", "a00758.html#ga9ac0536be3127139fb91992e1c5b46c4", null ]
+    [ "nrf_gpiote_outinit_t", "a00758.html#gab280bbb7269ab98a97e7b47d906ef9aa", [
+      [ "NRF_GPIOTE_INITIAL_VALUE_LOW", "a00758.html#ggab280bbb7269ab98a97e7b47d906ef9aaae0df1a0e930bfe3b198a9692d9916667", null ],
+      [ "NRF_GPIOTE_INITIAL_VALUE_HIGH", "a00758.html#ggab280bbb7269ab98a97e7b47d906ef9aaa1fc9af8ce3fcd7165b3c090b564e9aa4", null ]
+    ] ],
+    [ "nrf_gpiote_polarity_t", "a00758.html#ga9a424db0997c11092f8f69d52155dd9d", [
+      [ "NRF_GPIOTE_POLARITY_LOTOHI", "a00758.html#gga9a424db0997c11092f8f69d52155dd9da59dda358a841a81671bd372058b46498", null ],
+      [ "NRF_GPIOTE_POLARITY_HITOLO", "a00758.html#gga9a424db0997c11092f8f69d52155dd9da97c193ac03f0691bea38c2283b55fa8a", null ],
+      [ "NRF_GPIOTE_POLARITY_TOGGLE", "a00758.html#gga9a424db0997c11092f8f69d52155dd9da00487cd8286ff071ca751cd4a00295d5", null ]
+    ] ]
 ];

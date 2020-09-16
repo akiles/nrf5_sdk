@@ -1,9 +1,7 @@
 var a00190 =
 [
-    [ "conn_handle", "a00190.html#aea6b3ca0b15ba3d4684ac2dfaafb584b", null ],
-    [ "curr_char_ind", "a00190.html#a2ca30b7a259a7342dc23272fcd6d889f", null ],
-    [ "curr_srv_ind", "a00190.html#aa598c16586a07aa4b13e38c35b8b803d", null ],
-    [ "discovery_in_progress", "a00190.html#afca8a6f17e6b6d6c40f9fa490ed42b94", null ],
-    [ "services", "a00190.html#a982a55a9d1b9f10e010fcebeea5b8911", null ],
-    [ "srv_count", "a00190.html#a0cbdc7069a26178c67b3b558633fa261", null ]
+    [ "char_count", "a00190.html#a199d43a17b0e41d7904da316db6b98ae", null ],
+    [ "charateristics", "a00190.html#aeeb1c850a101a81108ca109c2f117166", null ],
+    [ "handle_range", "a00190.html#a2300f7ac7bc453bc13fb060d3ff05efc", null ],
+    [ "srv_uuid", "a00190.html#a97887d3332bca8ac17806b8d328e4a2c", null ]
 ];

@@ -23,71 +23,61 @@ struct __FILE
 FILE __stdout;
 FILE __stdin;
 
-static const uint8_t overflow_message[] = "\r\nERROR: BUFFOR OVERFLOW\r\n";
 
 #if defined(__CC_ARM)
-int fgetc(FILE *p_file)
+int fgetc(FILE * p_file)
 {
-  uint8_t input;
-  while (NRF_ERROR_NOT_FOUND == app_uart_get(&input))
-  {
-      // No implementation needed.
-  }
-  return input;
+    uint8_t input;
+    while (app_uart_get(&input) == NRF_ERROR_NOT_FOUND)
+    {
+        // No implementation needed.
+    }
+    return input;
 }
+
 
 int fputc(int ch, FILE * p_file)
 {
-  uint32_t err_code = app_uart_put((uint8_t)ch);
-  if (err_code == NRF_ERROR_NO_MEM)
-  {
-    UNUSED_PARAMETER(app_uart_flush());
-    for (uint32_t i = 0; i < sizeof(overflow_message); i++)
-    {
-      UNUSED_VARIABLE(app_uart_put(overflow_message[i]));
-    }
-  }
-  return ch;
-}
+    UNUSED_PARAMETER(p_file);
 
+    UNUSED_VARIABLE(app_uart_put((uint8_t)ch));
+    return ch;
+}
 #elif defined(__GNUC__)
 
-int _write(int file, const char *ptr, int len)
+
+int _write(int file, const char * p_char, int len)
 {
     int i;
-    uint32_t err_code;
 
     UNUSED_PARAMETER(file);
 
     for (i = 0; i < len; i++)
     {
-      err_code = app_uart_put(*ptr++);
-      if (err_code == NRF_ERROR_NO_MEM)
-      {
-          UNUSED_PARAMETER(app_uart_flush());
-          for (uint32_t i = 0; i < sizeof(overflow_message); i++)
-          {
-              UNUSED_VARIABLE(app_uart_put(overflow_message[i]));
-          }
-      }
+        UNUSED_VARIABLE(app_uart_put(*p_char++));
     }
 
     return len;
 }
 
-int _read(int file, char *ptr, int len)
+
+int _read(int file, char * p_char, int len)
 {
-  int ret_len = len;
-  uint8_t input;
-  UNUSED_PARAMETER(file);
+    int ret_len = len;
+    uint8_t input;
 
-  while (len--)
-  {
-    UNUSED_VARIABLE(app_uart_get(&input));
-    *ptr++ = input;
-  }
+    UNUSED_PARAMETER(file);
 
-  return ret_len;
+    while (len--)
+    {
+        while (app_uart_get(&input) == NRF_ERROR_NOT_FOUND)
+        {
+            // No implementation needed.
+        }
+        *p_char++ = input;
+    }
+
+    return ret_len;
 }
 #endif
 

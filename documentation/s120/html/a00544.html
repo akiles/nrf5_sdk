@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: GAP IO Capabilities</title>
+<title>nRF51 SDK - S120 SoftDevice: GAP Security status sources</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,87 +99,42 @@ $(document).ready(function(){initNavTree('a00544.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">GAP IO Capabilities<div class="ingroups"><a class="el" href="a00745.html">Defines</a></div></div>  </div>
+<div class="title">GAP Security status sources<div class="ingroups"><a class="el" href="a00747.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga4e2f9010ba35ab6488ec181f75786435"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00544.html#ga4e2f9010ba35ab6488ec181f75786435">BLE_GAP_IO_CAPS_DISPLAY_ONLY</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:ga4e2f9010ba35ab6488ec181f75786435"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga88681e29c52a54de028e2ee164d2403b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00544.html#ga88681e29c52a54de028e2ee164d2403b">BLE_GAP_IO_CAPS_DISPLAY_YESNO</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:ga88681e29c52a54de028e2ee164d2403b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga65df849ce31a65393bd89ef65a7575b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00544.html#ga65df849ce31a65393bd89ef65a7575b4">BLE_GAP_IO_CAPS_KEYBOARD_ONLY</a>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:ga65df849ce31a65393bd89ef65a7575b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad11df80d3ac9d375b320363694ec0a03"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00544.html#gad11df80d3ac9d375b320363694ec0a03">BLE_GAP_IO_CAPS_NONE</a>&#160;&#160;&#160;0x03</td></tr>
-<tr class="separator:gad11df80d3ac9d375b320363694ec0a03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaacd3ccc6340303a1edcc7c718f3c1e6f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00544.html#gaacd3ccc6340303a1edcc7c718f3c1e6f">BLE_GAP_IO_CAPS_KEYBOARD_DISPLAY</a>&#160;&#160;&#160;0x04</td></tr>
-<tr class="separator:gaacd3ccc6340303a1edcc7c718f3c1e6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c6035361c3893781b15f788954ea564"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00544.html#ga7c6035361c3893781b15f788954ea564">BLE_GAP_SEC_STATUS_SOURCE_LOCAL</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga7c6035361c3893781b15f788954ea564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd7d314e3a27338396a80cf38c71f1e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00544.html#gacd7d314e3a27338396a80cf38c71f1e2">BLE_GAP_SEC_STATUS_SOURCE_REMOTE</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:gacd7d314e3a27338396a80cf38c71f1e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga4e2f9010ba35ab6488ec181f75786435"></a>
+<a class="anchor" id="ga7c6035361c3893781b15f788954ea564"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GAP_IO_CAPS_DISPLAY_ONLY&#160;&#160;&#160;0x00</td>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_SOURCE_LOCAL&#160;&#160;&#160;0x00</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Display Only. </p>
+<p>Local failure. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga88681e29c52a54de028e2ee164d2403b"></a>
+<a class="anchor" id="gacd7d314e3a27338396a80cf38c71f1e2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GAP_IO_CAPS_DISPLAY_YESNO&#160;&#160;&#160;0x01</td>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_SOURCE_REMOTE&#160;&#160;&#160;0x01</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Display and Yes/No entry. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaacd3ccc6340303a1edcc7c718f3c1e6f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_GAP_IO_CAPS_KEYBOARD_DISPLAY&#160;&#160;&#160;0x04</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Keyboard and Display. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga65df849ce31a65393bd89ef65a7575b4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_GAP_IO_CAPS_KEYBOARD_ONLY&#160;&#160;&#160;0x02</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Keyboard Only. </p>
-
-</div>
-</div>
-<a class="anchor" id="gad11df80d3ac9d375b320363694ec0a03"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_GAP_IO_CAPS_NONE&#160;&#160;&#160;0x03</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>No I/O capabilities. </p>
+<p>Remote failure. </p>
 
 </div>
 </div>
@@ -188,7 +143,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:18 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

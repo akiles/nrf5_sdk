@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_srv_cccd_security_mode_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_sensorsim_state_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,52 +106,48 @@ $(document).ready(function(){initNavTree('a00328.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_srv_cccd_security_mode_t Struct Reference<div class="ingroups"><a class="el" href="a00975.html">Common service definitions</a></div></div>  </div>
+<div class="title">ble_sensorsim_state_t Struct Reference<div class="ingroups"><a class="el" href="a01032.html">Sensor Data Simulator</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Security settings structure.  
+<p>Triangular waveform sensor simulator state.  
  <a href="a00328.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_srv_common.h&gt;</code></p>
+<p><code>#include &lt;ble_sensorsim.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a320070d4ad9b4f4948a8bba65f3853c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a320070d4ad9b4f4948a8bba65f3853c0"></a>
-<a class="el" href="a00209.html">ble_gap_conn_sec_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>cccd_write_perm</b></td></tr>
-<tr class="separator:a320070d4ad9b4f4948a8bba65f3853c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3203f11dcbf8bea6cbe1dcffbf68661"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00209.html">ble_gap_conn_sec_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ab3203f11dcbf8bea6cbe1dcffbf68661">read_perm</a></td></tr>
-<tr class="separator:ab3203f11dcbf8bea6cbe1dcffbf68661"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac8a8cd605d17911a751bf74d72412568"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00209.html">ble_gap_conn_sec_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#ac8a8cd605d17911a751bf74d72412568">write_perm</a></td></tr>
-<tr class="separator:ac8a8cd605d17911a751bf74d72412568"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a607fd7c8e6f2f3e7bbe8dc5d5b44b54e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#a607fd7c8e6f2f3e7bbe8dc5d5b44b54e">current_val</a></td></tr>
+<tr class="separator:a607fd7c8e6f2f3e7bbe8dc5d5b44b54e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21bddc380a89ed66e20f88dfd4da4c8a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00328.html#a21bddc380a89ed66e20f88dfd4da4c8a">is_increasing</a></td></tr>
+<tr class="separator:a21bddc380a89ed66e20f88dfd4da4c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Security settings structure. </p>
-<p>This structure contains the security options needed during initialization of the service. It can be used when the charecteristics contains cccd. </p>
+<div class="textblock"><p>Triangular waveform sensor simulator state. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ab3203f11dcbf8bea6cbe1dcffbf68661"></a>
+<a class="anchor" id="a607fd7c8e6f2f3e7bbe8dc5d5b44b54e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00209.html">ble_gap_conn_sec_mode_t</a> ble_srv_cccd_security_mode_t::read_perm</td>
+          <td class="memname">uint32_t ble_sensorsim_state_t::current_val</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read permissions. </p>
+<p>Current sensor value. </p>
 
 </div>
 </div>
-<a class="anchor" id="ac8a8cd605d17911a751bf74d72412568"></a>
+<a class="anchor" id="a21bddc380a89ed66e20f88dfd4da4c8a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00209.html">ble_gap_conn_sec_mode_t</a> ble_srv_cccd_security_mode_t::write_perm</td>
+          <td class="memname">bool ble_sensorsim_state_t::is_increasing</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write permissions. </p>
+<p>TRUE if the simulator is in increasing state, FALSE otherwise. </p>
 
 </div>
 </div>
@@ -160,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00328.html">ble_srv_cccd_security_mode_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00328.html">ble_sensorsim_state_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

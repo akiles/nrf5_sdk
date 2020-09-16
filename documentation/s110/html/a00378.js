@@ -1,9 +1,6 @@
 var a00378 =
 [
-    [ "base_set", "a00378.html#aa16e258dae73733a2f1acc82d2aff10f", null ],
-    [ "command", "a00378.html#ace7fb69d83a5ef3dc0a35dbdb58cb78a", null ],
-    [ "compare", "a00378.html#a45bdd29ee5d7bc0a20a3d5c06dca7de6", null ],
-    [ "copy_bl", "a00378.html#a0ae5a869c2d4e2ac60daa53b66d2da38", null ],
-    [ "copy_sd", "a00378.html#a7efb4f5913fbaef52ae323305cf6e98c", null ],
-    [ "params", "a00378.html#aac9708bfdfe02c89997f73cb1293f1a5", null ]
+    [ "dst", "a00378.html#ae8afbb5ddb539bf7d5aa63102313210a", null ],
+    [ "len", "a00378.html#a36ada23cb97fb5ec6873d262689cbfdb", null ],
+    [ "src", "a00378.html#a7fab268f5a8db5b0ccc3a4b85d47c0b7", null ]
 ];

@@ -30,22 +30,6 @@
 #define APP_TIMER_PRESCALER      0                     /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_MAX_TIMERS     BSP_APP_TIMERS_NUMBER /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE  2                     /**< Size of timer operation queues. */
- 
-/**@brief Function for error handling, which is called when an error has occurred. 
- *
- * @param[in] error_code  Error code supplied to the handler.
- * @param[in] line_num    Line number where the handler is called.
- * @param[in] p_file_name Pointer to the file name. 
- */
-void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
-{
-    UNUSED_VARIABLE(bsp_indication_set(BSP_INDICATE_FATAL_ERROR));
-
-    for (;;)
-    {
-        // No implementation needed.
-    }
-}
 
 
 /**@brief Function for initializing bsp module.

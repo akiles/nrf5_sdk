@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Bootloader settings API.</title>
+<title>nRF51 SDK - S110 SoftDevice: Bootloader util API.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,43 +99,44 @@ $(document).ready(function(){initNavTree('a00942.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Bootloader settings API.<div class="ingroups"><a class="el" href="a01038.html">Bootloader/DFU API</a></div></div>  </div>
+<div class="title">Bootloader util API.<div class="ingroups"><a class="el" href="a01040.html">Bootloader/DFU API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Bootloader settings module interface.  
+<p>Bootloader util module interface.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga4eb23ec5cff141b518e2d9c9976bcbe7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00942.html#ga4eb23ec5cff141b518e2d9c9976bcbe7">bootloader_util_settings_get</a> (const <a class="el" href="a00338.html">bootloader_settings_t</a> **pp_bootloader_settings)</td></tr>
-<tr class="memdesc:ga4eb23ec5cff141b518e2d9c9976bcbe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the bootloader settings.  <a href="#ga4eb23ec5cff141b518e2d9c9976bcbe7">More...</a><br/></td></tr>
-<tr class="separator:ga4eb23ec5cff141b518e2d9c9976bcbe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1cae97837343b3feb5ff2f5dc5d3ed90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00942.html#ga1cae97837343b3feb5ff2f5dc5d3ed90">bootloader_util_app_start</a> (uint32_t start_addr)</td></tr>
+<tr class="memdesc:ga1cae97837343b3feb5ff2f5dc5d3ed90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for starting the application (or bootloader) at the provided address.  <a href="#ga1cae97837343b3feb5ff2f5dc5d3ed90">More...</a><br/></td></tr>
+<tr class="separator:ga1cae97837343b3feb5ff2f5dc5d3ed90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Bootloader settings module interface. </p>
+<p>Bootloader util module interface. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga4eb23ec5cff141b518e2d9c9976bcbe7"></a>
+<a class="anchor" id="ga1cae97837343b3feb5ff2f5dc5d3ed90"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void bootloader_util_settings_get </td>
+          <td class="memname">void bootloader_util_app_start </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00338.html">bootloader_settings_t</a> **&#160;</td>
-          <td class="paramname"><em>pp_bootloader_settings</em></td><td>)</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>start_addr</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for getting the bootloader settings. </p>
+<p>Function for starting the application (or bootloader) at the provided address. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">pp_bootloader_settings</td><td>Bootloader settings. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">start_addr</td><td>Start address.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>This function will never retrun. Instead it will reset into the application of the provided address. </dd></dl>
 
 </div>
 </div>
@@ -144,7 +145,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

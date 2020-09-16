@@ -144,7 +144,7 @@ $(document).ready(function(){initNavTree('a00068.html','');});
 0x34 - sd_power_system_off</h1>
 <h2><a class="anchor" id="nrf41_nrf51_sd_power_off_sec_function_req"></a>
 Function packet format.</h2>
-<p>Frame format encoding of the <a class="el" href="a00775.html#ga774947ee0e200456ea3aec3fc7f8bd6b">sd_power_system_off</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00777.html#ga774947ee0e200456ea3aec3fc7f8bd6b">sd_power_system_off</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
@@ -168,7 +168,7 @@ Response packet format</h2>
 0x52 - sd_temp_get</h1>
 <h2><a class="anchor" id="nrf41_nrf51_sd_temp_get_sec_function_req"></a>
 Function packet format.</h2>
-<p>Frame format encoding of the <a class="el" href="a00775.html#gade0ea69f513ff1feab2c4f6e1c393313">sd_temp_get</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00777.html#gade0ea69f513ff1feab2c4f6e1c393313">sd_temp_get</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
@@ -188,16 +188,16 @@ Figure 1: Packet format for sd_temp_get function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_sd_temp_get_sub"></a>
 Response packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00775.html#gade0ea69f513ff1feab2c4f6e1c393313">sd_temp_get</a> response packet:</p>
+<p>Frame format encoding of the <a class="el" href="a00777.html#gade0ea69f513ff1feab2c4f6e1c393313">sd_temp_get</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
 <td>1 byte </td><td>Operation Code </td><td>0x52 </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00775.html#gade0ea69f513ff1feab2c4f6e1c393313">sd_temp_get</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00777.html#gade0ea69f513ff1feab2c4f6e1c393313">sd_temp_get</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>Measured Temperature Value </td><td>see <a class="el" href="a00775.html#gade0ea69f513ff1feab2c4f6e1c393313">sd_temp_get</a> </td></tr>
+<td>4 bytes </td><td>Measured Temperature Value </td><td>see <a class="el" href="a00777.html#gade0ea69f513ff1feab2c4f6e1c393313">sd_temp_get</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -211,13 +211,13 @@ Figure 2: Packet format for sd_temp_get response.</div></div>
 0x61 - sd_ble_tx_buffer_count_get</h1>
 <h2><a class="anchor" id="nrf51_tx_buffer_count_get_sec_function"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00743.html#ga37e443c585217475a97e40dfb443a1b6">sd_ble_tx_buffer_count_get</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00745.html#ga37e443c585217475a97e40dfb443a1b6">sd_ble_tx_buffer_count_get</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x61, see <a class="el" href="a00740.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x61, see <a class="el" href="a00742.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Tx Buffer Count Present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
 </table>
@@ -231,19 +231,19 @@ Figure 1: Packet format for sd_ble_tx_buffer_count_get function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_tx_buffer_count_sub"></a>
 Response packet format</h2>
-<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
-<p>Frame format encoding of the <a class="el" href="a00743.html#ga37e443c585217475a97e40dfb443a1b6">sd_ble_tx_buffer_count_get</a> response packet:</p>
+<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
+<p>Frame format encoding of the <a class="el" href="a00745.html#ga37e443c585217475a97e40dfb443a1b6">sd_ble_tx_buffer_count_get</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x61, see <a class="el" href="a00740.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x61, see <a class="el" href="a00742.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00743.html#ga37e443c585217475a97e40dfb443a1b6">sd_ble_tx_buffer_count_get</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00745.html#ga37e443c585217475a97e40dfb443a1b6">sd_ble_tx_buffer_count_get</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Conditional: Tx Buffer Count Present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
 <tr>
-<td>1 byte </td><td>Conditional: Tx Buffer Count </td><td>see <a class="el" href="a00743.html#ga37e443c585217475a97e40dfb443a1b6">sd_ble_tx_buffer_count_get</a> </td></tr>
+<td>1 byte </td><td>Conditional: Tx Buffer Count </td><td>see <a class="el" href="a00745.html#ga37e443c585217475a97e40dfb443a1b6">sd_ble_tx_buffer_count_get</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -257,13 +257,13 @@ Figure 2: Packet format for sd_ble_tx_buffer_count_get function response.</div><
 0x62 - sd_ble_uuid_vs_add</h1>
 <h2><a class="anchor" id="nrf51_uuid_vs_add_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00743.html#ga265b4251110a15120d0aa97e5152163b">sd_ble_uuid_vs_add</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00745.html#ga265b4251110a15120d0aa97e5152163b">sd_ble_uuid_vs_add</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x62, see <a class="el" href="a00740.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x62, see <a class="el" href="a00742.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
 <tr>
 <td>1 byte </td><td>UUID Present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
 <tr>
@@ -281,15 +281,15 @@ Figure 1: Packet format for sd_ble_uuid_vs_add function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_uuid_vs_add_sec_b"></a>
 Response packet format</h2>
-<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
-<p>Frame format encoding of the <a class="el" href="a00743.html#ga265b4251110a15120d0aa97e5152163b">sd_ble_uuid_vs_add</a> response packet:</p>
+<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
+<p>Frame format encoding of the <a class="el" href="a00745.html#ga265b4251110a15120d0aa97e5152163b">sd_ble_uuid_vs_add</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x62, see <a class="el" href="a00740.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x62, see <a class="el" href="a00742.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00743.html#ga265b4251110a15120d0aa97e5152163b">sd_ble_uuid_vs_add</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00745.html#ga265b4251110a15120d0aa97e5152163b">sd_ble_uuid_vs_add</a> </td></tr>
 <tr>
 <td>1 byte </td><td>UUID Type Present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
 <tr>
@@ -307,13 +307,13 @@ Figure 2: Packet format for sd_ble_uuid_vs_add response.</div></div>
 0x63 - sd_ble_uuid_decode</h1>
 <h2><a class="anchor" id="nrf51_uuid_decode_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00743.html#ga53a62e0d6e8604b73c937f89424b89ba">sd_ble_uuid_decode</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00745.html#ga53a62e0d6e8604b73c937f89424b89ba">sd_ble_uuid_decode</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x63, see <a class="el" href="a00740.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x63, see <a class="el" href="a00742.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Length of Raw UUID </td><td>Shall be 2 or 16 bytes </td></tr>
 <tr>
@@ -333,15 +333,15 @@ Figure 1: Packet format for sd_ble_uuid_decode request function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_uuid_decode_sec_b"></a>
 Response packet format</h2>
-<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
-<p>Frame format encoding of the <a class="el" href="a00743.html#ga53a62e0d6e8604b73c937f89424b89ba">sd_ble_uuid_decode</a> response packet:</p>
+<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
+<p>Frame format encoding of the <a class="el" href="a00745.html#ga53a62e0d6e8604b73c937f89424b89ba">sd_ble_uuid_decode</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x63, see <a class="el" href="a00740.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x63, see <a class="el" href="a00742.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00743.html#ga53a62e0d6e8604b73c937f89424b89ba">sd_ble_uuid_decode</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00745.html#ga53a62e0d6e8604b73c937f89424b89ba">sd_ble_uuid_decode</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Conditional: <a class="el" href="a00193.html">ble_uuid_t</a> Present</td><td>0x00 Field not present, 0x01 Field present </td></tr>
 <tr>
@@ -370,13 +370,13 @@ Figure 2: Packet format for sd_ble_uuid_decode response.</div></div>
 0x64 - sd_ble_uuid_encode</h1>
 <h2><a class="anchor" id="nrf51_uuid_encode_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00743.html#ga2e55f7d7e631d072c24f2d6bc0860cc8">sd_ble_uuid_encode</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00745.html#ga2e55f7d7e631d072c24f2d6bc0860cc8">sd_ble_uuid_encode</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x64, see <a class="el" href="a00740.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x64, see <a class="el" href="a00742.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
 <tr>
 <td>1 byte </td><td>UUID Present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
 <tr>
@@ -407,15 +407,15 @@ Figure 1: Packet format for sd_ble_uuid_encode function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_uuid_encode_sec_b"></a>
 Response packet format</h2>
-<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
-<p>Frame format encoding of the <a class="el" href="a00743.html#ga2e55f7d7e631d072c24f2d6bc0860cc8">sd_ble_uuid_encode</a> response packet:</p>
+<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
+<p>Frame format encoding of the <a class="el" href="a00745.html#ga2e55f7d7e631d072c24f2d6bc0860cc8">sd_ble_uuid_encode</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x64, see <a class="el" href="a00740.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x64, see <a class="el" href="a00742.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00743.html#ga2e55f7d7e631d072c24f2d6bc0860cc8">sd_ble_uuid_encode</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00745.html#ga2e55f7d7e631d072c24f2d6bc0860cc8">sd_ble_uuid_encode</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Conditional: Length of encoded UUID </td><td>2 or 16 </td></tr>
 <tr>
@@ -433,13 +433,13 @@ Figure 2: Packet format for sd_ble_uuid_encode response.</div></div>
 0x65 - sd_ble_version_get</h1>
 <h2><a class="anchor" id="nrf51_version_get_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00743.html#gab3ba7bb07fa809e8dccfd27cbba0210a">sd_ble_version_get</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00745.html#gab3ba7bb07fa809e8dccfd27cbba0210a">sd_ble_version_get</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x65, see <a class="el" href="a00740.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x65, see <a class="el" href="a00742.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Version Present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
 </table>
@@ -453,15 +453,15 @@ Figure 1: Packet format for sd_ble_version_get function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_version_get_sec_b"></a>
 Response packet format</h2>
-<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
-<p>Frame format encoding of the <a class="el" href="a00743.html#gab3ba7bb07fa809e8dccfd27cbba0210a">sd_ble_version_get</a> response packet:</p>
+<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
+<p>Frame format encoding of the <a class="el" href="a00745.html#gab3ba7bb07fa809e8dccfd27cbba0210a">sd_ble_version_get</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x65, see <a class="el" href="a00740.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x65, see <a class="el" href="a00742.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00743.html#gab3ba7bb07fa809e8dccfd27cbba0210a">sd_ble_version_get</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00745.html#gab3ba7bb07fa809e8dccfd27cbba0210a">sd_ble_version_get</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Conditional: Version Number </td><td>see <a class="el" href="a00194.html#af18ca1a9b3d80b05042d9121e9d3c9ed">ble_version_t::version_number</a> </td></tr>
 <tr>
@@ -481,15 +481,15 @@ Figure 2: Packet format for sd_ble_version_get response.</div></div>
 0x67 - sd_ble_opt_set</h1>
 <h2><a class="anchor" id="nrf51_opt_set_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00743.html#ga511d431bc3d9ccf9bef09ad20cbf855a">sd_ble_opt_set</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00745.html#ga511d431bc3d9ccf9bef09ad20cbf855a">sd_ble_opt_set</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x67, see <a class="el" href="a00740.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x67, see <a class="el" href="a00742.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>GAP Option ID </td><td>see <a class="el" href="a00743.html#ga511d431bc3d9ccf9bef09ad20cbf855a">sd_ble_opt_set</a> </td></tr>
+<td>4 bytes </td><td>GAP Option ID </td><td>see <a class="el" href="a00745.html#ga511d431bc3d9ccf9bef09ad20cbf855a">sd_ble_opt_set</a> </td></tr>
 <tr>
 <td>1 byte </td><td>GAP Option present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
 <tr>
@@ -506,7 +506,7 @@ Figure 1: Packet format for sd_ble_opt_set function.</div></div>
 <h2><a class="anchor" id="nrf51_opt_set_sec_b"></a>
 Encoding of GAP Option</h2>
 <p>The GAP Option field (if present) is encoded depending on the GAP Option ID field:</p>
-<p>if <code>'GAP Option ID' equals <a class="el" href="a00744.html#gga2da79b1e293414621d79814490a8598ea81b10bb7db3428519b0d18281bafafd4">BLE_GAP_OPT_CH_MAP</a></code>, GAP Option is encoded as follows:</p>
+<p>if <code>'GAP Option ID' equals <a class="el" href="a00746.html#gga2da79b1e293414621d79814490a8598ea81b10bb7db3428519b0d18281bafafd4">BLE_GAP_OPT_CH_MAP</a></code>, GAP Option is encoded as follows:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
@@ -525,14 +525,14 @@ Figure 2: Encoding of GAP Option when Option ID equals BLE_GAP_OPT_CH_MAP.</div>
 </p>
 <h2><a class="anchor" id="nrf51_opt_set_sec_c"></a>
 Response packet format</h2>
-<p>Frame encoding of the <a class="el" href="a00743.html#ga511d431bc3d9ccf9bef09ad20cbf855a">sd_ble_opt_set</a> response packet:</p>
+<p>Frame encoding of the <a class="el" href="a00745.html#ga511d431bc3d9ccf9bef09ad20cbf855a">sd_ble_opt_set</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x67, see <a class="el" href="a00740.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x67, see <a class="el" href="a00742.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00743.html#ga511d431bc3d9ccf9bef09ad20cbf855a">sd_ble_opt_set</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00745.html#ga511d431bc3d9ccf9bef09ad20cbf855a">sd_ble_opt_set</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -546,15 +546,15 @@ Figure 5: Packet format for sd_ble_opt_set response.</div></div>
 0x68 - sd_ble_opt_get</h1>
 <h2><a class="anchor" id="nrf51_opt_get_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00743.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00745.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x68, see <a class="el" href="a00740.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x68, see <a class="el" href="a00742.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>GAP Option ID </td><td>see <a class="el" href="a00743.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> </td></tr>
+<td>4 bytes </td><td>GAP Option ID </td><td>see <a class="el" href="a00745.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> </td></tr>
 <tr>
 <td>1 byte </td><td>GAP Option present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
 </table>
@@ -568,17 +568,17 @@ Figure 1: Packet format for sd_ble_opt_get function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_opt_get_sec_b"></a>
 Response packet format</h2>
-<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
-<p>Frame encoding of the <a class="el" href="a00743.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> response packet:</p>
+<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
+<p>Frame encoding of the <a class="el" href="a00745.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x68, see <a class="el" href="a00740.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x68, see <a class="el" href="a00742.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00743.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00745.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>Conditional: GAP Option ID </td><td>see <a class="el" href="a00743.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> </td></tr>
+<td>4 bytes </td><td>Conditional: GAP Option ID </td><td>see <a class="el" href="a00745.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> </td></tr>
 <tr>
 <td>3 ... 19 bytes </td><td>Conditional: GAP Option </td><td>see <a class="el" href="a00186.html">ble_opt_t</a> </td></tr>
 </table>
@@ -597,7 +597,7 @@ Figure 2: Packet format for sd_ble_opt_get response.</div></div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00056.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00058.html">Serialization Codecs</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

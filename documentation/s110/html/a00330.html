@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_srv_security_mode_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_srv_report_ref_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,49 +106,49 @@ $(document).ready(function(){initNavTree('a00330.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_srv_security_mode_t Struct Reference<div class="ingroups"><a class="el" href="a00975.html">Common service definitions</a></div></div>  </div>
+<div class="title">ble_srv_report_ref_t Struct Reference<div class="ingroups"><a class="el" href="a00977.html">Common service definitions</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Security settings structure.  
+<p>Value of a Report Reference descriptor.  
  <a href="a00330.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_srv_common.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac08fb7f662817574a3792609f0d92637"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00209.html">ble_gap_conn_sec_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00330.html#ac08fb7f662817574a3792609f0d92637">read_perm</a></td></tr>
-<tr class="separator:ac08fb7f662817574a3792609f0d92637"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca8d641cf8e5b5811aa2a2c68035c395"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00209.html">ble_gap_conn_sec_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00330.html#aca8d641cf8e5b5811aa2a2c68035c395">write_perm</a></td></tr>
-<tr class="separator:aca8d641cf8e5b5811aa2a2c68035c395"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4db26fdff00f44138f9f684ff1dfd149"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00330.html#a4db26fdff00f44138f9f684ff1dfd149">report_id</a></td></tr>
+<tr class="separator:a4db26fdff00f44138f9f684ff1dfd149"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a765872684206db6d91ad6de596599434"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00330.html#a765872684206db6d91ad6de596599434">report_type</a></td></tr>
+<tr class="separator:a765872684206db6d91ad6de596599434"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Security settings structure. </p>
-<p>This structure contains the security options needed during initialization of the service. </p>
+<div class="textblock"><p>Value of a Report Reference descriptor. </p>
+<p>This is mapping information which maps the parent characteristic to the Report ID(s) and Report Type(s) defined within a Report Map characteristic. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ac08fb7f662817574a3792609f0d92637"></a>
+<a class="anchor" id="a4db26fdff00f44138f9f684ff1dfd149"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00209.html">ble_gap_conn_sec_mode_t</a> ble_srv_security_mode_t::read_perm</td>
+          <td class="memname">uint8_t ble_srv_report_ref_t::report_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read permissions. </p>
+<p>Non-zero value if these is more than one instance of the same Report Type </p>
 
 </div>
 </div>
-<a class="anchor" id="aca8d641cf8e5b5811aa2a2c68035c395"></a>
+<a class="anchor" id="a765872684206db6d91ad6de596599434"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00209.html">ble_gap_conn_sec_mode_t</a> ble_srv_security_mode_t::write_perm</td>
+          <td class="memname">uint8_t ble_srv_report_ref_t::report_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Write permissions. </p>
+<p>Type of Report characteristic (see <a class="el" href="a00968.html#BLE_HIDS_REPORT_TYPE">BLE_HIDS_REPORT_TYPE</a>) </p>
 
 </div>
 </div>
@@ -157,8 +157,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00330.html">ble_srv_security_mode_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00330.html">ble_srv_report_ref_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

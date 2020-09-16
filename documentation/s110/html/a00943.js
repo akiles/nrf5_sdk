@@ -1,14 +1,18 @@
 var a00943 =
 [
-    [ "bootloader_settings_t", "a00338.html", [
-      [ "app_image_size", "a00338.html#ae0c7e6db30c6f2e8be1dbe1438dd6fa5", null ],
-      [ "bank_0", "a00338.html#af258a4e7aa2091a87bbbf900aee3a473", null ],
-      [ "bank_0_crc", "a00338.html#a48a855222210663d34f20a90f6a3f98e", null ],
-      [ "bank_0_size", "a00338.html#a96f71ee507a86f0f69f9fd21c4f69f42", null ],
-      [ "bank_1", "a00338.html#a10a41bfab6e5113fb16ec3e302d4d81d", null ],
-      [ "bl_image_size", "a00338.html#a754414d2322ab954c6399a37559796bd", null ],
-      [ "sd_image_size", "a00338.html#a482692b4f8d53402e500f1f5aafd81c2", null ],
-      [ "sd_image_start", "a00338.html#aa97a2363588ea364c63c65c9a6b37f17", null ]
-    ] ],
-    [ "bootloader_bank_code_t", "a00943.html#gaa42a54966d007c04ca5fbca6775187f2", null ]
+    [ "Types and definitions.", "a00949.html", "a00949" ],
+    [ "dfu_callback_t", "a00943.html#gaacc31c43e887f7b9f1f462b39f5171c2", null ],
+    [ "dfu_bl_image_swap", "a00943.html#gaa5c719005d3cb149dc8af672c8782037", null ],
+    [ "dfu_bl_image_validate", "a00943.html#ga46075f420f41e2c6fe102a07e0def6e9", null ],
+    [ "dfu_data_pkt_handle", "a00943.html#gaedeca60961c137dbc070c9acba09126f", null ],
+    [ "dfu_image_activate", "a00943.html#gaaa8227795cc1e3d231d2114f79a9017c", null ],
+    [ "dfu_image_validate", "a00943.html#ga025b98379882ab47f9a2585dce60e34c", null ],
+    [ "dfu_init", "a00943.html#ga04aa562312c46cd022b4d4acc7318452", null ],
+    [ "dfu_init_pkt_complete", "a00943.html#ga7029a93e35d44f50a82aacd001069893", null ],
+    [ "dfu_init_pkt_handle", "a00943.html#ga0a7187ec97973d70e1f0d3d9a1747052", null ],
+    [ "dfu_register_callback", "a00943.html#gac459a6787392cac2da15bc87ce7b99c9", null ],
+    [ "dfu_reset", "a00943.html#ga3428f74b8abe841939414cd8669dc017", null ],
+    [ "dfu_sd_image_swap", "a00943.html#gac5f2b2c8faf704d6e2be18df05ceee1b", null ],
+    [ "dfu_sd_image_validate", "a00943.html#ga4d1fb87fd6d01940f8c69cfc08d74cb9", null ],
+    [ "dfu_start_pkt_handle", "a00943.html#ga3ca360d2f4d3e5847815e3b78ee00786", null ]
 ];

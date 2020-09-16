@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Utility Functions and Definitions (Platform)</title>
+<title>nRF51 SDK - S210 SoftDevice: Base defined for SDK Modules</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,102 +97,44 @@ $(document).ready(function(){initNavTree('a00238.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Utility Functions and Definitions (Platform)<div class="ingroups"><a class="el" href="a00270.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">Base defined for SDK Modules<div class="ingroups"><a class="el" href="a00237.html">SDK Error codes</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Various types and definitions available to all applications when using SoftDevice.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gac3db2bb99db38f42bf316a9d0d9ace99"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00238.html#gac3db2bb99db38f42bf316a9d0d9ace99">NRF_APP_PRIORITY_THREAD</a>&#160;&#160;&#160;4</td></tr>
-<tr class="separator:gac3db2bb99db38f42bf316a9d0d9ace99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9864421b965a73b1feef47c3813bf0e2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9864421b965a73b1feef47c3813bf0e2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PACKED</b>(TYPE)&#160;&#160;&#160;__packed TYPE</td></tr>
-<tr class="separator:ga9864421b965a73b1feef47c3813bf0e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga61149a977f6ebdaeb8bdeed626dd9392"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00238.html#ga61149a977f6ebdaeb8bdeed626dd9392">CRITICAL_REGION_ENTER</a>()&#160;&#160;&#160;critical_region_enter()</td></tr>
-<tr class="memdesc:ga61149a977f6ebdaeb8bdeed626dd9392"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for entering a critical region.  <a href="#ga61149a977f6ebdaeb8bdeed626dd9392">More...</a><br/></td></tr>
-<tr class="separator:ga61149a977f6ebdaeb8bdeed626dd9392"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga854878240b628e978f760f75aca4e1cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00238.html#ga854878240b628e978f760f75aca4e1cc">CRITICAL_REGION_EXIT</a>()&#160;&#160;&#160;critical_region_exit()</td></tr>
-<tr class="memdesc:ga854878240b628e978f760f75aca4e1cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for leaving a critical region.  <a href="#ga854878240b628e978f760f75aca4e1cc">More...</a><br/></td></tr>
-<tr class="separator:ga854878240b628e978f760f75aca4e1cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga1a193131d1d5911b1ec53f9541841b1b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00238.html#ga1a193131d1d5911b1ec53f9541841b1b">app_irq_priority_t</a> { <br/>
-&#160;&#160;<b>APP_IRQ_PRIORITY_HIGH</b> = 1, 
-<br/>
-&#160;&#160;<b>APP_IRQ_PRIORITY_MID</b> = 2, 
-<br/>
-&#160;&#160;<b>APP_IRQ_PRIORITY_LOW</b> = 3
-<br/>
- }</td></tr>
-<tr class="memdesc:ga1a193131d1d5911b1ec53f9541841b1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The interrupt priorities available to the application while the SoftDevice is active. <br/></td></tr>
-<tr class="separator:ga1a193131d1d5911b1ec53f9541841b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gafd8142d17a1fd843d3e0bbf7dfbf10a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafd8142d17a1fd843d3e0bbf7dfbf10a3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>critical_region_enter</b> (void)</td></tr>
-<tr class="separator:gafd8142d17a1fd843d3e0bbf7dfbf10a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31258aceb4080335b54832e5ee5ad7d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga31258aceb4080335b54832e5ee5ad7d9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>critical_region_exit</b> (void)</td></tr>
-<tr class="separator:ga31258aceb4080335b54832e5ee5ad7d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3756b7defda416b28928be1af33c4257"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00238.html#ga3756b7defda416b28928be1af33c4257">SDK_ERROR_BASE</a>&#160;&#160;&#160;(<a class="el" href="a00248.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 0x8000)</td></tr>
+<tr class="separator:ga3756b7defda416b28928be1af33c4257"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1fa2dae6c4a22d6592184236f7f8ed4e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00238.html#ga1fa2dae6c4a22d6592184236f7f8ed4e">SDK_COMMON_ERROR_BASE</a>&#160;&#160;&#160;(<a class="el" href="a00248.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 0x0080)</td></tr>
+<tr class="separator:ga1fa2dae6c4a22d6592184236f7f8ed4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Various types and definitions available to all applications when using SoftDevice. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga61149a977f6ebdaeb8bdeed626dd9392"></a>
+<a class="anchor" id="ga1fa2dae6c4a22d6592184236f7f8ed4e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CRITICAL_REGION_ENTER</td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;critical_region_enter()</td>
+          <td class="memname">#define SDK_COMMON_ERROR_BASE&#160;&#160;&#160;(<a class="el" href="a00248.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 0x0080)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Macro for entering a critical region. </p>
-<dl class="section note"><dt>Note</dt><dd>Due to implementation details, there must exist one and only one call to <a class="el" href="a00238.html#ga854878240b628e978f760f75aca4e1cc" title="Macro for leaving a critical region.">CRITICAL_REGION_EXIT()</a> for each call to <a class="el" href="a00238.html#ga61149a977f6ebdaeb8bdeed626dd9392" title="Macro for entering a critical region.">CRITICAL_REGION_ENTER()</a>, and they must be located in the same scope. </dd></dl>
+<p>Base error value to be used for SDK error values. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga854878240b628e978f760f75aca4e1cc"></a>
+<a class="anchor" id="ga3756b7defda416b28928be1af33c4257"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CRITICAL_REGION_EXIT</td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;critical_region_exit()</td>
+          <td class="memname">#define SDK_ERROR_BASE&#160;&#160;&#160;(<a class="el" href="a00248.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 0x8000)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Macro for leaving a critical region. </p>
-<dl class="section note"><dt>Note</dt><dd>Due to implementation details, there must exist one and only one call to <a class="el" href="a00238.html#ga854878240b628e978f760f75aca4e1cc" title="Macro for leaving a critical region.">CRITICAL_REGION_EXIT()</a> for each call to <a class="el" href="a00238.html#ga61149a977f6ebdaeb8bdeed626dd9392" title="Macro for entering a critical region.">CRITICAL_REGION_ENTER()</a>, and they must be located in the same scope. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gac3db2bb99db38f42bf316a9d0d9ace99"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define NRF_APP_PRIORITY_THREAD&#160;&#160;&#160;4</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>"Interrupt level" when running in Thread Mode. </p>
+<p>Base value defined for SDK module identifiers. </p>
 
 </div>
 </div>
@@ -201,7 +143,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>critical_region_exit<
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:42 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:29 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

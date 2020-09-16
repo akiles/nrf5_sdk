@@ -49,8 +49,8 @@ LIBS  = ../../../../../../../components/properitary_rf/esb/gcc/esb_gcc.a
 
 #includes common to all targets
 INC_PATHS  = -I../../../../../../../components/toolchain/gcc
-INC_PATHS += -I../../../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../../../components/toolchain
+INC_PATHS += -I../../../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../../bsp
 INC_PATHS += -I../../../../../../../components/properitary_rf/esb
 

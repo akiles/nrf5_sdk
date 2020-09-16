@@ -1,7 +1,13 @@
 var a00981 =
 [
-    [ "DM_PROTOCOL_CNTXT_ALL", "a00981.html#gabf3d92dc785166cb06763af1c6616b94", null ],
-    [ "DM_PROTOCOL_CNTXT_GATT_CLI_ID", "a00981.html#ga20cd764cccd94fd71cc07c9f5f2c681a", null ],
-    [ "DM_PROTOCOL_CNTXT_GATT_SRVR_ID", "a00981.html#ga40fd38aabb6b0c4ab56549d5189ff366", null ],
-    [ "DM_PROTOCOL_CNTXT_NONE", "a00981.html#gaf4cac13e3128b3131c16d52760393932", null ]
+    [ "ble_tps_init_t", "a00333.html", [
+      [ "initial_tx_power_level", "a00333.html#a5be1f2c1c00932c36837e70c02679072", null ],
+      [ "tps_attr_md", "a00333.html#afc4915bf42eeee72f61614aa1161aa80", null ]
+    ] ],
+    [ "ble_tps_t", "a00334.html", [
+      [ "service_handle", "a00334.html#a4ebaa77023ad95d4ea1bb2a046b9ea80", null ],
+      [ "tx_power_level_handles", "a00334.html#a6b43774912f600a0069a22603c69bc48", null ]
+    ] ],
+    [ "ble_tps_init", "a00981.html#gadf50170201ca904944d8ba0ecb485ba7", null ],
+    [ "ble_tps_tx_power_level_set", "a00981.html#ga6fccb23ed9c10d23d370e5709cdf6d9f", null ]
 ];

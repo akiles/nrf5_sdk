@@ -353,7 +353,7 @@
               <MiscControls>--c99</MiscControls>
               <Define> NRF51 BSP_DEFINES_ONLY BOARD_PCA10028</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\drivers_nrf\simple_uart;..\..\..\..\bsp</IncludePath>
+              <IncludePath>..\..\;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\components\libraries\fifo;..\..\..\..\bsp;..\..\..\..\..\components\libraries\util;..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\components\drivers_nrf\hal</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -439,14 +439,44 @@
           <GroupName>nRF_Drivers</GroupName>
           <Files>
             <File>
+              <FileName>app_uart_fifo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\drivers_nrf\uart\app_uart_fifo.c</FilePath>
+            </File>
+            <File>
               <FileName>nrf_delay.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>nRF_Libraries</GroupName>
+          <Files>
             <File>
-              <FileName>simple_uart.c</FileName>
+              <FileName>app_error.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\drivers_nrf\simple_uart\simple_uart.c</FilePath>
+              <FilePath>..\..\..\..\..\components\libraries\util\app_error.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_fifo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\fifo\app_fifo.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_gpiote.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\gpiote\app_gpiote.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_util_platform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\util\app_util_platform.c</FilePath>
+            </File>
+            <File>
+              <FileName>retarget.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\uart\retarget.c</FilePath>
             </File>
           </Files>
         </Group>

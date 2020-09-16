@@ -60,18 +60,18 @@ ASM_SOURCE_FILES  = ../../../../../../components/toolchain/gcc/gcc_startup_nrf51
 #includes common to all targets
 INC_PATHS  = -I../../include
 INC_PATHS += -I../../../../../../components/toolchain/gcc
-INC_PATHS += -I../../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../../components/toolchain
 INC_PATHS += -I../../
-INC_PATHS += -I../../../../../bsp
 INC_PATHS += -I../../../../../../components/libraries/button
 INC_PATHS += -I../../../../../../components/drivers_nrf/uart
 INC_PATHS += -I../../../../../../components/libraries/fifo
 INC_PATHS += -I../../../../../../components/softdevice/s210/headers
+INC_PATHS += -I../../../../../bsp
 INC_PATHS += -I../../../../../../components/libraries/timer
 INC_PATHS += -I../../../../../../components/libraries/gpiote
-INC_PATHS += -I../../../../../../components/libraries/util
+INC_PATHS += -I../../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../../components/libraries/scheduler
+INC_PATHS += -I../../../../../../components/libraries/util
 
 OBJECT_DIRECTORY = _build
 LISTING_DIRECTORY = $(OBJECT_DIRECTORY)
@@ -86,6 +86,7 @@ CFLAGS += -DTX_PAGE2
 CFLAGS += -DTX_PAGE3
 CFLAGS += -DNRF51
 CFLAGS += -DANT_STACK_SUPPORT_REQD
+CFLAGS += -DS210
 CFLAGS += -DSOFTDEVICE_PRESENT
 CFLAGS += -DBOARD_PCA10031
 CFLAGS += -mcpu=cortex-m0
@@ -112,6 +113,7 @@ ASMFLAGS += -DTX_PAGE2
 ASMFLAGS += -DTX_PAGE3
 ASMFLAGS += -DNRF51
 ASMFLAGS += -DANT_STACK_SUPPORT_REQD
+ASMFLAGS += -DS210
 ASMFLAGS += -DSOFTDEVICE_PRESENT
 ASMFLAGS += -DBOARD_PCA10031
 #default target - first one defined

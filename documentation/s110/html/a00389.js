@@ -1,7 +1,5 @@
 var a00389 =
 [
-    [ "evt_params", "a00389.html#ac2727c3d1dfcfbe1da4b260f6832c592", null ],
-    [ "evt_type", "a00389.html#ada9c2c8b40ebec25ee6c57f193f37314", null ],
-    [ "hw_error", "a00389.html#ae1d5196e1872407a376d8afb69f4ffab", null ],
-    [ "received_pkt", "a00389.html#ae40f6f48b5037861150c1248af401db8", null ]
+    [ "num_of_bytes", "a00389.html#a52ba1214757a5bbc308333735cdbf0d2", null ],
+    [ "p_buffer", "a00389.html#ae2d1620a22cdf63f23e5f13965412cb8", null ]
 ];

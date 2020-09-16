@@ -1,15 +1,15 @@
 var a00003 =
 [
-    [ "BLE libraries", "a00115.html", "a00115" ],
-    [ "BLE Services", "a00116.html", "a00116" ],
-    [ "BLE Serialization", "a00082.html", "a00082" ],
-    [ "RTOS support", "a00079.html", "a00079" ],
-    [ "Transport Services", "a00075.html", "a00075" ],
-    [ "SoftDevice Handler Library", "a00081.html", [
-      [ "Expectations from the application/developer using this library", "a00081.html#expectations", [
-        [ "Preprocessor defines", "a00081.html#compiler_defines", null ],
-        [ "Subscription to events", "a00081.html#function_defines", null ],
-        [ "No direct calls to sd_softdevice_disable and sd_softdevice_enable", "a00081.html#api_usage", null ]
+    [ "BLE libraries", "a00108.html", "a00108" ],
+    [ "BLE Services", "a00109.html", "a00109" ],
+    [ "BLE Serialization", "a00073.html", "a00073" ],
+    [ "RTOS support", "a00095.html", "a00095" ],
+    [ "Transport Services", "a00136.html", "a00136" ],
+    [ "SoftDevice Handler Library", "a00140.html", [
+      [ "Expectations from the application/developer using this library", "a00140.html#expectations", [
+        [ "Preprocessor defines", "a00140.html#compiler_defines", null ],
+        [ "Subscription to events", "a00140.html#function_defines", null ],
+        [ "No direct calls to sd_softdevice_disable and sd_softdevice_enable", "a00140.html#api_usage", null ]
       ] ]
     ] ],
     [ "Button handling library", "a00012.html", null ],
@@ -36,27 +36,27 @@ var a00003 =
       [ "Enable/Disable GPIOTE", "a00016.html#lib_app_gpiote_enable_disable", null ],
       [ "Reading GPIOTE State", "a00016.html#lib_gpiote_get_states", null ]
     ] ],
-    [ "Flash handling library", "a00072.html", null ],
-    [ "Gazell Pairing library", "a00110.html", null ],
-    [ "Persistent Storage Manager", "a00073.html", [
-      [ "Introduction", "a00073.html#pstorage_intro", null ],
-      [ "Application Interface Overview", "a00073.html#pstorage_api_overview", [
-        [ "Initialization", "a00073.html#pstorage_init", null ],
-        [ "Registration", "a00073.html#pstorage_registration", null ],
-        [ "Get Block Identifier", "a00073.html#pstorage_get_block_id", null ],
-        [ "Load Data", "a00073.html#pstorage_load", null ],
-        [ "Store Data", "a00073.html#pstorage_store", null ],
-        [ "Update Data", "a00073.html#pstorage_update", null ],
-        [ "Clear Data", "a00073.html#pstorage_clear", null ],
-        [ "Get Status", "a00073.html#pstorage_status_get", null ]
+    [ "Flash handling library", "a00133.html", null ],
+    [ "Gazell Pairing library", "a00103.html", null ],
+    [ "Persistent Storage Manager", "a00134.html", [
+      [ "Introduction", "a00134.html#pstorage_intro", null ],
+      [ "Application Interface Overview", "a00134.html#pstorage_api_overview", [
+        [ "Initialization", "a00134.html#pstorage_init", null ],
+        [ "Registration", "a00134.html#pstorage_registration", null ],
+        [ "Get Block Identifier", "a00134.html#pstorage_get_block_id", null ],
+        [ "Load Data", "a00134.html#pstorage_load", null ],
+        [ "Store Data", "a00134.html#pstorage_store", null ],
+        [ "Update Data", "a00134.html#pstorage_update", null ],
+        [ "Clear Data", "a00134.html#pstorage_clear", null ],
+        [ "Get Status", "a00134.html#pstorage_status_get", null ]
       ] ],
-      [ "Raw Mode", "a00073.html#pstorage_raw_mode", null ],
-      [ "Specifics and limitations of the SDK implementation", "a00073.html#pstorage_implement_specifics", null ]
+      [ "Raw Mode", "a00134.html#pstorage_raw_mode", null ],
+      [ "Specifics and limitations of the SDK implementation", "a00134.html#pstorage_implement_specifics", null ]
     ] ],
-    [ "Debug Logger", "a00074.html", [
-      [ "Initialization", "a00074.html#lib_trace_init", null ],
-      [ "Debug Logging", "a00074.html#lib_logger_log", null ],
-      [ "Usage by SDK modules and recommendations", "a00074.html#lib_trace_usage", null ]
+    [ "Debug Logger", "a00135.html", [
+      [ "Initialization", "a00135.html#lib_trace_init", null ],
+      [ "Debug Logging", "a00135.html#lib_logger_log", null ],
+      [ "Usage by SDK modules and recommendations", "a00135.html#lib_trace_usage", null ]
     ] ],
     [ "Error module", "a00017.html", null ]
 ];

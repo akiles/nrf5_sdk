@@ -1,5 +1,5 @@
 var a00381 =
 [
-    [ "num_of_bytes", "a00381.html#ac7195123250d62fa6ea18a433f1b002c", null ],
-    [ "p_buffer", "a00381.html#a54c012dbcda11f6bc5af7bbab3ba07d5", null ]
+    [ "error_type", "a00381.html#a5e8316b48a23107bf7983adeae181ee6", null ],
+    [ "hw_error_code", "a00381.html#ae3d54d4d1e511ad693f7927ea4da5d05", null ]
 ];

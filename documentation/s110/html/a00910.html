@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: GAP Application command request encoders and command response decoders</title>
+<title>nRF51 SDK - S110 SoftDevice: GATTC Application command request encoders and command response decoders</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,909 +99,79 @@ $(document).ready(function(){initNavTree('a00910.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">GAP Application command request encoders and command response decoders<div class="ingroups"><a class="el" href="a01078.html">Application s110 codecs</a></div></div>  </div>
+<div class="title">GATTC Application command request encoders and command response decoders<div class="ingroups"><a class="el" href="a01080.html">Application s110 codecs</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GAP Application command request encoders and command response decoders.  
+<p>GATTC Application command request encoders and command response decoders.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga7e1e3dcc671c6bcb1900cf179e8d0275"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga7e1e3dcc671c6bcb1900cf179e8d0275">ble_gap_address_get_req_enc</a> (<a class="el" href="a00206.html">ble_gap_addr_t</a> const *const p_address, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga7e1e3dcc671c6bcb1900cf179e8d0275"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#ga25ce3e4009710d35fd02092ea12bfdc4">sd_ble_gap_address_get</a> command request.  <a href="#ga7e1e3dcc671c6bcb1900cf179e8d0275">More...</a><br/></td></tr>
-<tr class="separator:ga7e1e3dcc671c6bcb1900cf179e8d0275"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1bf334e158ec8a50ded4572e21b1e6bf"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga1bf334e158ec8a50ded4572e21b1e6bf">ble_gap_address_get_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00206.html">ble_gap_addr_t</a> *const p_address, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:ga1bf334e158ec8a50ded4572e21b1e6bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#ga25ce3e4009710d35fd02092ea12bfdc4">sd_ble_gap_address_get</a> command.  <a href="#ga1bf334e158ec8a50ded4572e21b1e6bf">More...</a><br/></td></tr>
-<tr class="separator:ga1bf334e158ec8a50ded4572e21b1e6bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga36227e3bcb65f964245996f778cbb01f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga36227e3bcb65f964245996f778cbb01f">ble_gap_address_set_req_enc</a> (uint8_t addr_cycle_mode, <a class="el" href="a00206.html">ble_gap_addr_t</a> const *const p_addr, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga36227e3bcb65f964245996f778cbb01f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#ga6c68f3d6d9efa837de7b1ee28613e058">sd_ble_gap_address_set</a> command request.  <a href="#ga36227e3bcb65f964245996f778cbb01f">More...</a><br/></td></tr>
-<tr class="separator:ga36227e3bcb65f964245996f778cbb01f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gade14d239f5af6387afb8c2e80ce2f1c5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gade14d239f5af6387afb8c2e80ce2f1c5">ble_gap_address_set_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:gade14d239f5af6387afb8c2e80ce2f1c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#ga6c68f3d6d9efa837de7b1ee28613e058">sd_ble_gap_address_set</a> command.  <a href="#gade14d239f5af6387afb8c2e80ce2f1c5">More...</a><br/></td></tr>
-<tr class="separator:gade14d239f5af6387afb8c2e80ce2f1c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga38b50889e00514373d6f04ebfdf5e4c9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga38b50889e00514373d6f04ebfdf5e4c9">ble_gap_adv_data_set_req_enc</a> (uint8_t const *const p_data, uint8_t dlen, uint8_t const *const p_sr_data, uint8_t srdlen, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga38b50889e00514373d6f04ebfdf5e4c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#gab9b31b762b72a309a725925635c5ad25">sd_ble_gap_adv_data_set</a> command request.  <a href="#ga38b50889e00514373d6f04ebfdf5e4c9">More...</a><br/></td></tr>
-<tr class="separator:ga38b50889e00514373d6f04ebfdf5e4c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf7cf773ee4d5c34702d415a44773f295"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gaf7cf773ee4d5c34702d415a44773f295">ble_gap_adv_data_set_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:gaf7cf773ee4d5c34702d415a44773f295"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#gab9b31b762b72a309a725925635c5ad25">sd_ble_gap_adv_data_set</a> command.  <a href="#gaf7cf773ee4d5c34702d415a44773f295">More...</a><br/></td></tr>
-<tr class="separator:gaf7cf773ee4d5c34702d415a44773f295"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad696da9c58926d3de55f0fa768fd8cea"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gad696da9c58926d3de55f0fa768fd8cea">ble_gap_adv_start_req_enc</a> (<a class="el" href="a00207.html">ble_gap_adv_params_t</a> const *const p_adv_params, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:gad696da9c58926d3de55f0fa768fd8cea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#gab18b2339fa4c752037d9c9cd4df4e551">sd_ble_gap_adv_start</a> command request.  <a href="#gad696da9c58926d3de55f0fa768fd8cea">More...</a><br/></td></tr>
-<tr class="separator:gad696da9c58926d3de55f0fa768fd8cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4e5f40eeb387db896ec2eb6e23bc400a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga4e5f40eeb387db896ec2eb6e23bc400a">ble_gap_adv_start_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:ga4e5f40eeb387db896ec2eb6e23bc400a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#gab18b2339fa4c752037d9c9cd4df4e551">sd_ble_gap_adv_start</a> command.  <a href="#ga4e5f40eeb387db896ec2eb6e23bc400a">More...</a><br/></td></tr>
-<tr class="separator:ga4e5f40eeb387db896ec2eb6e23bc400a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga30cae694aa389384903f99ebca8d9944"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga30cae694aa389384903f99ebca8d9944">ble_gap_tx_power_set_req_enc</a> (int8_t tx_power, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga30cae694aa389384903f99ebca8d9944"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#ga0f1931af876bef39520c58de5ac060ca">sd_ble_gap_tx_power_set</a> command request.  <a href="#ga30cae694aa389384903f99ebca8d9944">More...</a><br/></td></tr>
-<tr class="separator:ga30cae694aa389384903f99ebca8d9944"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3d4cd09941dfd1fd79e2ee452228a156"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga3d4cd09941dfd1fd79e2ee452228a156">ble_gap_tx_power_set_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:ga3d4cd09941dfd1fd79e2ee452228a156"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#ga0f1931af876bef39520c58de5ac060ca">sd_ble_gap_tx_power_set</a> command.  <a href="#ga3d4cd09941dfd1fd79e2ee452228a156">More...</a><br/></td></tr>
-<tr class="separator:ga3d4cd09941dfd1fd79e2ee452228a156"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad79da9fc12521e85316b9c5d94146dd6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gad79da9fc12521e85316b9c5d94146dd6">ble_gap_appearance_get_req_enc</a> (uint16_t const *const p_appearance, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:gad79da9fc12521e85316b9c5d94146dd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#gaed7b29017a130f5c6ef7d12751470643">sd_ble_gap_appearance_get</a> command request.  <a href="#gad79da9fc12521e85316b9c5d94146dd6">More...</a><br/></td></tr>
-<tr class="separator:gad79da9fc12521e85316b9c5d94146dd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab4189ba04fbc060a87a83fac671f0041"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gab4189ba04fbc060a87a83fac671f0041">ble_gap_appearance_get_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint16_t *const p_appearance, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:gab4189ba04fbc060a87a83fac671f0041"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#gaed7b29017a130f5c6ef7d12751470643">sd_ble_gap_appearance_get</a> command.  <a href="#gab4189ba04fbc060a87a83fac671f0041">More...</a><br/></td></tr>
-<tr class="separator:gab4189ba04fbc060a87a83fac671f0041"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad39591c1321a684ce77db83aaf5ac306"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gad39591c1321a684ce77db83aaf5ac306">ble_gap_appearance_set_req_enc</a> (uint16_t appearance, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:gad39591c1321a684ce77db83aaf5ac306"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#gae5be2c237c81bb36ae370887b88da79f">sd_ble_gap_appearance_set</a> command request.  <a href="#gad39591c1321a684ce77db83aaf5ac306">More...</a><br/></td></tr>
-<tr class="separator:gad39591c1321a684ce77db83aaf5ac306"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga602943f7004b858710b0f6dd3d93f554"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga602943f7004b858710b0f6dd3d93f554">ble_gap_appearance_set_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:ga602943f7004b858710b0f6dd3d93f554"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#gae5be2c237c81bb36ae370887b88da79f">sd_ble_gap_appearance_set</a> command.  <a href="#ga602943f7004b858710b0f6dd3d93f554">More...</a><br/></td></tr>
-<tr class="separator:ga602943f7004b858710b0f6dd3d93f554"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga50491180c9c1f50aa8d83931906cc6a7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga50491180c9c1f50aa8d83931906cc6a7">ble_gap_device_name_get_req_enc</a> (uint8_t const *const p_dev_name, uint16_t const *const p_dev_name_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga50491180c9c1f50aa8d83931906cc6a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#ga87e51e8a92f7a1491bd09991ed97b919">sd_ble_gap_device_name_get</a> command request.  <a href="#ga50491180c9c1f50aa8d83931906cc6a7">More...</a><br/></td></tr>
-<tr class="separator:ga50491180c9c1f50aa8d83931906cc6a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga53b1b9298fb531725999b7cb18990ed0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga53b1b9298fb531725999b7cb18990ed0">ble_gap_device_name_get_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint8_t *const p_dev_name, uint16_t *const p_dev_name_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:ga53b1b9298fb531725999b7cb18990ed0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#ga87e51e8a92f7a1491bd09991ed97b919">sd_ble_gap_device_name_get</a> command.  <a href="#ga53b1b9298fb531725999b7cb18990ed0">More...</a><br/></td></tr>
-<tr class="separator:ga53b1b9298fb531725999b7cb18990ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafc3eca145880ebe2963c75829fbaf171"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gafc3eca145880ebe2963c75829fbaf171">ble_gap_device_name_set_req_enc</a> (<a class="el" href="a00209.html">ble_gap_conn_sec_mode_t</a> const *const p_write_perm, uint8_t const *const p_dev_name, uint16_t len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:gafc3eca145880ebe2963c75829fbaf171"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#ga3bf06dc3d5936a48f305ea8f0ba7180a">sd_ble_gap_device_name_set</a> command request.  <a href="#gafc3eca145880ebe2963c75829fbaf171">More...</a><br/></td></tr>
-<tr class="separator:gafc3eca145880ebe2963c75829fbaf171"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaebeeb6e9c1deb0c09a4999fd0740a816"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gaebeeb6e9c1deb0c09a4999fd0740a816">ble_gap_device_name_set_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:gaebeeb6e9c1deb0c09a4999fd0740a816"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#ga3bf06dc3d5936a48f305ea8f0ba7180a">sd_ble_gap_device_name_set</a> command.  <a href="#gaebeeb6e9c1deb0c09a4999fd0740a816">More...</a><br/></td></tr>
-<tr class="separator:gaebeeb6e9c1deb0c09a4999fd0740a816"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa31670d8a86f95167ca1122cf0cbb9c0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gaa31670d8a86f95167ca1122cf0cbb9c0">ble_gap_ppcp_set_req_enc</a> (<a class="el" href="a00208.html">ble_gap_conn_params_t</a> const *const p_conn_params, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:gaa31670d8a86f95167ca1122cf0cbb9c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#ga8c6db7d9bc501929c9cc63b4b04fdfbb">sd_ble_gap_ppcp_set</a> command request.  <a href="#gaa31670d8a86f95167ca1122cf0cbb9c0">More...</a><br/></td></tr>
-<tr class="separator:gaa31670d8a86f95167ca1122cf0cbb9c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6f710147bcdc7fb2a1351a3f81d5cbe5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga6f710147bcdc7fb2a1351a3f81d5cbe5">ble_gap_ppcp_set_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:ga6f710147bcdc7fb2a1351a3f81d5cbe5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#ga8c6db7d9bc501929c9cc63b4b04fdfbb">sd_ble_gap_ppcp_set</a> command.  <a href="#ga6f710147bcdc7fb2a1351a3f81d5cbe5">More...</a><br/></td></tr>
-<tr class="separator:ga6f710147bcdc7fb2a1351a3f81d5cbe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga140af257407f232f48fb22dcfe96cf42"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga140af257407f232f48fb22dcfe96cf42">ble_gap_conn_param_update_req_enc</a> (uint16_t conn_handle, <a class="el" href="a00208.html">ble_gap_conn_params_t</a> const *const p_conn_params, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga140af257407f232f48fb22dcfe96cf42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#ga6e9dce98f85415d2fc3c47f8a599f8fd">sd_ble_gap_conn_param_update</a> command request.  <a href="#ga140af257407f232f48fb22dcfe96cf42">More...</a><br/></td></tr>
-<tr class="separator:ga140af257407f232f48fb22dcfe96cf42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga75d5c17460b53666e4e02346d3775490"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga75d5c17460b53666e4e02346d3775490">ble_gap_conn_param_update_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:ga75d5c17460b53666e4e02346d3775490"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#ga6e9dce98f85415d2fc3c47f8a599f8fd">sd_ble_gap_conn_param_update</a> command.  <a href="#ga75d5c17460b53666e4e02346d3775490">More...</a><br/></td></tr>
-<tr class="separator:ga75d5c17460b53666e4e02346d3775490"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac65567762a3892e9d4ad90f3b51395dc"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gac65567762a3892e9d4ad90f3b51395dc">ble_gap_disconnect_req_enc</a> (uint16_t conn_handle, uint8_t hci_status_code, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:gac65567762a3892e9d4ad90f3b51395dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#ga4031d0e4034c6f5900ad6d35b763fb0d">sd_ble_gap_disconnect</a> command request.  <a href="#gac65567762a3892e9d4ad90f3b51395dc">More...</a><br/></td></tr>
-<tr class="separator:gac65567762a3892e9d4ad90f3b51395dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga97bcfb3c0e54a890557ad6be3a5f1558"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga97bcfb3c0e54a890557ad6be3a5f1558">ble_gap_disconnect_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:ga97bcfb3c0e54a890557ad6be3a5f1558"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#ga4031d0e4034c6f5900ad6d35b763fb0d">sd_ble_gap_disconnect</a> command.  <a href="#ga97bcfb3c0e54a890557ad6be3a5f1558">More...</a><br/></td></tr>
-<tr class="separator:ga97bcfb3c0e54a890557ad6be3a5f1558"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf170be5cf71abcb874b1dbfc322cea1b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gaf170be5cf71abcb874b1dbfc322cea1b">ble_gap_rssi_stop_req_enc</a> (uint16_t conn_handle, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:gaf170be5cf71abcb874b1dbfc322cea1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#ga6a4a22fdfcab344701c6ab3b27bff339">sd_ble_gap_rssi_stop</a> command request.  <a href="#gaf170be5cf71abcb874b1dbfc322cea1b">More...</a><br/></td></tr>
-<tr class="separator:gaf170be5cf71abcb874b1dbfc322cea1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac3801d187b3742e226aa2ecd7a08d65c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gac3801d187b3742e226aa2ecd7a08d65c">ble_gap_rssi_stop_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:gac3801d187b3742e226aa2ecd7a08d65c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#ga6a4a22fdfcab344701c6ab3b27bff339">sd_ble_gap_rssi_stop</a> command.  <a href="#gac3801d187b3742e226aa2ecd7a08d65c">More...</a><br/></td></tr>
-<tr class="separator:gac3801d187b3742e226aa2ecd7a08d65c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad025a20c228b169843510b65164b3451"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gad025a20c228b169843510b65164b3451">ble_gap_ppcp_get_req_enc</a> (<a class="el" href="a00208.html">ble_gap_conn_params_t</a> const *const p_conn_params, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:gad025a20c228b169843510b65164b3451"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#gad247f5e121219ad8a7fde20a4abc5503">sd_ble_gap_ppcp_get</a> command request.  <a href="#gad025a20c228b169843510b65164b3451">More...</a><br/></td></tr>
-<tr class="separator:gad025a20c228b169843510b65164b3451"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3fe575d7623e31517b16ad277f406653"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga3fe575d7623e31517b16ad277f406653">ble_gap_ppcp_get_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00208.html">ble_gap_conn_params_t</a> *const p_conn_params, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:ga3fe575d7623e31517b16ad277f406653"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#gad247f5e121219ad8a7fde20a4abc5503">sd_ble_gap_ppcp_get</a> command.  <a href="#ga3fe575d7623e31517b16ad277f406653">More...</a><br/></td></tr>
-<tr class="separator:ga3fe575d7623e31517b16ad277f406653"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5fc1ad45940d20198812eaee5e98bbca"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga5fc1ad45940d20198812eaee5e98bbca">ble_gap_auth_key_reply_req_enc</a> (uint16_t conn_handle, uint8_t key_type, uint8_t const *const p_key, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga5fc1ad45940d20198812eaee5e98bbca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#gab974758d1deeb1686fa4b3a0c4171f8c">sd_ble_gap_auth_key_reply</a> command request.  <a href="#ga5fc1ad45940d20198812eaee5e98bbca">More...</a><br/></td></tr>
-<tr class="separator:ga5fc1ad45940d20198812eaee5e98bbca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7fd4baf7ca5f628913b84e7b9e92fbc8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga7fd4baf7ca5f628913b84e7b9e92fbc8">ble_gap_auth_key_reply_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:ga7fd4baf7ca5f628913b84e7b9e92fbc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#gab974758d1deeb1686fa4b3a0c4171f8c">sd_ble_gap_auth_key_reply</a> command.  <a href="#ga7fd4baf7ca5f628913b84e7b9e92fbc8">More...</a><br/></td></tr>
-<tr class="separator:ga7fd4baf7ca5f628913b84e7b9e92fbc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga041b8976b60a7fa8931bfbd5ace85ea0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga041b8976b60a7fa8931bfbd5ace85ea0">ble_gap_sec_info_reply_req_enc</a> (uint16_t conn_handle, <a class="el" href="a00211.html">ble_gap_enc_info_t</a> const *const p_enc_info, <a class="el" href="a00235.html">ble_gap_sign_info_t</a> const *const p_sign_info, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga041b8976b60a7fa8931bfbd5ace85ea0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#gab4778f689b6f57c01db2a36050ffcffb">sd_ble_gap_sec_info_reply</a> command request.  <a href="#ga041b8976b60a7fa8931bfbd5ace85ea0">More...</a><br/></td></tr>
-<tr class="separator:ga041b8976b60a7fa8931bfbd5ace85ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7315c569a9961c27a21acc6bd9025652"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga7315c569a9961c27a21acc6bd9025652">ble_gap_sec_info_reply_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:ga7315c569a9961c27a21acc6bd9025652"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#gab4778f689b6f57c01db2a36050ffcffb">sd_ble_gap_sec_info_reply</a> command.  <a href="#ga7315c569a9961c27a21acc6bd9025652">More...</a><br/></td></tr>
-<tr class="separator:ga7315c569a9961c27a21acc6bd9025652"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabf56830aa7d542ec251034405f5f0080"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gabf56830aa7d542ec251034405f5f0080">ble_gap_sec_params_reply_req_enc</a> (uint16_t conn_handle, uint8_t sec_status, <a class="el" href="a00234.html">ble_gap_sec_params_t</a> const *const p_sec_params, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:gabf56830aa7d542ec251034405f5f0080"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#ga42a874a285560a4323b9a13cfa61e461">sd_ble_gap_sec_params_reply</a> command request.  <a href="#gabf56830aa7d542ec251034405f5f0080">More...</a><br/></td></tr>
-<tr class="separator:gabf56830aa7d542ec251034405f5f0080"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae2aa56eac6b97630c1697e55b6a3f440"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gae2aa56eac6b97630c1697e55b6a3f440">ble_gap_sec_params_reply_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:gae2aa56eac6b97630c1697e55b6a3f440"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#ga42a874a285560a4323b9a13cfa61e461">sd_ble_gap_sec_params_reply</a> command.  <a href="#gae2aa56eac6b97630c1697e55b6a3f440">More...</a><br/></td></tr>
-<tr class="separator:gae2aa56eac6b97630c1697e55b6a3f440"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga30d12a4e915c0a3bf67f2c67e3eb8491"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga30d12a4e915c0a3bf67f2c67e3eb8491">ble_gap_authenticate_req_enc</a> (uint16_t conn_handle, <a class="el" href="a00234.html">ble_gap_sec_params_t</a> const *const p_sec_params, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga30d12a4e915c0a3bf67f2c67e3eb8491"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#ga36d20f3eb57fdc1dc2a1e5156b3f565c">sd_ble_gap_authenticate</a> command request.  <a href="#ga30d12a4e915c0a3bf67f2c67e3eb8491">More...</a><br/></td></tr>
-<tr class="separator:ga30d12a4e915c0a3bf67f2c67e3eb8491"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa15965fa0d9242f5784a669f0b697a65"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gaa15965fa0d9242f5784a669f0b697a65">ble_gap_authenticate_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:gaa15965fa0d9242f5784a669f0b697a65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#ga36d20f3eb57fdc1dc2a1e5156b3f565c">sd_ble_gap_authenticate</a> command.  <a href="#gaa15965fa0d9242f5784a669f0b697a65">More...</a><br/></td></tr>
-<tr class="separator:gaa15965fa0d9242f5784a669f0b697a65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga193a578a974ea8e585c1cb91955342f4"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga193a578a974ea8e585c1cb91955342f4">ble_gap_adv_stop_req_enc</a> (uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga193a578a974ea8e585c1cb91955342f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#gaa88eea8e9e95dd96a7633e2c62f3ce16">sd_ble_gap_adv_stop</a> command request.  <a href="#ga193a578a974ea8e585c1cb91955342f4">More...</a><br/></td></tr>
-<tr class="separator:ga193a578a974ea8e585c1cb91955342f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab377d0872faeb082f9a693ff947e0205"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gab377d0872faeb082f9a693ff947e0205">ble_gap_adv_stop_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:gab377d0872faeb082f9a693ff947e0205"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#gaa88eea8e9e95dd96a7633e2c62f3ce16">sd_ble_gap_adv_stop</a> command.  <a href="#gab377d0872faeb082f9a693ff947e0205">More...</a><br/></td></tr>
-<tr class="separator:gab377d0872faeb082f9a693ff947e0205"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga93c10592b422530ebaf56232fc393976"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga93c10592b422530ebaf56232fc393976">ble_gap_conn_sec_get_req_enc</a> (uint16_t conn_handle, <a class="el" href="a00210.html">ble_gap_conn_sec_t</a> const *const p_conn_sec, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga93c10592b422530ebaf56232fc393976"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#ga67300e149a5af4a4f67bc928f795db2d">sd_ble_gap_conn_sec_get</a> command request.  <a href="#ga93c10592b422530ebaf56232fc393976">More...</a><br/></td></tr>
-<tr class="separator:ga93c10592b422530ebaf56232fc393976"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga51a80c86e19648b0c3dbb4dd5b7a982e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga51a80c86e19648b0c3dbb4dd5b7a982e">ble_gap_conn_sec_get_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, <a class="el" href="a00210.html">ble_gap_conn_sec_t</a> **const pp_conn_sec, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:ga51a80c86e19648b0c3dbb4dd5b7a982e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#ga67300e149a5af4a4f67bc928f795db2d">sd_ble_gap_conn_sec_get</a> command.  <a href="#ga51a80c86e19648b0c3dbb4dd5b7a982e">More...</a><br/></td></tr>
-<tr class="separator:ga51a80c86e19648b0c3dbb4dd5b7a982e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0927a8e82b6a0b818ed7998d4e83f310"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga0927a8e82b6a0b818ed7998d4e83f310">ble_gap_rssi_start_req_enc</a> (uint16_t conn_handle, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga0927a8e82b6a0b818ed7998d4e83f310"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01047.html#gaa58161bb20610aa9a6223980c837ed19">sd_ble_gap_rssi_start</a> command request.  <a href="#ga0927a8e82b6a0b818ed7998d4e83f310">More...</a><br/></td></tr>
-<tr class="separator:ga0927a8e82b6a0b818ed7998d4e83f310"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7e3bf15cae194bd8d68bad96c75a7529"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga7e3bf15cae194bd8d68bad96c75a7529">ble_gap_rssi_start_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
-<tr class="memdesc:ga7e3bf15cae194bd8d68bad96c75a7529"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01047.html#gaa58161bb20610aa9a6223980c837ed19">sd_ble_gap_rssi_start</a> command.  <a href="#ga7e3bf15cae194bd8d68bad96c75a7529">More...</a><br/></td></tr>
-<tr class="separator:ga7e3bf15cae194bd8d68bad96c75a7529"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga18c7b9f087bfdc0e67ccf80eb24129fb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga18c7b9f087bfdc0e67ccf80eb24129fb">ble_gattc_primary_services_discover_req_enc</a> (uint16_t conn_handle, uint16_t start_handle, <a class="el" href="a00337.html">ble_uuid_t</a> const *const p_srvc_uuid, uint8_t *const p_buf, uint32_t *p_buf_len)</td></tr>
+<tr class="memdesc:ga18c7b9f087bfdc0e67ccf80eb24129fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01056.html#gaa76505638ff5a74edeaad521e37548c8">sd_ble_gattc_primary_services_discover</a> command request.  <a href="#ga18c7b9f087bfdc0e67ccf80eb24129fb">More...</a><br/></td></tr>
+<tr class="separator:ga18c7b9f087bfdc0e67ccf80eb24129fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac19d0ae51f951df9c3d86fae2fed3123"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gac19d0ae51f951df9c3d86fae2fed3123">ble_gattc_primary_services_discover_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
+<tr class="memdesc:gac19d0ae51f951df9c3d86fae2fed3123"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01056.html#gaa76505638ff5a74edeaad521e37548c8">sd_ble_gattc_primary_services_discover</a> command.  <a href="#gac19d0ae51f951df9c3d86fae2fed3123">More...</a><br/></td></tr>
+<tr class="separator:gac19d0ae51f951df9c3d86fae2fed3123"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c5fff977b1ae9cd2c953bd0cd7fe3db"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga7c5fff977b1ae9cd2c953bd0cd7fe3db">ble_gattc_descriptors_discover_req_enc</a> (uint16_t conn_handle, <a class="el" href="a00253.html">ble_gattc_handle_range_t</a> const *const p_handle_range, uint8_t *const p_buf, uint32_t *p_buf_len)</td></tr>
+<tr class="memdesc:ga7c5fff977b1ae9cd2c953bd0cd7fe3db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01056.html#ga6cfe7fcac0dc1601a0edd2f4e97f4012">sd_ble_gattc_descriptors_discover</a> command request.  <a href="#ga7c5fff977b1ae9cd2c953bd0cd7fe3db">More...</a><br/></td></tr>
+<tr class="separator:ga7c5fff977b1ae9cd2c953bd0cd7fe3db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f4e7fef8989487740000818b1ea4ee8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga0f4e7fef8989487740000818b1ea4ee8">ble_gattc_descriptors_discover_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
+<tr class="memdesc:ga0f4e7fef8989487740000818b1ea4ee8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01056.html#ga6cfe7fcac0dc1601a0edd2f4e97f4012">sd_ble_gattc_descriptors_discover</a> command.  <a href="#ga0f4e7fef8989487740000818b1ea4ee8">More...</a><br/></td></tr>
+<tr class="separator:ga0f4e7fef8989487740000818b1ea4ee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga861e272e8df86a37a7f20c14f0c20724"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga861e272e8df86a37a7f20c14f0c20724">ble_gattc_relationships_discover_req_enc</a> (uint16_t conn_handle, <a class="el" href="a00253.html">ble_gattc_handle_range_t</a> const *const p_handle_range, uint8_t *const p_buf, uint32_t *p_buf_len)</td></tr>
+<tr class="memdesc:ga861e272e8df86a37a7f20c14f0c20724"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01056.html#gaa505bba10fbaf84554ccad41ae914cf3">sd_ble_gattc_relationships_discover</a> command request.  <a href="#ga861e272e8df86a37a7f20c14f0c20724">More...</a><br/></td></tr>
+<tr class="separator:ga861e272e8df86a37a7f20c14f0c20724"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca60596a4e90825a7586fe5aa0aba733"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gaca60596a4e90825a7586fe5aa0aba733">ble_gattc_relationships_discover_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
+<tr class="memdesc:gaca60596a4e90825a7586fe5aa0aba733"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01056.html#gaa505bba10fbaf84554ccad41ae914cf3">sd_ble_gattc_relationships_discover</a> command.  <a href="#gaca60596a4e90825a7586fe5aa0aba733">More...</a><br/></td></tr>
+<tr class="separator:gaca60596a4e90825a7586fe5aa0aba733"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba60986ac1e6bbd0c3a1c434cb46a7b3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gaba60986ac1e6bbd0c3a1c434cb46a7b3">ble_gattc_characteristics_discover_req_enc</a> (uint16_t conn_handle, <a class="el" href="a00253.html">ble_gattc_handle_range_t</a> const *const p_handle_range, uint8_t *const p_buf, uint32_t *p_buf_len)</td></tr>
+<tr class="memdesc:gaba60986ac1e6bbd0c3a1c434cb46a7b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01056.html#ga7052ca469495d7610e88530d2d088da1">sd_ble_gattc_characteristics_discover</a> command request.  <a href="#gaba60986ac1e6bbd0c3a1c434cb46a7b3">More...</a><br/></td></tr>
+<tr class="separator:gaba60986ac1e6bbd0c3a1c434cb46a7b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae846eb2f3c1c0af9b5e0a34ceef2ce2f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gae846eb2f3c1c0af9b5e0a34ceef2ce2f">ble_gattc_characteristics_discover_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
+<tr class="memdesc:gae846eb2f3c1c0af9b5e0a34ceef2ce2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01056.html#ga7052ca469495d7610e88530d2d088da1">sd_ble_gattc_characteristics_discover</a> command.  <a href="#gae846eb2f3c1c0af9b5e0a34ceef2ce2f">More...</a><br/></td></tr>
+<tr class="separator:gae846eb2f3c1c0af9b5e0a34ceef2ce2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga81f8cfc0a0663718fd968b9035dae5ba"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga81f8cfc0a0663718fd968b9035dae5ba">ble_gattc_read_req_enc</a> (uint16_t conn_handle, uint16_t handle, uint16_t offset, uint8_t *const p_buf, uint32_t *p_buf_len)</td></tr>
+<tr class="memdesc:ga81f8cfc0a0663718fd968b9035dae5ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01056.html#ga813daa5810a1d2ed31d2d6fe49d3ef11">sd_ble_gattc_read</a> command request.  <a href="#ga81f8cfc0a0663718fd968b9035dae5ba">More...</a><br/></td></tr>
+<tr class="separator:ga81f8cfc0a0663718fd968b9035dae5ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga792f8652a4bcf201e11f452657e3c365"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga792f8652a4bcf201e11f452657e3c365">ble_gattc_read_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
+<tr class="memdesc:ga792f8652a4bcf201e11f452657e3c365"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01056.html#ga813daa5810a1d2ed31d2d6fe49d3ef11">sd_ble_gattc_read</a> command.  <a href="#ga792f8652a4bcf201e11f452657e3c365">More...</a><br/></td></tr>
+<tr class="separator:ga792f8652a4bcf201e11f452657e3c365"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga39df63acd13f0dce6cef7e53a09381e6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga39df63acd13f0dce6cef7e53a09381e6">ble_gattc_char_values_read_req_enc</a> (uint16_t conn_handle, uint16_t const *const p_handles, uint16_t handle_count, uint8_t *const p_buf, uint32_t *p_buf_len)</td></tr>
+<tr class="memdesc:ga39df63acd13f0dce6cef7e53a09381e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01056.html#gacbdf576af1acf60fc63b7002e0a98322">sd_ble_gattc_char_values_read</a> command request.  <a href="#ga39df63acd13f0dce6cef7e53a09381e6">More...</a><br/></td></tr>
+<tr class="separator:ga39df63acd13f0dce6cef7e53a09381e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9b628dd3b75a0e1e2f49cb705f56cc92"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga9b628dd3b75a0e1e2f49cb705f56cc92">ble_gattc_char_values_read_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
+<tr class="memdesc:ga9b628dd3b75a0e1e2f49cb705f56cc92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01056.html#gacbdf576af1acf60fc63b7002e0a98322">sd_ble_gattc_char_values_read</a> command.  <a href="#ga9b628dd3b75a0e1e2f49cb705f56cc92">More...</a><br/></td></tr>
+<tr class="separator:ga9b628dd3b75a0e1e2f49cb705f56cc92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga406af7132760d67e18fb5483038a9e1a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga406af7132760d67e18fb5483038a9e1a">ble_gattc_write_req_enc</a> (uint16_t conn_handle, <a class="el" href="a00257.html">ble_gattc_write_params_t</a> const *const p_write_params, uint8_t *const p_buf, uint32_t *p_buf_len)</td></tr>
+<tr class="memdesc:ga406af7132760d67e18fb5483038a9e1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01056.html#gaf608cc468ddeb3504e7d175efaf5c4e3">sd_ble_gattc_write</a> command request.  <a href="#ga406af7132760d67e18fb5483038a9e1a">More...</a><br/></td></tr>
+<tr class="separator:ga406af7132760d67e18fb5483038a9e1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4a3559ff1ac9071778e44a04ed12e4ba"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga4a3559ff1ac9071778e44a04ed12e4ba">ble_gattc_write_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
+<tr class="memdesc:ga4a3559ff1ac9071778e44a04ed12e4ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01056.html#gaf608cc468ddeb3504e7d175efaf5c4e3">sd_ble_gattc_write</a> command.  <a href="#ga4a3559ff1ac9071778e44a04ed12e4ba">More...</a><br/></td></tr>
+<tr class="separator:ga4a3559ff1ac9071778e44a04ed12e4ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0ba1b581e8ef4577b367473756292261"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga0ba1b581e8ef4577b367473756292261">ble_gattc_hv_confirm_req_enc</a> (uint16_t conn_handle, uint16_t handle, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
+<tr class="memdesc:ga0ba1b581e8ef4577b367473756292261"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01056.html#ga173e2d16c9bbd24dcf2c724ded6708a5">sd_ble_gattc_hv_confirm</a> command request.  <a href="#ga0ba1b581e8ef4577b367473756292261">More...</a><br/></td></tr>
+<tr class="separator:ga0ba1b581e8ef4577b367473756292261"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd5ccdc48a78dfcaa498c4cc0d0791a2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gacd5ccdc48a78dfcaa498c4cc0d0791a2">ble_gattc_hv_confirm_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
+<tr class="memdesc:gacd5ccdc48a78dfcaa498c4cc0d0791a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01056.html#ga173e2d16c9bbd24dcf2c724ded6708a5">sd_ble_gattc_hv_confirm</a> command.  <a href="#gacd5ccdc48a78dfcaa498c4cc0d0791a2">More...</a><br/></td></tr>
+<tr class="separator:gacd5ccdc48a78dfcaa498c4cc0d0791a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2cecdef8b24bf9f3c80c72a379e91c70"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#ga2cecdef8b24bf9f3c80c72a379e91c70">ble_gattc_char_value_by_uuid_read_req_enc</a> (uint16_t conn_handle, <a class="el" href="a00337.html">ble_uuid_t</a> const *const p_uuid, <a class="el" href="a00253.html">ble_gattc_handle_range_t</a> const *const p_handle_range, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
+<tr class="memdesc:ga2cecdef8b24bf9f3c80c72a379e91c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a01056.html#gafa77a2a57f188051ea8d7761d08843a6">sd_ble_gattc_char_value_by_uuid_read</a> command request.  <a href="#ga2cecdef8b24bf9f3c80c72a379e91c70">More...</a><br/></td></tr>
+<tr class="separator:ga2cecdef8b24bf9f3c80c72a379e91c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae94fe81fe4fe1851d9e90928828c4238"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html#gae94fe81fe4fe1851d9e90928828c4238">ble_gattc_char_value_by_uuid_read_rsp_dec</a> (uint8_t const *const p_buf, uint32_t packet_len, uint32_t *const p_result_code)</td></tr>
+<tr class="memdesc:gae94fe81fe4fe1851d9e90928828c4238"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes response to <a class="el" href="a01056.html#gafa77a2a57f188051ea8d7761d08843a6">sd_ble_gattc_char_value_by_uuid_read</a> command.  <a href="#gae94fe81fe4fe1851d9e90928828c4238">More...</a><br/></td></tr>
+<tr class="separator:gae94fe81fe4fe1851d9e90928828c4238"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>GAP Application command request encoders and command response decoders. </p>
+<p>GATTC Application command request encoders and command response decoders. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga7e1e3dcc671c6bcb1900cf179e8d0275"></a>
+<a class="anchor" id="ga2cecdef8b24bf9f3c80c72a379e91c70"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_address_get_req_enc </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00206.html">ble_gap_addr_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes <a class="el" href="a01047.html#ga25ce3e4009710d35fd02092ea12bfdc4">sd_ble_gap_address_get</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_address_get_encoding">0x71 - sd_ble_gap_address_get</a> for packet format, <a class="el" href="a00910.html#ga1bf334e158ec8a50ded4572e21b1e6bf">ble_gap_address_get_rsp_dec</a> for command response decoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_address</td><td>Pointer to address. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> Size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd><code>p_address</code> will not be updated by the command request encoder. Updated values are set by <a class="el" href="a00910.html#ga1bf334e158ec8a50ded4572e21b1e6bf">ble_gap_address_get_rsp_dec</a>.</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1bf334e158ec8a50ded4572e21b1e6bf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_address_get_rsp_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00206.html">ble_gap_addr_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_address</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_result_code</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decodes response to <a class="el" href="a01047.html#ga25ce3e4009710d35fd02092ea12bfdc4">sd_ble_gap_address_get</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_address_get_encoding">0x71 - sd_ble_gap_address_get</a> for packet format, <a class="el" href="a00910.html#ga7e1e3dcc671c6bcb1900cf179e8d0275">ble_gap_address_get_req_enc</a> for command request encoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_address</td><td>Pointer to address. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command result code.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>Decoding failure. Decoded operation code does not match expected operation code. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga36227e3bcb65f964245996f778cbb01f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_address_set_req_enc </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>addr_cycle_mode</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00206.html">ble_gap_addr_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_addr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes <a class="el" href="a01047.html#ga6c68f3d6d9efa837de7b1ee28613e058">sd_ble_gap_address_set</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_gap_address_set_encoding">0x70 - sd_ble_gap_address_set</a> for packet format, <a class="el" href="a00910.html#gade14d239f5af6387afb8c2e80ce2f1c5">ble_gap_address_set_rsp_dec</a> for command response decoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">addr_cycle_mode</td><td>Address cycle mode. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_addr</td><td>Pointer to address structure. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gade14d239f5af6387afb8c2e80ce2f1c5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_address_set_rsp_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_result_code</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decodes response to <a class="el" href="a01047.html#ga6c68f3d6d9efa837de7b1ee28613e058">sd_ble_gap_address_set</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_gap_address_set_encoding">0x70 - sd_ble_gap_address_set</a> for packet format, <a class="el" href="a00910.html#ga36227e3bcb65f964245996f778cbb01f">ble_gap_address_set_req_enc</a> for command request encoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command result code.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>Decoding failure. Decoded operation code does not match expected operation code. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga38b50889e00514373d6f04ebfdf5e4c9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_adv_data_set_req_enc </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>dlen</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_sr_data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>srdlen</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes <a class="el" href="a01047.html#gab9b31b762b72a309a725925635c5ad25">sd_ble_gap_adv_data_set</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_adv_set_encoding">0x72 - sd_ble_gap_adv_data_set</a> for packet format, <a class="el" href="a00910.html#gaf7cf773ee4d5c34702d415a44773f295">ble_gap_adv_data_set_rsp_dec</a> for command response decoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Raw data to be placed in advertisement packet. If NULL, no changes are made to the current advertisement packet data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dlen</td><td>Data length for p_data. Max size: <a class="el" href="a01045.html#ga6d6ae1b58ea2dc641e4dc30e8e2dcc0b">BLE_GAP_ADV_MAX_SIZE</a> octets. Should be 0 if p_data is NULL, can be 0 if p_data is not NULL. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_sr_data</td><td>Raw data to be placed in scan response packet. If NULL, no changes are made to the current scan response packet data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">srdlen</td><td>Data length for p_sr_data. Max size: <a class="el" href="a01045.html#ga6d6ae1b58ea2dc641e4dc30e8e2dcc0b">BLE_GAP_ADV_MAX_SIZE</a> octets. Should be 0 if p_sr_data is NULL, can be 0 if p_data is not NULL. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> Size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf7cf773ee4d5c34702d415a44773f295"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_adv_data_set_rsp_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_result_code</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decodes response to <a class="el" href="a01047.html#gab9b31b762b72a309a725925635c5ad25">sd_ble_gap_adv_data_set</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_adv_set_encoding">0x72 - sd_ble_gap_adv_data_set</a> for packet format, <a class="el" href="a00910.html#ga38b50889e00514373d6f04ebfdf5e4c9">ble_gap_adv_data_set_req_enc</a> for command request encoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command result code.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>Decoding failure. Decoded operation code does not match expected operation code. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad696da9c58926d3de55f0fa768fd8cea"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_adv_start_req_enc </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00207.html">ble_gap_adv_params_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_adv_params</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes <a class="el" href="a01047.html#gab18b2339fa4c752037d9c9cd4df4e551">sd_ble_gap_adv_start</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_adv_start_encoding">0x73 - sd_ble_gap_adv_start</a> for packet format, <a class="el" href="a00910.html#ga4e5f40eeb387db896ec2eb6e23bc400a">ble_gap_adv_start_rsp_dec</a> for command response decoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_adv_params</td><td>Pointer to advertising parameters structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> Size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4e5f40eeb387db896ec2eb6e23bc400a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_adv_start_rsp_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_result_code</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decodes response to <a class="el" href="a01047.html#gab18b2339fa4c752037d9c9cd4df4e551">sd_ble_gap_adv_start</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_adv_start_encoding">0x73 - sd_ble_gap_adv_start</a> for packet format, <a class="el" href="a00910.html#gad696da9c58926d3de55f0fa768fd8cea">ble_gap_adv_start_req_enc</a> for command request encoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command result code.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>Decoding failure. Decoded operation code does not match expected operation code. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga193a578a974ea8e585c1cb91955342f4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_adv_stop_req_enc </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes <a class="el" href="a01047.html#gaa88eea8e9e95dd96a7633e2c62f3ce16">sd_ble_gap_adv_stop</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_sd_ble_gap_adv_stop">0x74 - sd_ble_gap_adv_stop</a> for packet format, <a class="el" href="a00910.html#gab377d0872faeb082f9a693ff947e0205">ble_gap_adv_stop_rsp_dec</a> for command response decoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab377d0872faeb082f9a693ff947e0205"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_adv_stop_rsp_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_result_code</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decodes response to <a class="el" href="a01047.html#gaa88eea8e9e95dd96a7633e2c62f3ce16">sd_ble_gap_adv_stop</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_sd_ble_gap_adv_stop">0x74 - sd_ble_gap_adv_stop</a> for packet format, <a class="el" href="a00910.html#ga193a578a974ea8e585c1cb91955342f4">ble_gap_adv_stop_req_enc</a> for command request encoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command response result code.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_DATA_SIZE</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>Decoding failure. Decoded operation code does not match expected operation code. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad79da9fc12521e85316b9c5d94146dd6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_appearance_get_req_enc </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t const *const&#160;</td>
-          <td class="paramname"><em>p_appearance</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes <a class="el" href="a01047.html#gaed7b29017a130f5c6ef7d12751470643">sd_ble_gap_appearance_get</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_appearance_get_encoding">0x79 - sd_ble_gap_appearance_get</a> for packet format, <a class="el" href="a00910.html#gab4189ba04fbc060a87a83fac671f0041">ble_gap_appearance_get_rsp_dec</a> for command response decoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_appearance</td><td>Appearance (16-bit), see <a class="el" href="a00839.html">Bluetooth Appearance values</a> </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> Size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd><code>p_appearance</code> will not be updated by the command request encoder. Updated values are set by <a class="el" href="a00910.html#gab4189ba04fbc060a87a83fac671f0041">ble_gap_appearance_get_rsp_dec</a>.</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab4189ba04fbc060a87a83fac671f0041"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_appearance_get_rsp_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *const&#160;</td>
-          <td class="paramname"><em>p_appearance</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_result_code</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decodes response to <a class="el" href="a01047.html#gaed7b29017a130f5c6ef7d12751470643">sd_ble_gap_appearance_get</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_appearance_get_encoding">0x79 - sd_ble_gap_appearance_get</a> for packet format, <a class="el" href="a00910.html#gad79da9fc12521e85316b9c5d94146dd6">ble_gap_appearance_get_req_enc</a> for command request encoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_appearance</td><td>Appearance (16-bit), see <a class="el" href="a00839.html">Bluetooth Appearance values</a>. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command result code.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>Decoding failure. Decoded operation code does not match expected operation code. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad39591c1321a684ce77db83aaf5ac306"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_appearance_set_req_enc </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>appearance</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes <a class="el" href="a01047.html#gae5be2c237c81bb36ae370887b88da79f">sd_ble_gap_appearance_set</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_appearance_set_encoding">0x78 - sd_ble_gap_appearance_set</a> for packet format, <a class="el" href="a00910.html#ga602943f7004b858710b0f6dd3d93f554">ble_gap_appearance_set_rsp_dec</a> for command response decoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">appearance</td><td>Appearance (16-bit), see <a class="el" href="a00839.html">Bluetooth Appearance values</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> Size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga602943f7004b858710b0f6dd3d93f554"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_appearance_set_rsp_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_result_code</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decodes response to <a class="el" href="a01047.html#gae5be2c237c81bb36ae370887b88da79f">sd_ble_gap_appearance_set</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_appearance_set_encoding">0x78 - sd_ble_gap_appearance_set</a> for packet format, <a class="el" href="a00910.html#gad39591c1321a684ce77db83aaf5ac306">ble_gap_appearance_set_req_enc</a> for command request encoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command result code.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>Decoding failure. Decoded operation code does not match expected operation code. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5fc1ad45940d20198812eaee5e98bbca"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_auth_key_reply_req_enc </td>
+          <td class="memname">uint32_t ble_gattc_char_value_by_uuid_read_req_enc </td>
           <td>(</td>
           <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>conn_handle</em>, </td>
@@ -1009,14 +179,14 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>key_type</em>, </td>
+          <td class="paramtype"><a class="el" href="a00337.html">ble_uuid_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_uuid</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_key</em>, </td>
+          <td class="paramtype"><a class="el" href="a00253.html">ble_gattc_handle_range_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_handle_range</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1038,13 +208,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes <a class="el" href="a01047.html#gab974758d1deeb1686fa4b3a0c4171f8c">sd_ble_gap_auth_key_reply</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_auth_key_reply_encoding">0x80 - sd_ble_gap_auth_key_reply</a> for packet format, <a class="el" href="a00910.html#ga7fd4baf7ca5f628913b84e7b9e92fbc8">ble_gap_auth_key_reply_rsp_dec</a> for command response decoder.</dd></dl>
+<p>Encodes <a class="el" href="a01056.html#gafa77a2a57f188051ea8d7761d08843a6">sd_ble_gattc_char_value_by_uuid_read</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_char_value_by_uuid_read_encoding">0x94 - sd_ble_gattc_char_value_by_uuid_read</a> for packet format, <a class="el" href="a00910.html#gae94fe81fe4fe1851d9e90928828c4238">ble_gattc_char_value_by_uuid_read_rsp_dec</a> for command response decoder.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle of the connection. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">key_type</td><td>Key type which defines length of key data as defined for <a class="el" href="a01047.html#gab974758d1deeb1686fa4b3a0c4171f8c">sd_ble_gap_auth_key_reply</a> . </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_key</td><td>Pointer to a buffer which contains key </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_uuid</td><td>Pointer to a characteristic value UUID to read. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_handle_range</td><td>Pointer to the range of handles to perform this procedure on. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
   </table>
@@ -1055,19 +225,18 @@ Functions</h2></td></tr>
     <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
     <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
     <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Encoding failure. Incorrect param provided (key_type). </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga7fd4baf7ca5f628913b84e7b9e92fbc8"></a>
+<a class="anchor" id="gae94fe81fe4fe1851d9e90928828c4238"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_auth_key_reply_rsp_dec </td>
+          <td class="memname">uint32_t ble_gattc_char_value_by_uuid_read_rsp_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -1092,13 +261,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes response to <a class="el" href="a01047.html#gab974758d1deeb1686fa4b3a0c4171f8c">sd_ble_gap_auth_key_reply</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_auth_key_reply_encoding">0x80 - sd_ble_gap_auth_key_reply</a> for packet format, <a class="el" href="a00910.html#ga5fc1ad45940d20198812eaee5e98bbca">ble_gap_auth_key_reply_req_enc</a> for command request encoder.</dd></dl>
+<p>Decodes response to <a class="el" href="a01056.html#gafa77a2a57f188051ea8d7761d08843a6">sd_ble_gattc_char_value_by_uuid_read</a> command. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_char_value_by_uuid_read_encoding">0x94 - sd_ble_gattc_char_value_by_uuid_read</a> for packet format, <a class="el" href="a00910.html#ga2cecdef8b24bf9f3c80c72a379e91c70">ble_gattc_char_value_by_uuid_read_req_enc</a> for command request encoder.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command response result code.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Pointer to command response result code.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1114,489 +283,27 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga30d12a4e915c0a3bf67f2c67e3eb8491"></a>
+<a class="anchor" id="ga39df63acd13f0dce6cef7e53a09381e6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_authenticate_req_enc </td>
+          <td class="memname">uint32_t ble_gattc_char_values_read_req_enc </td>
           <td>(</td>
           <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>conn_handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00234.html">ble_gap_sec_params_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_sec_params</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes <a class="el" href="a01047.html#ga36d20f3eb57fdc1dc2a1e5156b3f565c">sd_ble_gap_authenticate</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_ble_gap_authenticate_encoding">0x7E - sd_ble_gap_authenticate</a> for packet format, <a class="el" href="a00910.html#gaa15965fa0d9242f5784a669f0b697a65">ble_gap_authenticate_rsp_dec</a> for command response decoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle of the connection. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_sec_params</td><td>Pointer to a <a class="el" href="a00234.html">ble_gap_sec_params_t</a> security parameters structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa15965fa0d9242f5784a669f0b697a65"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_authenticate_rsp_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_result_code</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decodes response to <a class="el" href="a01047.html#ga36d20f3eb57fdc1dc2a1e5156b3f565c">sd_ble_gap_authenticate</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_ble_gap_authenticate_encoding">0x7E - sd_ble_gap_authenticate</a> for packet format, <a class="el" href="a00910.html#ga30d12a4e915c0a3bf67f2c67e3eb8491">ble_gap_authenticate_req_enc</a> for command request encoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command response result code.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_DATA_SIZE</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>Decoding failure. Decoded operation code does not match expected operation code. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga140af257407f232f48fb22dcfe96cf42"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_conn_param_update_req_enc </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>conn_handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00208.html">ble_gap_conn_params_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_conn_params</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes <a class="el" href="a01047.html#ga6e9dce98f85415d2fc3c47f8a599f8fd">sd_ble_gap_conn_param_update</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_gap_conn_param_update_encoding">0x75 - sd_ble_gap_conn_param_update</a> for packet format, <a class="el" href="a00910.html#ga75d5c17460b53666e4e02346d3775490">ble_gap_conn_param_update_rsp_dec</a> for command response decoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle of the connection. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_conn_params</td><td>Pointer to desired connection parameters.. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga75d5c17460b53666e4e02346d3775490"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_conn_param_update_rsp_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_result_code</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decodes response to <a class="el" href="a01047.html#ga6e9dce98f85415d2fc3c47f8a599f8fd">sd_ble_gap_conn_param_update</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_gap_conn_param_update_encoding">0x75 - sd_ble_gap_conn_param_update</a> for packet format, <a class="el" href="a00910.html#ga140af257407f232f48fb22dcfe96cf42">ble_gap_conn_param_update_req_enc</a> for command request encoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command response result code.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_DATA_SIZE</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>Decoding failure. Decoded operation code does not match expected operation code. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga93c10592b422530ebaf56232fc393976"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_conn_sec_get_req_enc </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>conn_handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00210.html">ble_gap_conn_sec_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_conn_sec</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes <a class="el" href="a01047.html#ga67300e149a5af4a4f67bc928f795db2d">sd_ble_gap_conn_sec_get</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_gap_conn_sec_get_encoding">0x82 - sd_ble_gap_conn_sec_get</a> for packet format, <a class="el" href="a00910.html#ga51a80c86e19648b0c3dbb4dd5b7a982e">ble_gap_conn_sec_get_rsp_dec</a> for command response decoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle of the connection. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_conn_sec</td><td>Pointer to <a class="el" href="a00210.html">ble_gap_conn_sec_t</a> which will be filled in response. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga51a80c86e19648b0c3dbb4dd5b7a982e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_conn_sec_get_rsp_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00210.html">ble_gap_conn_sec_t</a> **const&#160;</td>
-          <td class="paramname"><em>pp_conn_sec</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_result_code</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decodes response to <a class="el" href="a01047.html#ga67300e149a5af4a4f67bc928f795db2d">sd_ble_gap_conn_sec_get</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_gap_conn_sec_get_encoding">0x82 - sd_ble_gap_conn_sec_get</a> for packet format, <a class="el" href="a00910.html#ga93c10592b422530ebaf56232fc393976">ble_gap_conn_sec_get_req_enc</a> for command request encoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pp_conn_sec</td><td>Pointer to pointer to <a class="el" href="a00210.html">ble_gap_conn_sec_t</a> which will be filled by the decoded data (if present). </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command response result code.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_DATA_SIZE</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>Decoding failure. Decoded operation code does not match expected operation code. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga50491180c9c1f50aa8d83931906cc6a7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_device_name_get_req_enc </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_dev_name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint16_t const *const&#160;</td>
-          <td class="paramname"><em>p_dev_name_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes <a class="el" href="a01047.html#ga87e51e8a92f7a1491bd09991ed97b919">sd_ble_gap_device_name_get</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_device_name_get_encoding">0x7D - sd_ble_gap_device_name_get</a> for packet format, <a class="el" href="a00910.html#ga53b1b9298fb531725999b7cb18990ed0">ble_gap_device_name_get_rsp_dec</a> for command response decoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_dev_name</td><td>Pointer to an empty buffer where the UTF-8 <b>non NULL-terminated</b> string will be placed. Set to NULL to obtain the complete device name length. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_dev_name_len</td><td>Length of the buffer pointed by p_dev_name. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> Size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd><code>p_dev_name</code> and <code>p_len</code> will not be updated by the command request encoder. Updated values are set by <a class="el" href="a00910.html#ga53b1b9298fb531725999b7cb18990ed0">ble_gap_device_name_get_rsp_dec</a>.</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga53b1b9298fb531725999b7cb18990ed0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_device_name_get_rsp_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_dev_name</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *const&#160;</td>
-          <td class="paramname"><em>p_dev_name_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_result_code</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decodes response to <a class="el" href="a01047.html#ga87e51e8a92f7a1491bd09991ed97b919">sd_ble_gap_device_name_get</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_device_name_get_encoding">0x7D - sd_ble_gap_device_name_get</a> for packet format, <a class="el" href="a00910.html#ga50491180c9c1f50aa8d83931906cc6a7">ble_gap_device_name_get_req_enc</a> for command request encoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_dev_name</td><td>Pointer to an empty buffer where the UTF-8 <b>non NULL-terminated</b> string will be placed. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_dev_name_len</td><td>Length of the buffer pointed by p_dev_name, complete device name length on output. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command result code.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>Decoding failure. Decoded operation code does not match expected operation code. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gafc3eca145880ebe2963c75829fbaf171"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_device_name_set_req_enc </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00209.html">ble_gap_conn_sec_mode_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_write_perm</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_dev_name</em>, </td>
+          <td class="paramname"><em>p_handles</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>len</em>, </td>
+          <td class="paramname"><em>handle_count</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1607,7 +314,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramtype">uint32_t *&#160;</td>
           <td class="paramname"><em>p_buf_len</em>&#160;</td>
         </tr>
         <tr>
@@ -1618,15 +325,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes <a class="el" href="a01047.html#ga3bf06dc3d5936a48f305ea8f0ba7180a">sd_ble_gap_device_name_set</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_device_name_set_encoding">0x7C - sd_ble_gap_device_name_set</a> for packet format, <a class="el" href="a00910.html#gaebeeb6e9c1deb0c09a4999fd0740a816">ble_gap_device_name_set_rsp_dec</a> for command response decoder.</dd></dl>
+<p>Encodes <a class="el" href="a01056.html#gacbdf576af1acf60fc63b7002e0a98322">sd_ble_gattc_char_values_read</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_char_values_read">0x96 - sd_ble_gattc_char_values_read</a> for packet format, <a class="el" href="a00910.html#ga9b628dd3b75a0e1e2f49cb705f56cc92">ble_gattc_char_values_read_rsp_dec</a> for command response decoder.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_write_perm</td><td>Write permissions for the Device Name characteristic see <a class="el" href="a00209.html">ble_gap_conn_sec_mode_t</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_dev_name</td><td>Pointer to a UTF-8 encoded, <b>non NULL-terminated</b> string. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of the UTF-8, <b>non NULL-terminated</b> string pointed to by p_dev_name in octets (must be smaller or equal than <a class="el" href="a01045.html#gac2eb594dd57920a845941ba29990022d">BLE_GAP_DEVNAME_MAX_LEN</a>). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle of the connection. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_handles</td><td>A pointer to the handle(s) of the attribute(s) to be read. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">handle_count</td><td>The number of handles in p_handles. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> Size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1641,12 +348,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaebeeb6e9c1deb0c09a4999fd0740a816"></a>
+<a class="anchor" id="ga9b628dd3b75a0e1e2f49cb705f56cc92"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_device_name_set_rsp_dec </td>
+          <td class="memname">uint32_t ble_gattc_char_values_read_rsp_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -1671,13 +378,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes response to <a class="el" href="a01047.html#ga3bf06dc3d5936a48f305ea8f0ba7180a">sd_ble_gap_device_name_set</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_device_name_set_encoding">0x7C - sd_ble_gap_device_name_set</a> for packet format, <a class="el" href="a00910.html#gafc3eca145880ebe2963c75829fbaf171">ble_gap_device_name_set_req_enc</a> for command request encoder.</dd></dl>
+<p>Decodes response to <a class="el" href="a01056.html#gacbdf576af1acf60fc63b7002e0a98322">sd_ble_gattc_char_values_read</a> command. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_char_values_read">0x96 - sd_ble_gattc_char_values_read</a> for packet format, <a class="el" href="a00910.html#ga39df63acd13f0dce6cef7e53a09381e6">ble_gattc_char_values_read_req_enc</a> for command request encoder.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command result code.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command response result code.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1685,7 +392,7 @@ Functions</h2></td></tr>
   <table class="retval">
     <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
     <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_DATA_SIZE</td><td>Decoding failure. Incorrect buffer length. </td></tr>
     <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>Decoding failure. Decoded operation code does not match expected operation code. </td></tr>
   </table>
   </dd>
@@ -1693,12 +400,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gac65567762a3892e9d4ad90f3b51395dc"></a>
+<a class="anchor" id="gaba60986ac1e6bbd0c3a1c434cb46a7b3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_disconnect_req_enc </td>
+          <td class="memname">uint32_t ble_gattc_characteristics_discover_req_enc </td>
           <td>(</td>
           <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>conn_handle</em>, </td>
@@ -1706,8 +413,8 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>hci_status_code</em>, </td>
+          <td class="paramtype"><a class="el" href="a00253.html">ble_gattc_handle_range_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_handle_range</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1718,7 +425,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramtype">uint32_t *&#160;</td>
           <td class="paramname"><em>p_buf_len</em>&#160;</td>
         </tr>
         <tr>
@@ -1729,12 +436,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes <a class="el" href="a01047.html#ga4031d0e4034c6f5900ad6d35b763fb0d">sd_ble_gap_disconnect</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_disconnect_encoding">0x76 - sd_ble_gap_disconnect</a> for packet format, <a class="el" href="a00910.html#ga97bcfb3c0e54a890557ad6be3a5f1558">ble_gap_disconnect_rsp_dec</a> for command response decoder.</dd></dl>
+<p>Encodes <a class="el" href="a01056.html#ga7052ca469495d7610e88530d2d088da1">sd_ble_gattc_characteristics_discover</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_characteristics_discover_encoding">0x92 - sd_ble_gattc_characteristics_discover</a> for packet format, <a class="el" href="a00910.html#gae846eb2f3c1c0af9b5e0a34ceef2ce2f">ble_gattc_characteristics_discover_rsp_dec</a> for command response decoder.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle of the connection. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">hci_status_code</td><td>HCI status code, see <a class="el" href="a00832.html">Bluetooth status codes</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_handle_range</td><td>A pointer to the range of handles of the Service to perform this procedure on. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
   </table>
@@ -1751,12 +458,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga97bcfb3c0e54a890557ad6be3a5f1558"></a>
+<a class="anchor" id="gae846eb2f3c1c0af9b5e0a34ceef2ce2f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_disconnect_rsp_dec </td>
+          <td class="memname">uint32_t ble_gattc_characteristics_discover_rsp_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -1781,8 +488,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes response to <a class="el" href="a01047.html#ga4031d0e4034c6f5900ad6d35b763fb0d">sd_ble_gap_disconnect</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_disconnect_encoding">0x76 - sd_ble_gap_disconnect</a> for packet format, <a class="el" href="a00910.html#gac65567762a3892e9d4ad90f3b51395dc">ble_gap_disconnect_req_enc</a> for command request encoder.</dd></dl>
+<p>Decodes response to <a class="el" href="a01056.html#ga7052ca469495d7610e88530d2d088da1">sd_ble_gattc_characteristics_discover</a> command. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_characteristics_discover_encoding">0x92 - sd_ble_gattc_characteristics_discover</a> for packet format, <a class="el" href="a00910.html#gac19d0ae51f951df9c3d86fae2fed3123">ble_gattc_primary_services_discover_rsp_dec</a> for command request encoder.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
@@ -1803,226 +510,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gad025a20c228b169843510b65164b3451"></a>
+<a class="anchor" id="ga7c5fff977b1ae9cd2c953bd0cd7fe3db"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_ppcp_get_req_enc </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00208.html">ble_gap_conn_params_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_conn_params</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes <a class="el" href="a01047.html#gad247f5e121219ad8a7fde20a4abc5503">sd_ble_gap_ppcp_get</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_gap_ppcp_get_encoding">0x7B - sd_ble_gap_ppcp_get</a> for packet format, <a class="el" href="a00910.html#ga3fe575d7623e31517b16ad277f406653">ble_gap_ppcp_get_rsp_dec</a> for command response decoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_conn_params</td><td>Pointer to a <a class="el" href="a00208.html">ble_gap_conn_params_t</a> structure where the parameters will be stored. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd><code>p_conn_params</code> will not be updated by the command request encoder. Updated values are set by <a class="el" href="a00910.html#ga3fe575d7623e31517b16ad277f406653">ble_gap_ppcp_get_rsp_dec</a>.</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3fe575d7623e31517b16ad277f406653"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_ppcp_get_rsp_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00208.html">ble_gap_conn_params_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_conn_params</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_result_code</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decodes response to <a class="el" href="a01047.html#gad247f5e121219ad8a7fde20a4abc5503">sd_ble_gap_ppcp_get</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_gap_ppcp_get_encoding">0x7B - sd_ble_gap_ppcp_get</a> for packet format, <a class="el" href="a00910.html#gad025a20c228b169843510b65164b3451">ble_gap_ppcp_get_req_enc</a> for command request encoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_conn_params</td><td>Pointer to a <a class="el" href="a00208.html">ble_gap_conn_params_t</a> structure where the parameters will be stored. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command response result code.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_DATA_SIZE</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>Decoding failure. Decoded operation code does not match expected operation code. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa31670d8a86f95167ca1122cf0cbb9c0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_ppcp_set_req_enc </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00208.html">ble_gap_conn_params_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_conn_params</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes <a class="el" href="a01047.html#ga8c6db7d9bc501929c9cc63b4b04fdfbb">sd_ble_gap_ppcp_set</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_ppcp_set_encoding">0x7A - sd_ble_gap_ppcp_set</a> for packet format, <a class="el" href="a00910.html#ga6f710147bcdc7fb2a1351a3f81d5cbe5">ble_gap_ppcp_set_rsp_dec</a> for command response decoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_conn_params</td><td>Pointer to a <a class="el" href="a00208.html">ble_gap_conn_params_t</a> structure with the desired parameters. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> Size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6f710147bcdc7fb2a1351a3f81d5cbe5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_ppcp_set_rsp_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_result_code</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decodes response to <a class="el" href="a01047.html#ga8c6db7d9bc501929c9cc63b4b04fdfbb">sd_ble_gap_ppcp_set</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_ppcp_set_encoding">0x7A - sd_ble_gap_ppcp_set</a> for packet format, <a class="el" href="a00910.html#gaa31670d8a86f95167ca1122cf0cbb9c0">ble_gap_ppcp_set_req_enc</a> for command request encoder.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command result code.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>Decoding failure. Decoded operation code does not match expected operation code. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga0927a8e82b6a0b818ed7998d4e83f310"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gap_rssi_start_req_enc </td>
+          <td class="memname">uint32_t ble_gattc_descriptors_discover_req_enc </td>
           <td>(</td>
           <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>conn_handle</em>, </td>
@@ -2030,13 +523,19 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="a00253.html">ble_gattc_handle_range_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_handle_range</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">uint8_t *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramtype">uint32_t *&#160;</td>
           <td class="paramname"><em>p_buf_len</em>&#160;</td>
         </tr>
         <tr>
@@ -2047,11 +546,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes <a class="el" href="a01047.html#gaa58161bb20610aa9a6223980c837ed19">sd_ble_gap_rssi_start</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_rssi_start_encoding">0x83 - sd_ble_gap_rssi_start</a> for packet format, <a class="el" href="a00910.html#ga7e3bf15cae194bd8d68bad96c75a7529">ble_gap_rssi_start_rsp_dec</a> for command response decoder.</dd></dl>
+<p>Encodes <a class="el" href="a01056.html#ga6cfe7fcac0dc1601a0edd2f4e97f4012">sd_ble_gattc_descriptors_discover</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_descriptors_discover_encoding">0x93 - sd_ble_gattc_descriptors_discover</a> for packet format, <a class="el" href="a00910.html#ga0f4e7fef8989487740000818b1ea4ee8">ble_gattc_descriptors_discover_rsp_dec</a> for command response decoder.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle of the connection. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_handle_range</td><td>A pointer to the range of handles of the Service to perform this procedure on. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
   </table>
@@ -2068,12 +568,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga7e3bf15cae194bd8d68bad96c75a7529"></a>
+<a class="anchor" id="ga0f4e7fef8989487740000818b1ea4ee8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_rssi_start_rsp_dec </td>
+          <td class="memname">uint32_t ble_gattc_descriptors_discover_rsp_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -2098,8 +598,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes response to <a class="el" href="a01047.html#gaa58161bb20610aa9a6223980c837ed19">sd_ble_gap_rssi_start</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_rssi_start_encoding">0x83 - sd_ble_gap_rssi_start</a> for packet format, <a class="el" href="a00910.html#ga0927a8e82b6a0b818ed7998d4e83f310">ble_gap_rssi_start_req_enc</a> for command request encoder.</dd></dl>
+<p>Decodes response to <a class="el" href="a01056.html#ga6cfe7fcac0dc1601a0edd2f4e97f4012">sd_ble_gattc_descriptors_discover</a> command. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_descriptors_discover_encoding">0x93 - sd_ble_gattc_descriptors_discover</a> for packet format, <a class="el" href="a00910.html#gac19d0ae51f951df9c3d86fae2fed3123">ble_gattc_primary_services_discover_rsp_dec</a> for command request encoder.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
@@ -2120,12 +620,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaf170be5cf71abcb874b1dbfc322cea1b"></a>
+<a class="anchor" id="ga0ba1b581e8ef4577b367473756292261"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_rssi_stop_req_enc </td>
+          <td class="memname">uint32_t ble_gattc_hv_confirm_req_enc </td>
           <td>(</td>
           <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>conn_handle</em>, </td>
@@ -2133,6 +633,12 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">uint8_t *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
         </tr>
@@ -2150,11 +656,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes <a class="el" href="a01047.html#ga6a4a22fdfcab344701c6ab3b27bff339">sd_ble_gap_rssi_stop</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_rssi_stop_encoding">0x84 - sd_ble_gap_rssi_stop</a> for packet format, <a class="el" href="a00910.html#gac3801d187b3742e226aa2ecd7a08d65c">ble_gap_rssi_stop_rsp_dec</a> for command response decoder.</dd></dl>
+<p>Encodes <a class="el" href="a01056.html#ga173e2d16c9bbd24dcf2c724ded6708a5">sd_ble_gattc_hv_confirm</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_hv_confirm">0x98 - sd_ble_gattc_hv_confirm</a> for packet format, <a class="el" href="a00910.html#gacd5ccdc48a78dfcaa498c4cc0d0791a2">ble_gattc_hv_confirm_rsp_dec</a> for command response decoder.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle of the connection. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Handle of the attribute in the indication. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
   </table>
@@ -2171,12 +678,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gac3801d187b3742e226aa2ecd7a08d65c"></a>
+<a class="anchor" id="gacd5ccdc48a78dfcaa498c4cc0d0791a2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_rssi_stop_rsp_dec </td>
+          <td class="memname">uint32_t ble_gattc_hv_confirm_rsp_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -2201,13 +708,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes response to <a class="el" href="a01047.html#ga6a4a22fdfcab344701c6ab3b27bff339">sd_ble_gap_rssi_stop</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_rssi_stop_encoding">0x84 - sd_ble_gap_rssi_stop</a> for packet format, <a class="el" href="a00910.html#gac3801d187b3742e226aa2ecd7a08d65c">ble_gap_rssi_stop_rsp_dec</a> for command response decoder.</dd></dl>
+<p>Decodes response to <a class="el" href="a01056.html#ga173e2d16c9bbd24dcf2c724ded6708a5">sd_ble_gattc_hv_confirm</a> command. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_hv_confirm">0x98 - sd_ble_gattc_hv_confirm</a> for packet format, <a class="el" href="a00910.html#ga0ba1b581e8ef4577b367473756292261">ble_gattc_hv_confirm_req_enc</a> for command request encoder.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command response result code.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Pointer to command response result code.</td></tr>
   </table>
   </dd>
 </dl>
@@ -2223,12 +730,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga041b8976b60a7fa8931bfbd5ace85ea0"></a>
+<a class="anchor" id="ga18c7b9f087bfdc0e67ccf80eb24129fb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_sec_info_reply_req_enc </td>
+          <td class="memname">uint32_t ble_gattc_primary_services_discover_req_enc </td>
           <td>(</td>
           <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>conn_handle</em>, </td>
@@ -2236,14 +743,14 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00211.html">ble_gap_enc_info_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_enc_info</em>, </td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>start_handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00235.html">ble_gap_sign_info_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_sign_info</em>, </td>
+          <td class="paramtype"><a class="el" href="a00337.html">ble_uuid_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_srvc_uuid</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -2254,7 +761,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramtype">uint32_t *&#160;</td>
           <td class="paramname"><em>p_buf_len</em>&#160;</td>
         </tr>
         <tr>
@@ -2265,13 +772,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes <a class="el" href="a01047.html#gab4778f689b6f57c01db2a36050ffcffb">sd_ble_gap_sec_info_reply</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_gap_sec_info_reply_encoding">0x81 - sd_ble_gap_sec_info_reply</a> for packet format, <a class="el" href="a00910.html#ga7315c569a9961c27a21acc6bd9025652">ble_gap_sec_info_reply_rsp_dec</a> for command response decoder.</dd></dl>
+<p>Encodes <a class="el" href="a01056.html#gaa76505638ff5a74edeaad521e37548c8">sd_ble_gattc_primary_services_discover</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_primary_services_discover_encoding">0x90 - sd_ble_gattc_primary_services_discover</a> for packet format, <a class="el" href="a00910.html#gac19d0ae51f951df9c3d86fae2fed3123">ble_gattc_primary_services_discover_rsp_dec</a> for command response decoder.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle of the connection. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_enc_info</td><td>Pointer to a <a class="el" href="a00211.html">ble_gap_enc_info_t</a> encryption information structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_sign_info</td><td>Pointer to a <a class="el" href="a00235.html">ble_gap_sign_info_t</a> signing information structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">start_handle</td><td>Handle to start searching from. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_srvc_uuid</td><td>Pointer to a <a class="el" href="a00337.html">ble_uuid_t</a> which indicates the service UUID to be found. If it is NULL, all primary services will be returned. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
   </table>
@@ -2288,12 +795,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga7315c569a9961c27a21acc6bd9025652"></a>
+<a class="anchor" id="gac19d0ae51f951df9c3d86fae2fed3123"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_sec_info_reply_rsp_dec </td>
+          <td class="memname">uint32_t ble_gattc_primary_services_discover_rsp_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -2318,8 +825,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes response to <a class="el" href="a01047.html#gab4778f689b6f57c01db2a36050ffcffb">sd_ble_gap_sec_info_reply</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_gap_sec_info_reply_encoding">0x81 - sd_ble_gap_sec_info_reply</a> for packet format, <a class="el" href="a00910.html#ga041b8976b60a7fa8931bfbd5ace85ea0">ble_gap_sec_info_reply_req_enc</a> for command request encoder.</dd></dl>
+<p>Decodes response to <a class="el" href="a01056.html#gaa76505638ff5a74edeaad521e37548c8">sd_ble_gattc_primary_services_discover</a> command. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_primary_services_discover_encoding">0x90 - sd_ble_gattc_primary_services_discover</a> for packet format, <a class="el" href="a00910.html#ga18c7b9f087bfdc0e67ccf80eb24129fb">ble_gattc_primary_services_discover_req_enc</a> for command request encoder.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
@@ -2340,12 +847,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gabf56830aa7d542ec251034405f5f0080"></a>
+<a class="anchor" id="ga81f8cfc0a0663718fd968b9035dae5ba"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_sec_params_reply_req_enc </td>
+          <td class="memname">uint32_t ble_gattc_read_req_enc </td>
           <td>(</td>
           <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>conn_handle</em>, </td>
@@ -2353,14 +860,14 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>sec_status</em>, </td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00234.html">ble_gap_sec_params_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_sec_params</em>, </td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -2371,7 +878,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramtype">uint32_t *&#160;</td>
           <td class="paramname"><em>p_buf_len</em>&#160;</td>
         </tr>
         <tr>
@@ -2382,13 +889,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes <a class="el" href="a01047.html#ga42a874a285560a4323b9a13cfa61e461">sd_ble_gap_sec_params_reply</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_sec_params_reply_encoding">0x7F - sd_ble_gap_sec_params_reply</a> for packet format, <a class="el" href="a00910.html#gae2aa56eac6b97630c1697e55b6a3f440">ble_gap_sec_params_reply_rsp_dec</a> for command response decoder.</dd></dl>
+<p>Encodes <a class="el" href="a01056.html#ga813daa5810a1d2ed31d2d6fe49d3ef11">sd_ble_gattc_read</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_read_encoding">0x95 - sd_ble_gattc_read</a> for packet format, <a class="el" href="a00910.html#ga792f8652a4bcf201e11f452657e3c365">ble_gattc_read_rsp_dec</a> for command response decoder.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle of the connection. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">sec_status</td><td>Security status, see <a class="el" href="a00812.html">GAP Security status</a>. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_sec_params</td><td>Pointer to a <a class="el" href="a00234.html">ble_gap_sec_params_t</a> security parameters structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>The handle of the attribute to be read. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Offset into the attribute value to be read. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
   </table>
@@ -2405,12 +912,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gae2aa56eac6b97630c1697e55b6a3f440"></a>
+<a class="anchor" id="ga792f8652a4bcf201e11f452657e3c365"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_sec_params_reply_rsp_dec </td>
+          <td class="memname">uint32_t ble_gattc_read_rsp_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -2435,8 +942,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes response to <a class="el" href="a01047.html#ga42a874a285560a4323b9a13cfa61e461">sd_ble_gap_sec_params_reply</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_sec_params_reply_encoding">0x7F - sd_ble_gap_sec_params_reply</a> for packet format, <a class="el" href="a00910.html#gabf56830aa7d542ec251034405f5f0080">ble_gap_sec_params_reply_req_enc</a> for command request encoder.</dd></dl>
+<p>Decodes response to <a class="el" href="a01056.html#ga813daa5810a1d2ed31d2d6fe49d3ef11">sd_ble_gattc_read</a> command. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_read_encoding">0x95 - sd_ble_gattc_read</a> for packet format, <a class="el" href="a00910.html#ga81f8cfc0a0663718fd968b9035dae5ba">ble_gattc_read_req_enc</a> for command request encoder.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
@@ -2457,15 +964,21 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga30cae694aa389384903f99ebca8d9944"></a>
+<a class="anchor" id="ga861e272e8df86a37a7f20c14f0c20724"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_tx_power_set_req_enc </td>
+          <td class="memname">uint32_t ble_gattc_relationships_discover_req_enc </td>
           <td>(</td>
-          <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>tx_power</em>, </td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00253.html">ble_gattc_handle_range_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_handle_range</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -2476,7 +989,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramtype">uint32_t *&#160;</td>
           <td class="paramname"><em>p_buf_len</em>&#160;</td>
         </tr>
         <tr>
@@ -2487,13 +1000,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes <a class="el" href="a01047.html#ga0f1931af876bef39520c58de5ac060ca">sd_ble_gap_tx_power_set</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_tx_power_set_encoding">0x77 - sd_ble_gap_tx_power_set</a> for packet format, <a class="el" href="a00910.html#ga3d4cd09941dfd1fd79e2ee452228a156">ble_gap_tx_power_set_rsp_dec</a> for command response decoder.</dd></dl>
+<p>Encodes <a class="el" href="a01056.html#gaa505bba10fbaf84554ccad41ae914cf3">sd_ble_gattc_relationships_discover</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_relationships_discover_encoding">0x91 - sd_ble_gattc_relationships_discover</a> for packet format, <a class="el" href="a00910.html#gaca60596a4e90825a7586fe5aa0aba733">ble_gattc_relationships_discover_rsp_dec</a> for command response decoder.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">tx_power</td><td>Radio transmit power in dBm (accepted values are -40, -30, -20, -16, -12, -8, -4, 0, and 4 dBm). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle of the connection. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_handle_range</td><td>A pointer to the range of handles of the Service to perform this procedure on. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> Size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
   </table>
   </dd>
 </dl>
@@ -2508,12 +1022,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga3d4cd09941dfd1fd79e2ee452228a156"></a>
+<a class="anchor" id="gaca60596a4e90825a7586fe5aa0aba733"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gap_tx_power_set_rsp_dec </td>
+          <td class="memname">uint32_t ble_gattc_relationships_discover_rsp_dec </td>
           <td>(</td>
           <td class="paramtype">uint8_t const *const&#160;</td>
           <td class="paramname"><em>p_buf</em>, </td>
@@ -2538,13 +1052,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes response to <a class="el" href="a01047.html#ga0f1931af876bef39520c58de5ac060ca">sd_ble_gap_tx_power_set</a> command. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00095.html#nrf51_tx_power_set_encoding">0x77 - sd_ble_gap_tx_power_set</a> for packet format, <a class="el" href="a00910.html#ga30cae694aa389384903f99ebca8d9944">ble_gap_tx_power_set_req_enc</a> for command request encoder.</dd></dl>
+<p>Decodes response to <a class="el" href="a01056.html#gaa505bba10fbaf84554ccad41ae914cf3">sd_ble_gattc_relationships_discover</a> command. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_relationships_discover_encoding">0x91 - sd_ble_gattc_relationships_discover</a> for packet format, <a class="el" href="a00910.html#ga861e272e8df86a37a7f20c14f0c20724">ble_gattc_relationships_discover_req_enc</a> for command request encoder.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command result code.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command response result code.</td></tr>
   </table>
   </dd>
 </dl>
@@ -2552,7 +1066,117 @@ Functions</h2></td></tr>
   <table class="retval">
     <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
     <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Decoding failure. Incorrect buffer length. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_DATA_SIZE</td><td>Decoding failure. Incorrect buffer length. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>Decoding failure. Decoded operation code does not match expected operation code. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga406af7132760d67e18fb5483038a9e1a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_gattc_write_req_enc </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>conn_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00257.html">ble_gattc_write_params_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_write_params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>p_buf_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Encodes <a class="el" href="a01056.html#gaf608cc468ddeb3504e7d175efaf5c4e3">sd_ble_gattc_write</a> command request. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_write_encoding">0x97 - sd_ble_gattc_write</a> for packet format, <a class="el" href="a00910.html#ga4a3559ff1ac9071778e44a04ed12e4ba">ble_gattc_write_rsp_dec</a> for command response decoder.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection handle of the connection. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_write_params</td><td>Pointer to <a class="el" href="a01056.html#gaf608cc468ddeb3504e7d175efaf5c4e3">sd_ble_gattc_write</a> params. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command packet.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4a3559ff1ac9071778e44a04ed12e4ba"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ble_gattc_write_rsp_dec </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t const *const&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>packet_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *const&#160;</td>
+          <td class="paramname"><em>p_result_code</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Decodes response to <a class="el" href="a01056.html#gaf608cc468ddeb3504e7d175efaf5c4e3">sd_ble_gattc_write</a> command. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00087.html#nrf51_sd_ble_gattc_write_encoding">0x97 - sd_ble_gattc_write</a> for packet format, <a class="el" href="a00910.html#ga406af7132760d67e18fb5483038a9e1a">ble_gattc_write_req_enc</a> for command request encoder.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to beginning of command response packet. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of response packet. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_result_code</td><td>Command response result code.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Decoding success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Decoding failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_DATA_SIZE</td><td>Decoding failure. Incorrect buffer length. </td></tr>
     <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>Decoding failure. Decoded operation code does not match expected operation code. </td></tr>
   </table>
   </dd>
@@ -2565,7 +1189,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

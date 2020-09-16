@@ -15,9 +15,9 @@
 // LEDs and buttons definition for PCA20006 board (beacon) 
 #define LEDS_NUMBER    3
 
-#define LED_RED    16
-#define LED_GREEN  12
-#define LED_BLUE   15
+#define LED_RGB_RED    16
+#define LED_RGB_GREEN  12
+#define LED_RGB_BLUE   15
 
 #define BSP_LED_0 LED_RGB_RED
 #define BSP_LED_1 LED_RGB_GREEN
@@ -40,7 +40,7 @@
 
 #define BSP_BUTTON_0_MASK (1<<BUTTON_0)
 #define BSP_BUTTON_1_MASK (1<<BUTTON_1)
-#define BUTTONS_MASK   (BUTTON_0_MASK | BUTTON_1_MASK)
+#define BUTTONS_MASK   (BSP_BUTTON_0_MASK | BSP_BUTTON_1_MASK)
 
 #define BUTTONS_LIST { BUTTON_0, BUTTON_1 }
 

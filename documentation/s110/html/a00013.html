@@ -104,20 +104,20 @@ $(document).ready(function(){initNavTree('a00013.html','');});
 <h1><a class="anchor" id="lib_app_fifo_init"></a>
 Initializing FIFO</h1>
 <div class="fragment"><div class="line"><span class="comment">// Create a FIFO structure</span></div>
-<div class="line"><a class="code" href="a00142.html" title="A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the infor...">app_fifo_t</a> my_fifo;</div>
+<div class="line"><a class="code" href="a00143.html" title="A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the infor...">app_fifo_t</a> my_fifo;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Create a buffer for the FIFO</span></div>
 <div class="line">uint16_t buffer_size = 8;</div>
 <div class="line">uint8_t buffer[buffer_size];</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Initialize FIFO structure</span></div>
-<div class="line">uint32_t err_code = <a class="code" href="a00772.html#gafc2ba3545e60f0134689fac2aa87f493" title="Function for initializing the FIFO.">app_fifo_init</a>(&amp;test_fifo, buffer, (uint16_t)<span class="keyword">sizeof</span>(buffer));</div>
+<div class="line">uint32_t err_code = <a class="code" href="a00773.html#gafc2ba3545e60f0134689fac2aa87f493" title="Function for initializing the FIFO.">app_fifo_init</a>(&amp;test_fifo, buffer, (uint16_t)<span class="keyword">sizeof</span>(buffer));</div>
 </div><!-- fragment --><p>The application must provide a FIFO structure and memory buffer to the initialization function. <br/>
  The FIFO structured is passed by reference and will be initialized by the FIFO module. <br/>
  As seen in the above code the application needs to ensure the buffer has reserved memory space for the lifetime of the FIFO.</p>
-<p>The FIFO <a class="el" href="a00142.html">app_fifo_t</a> instance will ensure correct indexing when reading and writing data to the FIFO.</p>
+<p>The FIFO <a class="el" href="a00143.html">app_fifo_t</a> instance will ensure correct indexing when reading and writing data to the FIFO.</p>
 <p>The size of the buffer has to be a power of two.</p>
-<p>The library module itself will not store state information thus the application must ensure that the memory used by <a class="el" href="a00142.html">app_fifo_t</a> is not reclaimed as long as the FIFO is in use.</p>
+<p>The library module itself will not store state information thus the application must ensure that the memory used by <a class="el" href="a00143.html">app_fifo_t</a> is not reclaimed as long as the FIFO is in use.</p>
 <h1><a class="anchor" id="lib_app_fifo_struct"></a>
 FIFO instance</h1>
 <div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span></div>
@@ -126,7 +126,7 @@ FIFO instance</h1>
 <div class="line">    uint16_t           buf_size_mask;   <span class="comment">/**&lt; Read/write index mask. Also used for size checking. */</span></div>
 <div class="line">    <span class="keyword">volatile</span> uint32_t  read_pos;        <span class="comment">/**&lt; Next read position in the FIFO buffer.              */</span></div>
 <div class="line">    <span class="keyword">volatile</span> uint32_t  write_pos;       <span class="comment">/**&lt; Next write position in the FIFO buffer.             */</span></div>
-<div class="line">} <a class="code" href="a00142.html" title="A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the infor...">app_fifo_t</a>;</div>
+<div class="line">} <a class="code" href="a00143.html" title="A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the infor...">app_fifo_t</a>;</div>
 </div><!-- fragment --><p>The structure used to make a FIFO instance contains 4 members:</p>
 <ul>
 <li><b>p_buf</b> - which is the copy of the address to the provided buffer.</li>
@@ -159,12 +159,12 @@ Figure 1: FIFO instance read and write indices after initialization.</div></div>
 <dl class="section warning"><dt>Warning</dt><dd>The FIFO implementation is not re-entrant safe. Thus data must be added or fetched from the FIFO from the same context level. However, adding in one context level and fetching from another context is supported.</dd></dl>
 <h1><a class="anchor" id="lib_app_fifo_put"></a>
 Adding an element</h1>
-<p>To add an element to the FIFO the application has to use the <a class="el" href="a00772.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">app_fifo_put</a> function. This is done by passing the <code>FIFO</code> <code>structure</code> and the <code>data</code> to <a class="el" href="a00772.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">app_fifo_put</a>.</p>
+<p>To add an element to the FIFO the application has to use the <a class="el" href="a00773.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">app_fifo_put</a> function. This is done by passing the <code>FIFO</code> <code>structure</code> and the <code>data</code> to <a class="el" href="a00773.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">app_fifo_put</a>.</p>
 <p>Example of adding an element to the FIFO: </p>
 <div class="fragment"><div class="line">uint8_t data = 88;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Add an element to the FIFO</span></div>
-<div class="line">err_code = <a class="code" href="a00772.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e" title="Function for adding an element to the FIFO.">app_fifo_put</a>(&amp;my_fifo, data);</div>
+<div class="line">err_code = <a class="code" href="a00773.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e" title="Function for adding an element to the FIFO.">app_fifo_put</a>(&amp;my_fifo, data);</div>
 </div><!-- fragment --><p>When the new element is added to the buffer the value supplied as parameter to the put function will be copied over to the current index of the write_pos member of the FIFO instance. When an element has been added to the FIFO, the write_pos member of the instance will be incremented by 1 to point to the next free byte. This is illustrated in Figure 2. For each element added the write_pos counter increments. An illustration of this can be seen in Figure 3.</p>
 <div class="image">
 <img src="app_fifo_put_1_element.png" alt="app_fifo_put_1_element.png"/>
@@ -174,15 +174,15 @@ Figure 2: FIFO instance with 1 element added.</div></div>
 <img src="app_fifo_put_4_elements.png" alt="app_fifo_put_4_elements.png"/>
 <div class="caption">
 Figure 3: FIFO instance with 4 elements added.</div></div>
-<p>If the FIFO is full then <a class="el" href="a00840.html#ga7ef4d466b79b31c6325f8b7af5d4f75f">NRF_ERROR_NO_MEM</a> will be returned.</p>
+<p>If the FIFO is full then <a class="el" href="a00838.html#ga7ef4d466b79b31c6325f8b7af5d4f75f">NRF_ERROR_NO_MEM</a> will be returned.</p>
 <h1><a class="anchor" id="lib_app_fifo_get"></a>
 Fetching an element</h1>
-<p>To get an element from the FIFO, the application has to use the <a class="el" href="a00772.html#gab6292f78e91737ba0df83d6755e0abb9">app_fifo_get</a> function.<br/>
- This is done by passing the <code>FIFO</code> <code>structure</code> and a reference, <code>return_val</code> , for returning the data from <a class="el" href="a00772.html#gab6292f78e91737ba0df83d6755e0abb9">app_fifo_get</a>.</p>
+<p>To get an element from the FIFO, the application has to use the <a class="el" href="a00773.html#gab6292f78e91737ba0df83d6755e0abb9">app_fifo_get</a> function.<br/>
+ This is done by passing the <code>FIFO</code> <code>structure</code> and a reference, <code>return_val</code> , for returning the data from <a class="el" href="a00773.html#gab6292f78e91737ba0df83d6755e0abb9">app_fifo_get</a>.</p>
 <p>Example of fetching an element from the FIFO: </p>
 <div class="fragment"><div class="line"><span class="comment">// Consume one element from FIFO</span></div>
 <div class="line">uint8_t return_val;</div>
-<div class="line">err_code = <a class="code" href="a00772.html#gab6292f78e91737ba0df83d6755e0abb9" title="Function for getting the next element from the FIFO.">app_fifo_get</a>(&amp;my_fifo, &amp;return_val);</div>
+<div class="line">err_code = <a class="code" href="a00773.html#gab6292f78e91737ba0df83d6755e0abb9" title="Function for getting the next element from the FIFO.">app_fifo_get</a>(&amp;my_fifo, &amp;return_val);</div>
 </div><!-- fragment --><p>When app_fifo_get is called the memory of the supplied by-reference parameter is filled with the value stored in the memory buffer. Then, the read_pos member of the FIFO instance is incremented to free the byte read. An example of a FIFO where two elements has been consumed is shown below in Figure 4. For each element fetched from the FIFO the read_pos counter is increment therefore each byte can only be fetched once. This is shown in Figure 4.</p>
 <div class="image">
 <img src="app_fifo_read_2_elements.png" alt="app_fifo_read_2_elements.png"/>
@@ -192,15 +192,15 @@ Figure 4: FIFO instance with 2 elements consumed.</div></div>
 Empty Buffer</h1>
 <p>The read_pos and write_pos has the same value when the FIFO is empty. This is the case when the FIFO is initialized as read_pos and write_pos are both initialized to 0. <br/>
  Or when all elements in the FIFO has been fetched, in which case read_pos == write_pos. An illustration of this is given in Figure 5.</p>
-<p>The FIFO can also be emptied by executing <a class="el" href="a00772.html#ga0944439787b55aafb3288a836efa3b9b">app_fifo_flush</a>.</p>
-<p>When the FIFO is empty then any calls to <a class="el" href="a00772.html#gab6292f78e91737ba0df83d6755e0abb9">app_fifo_get</a> function will return <a class="el" href="a00840.html#ga349d25ada15be023e0d507f45ada682c">NRF_ERROR_NOT_FOUND</a>.</p>
+<p>The FIFO can also be emptied by executing <a class="el" href="a00773.html#ga0944439787b55aafb3288a836efa3b9b">app_fifo_flush</a>.</p>
+<p>When the FIFO is empty then any calls to <a class="el" href="a00773.html#gab6292f78e91737ba0df83d6755e0abb9">app_fifo_get</a> function will return <a class="el" href="a00838.html#ga349d25ada15be023e0d507f45ada682c">NRF_ERROR_NOT_FOUND</a>.</p>
 <div class="image">
 <img src="app_fifo_empty.png" alt="app_fifo_empty.png"/>
 <div class="caption">
 Figure 5: FIFO instance with no elements.</div></div>
 <h1><a class="anchor" id="lib_app_fifo_full"></a>
 Full Buffer</h1>
-<p>When <code>write_pos == read_pos + &lt;n&gt; </code> then the buffer is full and any subsequent calls to <a class="el" href="a00772.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">app_fifo_put</a> function will return <a class="el" href="a00840.html#ga7ef4d466b79b31c6325f8b7af5d4f75f">NRF_ERROR_NO_MEM</a>.</p>
+<p>When <code>write_pos == read_pos + &lt;n&gt; </code> then the buffer is full and any subsequent calls to <a class="el" href="a00773.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">app_fifo_put</a> function will return <a class="el" href="a00838.html#ga7ef4d466b79b31c6325f8b7af5d4f75f">NRF_ERROR_NO_MEM</a>.</p>
 <div class="image">
 <img src="app_fifo_full.png" alt="app_fifo_full.png"/>
 <div class="caption">
@@ -211,7 +211,7 @@ Figure 6: FIFO instance with all available elements used.</div></div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:18 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:04 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

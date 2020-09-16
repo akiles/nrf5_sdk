@@ -1,5 +1,6 @@
 var a00343 =
 [
-    [ "p_data_packet", "a00343.html#af89346860abb77469214502848213a43", null ],
-    [ "packet_length", "a00343.html#a5ad00469248e979253ea6df7e43e09f3", null ]
+    [ "addr", "a00343.html#a254efa46b45f5707510660ee0ae9edc3", null ],
+    [ "enc_info", "a00343.html#a8edc7904f78de5fddc021504d06ae029", null ],
+    [ "irk", "a00343.html#ac8c0e0d99c8c5cc39adfa07073253d58", null ]
 ];

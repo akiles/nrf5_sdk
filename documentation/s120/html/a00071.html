@@ -159,15 +159,15 @@ $(document).ready(function(){initNavTree('a00071.html','');});
 0xA0 - sd_ble_gatts_service_add</h1>
 <h2><a class="anchor" id="nrf51_gatts_service_add_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga39fea660228e4b2e788af7018a83927a">sd_ble_gatts_service_add</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga39fea660228e4b2e788af7018a83927a">sd_ble_gatts_service_add</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA0, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA0, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>1 byte </td><td>Service Type </td><td>see <a class="el" href="a00561.html">GATT Server Service Types</a> </td></tr>
+<td>1 byte </td><td>Service Type </td><td>see <a class="el" href="a00558.html">GATT Server Service Types</a> </td></tr>
 <tr>
 <td>1 byte </td><td>UUID Present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
 <tr>
@@ -196,17 +196,17 @@ Figure 1: Packet format for sd_ble_gatts_service_add function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_gatts_service_add_sec_b"></a>
 Response packet format</h2>
-<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga39fea660228e4b2e788af7018a83927a">sd_ble_gatts_service_add</a> response packet:</p>
+<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga39fea660228e4b2e788af7018a83927a">sd_ble_gatts_service_add</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA0, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA0, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes</td><td>nRF Error Code </td><td>see <a class="el" href="a00758.html#ga39fea660228e4b2e788af7018a83927a">sd_ble_gatts_service_add</a> </td></tr>
+<td>4 bytes</td><td>nRF Error Code </td><td>see <a class="el" href="a00760.html#ga39fea660228e4b2e788af7018a83927a">sd_ble_gatts_service_add</a> </td></tr>
 <tr>
-<td>2 bytes</td><td>Conditional: Handle Value </td><td>see <a class="el" href="a00758.html#ga39fea660228e4b2e788af7018a83927a">sd_ble_gatts_service_add</a> </td></tr>
+<td>2 bytes</td><td>Conditional: Handle Value </td><td>see <a class="el" href="a00760.html#ga39fea660228e4b2e788af7018a83927a">sd_ble_gatts_service_add</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -220,17 +220,17 @@ Figure 2: Packet format sd_ble_gatts_service_add response packet.</div></div>
 0xA1 - sd_ble_gatts_include_add</h1>
 <h2><a class="anchor" id="nrf51_gatts_include_add_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga591ba1e7e2b8ecb63541a1f2d5282b76">sd_ble_gatts_include_add</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga591ba1e7e2b8ecb63541a1f2d5282b76">sd_ble_gatts_include_add</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA1, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA1, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>2 bytes</td><td>Service Handle </td><td>see <a class="el" href="a00758.html#ga591ba1e7e2b8ecb63541a1f2d5282b76">sd_ble_gatts_include_add</a> </td></tr>
+<td>2 bytes</td><td>Service Handle </td><td>see <a class="el" href="a00760.html#ga591ba1e7e2b8ecb63541a1f2d5282b76">sd_ble_gatts_include_add</a> </td></tr>
 <tr>
-<td>2 bytes</td><td>Include Service Handle </td><td>see <a class="el" href="a00758.html#ga591ba1e7e2b8ecb63541a1f2d5282b76">sd_ble_gatts_include_add</a> </td></tr>
+<td>2 bytes</td><td>Include Service Handle </td><td>see <a class="el" href="a00760.html#ga591ba1e7e2b8ecb63541a1f2d5282b76">sd_ble_gatts_include_add</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Include Handle Present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
 </table>
@@ -244,17 +244,17 @@ Figure 1: Packet format for sd_ble_gatts_include_add function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_gatts_include_add_sec_b"></a>
 Response packet format</h2>
-<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga591ba1e7e2b8ecb63541a1f2d5282b76">sd_ble_gatts_include_add</a> response packet:</p>
+<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga591ba1e7e2b8ecb63541a1f2d5282b76">sd_ble_gatts_include_add</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA1, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA1, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes</td><td>nRF Error Code </td><td>see <a class="el" href="a00758.html#ga591ba1e7e2b8ecb63541a1f2d5282b76">sd_ble_gatts_include_add</a> </td></tr>
+<td>4 bytes</td><td>nRF Error Code </td><td>see <a class="el" href="a00760.html#ga591ba1e7e2b8ecb63541a1f2d5282b76">sd_ble_gatts_include_add</a> </td></tr>
 <tr>
-<td>2 bytes</td><td>Conditional: Handle Value </td><td>see <a class="el" href="a00758.html#ga591ba1e7e2b8ecb63541a1f2d5282b76">sd_ble_gatts_include_add</a> </td></tr>
+<td>2 bytes</td><td>Conditional: Handle Value </td><td>see <a class="el" href="a00760.html#ga591ba1e7e2b8ecb63541a1f2d5282b76">sd_ble_gatts_include_add</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -268,13 +268,13 @@ Figure 2: Packet format sd_ble_gatts_include_add response packet.</div></div>
 0xA2 - sd_ble_gatts_characteristic_add</h1>
 <h2><a class="anchor" id="nrf51_characteristic_add_sec_function"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga9ee07ea4b96dcca1537b01ff9a7692ba">sd_ble_gatts_characteristic_add</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga9ee07ea4b96dcca1537b01ff9a7692ba">sd_ble_gatts_characteristic_add</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA2, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA2, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
 <td>2 bytes </td><td>Service Handle </td><td>Service handle </td></tr>
 <tr>
@@ -560,15 +560,15 @@ Figure 9: Encoding of Metadata field inside Characteristic Attributes.</div></di
 </p>
 <h2><a class="anchor" id="nrf51_characteristic_add_b"></a>
 Response packet format</h2>
-<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga9ee07ea4b96dcca1537b01ff9a7692ba">sd_ble_gatts_characteristic_add</a> response packet:</p>
+<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga9ee07ea4b96dcca1537b01ff9a7692ba">sd_ble_gatts_characteristic_add</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA2, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA2, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes</td><td>nRF Error Code </td><td>see <a class="el" href="a00758.html#ga9ee07ea4b96dcca1537b01ff9a7692ba">sd_ble_gatts_characteristic_add</a> </td></tr>
+<td>4 bytes</td><td>nRF Error Code </td><td>see <a class="el" href="a00760.html#ga9ee07ea4b96dcca1537b01ff9a7692ba">sd_ble_gatts_characteristic_add</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Conditional: Handles Present </td><td>0x00 - not present, 0x01 - Handles are present in the packet </td></tr>
 <tr>
@@ -601,13 +601,13 @@ Figure 10: Response Packet format for sd_ble_gatts_characteristic_add response.<
 0xA3 - sd_ble_gatts_descriptor_add</h1>
 <h2><a class="anchor" id="nrf51_descriptor_add_sec_function"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga0e1478bd565ad99f998671e3baf9847d">sd_ble_gatts_descriptor_add</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga0e1478bd565ad99f998671e3baf9847d">sd_ble_gatts_descriptor_add</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA3, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA3, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
 <td>2 bytes </td><td>Characteristic Handle </td><td>Characteristic handle </td></tr>
 <tr>
@@ -627,15 +627,15 @@ Figure 1: Packet format for sd_ble_gatts_descriptor_add function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_descriptor_add_b"></a>
 Response packet format</h2>
-<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga0e1478bd565ad99f998671e3baf9847d">sd_ble_gatts_descriptor_add</a> response packet:</p>
+<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga0e1478bd565ad99f998671e3baf9847d">sd_ble_gatts_descriptor_add</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA3, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA3, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes</td><td>nRF Error Code </td><td>see <a class="el" href="a00758.html#ga0e1478bd565ad99f998671e3baf9847d">sd_ble_gatts_descriptor_add</a> </td></tr>
+<td>4 bytes</td><td>nRF Error Code </td><td>see <a class="el" href="a00760.html#ga0e1478bd565ad99f998671e3baf9847d">sd_ble_gatts_descriptor_add</a> </td></tr>
 <tr>
 <td>2 bytes</td><td>Descriptor handle </td><td>Descriptor handle </td></tr>
 </table>
@@ -651,25 +651,25 @@ Figure 2: Response Packet format for sd_ble_gatts_descriptor_add response.</div>
 0xA4 - sd_ble_gatts_value_set</h1>
 <h2><a class="anchor" id="nrf51_gatts_value_set_sec_function"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00758.html#gac1acf3f19c9d855c166dfa0c1a561f17">sd_ble_gatts_value_set</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#gac1acf3f19c9d855c166dfa0c1a561f17">sd_ble_gatts_value_set</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA4, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA4, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Attribute Handle </td><td><a class="el" href="a00758.html#gac1acf3f19c9d855c166dfa0c1a561f17">sd_ble_gatts_value_set</a> </td></tr>
+<td>2 bytes </td><td>Attribute Handle </td><td><a class="el" href="a00760.html#gac1acf3f19c9d855c166dfa0c1a561f17">sd_ble_gatts_value_set</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Offset </td><td><a class="el" href="a00758.html#gac1acf3f19c9d855c166dfa0c1a561f17">sd_ble_gatts_value_set</a> </td></tr>
+<td>2 bytes </td><td>Offset </td><td><a class="el" href="a00760.html#gac1acf3f19c9d855c166dfa0c1a561f17">sd_ble_gatts_value_set</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Length Present </td><td>0x00 - Not Present, 0x01 - Present </td></tr>
 <tr>
-<td>2 bytes </td><td>Length </td><td><a class="el" href="a00758.html#gac1acf3f19c9d855c166dfa0c1a561f17">sd_ble_gatts_value_set</a> </td></tr>
+<td>2 bytes </td><td>Length </td><td><a class="el" href="a00760.html#gac1acf3f19c9d855c166dfa0c1a561f17">sd_ble_gatts_value_set</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Attribute Value Present </td><td>0x00 - Not Present, 0x01 - Present </td></tr>
 <tr>
-<td>2 bytes </td><td>Attribute Value </td><td><a class="el" href="a00758.html#gac1acf3f19c9d855c166dfa0c1a561f17">sd_ble_gatts_value_set</a> </td></tr>
+<td>2 bytes </td><td>Attribute Value </td><td><a class="el" href="a00760.html#gac1acf3f19c9d855c166dfa0c1a561f17">sd_ble_gatts_value_set</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -681,17 +681,17 @@ Figure 1: Packet format for sd_ble_gatts_value_set function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_gatts_value_set_sec_response"></a>
 Response packet format</h2>
-<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
-<p>Frame format encoding of the <a class="el" href="a00758.html#gac1acf3f19c9d855c166dfa0c1a561f17">sd_ble_gatts_value_set</a> response packet:</p>
+<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#gac1acf3f19c9d855c166dfa0c1a561f17">sd_ble_gatts_value_set</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA4, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA4, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes</td><td>nRF Error Code </td><td>see <a class="el" href="a00758.html#gac1acf3f19c9d855c166dfa0c1a561f17">sd_ble_gatts_value_set</a> </td></tr>
+<td>4 bytes</td><td>nRF Error Code </td><td>see <a class="el" href="a00760.html#gac1acf3f19c9d855c166dfa0c1a561f17">sd_ble_gatts_value_set</a> </td></tr>
 <tr>
-<td>2 bytes</td><td>Conditional: Length of bytes written</td><td>see <a class="el" href="a00758.html#gac1acf3f19c9d855c166dfa0c1a561f17">sd_ble_gatts_value_set</a> </td></tr>
+<td>2 bytes</td><td>Conditional: Length of bytes written</td><td>see <a class="el" href="a00760.html#gac1acf3f19c9d855c166dfa0c1a561f17">sd_ble_gatts_value_set</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -705,21 +705,21 @@ Figure 2: Packet format for sd_ble_gatts_value_set function response.</div></div
 0xA5 - sd_ble_gatts_value_get</h1>
 <h2><a class="anchor" id="nrf51_gatts_value_get_sec_function"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga4db1bcd63b4406a245c737db1ec9cd5e">sd_ble_gatts_value_get</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga4db1bcd63b4406a245c737db1ec9cd5e">sd_ble_gatts_value_get</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA5, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA5, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Attribute Handle </td><td><a class="el" href="a00758.html#ga4db1bcd63b4406a245c737db1ec9cd5e">sd_ble_gatts_value_get</a> </td></tr>
+<td>2 bytes </td><td>Attribute Handle </td><td><a class="el" href="a00760.html#ga4db1bcd63b4406a245c737db1ec9cd5e">sd_ble_gatts_value_get</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Offset </td><td><a class="el" href="a00758.html#ga4db1bcd63b4406a245c737db1ec9cd5e">sd_ble_gatts_value_get</a> </td></tr>
+<td>2 bytes </td><td>Offset </td><td><a class="el" href="a00760.html#ga4db1bcd63b4406a245c737db1ec9cd5e">sd_ble_gatts_value_get</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Length Present </td><td>0x00 - Not Present, 0x01 - Present </td></tr>
 <tr>
-<td>2 bytes </td><td>Conditional: Length </td><td><a class="el" href="a00758.html#ga4db1bcd63b4406a245c737db1ec9cd5e">sd_ble_gatts_value_get</a> </td></tr>
+<td>2 bytes </td><td>Conditional: Length </td><td><a class="el" href="a00760.html#ga4db1bcd63b4406a245c737db1ec9cd5e">sd_ble_gatts_value_get</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Value Present </td><td>0x00 - Not Present, 0x01 - Present </td></tr>
 </table>
@@ -733,23 +733,23 @@ Figure 1: Packet format for sd_ble_gatts_value_get function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_gatts_value_get_sec_response"></a>
 Response packet format</h2>
-<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga4db1bcd63b4406a245c737db1ec9cd5e">sd_ble_gatts_value_get</a> response packet:</p>
+<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga4db1bcd63b4406a245c737db1ec9cd5e">sd_ble_gatts_value_get</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA5, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA5, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes</td><td>nRF Error Code </td><td>see <a class="el" href="a00758.html#ga4db1bcd63b4406a245c737db1ec9cd5e">sd_ble_gatts_value_get</a> </td></tr>
+<td>4 bytes</td><td>nRF Error Code </td><td>see <a class="el" href="a00760.html#ga4db1bcd63b4406a245c737db1ec9cd5e">sd_ble_gatts_value_get</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Length Present </td><td>0x00 - Not Present, 0x01 - Present </td></tr>
 <tr>
-<td>2 bytes</td><td>Conditional:Value length in bytes </td><td>see <a class="el" href="a00758.html#ga4db1bcd63b4406a245c737db1ec9cd5e">sd_ble_gatts_value_get</a> </td></tr>
+<td>2 bytes</td><td>Conditional:Value length in bytes </td><td>see <a class="el" href="a00760.html#ga4db1bcd63b4406a245c737db1ec9cd5e">sd_ble_gatts_value_get</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Value Present </td><td>0x00 - Not Present, 0x01 - Present </td></tr>
 <tr>
-<td>n bytes</td><td>Conditional:Value </td><td>see <a class="el" href="a00758.html#ga4db1bcd63b4406a245c737db1ec9cd5e">sd_ble_gatts_value_get</a> </td></tr>
+<td>n bytes</td><td>Conditional:Value </td><td>see <a class="el" href="a00760.html#ga4db1bcd63b4406a245c737db1ec9cd5e">sd_ble_gatts_value_get</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -763,19 +763,19 @@ Figure 2: Packet format for sd_ble_gatts_value_get function response.</div></div
 0xA6 - sd_ble_gatts_hvx</h1>
 <h2><a class="anchor" id="nrf51_gatts_hvx_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga313fe43c2e93267da668572e885945db">sd_ble_gatts_hvx</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga313fe43c2e93267da668572e885945db">sd_ble_gatts_hvx</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA6, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA6, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Connection Handle </td><td><a class="el" href="a00758.html#ga313fe43c2e93267da668572e885945db">sd_ble_gatts_hvx</a> </td></tr>
+<td>2 bytes </td><td>Connection Handle </td><td><a class="el" href="a00760.html#ga313fe43c2e93267da668572e885945db">sd_ble_gatts_hvx</a> </td></tr>
 <tr>
 <td>1 byte </td><td>HVX Parameters Present </td><td>0x00 - Not Present, 0x01 - Present </td></tr>
 <tr>
-<td>n bytes </td><td>Conditional:HVX Parameters </td><td>see <a class="el" href="a00758.html#ga313fe43c2e93267da668572e885945db">sd_ble_gatts_hvx</a> </td></tr>
+<td>n bytes </td><td>Conditional:HVX Parameters </td><td>see <a class="el" href="a00760.html#ga313fe43c2e93267da668572e885945db">sd_ble_gatts_hvx</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -808,19 +808,19 @@ Figure 1: Packet format for sd_ble_gatts_hvx function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_gatts_hvx_sec_response"></a>
 Response packet format</h2>
-<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga313fe43c2e93267da668572e885945db">sd_ble_gatts_hvx</a> response packet:</p>
+<p>In case of a successful command, i.e. <code>'nRF Error Code' = <a class="el" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a></code> nRF Error Code is followed by conditional data.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga313fe43c2e93267da668572e885945db">sd_ble_gatts_hvx</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA6, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA6, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes</td><td>nRF Error Code </td><td>see <a class="el" href="a00758.html#ga313fe43c2e93267da668572e885945db">sd_ble_gatts_hvx</a> </td></tr>
+<td>4 bytes</td><td>nRF Error Code </td><td>see <a class="el" href="a00760.html#ga313fe43c2e93267da668572e885945db">sd_ble_gatts_hvx</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Number of Data Written Present </td><td>0x00 - Not Present, 0x01 - Present </td></tr>
 <tr>
-<td>2 bytes</td><td>Conditional: Number of Data written </td><td>see <a class="el" href="a00758.html#ga313fe43c2e93267da668572e885945db">sd_ble_gatts_hvx</a> </td></tr>
+<td>2 bytes</td><td>Conditional: Number of Data written </td><td>see <a class="el" href="a00760.html#ga313fe43c2e93267da668572e885945db">sd_ble_gatts_hvx</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -834,19 +834,19 @@ Figure 2: Packet format sd_ble_gatts_hvx response packet.</div></div>
 0xA7 - sd_ble_gatts_service_changed</h1>
 <h2><a class="anchor" id="nrf51_service_changed_sec_function"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga2c8c90d73fa27ba6691ad82b4a960adc">sd_ble_gatts_service_changed</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga2c8c90d73fa27ba6691ad82b4a960adc">sd_ble_gatts_service_changed</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA7, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA7, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00758.html#ga2c8c90d73fa27ba6691ad82b4a960adc">sd_ble_gatts_service_changed</a> </td></tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00760.html#ga2c8c90d73fa27ba6691ad82b4a960adc">sd_ble_gatts_service_changed</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Start Handle </td><td>see <a class="el" href="a00758.html#ga2c8c90d73fa27ba6691ad82b4a960adc">sd_ble_gatts_service_changed</a> </td></tr>
+<td>2 bytes </td><td>Start Handle </td><td>see <a class="el" href="a00760.html#ga2c8c90d73fa27ba6691ad82b4a960adc">sd_ble_gatts_service_changed</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>End Handle </td><td>see <a class="el" href="a00758.html#ga2c8c90d73fa27ba6691ad82b4a960adc">sd_ble_gatts_service_changed</a> </td></tr>
+<td>2 bytes </td><td>End Handle </td><td>see <a class="el" href="a00760.html#ga2c8c90d73fa27ba6691ad82b4a960adc">sd_ble_gatts_service_changed</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -864,9 +864,9 @@ Response packet format</h2>
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA7, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA7, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes</td><td>nRF Error Code </td><td>see <a class="el" href="a00758.html#ga2c8c90d73fa27ba6691ad82b4a960adc">sd_ble_gatts_service_changed</a> </td></tr>
+<td>4 bytes</td><td>nRF Error Code </td><td>see <a class="el" href="a00760.html#ga2c8c90d73fa27ba6691ad82b4a960adc">sd_ble_gatts_service_changed</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -880,19 +880,19 @@ Figure 2: Response Packet format for sd_ble_gatts_service_changed response.</div
 0xA8 - sd_ble_gatts_rw_authorize_reply</h1>
 <h2><a class="anchor" id="nrf51_gatts_rw_authorize_reply_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga6de7aea3a870669e1d869b047de95545">sd_ble_gatts_rw_authorize_reply</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga6de7aea3a870669e1d869b047de95545">sd_ble_gatts_rw_authorize_reply</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA8, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA8, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00758.html#ga6de7aea3a870669e1d869b047de95545">sd_ble_gatts_rw_authorize_reply</a> </td></tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00760.html#ga6de7aea3a870669e1d869b047de95545">sd_ble_gatts_rw_authorize_reply</a> </td></tr>
 <tr>
 <td>1 byte </td><td>RW Authorize Reply Params Present </td><td>0x00 if System Attributes is a NULL pointer, 0x01 otherwise </td></tr>
 <tr>
-<td>n bytes </td><td>Conditional: RW Authorize Reply Params </td><td>see <a class="el" href="a00758.html#ga6de7aea3a870669e1d869b047de95545">sd_ble_gatts_rw_authorize_reply</a> </td></tr>
+<td>n bytes </td><td>Conditional: RW Authorize Reply Params </td><td>see <a class="el" href="a00760.html#ga6de7aea3a870669e1d869b047de95545">sd_ble_gatts_rw_authorize_reply</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -941,7 +941,7 @@ Figure 2: Packet format for ble_gatts_read_authorize_params_t struct.</div></div
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>2 bytes </td><td>GATT Status </td><td>see <a class="el" href="a00555.html">GATT Status Codes</a> </td></tr>
+<td>2 bytes </td><td>GATT Status </td><td>see <a class="el" href="a00552.html">GATT Status Codes</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -953,14 +953,14 @@ Figure 3: Packet format for ble_gatts_write_authorize_params_t struct.</div></di
 </p>
 <h2><a class="anchor" id="nrf51_gatts_rw_authorize_reply_sec_response"></a>
 Response packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga6de7aea3a870669e1d869b047de95545">sd_ble_gatts_rw_authorize_reply</a> response packet:</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga6de7aea3a870669e1d869b047de95545">sd_ble_gatts_rw_authorize_reply</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA8, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA8, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00758.html#ga6de7aea3a870669e1d869b047de95545">sd_ble_gatts_rw_authorize_reply</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00760.html#ga6de7aea3a870669e1d869b047de95545">sd_ble_gatts_rw_authorize_reply</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -974,13 +974,13 @@ Figure 4: Packet format for sd_ble_gatts_rw_authorize_reply response.</div></div
 0xA9 - sd_ble_gatts_sys_attr_set</h1>
 <h2><a class="anchor" id="nrf51_gatts_sys_attr_set_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga34f2bda6800b014135a5775184ecaa0d">sd_ble_gatts_sys_attr_set</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga34f2bda6800b014135a5775184ecaa0d">sd_ble_gatts_sys_attr_set</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA9, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA9, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
 <td>2 bytes </td><td>Connection Handle </td><td>Handle Value </td></tr>
 <tr>
@@ -1000,14 +1000,14 @@ Figure 1: Packet format for sd_ble_gatts_sys_attr_set function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_gatts_sys_attr_set_sec_response"></a>
 Response packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00758.html#ga34f2bda6800b014135a5775184ecaa0d">sd_ble_gatts_sys_attr_set</a> response packet:</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#ga34f2bda6800b014135a5775184ecaa0d">sd_ble_gatts_sys_attr_set</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xA9, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xA9, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00758.html#ga34f2bda6800b014135a5775184ecaa0d">sd_ble_gatts_sys_attr_set</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00760.html#ga34f2bda6800b014135a5775184ecaa0d">sd_ble_gatts_sys_attr_set</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -1021,19 +1021,19 @@ Figure 2: Packet format for sd_ble_gatts_sys_attr_set response.</div></div>
 0xAA - sd_ble_gatts_sys_attr_get</h1>
 <h2><a class="anchor" id="nrf51_gatts_sys_attr_get_sec_function"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00758.html#gae8e852fe2caa6e37c714258e230657c3">sd_ble_gatts_sys_attr_get</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#gae8e852fe2caa6e37c714258e230657c3">sd_ble_gatts_sys_attr_get</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xAA, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xAA, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
 <td>2 bytes </td><td>Connection Handle </td><td>Handle Value </td></tr>
 <tr>
 <td>1 byte </td><td>System Attribute Length Present </td><td>0x00 if is a NULL pointer, 0x01 otherwise </td></tr>
 <tr>
-<td>2 bytes </td><td>Conditional: System Attribute Length </td><td>see <a class="el" href="a00758.html#gae8e852fe2caa6e37c714258e230657c3">sd_ble_gatts_sys_attr_get</a> </td></tr>
+<td>2 bytes </td><td>Conditional: System Attribute Length </td><td>see <a class="el" href="a00760.html#gae8e852fe2caa6e37c714258e230657c3">sd_ble_gatts_sys_attr_get</a> </td></tr>
 <tr>
 <td>1 byte </td><td>System Attribute Data Present </td><td>0x00 if is a NULL pointer, 0x01 otherwise </td></tr>
 </table>
@@ -1050,20 +1050,20 @@ Response packet format</h2>
 <p>In case of a successful command, The response packet will encode the return value NRF_SUCCESS. If a valid pointer were provided in the function packet, i.e. <code> 'System Attribute Present' = 0x01</code>, then the System Attributes from the BLE S110 SoftDevice will be encoded, and the length of the data will be encoded in the length field. <br/>
  If a NULL pointer where provided in the function packet, i.e. <code> 'System Attribute Present' = 0x00 </code>, then the length of the System Attribute Data will be encoded, but no data will follow.<br/>
 </p>
-<p>Frame format encoding of the <a class="el" href="a00758.html#gae8e852fe2caa6e37c714258e230657c3">sd_ble_gatts_sys_attr_get</a> response packet:</p>
+<p>Frame format encoding of the <a class="el" href="a00760.html#gae8e852fe2caa6e37c714258e230657c3">sd_ble_gatts_sys_attr_get</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0xAA, see <a class="el" href="a00755.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xAA, see <a class="el" href="a00757.html#gac817a87689e9c2c82f813a5221d0bd27">BLE_GATTS_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00758.html#gae8e852fe2caa6e37c714258e230657c3">sd_ble_gatts_sys_attr_get</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00760.html#gae8e852fe2caa6e37c714258e230657c3">sd_ble_gatts_sys_attr_get</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Conditional: System Attribute Length </td><td>see <a class="el" href="a00758.html#gae8e852fe2caa6e37c714258e230657c3">sd_ble_gatts_sys_attr_get</a> </td></tr>
+<td>2 bytes </td><td>Conditional: System Attribute Length </td><td>see <a class="el" href="a00760.html#gae8e852fe2caa6e37c714258e230657c3">sd_ble_gatts_sys_attr_get</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Conditional: System Attribute Data Present </td><td>0x00 if is a NULL pointer, 0x01 otherwise </td></tr>
 <tr>
-<td>n bytes </td><td>Conditional: System Attribute Data </td><td>see <a class="el" href="a00758.html#gae8e852fe2caa6e37c714258e230657c3">sd_ble_gatts_sys_attr_get</a> </td></tr>
+<td>n bytes </td><td>Conditional: System Attribute Data </td><td>see <a class="el" href="a00760.html#gae8e852fe2caa6e37c714258e230657c3">sd_ble_gatts_sys_attr_get</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -1079,7 +1079,7 @@ Figure 2: Packet format for sd_ble_gatts_sys_attr_get function response.</div></
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00056.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00058.html">Serialization Codecs</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: DFU BLE packet handling in Application</title>
+<title>nRF51 SDK - S110 SoftDevice: Types definitions for ANT support in SoftDevice handler.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,119 +97,100 @@ $(document).ready(function(){initNavTree('a00952.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">DFU BLE packet handling in Application<div class="ingroups"><a class="el" href="a01038.html">Bootloader/DFU API</a></div></div>  </div>
+<div class="title">Types definitions for ANT support in SoftDevice handler.<div class="ingroups"><a class="el" href="a00954.html">SoftDevice Event Handler</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>DFU BLE packet handling for application.  
+<p>This file contains the declarations of types required for ANT stack support. These types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html">ant_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">ANT stack event type.  <a href="a00141.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gafcf5a1211ca1625c5c111871c6139d79"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00952.html#gafcf5a1211ca1625c5c111871c6139d79">ANT_STACK_EVT_MSG_BUF_SIZE</a>&#160;&#160;&#160;32</td></tr>
+<tr class="separator:gafcf5a1211ca1625c5c111871c6139d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga099e8f139d53724bf7238bb77c9e32e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00952.html#ga099e8f139d53724bf7238bb77c9e32e0">ANT_STACK_EVT_STRUCT_SIZE</a>&#160;&#160;&#160;(sizeof(<a class="el" href="a00141.html">ant_evt_t</a>))</td></tr>
+<tr class="separator:ga099e8f139d53724bf7238bb77c9e32e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gacb9c231addcf47494f127d60d875232c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gacb9c231addcf47494f127d60d875232c"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00952.html#gacb9c231addcf47494f127d60d875232c">dfu_app_reset_prepare_t</a> )(void)</td></tr>
-<tr class="memdesc:gacb9c231addcf47494f127d60d875232c"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU Application reset prepare function. This function is a callback which allows the application to prepare for an upcoming application reset. <br/></td></tr>
-<tr class="separator:gacb9c231addcf47494f127d60d875232c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2b0ca4dbb952df8f26cb58d4e7341115"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00952.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a> )(<a class="el" href="a00141.html">ant_evt_t</a> *p_ant_evt)</td></tr>
+<tr class="memdesc:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application ANT stack event handler type. <br/></td></tr>
+<tr class="separator:ga2b0ca4dbb952df8f26cb58d4e7341115"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga0b5bc3c6d3daca444ec05d33d065f369"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00952.html#ga0b5bc3c6d3daca444ec05d33d065f369">dfu_app_on_dfu_evt</a> (<a class="el" href="a00962.html#ga03ad2477271b1db6cdcbf6285b5ccf3f">ble_dfu_t</a> *p_dfu, <a class="el" href="a00191.html">ble_dfu_evt_t</a> *p_evt)</td></tr>
-<tr class="memdesc:ga0b5bc3c6d3daca444ec05d33d065f369"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling of <a class="el" href="a00191.html">ble_dfu_evt_t</a> from DFU Service.  <a href="#ga0b5bc3c6d3daca444ec05d33d065f369">More...</a><br/></td></tr>
-<tr class="separator:ga0b5bc3c6d3daca444ec05d33d065f369"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga46ec5bb0ed70dfa3207ba06a25ce2347"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00952.html#ga46ec5bb0ed70dfa3207ba06a25ce2347">dfu_app_reset_prepare_set</a> (<a class="el" href="a00952.html#gacb9c231addcf47494f127d60d875232c">dfu_app_reset_prepare_t</a> reset_prepare_func)</td></tr>
-<tr class="memdesc:ga46ec5bb0ed70dfa3207ba06a25ce2347"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering for reset prepare calls.  <a href="#ga46ec5bb0ed70dfa3207ba06a25ce2347">More...</a><br/></td></tr>
-<tr class="separator:ga46ec5bb0ed70dfa3207ba06a25ce2347"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaab1fd97fd650257c8bf02fbffc63baf6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00952.html#gaab1fd97fd650257c8bf02fbffc63baf6">dfu_app_set_dm_handle</a> (<a class="el" href="a00986.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> const *p_dm_handle)</td></tr>
-<tr class="memdesc:gaab1fd97fd650257c8bf02fbffc63baf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting Device manager handle for current BLE connection.  <a href="#gaab1fd97fd650257c8bf02fbffc63baf6">More...</a><br/></td></tr>
-<tr class="separator:gaab1fd97fd650257c8bf02fbffc63baf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac05d1d266aef077ae88818dff3775010"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00952.html#gac05d1d266aef077ae88818dff3775010">softdevice_ant_evt_handler_set</a> (<a class="el" href="a00952.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a> ant_evt_handler)</td></tr>
+<tr class="memdesc:gac05d1d266aef077ae88818dff3775010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering for ANT events.  <a href="#gac05d1d266aef077ae88818dff3775010">More...</a><br/></td></tr>
+<tr class="separator:gac05d1d266aef077ae88818dff3775010"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>DFU BLE packet handling for application. </p>
-<p>This module implements handling of DFU packets transmitted over BLE for switching from application mode to Bootloader running full DFU service. This module only handles the StartDFU packet allowing for any BLE application to expose support for the DFU service. Actual DFU service will execute in dedicated environment after a BLE disconnect and reset of the nRF51 chip. The host must then reconnect and can continue the update procedure with access to full DFU service.</p>
-<dl class="section note"><dt>Note</dt><dd>The application must propagate dfu events to the DFU App handler module by calling <a class="el" href="a00952.html#ga0b5bc3c6d3daca444ec05d33d065f369" title="Function for handling of ble_dfu_evt_t from DFU Service.">dfu_app_on_dfu_evt()</a> from the <a class="el" href="a00962.html#ga4c1ddf1bdd414c49f408f4ffd965fa00">ble_dfu_evt_handler_t</a> callback. </dd></dl>
+<p>This file contains the declarations of types required for ANT stack support. These types will be defined when the preprocessor define ANT_STACK_SUPPORT_REQD is defined. </p>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gafcf5a1211ca1625c5c111871c6139d79"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ANT_STACK_EVT_MSG_BUF_SIZE&#160;&#160;&#160;32</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size of ANT event message buffer. This will be provided to the SoftDevice while fetching an event. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga099e8f139d53724bf7238bb77c9e32e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ANT_STACK_EVT_STRUCT_SIZE&#160;&#160;&#160;(sizeof(<a class="el" href="a00141.html">ant_evt_t</a>))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size of the <a class="el" href="a00141.html">ant_evt_t</a> structure. This will be used by the <a class="el" href="a00954.html">SoftDevice Event Handler</a> to internal event buffer size needed. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga0b5bc3c6d3daca444ec05d33d065f369"></a>
+<a class="anchor" id="gac05d1d266aef077ae88818dff3775010"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void dfu_app_on_dfu_evt </td>
+          <td class="memname">uint32_t softdevice_ant_evt_handler_set </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00962.html#ga03ad2477271b1db6cdcbf6285b5ccf3f">ble_dfu_t</a> *&#160;</td>
-          <td class="paramname"><em>p_dfu</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a00952.html#ga2b0ca4dbb952df8f26cb58d4e7341115">ant_evt_handler_t</a>&#160;</td>
+          <td class="paramname"><em>ant_evt_handler</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00191.html">ble_dfu_evt_t</a> *&#160;</td>
-          <td class="paramname"><em>p_evt</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for handling of <a class="el" href="a00191.html">ble_dfu_evt_t</a> from DFU Service. </p>
-<p>The application must inject this function into the DFU service or propagate DFU events to dfu_app_handler module by calling this function in application specific DFU event handler.</p>
+<p>Function for registering for ANT events. </p>
+<p>The application should use this function to register for receiving ANT events from the SoftDevice. If the application does not call this function, then any ANT event that may be generated by the SoftDevice will NOT be fetched. Once the application has registered for the events, it is not possible to possible to cancel the registration. However, it is possible to register a different function for handling the events at any point of time.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_dfu</td><td>Pointer to the DFU Service structure for which the include event relates. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_evt</td><td>Pointer to the DFU event. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ant_evt_handler</td><td>Function to be called for each received ANT event.</td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="ga46ec5bb0ed70dfa3207ba06a25ce2347"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void dfu_app_reset_prepare_set </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00952.html#gacb9c231addcf47494f127d60d875232c">dfu_app_reset_prepare_t</a>&#160;</td>
-          <td class="paramname"><em>reset_prepare_func</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for registering for reset prepare calls. </p>
-<p>The function provided will be executed before reseting the system into Bootloader/DFU mode. By setting this function the caller will be notified prior to the reset and can thus prepare the application for reset. As example the application can gracefully disconnect any peers on BLE, turning of LEDS, ensure all pending flash operations has completed, etc.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">reset_prepare_func</td><td>Function to be execute prior to a reset. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaab1fd97fd650257c8bf02fbffc63baf6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void dfu_app_set_dm_handle </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00986.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> const *&#160;</td>
-          <td class="paramname"><em>p_dm_handle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for setting Device manager handle for current BLE connection. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_dm_handle</td><td>Pointer to device manager handle of current connection. </td></tr>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Successful registration. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Null pointer provided as input. </td></tr>
   </table>
   </dd>
 </dl>
@@ -221,7 +202,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

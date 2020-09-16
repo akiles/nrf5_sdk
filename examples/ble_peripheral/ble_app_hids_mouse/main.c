@@ -59,10 +59,11 @@
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT 0                                           /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
-#define LEFT_BUTTON_PIN_ID              0                                           /**< Button used for moving the mouse pointer to the left. */
-#define UP_BUTTON_BOND_DELETE_PIN_ID    1                                           /**< Button used for moving the mouse pointer upwards. */
-#define RIGHT_BUTTON_PIN_ID             2                                           /**< Button used for moving the mouse pointer to the right. */
-#define DOWN_BUTTON_PIN_ID              3                                           /**< Button used for moving the mouse pointer downwards. */
+#define LEFT_BUTTON_ID                  0                                           /**< Button used for moving the mouse pointer to the left. */
+#define UP_BUTTON_ID                    1                                           /**< Button used for moving the mouse pointer upwards. */
+#define RIGHT_BUTTON_ID                 2                                           /**< Button used for moving the mouse pointer to the right. */
+#define DOWN_BUTTON_ID                  3                                           /**< Button used for moving the mouse pointer downwards. */
+#define BOND_DELETE_ALL_BUTTON_ID       1                                           /**< Button used for deleting all bonded centrals during startup. */
 
 #define DEVICE_NAME                     "Nordic_Mouse"                              /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME               "NordicSemiconductor"                       /**< Manufacturer. Will be passed to Device Information Service. */
@@ -829,8 +830,8 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             APP_ERROR_CHECK(err_code);
 
             // Start handling button presses.
-            err_code = bsp_buttons_enable((1 << LEFT_BUTTON_PIN_ID) | (1 << UP_BUTTON_BOND_DELETE_PIN_ID) |
-                               (1 << RIGHT_BUTTON_PIN_ID) | (1<<DOWN_BUTTON_PIN_ID));
+            err_code = bsp_buttons_enable((1 << LEFT_BUTTON_ID) | (1 << UP_BUTTON_ID) |
+                               (1 << RIGHT_BUTTON_ID) | (1<<DOWN_BUTTON_ID) | (1<<BOND_DELETE_ALL_BUTTON_ID));
             APP_ERROR_CHECK(err_code);
 
             m_conn_handle      = p_ble_evt->evt.gap_evt.conn_handle;
@@ -864,8 +865,8 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                     APP_ERROR_CHECK(err_code);
 
                     // Configure buttons with sense level low as wakeup source.
-                    err_code = bsp_buttons_enable((1 << LEFT_BUTTON_PIN_ID) |
-                                                        (1 << UP_BUTTON_BOND_DELETE_PIN_ID));
+                    err_code = bsp_buttons_enable((1 << LEFT_BUTTON_ID) |
+                                                        (1 << BOND_DELETE_ALL_BUTTON_ID));
                     APP_ERROR_CHECK(err_code);
                     
                     // Go to system-off mode.
@@ -1107,7 +1108,7 @@ static void device_manager_init(void)
     APP_ERROR_CHECK(err_code);
 
     // Clear all bonded centrals if the "delete all bonds" button is pushed.
-    init_data.clear_persistent_data = bsp_buttons_state_get() & (1 << UP_BUTTON_BOND_DELETE_PIN_ID);
+    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID,&(init_data.clear_persistent_data));
     APP_ERROR_CHECK(err_code);
 
     err_code = dm_init(&init_data);

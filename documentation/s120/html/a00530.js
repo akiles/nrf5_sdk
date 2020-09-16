@@ -1,6 +1,7 @@
 var a00530 =
 [
-    [ "BLE_ERROR_GAP_DISCOVERABLE_WITH_WHITELIST", "a00530.html#gaa65c2f6a6eba52654e2b6febc5c3ba8c", null ],
-    [ "BLE_ERROR_GAP_INVALID_BLE_ADDR", "a00530.html#ga3eda228736d6c1dcbcf9aba2bd059068", null ],
-    [ "BLE_ERROR_GAP_UUID_LIST_MISMATCH", "a00530.html#ga996146eb2c3b244f044b5cd121f8b826", null ]
+    [ "BLE_GAP_ADDR_TYPE_PUBLIC", "a00530.html#gaa5e499423d88b16817efd4d5ec10fd6e", null ],
+    [ "BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE", "a00530.html#ga86fe5e506ba152ec4d60ac6daaca2aef", null ],
+    [ "BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE", "a00530.html#gae166d654401b0ed83ad7073f31467b70", null ],
+    [ "BLE_GAP_ADDR_TYPE_RANDOM_STATIC", "a00530.html#gabe27b8f22c3a52413fa064c2ee1e4fba", null ]
 ];

@@ -1,5 +1,7 @@
 var a00237 =
 [
-    [ "reliable_wr", "a00237.html#a8b4bb4c79bed8c8a6d75ca0dd08b7591", null ],
-    [ "wr_aux", "a00237.html#a0f36b2c312c08c22853231a3bc8b950c", null ]
+    [ "addr_count", "a00237.html#a8f7d372587ed29005dbfd515103fa6fd", null ],
+    [ "irk_count", "a00237.html#a21922578ee2df66befd41e968f8d5af1", null ],
+    [ "pp_addrs", "a00237.html#a9316d95519c47512389b4696376556d0", null ],
+    [ "pp_irks", "a00237.html#ab78ecf15e25742a5ea56377cef1a8603", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Heart Rate Application with RTX</title>
+<title>nRF51 SDK - S110 SoftDevice: Health Thermometer Application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,20 +97,50 @@ $(document).ready(function(){initNavTree('a00055.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Heart Rate Application with RTX </div>  </div>
+<div class="title">Health Thermometer Application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Heart Rate Application with RTX is a firmware example that shows the cooperation between RTX and the S110 SoftDevice.</p>
-<p>The name of the example is <b>ble_app_hrs_rtx_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\example\ble_peripheral\ble_app_hrs_rtx</code> </p>
-<p>See <a class="el" href="a00054.html">Heart Rate Application</a> for a detailed description of the example scenario.</p>
-<dl class="section note"><dt>Note</dt><dd>See <a class="el" href="a00080.html">RTX Support</a> for more information about RTX. </dd></dl>
+<div class="textblock"><p>The Health Thermometer Application is an example that implements the Health Thermometer profile using the hardware delivered in the nRF51 Development Kit.</p>
+<p>The application includes the two services in the Health Thermometer profile:</p>
+<ul>
+<li><a class="el" href="a00970.html">Health Thermometer Service</a></li>
+<li><a class="el" href="a00964.html">Device Information Service</a></li>
+</ul>
+<p>In addition, use of the <a class="el" href="a00959.html">Battery Service</a> is also demonstrated. When the application starts, a timer for generating battery measurements is started.</p>
+<p>When indication of the Temperature Measurement characteristic is enabled, a Temperature Measurement is transmitted. This also happens when reconnecting to a previously bonded central. A Temperature Measurement is also transmitted each time button 1 is pushed.</p>
+<dl class="section note"><dt>Note</dt><dd>This application is not power optimized! </dd>
+<dd>
+The application will stop advertising after 3 minutes and go to system-off mode. Push button 1 to wake it up and restart advertising.</dd></dl>
+<h1><a class="anchor" id="project_hts_setup"></a>
+Setup</h1>
+<p>The name of the example is <b>ble_app_hts_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_hts</code> </p>
+<p>Button assignments when in system-off:</p>
+<ul>
+<li>Button 1: Wake up and start advertising.</li>
+<li>Button 2: Wake up, erase all bonds, and restart advertising.</li>
+</ul>
+<p>Button assignments when connected:</p>
+<ul>
+<li>Button 1: Simulate and send a Temperature Measurement.</li>
+</ul>
+<h1><a class="anchor" id="project_hts_test"></a>
+Testing</h1>
+<p>Test the Health Thermometer Application with the nRF Toolbox app, which is available on both iOS (Apple Store) and Android (Google Play).</p>
+<p>You can also test the application with the Master Control Panel by performing the following steps:</p>
+<ol type="1">
+<li>Compile and program the application. Observe that the <a class="el" href="a00041.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>Connect to the device from Master Control Panel (the device will be advertising as 'Nordic_HTS'), then bond and perform service discovery. Observe that the <a class="el" href="a00041.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Click the 'Enable services' button on the Master Control Panel. Observe that one Temperature Measurement indication is received. Also, Battery Level notifications are received every two seconds.</li>
+<li>Click the 'Disconnect' button and then the 'Connect' button on the Master Control Panel. Observe that one Temperature Measurement indication is received.</li>
+<li>Push Button 1. Observe that one Temperature Measurement indication is received each time the button is pushed. </li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00044.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:18 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00043.html">BLE Peripheral</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:04 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

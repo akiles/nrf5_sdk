@@ -353,7 +353,7 @@
               <MiscControls>--c99</MiscControls>
               <Define> NRF51 BSP_UART_SUPPORT BOARD_PCA10028</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\drivers_nrf\radio_config;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\scheduler</IncludePath>
+              <IncludePath>..\..\;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\drivers_nrf\radio_config;..\..\..\..\..\bsp;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\util</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

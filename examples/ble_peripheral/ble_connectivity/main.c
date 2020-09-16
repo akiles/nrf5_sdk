@@ -36,9 +36,9 @@ int main(void)
     uint32_t err_code = NRF_SUCCESS;
 
 #if ( defined(SER_PHY_HCI_DEBUG_ENABLE) || defined(SER_PHY_DEBUG_APP_ENABLE))
-	debug_init(NULL);
-#endif	
-	
+    debug_init(NULL);
+#endif
+
     /* Force constant latency mode to control SPI slave timing */
     NRF_POWER->TASKS_CONSTLAT = 1;
     

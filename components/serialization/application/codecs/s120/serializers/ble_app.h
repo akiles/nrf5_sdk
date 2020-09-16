@@ -294,7 +294,7 @@ uint32_t ble_opt_set_rsp_dec(uint8_t const * const p_buf,
                              uint32_t              packet_len,
                              uint32_t * const      p_result_code);
 
-/**@brief Encodes @ref sd_ble_opt_get_encode command request.
+/**@brief Encodes @ref sd_ble_opt_get command request.
  *
  * @sa @ref nrf51_opt_get_encoding for packet format,
  *     @ref ble_opt_get_rsp_dec for command response decoder.

@@ -166,7 +166,7 @@ SPI Module Initialization and Configuration</h1>
 <li>Configure SPI master PINs.</li>
 </ul>
 <ul>
-<li>Invoke <a class="el" href="a00498.html#ga3cf5563d474f5b41080b6ae53be0ee51" title="Function for opening and initializing a SPI master driver.">spi_master_open()</a> with parameters <a class="el" href="a00498.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a> and pointer to the <a class="el" href="a00229.html">spi_master_config_t</a>. On successful initialization <a class="el" href="a00498.html#ga3cf5563d474f5b41080b6ae53be0ee51" title="Function for opening and initializing a SPI master driver.">spi_master_open()</a> should return <a class="el" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a>.</li>
+<li>Invoke <a class="el" href="a00498.html#ga3cf5563d474f5b41080b6ae53be0ee51" title="Function for opening and initializing a SPI master driver.">spi_master_open()</a> with parameters <a class="el" href="a00498.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a> and pointer to the <a class="el" href="a00229.html">spi_master_config_t</a>. On successful initialization <a class="el" href="a00498.html#ga3cf5563d474f5b41080b6ae53be0ee51" title="Function for opening and initializing a SPI master driver.">spi_master_open()</a> should return <a class="el" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a>.</li>
 </ul>
 <ul>
 <li>Invoke <a class="el" href="a00498.html#ga76af017b1ce006baeed02f2668c00e7d" title="Function for registration event handler.">spi_master_evt_handler_reg()</a> with parameters <a class="el" href="a00498.html#ga84f5e5074c1cb0163acc71cd9b4d1107">spi_master_hw_instance_t</a> and the event handler name to register a event handler.</li>
@@ -209,7 +209,7 @@ SPI Module Initialization and Configuration</h1>
 <div class="line">    </div>
 <div class="line">    <span class="comment">//Initialize SPI master.</span></div>
 <div class="line">    uint32_t err_code = <a class="code" href="a00498.html#ga3cf5563d474f5b41080b6ae53be0ee51" title="Function for opening and initializing a SPI master driver.">spi_master_open</a>(<a class="code" href="a00498.html#ga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d">SPI_MASTER_0</a>, &amp;spi_config);</div>
-<div class="line">    <span class="keywordflow">if</span> (err_code != <a class="code" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line">    <span class="keywordflow">if</span> (err_code != <a class="code" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">    {</div>
 <div class="line">        <span class="comment">//Module initialization failed. Take recovery action.</span></div>
 <div class="line">    }</div>
@@ -233,7 +233,7 @@ SPI Master Data Exchange API</h1>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line">uint32_t err_code = <a class="code" href="a00498.html#ga4e03ec39c566925e98fe0ec79c6d7623" title="Function for transferring data between SPI master and SPI slave.">spi_master_send_recv</a>(<a class="code" href="a00498.html#ga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d">SPI_MASTER_0</a>, tx_buffer, buf_len, rx_buffer, buf_len);</div>
-<div class="line"><span class="keywordflow">if</span> (err_code != <a class="code" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span> (err_code != <a class="code" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">//Data transmission failed.</span></div>
 <div class="line">}</div>
@@ -245,7 +245,7 @@ SPI Master Data Exchange API</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00002.html">Hardware Drivers</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

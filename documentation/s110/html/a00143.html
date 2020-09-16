@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: app_mailbox_def Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: app_fifo_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,78 @@ $(document).ready(function(){initNavTree('a00143.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">app_mailbox_def Struct Reference</div>  </div>
+<div class="title">app_fifo_t Struct Reference<div class="ingroups"><a class="el" href="a00773.html">FIFO implementation</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Mailbox definition structure.  
+<p>A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the information about which memory is allocated for the buffer and its size. This needs to be initialized by <a class="el" href="a00773.html#gafc2ba3545e60f0134689fac2aa87f493" title="Function for initializing the FIFO.">app_fifo_init()</a> before use.  
  <a href="a00143.html#details">More...</a></p>
 
-<p><code>#include &lt;app_mailbox.h&gt;</code></p>
+<p><code>#include &lt;app_fifo.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a3f57e40b294eedf373ebd56ebc48d871"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00143.html#a3f57e40b294eedf373ebd56ebc48d871">queue_sz</a></td></tr>
-<tr class="separator:a3f57e40b294eedf373ebd56ebc48d871"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a6172b2fd1d922b2fdd786722b608f5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00143.html#a6a6172b2fd1d922b2fdd786722b608f5">item_sz</a></td></tr>
-<tr class="separator:a6a6172b2fd1d922b2fdd786722b608f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc2a8007d3403d94b1499961fff6402f"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00143.html#abc2a8007d3403d94b1499961fff6402f">pool</a></td></tr>
-<tr class="separator:abc2a8007d3403d94b1499961fff6402f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64eafd180a65260208be3b845f6acbf5"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00143.html#a64eafd180a65260208be3b845f6acbf5">p_buf</a></td></tr>
+<tr class="separator:a64eafd180a65260208be3b845f6acbf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03c6c7fcf087b5c1e0cfd5ce09661870"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00143.html#a03c6c7fcf087b5c1e0cfd5ce09661870">buf_size_mask</a></td></tr>
+<tr class="separator:a03c6c7fcf087b5c1e0cfd5ce09661870"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabcc538faf2ea4a374702c9896ae52d6"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00143.html#aabcc538faf2ea4a374702c9896ae52d6">read_pos</a></td></tr>
+<tr class="separator:aabcc538faf2ea4a374702c9896ae52d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12631a6575aae2c98f1cca4034b38eaf"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00143.html#a12631a6575aae2c98f1cca4034b38eaf">write_pos</a></td></tr>
+<tr class="separator:a12631a6575aae2c98f1cca4034b38eaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Mailbox definition structure. </p>
+<div class="textblock"><p>A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the information about which memory is allocated for the buffer and its size. This needs to be initialized by <a class="el" href="a00773.html#gafc2ba3545e60f0134689fac2aa87f493" title="Function for initializing the FIFO.">app_fifo_init()</a> before use. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a6a6172b2fd1d922b2fdd786722b608f5"></a>
+<a class="anchor" id="a03c6c7fcf087b5c1e0cfd5ce09661870"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t app_mailbox_def::item_sz</td>
+          <td class="memname">uint16_t app_fifo_t::buf_size_mask</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>size of an item. </p>
+<p>Read/write index mask. Also used for size checking. </p>
 
 </div>
 </div>
-<a class="anchor" id="abc2a8007d3403d94b1499961fff6402f"></a>
+<a class="anchor" id="a64eafd180a65260208be3b845f6acbf5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void* app_mailbox_def::pool</td>
+          <td class="memname">uint8_t* app_fifo_t::p_buf</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>memory array for mail. </p>
+<p>Pointer to FIFO buffer memory. </p>
 
 </div>
 </div>
-<a class="anchor" id="a3f57e40b294eedf373ebd56ebc48d871"></a>
+<a class="anchor" id="aabcc538faf2ea4a374702c9896ae52d6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t app_mailbox_def::queue_sz</td>
+          <td class="memname">volatile uint32_t app_fifo_t::read_pos</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>number of elements in the queue. </p>
+<p>Next read position in the FIFO buffer. </p>
+
+</div>
+</div>
+<a class="anchor" id="a12631a6575aae2c98f1cca4034b38eaf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile uint32_t app_fifo_t::write_pos</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Next write position in the FIFO buffer. </p>
 
 </div>
 </div>
@@ -171,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00143.html">app_mailbox_def</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:26 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00143.html">app_fifo_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:12 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

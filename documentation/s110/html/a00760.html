@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Persistent Storage Interface</title>
+<title>nRF51 SDK - S110 SoftDevice: TEMP (temperature) abstraction</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,36 +97,32 @@ $(document).ready(function(){initNavTree('a00760.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Persistent Storage Interface<div class="ingroups"><a class="el" href="a01037.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">TEMP (temperature) abstraction<div class="ingroups"><a class="el" href="a01035.html">Peripheral Drivers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Abstracted flash interface.  
+<p>Temperature module init and read functions.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00761"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html">Persistent Storage Access Operation Codes</a></td></tr>
-<tr class="memdesc:a00761"><td class="mdescLeft">&#160;</td><td class="mdescRight">Persistent Storage Access Operation Codes. These are used to report any error during a persistent storage access operation or any general error that may occur in the interface. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00762"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00762.html">Persistent Memory Interface Data Types</a></td></tr>
-<tr class="memdesc:a00762"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data Types needed for interfacing with persistent memory. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00763"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00763.html">Persistent Storage Access Routines</a></td></tr>
-<tr class="memdesc:a00763"><td class="mdescLeft">&#160;</td><td class="mdescRight">Functions/Interface SDK modules use to persistently store data. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga35bcd12671e3b2efd6081c847750b825"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga35bcd12671e3b2efd6081c847750b825"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MASK_SIGN</b>&#160;&#160;&#160;(0x00000200UL)</td></tr>
+<tr class="separator:ga35bcd12671e3b2efd6081c847750b825"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga04cf7aed7e99e20a6d6d4e54d128179e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga04cf7aed7e99e20a6d6d4e54d128179e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MASK_SIGN_EXTENSION</b>&#160;&#160;&#160;(0xFFFFFC00UL)</td></tr>
+<tr class="separator:ga04cf7aed7e99e20a6d6d4e54d128179e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Abstracted flash interface. </p>
-<p>In order to ensure that the SDK and application be moved to alternate persistent storage options other than the default provided with NRF solution, an abstracted interface is provided by the module to ensure SDK modules and application can be ported to alternate option with ease. </p>
+<p>Temperature module init and read functions. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:19 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:05 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

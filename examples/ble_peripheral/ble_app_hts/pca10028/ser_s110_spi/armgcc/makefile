@@ -38,10 +38,9 @@ remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-ou
 
 #source common to all targets
 C_SOURCE_FILES += \
-../../../../../../components/libraries/button/app_button.c \
 ../../../../../../components/libraries/sensorsim/ble_sensorsim.c \
+../../../../../../components/libraries/button/app_button.c \
 ../../../../../../components/libraries/gpiote/app_gpiote_fast_detect.c \
-../../../../../../components/libraries/fifo/app_fifo.c \
 ../../../../../../components/libraries/util/app_error.c \
 ../../../../../../components/libraries/util/app_util_platform.c \
 ../../../../../../components/libraries/timer/app_timer.c \
@@ -50,11 +49,12 @@ C_SOURCE_FILES += \
 ../../../../../../components/libraries/util/nrf_assert.c \
 ../../../../../../components/libraries/trace/app_trace.c \
 ../../../../../../components/libraries/uart/retarget.c \
+../../../../../../components/libraries/fifo/app_fifo.c \
 ../../../../../../components/drivers_nrf/spi_master/spi_master.c \
 ../../../../../../components/drivers_nrf/hal/nrf_delay.c \
-../../../../../../components/drivers_nrf/uart/app_uart_fifo.c \
 ../../../../../../components/drivers_nrf/nrf_soc_nosd/nrf_soc.c \
 ../../../../../../components/drivers_nrf/pstorage/pstorage_nosd.c \
+../../../../../../components/drivers_nrf/uart/app_uart_fifo.c \
 ../../../../../../components/drivers_nrf/ble_flash/ble_flash.c \
 ../../../../../bsp/bsp.c \
 ../../../main.c \
@@ -75,9 +75,6 @@ C_SOURCE_FILES += \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gap_evt_sec_info_request.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gap_evt_sec_params_request.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gap_evt_timeout.c \
-../../../../../../components/serialization/common/ble_serialization.c \
-../../../../../../components/serialization/common/cond_field_serialization.c \
-../../../../../../components/serialization/common/struct_ser/s110/ble_gap_struct_serialization.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gattc_evt_char_disc_rsp.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gattc_evt_char_val_by_uuid_read_rsp.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gattc_evt_char_vals_read_rsp.c \
@@ -88,15 +85,12 @@ C_SOURCE_FILES += \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gattc_evt_rel_disc_rsp.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gattc_evt_timeout.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gattc_evt_write_rsp.c \
-../../../../../../components/serialization/common/struct_ser/s110/ble_gattc_struct_serialization.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gatts_evt_hvc.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gatts_evt_rw_authorize_request.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gatts_evt_sc_confirm.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gatts_evt_sys_attr_missing.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gatts_evt_timeout.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gatts_evt_write.c \
-../../../../../../components/serialization/common/struct_ser/s110/ble_gatts_struct_serialization.c \
-../../../../../../components/serialization/common/struct_ser/s110/ble_struct_serialization.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_l2cap_evt_rx.c \
 ../../../../../../components/serialization/application/codecs/common/ble_dtm_init.c \
 ../../../../../../components/serialization/application/transport/ser_softdevice_handler.c \
@@ -123,6 +117,7 @@ C_SOURCE_FILES += \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gap_sec_info_reply.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gap_sec_params_reply.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gap_tx_power_set.c \
+../../../../../../components/serialization/common/struct_ser/s110/ble_gap_struct_serialization.c \
 ../../../../../../components/serialization/application/transport/ser_sd_transport.c \
 ../../../../../../components/serialization/application/codecs/s110/middleware/app_mw_ble_gattc.c \
 ../../../../../../components/serialization/application/codecs/s110/middleware/app_mw_ble_gatts.c \
@@ -146,6 +141,7 @@ C_SOURCE_FILES += \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gattc_read.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gattc_relationships_discover.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gattc_write.c \
+../../../../../../components/serialization/common/struct_ser/s110/ble_gattc_struct_serialization.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gatts_characteristic_add.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gatts_descriptor_add.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gatts_hvx.c \
@@ -157,18 +153,22 @@ C_SOURCE_FILES += \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gatts_sys_attr_set.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gatts_value_get.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_gatts_value_set.c \
+../../../../../../components/serialization/common/struct_ser/s110/ble_gatts_struct_serialization.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_l2cap_cid_register.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_l2cap_cid_unregister.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/ble_l2cap_tx.c \
+../../../../../../components/serialization/common/struct_ser/s110/ble_struct_serialization.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/power_system_off.c \
 ../../../../../../components/serialization/application/codecs/s110/serializers/temp_get.c \
+../../../../../../components/serialization/common/ble_serialization.c \
+../../../../../../components/serialization/common/cond_field_serialization.c \
 ../../../../../../components/serialization/application/hal/ser_app_power_system_off.c \
 ../../../../../../components/ble/ble_services/ble_bas/ble_bas.c \
 ../../../../../../components/ble/ble_services/ble_hts/ble_hts.c \
 ../../../../../../components/ble/ble_services/ble_dis/ble_dis.c \
-../../../../../../components/ble/common/ble_srv_common.c \
 ../../../../../../components/ble/common/ble_conn_params.c \
 ../../../../../../components/ble/common/ble_advdata.c \
+../../../../../../components/ble/common/ble_srv_common.c \
 ../../../../../../components/ble/device_manager/device_manager_peripheral.c \
 
 #assembly files common to all targets
@@ -177,39 +177,39 @@ ASM_SOURCE_FILES  = ../../../../../../components/toolchain/gcc/gcc_startup_nrf51
 #includes common to all targets
 INC_PATHS  = -I../../../config
 INC_PATHS += -I../../../../../../components/toolchain/gcc
-INC_PATHS += -I../../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../../components/toolchain
-INC_PATHS += -I../../../../../../components/ble/common
-INC_PATHS += -I../../../../../bsp
-INC_PATHS += -I../../../../../../components/libraries/button
 INC_PATHS += -I../../../../../../components/ble/ble_services/ble_bas
 INC_PATHS += -I../../../../../../components/ble/ble_services/ble_hts
 INC_PATHS += -I../../../../../../components/ble/ble_services/ble_dis
 INC_PATHS += -I../../../../../../components/libraries/sensorsim
+INC_PATHS += -I../../../../../../components/libraries/button
 INC_PATHS += -I../../../../../../components/serialization/common/transport/ser_phy
 INC_PATHS += -I../../../../../../components/serialization/common/transport/ser_phy/config
 INC_PATHS += -I../../../../../../components/drivers_nrf/spi_master
 INC_PATHS += -I../../../../../../components/libraries/gpiote
 INC_PATHS += -I../../../../../../components/softdevice/s110/headers
-INC_PATHS += -I../../../../../../components/libraries/trace
-INC_PATHS += -I../../../../../../components/serialization/common
-INC_PATHS += -I../../../../../../components/serialization/application/codecs/s110/serializers
-INC_PATHS += -I../../../../../../components/serialization/common/struct_ser/s110
 INC_PATHS += -I../../../../../../components/serialization/application/codecs/common
-INC_PATHS += -I../../../../../../components/serialization/application/hal
-INC_PATHS += -I../../../../../../components/serialization/application/transport
-INC_PATHS += -I../../../../../../components/drivers_nrf/uart
-INC_PATHS += -I../../../../../../components/libraries/fifo
-INC_PATHS += -I../../../../../../components/libraries/util
+INC_PATHS += -I../../../../../../components/ble/common
+INC_PATHS += -I../../../../../bsp
 INC_PATHS += -I../../../../../../components/libraries/timer
-INC_PATHS += -I../../../../../../components/drivers_nrf/nrf_soc_nosd
+INC_PATHS += -I../../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../../components/ble/device_manager
 INC_PATHS += -I../../../../../../components/ble/device_manager/config
+INC_PATHS += -I../../../../../../components/drivers_nrf/nrf_soc_nosd
+INC_PATHS += -I../../../../../../components/serialization/application/transport
 INC_PATHS += -I../../../../../../components/softdevice/common/softdevice_handler
 INC_PATHS += -I../../../../../../components/libraries/scheduler
+INC_PATHS += -I../../../../../../components/libraries/util
 INC_PATHS += -I../../../../../../components/drivers_nrf/pstorage
 INC_PATHS += -I../../../../../../components/drivers_nrf/pstorage/config
+INC_PATHS += -I../../../../../../components/libraries/trace
+INC_PATHS += -I../../../../../../components/drivers_nrf/uart
+INC_PATHS += -I../../../../../../components/libraries/fifo
 INC_PATHS += -I../../../../../../components/serialization/common/transport
+INC_PATHS += -I../../../../../../components/serialization/common/struct_ser/s110
+INC_PATHS += -I../../../../../../components/serialization/application/codecs/s110/serializers
+INC_PATHS += -I../../../../../../components/serialization/common
+INC_PATHS += -I../../../../../../components/serialization/application/hal
 INC_PATHS += -I../../../../../../components/drivers_nrf/ble_flash
 
 OBJECT_DIRECTORY = _build

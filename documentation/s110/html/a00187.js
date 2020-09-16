@@ -1,5 +1,9 @@
 var a00187 =
 [
-    [ "cccd_handle", "a00187.html#a7ec4f43c4adba9c33d6c52fa6637540b", null ],
-    [ "characteristic", "a00187.html#ac1bd337f6b1acc35a908b13ee4877a88", null ]
+    [ "day", "a00187.html#a94bdc52cbceff5f14951b6f7e8c02263", null ],
+    [ "hours", "a00187.html#a5288a98f74703cf1c5f9d0b9b1119461", null ],
+    [ "minutes", "a00187.html#a1328373bafcaa7e7ed28e2a3f52ec6e4", null ],
+    [ "month", "a00187.html#a49262472d4a8f721997adc626ae4f693", null ],
+    [ "seconds", "a00187.html#a20bab791a65115383e5e355e97078e27", null ],
+    [ "year", "a00187.html#a469839121af0c966717424b7649e0532", null ]
 ];

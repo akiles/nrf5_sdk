@@ -143,17 +143,17 @@ $(document).ready(function(){initNavTree('a00070.html','');});
 0x90 - sd_ble_gattc_primary_services_discover</h1>
 <h2><a class="anchor" id="nrf51_gattc_primary_services_discover_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#gaa778ccc1990e05fffa4aaf304c95e614">sd_ble_gattc_primary_services_discover</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#gaa778ccc1990e05fffa4aaf304c95e614">sd_ble_gattc_primary_services_discover</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x90, see <a class="el" href="a00751.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x90, see <a class="el" href="a00753.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00754.html#gaa778ccc1990e05fffa4aaf304c95e614">sd_ble_gattc_primary_services_discover</a> </td></tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00756.html#gaa778ccc1990e05fffa4aaf304c95e614">sd_ble_gattc_primary_services_discover</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Start Handle </td><td>see <a class="el" href="a00754.html#gaa778ccc1990e05fffa4aaf304c95e614">sd_ble_gattc_primary_services_discover</a> </td></tr>
+<td>2 bytes </td><td>Start Handle </td><td>see <a class="el" href="a00756.html#gaa778ccc1990e05fffa4aaf304c95e614">sd_ble_gattc_primary_services_discover</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Service UUID Information Present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
 <tr>
@@ -180,14 +180,14 @@ Figure 1: Packet format for sd_ble_gattc_primary_services_discover function.</di
 </p>
 <h2><a class="anchor" id="nrf51_gattc_primary_services_discover_sec_b"></a>
 Response packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#gaa778ccc1990e05fffa4aaf304c95e614">sd_ble_gattc_primary_services_discover</a> response packet:</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#gaa778ccc1990e05fffa4aaf304c95e614">sd_ble_gattc_primary_services_discover</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x90, see <a class="el" href="a00751.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x90, see <a class="el" href="a00753.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00754.html#gaa778ccc1990e05fffa4aaf304c95e614">sd_ble_gattc_primary_services_discover</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00756.html#gaa778ccc1990e05fffa4aaf304c95e614">sd_ble_gattc_primary_services_discover</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -201,15 +201,15 @@ Figure 2: Packet format for sd_ble_gattc_primary_services_discover error respons
 0x91 - sd_ble_gattc_relationships_discover</h1>
 <h2><a class="anchor" id="nrf51_gattc_relationships_discover_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#ga2c03757248d02fc59591354688e402bc">sd_ble_gattc_relationships_discover</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#ga2c03757248d02fc59591354688e402bc">sd_ble_gattc_relationships_discover</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x91, see <a class="el" href="a00751.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x91, see <a class="el" href="a00753.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00754.html#gaa778ccc1990e05fffa4aaf304c95e614">sd_ble_gattc_primary_services_discover</a> </td></tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00756.html#gaa778ccc1990e05fffa4aaf304c95e614">sd_ble_gattc_primary_services_discover</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Handle Range Present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
 <tr>
@@ -236,14 +236,14 @@ Figure 1: Packet format for sd_ble_gattc_relationships_discover function.</div><
 </p>
 <h2><a class="anchor" id="nrf51_gattc_relationships_discover_sec_b"></a>
 Response packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#ga2c03757248d02fc59591354688e402bc">sd_ble_gattc_relationships_discover</a> response packet:</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#ga2c03757248d02fc59591354688e402bc">sd_ble_gattc_relationships_discover</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x91, see <a class="el" href="a00751.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x91, see <a class="el" href="a00753.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00754.html#ga2c03757248d02fc59591354688e402bc">sd_ble_gattc_relationships_discover</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00756.html#ga2c03757248d02fc59591354688e402bc">sd_ble_gattc_relationships_discover</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -257,15 +257,15 @@ Figure 2: Packet format for sd_ble_gattc_relationships_discover error response.<
 0x92 - sd_ble_gattc_characteristics_discover</h1>
 <h2><a class="anchor" id="nrf51_gattc_characteristics_discover_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#gaf2bbf5162938f59bae419282d54f76fa">sd_ble_gattc_characteristics_discover</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#gaf2bbf5162938f59bae419282d54f76fa">sd_ble_gattc_characteristics_discover</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x92, see <a class="el" href="a00751.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x92, see <a class="el" href="a00753.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00754.html#gaf2bbf5162938f59bae419282d54f76fa">sd_ble_gattc_characteristics_discover</a> </td></tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00756.html#gaf2bbf5162938f59bae419282d54f76fa">sd_ble_gattc_characteristics_discover</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Handle Range Present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
 <tr>
@@ -292,14 +292,14 @@ Figure 1: Packet format for sd_ble_gattc_characteristics_discover function.</div
 </p>
 <h2><a class="anchor" id="nrf51_gattc_characteristics_discover_sec_b"></a>
 Response packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#gaf2bbf5162938f59bae419282d54f76fa">sd_ble_gattc_characteristics_discover</a> response packet:</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#gaf2bbf5162938f59bae419282d54f76fa">sd_ble_gattc_characteristics_discover</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x92, see <a class="el" href="a00751.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x92, see <a class="el" href="a00753.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00754.html#gaf2bbf5162938f59bae419282d54f76fa">sd_ble_gattc_characteristics_discover</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00756.html#gaf2bbf5162938f59bae419282d54f76fa">sd_ble_gattc_characteristics_discover</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -313,19 +313,19 @@ Figure 2: Packet format for sd_ble_gattc_characteristics_discover error response
 0x93 - sd_ble_gattc_descriptors_discover</h1>
 <h2><a class="anchor" id="nrf51_gattc_descriptors_discover_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#gaf896032d8502d0e535c2889955e3ad64">sd_ble_gattc_descriptors_discover</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#gaf896032d8502d0e535c2889955e3ad64">sd_ble_gattc_descriptors_discover</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x93, see <a class="el" href="a00751.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x93, see <a class="el" href="a00753.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00754.html#gaf896032d8502d0e535c2889955e3ad64">sd_ble_gattc_descriptors_discover</a> </td></tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00756.html#gaf896032d8502d0e535c2889955e3ad64">sd_ble_gattc_descriptors_discover</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Handle range Present </td><td>0x00 - Not Present, 0x01 - Present </td></tr>
 <tr>
-<td>4 bytes </td><td>Conditional: Handle range </td><td>see <a class="el" href="a00754.html#gaf896032d8502d0e535c2889955e3ad64">sd_ble_gattc_descriptors_discover</a> </td></tr>
+<td>4 bytes </td><td>Conditional: Handle range </td><td>see <a class="el" href="a00756.html#gaf896032d8502d0e535c2889955e3ad64">sd_ble_gattc_descriptors_discover</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -348,14 +348,14 @@ Figure 1: Packet format for sd_ble_gattc_descriptors_discover function.</div></d
 </p>
 <h2><a class="anchor" id="nrf51_gattc_descriptors_discover_sec_b"></a>
 Response packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#gaf896032d8502d0e535c2889955e3ad64">sd_ble_gattc_descriptors_discover</a> response packet:</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#gaf896032d8502d0e535c2889955e3ad64">sd_ble_gattc_descriptors_discover</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x93, see <a class="el" href="a00751.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x93, see <a class="el" href="a00753.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00754.html#gaf896032d8502d0e535c2889955e3ad64">sd_ble_gattc_descriptors_discover</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00756.html#gaf896032d8502d0e535c2889955e3ad64">sd_ble_gattc_descriptors_discover</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -369,7 +369,7 @@ Figure 2: Packet format for sd_ble_gattc_descriptors_discover response.</div></d
 0x94 - sd_ble_gattc_char_value_by_uuid_read</h1>
 <h2><a class="anchor" id="nrf51_gattc_char_value_by_uuid_read_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#ga1e5d6f7c678b7db3205fa6b5c419f665">sd_ble_gattc_char_value_by_uuid_read</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#ga1e5d6f7c678b7db3205fa6b5c419f665">sd_ble_gattc_char_value_by_uuid_read</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
@@ -377,15 +377,15 @@ Function packet format</h2>
 <tr>
 <td>1 byte </td><td>Operation Code </td><td>0x94 </td></tr>
 <tr>
-<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00754.html#ga1e5d6f7c678b7db3205fa6b5c419f665">sd_ble_gattc_char_value_by_uuid_read</a> </td></tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00756.html#ga1e5d6f7c678b7db3205fa6b5c419f665">sd_ble_gattc_char_value_by_uuid_read</a> </td></tr>
 <tr>
 <td>1 byte </td><td>UUID Present </td><td>0x00 - Not Present, 0x01 - Present </td></tr>
 <tr>
-<td>3 bytes </td><td>Conditional: UUID </td><td>see <a class="el" href="a00754.html#ga1e5d6f7c678b7db3205fa6b5c419f665">sd_ble_gattc_char_value_by_uuid_read</a> </td></tr>
+<td>3 bytes </td><td>Conditional: UUID </td><td>see <a class="el" href="a00756.html#ga1e5d6f7c678b7db3205fa6b5c419f665">sd_ble_gattc_char_value_by_uuid_read</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Handle range Present </td><td>0x00 - Not Present, 0x01 - Present </td></tr>
 <tr>
-<td>4 bytes </td><td>Conditional: Handle range </td><td>see <a class="el" href="a00754.html#ga1e5d6f7c678b7db3205fa6b5c419f665">sd_ble_gattc_char_value_by_uuid_read</a> </td></tr>
+<td>4 bytes </td><td>Conditional: Handle range </td><td>see <a class="el" href="a00756.html#ga1e5d6f7c678b7db3205fa6b5c419f665">sd_ble_gattc_char_value_by_uuid_read</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -419,14 +419,14 @@ Figure 1: Packet format for sd_ble_gattc_char_value_by_uuid_read function.</div>
 </p>
 <h2><a class="anchor" id="nrf51_gattc_char_value_by_uuid_read_sec_b"></a>
 Response packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#ga1e5d6f7c678b7db3205fa6b5c419f665">sd_ble_gattc_char_value_by_uuid_read</a> response packet:</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#ga1e5d6f7c678b7db3205fa6b5c419f665">sd_ble_gattc_char_value_by_uuid_read</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
 <td>1 byte </td><td>Operation Code </td><td>0x94 </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00754.html#ga1e5d6f7c678b7db3205fa6b5c419f665">sd_ble_gattc_char_value_by_uuid_read</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00756.html#ga1e5d6f7c678b7db3205fa6b5c419f665">sd_ble_gattc_char_value_by_uuid_read</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -440,19 +440,19 @@ Figure 2: Packet format for sd_ble_gattc_char_value_by_uuid_read response.</div>
 0x95 - sd_ble_gattc_read</h1>
 <h2><a class="anchor" id="nrf51_gattc_read_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#ga813daa5810a1d2ed31d2d6fe49d3ef11">sd_ble_gattc_read</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#ga813daa5810a1d2ed31d2d6fe49d3ef11">sd_ble_gattc_read</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x95, see <a class="el" href="a00751.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x95, see <a class="el" href="a00753.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00754.html#ga813daa5810a1d2ed31d2d6fe49d3ef11">sd_ble_gattc_read</a> </td></tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00756.html#ga813daa5810a1d2ed31d2d6fe49d3ef11">sd_ble_gattc_read</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Handle </td><td>see <a class="el" href="a00754.html#ga813daa5810a1d2ed31d2d6fe49d3ef11">sd_ble_gattc_read</a> </td></tr>
+<td>2 bytes </td><td>Handle </td><td>see <a class="el" href="a00756.html#ga813daa5810a1d2ed31d2d6fe49d3ef11">sd_ble_gattc_read</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Offset </td><td>see <a class="el" href="a00754.html#ga813daa5810a1d2ed31d2d6fe49d3ef11">sd_ble_gattc_read</a> </td></tr>
+<td>2 bytes </td><td>Offset </td><td>see <a class="el" href="a00756.html#ga813daa5810a1d2ed31d2d6fe49d3ef11">sd_ble_gattc_read</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -464,14 +464,14 @@ Figure 1: Packet format for sd_ble_gattc_read function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_gattc_read_sec_b"></a>
 Response packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#ga813daa5810a1d2ed31d2d6fe49d3ef11">sd_ble_gattc_read</a> response packet:</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#ga813daa5810a1d2ed31d2d6fe49d3ef11">sd_ble_gattc_read</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x95, see <a class="el" href="a00751.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x95, see <a class="el" href="a00753.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00754.html#ga813daa5810a1d2ed31d2d6fe49d3ef11">sd_ble_gattc_read</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00756.html#ga813daa5810a1d2ed31d2d6fe49d3ef11">sd_ble_gattc_read</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -485,17 +485,17 @@ Figure 2: Packet format for sd_ble_gattc_read response.</div></div>
 0x96 - sd_ble_gattc_char_values_read</h1>
 <h2><a class="anchor" id="nrf51_gattc_char_values_read"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#gac13467be9f6901defc8fc04258c88d36">sd_ble_gattc_char_values_read</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#gac13467be9f6901defc8fc04258c88d36">sd_ble_gattc_char_values_read</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x96, see <a class="el" href="a00751.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x96, see <a class="el" href="a00753.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00754.html#gac13467be9f6901defc8fc04258c88d36">sd_ble_gattc_char_values_read</a> </td></tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00756.html#gac13467be9f6901defc8fc04258c88d36">sd_ble_gattc_char_values_read</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Handle Count </td><td>see <a class="el" href="a00754.html#gac13467be9f6901defc8fc04258c88d36">sd_ble_gattc_char_values_read</a> </td></tr>
+<td>2 bytes </td><td>Handle Count </td><td>see <a class="el" href="a00756.html#gac13467be9f6901defc8fc04258c88d36">sd_ble_gattc_char_values_read</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Handles Present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
 <tr>
@@ -511,14 +511,14 @@ Figure 1: Packet format for sd_ble_gattc_char_values_read function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_gattc_char_values_read_sec_b"></a>
 Response packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#gac13467be9f6901defc8fc04258c88d36">sd_ble_gattc_char_values_read</a> response packet:</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#gac13467be9f6901defc8fc04258c88d36">sd_ble_gattc_char_values_read</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x96, see <a class="el" href="a00751.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x96, see <a class="el" href="a00753.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00754.html#gac13467be9f6901defc8fc04258c88d36">sd_ble_gattc_char_values_read</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00756.html#gac13467be9f6901defc8fc04258c88d36">sd_ble_gattc_char_values_read</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -532,19 +532,19 @@ Figure 2: Packet format for sd_ble_gattc_read response.</div></div>
 0x97 - sd_ble_gattc_write</h1>
 <h2><a class="anchor" id="nrf51_gattc_write_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#ga90298b8dcd8bbe7bbe69d362d1133378">sd_ble_gattc_write</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#ga90298b8dcd8bbe7bbe69d362d1133378">sd_ble_gattc_write</a> packet.</p>
 <p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x97, see <a class="el" href="a00751.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x97, see <a class="el" href="a00753.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00754.html#ga90298b8dcd8bbe7bbe69d362d1133378">sd_ble_gattc_write</a> </td></tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00756.html#ga90298b8dcd8bbe7bbe69d362d1133378">sd_ble_gattc_write</a> </td></tr>
 <tr>
 <td>1 byte </td><td>Write Parameters Present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
 <tr>
-<td>9..<em>n</em> bytes </td><td>Conditional: GATTC Write Parameters </td><td>see <a class="el" href="a00754.html#ga90298b8dcd8bbe7bbe69d362d1133378">sd_ble_gattc_write</a> </td></tr>
+<td>9..<em>n</em> bytes </td><td>Conditional: GATTC Write Parameters </td><td>see <a class="el" href="a00756.html#ga90298b8dcd8bbe7bbe69d362d1133378">sd_ble_gattc_write</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -577,14 +577,14 @@ Figure 1: Packet format for sd_ble_gattc_write function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_gattc_write_sec_b"></a>
 Response packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#ga90298b8dcd8bbe7bbe69d362d1133378">sd_ble_gattc_write</a> response packet:</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#ga90298b8dcd8bbe7bbe69d362d1133378">sd_ble_gattc_write</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x97, see <a class="el" href="a00751.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x97, see <a class="el" href="a00753.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00754.html#ga90298b8dcd8bbe7bbe69d362d1133378">sd_ble_gattc_write</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00756.html#ga90298b8dcd8bbe7bbe69d362d1133378">sd_ble_gattc_write</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -598,16 +598,16 @@ Figure 2: Packet format for sd_ble_gattc_write response.</div></div>
 0x98 - sd_ble_gattc_hv_confirm</h1>
 <h2><a class="anchor" id="nrf51_gattc_hv_confirm_sec_a"></a>
 Function packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#ga173e2d16c9bbd24dcf2c724ded6708a5">sd_ble_gattc_hv_confirm</a> packet:</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#ga173e2d16c9bbd24dcf2c724ded6708a5">sd_ble_gattc_hv_confirm</a> packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x98, see <a class="el" href="a00751.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x98, see <a class="el" href="a00753.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00754.html#ga173e2d16c9bbd24dcf2c724ded6708a5">sd_ble_gattc_hv_confirm</a> </td></tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00756.html#ga173e2d16c9bbd24dcf2c724ded6708a5">sd_ble_gattc_hv_confirm</a> </td></tr>
 <tr>
-<td>2 bytes </td><td>Handle </td><td>see <a class="el" href="a00754.html#ga173e2d16c9bbd24dcf2c724ded6708a5">sd_ble_gattc_hv_confirm</a> </td></tr>
+<td>2 bytes </td><td>Handle </td><td>see <a class="el" href="a00756.html#ga173e2d16c9bbd24dcf2c724ded6708a5">sd_ble_gattc_hv_confirm</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -619,14 +619,14 @@ Figure 1: Packet format for sd_ble_gattc_hv_confirm function.</div></div>
 </p>
 <h2><a class="anchor" id="nrf51_gattc_hv_confirm_sec_b"></a>
 Response packet format</h2>
-<p>Frame format encoding of the <a class="el" href="a00754.html#ga173e2d16c9bbd24dcf2c724ded6708a5">sd_ble_gattc_hv_confirm</a> response packet:</p>
+<p>Frame format encoding of the <a class="el" href="a00756.html#ga173e2d16c9bbd24dcf2c724ded6708a5">sd_ble_gattc_hv_confirm</a> response packet:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>1 byte </td><td>Operation Code </td><td>0x98, see <a class="el" href="a00751.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0x98, see <a class="el" href="a00753.html#ga1861d83550e6998efd13d44b09ec1ba9">BLE_GATTC_SVCS</a> </td></tr>
 <tr>
-<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00754.html#ga173e2d16c9bbd24dcf2c724ded6708a5">sd_ble_gattc_hv_confirm</a> </td></tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a00756.html#ga173e2d16c9bbd24dcf2c724ded6708a5">sd_ble_gattc_hv_confirm</a> </td></tr>
 </table>
 <p><br/>
 </p>
@@ -642,7 +642,7 @@ Figure 2: Packet format for sd_ble_gattc_hv_confirm response.</div></div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00056.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00058.html">Serialization Codecs</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

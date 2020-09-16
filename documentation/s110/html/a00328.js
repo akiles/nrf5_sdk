@@ -1,6 +1,5 @@
 var a00328 =
 [
-    [ "cccd_write_perm", "a00328.html#a320070d4ad9b4f4948a8bba65f3853c0", null ],
-    [ "read_perm", "a00328.html#ab3203f11dcbf8bea6cbe1dcffbf68661", null ],
-    [ "write_perm", "a00328.html#ac8a8cd605d17911a751bf74d72412568", null ]
+    [ "current_val", "a00328.html#a607fd7c8e6f2f3e7bbe8dc5d5b44b54e", null ],
+    [ "is_increasing", "a00328.html#a21bddc380a89ed66e20f88dfd4da4c8a", null ]
 ];

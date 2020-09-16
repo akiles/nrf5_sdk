@@ -1,11 +1,13 @@
 var NAVTREEINDEX2 =
 {
+"a00083.html#lib_device_manaegerit":[3,0,1,0],
+"a00083.html#lib_device_manager_init_cnfg_param":[3,0,1,0,1],
 "a00083.html#lib_device_manager_init_evt":[3,0,1,0,0],
 "a00083.html#lib_device_manager_register":[3,0,1,1],
-"a00084.html":[5,0,5,15,0,0],
-"a00084.html#a0945895af053724b710662f5beea9ed5":[5,0,5,15,0,0,2],
-"a00084.html#a5e084957ed6c0f93b78203d74a268e36":[5,0,5,15,0,0,0],
-"a00084.html#a8449b66e97f4dfce737478dc751199e1":[5,0,5,15,0,0,1],
+"a00084.html":[5,0,5,16,0,0],
+"a00084.html#a0945895af053724b710662f5beea9ed5":[5,0,5,16,0,0,2],
+"a00084.html#a5e084957ed6c0f93b78203d74a268e36":[5,0,5,16,0,0,0],
+"a00084.html#a8449b66e97f4dfce737478dc751199e1":[5,0,5,16,0,0,1],
 "a00085.html":[5,0,5,2,0],
 "a00085.html#abf23ae362a2ecdfbc73c9f6736ce0ba8":[5,0,5,2,0,3],
 "a00085.html#ad06ea1e496c4b37802492b289b54a875":[5,0,5,2,0,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "a00139.html#a6f9134a72c72763bc041086eea13aced":[5,1,1,3,9,4],
 "a00139.html#a70632c0a1d795c5b651d910826803cad":[5,1,1,3,9,5],
 "a00139.html#a72cc5af2f69e1b15a7c0b281acd1059e":[5,1,1,3,9,7],
-"a00139.html#ab717b7758f6bc0d7ea50682a4d4e149b":[5,1,1,3,9,6],
-"a00139.html#ab87edb24814869990c89391036c4f842":[5,1,1,3,9,3],
-"a00139.html#ad648e7de58fa4157388375a9c86b3bc4":[5,1,1,3,9,2]
+"a00139.html#ab717b7758f6bc0d7ea50682a4d4e149b":[5,1,1,3,9,6]
 };

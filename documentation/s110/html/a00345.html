@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: dfu_init_packet_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dfu_device_info_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,50 +106,31 @@ $(document).ready(function(){initNavTree('a00345.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dfu_init_packet_t Struct Reference<div class="ingroups"><a class="el" href="a00949.html">Init packet handling in DFU.</a></div></div>  </div>
+<div class="title">dfu_device_info_t Struct Reference<div class="ingroups"><a class="el" href="a00947.html">Init packet handling in DFU.</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure contained in an init packet. Contains information on device type, revision, and supported SoftDevices.  
+<p>Structure holding basic device information settings.  
  <a href="a00345.html#details">More...</a></p>
 
 <p><code>#include &lt;dfu_init.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a880fe28496a9999f4554b47662485064"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#a880fe28496a9999f4554b47662485064">device_type</a></td></tr>
-<tr class="separator:a880fe28496a9999f4554b47662485064"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfdd24f9e67a34b585c49d43d5fb9230"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#acfdd24f9e67a34b585c49d43d5fb9230">device_rev</a></td></tr>
-<tr class="separator:acfdd24f9e67a34b585c49d43d5fb9230"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2af05679dfa350f574a5aa0d403ca05e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#a2af05679dfa350f574a5aa0d403ca05e">app_version</a></td></tr>
-<tr class="separator:a2af05679dfa350f574a5aa0d403ca05e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86e254a1d13edd634ce1c1aad34e87ea"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#a86e254a1d13edd634ce1c1aad34e87ea">softdevice_len</a></td></tr>
-<tr class="separator:a86e254a1d13edd634ce1c1aad34e87ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b1f79aeef3c148827d1740aec3daa3d"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#a3b1f79aeef3c148827d1740aec3daa3d">softdevice</a> [1]</td></tr>
-<tr class="separator:a3b1f79aeef3c148827d1740aec3daa3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a77c3ef129c3527681c089fce4b95a5"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#a1a77c3ef129c3527681c089fce4b95a5">device_type</a></td></tr>
+<tr class="separator:a1a77c3ef129c3527681c089fce4b95a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35291383c3fc311def52bf828fc99386"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#a35291383c3fc311def52bf828fc99386">device_rev</a></td></tr>
+<tr class="separator:a35291383c3fc311def52bf828fc99386"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure contained in an init packet. Contains information on device type, revision, and supported SoftDevices. </p>
+<div class="textblock"><p>Structure holding basic device information settings. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a2af05679dfa350f574a5aa0d403ca05e"></a>
+<a class="anchor" id="a35291383c3fc311def52bf828fc99386"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t dfu_init_packet_t::app_version</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Application version for the image software. This field allows for additional checking, for example ensuring that a downgrade is not allowed. </p>
-
-</div>
-</div>
-<a class="anchor" id="acfdd24f9e67a34b585c49d43d5fb9230"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t dfu_init_packet_t::device_rev</td>
+          <td class="memname">uint16_t dfu_device_info_t::device_rev</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -157,42 +138,16 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a880fe28496a9999f4554b47662485064"></a>
+<a class="anchor" id="a1a77c3ef129c3527681c089fce4b95a5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t dfu_init_packet_t::device_type</td>
+          <td class="memname">uint16_t dfu_device_info_t::device_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>Device type (2 bytes), for example Heart Rate. This number must be defined by the customer before production. It can be located in UICR or FICR. </p>
-
-</div>
-</div>
-<a class="anchor" id="a3b1f79aeef3c148827d1740aec3daa3d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t dfu_init_packet_t::softdevice[1]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Variable length array of SoftDevices compatible with this application. The length of the array is specified in the length field. SoftDevice firmware id 0xFFFE indicates any SoftDevice. </p>
-
-</div>
-</div>
-<a class="anchor" id="a86e254a1d13edd634ce1c1aad34e87ea"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t dfu_init_packet_t::softdevice_len</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Number of different SoftDevice revisions compatible with this application. The list of SoftDevice firmware IDs is defined in <a class="el" href="a00345.html#a3b1f79aeef3c148827d1740aec3daa3d">softdevice</a>. </p>
 
 </div>
 </div>
@@ -201,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00345.html">dfu_init_packet_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00345.html">dfu_device_info_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

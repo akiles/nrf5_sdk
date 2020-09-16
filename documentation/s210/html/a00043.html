@@ -103,8 +103,8 @@ $(document).ready(function(){initNavTree('a00043.html','');});
 <div class="textblock"><p>The ANT Background Scanning Example shows how to implement a background scanning channel in combination with a master channel on a single device. It also demonstrates how to use extended messages to obtain Received Signal Strength Indication (RSSI) and channel ID information from received packets.</p>
 <h1><a class="anchor" id="ant_examples_scanning_description"></a>
 Description</h1>
-<p>Background scanning channels in ANT are searching channels that never synchronize with a master. They allow for asynchronous topologies with other channels running independently on the same device. For more information about background scanning channels and channel parameters, see the <a href="http://www.thisisant.com/resources/ant-message-protocol-and-usage/">ANT Message Protocol and Usage</a> documentation and the <a href="http://www.thisisant.com/developer/resources/downloads/#documents_tab">ANT Channel Search and Background Scanning Channel</a> application note.</p>
-<p>This example uses two channels: one background scanning channel that can receive data from multiple other devices and one master channel. The master channel in this example copies the received RSSI and channel ID information and mirrors these parameters back to the transmitting devices.</p>
+<p>Background scanning channels in ANT are searching channels that never synchronize with a master. Instead of acquiring a master, ANT will pass the data to the master and continue searching. These channels allow for asynchronous topologies with other channels running independently on the same device. For more information about background scanning channels and channel parameters, see the <a href="http://www.thisisant.com/resources/ant-message-protocol-and-usage/">ANT Message Protocol and Usage</a> documentation and the <a href="http://www.thisisant.com/developer/resources/downloads/#documents_tab">ANT Channel Search and Background Scanning Channel</a> application note.</p>
+<p>This example uses two channels: one background scanning channel that can receive data from multiple devices and one master channel. The master channel in this example copies the received RSSI and channel ID information and mirrors these parameters back to the transmitting devices.</p>
 <div class="image">
 <img src="ant_background_scanning.svg" alt="ant_background_scanning.svg"/>
 <div class="caption">
@@ -157,18 +157,18 @@ Message format</h1>
 </table>
 <h1><a class="anchor" id="ant_examples_scanning_setup"></a>
 Setup</h1>
-<p>The name of the example for PCA10028 is <b>experimental_ant_background_scanning_pca10028</b>, and for PCA10031 it is <b>experimental_ant_background_scanning_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\examples\ant\experimental\ant_background_scanning</code> </p>
-<p>The ANT background scanning example uses a single development board in combination with an ANT USB dongle and ANTware II, but it can be adapted to work with any number of nodes. In this example, ANTware II will be configured to use one slave channel to track the master channel of one single device. In addition, a master channel in ANTware II will transmit to the background scanning channel on the device. Note that any number of channels could be configured in ANTware II to transmit to the background scanning channel on the device.</p>
+<p>The name of the example for PCA10028 is <b>experimental_ant_background_scanning_pca10028</b>, and for PCA10031 it is <b>experimental_ant_background_scanning_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ant\experimental\ant_background_scanning</code> </p>
+<p>The ANT background scanning example uses a single development board in combination with an nRF51 ANT USB dongle and ANTware II, but it can be adapted to work with any number of nodes. In this example, ANTware II will be configured to use one slave channel to track the master channel of one single device. In addition, a master channel in ANTware II will transmit to the background scanning channel on the device. Note that any number of channels could be configured in ANTware II to transmit to the background scanning channel on the device.</p>
 <div class="image">
 <img src="ant_background_scanning_setup.svg" alt="ant_background_scanning_setup.svg"/>
 <div class="caption">
 Setup of the ANT Background scanning example</div></div>
-<p> The example runs on any nRF51 ANT capable device. It does not use any buttons or LEDs.</p>
+<p> The example does not use any buttons or LEDs.</p>
 <h1><a class="anchor" id="ant_examples_scanning_testing"></a>
 Testing</h1>
 <p>Test the ANT Background Scanning Example application by performing the following steps:</p>
 <ol type="1">
-<li>Compile and program the application and toggle the power or reset the board. The background scanning channel and the master channel will start right away.</li>
+<li>Compile and program the application and toggle the power or reset the development board. The background scanning channel and the master channel will start immediately.</li>
 <li>Ensure that an ANT USB dongle is connected to the computer.</li>
 <li><p class="startli">Start ANTware II and configure the following channels:</p>
 <ul>
@@ -195,8 +195,8 @@ Testing</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00042.html">ANT</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:42 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00041.html">ANT</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:29 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

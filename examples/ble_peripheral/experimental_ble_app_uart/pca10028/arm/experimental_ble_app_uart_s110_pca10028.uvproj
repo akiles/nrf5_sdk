@@ -353,7 +353,7 @@
               <MiscControls>--c99</MiscControls>
               <Define> NRF51 BLE_STACK_SUPPORT_REQD S110 SOFTDEVICE_PRESENT BOARD_PCA10001 BOARD_PCA10028</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\softdevice\s110\headers;..\..\..\..\..\components\ble\common;..\..\..\..\bsp;..\..\..\..\..\components\libraries\button;..\..\..\..\..\components\drivers_nrf\simple_uart;..\..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\..\components\libraries\timer;..\..\..\..\..\components\libraries\util;..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\components\libraries\scheduler</IncludePath>
+              <IncludePath>..\..\..\..\..\components\toolchain;..\..\..\..\..\components\softdevice\s110\headers;..\..\..\..\..\components\ble\common;..\..\..\..\..\components\drivers_nrf\simple_uart;..\..\..\..\..\components\libraries\button;..\..\..\..\bsp;..\..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\..\components\libraries\timer;..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\components\libraries\util</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

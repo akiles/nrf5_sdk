@@ -1,5 +1,6 @@
 var a00396 =
 [
-    [ "p_data", "a00396.html#af0aec898e61ff702225ab7cb8e81419a", null ],
-    [ "size", "a00396.html#a0ea03f9dd5df67309f05eeddf0b854ff", null ]
+    [ "evt_type", "a00396.html#acbc2e2d26c15219ff593c40aabab3815", null ],
+    [ "rx_amount", "a00396.html#a7b54206d997d599a2c3ee5751c208c58", null ],
+    [ "tx_amount", "a00396.html#a080b88a554c371f8220691fc28117ebd", null ]
 ];

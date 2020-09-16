@@ -174,7 +174,7 @@ Figure 2: FIFO instance with 1 element added.</div></div>
 <img src="app_fifo_put_4_elements.png" alt="app_fifo_put_4_elements.png"/>
 <div class="caption">
 Figure 3: FIFO instance with 4 elements added.</div></div>
-<p>If the FIFO is full then <a class="el" href="a00574.html#ga7ef4d466b79b31c6325f8b7af5d4f75f">NRF_ERROR_NO_MEM</a> will be returned.</p>
+<p>If the FIFO is full then <a class="el" href="a00571.html#ga7ef4d466b79b31c6325f8b7af5d4f75f">NRF_ERROR_NO_MEM</a> will be returned.</p>
 <h1><a class="anchor" id="lib_app_fifo_get"></a>
 Fetching an element</h1>
 <p>To get an element from the FIFO, the application has to use the <a class="el" href="a00504.html#gab6292f78e91737ba0df83d6755e0abb9">app_fifo_get</a> function.<br/>
@@ -193,14 +193,14 @@ Empty Buffer</h1>
 <p>The read_pos and write_pos has the same value when the FIFO is empty. This is the case when the FIFO is initialized as read_pos and write_pos are both initialized to 0. <br/>
  Or when all elements in the FIFO has been fetched, in which case read_pos == write_pos. An illustration of this is given in Figure 5.</p>
 <p>The FIFO can also be emptied by executing <a class="el" href="a00504.html#ga0944439787b55aafb3288a836efa3b9b">app_fifo_flush</a>.</p>
-<p>When the FIFO is empty then any calls to <a class="el" href="a00504.html#gab6292f78e91737ba0df83d6755e0abb9">app_fifo_get</a> function will return <a class="el" href="a00574.html#ga349d25ada15be023e0d507f45ada682c">NRF_ERROR_NOT_FOUND</a>.</p>
+<p>When the FIFO is empty then any calls to <a class="el" href="a00504.html#gab6292f78e91737ba0df83d6755e0abb9">app_fifo_get</a> function will return <a class="el" href="a00571.html#ga349d25ada15be023e0d507f45ada682c">NRF_ERROR_NOT_FOUND</a>.</p>
 <div class="image">
 <img src="app_fifo_empty.png" alt="app_fifo_empty.png"/>
 <div class="caption">
 Figure 5: FIFO instance with no elements.</div></div>
 <h1><a class="anchor" id="lib_app_fifo_full"></a>
 Full Buffer</h1>
-<p>When <code>write_pos == read_pos + &lt;n&gt; </code> then the buffer is full and any subsequent calls to <a class="el" href="a00504.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">app_fifo_put</a> function will return <a class="el" href="a00574.html#ga7ef4d466b79b31c6325f8b7af5d4f75f">NRF_ERROR_NO_MEM</a>.</p>
+<p>When <code>write_pos == read_pos + &lt;n&gt; </code> then the buffer is full and any subsequent calls to <a class="el" href="a00504.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">app_fifo_put</a> function will return <a class="el" href="a00571.html#ga7ef4d466b79b31c6325f8b7af5d4f75f">NRF_ERROR_NO_MEM</a>.</p>
 <div class="image">
 <img src="app_fifo_full.png" alt="app_fifo_full.png"/>
 <div class="caption">
@@ -211,7 +211,7 @@ Figure 6: FIFO instance with all available elements used.</div></div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

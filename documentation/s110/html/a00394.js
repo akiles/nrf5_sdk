@@ -1,11 +1,7 @@
 var a00394 =
 [
-    [ "bit_order", "a00394.html#a27e8ba88d43c17e40e1c2cbf0f785648", null ],
-    [ "def_tx_character", "a00394.html#a4f274a8534602ab7cf7b3df09501e3e0", null ],
-    [ "mode", "a00394.html#a21dcdc253470ffeaf889d2b9ffa22472", null ],
-    [ "orc_tx_character", "a00394.html#a7d9dd3521043484438ffa72545b6db28", null ],
-    [ "pin_csn", "a00394.html#a1ff06608d64bb19ed48f49274231de9c", null ],
-    [ "pin_miso", "a00394.html#a65afb70f1cdb35519719efa4950294b7", null ],
-    [ "pin_mosi", "a00394.html#af40a3044730330e7c560f2a9913b6d55", null ],
-    [ "pin_sck", "a00394.html#ae98dbbcc5e16aea69a2f0922e266f908", null ]
+    [ "data", "a00394.html#a800d239d1224cc1226201c6b9a635713", null ],
+    [ "data_count", "a00394.html#a370358835ed2aa53bcc515894b13eb87", null ],
+    [ "evt_type", "a00394.html#a622197dded7bfa292535944e6870c5f7", null ],
+    [ "type", "a00394.html#a6d7cb2ed26034e0c1cb5dcb0022a612a", null ]
 ];

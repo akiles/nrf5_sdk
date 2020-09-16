@@ -1,46 +1,41 @@
 var a00969 =
 [
-    [ "ble_hts_evt_t", "a00298.html", [
-      [ "evt_type", "a00298.html#afe0fd1c3cee451270df1d333c1605837", null ]
+    [ "ble_hrs_evt_t", "a00296.html", [
+      [ "evt_type", "a00296.html#aa66cdb9dcfb0d14b84933eed8ef6d369", null ]
     ] ],
-    [ "ieee_float32_t", "a00364.html", [
-      [ "exponent", "a00364.html#ad2b0d21fa7152a4afd8d98ec81bbe15a", null ],
-      [ "mantissa", "a00364.html#af54051e1c850e7ca43fc5e7b49c91261", null ]
+    [ "ble_hrs_init_t", "a00297.html", [
+      [ "evt_handler", "a00297.html#aa86b9c7d2205607e9e77fa9c3affabbe", null ],
+      [ "hrs_bsl_attr_md", "a00297.html#a12b40292268a248ca7341f0298d16b1a", null ],
+      [ "hrs_hrm_attr_md", "a00297.html#a8023c653b5f45b8fd6de1fc61761275a", null ],
+      [ "is_sensor_contact_supported", "a00297.html#af531586afe7aa4c124e96e04d42e70d1", null ],
+      [ "p_body_sensor_location", "a00297.html#a6950ba718a00b8236331be362d3a9beb", null ]
     ] ],
-    [ "ble_hts_init_t", "a00299.html", [
-      [ "evt_handler", "a00299.html#ac6fbae8371e9336d3acb46b8903a8947", null ],
-      [ "hts_meas_attr_md", "a00299.html#a5c4a4bc737442da34f2b9cfd367bb5e8", null ],
-      [ "hts_temp_type_attr_md", "a00299.html#a1f216c81224e94f40db0d5b4aaa1898b", null ],
-      [ "temp_type", "a00299.html#a7d233be4574d7bdd2f28c9afa8d0efc2", null ],
-      [ "temp_type_as_characteristic", "a00299.html#a6ac11fedc2f4a022e482c6342880e30f", null ]
+    [ "ble_hrs_s", "a00298.html", [
+      [ "bsl_handles", "a00298.html#a0a32b7e1cf6a5f95cdeeb6eaa8f6f6ba", null ],
+      [ "conn_handle", "a00298.html#a3d918e6a8f1da592ea67134cb9c9fec9", null ],
+      [ "evt_handler", "a00298.html#abd7c3e92fc72df788563a53bd0f4ce2d", null ],
+      [ "hrcp_handles", "a00298.html#a1c58eabf826182923b1f2ed209f8dc0e", null ],
+      [ "hrm_handles", "a00298.html#a77fcb24345f20bd721cf5a2820749875", null ],
+      [ "is_expended_energy_supported", "a00298.html#ac2328b5880df56c0afca889faaac0cab", null ],
+      [ "is_sensor_contact_detected", "a00298.html#a63f11f789786cf4e44bae53c8f63c55e", null ],
+      [ "is_sensor_contact_supported", "a00298.html#aa373c36f6b186c6d6a2846535cf431e3", null ],
+      [ "rr_interval", "a00298.html#aaae77371d110359230bee5c06d9f1e4f", null ],
+      [ "rr_interval_count", "a00298.html#a9cf8168d7866d6530c9763a0953bb8d2", null ],
+      [ "service_handle", "a00298.html#adaa286c0fe8805c891b2b4160ca4ac0b", null ]
     ] ],
-    [ "ble_hts_s", "a00301.html", [
-      [ "conn_handle", "a00301.html#a71533de99d438bb326730e08da1d402a", null ],
-      [ "evt_handler", "a00301.html#ab0392a7012b01ace2dad863bc8f573cc", null ],
-      [ "meas_handles", "a00301.html#a6e3f96502d28802be863f09b2839817d", null ],
-      [ "service_handle", "a00301.html#ac62f9c0c453beef41d04c488c5d19ecc", null ],
-      [ "temp_type", "a00301.html#ad8e572095f9a6cecdf4bcde49c527aab", null ],
-      [ "temp_type_handles", "a00301.html#a514df962e0856554cd6eee1e2b11bf26", null ]
+    [ "BLE_HRS_MAX_BUFFERED_RR_INTERVALS", "a00969.html#ga2e829f32fd9d57d18d1e8daa7956dee5", null ],
+    [ "ble_hrs_evt_handler_t", "a00969.html#ga85836949ab0f55e7ffcaec72dd0ee6e1", null ],
+    [ "ble_hrs_t", "a00969.html#gafea0cb34e3a05260b4de67d81f2f4cab", null ],
+    [ "ble_hrs_evt_type_t", "a00969.html#gaee495052c855cd5345f7301b594763c9", [
+      [ "BLE_HRS_EVT_NOTIFICATION_ENABLED", "a00969.html#ggaee495052c855cd5345f7301b594763c9a0f13cf6877038b174544d95ee3a40894", null ],
+      [ "BLE_HRS_EVT_NOTIFICATION_DISABLED", "a00969.html#ggaee495052c855cd5345f7301b594763c9a1ed0b327eecae450aa039af15ddae345", null ]
     ] ],
-    [ "ble_hts_meas_s", "a00300.html", [
-      [ "temp_in_celcius", "a00300.html#a4065a89fde57ebf2effce6a1401e38c4", null ],
-      [ "temp_in_fahr", "a00300.html#a0120700a8a6185ce21e1a05391fbc706", null ],
-      [ "temp_in_fahr_units", "a00300.html#a16e05739a1ac3b03a2b4dc683bc1eacd", null ],
-      [ "temp_type", "a00300.html#a12b9d8fddee8e461bfcedb3489bd5f92", null ],
-      [ "temp_type_present", "a00300.html#a10dadb1129dd55a6d597e4e08764d7ff", null ],
-      [ "time_stamp", "a00300.html#aab4240703a233a4bd2cd1a7b3a5997c0", null ],
-      [ "time_stamp_present", "a00300.html#a21a7a430b8f85908438c9bd1fc2e0dce", null ]
-    ] ],
-    [ "ble_hts_evt_handler_t", "a00969.html#ga78edebed11dc6c480b65706199500862", null ],
-    [ "ble_hts_meas_t", "a00969.html#ga2e809e8344a249203c4e86abc19c7c1b", null ],
-    [ "ble_hts_t", "a00969.html#ga15a0b1f92fe74fb20da63eb7dd0efed8", null ],
-    [ "ble_hts_evt_type_t", "a00969.html#ga9de0c7527af87daac3cf198d8708cc27", [
-      [ "BLE_HTS_EVT_INDICATION_ENABLED", "a00969.html#gga9de0c7527af87daac3cf198d8708cc27a0c68bf5f24a76260b8d60d6b5d992245", null ],
-      [ "BLE_HTS_EVT_INDICATION_DISABLED", "a00969.html#gga9de0c7527af87daac3cf198d8708cc27a85a307874a0234f6150db9bb938cdad0", null ],
-      [ "BLE_HTS_EVT_INDICATION_CONFIRMED", "a00969.html#gga9de0c7527af87daac3cf198d8708cc27a3973d850e7c89fb22b39ae12393bb278", null ]
-    ] ],
-    [ "ble_hts_init", "a00969.html#ga734d073032acce7c7f59bf9afc428fb7", null ],
-    [ "ble_hts_is_indication_enabled", "a00969.html#gaac026b3fb1fff6771f554e913a76e80e", null ],
-    [ "ble_hts_measurement_send", "a00969.html#ga46f07a190d194f273fbe609936bde3e2", null ],
-    [ "ble_hts_on_ble_evt", "a00969.html#ga1d50a1758227869205ce213a564b436c", null ]
+    [ "ble_hrs_body_sensor_location_set", "a00969.html#gab3ec66c7419f5c79ad54f849353e8aea", null ],
+    [ "ble_hrs_heart_rate_measurement_send", "a00969.html#gabe5fed48baeb4a518a51bd7e2e5f010e", null ],
+    [ "ble_hrs_init", "a00969.html#ga94256c7eb29129ff352ca53adf1ad5b8", null ],
+    [ "ble_hrs_on_ble_evt", "a00969.html#gac50e029608199cc8d52463acb3e8a02e", null ],
+    [ "ble_hrs_rr_interval_add", "a00969.html#gaea316a9c9503571b143d93086295f61a", null ],
+    [ "ble_hrs_rr_interval_buffer_is_full", "a00969.html#gaf207a34d16fbee25b5555fd4192b5b15", null ],
+    [ "ble_hrs_sensor_contact_detected_update", "a00969.html#ga4eccea2cb1d248ccdc75bebb84c1dff2", null ],
+    [ "ble_hrs_sensor_contact_supported_set", "a00969.html#gad8b66aa54ddf79459271df6ec9b65644", null ]
 ];

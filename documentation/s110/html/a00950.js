@@ -1,5 +1,7 @@
 var a00950 =
 [
-    [ "dfu_transport_close", "a00950.html#ga04a691c0efff2215cf82d3b797d7dcd2", null ],
-    [ "dfu_transport_update_start", "a00950.html#gaea872c4e8b0fc157a5ca968b683eb591", null ]
+    [ "dfu_app_reset_prepare_t", "a00950.html#gacb9c231addcf47494f127d60d875232c", null ],
+    [ "dfu_app_on_dfu_evt", "a00950.html#ga0b5bc3c6d3daca444ec05d33d065f369", null ],
+    [ "dfu_app_reset_prepare_set", "a00950.html#ga46ec5bb0ed70dfa3207ba06a25ce2347", null ],
+    [ "dfu_app_set_dm_handle", "a00950.html#gaab1fd97fd650257c8bf02fbffc63baf6", null ]
 ];

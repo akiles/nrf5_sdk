@@ -13,8 +13,6 @@
 /** @file
 * @brief Example template project.
 * @defgroup nrf_templates_example Example Template
-* @{
-* @ingroup nrf_examples_nrf6310
 *
 */
 

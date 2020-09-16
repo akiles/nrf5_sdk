@@ -49,9 +49,9 @@ ASM_SOURCE_FILES  = ../../../../../components/toolchain/gcc/gcc_startup_nrf51.s
 #includes common to all targets
 INC_PATHS  = -I../../
 INC_PATHS += -I../../../../../components/toolchain/gcc
-INC_PATHS += -I../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../components/toolchain
 INC_PATHS += -I../../../../../components/drivers_nrf/simple_uart
+INC_PATHS += -I../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../bsp
 
 OBJECT_DIRECTORY = _build

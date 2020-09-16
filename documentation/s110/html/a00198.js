@@ -1,5 +1,5 @@
 var a00198 =
 [
-    [ "manufacturer_id", "a00198.html#ae1f58152dab08532bc52edd976c2f51c", null ],
-    [ "organizationally_unique_id", "a00198.html#a452099e99c407f16e24299e57e53af46", null ]
+    [ "list_len", "a00198.html#a0fb27ab1e05a0b9ac07d6abf32012391", null ],
+    [ "p_list", "a00198.html#ac2fd43c554a7b7ddc54d007a40bb5a81", null ]
 ];

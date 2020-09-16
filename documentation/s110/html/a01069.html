@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Types</title>
+<title>nRF51 SDK - S110 SoftDevice: Defines</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,54 +97,26 @@ $(document).ready(function(){initNavTree('a01069.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Types<div class="ingroups"><a class="el" href="a00842.html">SoftDevice Manager API</a></div></div>  </div>
+<div class="title">Defines<div class="ingroups"><a class="el" href="a00840.html">SoftDevice Manager API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gabfecdd0b916a4022bd5688d4f842c473"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabfecdd0b916a4022bd5688d4f842c473"></a>
-typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01069.html#gabfecdd0b916a4022bd5688d4f842c473">nrf_clock_lfclksrc_t</a></td></tr>
-<tr class="memdesc:gabfecdd0b916a4022bd5688d4f842c473"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type representing lfclk oscillator source. <br/></td></tr>
-<tr class="separator:gabfecdd0b916a4022bd5688d4f842c473"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaddfb569a9b86648e642ed0d7e3a83034"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01069.html#gaddfb569a9b86648e642ed0d7e3a83034">softdevice_assertion_handler_t</a> )(uint32_t pc, uint16_t line_number, const uint8_t *p_file_name)</td></tr>
-<tr class="memdesc:gaddfb569a9b86648e642ed0d7e3a83034"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoftDevice Assertion Handler type.  <a href="#gaddfb569a9b86648e642ed0d7e3a83034">More...</a><br/></td></tr>
-<tr class="separator:gaddfb569a9b86648e642ed0d7e3a83034"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaa620a383a50dd98d8319832cedc20a19"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa620a383a50dd98d8319832cedc20a19"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01069.html#gaa620a383a50dd98d8319832cedc20a19">SDM_SVC_BASE</a>&#160;&#160;&#160;(0x10)</td></tr>
+<tr class="memdesc:gaa620a383a50dd98d8319832cedc20a19"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoftDevice Manager SVC Base number. <br/></td></tr>
+<tr class="separator:gaa620a383a50dd98d8319832cedc20a19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gaddfb569a9b86648e642ed0d7e3a83034"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef void(* softdevice_assertion_handler_t)(uint32_t pc, uint16_t line_number, const uint8_t *p_file_name)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>SoftDevice Assertion Handler type. </p>
-<p>When an unexpected error occurs within the SoftDevice it will call the SoftDevice assertion handler callback. The protocol stack will be in an undefined state when this happens and the only way to recover will be to perform a reset, using e.g. CMSIS NVIC_SystemReset().</p>
-<dl class="section note"><dt>Note</dt><dd>This callback is executed in HardFault context, thus SVC functions cannot be called from the SoftDevice assert callback.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pc</td><td>The program counter of the failed assert. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">line_number</td><td>Line number where the assert failed. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">file_name</td><td>File name where the assert failed. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:26 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:12 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

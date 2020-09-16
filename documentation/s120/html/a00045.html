@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: BLE Multi-link Example</title>
+<title>nRF51 SDK - S120 SoftDevice: Blinky RTX Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,40 +97,36 @@ $(document).ready(function(){initNavTree('a00045.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BLE Multi-link Example </div>  </div>
+<div class="title">Blinky RTX Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The BLE Multi-link Central application together with the BLE Multi-link Peripheral application tests the multi-link functionality of the S120 SoftDevice. The BLE Multi-link Example demonstrates how one central device can connect to multiple peripheral devices.</p>
-<p>On startup, the peripheral devices will start advertising. Once connected to the central, pressing button 1 on the peripheral changes the state of the peripheral and a corresponding LED on the central. When multiple peripherals are connected, each peripheral is assigned one LED by the central depending on the order in which the peripherals got connected. For example, LED 1 will be assigned to the peripheral that connects first. LED 2 will be assigned to the peripheral that connects second and so on.</p>
-<h1><a class="anchor" id="project_multilink_setup"></a>
+<div class="textblock"><p>The Blinky RTX Example shows RTX features like osSignal, osDelay, and osTimer.</p>
+<div class="image">
+<img src="blinky_rtx.jpg" alt="blinky_rtx.jpg"/>
+</div>
+<p> When the application starts, two GPIO pins are configured as outputs to drive the LEDs, and then new thread and timer are created.</p>
+<h1><a class="anchor" id="rtx_example_app_blinky_setup"></a>
 Setup</h1>
-<p>BLE Multi-link Central: The name of the example for PCA10028 is <b>ble_app_multilink_central_s120_pca10028</b>, and for PCA10031 it is <b>ble_app_multilink_central_s120_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_central\ble_app_multilink_central</code> </p>
-<p>BLE Multi-link Peripheral: The name of the example is <b>ble_app_multilink_peripheral_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_central\ble_app_multilink_peripheral</code> </p>
-<dl class="section note"><dt>Note</dt><dd>The BLE Multi-link Peripheral application needs the S110 SoftDevice to work. Its primary use is to act as helper application to test the BLE Multi-link Central application.</dd></dl>
-<p>The BLE Multi-link Example requires at least three boards to verify that more than one link is active. The central device can have a maximum of 8 concurrent connections to peripheral devices.</p>
-<p>Button assignments peripheral:</p>
+<p>The name of the example is <b>blinky_rtx_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\example\peripheral\blinky_rtx</code> </p>
+<p>LED assignments:</p>
 <ul>
-<li>Button 1: Change state on peripheral side (<a class="el" href="a00041.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a>/<a class="el" href="a00041.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a>) and toggle assigned LED on central side</li>
+<li>LED 1 and LED 2: Blinking.</li>
 </ul>
-<p>UART logging can be used instead of the LEDs.</p>
-<h1><a class="anchor" id="project_multilink_testing"></a>
+<h1><a class="anchor" id="rtx_example_app_blinky_testing"></a>
 Testing</h1>
-<p>Test the BLE Multi-link Example application by performing the following steps:</p>
+<p>Test the Blinky Example application by performing the following steps:</p>
 <ol type="1">
-<li>Compile and program the peripheral application to two boards. The <a class="el" href="a00041.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated on both boards. This means they are advertising and are waiting for the central device to connect.</li>
-<li>Compile and program the central application onto another board.</li>
-<li>As soon as the central application is programmed, it starts scanning and attempts to connect to the peripherals and enable notifications. Hence on the peripherals, observe that the <a class="el" href="a00041.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated after a few seconds.</li>
-<li>Press button 1 on one of the peripherals. Observe that <a class="el" href="a00041.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a> is indicated on that peripheral and one of the LEDs on the central turns ON.</li>
-<li>Press button 1 on the same peripheral again. Observe that <a class="el" href="a00041.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a> is indicated and the corresponding LED on the central is turned off.</li>
-<li>Repeat the last two steps with other connected peripherals and observe the same behavior. </li>
+<li>Compile and program the application.</li>
+<li>Observe that the LEDs are blinking.</li>
 </ol>
+<dl class="section note"><dt>Note</dt><dd>See <a class="el" href="a00054.html">RTX Support</a> for more information about RTX. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00043.html">BLE Central</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00018.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

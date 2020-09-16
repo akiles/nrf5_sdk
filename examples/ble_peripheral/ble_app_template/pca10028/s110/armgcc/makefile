@@ -49,9 +49,9 @@ C_SOURCE_FILES += \
 ../../../main.c \
 ../../../../../../components/softdevice/common/softdevice_handler/softdevice_handler.c \
 ../../../../../../components/toolchain/system_nrf51.c \
-../../../../../../components/ble/common/ble_srv_common.c \
 ../../../../../../components/ble/common/ble_conn_params.c \
 ../../../../../../components/ble/common/ble_advdata.c \
+../../../../../../components/ble/common/ble_srv_common.c \
 
 #assembly files common to all targets
 ASM_SOURCE_FILES  = ../../../../../../components/toolchain/gcc/gcc_startup_nrf51.s
@@ -59,16 +59,16 @@ ASM_SOURCE_FILES  = ../../../../../../components/toolchain/gcc/gcc_startup_nrf51
 #includes common to all targets
 INC_PATHS  = -I../../../config
 INC_PATHS += -I../../../../../../components/toolchain/gcc
-INC_PATHS += -I../../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../../components/toolchain
-INC_PATHS += -I../../../../../../components/ble/common
-INC_PATHS += -I../../../../../bsp
 INC_PATHS += -I../../../../../../components/libraries/button
 INC_PATHS += -I../../../../../../components/libraries/scheduler
-INC_PATHS += -I../../../../../../components/libraries/util
 INC_PATHS += -I../../../../../../components/softdevice/s110/headers
+INC_PATHS += -I../../../../../../components/ble/common
+INC_PATHS += -I../../../../../bsp
+INC_PATHS += -I../../../../../../components/libraries/util
 INC_PATHS += -I../../../../../../components/libraries/timer
 INC_PATHS += -I../../../../../../components/libraries/gpiote
+INC_PATHS += -I../../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../../components/softdevice/common/softdevice_handler
 
 OBJECT_DIRECTORY = _build

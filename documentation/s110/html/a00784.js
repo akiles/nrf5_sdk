@@ -1,8 +1,7 @@
 var a00784 =
 [
-    [ "Base defined for SDK Modules", "a00785.html", "a00785" ],
-    [ "Codes reserved as identification for module where the error occurred.", "a00786.html", null ],
-    [ "Codes reserved as identification for common errors.", "a00787.html", null ],
-    [ "Error / status codes specific to device manager.", "a00788.html", null ],
-    [ "api_result_t", "a00784.html#ga981ace296dd50082e82b56dc820295a9", null ]
+    [ "CRITICAL_REGION_ENTER", "a00784.html#ga61149a977f6ebdaeb8bdeed626dd9392", null ],
+    [ "CRITICAL_REGION_EXIT", "a00784.html#ga854878240b628e978f760f75aca4e1cc", null ],
+    [ "NRF_APP_PRIORITY_THREAD", "a00784.html#gac3db2bb99db38f42bf316a9d0d9ace99", null ],
+    [ "app_irq_priority_t", "a00784.html#ga1a193131d1d5911b1ec53f9541841b1b", null ]
 ];

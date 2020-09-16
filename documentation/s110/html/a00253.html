@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gattc_handle_value_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gattc_handle_range_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,49 +106,48 @@ $(document).ready(function(){initNavTree('a00253.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gattc_handle_value_t Struct Reference<div class="ingroups"><a class="el" href="a01053.html">Structures</a></div></div>  </div>
+<div class="title">ble_gattc_handle_range_t Struct Reference<div class="ingroups"><a class="el" href="a01055.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GATT read by UUID handle value pair.  
+<p>Operation Handle Range.  
  <a href="a00253.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gattc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:af1b50c1fd1d5be05d0d0cf25e0925fd0"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00253.html#af1b50c1fd1d5be05d0d0cf25e0925fd0">handle</a></td></tr>
-<tr class="separator:af1b50c1fd1d5be05d0d0cf25e0925fd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e842e1c975c50acf7eec947baa405e8"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00253.html#a6e842e1c975c50acf7eec947baa405e8">p_value</a></td></tr>
-<tr class="separator:a6e842e1c975c50acf7eec947baa405e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a091b1b8aeda9dcc211ec3f44d6832c51"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00253.html#a091b1b8aeda9dcc211ec3f44d6832c51">start_handle</a></td></tr>
+<tr class="separator:a091b1b8aeda9dcc211ec3f44d6832c51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ef3ed6409b66e9b087a761bd6a2b747"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00253.html#a7ef3ed6409b66e9b087a761bd6a2b747">end_handle</a></td></tr>
+<tr class="separator:a7ef3ed6409b66e9b087a761bd6a2b747"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GATT read by UUID handle value pair. </p>
+<div class="textblock"><p>Operation Handle Range. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="af1b50c1fd1d5be05d0d0cf25e0925fd0"></a>
+<a class="anchor" id="a7ef3ed6409b66e9b087a761bd6a2b747"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gattc_handle_value_t::handle</td>
+          <td class="memname">uint16_t ble_gattc_handle_range_t::end_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Attribute Handle. </p>
+<p>End Handle. </p>
 
 </div>
 </div>
-<a class="anchor" id="a6e842e1c975c50acf7eec947baa405e8"></a>
+<a class="anchor" id="a091b1b8aeda9dcc211ec3f44d6832c51"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* ble_gattc_handle_value_t::p_value</td>
+          <td class="memname">uint16_t ble_gattc_handle_range_t::start_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">       Pointer to value, variable length (length available as value_len in ble_gattc_evt_read_by_uuid_rsp_t). 
-</pre><p> Please note that this pointer is absolute to the memory provided by the user when retrieving the event, so it will effectively point to a location inside the handle_value array. </p>
+<p>Start Handle. </p>
 
 </div>
 </div>
@@ -157,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00253.html">ble_gattc_handle_value_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00253.html">ble_gattc_handle_range_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:12 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

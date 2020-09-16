@@ -15,6 +15,7 @@
 #include "bootloader_util.h"
 #include "nrf.h"
 #include "nrf_sdm.h"
+#include "ble_gatts.h"
 #include "app_error.h"
 #include "dfu_ble_svc.h"
 #include "device_manager.h"
@@ -26,6 +27,7 @@ static void                    dfu_app_reset_prepare(void);                    /
 static dfu_app_reset_prepare_t m_reset_prepare = dfu_app_reset_prepare;        /**< Callback function to application to prepare for system reset. Allows application to cleanup of service and memory prior to reset. */
 static dfu_ble_peer_data_t     m_peer_data;                                    /**< Peer data to be used for data exchange when reseting into DFU mode. */
 static dm_handle_t             m_dm_handle;                                    /**< Device Manager handle with instance id's of current BLE connection. */
+static bool                    m_dm_handle_valid = false;                      /**< Variable indicating if the Device Manager handle is valid. */
 
 
 /**@brief Default reset prepare handler if application hasn't registered a handler.
@@ -73,7 +75,8 @@ static void dfu_app_set_peer_data(void)
 
     m_peer_data.addr     = key_set.keys_central.p_id_key->id_addr_info;
     m_peer_data.enc_info = *key_set.keys_central.enc_key.p_enc_info;
-
+    m_peer_data.irk      = key_set.keys_central.p_id_key->id_info;
+    
     err_code = dfu_ble_svc_set_peer_data(&m_peer_data);
     APP_ERROR_CHECK(err_code);
 /** [DFU bond sharing] */
@@ -95,7 +98,10 @@ static void bootloader_start(void)
     err_code = sd_softdevice_vector_table_base_set(NRF_UICR->BOOTLOADERADDR);
     APP_ERROR_CHECK(err_code);
 
-    dfu_app_set_peer_data();
+    if (m_dm_handle_valid)
+    {
+        dfu_app_set_peer_data();
+    }
 
     NVIC_ClearPendingIRQ(SWI2_IRQn);
     interrupts_disable();
@@ -143,6 +149,12 @@ void dfu_app_reset_prepare_set(dfu_app_reset_prepare_t reset_prepare_func)
 
 void dfu_app_set_dm_handle(dm_handle_t const * p_dm_handle)
 {
-    m_dm_handle = *p_dm_handle;
+    m_dm_handle_valid = false;
+    
+    if (p_dm_handle != NULL)
+    {
+        m_dm_handle       = *p_dm_handle;
+        m_dm_handle_valid = true;
+    }
 }
 

@@ -42,7 +42,7 @@
 #include "app_error.h"
 
 #define UART_TX_BUF_SIZE 256                                                          /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 1                                                          /**< UART RX buffer size. */
+#define UART_RX_BUF_SIZE 1                                                            /**< UART RX buffer size. */
 
 void uart_error_handle(app_uart_evt_t * p_event)
 {
@@ -61,8 +61,8 @@ void uart_error_handle(app_uart_evt_t * p_event)
 int main(void)
 {
     uint32_t err_code;
-   APP_GPIOTE_INIT(1);
-   const app_uart_comm_params_t comm_params =
+    APP_GPIOTE_INIT(1);
+    const app_uart_comm_params_t comm_params =
       {
           RX_PIN_NUMBER,
           TX_PIN_NUMBER,
@@ -73,14 +73,14 @@ int main(void)
           UART_BAUDRATE_BAUDRATE_Baud38400
       };
 
-   APP_UART_FIFO_INIT(&comm_params,
+    APP_UART_FIFO_INIT(&comm_params,
                          UART_RX_BUF_SIZE,
                          UART_TX_BUF_SIZE,
                          uart_error_handle,
                          APP_IRQ_PRIORITY_LOW,
                          err_code);
 
-   (void)err_code;
+    APP_ERROR_CHECK(err_code);
 
     NRF_RNG->TASKS_START = 1; // start the RNG peripheral.
 

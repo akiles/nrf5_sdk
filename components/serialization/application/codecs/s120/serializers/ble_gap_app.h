@@ -919,7 +919,7 @@ uint32_t ble_gap_rssi_start_rsp_dec(uint8_t const * const p_buf,
 
 /**@brief Encodes @ref sd_ble_gap_scan_stop command request.
  *
- * @sa @ref nrf51_sd_ble_gap_scan_stop for packet format,
+ * @sa @ref nrf51_scan_stop_encoding for packet format,
  *     @ref ble_gap_scan_stop_rsp_dec for command response decoder.
  *
  * @param[in]      p_buf          Pointer to buffer where encoded data command will be returned.
@@ -934,8 +934,8 @@ uint32_t ble_gap_scan_stop_req_enc(uint8_t * const p_buf, uint32_t * const p_buf
 
 /**@brief Decodes response to @ref sd_ble_gap_scan_stop command.
  *
- * @sa @ref nrf51_sd_ble_gap_adv_stop for packet format,
- *     @ref ble_gap_adv_stop_req_enc for command request encoder.
+ * @sa @ref nrf51_scan_stop_encoding for packet format,
+ *     @ref ble_gap_scan_stop_req_enc for command request encoder.
  *
  * @param[in]  p_buf         Pointer to beginning of command response packet.
  * @param[in]  packet_len    Length (in bytes) of response packet.
@@ -953,9 +953,10 @@ uint32_t ble_gap_scan_stop_rsp_dec(uint8_t const * const p_buf,
 
 /**@brief Encodes @ref sd_ble_gap_scan_start command request.
  *
- * @sa @ref nrf51_sd_ble_gap_scan_start for packet format,
+ * @sa @ref nrf51_scan_start_encoding for packet format,
  *     @ref ble_gap_scan_start_rsp_dec for command response decoder.
  *
+ * @param[in]      p_scan_params  Pointer to scan params structure.
  * @param[in]      p_buf          Pointer to buffer where encoded data command will be returned.
  * @param[in, out] p_buf_len      \c in: size of \p p_buf buffer.
  *                                \c out: Length of encoded command packet.
@@ -970,7 +971,7 @@ uint32_t ble_gap_scan_start_req_enc(ble_gap_scan_params_t const *  p_scan_params
 
 /**@brief Decodes response to @ref sd_ble_gap_scan_start command.
  *
- * @sa @ref nrf51_sd_ble_gap_scan_start for packet format,
+ * @sa @ref nrf51_scan_start_encoding for packet format,
  *     @ref ble_gap_scan_start_req_enc for command request encoder.
  *
  * @param[in]  p_buf         Pointer to beginning of command response packet.
@@ -989,7 +990,7 @@ uint32_t ble_gap_scan_start_rsp_dec(uint8_t const * const p_buf,
 
 /**@brief Encodes @ref sd_ble_gap_connect command request.
  *
- * @sa @ref nrf51_sd_ble_gap_connect for packet format,
+ * @sa @ref nrf51_connect_encoding for packet format,
  *     @ref ble_gap_connect_rsp_dec for command response decoder.
  *
  * @param[in]      p_peer_addr    Pointer to peer address.
@@ -1011,7 +1012,7 @@ uint32_t ble_gap_connect_req_enc(ble_gap_addr_t const * const        p_peer_addr
 
 /**@brief Decodes response to @ref sd_ble_gap_connect command.
  *
- * @sa @ref nrf51_sd_ble_gap_connect for packet format,
+ * @sa @ref nrf51_connect_encoding for packet format,
  *     @ref ble_gap_connect_req_enc for command request encoder.
  *
  * @param[in]  p_buf         Pointer to beginning of command response packet.
@@ -1030,7 +1031,7 @@ uint32_t ble_gap_connect_rsp_dec(uint8_t const * const p_buf,
 
 /**@brief Encodes @ref sd_ble_gap_connect_cancel command request.
  *
- * @sa @ref nrf51_sd_ble_gap_connect_cancel for packet format,
+ * @sa @ref nrf51_connect_cancel_encoding for packet format,
  *     @ref ble_gap_connect_cancel_rsp_dec for command response decoder.
  *
  * @param[in]      p_buf          Pointer to buffer where encoded data command will be returned.
@@ -1046,8 +1047,8 @@ uint32_t ble_gap_connect_cancel_req_enc(uint8_t * const  p_buf,
 
 /**@brief Decodes response to @ref sd_ble_gap_connect_cancel command.
  *
- * @sa @ref nrf51_sd_ble_gap_connect for packet format,
- *     @ref ble_gap_connect_req_enc for command request encoder.
+ * @sa @ref nrf51_connect_cancel_encoding for packet format,
+ *     @ref ble_gap_connect_cancel_req_enc for command request encoder.
  *
  * @param[in]  p_buf         Pointer to beginning of command response packet.
  * @param[in]  packet_len    Length (in bytes) of response packet.
@@ -1066,8 +1067,8 @@ uint32_t ble_gap_connect_cancel_rsp_dec(uint8_t const * const p_buf,
 
 /**@brief Encodes @ref sd_ble_gap_encrypt command request.
  *
- * @sa @ref nrf51_sd_ble_gap_encrypt for packet format,
- *     @ref sd_ble_gap_encrypt_rsp_dec for command response decoder.
+ * @sa @ref nrf51_gap_encrypt_encoding for packet format,
+ *     @ref ble_gap_encrypt_rsp_dec for command response decoder.
  *
  * @param[in]      conn_handle    Connection handle.
  * @param[in]      p_master_id    Pointer to a master identification structure.
@@ -1090,8 +1091,8 @@ uint32_t ble_gap_encrypt_req_enc( uint16_t                          conn_handle,
 
 /**@brief Decodes response to @ref sd_ble_gap_encrypt command.
  *
- * @sa @ref nrf51_sd_ble_gap_encrypt for packet format,
- *     @ref sd_ble_gap_encrypt_rsp_dec for command response decoder.
+ * @sa @ref nrf51_gap_encrypt_encoding for packet format,
+ *     @ref ble_gap_encrypt_req_enc for command request encoder.
  *
  * @param[in]  p_buf         Pointer to beginning of command response packet.
  * @param[in]  packet_len    Length (in bytes) of response packet.

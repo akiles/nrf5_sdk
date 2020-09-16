@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['temp_5fget_5freq_5fdec',['temp_get_req_dec',['../a00677.html#ga3c4e3f76e2c264210ef7aa17233f00fa',1,'nrf_soc_conn.h']]],
-  ['temp_5fget_5freq_5fenc',['temp_get_req_enc',['../a00660.html#ga7a321d0c704f19df22bf2a901c15c4c2',1,'nrf_soc_app.h']]],
-  ['temp_5fget_5frsp_5fdec',['temp_get_rsp_dec',['../a00660.html#ga0ce4e52b270e62aa7c772f31776b5e6c',1,'nrf_soc_app.h']]],
-  ['temp_5fget_5frsp_5fenc',['temp_get_rsp_enc',['../a00677.html#ga4ec27ca18b068637552f9f9b6a87095c',1,'nrf_soc_conn.h']]],
+  ['temp_5fget_5freq_5fdec',['temp_get_req_dec',['../a00676.html#ga3c4e3f76e2c264210ef7aa17233f00fa',1,'nrf_soc_conn.h']]],
+  ['temp_5fget_5freq_5fenc',['temp_get_req_enc',['../a00658.html#ga7a321d0c704f19df22bf2a901c15c4c2',1,'nrf_soc_app.h']]],
+  ['temp_5fget_5frsp_5fdec',['temp_get_rsp_dec',['../a00658.html#ga0ce4e52b270e62aa7c772f31776b5e6c',1,'nrf_soc_app.h']]],
+  ['temp_5fget_5frsp_5fenc',['temp_get_rsp_enc',['../a00676.html#ga4ec27ca18b068637552f9f9b6a87095c',1,'nrf_soc_conn.h']]],
   ['touchpad_5finit',['touchpad_init',['../a00486.html#ga56d2b2da22fd614a12dead51b86f5be8',1,'synaptics_touchpad.h']]],
   ['touchpad_5finterrupt_5fstatus_5fread',['touchpad_interrupt_status_read',['../a00486.html#ga22b2f1fbcc1c09d3fcb5dae98e7a7dd2',1,'synaptics_touchpad.h']]],
   ['touchpad_5fproduct_5fid_5fread',['touchpad_product_id_read',['../a00486.html#ga32ff3519e36304ef6111a893730a22a8',1,'synaptics_touchpad.h']]],

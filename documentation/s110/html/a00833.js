@@ -1,4 +1,5 @@
 var a00833 =
 [
-    [ "BLE_ERROR_L2CAP_CID_IN_USE", "a00833.html#ga258b4a1e6ac5f32e23036ef0b88af3fa", null ]
+    [ "Defines", "a01043.html", "a01043" ],
+    [ "Structures", "a01064.html", "a01064" ]
 ];

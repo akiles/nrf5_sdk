@@ -1,9 +1,10 @@
 var a00301 =
 [
-    [ "conn_handle", "a00301.html#a71533de99d438bb326730e08da1d402a", null ],
-    [ "evt_handler", "a00301.html#ab0392a7012b01ace2dad863bc8f573cc", null ],
-    [ "meas_handles", "a00301.html#a6e3f96502d28802be863f09b2839817d", null ],
-    [ "service_handle", "a00301.html#ac62f9c0c453beef41d04c488c5d19ecc", null ],
-    [ "temp_type", "a00301.html#ad8e572095f9a6cecdf4bcde49c527aab", null ],
-    [ "temp_type_handles", "a00301.html#a514df962e0856554cd6eee1e2b11bf26", null ]
+    [ "temp_in_celcius", "a00301.html#a4065a89fde57ebf2effce6a1401e38c4", null ],
+    [ "temp_in_fahr", "a00301.html#a0120700a8a6185ce21e1a05391fbc706", null ],
+    [ "temp_in_fahr_units", "a00301.html#a16e05739a1ac3b03a2b4dc683bc1eacd", null ],
+    [ "temp_type", "a00301.html#a12b9d8fddee8e461bfcedb3489bd5f92", null ],
+    [ "temp_type_present", "a00301.html#a10dadb1129dd55a6d597e4e08764d7ff", null ],
+    [ "time_stamp", "a00301.html#aab4240703a233a4bd2cd1a7b3a5997c0", null ],
+    [ "time_stamp_present", "a00301.html#a21a7a430b8f85908438c9bd1fc2e0dce", null ]
 ];

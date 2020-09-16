@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_hids_hid_information_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_hids_feature_rep_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,78 @@ $(document).ready(function(){initNavTree('a00284.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_hids_hid_information_t Struct Reference<div class="ingroups"><a class="el" href="a00967.html">Human Interface Device Service</a></div></div>  </div>
+<div class="title">ble_hids_feature_rep_init_t Struct Reference<div class="ingroups"><a class="el" href="a00968.html">Human Interface Device Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>HID Information characteristic value.  
+<p>HID Service Feature Report characteristic init structure. This contains all options and data needed for initialization of one Feature Report characteristic.  
  <a href="a00284.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_hids.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a077bfa68d00dff20a7497f8f7936ae79"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00284.html#a077bfa68d00dff20a7497f8f7936ae79">bcd_hid</a></td></tr>
-<tr class="separator:a077bfa68d00dff20a7497f8f7936ae79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aadd0326cc45c31ea9e16b2f4cf0000fd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00284.html#aadd0326cc45c31ea9e16b2f4cf0000fd">b_country_code</a></td></tr>
-<tr class="separator:aadd0326cc45c31ea9e16b2f4cf0000fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acec5c1f0cd643c04bce7a9542e1b7444"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00284.html#acec5c1f0cd643c04bce7a9542e1b7444">flags</a></td></tr>
-<tr class="separator:acec5c1f0cd643c04bce7a9542e1b7444"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad011fc0114c033fc712bce4491101ac1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00330.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00284.html#ad011fc0114c033fc712bce4491101ac1">security_mode</a></td></tr>
-<tr class="separator:ad011fc0114c033fc712bce4491101ac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a021ad724a66d2f8e54c1bdff8def4b4c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00284.html#a021ad724a66d2f8e54c1bdff8def4b4c">max_len</a></td></tr>
+<tr class="separator:a021ad724a66d2f8e54c1bdff8def4b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af12bb312c4056f52bc2e83ff0ef66233"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00330.html">ble_srv_report_ref_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00284.html#af12bb312c4056f52bc2e83ff0ef66233">rep_ref</a></td></tr>
+<tr class="separator:af12bb312c4056f52bc2e83ff0ef66233"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88082cfc1a5360f43e333ea838257ccb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00329.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00284.html#a88082cfc1a5360f43e333ea838257ccb">security_mode</a></td></tr>
+<tr class="separator:a88082cfc1a5360f43e333ea838257ccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ed64286300a70a9d26f1839f2396221"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00284.html#a9ed64286300a70a9d26f1839f2396221">read_resp</a>: 1</td></tr>
+<tr class="separator:a9ed64286300a70a9d26f1839f2396221"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>HID Information characteristic value. </p>
+<div class="textblock"><p>HID Service Feature Report characteristic init structure. This contains all options and data needed for initialization of one Feature Report characteristic. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aadd0326cc45c31ea9e16b2f4cf0000fd"></a>
+<a class="anchor" id="a021ad724a66d2f8e54c1bdff8def4b4c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_hids_hid_information_t::b_country_code</td>
+          <td class="memname">uint16_t ble_hids_feature_rep_init_t::max_len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Identifies which country the hardware is localized for. Most hardware is not localized and thus this value would be zero (0). </p>
+<p>Maximum length of characteristic value. </p>
 
 </div>
 </div>
-<a class="anchor" id="a077bfa68d00dff20a7497f8f7936ae79"></a>
+<a class="anchor" id="a9ed64286300a70a9d26f1839f2396221"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_hids_hid_information_t::bcd_hid</td>
+          <td class="memname">uint8_t ble_hids_feature_rep_init_t::read_resp</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>16-bit unsigned integer representing version number of base USB HID Specification implemented by HID Device </p>
+<p>Should application generate a response to read requests. </p>
 
 </div>
 </div>
-<a class="anchor" id="acec5c1f0cd643c04bce7a9542e1b7444"></a>
+<a class="anchor" id="af12bb312c4056f52bc2e83ff0ef66233"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_hids_hid_information_t::flags</td>
+          <td class="memname"><a class="el" href="a00330.html">ble_srv_report_ref_t</a> ble_hids_feature_rep_init_t::rep_ref</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>See <a href="http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.hid_information.xml">http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.hid_information.xml</a> </p>
+<p>Value of the Report Reference descriptor. </p>
 
 </div>
 </div>
-<a class="anchor" id="ad011fc0114c033fc712bce4491101ac1"></a>
+<a class="anchor" id="a88082cfc1a5360f43e333ea838257ccb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00330.html">ble_srv_security_mode_t</a> ble_hids_hid_information_t::security_mode</td>
+          <td class="memname"><a class="el" href="a00329.html">ble_srv_cccd_security_mode_t</a> ble_hids_feature_rep_init_t::security_mode</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Security mode for the HID Information characteristic. </p>
+<p>Security mode for the HID Service Feature Report characteristic, including cccd. </p>
 
 </div>
 </div>
@@ -186,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00284.html">ble_hids_hid_information_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00284.html">ble_hids_feature_rep_init_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

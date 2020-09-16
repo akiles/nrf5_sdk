@@ -1,7 +1,9 @@
 var a00191 =
 [
-    [ "ble_dfu_evt_type", "a00191.html#a48f6c7cc051e012565ba9b05dd55e05a", null ],
-    [ "ble_dfu_pkt_write", "a00191.html#acc15bfa51d868c165e8dcb85f0c89f3d", null ],
-    [ "evt", "a00191.html#a610ac1df4d1894f84f3b0e51a58927f8", null ],
-    [ "pkt_rcpt_notif_req", "a00191.html#ac8054aef37b49a028cfee3dd3007becf", null ]
+    [ "conn_handle", "a00191.html#aea6b3ca0b15ba3d4684ac2dfaafb584b", null ],
+    [ "curr_char_ind", "a00191.html#a2ca30b7a259a7342dc23272fcd6d889f", null ],
+    [ "curr_srv_ind", "a00191.html#aa598c16586a07aa4b13e38c35b8b803d", null ],
+    [ "discovery_in_progress", "a00191.html#afca8a6f17e6b6d6c40f9fa490ed42b94", null ],
+    [ "services", "a00191.html#a982a55a9d1b9f10e010fcebeea5b8911", null ],
+    [ "srv_count", "a00191.html#a0cbdc7069a26178c67b3b558633fa261", null ]
 ];

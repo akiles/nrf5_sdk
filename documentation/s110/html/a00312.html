@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_lls_init_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_lls_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,52 @@ $(document).ready(function(){initNavTree('a00312.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_lls_init_t Struct Reference<div class="ingroups"><a class="el" href="a00972.html">Link Loss Service</a></div></div>  </div>
+<div class="title">ble_lls_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00973.html">Link Loss Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Link Loss Service init structure. This contains all options and data needed for initialization of the service.  
+<p>Link Loss Service event.  
  <a href="a00312.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_lls.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aba9fc4fcd56873873aa82aace5c804f7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00972.html#ga2ff59fd3c572afa373d8731265a2daee">ble_lls_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00312.html#aba9fc4fcd56873873aa82aace5c804f7">evt_handler</a></td></tr>
-<tr class="separator:aba9fc4fcd56873873aa82aace5c804f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad807ea2ae006260b7c63872abc7961a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00975.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00312.html#ad807ea2ae006260b7c63872abc7961a9">error_handler</a></td></tr>
-<tr class="separator:ad807ea2ae006260b7c63872abc7961a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e1cfca38578d65b9e40d1dffd69ebf6"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00312.html#a7e1cfca38578d65b9e40d1dffd69ebf6">initial_alert_level</a></td></tr>
-<tr class="separator:a7e1cfca38578d65b9e40d1dffd69ebf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4107eb4f75941f56faea5db0b273c863"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00330.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00312.html#a4107eb4f75941f56faea5db0b273c863">lls_attr_md</a></td></tr>
-<tr class="separator:a4107eb4f75941f56faea5db0b273c863"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a971a9cd94583dae76dcf5f94eb412686"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00973.html#ga94331ff0a90e8f8b61dcf230e1760ccf">ble_lls_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00312.html#a971a9cd94583dae76dcf5f94eb412686">evt_type</a></td></tr>
+<tr class="separator:a971a9cd94583dae76dcf5f94eb412686"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03bfd9896c9389b175cf494e4f548514"><td class="memItemLeft" ><a class="anchor" id="a03bfd9896c9389b175cf494e4f548514"></a>
+union {</td></tr>
+<tr class="memitem:a232562ab0f8bf87d9aac9f789a69fac5"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00312.html#adaf4d087319007c776df8baf3673fe8a">alert_level</a></td></tr>
+<tr class="separator:a232562ab0f8bf87d9aac9f789a69fac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03bfd9896c9389b175cf494e4f548514"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
+<tr class="separator:a03bfd9896c9389b175cf494e4f548514"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Link Loss Service init structure. This contains all options and data needed for initialization of the service. </p>
+<div class="textblock"><p>Link Loss Service event. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ad807ea2ae006260b7c63872abc7961a9"></a>
+<a class="anchor" id="adaf4d087319007c776df8baf3673fe8a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00975.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_lls_init_t::error_handler</td>
+          <td class="memname">uint8_t ble_lls_evt_t::alert_level</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Function to be called in case of an error. </p>
+<p>New Alert Level value. </p>
 
 </div>
 </div>
-<a class="anchor" id="aba9fc4fcd56873873aa82aace5c804f7"></a>
+<a class="anchor" id="a971a9cd94583dae76dcf5f94eb412686"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00972.html#ga2ff59fd3c572afa373d8731265a2daee">ble_lls_evt_handler_t</a> ble_lls_init_t::evt_handler</td>
+          <td class="memname"><a class="el" href="a00973.html#ga94331ff0a90e8f8b61dcf230e1760ccf">ble_lls_evt_type_t</a> ble_lls_evt_t::evt_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Event handler to be called for handling events in the Link Loss Service. </p>
-
-</div>
-</div>
-<a class="anchor" id="a7e1cfca38578d65b9e40d1dffd69ebf6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_lls_init_t::initial_alert_level</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Initial value of the Alert Level characteristic. </p>
-
-</div>
-</div>
-<a class="anchor" id="a4107eb4f75941f56faea5db0b273c863"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00330.html">ble_srv_security_mode_t</a> ble_lls_init_t::lls_attr_md</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Initial Security Setting for Link Loss Service Characteristics. </p>
+<p>Type of event. </p>
 
 </div>
 </div>
@@ -186,8 +160,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00312.html">ble_lls_init_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00312.html">ble_lls_evt_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

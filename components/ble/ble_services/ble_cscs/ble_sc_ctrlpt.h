@@ -110,11 +110,16 @@ typedef struct{
 }ble_sc_ctrlpt_rsp_t;
 
 
-
+/**
+ * \defgroup BLE_SRV_SC_CTRLPT_SUPP_FUNC Control point functionalities.
+ *@{
+ */
 #define BLE_SRV_SC_CTRLPT_SENSOR_LOCATIONS_OP_SUPPORTED  0x01                             /**< Support for sensor location related operations */
 #define BLE_SRV_SC_CTRLPT_CUM_VAL_OP_SUPPORTED           0x02                             /**< Support for setting cumulative value related operations */
 #define BLE_SRV_SC_CTRLPT_START_CALIB_OP_SUPPORTED       0x04                             /**< Support for starting calibration related operations */
-
+/**
+  *@}
+  */
 
 /**@brief Speed and Cadence Control Point init structure. This contains all options and data
 *         needed for initialization of the Speed and Cadence Control Point module. */

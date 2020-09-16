@@ -351,9 +351,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define> TX_PAGE1 TX_PAGE2 TX_PAGE3 NRF51 ANT_STACK_SUPPORT_REQD SOFTDEVICE_PRESENT BOARD_PCA10031</Define>
+              <Define> TX_PAGE1 TX_PAGE2 TX_PAGE3 NRF51 ANT_STACK_SUPPORT_REQD S210 SOFTDEVICE_PRESENT BOARD_PCA10031</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\include;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\toolchain;..\..\;..\..\..\..\..\bsp;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\softdevice\s210\headers;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\libraries\scheduler</IncludePath>
+              <IncludePath>..\..\include;..\..\..\..\..\..\components\toolchain;..\..\;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\softdevice\s210\headers;..\..\..\..\..\bsp;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\libraries\scheduler;..\..\..\..\..\..\components\libraries\util</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -367,7 +367,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define> TX_PAGE1 TX_PAGE2 TX_PAGE3 NRF51 ANT_STACK_SUPPORT_REQD SOFTDEVICE_PRESENT BOARD_PCA10031</Define>
+              <Define> TX_PAGE1 TX_PAGE2 TX_PAGE3 NRF51 ANT_STACK_SUPPORT_REQD S210 SOFTDEVICE_PRESENT BOARD_PCA10031</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

@@ -933,8 +933,9 @@ static void device_manager_init(void)
     APP_ERROR_CHECK(err_code);
 
     // Clear all bonded centrals if the Bonds Delete button is pushed.
-    init_data.clear_persistent_data = (nrf_gpio_pin_read(BOND_DELETE_ALL_BUTTON_ID) == 0);
-
+    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID, &(init_data.clear_persistent_data));
+    APP_ERROR_CHECK(err_code);
+    
     err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);
 

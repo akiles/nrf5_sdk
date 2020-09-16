@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Cycling Speed and Cadence Application</title>
+<title>nRF51 SDK - S110 SoftDevice: Blood Glucose Application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,65 +97,63 @@ $(document).ready(function(){initNavTree('a00049.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Cycling Speed and Cadence Application </div>  </div>
+<div class="title">Blood Glucose Application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Cycling Speed and Cadence Application is an example that implements the Cycling Speed and Cadence profile using the hardware delivered in the nRF51 Development Kit.</p>
-<p>The application includes the two services in the Cycling Speed and Cadence profile:</p>
+<div class="textblock"><p>The Blood Glucose Application is an example that implements the Blood Glucose profile using the hardware delivered in the nRF51 Development Kit.</p>
+<p>The application includes the two services in the Blood Glucose profile:</p>
 <ul>
-<li><a class="el" href="a00960.html">Cycling Speed and Cadence Service</a></li>
-<li><a class="el" href="a00963.html">Device Information Service</a></li>
+<li><a class="el" href="a00966.html">Glucose Service</a></li>
+<li><a class="el" href="a00964.html">Device Information Service</a></li>
 </ul>
-<p>In addition, use of the <a class="el" href="a00958.html">Battery Service</a> is also demonstrated.</p>
-<p>When the application starts, it starts a timer to simulate Cycling Speed and Cadence Measurements.</p>
-<p>Also, a timer for generating battery measurements is started.</p>
-<p>The sensor measurements are simulated the following way:</p>
-<ul>
-<li>Instantenous speed and instantaneous cadence: see <a class="el" href="a01030.html">Sensor Data Simulator</a>.</li>
-<li>Battery Level: see <a class="el" href="a01030.html">Sensor Data Simulator</a>.</li>
-</ul>
-<p>When notification of Cycling Speed and Cadence Measurement characteristic is enabled, the Cycling Speed and Cadence Measurement, containing the current value for all the components of the Cycling Speed and Cadence Measurement characteristic, is notified each time the Cycling Speed and Cadence measurement timer expires. When notification of Battery Level characteristic is enabled, the Battery Level is notified each time the Battery Level measurement timer expires.</p>
+<p>In addition, use of the <a class="el" href="a00959.html">Battery Service</a> is also demonstrated.</p>
+<p>When the application starts, a timer for generating battery measurements is started.</p>
+<p>The actual measurements are hard-coded values. They get added when connected and bonded to a central, at each press of the button 1. The timestamps are simulated and it uses the Record Access Control point and implements the filtering on sequence number. It supports only glucose measurement characteristic, not glucose context.</p>
 <dl class="section note"><dt>Note</dt><dd>This application is not power optimized! </dd>
 <dd>
 The application will stop advertising after 3 minutes and go to system-off mode. Push the button 1 to restart advertising.</dd></dl>
-<h1><a class="anchor" id="project_cscs_setup"></a>
+<h1><a class="anchor" id="project_gls_setup"></a>
 Setup</h1>
-<p>The name of the example is <b>ble_app_cscs_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\exmples\ble_peripheral\ble_app_cscs</code> </p>
+<p>The name of the example is <b>ble_app_gls_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_gls</code> </p>
 <p>Button assignments:</p>
 <ul>
-<li>Button 1: Wake up from system-off and restart advertising.</li>
-<li>Button 2: Wake up from system-off, erase all bonds, and restart advertising.</li>
+<li>Button 1: Wake up from system-off and restart advertising; in a connection, create a new record.</li>
+<li>Button 2: Wake up, erase all bonds, and restart advertising.</li>
 </ul>
-<h1><a class="anchor" id="project_cscs_test"></a>
+<h2><a class="anchor" id="mitm_protection"></a>
+MITM protection</h2>
+<p>The Blood Glucose Application secures the bond using Man-in-the-Middle protection (MITM). A passkey must be entered at the central to complete the bonding and ensure MITM protection. The Blood Glucose Application will present the passkey during bonding. It is sent on the UART. It is therefore important that UART is set up correctly on the receiving side.</p>
+<ul>
+<li>8 Data Bits</li>
+<li>No parity</li>
+<li>1 Stop Bit</li>
+<li>CTS/RTS Flow control</li>
+<li>38400 Baudrate</li>
+</ul>
+<h1><a class="anchor" id="project_gls_profile"></a>
+Demonstrating the Blood Glucose Meter Profile</h1>
+<p>The Blood Glucose Meter Profile uses the Record Access Control Point characteristic to access all measurements. This means that the sensor does not automatically send new measurements, but the collector has to fetch them writing request to the control point (see <a href="http://developer.bluetooth.org/Pages/default.aspx">http://developer.bluetooth.org/Pages/default.aspx</a> for more detail on the RACP characteristic).</p>
+<h1><a class="anchor" id="project_gls_test"></a>
 Testing</h1>
-<p>Test the Cycling Speed and Cadence Application with the Master Control Panel by performing the following steps:</p>
+<p>Test the Glucose Meter Application with the nRF Toolbox app, which is available on both iOS (Apple Store) and Android (Google Play).</p>
+<p>You can also test the application with the Master Control Panel by performing the following steps:</p>
 <ol type="1">
-<li>Compile and program the application. Observe that the <a class="el" href="a00042.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
-<li>Connect to the device from Master Control Panel (the device will be advertising as 'Nordic_CSC'), then perform service discovery. Observe that the <a class="el" href="a00042.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
-<li>Click the 'Enable services' button on the Master Control Panel. Observe that Cycling Speed and Cadence notifications are received every second, and Battery Level notifications are received every two seconds.</li>
-<li>Do a 'start auto calibration' speed and cadence control point operation:<ul>
-<li>Write 02 (OpCode : BLE_SCPT_START_AUTOMATIC_CALIBRATION) to Speed and Cadence</li>
-<li>Control Point Characteristic (UUID 0x2A55).</li>
-<li>Observe that you receive one indication of the Speed and Cadence Ctrlpt indicating success (100201).</li>
+<li>Compile and program the application. Observe that the <a class="el" href="a00041.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>Connect and to the device from Master Control Panel (the device will be advertising as 'Nordic_Glucose')</li>
+<li>Bond to the device. A new window opens up and asks for a passkey. Enter the key received over the UART.</li>
+<li>Perform service discovery. Observe that the <a class="el" href="a00041.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Click the 'Enable services' button on the Master Control Panel. Observe that Battery Level notifications are received every 10 seconds.</li>
+<li>Press Button 1 five times.</li>
+<li>Do a Read all records operation:<ul>
+<li>Write 0101 (OpCode : REPORT_STORED_RECORDS, Operator : ALL_STORED_RECORDS) to Record Access</li>
+<li>Control Point Characteristic (UUID 0x2A52).</li>
+<li>Observe that you receive five notification of the glucose measurements(UUID 0x2A18) and one indication of the RACP indicating success (06000101);</li>
 </ul>
 </li>
-<li>Do a 'set cumulative value' speed and cadence control point operation:<ul>
-<li>Write 0112345678 (OpCode : BLE_SCPT_SET_CUMULATIVE_VALUE, Operand : 0x012345678) to Speed and Cadence</li>
-<li>Control Point Characteristic (UUID 0x2A55).</li>
-<li>Observe that you receive one indication of the Speed and Cadence Ctrlpt indicating success (100101) and that the bytes 1-4 of the next Csc Measurement nofitications match the new value (received notification should be yyxx345678, where yy being the byte 0 containing flags, xx being the cumulative value LSB which changes quickly, and should be bigger than 12).</li>
-</ul>
-</li>
-<li>Do a 'request supported sensor locations' speed and cadence control point operation:<ul>
-<li>Write 04 (OpCode : BLE_SCPT_REQUEST_SUPPORTED_SENSOR_LOCATIONS) to Speed and Cadence</li>
-<li>Control Point Characteristic (UUID 0x2A55).</li>
-<li>Observe that you receive one indication of the Speed and Cadence Ctrlpt indicating success and the list of supported locations (1004010405060708090A0B0C0D).</li>
-</ul>
-</li>
-<li>Do an 'update sensor location' speed and cadence control point operation:<ul>
-<li>Write 030A (OpCode : BLE_SCPT_UPDATE_SENSOR_LOCATION Operand : SENSOR_LOCATION_REAR_DROPOUT) to Speed and Cadence</li>
-<li>Control Point Characteristic (UUID 0x2A55).</li>
-<li>Observe that you receive one indication of the Speed and Cadence Ctrlpt indicating success (100301).</li>
-<li>Read the Sensor Location Charactersitic (UUID 0x2A5D) and verify that the read value is 0x0A (SENSOR_LOCATION_REAR_DROPOUT). </li>
+<li>Read the number of stored records:<ul>
+<li>Write 0401 (OpCode: REPORT_NUM_STORED_RECORDS, Operator: ALL_STORED_RECORDS) to Record Access Control Point</li>
+<li>Characteristic (UUID 0x2A52).</li>
+<li>Observe that you get an indication of the RACP giving you the number of records, 5 (05000500). </li>
 </ul>
 </li>
 </ol>
@@ -164,8 +162,8 @@ Testing</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00044.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:18 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00043.html">BLE Peripheral</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:04 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

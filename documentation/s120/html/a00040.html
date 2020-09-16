@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Direct Test Mode</title>
+<title>nRF51 SDK - S120 SoftDevice: BSP indication states</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,96 +97,76 @@ $(document).ready(function(){initNavTree('a00040.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Direct Test Mode </div>  </div>
+<div class="title">BSP indication states </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The DTM application enables the DTM test functions described in <em>Bluetooth</em> Specification Version 4.0, Vol. 6, Part F.</p>
-<p>The purpose of DTM is to test the operation of the radio at the physical level, such as:</p>
-<ul>
-<li>transmission power and receiver sensitivity</li>
-<li>frequency offset and drift</li>
-<li>modulation characteristics</li>
-<li>packet error rate</li>
-<li>intermodulation performance</li>
-</ul>
-<p>Test procedures are defined the document "<em>Bluetooth</em> Low Energy RF PHY Test Specification", Document no RF-PHY.TS/4.0.0. Conformance tests are carried out by dedicated test equipment (such as the Anritsu MT8852 or similar), the nRF51 with the DTM application as the DUT.</p>
-<p>The nRF51 DTM application includes two parts:</p>
-<ul>
-<li><a class="el" href="a00725.html">DTM - Direct Test Mode</a> library, which manages the nRF radio and controls the standard DTM procedures</li>
-<li>an application providing an external interface to the library</li>
-</ul>
-<p>The DTM application contains a driver for a 2-wire UART interface, mapping two-octet commands and events as specified by the BLE DTM specification to the dtmlib.</p>
-<p>The name of the example is <b>direct_test_mode_s120_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\dtm\direct_test_mode</code> </p>
-<p>Source code and project file for the ble_dtm module can be found in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\components\ble\ble_dtm</code> </p>
-<div class="image">
-<img src="DTM_DUT.png" alt="DTM_DUT.png"/>
-<div class="caption">
-nRF51 with DTM as a DUT</div></div>
-<p>The implementation is self-contained and requires no BLE protocol stack for its operation. The MPU is initialized in the standard way (files <code>startup_nRF51502.s</code> and <code>system_nRF51502.c</code>. The dtmlib function <a class="el" href="a00725.html#ga45f73017a4ba401da34571bcc741b564" title="Function for initializing or re-initializing DTM module.">dtm_init()</a> will do all configuration of interrupts, timers and radio. Initialization of the UART is done by the dtm_serial2w code.</p>
-<p><code>main.c</code> may be replaced with other interface implementations, such as an HCI interface, USB, or other interface required by the Upper Tester.</p>
-<p>The interface to the Lower Tester uses the antenna connector of the nRF51. While in principle an aerial may be used, conformance tests cover reading the transmission power delivered by the DUT; hence a coax connection between the DUT and the Lower Tester is employed for all conformance testing.</p>
-<h1><a class="anchor" id="ble_sdk_dtm_lib_interface"></a>
-BLE DTM module interface</h1>
-<p>ble_dtm.c function <a class="el" href="a00725.html#gacfd7e507740ae8f6d296e77306d89a3a" title="Function for calling when a complete command has been prepared by the Tester.">dtm_cmd()</a> implements the four commands defined by the BLE standard</p>
-<ul>
-<li>RESET</li>
-<li>RECEIVER_TEST</li>
-<li>TRANSMITTER_TEST</li>
-<li>TEST_END</li>
-</ul>
-<p>In the <a class="el" href="a00725.html#gacfd7e507740ae8f6d296e77306d89a3a" title="Function for calling when a complete command has been prepared by the Tester.">dtm_cmd()</a> interface, each of the parameters (cmd,freq, length, payload) is a word size value. Note that the currently supported parameter values are limited to those defined for BLE. (HCI allows a greater value range for use with BR/EDR.)</p>
-<p>The following DTM events are polled using the <a class="el" href="a00725.html#ga574ceb36cc9cee237a6e9f77e3c32b36" title="Function for reading the result of a DTM command.">dtm_event_get()</a> function:</p>
-<ul>
-<li>PACKET_REPORTING_EVENT</li>
-<li>TEST_STATUS_EVENT [SUCCESS|FAIL]</li>
-</ul>
-<div class="image">
-<img src="dtm_engine.jpg" alt="dtm_engine.jpg"/>
-<div class="caption">
-State machine overview of the dtm engine.</div></div>
-<h1><a class="anchor" id="ble_sdk_dtm_proprietary"></a>
-Vendor Specific Packet Payload</h1>
-<p>The BLE 2-wire UART DTM interface standard reserves Packet Type (payload parameter) binary value '11' for a <em>Vendor Specific</em> Packet Payload. The dtm_serial2w adaptation layer maps this to value 0xFFF..FFF in the <a class="el" href="a00725.html#gacfd7e507740ae8f6d296e77306d89a3a" title="Function for calling when a complete command has been prepared by the Tester.">dtm_cmd()</a> interface. The rationale for this mapping is to allow later extensions to a 4-bit Packet Type field, as specified in the HCI interface and in the DTM PDU layout.</p>
-<p>The <em>Vendor Specific</em> payload (parameter 4) is interpreted as follows:</p>
-<p>If Command, parameter 1, is set to Transmitter Test (binary '10') and parameter 4, payload, to <em>Vendor Specific</em> (binary '11' in the 2wire physical interface, all bits set to 1 in the dtmlib interface):</p>
-<ul>
-<li>If parameter 3 (length) is set to 0 (symbol CARRIER_TEST), an unmodulated carrier is turned on at the channel indicated by parameter 2 (freq). It remains turned on until a TEST_END or RESET command is issued.</li>
-</ul>
-<ul>
-<li>Parameter 3 (length) equal to 1 (symbol CARRIER_TEST_STUDIO) is used by the nRFgo studio to indicate an unmodulated carrier is turned on at the channel. It remains turned on until a TEST_END or RESET command is issued.</li>
-</ul>
-<ul>
-<li>If parameter 3 (length) is set to 2 (symbol SET_TX_POWER), parameter 2 (length) sets the tx power in dBm, ranging from -40 to +4 in steps of 4, 0 dBm being the reset value. The tx power can only be modified while no Transmitter Test or Receiver Test is running.</li>
-</ul>
-<ul>
-<li>If parameter 3 (freq) is set to 3 (symbol SELECT_TIMER), parameter 2 (length) selects the timer to be used by dtmlib for Transmitter Test timing. Valid timer identifiers are 0, 1 and 2. Configuring the timer to be used allows dtmlib to be integrated in a larger test environment where other modules may be occupying the default timer (timer 0).</li>
-</ul>
-<ul>
-<li>All other values of parameter 2 (freq) and 4 (length) are reserved.</li>
-</ul>
-<h1><a class="anchor" id="ble_sdk_dtm_serial2w"></a>
-The DTM to Serial adaptation layer</h1>
-<p><code>main.c</code> is a sample adaptation layer, implementing the UART interface as specified in Volume 6, part F, chapter 3 of the <em>Bluetooth</em> specification.</p>
-<p>The default selection of GPIO pins are pin 11 for RX and pin 9 for TX. These defaults are defined in <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\bsp\pca10028.h</code> and can be changed by editing the values of the symbols RX_PIN_NUMBER and TX_PIN_NUMBER.</p>
-<h1><a class="anchor" id="ble_sdk_dtm_testing"></a>
-Running DTM tests</h1>
-<p>Conformance testing is done using a certified tester. The setup depends on the actual tester, and details about the test operation must be found from the tester documentation.</p>
-<p>The BLE DTM UART interface standard specifies:</p>
-<ul>
-<li>8 data bits</li>
-<li>No parity</li>
-<li>1 stop bit</li>
-<li>CTS/RTS Flow control</li>
-<li>A selection of bit rates from 1200 to 115200, one of which must be supported by the DUT</li>
-</ul>
-<p>The default bit rate of the DTM UART driver is 19200 bps, which is supported by most certified testers. </p>
+<div class="textblock"><p>To abstract from the actual hardware that is used to run an example, some examples use BSP states instead of a fast assignment of LEDs to indicate states. In this way, examples can easily be tested on different boards, like the development board and the dongle. States are indicated in different ways depending on the hardware that is used.</p>
+<p>The following table lists how the BSP states are indicated on PCA10028 and PCA10031:</p>
+<table class="doxtable">
+<tr>
+<th>BSP state </th><th>PCA10028 </th><th>PCA10031</th></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_IDLE"></a>BSP_INDICATE_IDLE </td><td>All LEDs are off </td><td>All LEDs are off </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_SCANNING"></a>BSP_INDICATE_SCANNING </td><td>LED 1 is blinking (period 2 sec, duty cycle: 10%) </td><td>Red LED is blinking (period 2 sec, duty cycle: 10%) </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_ADVERTISING"></a>BSP_INDICATE_ADVERTISING </td><td>LED 1 is blinking (period 2 sec, duty cycle: 10%) </td><td>Red LED is blinking (period 2 sec, duty cycle: 10%) </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_ADVERTISING_WHITELIST"></a>BSP_INDICATE_ADVERTISING_WHITELIST </td><td>LED 1 is blinking fast (period 1 sec, duty cycle: 20%) </td><td>Red LED is blinking fast (period 1 sec, duty cycle: 20%) </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_ADVERTISING_SLOW"></a>BSP_INDICATE_ADVERTISING_SLOW </td><td>LED 1 is blinking slowly (period 4.4 sec, duty cycle: 10%) </td><td>Red LED is is blinking slowly (period 4.4 sec, duty cycle: 10%) </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_ADVERTISING_DIRECTED"></a>BSP_INDICATE_ADVERTISING_DIRECTED </td><td>LED 1 is blinking very fast (period 0.6 sec, duty cycle: 50%) </td><td>Red LED is blinking very fast (period 0.6 sec, duty cycle: 50%) </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_BONDING"></a>BSP_INDICATE_BONDING </td><td>LED 1 is blinking (period 200 msec, duty cycle: 50%) </td><td>Red LED is blinking (period 200 msec, duty cycle: 50%) </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_CONNECTED"></a>BSP_INDICATE_CONNECTED </td><td>LED 1 is on </td><td>Red LED is on </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_SENT_OK"></a>BSP_INDICATE_SENT_OK </td><td>LED 2 is inverted for 100 msec </td><td>Green LED is inverted for 100 msec </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_SEND_ERROR"></a>BSP_INDICATE_SEND_ERROR </td><td>LED 2 is inverted for 500 msec </td><td>Green LED is inverted for 500 msec </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_RCV_OK"></a>BSP_INDICATE_RCV_OK </td><td>LED 2 is inverted for 100 msec </td><td>Green LED is inverted for 100 msec </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_RCV_ERROR"></a>BSP_INDICATE_RCV_ERROR </td><td>LED 2 is inverted for 500 msec </td><td>Green LED is inverted for 500 msec </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_FATAL_ERROR"></a>BSP_INDICATE_FATAL_ERROR </td><td>All LEDs are on </td><td>All LEDs are on </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_USER_STATE_OFF"></a>BSP_INDICATE_USER_STATE_OFF </td><td>All LEDs are off </td><td>All LEDs are off </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_USER_STATE_0"></a>BSP_INDICATE_USER_STATE_0 </td><td>LEDs 2, 3, and 4 are off, LED 1 is on </td><td>Green and blue LEDs are off, red LED is on </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_USER_STATE_1"></a>BSP_INDICATE_USER_STATE_1 </td><td>LEDs 1, 3, and 4 are off, LED 2 is on </td><td>Red and blue LED are off, green LED is on </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_USER_STATE_2"></a>BSP_INDICATE_USER_STATE_2 </td><td>LEDs 3 and 4 are off, LEDs 1 and 2 are on </td><td>Blue LED is off, red and green LEDs are on </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_USER_STATE_3"></a>BSP_INDICATE_USER_STATE_3 </td><td>All LEDs are on </td><td>All LEDs are on </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_USER_STATE_ON"></a>BSP_INDICATE_USER_STATE_ON </td><td>All LEDs are on </td><td>All LEDs are on </td></tr>
+</table>
+<p>The following BSP alerts can be indicated on top of the states described in the previous table: </p>
+<table class="doxtable">
+<tr>
+<th>BSP alert </th><th>PCA10028 </th><th>PCA10031</th></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_ALERT_0"></a>BSP_INDICATE_ALERT_0 </td><td>LED 3 is blinking (period 1200 msec, duty cycle: 50%) </td><td>Blue LED is blinking (period 1200 msec, duty cycle: 50%) </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_ALERT_1"></a>BSP_INDICATE_ALERT_1 </td><td>LED 3 is blinking (period 800 msec, duty cycle: 50%) </td><td>Blue LED is blinking (period 800 msec, duty cycle: 50%) </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_ALERT_2"></a>BSP_INDICATE_ALERT_2 </td><td>LED 3 is blinking (period 400 msec, duty cycle: 50%) </td><td>Blue LED is blinking (period 400 msec, duty cycle: 50%) </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_ALERT_3"></a>BSP_INDICATE_ALERT_3 </td><td>LED 3 is on </td><td>Blue LED is on </td></tr>
+<tr>
+<td><a class="anchor" id="BSP_INDICATE_ALERT_OFF"></a>BSP_INDICATE_ALERT_OFF </td><td>LED 3 is off </td><td>Blue LED is off </td></tr>
+</table>
+<p>The states are defined in <a class="el" href="a00521.html#ga1e44400c2a8fe4979010bb62a6ca8a55">bsp_indication_t</a>. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

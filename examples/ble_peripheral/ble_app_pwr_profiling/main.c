@@ -56,8 +56,8 @@
 //      The following parameters are not meant to be changed while using this application for power
 //      profiling.
 
-#define NOTIF_BUTTON_PIN_NO           0				                                      /**< Button used for initializing the application in connectable mode. */
-#define NON_CONN_ADV_BUTTON_PIN_NO    1				                                      /**< Button used for initializing the application in non-connectable mode. */
+#define NOTIF_BUTTON_ID               0                                             /**< Button used for initializing the application in connectable mode. */
+#define NON_CONN_ADV_BUTTON_ID        1                                             /**< Button used for initializing the application in non-connectable mode. */
 
 #define DEVICE_NAME                   "Nordic_Power_Mgmt"                           /**< Name of device. Will be included in the advertising data. */
 
@@ -645,14 +645,13 @@ int main(void)
 
     // Check button states.
     // Notification Start button.
-    if (bsp_buttons_state_get() & (1 << NOTIF_BUTTON_PIN_NO))
-    {
-        is_notification_mode = true;
-    }
+    err_code = bsp_button_is_pressed(NOTIF_BUTTON_ID, &(is_notification_mode));
+    APP_ERROR_CHECK(err_code);
     // Non-connectable advertisement start button.
-    else if (bsp_buttons_state_get() & (1 << NON_CONN_ADV_BUTTON_PIN_NO))
+    if (!is_notification_mode)
     {
-        is_non_connectable_mode = true;
+        err_code = bsp_button_is_pressed(NON_CONN_ADV_BUTTON_ID, &(is_non_connectable_mode));
+        APP_ERROR_CHECK(err_code);
     }
     // Un-configured button.
     else

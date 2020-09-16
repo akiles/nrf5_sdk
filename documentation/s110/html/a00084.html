@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Serialization Codecs</title>
+<title>nRF51 SDK - S110 SoftDevice: BLE S110 L2CAP Events</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,73 +97,53 @@ $(document).ready(function(){initNavTree('a00084.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Serialization Codecs </div>  </div>
+<div class="title">BLE S110 L2CAP Events </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="packet_encoding_format"></a>
-Packet Encoding Format</h1>
-<div class="image">
-<img src="frame_general.png" alt="frame_general.png"/>
-<div class="caption">
-Figure 1: Frame format.</div></div>
-<p>For an architectural overview of Serialized <em>Bluetooth</em> Application, please see the <a class="el" href="a00082.html#nrf51_arch_serialization">Architecture</a> module. <br/>
-</p>
-<h2><a class="anchor" id="packet_encoding_format_commands"></a>
-Commands and responses</h2>
-<div class="image">
-<img src="command_and_response_diagram.png" alt="command_and_response_diagram.png"/>
-<div class="caption">
-Figure 2: Command and Response packet course.</div></div>
-<p><br/>
-</p>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#nrf51_l2cap_evt_rx_encoding">0x70 - BLE_L2CAP_EVT_RX</a><ul><li class="level2"><a href="#nrf51_l2cap_evt_rx_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_l2cap_evt_rx_encoding_sub_a">Encoding of BLE L2CAP packet received event</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="textblock"><h1><a class="anchor" id="nrf51_l2cap_evt_rx_encoding"></a>
+0x70 - BLE_L2CAP_EVT_RX</h1>
+<h2><a class="anchor" id="nrf51_l2cap_evt_rx_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a01063.html#gga200c8684032d8e5fe10d295b2f3a1555af6d68dde17c172258858ea9d9c4488e3">BLE_L2CAP_EVT_RX</a> packet.</p>
+<p>Event ID = 0x70 for BLE_L2CAP_EVT_RX.</p>
+<p>The BLE L2CAP event contains a connection handle, and for the BLE L2CAP event RX, the <a class="el" href="a00309.html">ble_l2cap_evt_rx_t</a> is encoded after connection handle as seen in Figure 1.</p>
+<p>The order of the encoding is: </p>
 <table class="doxtable">
 <tr>
-<th>Packet Type </th><th>Description</th></tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>0x00 Command </td><td>The packet is sent from the application chip to the BLE Connectivity Chip, where it will be decoded and the corresponding <a class="el" href="a00094.html">function</a>&#160;in the SoftDevice is executed. </td></tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00310.html#ab843f6e96efbaf3d2bffee8c92c62f1a">ble_l2cap_evt_t::conn_handle</a> </td></tr>
 <tr>
-<td>0x01 Command Response </td><td>After a function in the SoftDevice is received, the <a class="el" href="a00094.html">response</a>&#160;is encoded in the BLE Connectivity Chip and a response packet is sent to the application chip. </td></tr>
+<td>2 bytes </td><td>Data Length </td><td>see <a class="el" href="a00311.html#a754900407e75298f4af89a59febed5b8">ble_l2cap_header_t::len</a> </td></tr>
 <tr>
-<td>0x03 DTM Command </td><td>The packet is sent from the application chip to the BLE Connectivity Chip, where it will be decoded and the chip will enter in the DTM mode. </td></tr>
+<td>2 bytes </td><td>CID </td><td>see <a class="el" href="a00311.html#a6e40f192db4382919b6c1f3db8e70d46">ble_l2cap_header_t::cid</a> </td></tr>
 <tr>
-<td>0x04 DTM Command Response </td><td>Before BLE Connectivity Chip enter in the DTM mode it sends response packet to the application chip. </td></tr>
-</table>
-<p><b>Note:</b> If the length field is invalid for the specific command, the call will return error code NRF_ERROR_INVALID_LENGTH from the codec in the Application Chip. <br/>
-</p>
-<h2><a class="anchor" id="packet_encoding_format_events"></a>
-Events</h2>
-<div class="image">
-<img src="event_send_diagram.png" alt="event_send_diagram.png"/>
-<div class="caption">
-Figure 3: Event packet course.</div></div>
-<p><br/>
-</p>
-<table class="doxtable">
-<tr>
-<th>Packet Type </th><th>Description</th></tr>
-<tr>
-<td>0x02 Event </td><td>If an <a class="el" href="a00089.html">event</a>&#160;is triggered in the SoftDevice, an event packet is is sent from the BLE Connectivity Chip to the application chip. </td></tr>
+<td>0..'Data Length' bytes </td><td>Data </td><td>see <a class="el" href="a00309.html#ad3df37c1998b3d1d213a6e7b5cfbcd5e">ble_l2cap_evt_rx_t::data</a> </td></tr>
 </table>
 <p><br/>
 </p>
-<p><a class="el" href="a00089.html">BLE S110 Events</a></p>
-<p><a class="el" href="a00090.html">BLE S110 GAP Events</a></p>
-<p><a class="el" href="a00091.html">BLE S110 GATTC Events</a></p>
-<p><a class="el" href="a00092.html">BLE S110 GATTS Events</a></p>
-<p><a class="el" href="a00093.html">BLE S110 L2CAP Events</a></p>
-<p><a class="el" href="a00094.html">BLE S110 Functions</a></p>
-<p><a class="el" href="a00095.html">BLE S110 GAP Functions</a></p>
-<p><a class="el" href="a00096.html">BLE S110 GATTC Functions</a></p>
-<p><a class="el" href="a00097.html">BLE S110 GATTS Functions</a></p>
-<p><a class="el" href="a00098.html">BLE S110 L2CAP Functions</a></p>
-<p><a class="el" href="a00088.html">BLE DTM</a> </p>
+<h2><a class="anchor" id="nrf51_l2cap_evt_rx_encoding_sub_a"></a>
+Encoding of BLE L2CAP packet received event</h2>
+<div class="image">
+<img src="l2cap_evt_rx.png" alt="l2cap_evt_rx.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE L2CAP packet received event.</div></div>
+<p> <br/>
+ </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00082.html">BLE Serialization</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:19 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00073.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00075.html">Serialization Codecs</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:04 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

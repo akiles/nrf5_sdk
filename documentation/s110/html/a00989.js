@@ -1,6 +1,7 @@
 var a00989 =
 [
-    [ "dm_security_setup_req", "a00989.html#ga4611de4e4f5cc68f0e3648e72e63283e", null ],
-    [ "dm_security_status_req", "a00989.html#ga3fe0567568f486ca25712c87522cb939", null ],
-    [ "dm_whitelist_create", "a00989.html#ga2c2148c29f11f7508ee4550ff3ac3db2", null ]
+    [ "Device Module Set-up APIs", "a00990.html", "a00990" ],
+    [ "APIs to set up or read status of security on a link.", "a00991.html", "a00991" ],
+    [ "Context Management APIs", "a00992.html", "a00992" ],
+    [ "Utility APIs", "a00993.html", "a00993" ]
 ];

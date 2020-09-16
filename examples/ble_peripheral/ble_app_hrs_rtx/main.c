@@ -10,7 +10,7 @@
  *
  */
 // Board/nrf6310/ble/ble_app_hrs_rtx/main.c
-/** @example Board/nrf6310/ble/ble_app_hrs_rtx/main.c
+/**
  *
  * @brief Heart Rate Service Sample Application with RTX main file.
  *
@@ -44,7 +44,7 @@
 #include "bsp.h"
 #include "cmsis_os.h"
 
-#define IS_SRVC_CHANGED_CHARACT_PRESENT      0                                           /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
+#define IS_SRVC_CHANGED_CHARACT_PRESENT      0                                          /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
 #define WAKEUP_BUTTON_ID                     0                                          /**< Button used to wake up the application. */
 #define BOND_DELETE_ALL_BUTTON_ID            1                                          /**< Button used for deleting all bonded centrals during startup. */
@@ -458,13 +458,13 @@ static void sensor_sim_init(void)
 static void application_timers_start(void)
 {
     // Start application timers.
-    (void)osTimerStart(m_battery_timer_id, BATTERY_LEVEL_MEAS_INTERVAL);
+    UNUSED_VARIABLE(osTimerStart(m_battery_timer_id, BATTERY_LEVEL_MEAS_INTERVAL));
 
-    (void)osTimerStart(m_heart_rate_timer_id, HEART_RATE_MEAS_INTERVAL);
+    UNUSED_VARIABLE(osTimerStart(m_heart_rate_timer_id, HEART_RATE_MEAS_INTERVAL));
 
-    (void)osTimerStart(m_rr_interval_timer_id, RR_INTERVAL_INTERVAL);
+    UNUSED_VARIABLE(osTimerStart(m_rr_interval_timer_id, RR_INTERVAL_INTERVAL));
 
-    (void)osTimerStart(m_sensor_contact_timer_id, SENSOR_CONTACT_DETECTED_INTERVAL);
+    UNUSED_VARIABLE(osTimerStart(m_sensor_contact_timer_id, SENSOR_CONTACT_DETECTED_INTERVAL));
 }
 
 
@@ -675,7 +675,8 @@ static void device_manager_init(void)
     APP_ERROR_CHECK(err_code);
 
     // Clear all bonded centrals if the Bonds Delete button is pushed.
-    init_data.clear_persistent_data = bsp_buttons_state_get() & (1 << BOND_DELETE_ALL_BUTTON_ID );
+    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID,&(init_data.clear_persistent_data));
+    APP_ERROR_CHECK(err_code);
 
     err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);
@@ -791,7 +792,7 @@ int main(void)
     // Enter main loop.
     for (;; )
     {
-        (void)osDelay(1000);
+        UNUSED_VARIABLE(osDelay(1000));
     }
 }
 

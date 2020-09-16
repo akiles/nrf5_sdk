@@ -1,4 +1,4 @@
 var a00938 =
 [
-    [ "ser_conn_ble_event_encoder", "a00938.html#gaa5e926f38b8fe9d407948c3325bf2749", null ]
+    [ "ser_conn_received_pkt_process", "a00938.html#gad559e91ce1be69927a87c644069154c0", null ]
 ];

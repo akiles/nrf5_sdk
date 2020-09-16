@@ -1,5 +1,5 @@
 var a00334 =
 [
-    [ "len", "a00334.html#a14ab9ae8747f2add25b332c15d20647e", null ],
-    [ "p_mem", "a00334.html#ab5fa5a7ab3575057522e07be1581c659", null ]
+    [ "service_handle", "a00334.html#a4ebaa77023ad95d4ea1bb2a046b9ea80", null ],
+    [ "tx_power_level_handles", "a00334.html#a6b43774912f600a0069a22603c69bc48", null ]
 ];

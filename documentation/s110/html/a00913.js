@@ -1,13 +1,9 @@
 var a00913 =
 [
-    [ "ble_gattc_evt_char_disc_rsp_dec", "a00913.html#ga0d3c75d0b9f3a597d838ae7cf88e28db", null ],
-    [ "ble_gattc_evt_char_val_by_uuid_read_rsp_dec", "a00913.html#gaa0d2c10356b7c2b6434009f9eff82618", null ],
-    [ "ble_gattc_evt_char_vals_read_rsp_dec", "a00913.html#gaa45af7a38642008e43f59e1c85c54e04", null ],
-    [ "ble_gattc_evt_desc_disc_rsp_dec", "a00913.html#gadeb28e7d413e6b8c8bb0630fe22562b5", null ],
-    [ "ble_gattc_evt_hvx_dec", "a00913.html#ga3dba62373f3ad46797458c57b390f5dc", null ],
-    [ "ble_gattc_evt_prim_srvc_disc_rsp_dec", "a00913.html#ga2a567ca90f98dc7143cb55040cc15022", null ],
-    [ "ble_gattc_evt_read_rsp_dec", "a00913.html#ga414e6d4beabd29402ebbee68a8002cb0", null ],
-    [ "ble_gattc_evt_rel_disc_rsp_dec", "a00913.html#ga92e263bf80453f7826115be24e041471", null ],
-    [ "ble_gattc_evt_timeout_dec", "a00913.html#ga5057f23967c515c5fb3f625c0a95c766", null ],
-    [ "ble_gattc_evt_write_rsp_dec", "a00913.html#ga99b4f39aecd2c709f7e93ddb3da6c6c1", null ]
+    [ "ble_gatts_evt_hvc_dec", "a00913.html#ga055ddda0e576c6f9bc873cc7305f6032", null ],
+    [ "ble_gatts_evt_rw_authorize_request_dec", "a00913.html#ga86f038acc0952b4dbc4d19fce6e8e419", null ],
+    [ "ble_gatts_evt_sc_confirm_dec", "a00913.html#ga2eaa188f92315d4eae941b30b1fb0334", null ],
+    [ "ble_gatts_evt_sys_attr_missing_dec", "a00913.html#ga77c7e6565eb1ea9e8b433a867e1cfb90", null ],
+    [ "ble_gatts_evt_timeout_dec", "a00913.html#ga91b3c7a4305b04dc2e258d5efc9f9292", null ],
+    [ "ble_gatts_evt_write_dec", "a00913.html#gaf1f46ad018dc5bf3d8eb4255a7845c25", null ]
 ];

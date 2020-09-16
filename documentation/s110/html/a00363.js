@@ -1,5 +1,5 @@
 var a00363 =
 [
-    [ "exponent", "a00363.html#a42d83a992fc160d167482ec70b58d17c", null ],
-    [ "mantissa", "a00363.html#a4668d8cc50fe654da1cfff425c16c5c0", null ]
+    [ "cmd_type", "a00363.html#a4955a964032009d6b9b5cc167e758d32", null ],
+    [ "tx_done_result", "a00363.html#ac9e1ac1b373abcbd4e761600473340bc", null ]
 ];

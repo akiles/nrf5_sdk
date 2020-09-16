@@ -1,5 +1,6 @@
 var a00376 =
 [
-    [ "bl_len", "a00376.html#a197755f22bcc92adc7c8288f48bd9ef8", null ],
-    [ "bl_src", "a00376.html#a504481143eb43e52488288d7de70a6f1", null ]
+    [ "len", "a00376.html#ae7fb48410ecb00dec1dca60d45cbc606", null ],
+    [ "ptr1", "a00376.html#a03e88994f8127e877c2fd08800e64768", null ],
+    [ "ptr2", "a00376.html#a3f670b76c31a7b6badf0bfadd1dc08b0", null ]
 ];

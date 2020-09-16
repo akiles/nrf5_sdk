@@ -219,20 +219,18 @@ static void process_dfu_packet(void * p_event_data, uint16_t event_size)
                             APP_ERROR_CHECK(retval);
                             break;
 
+                        case INIT_PACKET:
+                            (void)dfu_init_pkt_handle(packet);
+                            retval = dfu_init_pkt_complete();
+                            APP_ERROR_CHECK(retval);
+                            break;
+
                         case STOP_DATA_PACKET:
                             (void)dfu_image_validate();
                             (void)dfu_image_activate();
 
                             // Break the loop by returning.
                             return;
-
-                        case INIT_PACKET:
-                            // Validate init packet.
-                            // We expect to receive the init packet in two rounds of 512 bytes.
-                            // If that fails, we abort, and boot the application.
-                            // @note: Current release doesn't handle an init packet.
-
-                            break;
 
                         default:
                             // No implementation needed.
@@ -241,7 +239,7 @@ static void process_dfu_packet(void * p_event_data, uint16_t event_size)
 
                     // Free the processed element.
                     retval = data_queue_element_free(index);
-                    APP_ERROR_CHECK(retval);                    
+                    APP_ERROR_CHECK(retval);
                 }
             }
         }

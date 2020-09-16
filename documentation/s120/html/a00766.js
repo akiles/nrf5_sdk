@@ -1,12 +1,10 @@
 var a00766 =
 [
-    [ "NRF_MBR_COMMANDS", "a00766.html#gad416fbc71855eb8e1533a812164b85a7", [
-      [ "SD_MBR_COMMAND_COPY_BL", "a00766.html#ggad416fbc71855eb8e1533a812164b85a7a56ab45130d67e73165ac12b66e8db127", null ],
-      [ "SD_MBR_COMMAND_COPY_SD", "a00766.html#ggad416fbc71855eb8e1533a812164b85a7a425aceb6eaa893f49011dada2c1dd812", null ],
-      [ "SD_MBR_COMMAND_INIT_SD", "a00766.html#ggad416fbc71855eb8e1533a812164b85a7a1fcb02bcda46da19c7baff2b92c71fe5", null ],
-      [ "SD_MBR_COMMAND_COMPARE", "a00766.html#ggad416fbc71855eb8e1533a812164b85a7a5199987af2f952e4af19b1a30f02dbac", null ]
+    [ "ble_uuid128_t", "a00192.html", [
+      [ "uuid128", "a00192.html#a13339a8ee220b2ad2f4b8e130e730407", null ]
     ] ],
-    [ "NRF_MBR_SVCS", "a00766.html#gaebb8642cfb30caf7eea66524b13c58be", [
-      [ "SD_MBR_COMMAND", "a00766.html#ggaebb8642cfb30caf7eea66524b13c58bea4306e887e1d767e0d8161213b7fe1357", null ]
+    [ "ble_uuid_t", "a00193.html", [
+      [ "type", "a00193.html#ae233c47cdd5f63de456f413a158bb16f", null ],
+      [ "uuid", "a00193.html#ac9ccd46e82b1b51d561f17d49282348c", null ]
     ] ]
 ];

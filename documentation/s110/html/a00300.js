@@ -1,10 +1,8 @@
 var a00300 =
 [
-    [ "temp_in_celcius", "a00300.html#a4065a89fde57ebf2effce6a1401e38c4", null ],
-    [ "temp_in_fahr", "a00300.html#a0120700a8a6185ce21e1a05391fbc706", null ],
-    [ "temp_in_fahr_units", "a00300.html#a16e05739a1ac3b03a2b4dc683bc1eacd", null ],
-    [ "temp_type", "a00300.html#a12b9d8fddee8e461bfcedb3489bd5f92", null ],
-    [ "temp_type_present", "a00300.html#a10dadb1129dd55a6d597e4e08764d7ff", null ],
-    [ "time_stamp", "a00300.html#aab4240703a233a4bd2cd1a7b3a5997c0", null ],
-    [ "time_stamp_present", "a00300.html#a21a7a430b8f85908438c9bd1fc2e0dce", null ]
+    [ "evt_handler", "a00300.html#ac6fbae8371e9336d3acb46b8903a8947", null ],
+    [ "hts_meas_attr_md", "a00300.html#a5c4a4bc737442da34f2b9cfd367bb5e8", null ],
+    [ "hts_temp_type_attr_md", "a00300.html#a1f216c81224e94f40db0d5b4aaa1898b", null ],
+    [ "temp_type", "a00300.html#a7d233be4574d7bdd2f28c9afa8d0efc2", null ],
+    [ "temp_type_as_characteristic", "a00300.html#a6ac11fedc2f4a022e482c6342880e30f", null ]
 ];

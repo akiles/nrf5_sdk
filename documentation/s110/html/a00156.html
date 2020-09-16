@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_ancs_c_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_ancs_c_evt_notif_attribute_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,82 +106,35 @@ $(document).ready(function(){initNavTree('a00156.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ancs_c_evt_t Struct Reference<div class="ingroups"><a class="el" href="a01029.html">Apple Notification Service Client</a></div></div>  </div>
+<div class="title">ble_ancs_c_evt_notif_attribute_t Struct Reference<div class="ingroups"><a class="el" href="a01031.html">Apple Notification Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Apple Notification Event structure.  
- <a href="a00156.html#details">More...</a></p>
-
-<p><code>#include &lt;ble_ancs_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aa11f9ec43554a7e299bac599bcca39ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01029.html#ga82d6e5664766c42d7c3bd7c87ef7c390">ble_ancs_c_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#aa11f9ec43554a7e299bac599bcca39ff">evt_type</a></td></tr>
-<tr class="separator:aa11f9ec43554a7e299bac599bcca39ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b8853a2fa48267ea2e36eeedf0dbacf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00336.html">ble_uuid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#a9b8853a2fa48267ea2e36eeedf0dbacf">uuid</a></td></tr>
-<tr class="separator:a9b8853a2fa48267ea2e36eeedf0dbacf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee69c1e62c33602752e5440a6ed0f8b9"><td class="memItemLeft" ><a class="anchor" id="aee69c1e62c33602752e5440a6ed0f8b9"></a>
-union {</td></tr>
-<tr class="memitem:ae63070ebb7b32959342da101be31086f"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00154.html">ble_ancs_c_evt_ios_notification_t</a>&#160;&#160;&#160;<b>notification</b></td></tr>
-<tr class="separator:ae63070ebb7b32959342da101be31086f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5c6d5ef4ffd45707d63e2328e459e90"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00155.html">ble_ancs_c_evt_notif_attribute_t</a>&#160;&#160;&#160;<b>attribute</b></td></tr>
-<tr class="separator:af5c6d5ef4ffd45707d63e2328e459e90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acead85b50f07c68efbfb1888eb956130"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="a00156.html#af6c7c0fce10e07d23e7d1506c40dbbcf">error_code</a></td></tr>
-<tr class="separator:acead85b50f07c68efbfb1888eb956130"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee69c1e62c33602752e5440a6ed0f8b9"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
-<tr class="separator:aee69c1e62c33602752e5440a6ed0f8b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a8e2cd58a0a579159397ad4c4532ee5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a8e2cd58a0a579159397ad4c4532ee5"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>command_id</b></td></tr>
+<tr class="separator:a8a8e2cd58a0a579159397ad4c4532ee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2de713787637343b123d4912cd0aa129"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2de713787637343b123d4912cd0aa129"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>notification_uid</b> [4]</td></tr>
+<tr class="separator:a2de713787637343b123d4912cd0aa129"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91ad99b533291a9bd4ace32d24b6c11e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a91ad99b533291a9bd4ace32d24b6c11e"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>attribute_id</b></td></tr>
+<tr class="separator:a91ad99b533291a9bd4ace32d24b6c11e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4ba23bbecdf56110773a54e11c0305f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad4ba23bbecdf56110773a54e11c0305f"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>attribute_len</b></td></tr>
+<tr class="separator:ad4ba23bbecdf56110773a54e11c0305f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ea2b73942a8314da74c64075ad076f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ea2b73942a8314da74c64075ad076f2"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>data</b> [32]</td></tr>
+<tr class="separator:a8ea2b73942a8314da74c64075ad076f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Apple Notification Event structure. </p>
-<p>The structure contains the event that should be handled, as well as additional information. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="af6c7c0fce10e07d23e7d1506c40dbbcf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_ancs_c_evt_t::error_code</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Additional status/error code if the event was caused by a stack error or gatt status, e.g. during service discovery. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa11f9ec43554a7e299bac599bcca39ff"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01029.html#ga82d6e5664766c42d7c3bd7c87ef7c390">ble_ancs_c_evt_type_t</a> ble_ancs_c_evt_t::evt_type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Type of event. </p>
-
-</div>
-</div>
-<a class="anchor" id="a9b8853a2fa48267ea2e36eeedf0dbacf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00336.html">ble_uuid_t</a> ble_ancs_c_evt_t::uuid</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>UUID of the event in case of an apple or notification. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00156.html">ble_ancs_c_evt_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:26 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00156.html">ble_ancs_c_evt_notif_attribute_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:12 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

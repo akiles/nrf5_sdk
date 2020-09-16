@@ -1,22 +1,13 @@
 var a00252 =
 [
-    [ "Error Codes Base number definitions", "a00253.html", "a00253" ],
-    [ "NRF_ERROR_BUSY", "a00252.html#ga5d2d8608f6d6a0329f58961a969e946e", null ],
-    [ "NRF_ERROR_DATA_SIZE", "a00252.html#ga4c61f2b54667506e90cc296721b2e658", null ],
-    [ "NRF_ERROR_FORBIDDEN", "a00252.html#ga85125dae5d7e9d4b9964acbc13f641b3", null ],
-    [ "NRF_ERROR_INTERNAL", "a00252.html#gadf8b0c33ea15352808e5ac7f69c2be8a", null ],
-    [ "NRF_ERROR_INVALID_ADDR", "a00252.html#gabc562e4ddfe2f427666a3acdd0b469a3", null ],
-    [ "NRF_ERROR_INVALID_DATA", "a00252.html#gaca6d57e218563351e7abdbdebb049f69", null ],
-    [ "NRF_ERROR_INVALID_FLAGS", "a00252.html#ga10f61a8901fb865840da22a0792eca18", null ],
-    [ "NRF_ERROR_INVALID_LENGTH", "a00252.html#ga59fe2a8fe184005aefa0835c7ff400fd", null ],
-    [ "NRF_ERROR_INVALID_PARAM", "a00252.html#ga0a5831cf5092e0dd43a01869676ee076", null ],
-    [ "NRF_ERROR_INVALID_STATE", "a00252.html#gaf0aff2ba7864b34a36b4a96986e1851e", null ],
-    [ "NRF_ERROR_NO_MEM", "a00252.html#ga7ef4d466b79b31c6325f8b7af5d4f75f", null ],
-    [ "NRF_ERROR_NOT_FOUND", "a00252.html#ga349d25ada15be023e0d507f45ada682c", null ],
-    [ "NRF_ERROR_NOT_SUPPORTED", "a00252.html#gaacf52836cc3860c5ffd4e129f725f138", null ],
-    [ "NRF_ERROR_NULL", "a00252.html#gaf6e08e45224ec612e6c95660eb1bcfa0", null ],
-    [ "NRF_ERROR_SOFTDEVICE_NOT_ENABLED", "a00252.html#ga9a2af1a322a5dfb3bdb69e2aacd3bc27", null ],
-    [ "NRF_ERROR_SVC_HANDLER_MISSING", "a00252.html#gacee74578161456da0759c7b80f55d2e0", null ],
-    [ "NRF_ERROR_TIMEOUT", "a00252.html#gaf3ac440fa84dedc1a80baab36da36f80", null ],
-    [ "NRF_SUCCESS", "a00252.html#ga7e6367efeaac363d8cf024940b4ec123", null ]
+    [ "NRF_ERROR_SOC_MUTEX_ALREADY_TAKEN", "a00252.html#ga08505c75d1cc68c75b2b529f0acfd9e7", null ],
+    [ "NRF_ERROR_SOC_NVIC_INTERRUPT_NOT_AVAILABLE", "a00252.html#ga4660c0925c76d795707fe77c41aac89b", null ],
+    [ "NRF_ERROR_SOC_NVIC_INTERRUPT_PRIORITY_NOT_ALLOWED", "a00252.html#gae2b0d8c5f538bbcab43d82f04412463d", null ],
+    [ "NRF_ERROR_SOC_NVIC_SHOULD_NOT_RETURN", "a00252.html#gadb16c01a8206067f0831b6a7d9cd41c1", null ],
+    [ "NRF_ERROR_SOC_POWER_MODE_UNKNOWN", "a00252.html#gaba78285df6e85daaa153bce5890364df", null ],
+    [ "NRF_ERROR_SOC_POWER_OFF_SHOULD_NOT_RETURN", "a00252.html#ga57d53aa15592b0bfacc98d99c4dda07b", null ],
+    [ "NRF_ERROR_SOC_POWER_POF_THRESHOLD_UNKNOWN", "a00252.html#ga4c66885f407427c323d19539f6e59e0d", null ],
+    [ "NRF_ERROR_SOC_PPI_INVALID_CHANNEL", "a00252.html#ga563fa0ece398152e3256b09da51fda7f", null ],
+    [ "NRF_ERROR_SOC_PPI_INVALID_GROUP", "a00252.html#ga78bb614cb480357c7cb191ec8efba5fb", null ],
+    [ "NRF_ERROR_SOC_RAND_NOT_ENOUGH_VALUES", "a00252.html#gabb7186c1f08507eecc60e99b569ee2f7", null ]
 ];

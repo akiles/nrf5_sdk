@@ -74,10 +74,12 @@ var NAVTREEINDEX1 =
 "a00069.html#nrf51_auth_key_reply_sec_response":[3,1,2,7,16,1],
 "a00069.html#nrf51_ble_gap_authenticate_encoding":[3,1,2,7,14],
 "a00069.html#nrf51_ble_gap_authenticate_function":[3,1,2,7,14,0],
-"a00069.html#nrf51_ble_gap_authenticate_response":[3,1,2,7,14,2],
+"a00069.html#nrf51_ble_gap_authenticate_response":[3,1,2,7,14,3],
 "a00069.html#nrf51_ble_gap_authenticate_sub_e":[3,1,2,7,14,1],
-"a00069.html#nrf51_connect_cancel_encoding_sec_function":[3,1,2,7,24,2],
-"a00069.html#nrf51_connect_cancel_encoding_sec_response":[3,1,2,7,24,3],
+"a00069.html#nrf51_ble_gap_authenticate_sub_f":[3,1,2,7,14,2],
+"a00069.html#nrf51_connect_cancel_encoding":[3,1,2,7,25],
+"a00069.html#nrf51_connect_cancel_encoding_sec_function":[3,1,2,7,25,0],
+"a00069.html#nrf51_connect_cancel_encoding_sec_response":[3,1,2,7,25,1],
 "a00069.html#nrf51_connect_encoding":[3,1,2,7,24],
 "a00069.html#nrf51_connect_encoding_sec_function":[3,1,2,7,24,0],
 "a00069.html#nrf51_connect_encoding_sec_response":[3,1,2,7,24,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX1 =
 "a00082.html":[3,0,4],
 "a00083.html":[3,0,1],
 "a00083.html#lib_cnxn_register_cnfg_param":[3,0,1,1,1],
-"a00083.html#lib_cnxn_register_evt":[3,0,1,1,0],
-"a00083.html#lib_device_manaegerit":[3,0,1,0],
-"a00083.html#lib_device_manager_init_cnfg_param":[3,0,1,0,1]
+"a00083.html#lib_cnxn_register_evt":[3,0,1,1,0]
 };

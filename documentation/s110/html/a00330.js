@@ -1,5 +1,5 @@
 var a00330 =
 [
-    [ "read_perm", "a00330.html#ac08fb7f662817574a3792609f0d92637", null ],
-    [ "write_perm", "a00330.html#aca8d641cf8e5b5811aa2a2c68035c395", null ]
+    [ "report_id", "a00330.html#a4db26fdff00f44138f9f684ff1dfd149", null ],
+    [ "report_type", "a00330.html#a765872684206db6d91ad6de596599434", null ]
 ];

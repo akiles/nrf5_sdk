@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: DFU BLE SVC internal</title>
+<title>nRF51 SDK - S110 SoftDevice: DFU transport API.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,47 +99,67 @@ $(document).ready(function(){initNavTree('a00948.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">DFU BLE SVC internal<div class="ingroups"><a class="el" href="a01038.html">Bootloader/DFU API</a> &#124; <a class="el" href="a00947.html">DFU BLE SVC</a></div></div>  </div>
+<div class="title">DFU transport API.<div class="ingroups"><a class="el" href="a01040.html">Bootloader/DFU API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>DFU BLE SVC internal functions in bootloader. The DFU BLE SuperVisor Calls allow an application to execute functions in the installed bootloader. This interface provides internal Bootloader DFU functions for retrieving data exchanged through SuperVisor Calls.  
+<p>DFU transport module interface.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaae1ae9e244a40aeee3537eeb9e7d455e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00948.html#gaae1ae9e244a40aeee3537eeb9e7d455e">dfu_ble_get_peer_data</a> (<a class="el" href="a00342.html">dfu_ble_peer_data_t</a> *p_peer_data)</td></tr>
-<tr class="memdesc:gaae1ae9e244a40aeee3537eeb9e7d455e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal bootloader/DFU function for retrieving peer data provided from application.  <a href="#gaae1ae9e244a40aeee3537eeb9e7d455e">More...</a><br/></td></tr>
-<tr class="separator:gaae1ae9e244a40aeee3537eeb9e7d455e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea872c4e8b0fc157a5ca968b683eb591"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00948.html#gaea872c4e8b0fc157a5ca968b683eb591">dfu_transport_update_start</a> (void)</td></tr>
+<tr class="memdesc:gaea872c4e8b0fc157a5ca968b683eb591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for starting the update of Device Firmware.  <a href="#gaea872c4e8b0fc157a5ca968b683eb591">More...</a><br/></td></tr>
+<tr class="separator:gaea872c4e8b0fc157a5ca968b683eb591"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga04a691c0efff2215cf82d3b797d7dcd2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00948.html#ga04a691c0efff2215cf82d3b797d7dcd2">dfu_transport_close</a> (void)</td></tr>
+<tr class="memdesc:ga04a691c0efff2215cf82d3b797d7dcd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for closing the transport layer.  <a href="#ga04a691c0efff2215cf82d3b797d7dcd2">More...</a><br/></td></tr>
+<tr class="separator:ga04a691c0efff2215cf82d3b797d7dcd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>DFU BLE SVC internal functions in bootloader. The DFU BLE SuperVisor Calls allow an application to execute functions in the installed bootloader. This interface provides internal Bootloader DFU functions for retrieving data exchanged through SuperVisor Calls. </p>
+<p>DFU transport module interface. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaae1ae9e244a40aeee3537eeb9e7d455e"></a>
+<a class="anchor" id="ga04a691c0efff2215cf82d3b797d7dcd2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t dfu_ble_get_peer_data </td>
+          <td class="memname">uint32_t dfu_transport_close </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00342.html">dfu_ble_peer_data_t</a> *&#160;</td>
-          <td class="paramname"><em>p_peer_data</em></td><td>)</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Internal bootloader/DFU function for retrieving peer data provided from application. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_peer_data</td><td>Peer data set by application to be used for DFU connection.</td></tr>
+<p>Function for closing the transport layer. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="gaea872c4e8b0fc157a5ca968b683eb591"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t dfu_transport_update_start </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for starting the update of Device Firmware. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCES</td><td>If peer data is valid and can be used for connection. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_DATA</td><td>If peer data is not available or invalid. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
   </table>
   </dd>
 </dl>
@@ -151,7 +171,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_ias_c_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_ias_c_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,61 +106,31 @@ $(document).ready(function(){initNavTree('a00304.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ias_c_s Struct Reference<div class="ingroups"><a class="el" href="a00971.html">Immediate Alert Service Client</a></div></div>  </div>
+<div class="title">ble_ias_c_init_t Struct Reference<div class="ingroups"><a class="el" href="a00972.html">Immediate Alert Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>IAS Client structure. This contains various status information for the client.  
+<p>IAS Client init structure. This contains all options and data needed for initialization of the client.  
  <a href="a00304.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_ias_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac306d48fcd140ddbffb4d4c64ca4d007"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00971.html#ga96adb4273980cee3c28140485a07884f">ble_ias_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00304.html#ac306d48fcd140ddbffb4d4c64ca4d007">evt_handler</a></td></tr>
-<tr class="separator:ac306d48fcd140ddbffb4d4c64ca4d007"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cecf3d78ec7d72912dd4215455720ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00975.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00304.html#a6cecf3d78ec7d72912dd4215455720ed">error_handler</a></td></tr>
-<tr class="separator:a6cecf3d78ec7d72912dd4215455720ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad136ca554bce057fd4cd38ba0f796ea6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00304.html#ad136ca554bce057fd4cd38ba0f796ea6">alert_level_handle</a></td></tr>
-<tr class="separator:ad136ca554bce057fd4cd38ba0f796ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad18ae38bccb88d086eedbc1647ce2386"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00304.html#ad18ae38bccb88d086eedbc1647ce2386">conn_handle</a></td></tr>
-<tr class="separator:ad18ae38bccb88d086eedbc1647ce2386"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53302faad4381a87101012bf06af6101"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00972.html#ga96adb4273980cee3c28140485a07884f">ble_ias_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00304.html#a53302faad4381a87101012bf06af6101">evt_handler</a></td></tr>
+<tr class="separator:a53302faad4381a87101012bf06af6101"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83986799fa5972b6665f1dd70af89bca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00977.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00304.html#a83986799fa5972b6665f1dd70af89bca">error_handler</a></td></tr>
+<tr class="separator:a83986799fa5972b6665f1dd70af89bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>IAS Client structure. This contains various status information for the client. </p>
+<div class="textblock"><p>IAS Client init structure. This contains all options and data needed for initialization of the client. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ad136ca554bce057fd4cd38ba0f796ea6"></a>
+<a class="anchor" id="a83986799fa5972b6665f1dd70af89bca"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_ias_c_s::alert_level_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle of Alert Level characteristic at peer (as provided by the BLE stack). </p>
-
-</div>
-</div>
-<a class="anchor" id="ad18ae38bccb88d086eedbc1647ce2386"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_ias_c_s::conn_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
-
-</div>
-</div>
-<a class="anchor" id="a6cecf3d78ec7d72912dd4215455720ed"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00975.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_ias_c_s::error_handler</td>
+          <td class="memname"><a class="el" href="a00977.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_ias_c_init_t::error_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -168,16 +138,16 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac306d48fcd140ddbffb4d4c64ca4d007"></a>
+<a class="anchor" id="a53302faad4381a87101012bf06af6101"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00971.html#ga96adb4273980cee3c28140485a07884f">ble_ias_c_evt_handler_t</a> ble_ias_c_s::evt_handler</td>
+          <td class="memname"><a class="el" href="a00972.html#ga96adb4273980cee3c28140485a07884f">ble_ias_c_evt_handler_t</a> ble_ias_c_init_t::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Event handler to be called for handling events in the Immediate Alert Service client. </p>
+<p>Event handler to be called for handling events from the Immediate Alert Service client. </p>
 
 </div>
 </div>
@@ -186,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00304.html">ble_ias_c_s</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00304.html">ble_ias_c_init_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

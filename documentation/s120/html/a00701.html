@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Security Set-Up &amp; Status Related</title>
+<title>nRF51 SDK - S120 SoftDevice: Device Manager</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,26 +97,70 @@ $(document).ready(function(){initNavTree('a00701.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a>  </div>
+<a href="#groups">Modules</a> &#124;
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Security Set-Up &amp; Status Related<div class="ingroups"><a class="el" href="a00700.html">Device Manager Sequence Charts</a></div></div>  </div>
+<div class="title">Device Manager<div class="ingroups"><a class="el" href="a00739.html">BLE Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Device Manager Application Interface Abstraction.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:a00702"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00702.html">Fresh Bonding &amp; Context Store</a></td></tr>
+<tr class="memitem:a00702"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00702.html">Device Manager Sequence Charts</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00703"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00703.html">Link Encryption with Bonded Device</a></td></tr>
+<tr class="memitem:a00715"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00715.html">Service/Protocol Types</a></td></tr>
+<tr class="memdesc:a00715"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes the possible types of Service/Protocol Contexts for a bonded/peer device. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00716"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00716.html">Device Manager Events</a></td></tr>
+<tr class="memdesc:a00716"><td class="mdescLeft">&#160;</td><td class="mdescRight">This section describes the device manager events that are notified to the application. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00720"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00720.html">Device Manager Data Types</a></td></tr>
+<tr class="memdesc:a00720"><td class="mdescLeft">&#160;</td><td class="mdescRight">This section describes all the data types exposed by the module to the application. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00721"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00721.html">Device Module APIs</a></td></tr>
+<tr class="memdesc:a00721"><td class="mdescLeft">&#160;</td><td class="mdescRight">This section describes APIs exposed by the module. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaffbf0ad98e25546a4645eb2cac9bef8a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00701.html#gaffbf0ad98e25546a4645eb2cac9bef8a">DM_INVALID_ID</a>&#160;&#160;&#160;0xFF</td></tr>
+<tr class="separator:gaffbf0ad98e25546a4645eb2cac9bef8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Device Manager Application Interface Abstraction. </p>
+<p>The Device Manager module manages Active and Bonded Peers. Management of peer includes book keeping of contextual information like the Security Keys, GATT configuration and any application specific information.</p>
+<p>Active Peers are devices which are connected, and may or may not be bonded. Bonded Peers are devices which are bonded, and may or may not be Active (Connected). Active Bonded Peer refers to a device which is connected and bonded.</p>
+<p>Paired Devices refers to peer devices that are connected and have necessary context establishment/exchange for the current connection session. On disconnect, all contextual information is flushed. For example, SMP Information Exchanged during pairing and GATT Configuration is not retained on disconnection.</p>
+<p>Note that this module allows management of contextual information but does not provide an interface for connection management. Therefore, entering connectible mode, connection establishment, or disconnection of a link with peer is not in scope of this module.</p>
+<p>For bonded peers, the contextual information is required to be retained on disconnection and power cycling. Persistent storage of contextual information is handled by the module. This module categorizes the contextual information into 3 categories:</p>
+<ul>
+<li><b>Bonding Information</b> Bond information is the information exchanged between local and peer device to establish a bond. It also includes peer identification information, like the peer address or the IRK or both. From here on this category of information is referred to as Device Context.</li>
+<li><b>Service/Protocol Information</b> Service/Protocol information is the information retained for the peer to save on one-time procedures like the GATT Service Discovery procedures and Service Configurations. It allows devices to resume data exchange on subsequent reconnection without having to perform initial set-up procedures each time. From here on this category is referred to as Service Context.</li>
+<li><b>Application Information</b> Application information is the context that the application would like to associate with each of the bonded device. For example, if the application chooses to rank its peers in order to manage them better, the rank information could be treated as Application Information. This storage space is provided to save the application from maintaining a mapping table with each Device Instance and Application Information. However, if the application have no use for this, it is possible to not use or employ this at compile time. From here on this category of information is referred to as Application Context. </li>
+</ul>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gaffbf0ad98e25546a4645eb2cac9bef8a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DM_INVALID_ID&#160;&#160;&#160;0xFF</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Invalid instance idenitifer. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:39 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:25 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

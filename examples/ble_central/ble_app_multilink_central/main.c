@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Nordic Semiconductor. All Rights Reserved.
+ * Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
  *
  * The information contained herein is confidential property of Nordic Semiconductor. The use,
  * copying, transfer or disclosure of such information is prohibited except by express written
@@ -31,8 +31,8 @@
 #include "app_trace.h"
 #include "app_util.h"
 
-#ifdef BUTTON_1
-#define BOND_DELETE_ALL_BUTTON_PIN       BUTTON_1                                       /**< Button used for deleting all bonded centrals during startup. */
+#ifdef BSP_BUTTON_1
+#define BOND_DELETE_ALL_BUTTON_PIN       BSP_BUTTON_1                                   /**< Button used for deleting all bonded centrals during startup. */
 #endif
 
 #define APPL_LOG                         app_trace_log                                  /**< Debug logger macro that will be used in this file to do logging of debug information over UART. */

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Running a serialized application</title>
+<title>nRF51 SDK - S120 SoftDevice: BLE Central</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,65 +97,60 @@ $(document).ready(function(){initNavTree('a00042.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Running a serialized application </div>  </div>
+<div class="title">BLE Central </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>If you want to use a BLE SoftDevice in applications that cannot be ported to nRF51, for example because they use specific peripherals or need more resources like RAM, flash memory, or CPU speed, you should consider using serialization.</p>
-<p>The SDK provides a sample serialization setup consisting of two nRF51 Development boards. One of these boards serves as <b>application board</b> and hosts the actual <em>Bluetooth</em> application. The other board serves as <b>connectivity board</b> and supplies the radio connection. The application board with an nRF51 chip is provided as a reference only. You will need to port the serialized application to the microcontroller in the target system.</p>
-<h1><a class="anchor" id="serialization_hardware"></a>
-Serialization hardware setup</h1>
-<p>The sample serialization setup supports two physical transport interfaces: UART and SPI. See Figure 1 for an illustration of how to connect two development boards as an application board and a connectivity board supplying a UART connection.</p>
-<div class="image">
-<img src="UART_serialization.svg" alt="UART_serialization.svg"/>
-<div class="caption">
-Figure 1: Serialization UART</div></div>
-<p> Figure 2 illustrates how to connect two development boards as an application board and a connectivity board supplying an SPI connection.</p>
-<div class="image">
-<img src="SPI_serialization.svg" alt="SPI_serialization.svg"/>
-<div class="caption">
-Figure 2: Serialization SPI</div></div>
- <h1><a class="anchor" id="serialization_software"></a>
-Serialization software setup</h1>
-<p>Prepare the connectivity board by performing the following steps:</p>
-<ol type="1">
-<li>Connect the board to the computer and make sure that the RESET wire is disconnected.</li>
-<li>Program the S110 SoftDevice on the connectivity board. See <a class="el" href="a00009.html">Running examples that use a SoftDevice</a> for instructions.</li>
-<li>In Keil, open the Connectivity Example for the physical transport layer that you want to use: <table class="doxtable">
-<tr>
-<th>Physical transport layer </th><th>Example name</th></tr>
-<tr>
-<td>UART </td><td>ble_connectivity_ s120_uart_pca10028 </td></tr>
-<tr>
-<td>SPI </td><td>ble_connectivity_ s120_spi_pca10028 </td></tr>
-<tr>
-<td>HCI (reliable UART) </td><td>ble_connectivity_ s120_hci_pca10028 </td></tr>
-</table>
-If you are not using the Keil Pack Installer, you can find all examples in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_central\ble_connectivity</code> </li>
-<li>Compile the application and download the created .hex file to the connectivity board.</li>
-</ol>
-<p>The application board does not need a SoftDevice. Prepare the application board by performing the following steps:</p>
-<ol type="1">
-<li>Connect the board to the computer and make sure that the RESET wire is disconnected.</li>
-<li>Erase the chip on the application board as described in the nRF51 DK User Guide.</li>
-<li>In Keil, open one of the following serialized example projects: <table class="doxtable">
-<tr>
-<th>Example </th><th>Example name </th><th>Physical transport layers</th></tr>
-<tr>
-<td><a class="el" href="a00044.html">BLE Heart Rate Collector Example</a> </td><td>ble_app_hrs_c_s120_<em>TransportLayer</em>_pca10028 </td><td>SPI </td></tr>
-<tr>
-<td><a class="el" href="a00045.html">BLE Multi-link Example</a> </td><td>ble_app_multilink_central_s120_<em>TransportLayer</em>_pca10028 </td><td>UART, SPI, HCI </td></tr>
-</table>
-Choose the example project for the same physical transport layer as on the connectivity board.</li>
-<li>Compile the application and download the created .hex file to the application board.</li>
-</ol>
-<p>See <a class="el" href="a00056.html">BLE Serialization</a> for further documentation on serialization. </p>
+<div class="textblock"><p>Example applications implementing BLE profiles and demonstrating the use of BLE services.</p>
+<p>We have two types of example application designs:</p>
+<ul>
+<li><b>Using Scheduler</b>: Events are passed from interrupt level to the main loop (thread mode) using a <a class="el" href="a00510.html">Scheduler</a>.</li>
+</ul>
+<ul>
+<li><b>App Low only</b>: All service and application code executes in App Low interrupt level.</li>
+</ul>
+<p>In both designs, the example applications have many similarities:</p>
+<ul>
+<li><b>Main function</b>: The main function consists of a number of init function calls, followed by a small main loop. In an "App Low only" application, the main loop only handles power management. In Scheduler applications, the main loop contains a call to app_sched_schedule() in addition to the power management.</li>
+</ul>
+<ul>
+<li><b>Service initialization</b>: All applications contain a function named services_init. This function will initialize all services to be used by the application.</li>
+</ul>
+<ul>
+<li><b>BLE stack interrupt handler</b>: All applications include the <a class="el" href="a00700.html">SoftDevice Event Handler</a> module, which contains a BLE stack interrupt handler (SWI2_IRQHandler). This interrupt handler will be called each time the stack wants to pass an event to the application. The handler reads the stack event, and passes the event to the application through a callback function. In applications using the Scheduler, this callback function is always named ble_evt_schedule(), and in applications not using the Scheduler, it is always named ble_evt_dispatch(). The callback function dispatches the event to the BLE stack event handler of all its services and modules having such a handler (either directly, or through the Scheduler). Optionally, it may also dispatch the event to an application specific BLE stack event handler.</li>
+</ul>
+<ul>
+<li><b>Service BLE stack event handlers</b>: Services may implement their own BLE stack event handlers. These must be called when SWI2_IRQHandler (in <a class="el" href="a00700.html">SoftDevice Event Handler</a>) receives a BLE event (see previous point). The handlers will react to events that are relevant to the service, while ignoring all others.</li>
+</ul>
+<ul>
+<li><b>Application BLE stack event handler</b>: Optionally the application may implement its own BLE stack event handler. This must be called when SWI2_IRQHandler (in <a class="el" href="a00700.html">SoftDevice Event Handler</a>) receives a BLE event. The handler will react to events that are relevant to the application, while ignoring all others.</li>
+</ul>
+<ul>
+<li><b>Service event handlers</b>: The application may provide event handlers to services, letting the service inform the application about events inside the service. For some services this is optional, while for others it is mandatory.</li>
+</ul>
+<ul>
+<li><b>Service error handlers</b>: To some services, the application may provide an error handler, letting the service inform the application about errors.</li>
+</ul>
+<ul>
+<li><b>Assert handler</b>: BLE applications must implement an assert handler callback function named assert_nrf_callback. This assert handler function will be passed to the S120 SoftDevice during system initialization using <a class="el" href="a00774.html#ga26ecfde6eee7363f88bed8a8b711122a">sd_softdevice_enable</a>. In the BLE Central example applications the assert_nrf_callback is propagating all asserts to the <b>app_error_handler</b>. If different actions are required for application error and BLE S120 SoftDevice asserts a dedicated <b>assert_nrf_callback</b> should be implemented.</li>
+</ul>
+<ul>
+<li><b>Error handler</b>: Applications must implement an error handler callback function named app_error_handler. This is called directly from the application <a class="el" href="a00513.html#gace6d059863761677dae5a6b1456a34ba">APP_ERROR_HANDLER</a> macro (implemented in app_error.h). And indirectly from <a class="el" href="a00513.html#ga82d00a810dcea7dcc6af469461fb254c">APP_ERROR_CHECK</a> and <a class="el" href="a00513.html#ga9e67d9f4978caa34040b31f8fb9d4f58">APP_ERROR_CHECK_BOOL</a>.</li>
+</ul>
+<ul>
+<li><b>Behavior when maximum number of bonds is reached</b>: All applications that support bonding use the device manager module. <b>When the device manager notifies the application that it cannot store a newly bonded peripheral into the flash, the application will assert</b>. When this happens, allow the device to go into System Off mode and then press Button 1. This will wake up the application and clear all existing bonds. The bonds can also be cleared by power-cycling the board by keeping the Button 1 pressed.</li>
+</ul>
+<p>In an application using the Scheduler, instead of calling service/application event handlers directly from the <a class="el" href="a00700.html">SoftDevice Event Handler</a> callback function, the callback function passes "wrapper" events to the Scheduler, and the "wrapper" event handler will call the service/application event handlers, thus making all service/application event handlers execute in thread mode.</p>
+<p>When initializing the <a class="el" href="a00511.html">Application Timer</a> module, applications using the <a class="el" href="a00510.html">Scheduler</a> must supply a pointer to the app_sched_timer_event_schedule() function to <a class="el" href="a00511.html#ga96087520ca79dfa28fb6ba6bb562a88f" title="Function for initializing the timer module.">app_timer_init()</a>. This function will transfer execution of timer timeout handlers to the main loop by using the <a class="el" href="a00510.html">Scheduler</a>.</p>
+<p>Examples:</p>
+<p><a class="el" href="a00043.html">BLE Heart Rate Collector Example</a></p>
+<p><a class="el" href="a00044.html">BLE Multi-link Example</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00001.html">Getting Started</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

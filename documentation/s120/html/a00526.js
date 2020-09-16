@@ -1,7 +1,7 @@
 var a00526 =
 [
-    [ "Enumerations", "a00740.html", "a00740" ],
-    [ "Defines", "a00741.html", "a00741" ],
-    [ "Structures", "a00742.html", "a00742" ],
-    [ "Functions", "a00743.html", "a00743" ]
+    [ "NRF_GAP_ERR_BASE", "a00526.html#ga29249baa158d723505c601121d003034", null ],
+    [ "NRF_GATTC_ERR_BASE", "a00526.html#ga200400dc8ad79918acee9cd038336165", null ],
+    [ "NRF_GATTS_ERR_BASE", "a00526.html#ga7bc503f781e56a86cdd044d6043629b8", null ],
+    [ "NRF_L2CAP_ERR_BASE", "a00526.html#ga82756b5d44b6b5757c3968513b4928ac", null ]
 ];

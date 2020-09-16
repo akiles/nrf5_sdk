@@ -1,5 +1,6 @@
 var a00825 =
 [
-    [ "BLE_ERROR_GATTS_INVALID_ATTR_TYPE", "a00825.html#ga050988950fb5cfb9e64b1f91f8872b45", null ],
-    [ "BLE_ERROR_GATTS_SYS_ATTR_MISSING", "a00825.html#ga1d0833ac31d0c319e5286623b6301d0a", null ]
+    [ "BLE_GATTS_SRVC_TYPE_INVALID", "a00825.html#ga07c49b0b262d0b5bd709d282b659436d", null ],
+    [ "BLE_GATTS_SRVC_TYPE_PRIMARY", "a00825.html#ga881b91f3ac789bf6fcefee7f815dcf7e", null ],
+    [ "BLE_GATTS_SRVC_TYPE_SECONDARY", "a00825.html#ga1aa1898278ef4d0034858d752eac29b0", null ]
 ];

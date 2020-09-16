@@ -1,7 +1,4 @@
 var a00316 =
 [
-    [ "opcode", "a00316.html#ac9347eb17ef67e3f06df043008ffb2fc", null ],
-    [ "operand_len", "a00316.html#af49baa0004db22db129862b609928a62", null ],
-    [ "operator", "a00316.html#a3d079df679dec85ecc10fe70a2d349f1", null ],
-    [ "p_operand", "a00316.html#a2560ddd094bfd6960dd5cc3a6ee54c48", null ]
+    [ "num_of_pkts", "a00316.html#ae358c37001ff578f12948a6e58642843", null ]
 ];

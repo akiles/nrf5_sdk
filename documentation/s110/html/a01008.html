@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Heart Rate Service Client</title>
+<title>nRF51 SDK - S110 SoftDevice: Types</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,37 +97,58 @@ $(document).ready(function(){initNavTree('a01008.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">Heart Rate Service Client<div class="ingroups"><a class="el" href="a01034.html">BLE Services</a></div></div>  </div>
+<div class="title">Types<div class="ingroups"><a class="el" href="a01005.html">Battery Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Heart Rate Service Client module.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a01009"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01009.html">Enumerations</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01010"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01010.html">Structures</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01011"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01011.html">Types</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01012"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01012.html">Functions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga4ba5a658bdfc3b2a316317abe1c4214c"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a00168.html">ble_bas_c_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01008.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a></td></tr>
+<tr class="memdesc:ga4ba5a658bdfc3b2a316317abe1c4214c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Battery Service Client structure.  <a href="#ga4ba5a658bdfc3b2a316317abe1c4214c">More...</a><br/></td></tr>
+<tr class="separator:ga4ba5a658bdfc3b2a316317abe1c4214c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga13d2aed8afc44d31865195d77b09c4ba"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01008.html#ga13d2aed8afc44d31865195d77b09c4ba">ble_bas_c_evt_handler_t</a> )(<a class="el" href="a01008.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *p_bas_bas_c, <a class="el" href="a00166.html">ble_bas_c_evt_t</a> *p_evt)</td></tr>
+<tr class="memdesc:ga13d2aed8afc44d31865195d77b09c4ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event handler type.  <a href="#ga13d2aed8afc44d31865195d77b09c4ba">More...</a><br/></td></tr>
+<tr class="separator:ga13d2aed8afc44d31865195d77b09c4ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Heart Rate Service Client module. </p>
-<p>This module contains the APIs and types exposed by the Heart Rate Service Client module. These APIs and types can be used by the application to perform discovery of Heart Rate Service at the peer and interact with it.</p>
-<dl class="section warning"><dt>Warning</dt><dd>Currently this module only has support for Heart Rate Measurement characteristic. This means that it will be able to enable notification of the characteristic at the peer and be able to receive Heart Rate Measurement notifications from the peer. It does not support the Body Sensor Location and the Heart Rate Control Point characteristics. When a Heart Rate Measurement is received, this module will decode only the Heart Rate Measurement Value (both 8 bit and 16 bit) field from it and provide it to the application.</dd></dl>
-<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to this module by calling <a class="el" href="a01012.html#ga062e0829a2ebd211d4e51a23c520ab1f" title="Function for handling BLE events from the SoftDevice.">ble_hrs_c_on_ble_evt()</a>. </dd></dl>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga13d2aed8afc44d31865195d77b09c4ba"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(*  ble_bas_c_evt_handler_t)(<a class="el" href="a01008.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a> *p_bas_bas_c, <a class="el" href="a00166.html">ble_bas_c_evt_t</a> *p_evt)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Event handler type. </p>
+<p>This is the type of the event handler that should be provided by the application of this module in order to receive events. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga4ba5a658bdfc3b2a316317abe1c4214c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a00168.html">ble_bas_c_s</a> <a class="el" href="a01008.html#ga4ba5a658bdfc3b2a316317abe1c4214c">ble_bas_c_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Battery Service Client structure. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -10,7 +10,7 @@ var searchData=
   ['serialization_20codecs',['Serialization Codecs',['../a00058.html',1,'lib_serialization']]],
   ['serialization_20phy',['Serialization PHY',['../a00059.html',1,'lib_serialization']]],
   ['serialization_20hal_20transport',['Serialization HAL Transport',['../a00061.html',1,'lib_serialization']]],
-  ['spi_20master_20loopback_20example',['SPI Master Loopback Example',['../a00033.html',1,'examples_hw_peripheral_devices']]],
-  ['spi_20master_20example_20to_20be_20used_20with_20spi_20slave_20example',['SPI Master Example to be used with SPI Slave Example',['../a00034.html',1,'examples_hw_peripheral_devices']]],
-  ['spi_20slave_20example',['SPI Slave Example',['../a00035.html',1,'examples_hw_peripheral_devices']]]
+  ['spi_20master_20loopback_20example',['SPI Master Loopback Example',['../a00032.html',1,'examples_hw_peripheral_devices']]],
+  ['spi_20master_20example_20to_20be_20used_20with_20spi_20slave_20example',['SPI Master Example to be used with SPI Slave Example',['../a00033.html',1,'examples_hw_peripheral_devices']]],
+  ['spi_20slave_20example',['SPI Slave Example',['../a00034.html',1,'examples_hw_peripheral_devices']]]
 ];

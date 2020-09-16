@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: PPI Example</title>
+<title>nRF51 SDK - S110 SoftDevice: PWM Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,31 +97,30 @@ $(document).ready(function(){initNavTree('a00026.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">PPI Example </div>  </div>
+<div class="title">PWM Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Programmable Peripheral Interconnect (PPI) Example uses the PPI module to communicate between three timers.</p>
-<p>Timer 0 is triggered by the main program loop every 100 milliseconds. The counter value of timer 0 is passed through the UART port and can be observed with a COM listener like, for example, PUTTY.</p>
-<p>Timer 1 generates events every even second, thus at 2, 4, 6, 8, ... seconds. These events trigger a stop task for timer 0. Timer 2 generates events every odd second, thus at 1, 3, 5, 7, ... seconds. These events trigger a start task for timer 0, which is running in counter mode. The start and stop tasks are triggered using PPI.</p>
-<p>When the application starts, the counter value of timer 0 increases every 100 milliseconds for the first second. Then, timer 2 creates an event that is passed through PPI, generating a stop task for timer 0. Therefore, timer 0 stops. Even though the main program loop triggers timer 0 to increment, its value does not change because the counter is stopped. After one second, timer 1 creates an event that is passed through PPI, generating a start task for timer 0. Timer 0 starts again, and the counter value increases again every 100 milliseconds until it is stopped again by timer 2 after one second.</p>
-<div class="image">
-<img src="ppi_example.png" alt="ppi_example.png"/>
-</div>
-<p>The application starts with configuring the three timers:</p>
+<div class="textblock"><p>The PWM Example shows how the Programmable Peripheral Interconnect (PPI) and a free running timer can be used to output a PWM waveform over a GPIO. The GPIO pin could drive a small speaker, for example.</p>
+<p>This example generates a variable duty cycle pulse. The duty cycle is changed by buttons and will vary between 1 and 255. Note that the value 0 is omitted because it would cause two events to be triggered at the same time, which would result in only one toggle of the output pin. Timer 2 is used to dispatch GPIOTE toggle events on every compare match. CC1 will set the output pin high, while CC0 and CC2 will toggle it low every other turn, ending a duty cycle. These compare timings will be set by an interrupt that happens every CC1 at the 0 (or 256) mark for the period. This interrupt will increase CC1 with one more period. Also, this interrupt will set CC0 or CC2 to the value retrieved from the state of the buttons. If CC0 or CC2 is set changes every turn.</p>
+<p>The application will emit light on LED 1, corresponding to the duty cycle. With a higher value, the LED will emit brighter light.</p>
+<h1><a class="anchor" id="pwm_example_setup"></a>
+Setup</h1>
+<p>The name of the example is <b>pwm_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\pwm</code> </p>
+<p>LED assignments:</p>
 <ul>
-<li>Timer 0 is configured in counter mode.</li>
-<li>Timer 1 is configured to generate events on even numbered seconds.</li>
-<li>Timer 2 is configured to generate events on odd numbered seconds.</li>
+<li>LED 1 shows the duty cycle of the current state.</li>
 </ul>
-<p>The PPI is configured to make timer 0 stop and start when timer 1 and timer 2, respectively, generate events. The main loop increments timer 0 and prints the count every 100 milliseconds.</p>
-<p>The name of the example is <b>ppi_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\ppi</code> </p>
-<h1><a class="anchor" id="ppi_example_testing"></a>
+<p>Button assignments:</p>
+<ul>
+<li>Button 1 and button 2 change the duty cycle.</li>
+</ul>
+<h1><a class="anchor" id="pwm_example_testing"></a>
 Testing</h1>
-<p>Test the PPI Example application by performing the following steps:</p>
+<p>Test the PWM Example application by performing the following steps:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Start a COM listener like PUTTY and connect to the used COM port at 38400 baud rate.</li>
-<li>Check the output and observe that the counting stops and starts every second. </li>
+<li>LED 1 should give a low light intensity.</li>
+<li>Press BUTTON_1 or BUTTON_2 to change LED light intensity. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
@@ -129,7 +128,7 @@ Testing</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00019.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:18 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:04 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

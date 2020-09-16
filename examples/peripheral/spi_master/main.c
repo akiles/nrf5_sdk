@@ -36,7 +36,7 @@
 #define APP_TIMER_MAX_TIMERS     BSP_APP_TIMERS_NUMBER  /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE  2                      /**< Size of timer operation queues. */
 
-#define DELAY_MS                 1000                /**< Timer Delay in milli-seconds. */
+#define DELAY_MS                 1000                   /**< Timer Delay in milli-seconds. */
 
 /** @def  TX_RX_MSG_LENGTH
  * number of bytes to transmit and receive. This amount of bytes will also be tested to see that
@@ -79,6 +79,7 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
         // No implementation needed.
     }
 }
+
 
 
 /**@brief The function initializes TX buffer to values to be sent and clears RX buffer.
@@ -369,13 +370,13 @@ int main(void)
 
     for (;; )
     {
-              #if defined(SPI_MASTER_0_ENABLE) || defined(SPI_MASTER_1_ENABLE)
+        #if defined(SPI_MASTER_0_ENABLE) || defined(SPI_MASTER_1_ENABLE)
         if (m_transfer_completed)
         {
             m_transfer_completed = false;
             switch_state();
         }
-                #endif /* defined(SPI_MASTER_0_ENABLE) || defined(SPI_MASTER_1_ENABLE) */
+        #endif // defined(SPI_MASTER_0_ENABLE) || defined(SPI_MASTER_1_ENABLE)
     }
 }
 

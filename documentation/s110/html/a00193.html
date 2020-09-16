@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_dfu_pkt_write_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_dfu_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,49 +106,64 @@ $(document).ready(function(){initNavTree('a00193.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_dfu_pkt_write_t Struct Reference<div class="ingroups"><a class="el" href="a00962.html">Device Firmware Update Service</a></div></div>  </div>
+<div class="title">ble_dfu_init_t Struct Reference<div class="ingroups"><a class="el" href="a00963.html">Device Firmware Update Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>DFU Packet structure.  
+<p>DFU service initialization structure.  
  <a href="a00193.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_dfu.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac28ec8c8ca6292b7987cf6b49a07da4f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00193.html#ac28ec8c8ca6292b7987cf6b49a07da4f">len</a></td></tr>
-<tr class="separator:ac28ec8c8ca6292b7987cf6b49a07da4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e52a5c33d9b8e7f3f605f60f906652c"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00193.html#a6e52a5c33d9b8e7f3f605f60f906652c">p_data</a></td></tr>
-<tr class="separator:a6e52a5c33d9b8e7f3f605f60f906652c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a231060516b6bcba26e6cdf7a87206ba2"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00193.html#a231060516b6bcba26e6cdf7a87206ba2">revision</a></td></tr>
+<tr class="separator:a231060516b6bcba26e6cdf7a87206ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a751feee2fb6a1c75f2f013256e40ff98"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00963.html#ga4c1ddf1bdd414c49f408f4ffd965fa00">ble_dfu_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00193.html#a751feee2fb6a1c75f2f013256e40ff98">evt_handler</a></td></tr>
+<tr class="separator:a751feee2fb6a1c75f2f013256e40ff98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88a44f941a9a76c4b3c43db109bd07f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00977.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00193.html#a88a44f941a9a76c4b3c43db109bd07f2">error_handler</a></td></tr>
+<tr class="separator:a88a44f941a9a76c4b3c43db109bd07f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>DFU Packet structure. </p>
-<p>This structure contains the value of the DFU Packet characteristic as written by the peer and the length of the value written. It will be filled by the DFU Service when the peer writes to the DFU Packet characteristic. </p>
+<div class="textblock"><p>DFU service initialization structure. </p>
+<p>This structure contains the initialization information for the DFU Service. The application needs to fill this structure and pass it to the DFU Service using the <a class="el" href="a00963.html#gae07a32975c8366cda747a0734a3f43ea">ble_dfu_init</a> function. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ac28ec8c8ca6292b7987cf6b49a07da4f"></a>
+<a class="anchor" id="a88a44f941a9a76c4b3c43db109bd07f2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_dfu_pkt_write_t::len</td>
+          <td class="memname"><a class="el" href="a00977.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_dfu_init_t::error_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Length of the packet received. </p>
+<p>Function to be called in case of an error. </p>
 
 </div>
 </div>
-<a class="anchor" id="a6e52a5c33d9b8e7f3f605f60f906652c"></a>
+<a class="anchor" id="a751feee2fb6a1c75f2f013256e40ff98"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* ble_dfu_pkt_write_t::p_data</td>
+          <td class="memname"><a class="el" href="a00963.html#ga4c1ddf1bdd414c49f408f4ffd965fa00">ble_dfu_evt_handler_t</a> ble_dfu_init_t::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to the received packet. This will point to a word aligned memory location. </p>
+<p>Event handler to be called for handling events in the Device Firmware Update Service. </p>
+
+</div>
+</div>
+<a class="anchor" id="a231060516b6bcba26e6cdf7a87206ba2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_dfu_init_t::revision</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Revision number to be exposed by the DFU service. </p>
 
 </div>
 </div>
@@ -157,8 +172,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00193.html">ble_dfu_pkt_write_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:26 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00193.html">ble_dfu_init_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:12 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

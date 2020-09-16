@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_scan_params_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gap_opt_t Union Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,108 +106,63 @@ $(document).ready(function(){initNavTree('a00231.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_scan_params_t Struct Reference<div class="ingroups"><a class="el" href="a01046.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_opt_t Union Reference<div class="ingroups"><a class="el" href="a00849.html">Generic Access Profile (GAP)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GAP scanning parameters.  
+<p>Option structure for GAP options.  
  <a href="a00231.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a0be3f012ef37a3bfca076cffab526f68"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a0be3f012ef37a3bfca076cffab526f68">filter</a></td></tr>
-<tr class="separator:a0be3f012ef37a3bfca076cffab526f68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f3eda85d15916ad467a81faba18f076"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a7f3eda85d15916ad467a81faba18f076">active</a>: 1</td></tr>
-<tr class="separator:a7f3eda85d15916ad467a81faba18f076"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbe25b20112d8859f9ceff46b5711651"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#abbe25b20112d8859f9ceff46b5711651">selective</a>: 1</td></tr>
-<tr class="separator:abbe25b20112d8859f9ceff46b5711651"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a086b92604899521d85052d48d8552b7d"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a086b92604899521d85052d48d8552b7d">interval</a></td></tr>
-<tr class="separator:a086b92604899521d85052d48d8552b7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89a91dffe2c1b7edc26567c932a491b7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a89a91dffe2c1b7edc26567c932a491b7">window</a></td></tr>
-<tr class="separator:a89a91dffe2c1b7edc26567c932a491b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ddedc25ebdb29351a7cbd0039ce6ed8"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a1ddedc25ebdb29351a7cbd0039ce6ed8">timeout</a></td></tr>
-<tr class="separator:a1ddedc25ebdb29351a7cbd0039ce6ed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bb53c22c985681a03ee48b81498112c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00228.html">ble_gap_opt_local_conn_latency_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a1bb53c22c985681a03ee48b81498112c">local_conn_latency</a></td></tr>
+<tr class="separator:a1bb53c22c985681a03ee48b81498112c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada41fdfa545113ec48371bc74ec7aa9a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00229.html">ble_gap_opt_passkey_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#ada41fdfa545113ec48371bc74ec7aa9a">passkey</a></td></tr>
+<tr class="separator:ada41fdfa545113ec48371bc74ec7aa9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19819de8fc2357584b987c5087f2c54a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00230.html">ble_gap_opt_privacy_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a19819de8fc2357584b987c5087f2c54a">privacy</a></td></tr>
+<tr class="separator:a19819de8fc2357584b987c5087f2c54a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GAP scanning parameters. </p>
+<div class="textblock"><p>Option structure for GAP options. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a7f3eda85d15916ad467a81faba18f076"></a>
+<a class="anchor" id="a1bb53c22c985681a03ee48b81498112c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_scan_params_t::active</td>
+          <td class="memname"><a class="el" href="a00228.html">ble_gap_opt_local_conn_latency_t</a> ble_gap_opt_t::local_conn_latency</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>If 1, perform active scanning (scan requests). </p>
+<p>Local connection latency. </p>
 
 </div>
 </div>
-<a class="anchor" id="a0be3f012ef37a3bfca076cffab526f68"></a>
+<a class="anchor" id="ada41fdfa545113ec48371bc74ec7aa9a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_scan_params_t::filter</td>
+          <td class="memname"><a class="el" href="a00229.html">ble_gap_opt_passkey_t</a> ble_gap_opt_t::passkey</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Filter based on discovery mode, see <a class="el" href="a00809.html">GAP Discovery modes</a>. </p>
+<p>Passkey to be used for pairing. </p>
 
 </div>
 </div>
-<a class="anchor" id="a086b92604899521d85052d48d8552b7d"></a>
+<a class="anchor" id="a19819de8fc2357584b987c5087f2c54a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gap_scan_params_t::interval</td>
+          <td class="memname"><a class="el" href="a00230.html">ble_gap_opt_privacy_t</a> ble_gap_opt_t::privacy</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Scan interval between 0x0020 and 0x4000 in 0.625ms units (20ms to 10.24s). </p>
-
-</div>
-</div>
-<a class="anchor" id="abbe25b20112d8859f9ceff46b5711651"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_scan_params_t::selective</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>If 1, ignore unknown devices (non whitelisted). </p>
-
-</div>
-</div>
-<a class="anchor" id="a1ddedc25ebdb29351a7cbd0039ce6ed8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gap_scan_params_t::timeout</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Scan timeout between 0x0001 and 0x3FFF in seconds, 0x0000 disables timeout. </p>
-
-</div>
-</div>
-<a class="anchor" id="a89a91dffe2c1b7edc26567c932a491b7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gap_scan_params_t::window</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Scan window between 0x0004 and 0x4000 in 0.625ms units (2.5ms to 10.24s). </p>
+<p>Custom privacy options. </p>
 
 </div>
 </div>
@@ -216,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00231.html">ble_gap_scan_params_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:26 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00231.html">ble_gap_opt_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:12 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Types</title>
+<title>nRF51 SDK - S110 SoftDevice: Enumerations</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,36 +97,44 @@ $(document).ready(function(){initNavTree('a01011.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Types<div class="ingroups"><a class="el" href="a01008.html">Heart Rate Service Client</a></div></div>  </div>
+<div class="title">Enumerations<div class="ingroups"><a class="el" href="a01010.html">Heart Rate Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gaff74b227fdcb0906d5333821b4d06217"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaff74b227fdcb0906d5333821b4d06217"></a>
-typedef struct <a class="el" href="a00294.html">ble_hrs_c_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01011.html#gaff74b227fdcb0906d5333821b4d06217">ble_hrs_c_t</a></td></tr>
-<tr class="memdesc:gaff74b227fdcb0906d5333821b4d06217"><td class="mdescLeft">&#160;</td><td class="mdescRight">Heart Rate Client structure. <br/></td></tr>
-<tr class="separator:gaff74b227fdcb0906d5333821b4d06217"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga877f2faf397dff36652766f1a6c31b85"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01011.html#ga877f2faf397dff36652766f1a6c31b85">ble_hrs_c_evt_handler_t</a> )(<a class="el" href="a01011.html#gaff74b227fdcb0906d5333821b4d06217">ble_hrs_c_t</a> *p_ble_hrs_c, <a class="el" href="a00292.html">ble_hrs_c_evt_t</a> *p_evt)</td></tr>
-<tr class="memdesc:ga877f2faf397dff36652766f1a6c31b85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event handler type.  <a href="#ga877f2faf397dff36652766f1a6c31b85">More...</a><br/></td></tr>
-<tr class="separator:ga877f2faf397dff36652766f1a6c31b85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga1cb65f3c0928fd75d0e186c28fca8c0e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01011.html#ga1cb65f3c0928fd75d0e186c28fca8c0e">ble_hrs_c_evt_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="a01011.html#gga1cb65f3c0928fd75d0e186c28fca8c0eaab184fc5978897e328792f1672f80011">BLE_HRS_C_EVT_DISCOVERY_COMPLETE</a> = 1, 
+<br/>
+&#160;&#160;<a class="el" href="a01011.html#gga1cb65f3c0928fd75d0e186c28fca8c0ea8c95bb250aab94f4b82257bdeadfa673">BLE_HRS_C_EVT_HRM_NOTIFICATION</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga1cb65f3c0928fd75d0e186c28fca8c0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">HRS Client event type.  <a href="a01011.html#ga1cb65f3c0928fd75d0e186c28fca8c0e">More...</a><br/></td></tr>
+<tr class="separator:ga1cb65f3c0928fd75d0e186c28fca8c0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga877f2faf397dff36652766f1a6c31b85"></a>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga1cb65f3c0928fd75d0e186c28fca8c0e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(*  ble_hrs_c_evt_handler_t)(<a class="el" href="a01011.html#gaff74b227fdcb0906d5333821b4d06217">ble_hrs_c_t</a> *p_ble_hrs_c, <a class="el" href="a00292.html">ble_hrs_c_evt_t</a> *p_evt)</td>
+          <td class="memname">enum <a class="el" href="a01011.html#ga1cb65f3c0928fd75d0e186c28fca8c0e">ble_hrs_c_evt_type_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Event handler type. </p>
-<p>This is the type of the event handler that should be provided by the application of this module in order to receive events. </p>
+<p>HRS Client event type. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1cb65f3c0928fd75d0e186c28fca8c0eaab184fc5978897e328792f1672f80011"></a>BLE_HRS_C_EVT_DISCOVERY_COMPLETE</em>&nbsp;</td><td class="fielddoc">
+<p>Event indicating that the Heart Rate Service has been discovered at the peer. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1cb65f3c0928fd75d0e186c28fca8c0ea8c95bb250aab94f4b82257bdeadfa673"></a>BLE_HRS_C_EVT_HRM_NOTIFICATION</em>&nbsp;</td><td class="fielddoc">
+<p>Event indicating that a notification of the Heart Rate Measurement characteristic has been received from the peer. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -135,7 +143,7 @@ typedef struct <a class="el" href="a00294.html">ble_hrs_c_s</a>&#160;</td><td cl
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

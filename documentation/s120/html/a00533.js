@@ -1,7 +1,6 @@
 var a00533 =
 [
-    [ "BLE_GAP_ADDR_TYPE_PUBLIC", "a00533.html#gaa5e499423d88b16817efd4d5ec10fd6e", null ],
-    [ "BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE", "a00533.html#ga86fe5e506ba152ec4d60ac6daaca2aef", null ],
-    [ "BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE", "a00533.html#gae166d654401b0ed83ad7073f31467b70", null ],
-    [ "BLE_GAP_ADDR_TYPE_RANDOM_STATIC", "a00533.html#gabe27b8f22c3a52413fa064c2ee1e4fba", null ]
+    [ "BLE_GAP_ADV_INTERVAL_MAX", "a00533.html#gada06c7f328e5bcc50ce55f9f567129ca", null ],
+    [ "BLE_GAP_ADV_INTERVAL_MIN", "a00533.html#gaf61691584387648b33a032c934bcd094", null ],
+    [ "BLE_GAP_ADV_NONCON_INTERVAL_MIN", "a00533.html#gaf0853bcb2a170efd2bb58e3a6b3c8ca5", null ]
 ];

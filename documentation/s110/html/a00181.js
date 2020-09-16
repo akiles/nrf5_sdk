@@ -1,11 +1,11 @@
 var a00181 =
 [
-    [ "error_handler", "a00181.html#a5840a1605a5459c4e82ef773ac9d2e24", null ],
-    [ "evt_handler", "a00181.html#a96de686937df25c7bdc23206170ae50a", null ],
-    [ "list_supported_locations", "a00181.html#a43e3dbaf04322020621f80634fb4ab11", null ],
-    [ "sc_ctrlpt_attr_md", "a00181.html#ace531100dc9ba6f0ff3f62d27fd220f8", null ],
-    [ "sensor_location_handle", "a00181.html#aff182ef403314ac9e5fb3d6964d4e862", null ],
-    [ "service_handle", "a00181.html#a14e10c317dd498dc5ac6d17f162cb01e", null ],
-    [ "size_list_supported_locations", "a00181.html#accef6d6a6a4d4a5365c2a6043850c22a", null ],
-    [ "supported_functions", "a00181.html#a64788d2708103f5bbc852e2e1835182c", null ]
+    [ "disconnect_on_fail", "a00181.html#abf5ac3620c0afeef3c3a04608094119a", null ],
+    [ "error_handler", "a00181.html#a03b0ebe516b8abda6ae38a1d8bd94cf8", null ],
+    [ "evt_handler", "a00181.html#aceb664463e99eb25dd703bca4e670038", null ],
+    [ "first_conn_params_update_delay", "a00181.html#af2c34d78dad374ee7e2e443212b3912d", null ],
+    [ "max_conn_params_update_count", "a00181.html#acc761ab28614393d35e59d0a11fdff76", null ],
+    [ "next_conn_params_update_delay", "a00181.html#a406caf4a6f77cf13f9c4a4116bcdcad3", null ],
+    [ "p_conn_params", "a00181.html#a4182d653bc49593db1dc32c47a3a2af0", null ],
+    [ "start_on_notify_cccd_handle", "a00181.html#a6dcaa575801ddea65376594e964c3837", null ]
 ];

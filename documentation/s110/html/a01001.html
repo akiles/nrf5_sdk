@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Record Access Control Point</title>
+<title>nRF51 SDK - S110 SoftDevice: DTM - Direct Test Mode</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,444 +97,529 @@ $(document).ready(function(){initNavTree('a01001.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Record Access Control Point<div class="ingroups"><a class="el" href="a01035.html">BLE Libraries</a></div></div>  </div>
+<div class="title">DTM - Direct Test Mode<div class="ingroups"><a class="el" href="a01037.html">BLE Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Record Access Control Point library.  
+<p>Module for testing RF/PHY using DTM commands.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00316.html">ble_racp_value_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Record Access Control Point value structure.  <a href="a00316.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga0e05e1970601961df9fe0454c300c908"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga0e05e1970601961df9fe0454c300c908">RACP_OPCODE_RESERVED</a>&#160;&#160;&#160;0</td></tr>
-<tr class="memdesc:ga0e05e1970601961df9fe0454c300c908"><td class="mdescLeft">&#160;</td><td class="mdescRight">Record Access Control Point opcodes.  <a href="#ga0e05e1970601961df9fe0454c300c908">More...</a><br/></td></tr>
-<tr class="separator:ga0e05e1970601961df9fe0454c300c908"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga49388be871dffb63399dbe98b1842489"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga49388be871dffb63399dbe98b1842489">RACP_OPCODE_REPORT_RECS</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:ga49388be871dffb63399dbe98b1842489"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga78e11e9e6dbc5ef4b675511a20d818e8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga78e11e9e6dbc5ef4b675511a20d818e8">RACP_OPCODE_DELETE_RECS</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:ga78e11e9e6dbc5ef4b675511a20d818e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1f2237abbeda09c485d5447cbe94a85f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga1f2237abbeda09c485d5447cbe94a85f">RACP_OPCODE_ABORT_OPERATION</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:ga1f2237abbeda09c485d5447cbe94a85f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab687359cf05d27ddf11b12951e02525f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gab687359cf05d27ddf11b12951e02525f">RACP_OPCODE_REPORT_NUM_RECS</a>&#160;&#160;&#160;4</td></tr>
-<tr class="separator:gab687359cf05d27ddf11b12951e02525f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a6225ef2587dc00ed6148cb066bdbc9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga5a6225ef2587dc00ed6148cb066bdbc9">RACP_OPCODE_NUM_RECS_RESPONSE</a>&#160;&#160;&#160;5</td></tr>
-<tr class="separator:ga5a6225ef2587dc00ed6148cb066bdbc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga66da7543686224bc248441c49cf08934"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga66da7543686224bc248441c49cf08934">RACP_OPCODE_RESPONSE_CODE</a>&#160;&#160;&#160;6</td></tr>
-<tr class="separator:ga66da7543686224bc248441c49cf08934"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2c12a66c5429507963b1e46d5276d95e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga2c12a66c5429507963b1e46d5276d95e">RACP_OPERATOR_NULL</a>&#160;&#160;&#160;0</td></tr>
-<tr class="memdesc:ga2c12a66c5429507963b1e46d5276d95e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Record Access Control Point operators.  <a href="#ga2c12a66c5429507963b1e46d5276d95e">More...</a><br/></td></tr>
-<tr class="separator:ga2c12a66c5429507963b1e46d5276d95e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5f732cb3d8d531dfff2f8629aef0cd34"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga5f732cb3d8d531dfff2f8629aef0cd34">RACP_OPERATOR_ALL</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:ga5f732cb3d8d531dfff2f8629aef0cd34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad0be5ef4f666655416920b4012ae250f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gad0be5ef4f666655416920b4012ae250f">RACP_OPERATOR_LESS_OR_EQUAL</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:gad0be5ef4f666655416920b4012ae250f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3866a767110fa49f69aec4a2975d7cd0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga3866a767110fa49f69aec4a2975d7cd0">RACP_OPERATOR_GREATER_OR_EQUAL</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:ga3866a767110fa49f69aec4a2975d7cd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafe1dbd19d45e23e854345e6520db2b10"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gafe1dbd19d45e23e854345e6520db2b10">RACP_OPERATOR_RANGE</a>&#160;&#160;&#160;4</td></tr>
-<tr class="separator:gafe1dbd19d45e23e854345e6520db2b10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga08b50d7ec5871beb5361fb8d4d779499"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga08b50d7ec5871beb5361fb8d4d779499">RACP_OPERATOR_FIRST</a>&#160;&#160;&#160;5</td></tr>
-<tr class="separator:ga08b50d7ec5871beb5361fb8d4d779499"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga201ff79b37040d73455d8e3eefb90690"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga201ff79b37040d73455d8e3eefb90690">RACP_OPERATOR_LAST</a>&#160;&#160;&#160;6</td></tr>
-<tr class="separator:ga201ff79b37040d73455d8e3eefb90690"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4348e676fbde467ff6e7c33f94346421"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga4348e676fbde467ff6e7c33f94346421">RACP_OPERATOR_RFU_START</a>&#160;&#160;&#160;7</td></tr>
-<tr class="separator:ga4348e676fbde467ff6e7c33f94346421"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga059144e4f231c6f71b89c44b0eba780f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga059144e4f231c6f71b89c44b0eba780f">RACP_RESPONSE_RESERVED</a>&#160;&#160;&#160;0</td></tr>
-<tr class="memdesc:ga059144e4f231c6f71b89c44b0eba780f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Record Access Control Point response codes.  <a href="#ga059144e4f231c6f71b89c44b0eba780f">More...</a><br/></td></tr>
-<tr class="separator:ga059144e4f231c6f71b89c44b0eba780f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8dd0264329f8e713724a5b6a6471c816"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga8dd0264329f8e713724a5b6a6471c816">RACP_RESPONSE_SUCCESS</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:ga8dd0264329f8e713724a5b6a6471c816"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab3f683fb6e4516b455b5faecb3f300e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gab3f683fb6e4516b455b5faecb3f300e7">RACP_RESPONSE_OPCODE_UNSUPPORTED</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:gab3f683fb6e4516b455b5faecb3f300e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga285f258d56b5f16089175ec42e20578a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga285f258d56b5f16089175ec42e20578a">RACP_RESPONSE_INVALID_OPERATOR</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:ga285f258d56b5f16089175ec42e20578a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga415561bfa2c94efb16f8d196a498ecb1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga415561bfa2c94efb16f8d196a498ecb1">RACP_RESPONSE_OPERATOR_UNSUPPORTED</a>&#160;&#160;&#160;4</td></tr>
-<tr class="separator:ga415561bfa2c94efb16f8d196a498ecb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf8f2571a3d52473c51adea105368cfaa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gaf8f2571a3d52473c51adea105368cfaa">RACP_RESPONSE_INVALID_OPERAND</a>&#160;&#160;&#160;5</td></tr>
-<tr class="separator:gaf8f2571a3d52473c51adea105368cfaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2df0743c7976f89a006ee344015eb0d4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga2df0743c7976f89a006ee344015eb0d4">RACP_RESPONSE_NO_RECORDS_FOUND</a>&#160;&#160;&#160;6</td></tr>
-<tr class="separator:ga2df0743c7976f89a006ee344015eb0d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacfb3074797d3d6ea64c2f540aaef4aed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gacfb3074797d3d6ea64c2f540aaef4aed">RACP_RESPONSE_ABORT_FAILED</a>&#160;&#160;&#160;7</td></tr>
-<tr class="separator:gacfb3074797d3d6ea64c2f540aaef4aed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab4871dbc0cdd1f5fdf13d9a2d04f0941"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gab4871dbc0cdd1f5fdf13d9a2d04f0941">RACP_RESPONSE_PROCEDURE_NOT_DONE</a>&#160;&#160;&#160;8</td></tr>
-<tr class="separator:gab4871dbc0cdd1f5fdf13d9a2d04f0941"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9da2cb80af789f9cc59cec8ef089f8ad"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga9da2cb80af789f9cc59cec8ef089f8ad">RACP_RESPONSE_OPERAND_UNSUPPORTED</a>&#160;&#160;&#160;9</td></tr>
-<tr class="separator:ga9da2cb80af789f9cc59cec8ef089f8ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafe4068300543aca796a35c939959caa3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gafe4068300543aca796a35c939959caa3">DEFAULT_TX_POWER</a>&#160;&#160;&#160;RADIO_TXPOWER_TXPOWER_Pos4dBm</td></tr>
+<tr class="memdesc:gafe4068300543aca796a35c939959caa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration parameters.  <a href="#gafe4068300543aca796a35c939959caa3">More...</a><br/></td></tr>
+<tr class="separator:gafe4068300543aca796a35c939959caa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac91bd56eef3f2b82894a058b7f136a21"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gac91bd56eef3f2b82894a058b7f136a21">DEFAULT_TIMER</a>&#160;&#160;&#160;NRF_TIMER0</td></tr>
+<tr class="separator:gac91bd56eef3f2b82894a058b7f136a21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1efafa03b7e7bc3274e1bfdba549cd09"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga1efafa03b7e7bc3274e1bfdba549cd09">DEFAULT_TIMER_IRQn</a>&#160;&#160;&#160;TIMER0_IRQn</td></tr>
+<tr class="separator:ga1efafa03b7e7bc3274e1bfdba549cd09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a0690bbc7f0d3e74f67c239c4247291"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga7a0690bbc7f0d3e74f67c239c4247291">LE_RESET</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:ga7a0690bbc7f0d3e74f67c239c4247291"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad748a96ebeca311ebaf9e657c99eaafb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gad748a96ebeca311ebaf9e657c99eaafb">LE_RECEIVER_TEST</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:gad748a96ebeca311ebaf9e657c99eaafb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae8d2c3303667273a59d407df6445c54b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gae8d2c3303667273a59d407df6445c54b">LE_TRANSMITTER_TEST</a>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:gae8d2c3303667273a59d407df6445c54b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3c5397c73c1109a60268513b67df0a2a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga3c5397c73c1109a60268513b67df0a2a">LE_TEST_END</a>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:ga3c5397c73c1109a60268513b67df0a2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac54ae7bd6c0326b4bda06f72061b2b00"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gac54ae7bd6c0326b4bda06f72061b2b00">CARRIER_TEST</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:gac54ae7bd6c0326b4bda06f72061b2b00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaacd01d21c085dc48af3ddb844c68cc54"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gaacd01d21c085dc48af3ddb844c68cc54">CARRIER_TEST_STUDIO</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:gaacd01d21c085dc48af3ddb844c68cc54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf10191ab4d2caac1d49091d0b252b445"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gaf10191ab4d2caac1d49091d0b252b445">SET_TX_POWER</a>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:gaf10191ab4d2caac1d49091d0b252b445"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5674684bcc78025bc3e8974f2f83d31a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga5674684bcc78025bc3e8974f2f83d31a">SELECT_TIMER</a>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:ga5674684bcc78025bc3e8974f2f83d31a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0d787a4016fcf3f7393591acfe2f6e99"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga0d787a4016fcf3f7393591acfe2f6e99">LE_PACKET_REPORTING_EVENT</a>&#160;&#160;&#160;0x8000</td></tr>
+<tr class="separator:ga0d787a4016fcf3f7393591acfe2f6e99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga23033ef9a49e11e6045c0fa5203a5e62"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga23033ef9a49e11e6045c0fa5203a5e62">LE_TEST_STATUS_EVENT_SUCCESS</a>&#160;&#160;&#160;0x0000</td></tr>
+<tr class="separator:ga23033ef9a49e11e6045c0fa5203a5e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8560ef1ea2aef1a1e8405c90dd7a3d62"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga8560ef1ea2aef1a1e8405c90dd7a3d62">LE_TEST_STATUS_EVENT_ERROR</a>&#160;&#160;&#160;0x0001</td></tr>
+<tr class="separator:ga8560ef1ea2aef1a1e8405c90dd7a3d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf0668d4430e7040f88ac175d0f0fe18a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gaf0668d4430e7040f88ac175d0f0fe18a">DTM_PKT_PRBS9</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:gaf0668d4430e7040f88ac175d0f0fe18a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga80629f04fe92e9d1a6a6cc7518bb3443"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga80629f04fe92e9d1a6a6cc7518bb3443">DTM_PKT_0X0F</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga80629f04fe92e9d1a6a6cc7518bb3443"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac8342f5fb0460a2c17837f460d478f05"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gac8342f5fb0460a2c17837f460d478f05">DTM_PKT_0X55</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:gac8342f5fb0460a2c17837f460d478f05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga42c6ddb4a7cfcca162859a8744492ffc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga42c6ddb4a7cfcca162859a8744492ffc">DTM_PKT_VENDORSPECIFIC</a>&#160;&#160;&#160;0xFFFFFFFF</td></tr>
+<tr class="separator:ga42c6ddb4a7cfcca162859a8744492ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad1926e67b0af038cd28f294d2c6ada4a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gad1926e67b0af038cd28f294d2c6ada4a">DTM_SUCCESS</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="memdesc:gad1926e67b0af038cd28f294d2c6ada4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return codes from <a class="el" href="a01001.html#gacfd7e507740ae8f6d296e77306d89a3a" title="Function for calling when a complete command has been prepared by the Tester.">dtm_cmd()</a>.  <a href="#gad1926e67b0af038cd28f294d2c6ada4a">More...</a><br/></td></tr>
+<tr class="separator:gad1926e67b0af038cd28f294d2c6ada4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0d15718064583f1c5ff0c9ffd69e7b47"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga0d15718064583f1c5ff0c9ffd69e7b47">DTM_ERROR_ILLEGAL_CHANNEL</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga0d15718064583f1c5ff0c9ffd69e7b47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa81f7b94447a07b8e017fce4690eaf21"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gaa81f7b94447a07b8e017fce4690eaf21">DTM_ERROR_INVALID_STATE</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:gaa81f7b94447a07b8e017fce4690eaf21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad8ccc81041426a013921e6d1433048f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gad8ccc81041426a013921e6d1433048f2">DTM_ERROR_ILLEGAL_LENGTH</a>&#160;&#160;&#160;0x03</td></tr>
+<tr class="separator:gad8ccc81041426a013921e6d1433048f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6fc53bfea239368acef19f07ea256aec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga6fc53bfea239368acef19f07ea256aec">DTM_ERROR_ILLEGAL_CONFIGURATION</a>&#160;&#160;&#160;0x04</td></tr>
+<tr class="separator:ga6fc53bfea239368acef19f07ea256aec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf009cf6c05fcc0ccf37c3132e9c6c384"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gaf009cf6c05fcc0ccf37c3132e9c6c384">DTM_ERROR_UNINITIALIZED</a>&#160;&#160;&#160;0x05</td></tr>
+<tr class="separator:gaf009cf6c05fcc0ccf37c3132e9c6c384"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc5d077c996e79bb46808ca484f0a163"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gabc5d077c996e79bb46808ca484f0a163">PACKET_TYPE_MAX</a>&#160;&#160;&#160;<a class="el" href="a01001.html#gac8342f5fb0460a2c17837f460d478f05">DTM_PKT_0X55</a></td></tr>
+<tr class="separator:gabc5d077c996e79bb46808ca484f0a163"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga1913c46b27822e5ba366c6feb7dd8a71"><td class="memItemLeft" align="right" valign="top">typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga1913c46b27822e5ba366c6feb7dd8a71">dtm_cmd_t</a></td></tr>
+<tr class="memdesc:ga1913c46b27822e5ba366c6feb7dd8a71"><td class="mdescLeft">&#160;</td><td class="mdescRight">BLE DTM command codes.  <a href="#ga1913c46b27822e5ba366c6feb7dd8a71">More...</a><br/></td></tr>
+<tr class="separator:ga1913c46b27822e5ba366c6feb7dd8a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeddc8e448d5f03e66af18dae76476518"><td class="memItemLeft" align="right" valign="top">typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gaeddc8e448d5f03e66af18dae76476518">dtm_event_t</a></td></tr>
+<tr class="memdesc:gaeddc8e448d5f03e66af18dae76476518"><td class="mdescLeft">&#160;</td><td class="mdescRight">BLE DTM event type.  <a href="#gaeddc8e448d5f03e66af18dae76476518">More...</a><br/></td></tr>
+<tr class="separator:gaeddc8e448d5f03e66af18dae76476518"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga678d75ffdbe6263fd2395ec5550de11a"><td class="memItemLeft" align="right" valign="top">typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga678d75ffdbe6263fd2395ec5550de11a">dtm_freq_t</a></td></tr>
+<tr class="memdesc:ga678d75ffdbe6263fd2395ec5550de11a"><td class="mdescLeft">&#160;</td><td class="mdescRight">BLE DTM frequency type.  <a href="#ga678d75ffdbe6263fd2395ec5550de11a">More...</a><br/></td></tr>
+<tr class="separator:ga678d75ffdbe6263fd2395ec5550de11a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22c1d34e8bc119600a2986ddd1e2d972"><td class="memItemLeft" align="right" valign="top">typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga22c1d34e8bc119600a2986ddd1e2d972">dtm_pkt_type_t</a></td></tr>
+<tr class="memdesc:ga22c1d34e8bc119600a2986ddd1e2d972"><td class="mdescLeft">&#160;</td><td class="mdescRight">BLE DTM packet types.  <a href="#ga22c1d34e8bc119600a2986ddd1e2d972">More...</a><br/></td></tr>
+<tr class="separator:ga22c1d34e8bc119600a2986ddd1e2d972"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga0962a4fbdb09ddb3b15cf08caa26153a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga0962a4fbdb09ddb3b15cf08caa26153a">ble_racp_decode</a> (uint8_t data_len, uint8_t *p_data, <a class="el" href="a00316.html">ble_racp_value_t</a> *p_racp_val)</td></tr>
-<tr class="memdesc:ga0962a4fbdb09ddb3b15cf08caa26153a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for decoding a Record Access Control Point write.  <a href="#ga0962a4fbdb09ddb3b15cf08caa26153a">More...</a><br/></td></tr>
-<tr class="separator:ga0962a4fbdb09ddb3b15cf08caa26153a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga39cb2e39ee6b1c76549968c8defb68ef"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga39cb2e39ee6b1c76549968c8defb68ef">ble_racp_encode</a> (const <a class="el" href="a00316.html">ble_racp_value_t</a> *p_racp_val, uint8_t *p_data)</td></tr>
-<tr class="memdesc:ga39cb2e39ee6b1c76549968c8defb68ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for encoding a Record Access Control Point response.  <a href="#ga39cb2e39ee6b1c76549968c8defb68ef">More...</a><br/></td></tr>
-<tr class="separator:ga39cb2e39ee6b1c76549968c8defb68ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga45f73017a4ba401da34571bcc741b564"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga45f73017a4ba401da34571bcc741b564">dtm_init</a> (void)</td></tr>
+<tr class="memdesc:ga45f73017a4ba401da34571bcc741b564"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing or re-initializing DTM module.  <a href="#ga45f73017a4ba401da34571bcc741b564">More...</a><br/></td></tr>
+<tr class="separator:ga45f73017a4ba401da34571bcc741b564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab8114a0b0dd2db821a479ad848a67121"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gab8114a0b0dd2db821a479ad848a67121">dtm_wait</a> (void)</td></tr>
+<tr class="memdesc:gab8114a0b0dd2db821a479ad848a67121"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for giving control to dtmlib for handling timer and radio events. Will return to caller at 625us intervals or whenever another event than radio occurs (such as UART input). Function will put MCU to sleep between events.  <a href="#gab8114a0b0dd2db821a479ad848a67121">More...</a><br/></td></tr>
+<tr class="separator:gab8114a0b0dd2db821a479ad848a67121"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacfd7e507740ae8f6d296e77306d89a3a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#gacfd7e507740ae8f6d296e77306d89a3a">dtm_cmd</a> (<a class="el" href="a01001.html#ga1913c46b27822e5ba366c6feb7dd8a71">dtm_cmd_t</a> cmd, <a class="el" href="a01001.html#ga678d75ffdbe6263fd2395ec5550de11a">dtm_freq_t</a> freq, uint32_t length, <a class="el" href="a01001.html#ga22c1d34e8bc119600a2986ddd1e2d972">dtm_pkt_type_t</a> payload)</td></tr>
+<tr class="memdesc:gacfd7e507740ae8f6d296e77306d89a3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for calling when a complete command has been prepared by the Tester.  <a href="#gacfd7e507740ae8f6d296e77306d89a3a">More...</a><br/></td></tr>
+<tr class="separator:gacfd7e507740ae8f6d296e77306d89a3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga574ceb36cc9cee237a6e9f77e3c32b36"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga574ceb36cc9cee237a6e9f77e3c32b36">dtm_event_get</a> (<a class="el" href="a01001.html#gaeddc8e448d5f03e66af18dae76476518">dtm_event_t</a> *p_dtm_event)</td></tr>
+<tr class="memdesc:ga574ceb36cc9cee237a6e9f77e3c32b36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for reading the result of a DTM command.  <a href="#ga574ceb36cc9cee237a6e9f77e3c32b36">More...</a><br/></td></tr>
+<tr class="separator:ga574ceb36cc9cee237a6e9f77e3c32b36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga283b15cf4583b6282d078dd7752efb5b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga283b15cf4583b6282d078dd7752efb5b">dtm_set_timer</a> (uint32_t new_timer)</td></tr>
+<tr class="memdesc:ga283b15cf4583b6282d078dd7752efb5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for configuring the timer to use.  <a href="#ga283b15cf4583b6282d078dd7752efb5b">More...</a><br/></td></tr>
+<tr class="separator:ga283b15cf4583b6282d078dd7752efb5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8fc47d8b727b01821d4287e3c8a6068d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01001.html#ga8fc47d8b727b01821d4287e3c8a6068d">dtm_set_txpower</a> (uint32_t new_tx_power)</td></tr>
+<tr class="memdesc:ga8fc47d8b727b01821d4287e3c8a6068d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for configuring the transmit power.  <a href="#ga8fc47d8b727b01821d4287e3c8a6068d">More...</a><br/></td></tr>
+<tr class="separator:ga8fc47d8b727b01821d4287e3c8a6068d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Record Access Control Point library. </p>
+<p>Module for testing RF/PHY using DTM commands. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga1f2237abbeda09c485d5447cbe94a85f"></a>
+<a class="anchor" id="gac54ae7bd6c0326b4bda06f72061b2b00"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_OPCODE_ABORT_OPERATION&#160;&#160;&#160;3</td>
+          <td class="memname">#define CARRIER_TEST&#160;&#160;&#160;0</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point opcode - Abort operation. </p>
+<p>Length=0 indicates a constant, unmodulated carrier until LE_TEST_END or LE_RESET </p>
 
 </div>
 </div>
-<a class="anchor" id="ga78e11e9e6dbc5ef4b675511a20d818e8"></a>
+<a class="anchor" id="gaacd01d21c085dc48af3ddb844c68cc54"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_OPCODE_DELETE_RECS&#160;&#160;&#160;2</td>
+          <td class="memname">#define CARRIER_TEST_STUDIO&#160;&#160;&#160;1</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point opcode - Delete stored records. </p>
+<p>nRFgo Studio uses value 1 in length field, to indicate a constant, unmodulated carrier until LE_TEST_END or LE_RESET </p>
 
 </div>
 </div>
-<a class="anchor" id="ga5a6225ef2587dc00ed6148cb066bdbc9"></a>
+<a class="anchor" id="gac91bd56eef3f2b82894a058b7f136a21"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_OPCODE_NUM_RECS_RESPONSE&#160;&#160;&#160;5</td>
+          <td class="memname">#define DEFAULT_TIMER&#160;&#160;&#160;NRF_TIMER0</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point opcode - Number of stored records response. </p>
+<p>Default timer used for timing. </p>
 
 </div>
 </div>
-<a class="anchor" id="gab687359cf05d27ddf11b12951e02525f"></a>
+<a class="anchor" id="ga1efafa03b7e7bc3274e1bfdba549cd09"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_OPCODE_REPORT_NUM_RECS&#160;&#160;&#160;4</td>
+          <td class="memname">#define DEFAULT_TIMER_IRQn&#160;&#160;&#160;TIMER0_IRQn</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point opcode - Report number of stored records. </p>
+<p>IRQ used for timer. NOTE: MUST correspond to DEFAULT_TIMER. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga49388be871dffb63399dbe98b1842489"></a>
+<a class="anchor" id="gafe4068300543aca796a35c939959caa3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_OPCODE_REPORT_RECS&#160;&#160;&#160;1</td>
+          <td class="memname">#define DEFAULT_TX_POWER&#160;&#160;&#160;RADIO_TXPOWER_TXPOWER_Pos4dBm</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point opcode - Report stored records. </p>
+
+<p>Configuration parameters. </p>
+<p>Default Transmission power using in the DTM module. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga0e05e1970601961df9fe0454c300c908"></a>
+<a class="anchor" id="ga0d15718064583f1c5ff0c9ffd69e7b47"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_OPCODE_RESERVED&#160;&#160;&#160;0</td>
+          <td class="memname">#define DTM_ERROR_ILLEGAL_CHANNEL&#160;&#160;&#160;0x01</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Record Access Control Point opcodes. </p>
-<p>Record Access Control Point opcode - Reserved for future use. </p>
+<p>Physical channel number must be in the range 0..39. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga66da7543686224bc248441c49cf08934"></a>
+<a class="anchor" id="ga6fc53bfea239368acef19f07ea256aec"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_OPCODE_RESPONSE_CODE&#160;&#160;&#160;6</td>
+          <td class="memname">#define DTM_ERROR_ILLEGAL_CONFIGURATION&#160;&#160;&#160;0x04</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point opcode - Response code. </p>
+<p>Parameter out of range (legal range is function dependent). </p>
 
 </div>
 </div>
-<a class="anchor" id="ga5f732cb3d8d531dfff2f8629aef0cd34"></a>
+<a class="anchor" id="gad8ccc81041426a013921e6d1433048f2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_OPERATOR_ALL&#160;&#160;&#160;1</td>
+          <td class="memname">#define DTM_ERROR_ILLEGAL_LENGTH&#160;&#160;&#160;0x03</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point operator - All records. </p>
+<p>Payload size must be in the range 0..37. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga08b50d7ec5871beb5361fb8d4d779499"></a>
+<a class="anchor" id="gaa81f7b94447a07b8e017fce4690eaf21"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_OPERATOR_FIRST&#160;&#160;&#160;5</td>
+          <td class="memname">#define DTM_ERROR_INVALID_STATE&#160;&#160;&#160;0x02</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point operator - First record (i.e. oldest record). </p>
+<p>Sequencing error: Command is not valid now. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga3866a767110fa49f69aec4a2975d7cd0"></a>
+<a class="anchor" id="gaf009cf6c05fcc0ccf37c3132e9c6c384"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_OPERATOR_GREATER_OR_EQUAL&#160;&#160;&#160;3</td>
+          <td class="memname">#define DTM_ERROR_UNINITIALIZED&#160;&#160;&#160;0x05</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point operator - Greater than or equal to. </p>
+<p>DTM module has not been initialized by the application. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga201ff79b37040d73455d8e3eefb90690"></a>
+<a class="anchor" id="ga80629f04fe92e9d1a6a6cc7518bb3443"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_OPERATOR_LAST&#160;&#160;&#160;6</td>
+          <td class="memname">#define DTM_PKT_0X0F&#160;&#160;&#160;0x01</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point operator - Last record (i.e. most recent record). </p>
+<p>Bit pattern 11110000 (LSB is the leftmost bit). </p>
 
 </div>
 </div>
-<a class="anchor" id="gad0be5ef4f666655416920b4012ae250f"></a>
+<a class="anchor" id="gac8342f5fb0460a2c17837f460d478f05"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_OPERATOR_LESS_OR_EQUAL&#160;&#160;&#160;2</td>
+          <td class="memname">#define DTM_PKT_0X55&#160;&#160;&#160;0x02</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point operator - Less than or equal to. </p>
+<p>Bit pattern 10101010 (LSB is the leftmost bit). </p>
 
 </div>
 </div>
-<a class="anchor" id="ga2c12a66c5429507963b1e46d5276d95e"></a>
+<a class="anchor" id="gaf0668d4430e7040f88ac175d0f0fe18a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_OPERATOR_NULL&#160;&#160;&#160;0</td>
+          <td class="memname">#define DTM_PKT_PRBS9&#160;&#160;&#160;0x00</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Record Access Control Point operators. </p>
-<p>Record Access Control Point operator - Null. </p>
+<p>Bit pattern PRBS9. </p>
 
 </div>
 </div>
-<a class="anchor" id="gafe1dbd19d45e23e854345e6520db2b10"></a>
+<a class="anchor" id="ga42c6ddb4a7cfcca162859a8744492ffc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_OPERATOR_RANGE&#160;&#160;&#160;4</td>
+          <td class="memname">#define DTM_PKT_VENDORSPECIFIC&#160;&#160;&#160;0xFFFFFFFF</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point operator - Within range of (inclusive). </p>
+<p>Vendor specific. Nordic: Continuous carrier test, or configuration. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga4348e676fbde467ff6e7c33f94346421"></a>
+<a class="anchor" id="gad1926e67b0af038cd28f294d2c6ada4a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_OPERATOR_RFU_START&#160;&#160;&#160;7</td>
+          <td class="memname">#define DTM_SUCCESS&#160;&#160;&#160;0x00</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point operator - Start of Reserved for Future Use area. </p>
+
+<p>Return codes from <a class="el" href="a01001.html#gacfd7e507740ae8f6d296e77306d89a3a" title="Function for calling when a complete command has been prepared by the Tester.">dtm_cmd()</a>. </p>
+<p>Indicate that the DTM function completed with success. </p>
 
 </div>
 </div>
-<a class="anchor" id="gacfb3074797d3d6ea64c2f540aaef4aed"></a>
+<a class="anchor" id="ga0d787a4016fcf3f7393591acfe2f6e99"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_RESPONSE_ABORT_FAILED&#160;&#160;&#160;7</td>
+          <td class="memname">#define LE_PACKET_REPORTING_EVENT&#160;&#160;&#160;0x8000</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point response code - Abort could not be completed. </p>
+<p>DTM Packet reporting event, returned by the device to the tester. </p>
 
 </div>
 </div>
-<a class="anchor" id="gaf8f2571a3d52473c51adea105368cfaa"></a>
+<a class="anchor" id="gad748a96ebeca311ebaf9e657c99eaafb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_RESPONSE_INVALID_OPERAND&#160;&#160;&#160;5</td>
+          <td class="memname">#define LE_RECEIVER_TEST&#160;&#160;&#160;1</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point response code - Operand not valid for service. </p>
+<p>DTM command: Start receive test. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga285f258d56b5f16089175ec42e20578a"></a>
+<a class="anchor" id="ga7a0690bbc7f0d3e74f67c239c4247291"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_RESPONSE_INVALID_OPERATOR&#160;&#160;&#160;3</td>
+          <td class="memname">#define LE_RESET&#160;&#160;&#160;0</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point response code - Operator not valid for service. </p>
+<p>DTM command: Reset device. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga2df0743c7976f89a006ee344015eb0d4"></a>
+<a class="anchor" id="ga3c5397c73c1109a60268513b67df0a2a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_RESPONSE_NO_RECORDS_FOUND&#160;&#160;&#160;6</td>
+          <td class="memname">#define LE_TEST_END&#160;&#160;&#160;3</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point response code - No matching records found. </p>
+<p>DTM command: End test and send packet report. </p>
 
 </div>
 </div>
-<a class="anchor" id="gab3f683fb6e4516b455b5faecb3f300e7"></a>
+<a class="anchor" id="ga8560ef1ea2aef1a1e8405c90dd7a3d62"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_RESPONSE_OPCODE_UNSUPPORTED&#160;&#160;&#160;2</td>
+          <td class="memname">#define LE_TEST_STATUS_EVENT_ERROR&#160;&#160;&#160;0x0001</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point response code - Unsupported op code received. </p>
+<p>DTM Status event, indicating an error. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga9da2cb80af789f9cc59cec8ef089f8ad"></a>
+<a class="anchor" id="ga23033ef9a49e11e6045c0fa5203a5e62"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_RESPONSE_OPERAND_UNSUPPORTED&#160;&#160;&#160;9</td>
+          <td class="memname">#define LE_TEST_STATUS_EVENT_SUCCESS&#160;&#160;&#160;0x0000</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point response code - Unsupported operand. </p>
+<p>DTM Status event, indicating success. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga415561bfa2c94efb16f8d196a498ecb1"></a>
+<a class="anchor" id="gae8d2c3303667273a59d407df6445c54b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_RESPONSE_OPERATOR_UNSUPPORTED&#160;&#160;&#160;4</td>
+          <td class="memname">#define LE_TRANSMITTER_TEST&#160;&#160;&#160;2</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point response code - Unsupported operator. </p>
+<p>DTM command: Start transmission test. </p>
 
 </div>
 </div>
-<a class="anchor" id="gab4871dbc0cdd1f5fdf13d9a2d04f0941"></a>
+<a class="anchor" id="gabc5d077c996e79bb46808ca484f0a163"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_RESPONSE_PROCEDURE_NOT_DONE&#160;&#160;&#160;8</td>
+          <td class="memname">#define PACKET_TYPE_MAX&#160;&#160;&#160;<a class="el" href="a01001.html#gac8342f5fb0460a2c17837f460d478f05">DTM_PKT_0X55</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point response code - Procedure could not be completed. </p>
+<p>Highest value allowed as DTM Packet type. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga059144e4f231c6f71b89c44b0eba780f"></a>
+<a class="anchor" id="ga5674684bcc78025bc3e8974f2f83d31a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_RESPONSE_RESERVED&#160;&#160;&#160;0</td>
+          <td class="memname">#define SELECT_TIMER&#160;&#160;&#160;3</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Record Access Control Point response codes. </p>
-<p>Record Access Control Point response code - Reserved for future use. </p>
+<p>Select on of the 16 MHz timers 0, 1 or 2 </p>
 
 </div>
 </div>
-<a class="anchor" id="ga8dd0264329f8e713724a5b6a6471c816"></a>
+<a class="anchor" id="gaf10191ab4d2caac1d49091d0b252b445"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RACP_RESPONSE_SUCCESS&#160;&#160;&#160;1</td>
+          <td class="memname">#define SET_TX_POWER&#160;&#160;&#160;2</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Record Access Control Point response code - Successful operation. </p>
+<p>Set transmission power, value -40..+4 dBm in steps of 4 </p>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga1913c46b27822e5ba366c6feb7dd8a71"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint32_t <a class="el" href="a01001.html#ga1913c46b27822e5ba366c6feb7dd8a71">dtm_cmd_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>BLE DTM command codes. </p>
+<p>DTM command type. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaeddc8e448d5f03e66af18dae76476518"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint32_t <a class="el" href="a01001.html#gaeddc8e448d5f03e66af18dae76476518">dtm_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>BLE DTM event type. </p>
+<p>Type for handling DTM event. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga678d75ffdbe6263fd2395ec5550de11a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint32_t <a class="el" href="a01001.html#ga678d75ffdbe6263fd2395ec5550de11a">dtm_freq_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>BLE DTM frequency type. </p>
+<p>Physical channel, valid range: 0..39. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga22c1d34e8bc119600a2986ddd1e2d972"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef uint32_t <a class="el" href="a01001.html#ga22c1d34e8bc119600a2986ddd1e2d972">dtm_pkt_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>BLE DTM packet types. </p>
+<p>Type for holding the requested DTM payload type. </p>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga0962a4fbdb09ddb3b15cf08caa26153a"></a>
+<a class="anchor" id="gacfd7e507740ae8f6d296e77306d89a3a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ble_racp_decode </td>
+          <td class="memname">uint32_t dtm_cmd </td>
           <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>data_len</em>, </td>
+          <td class="paramtype"><a class="el" href="a01001.html#ga1913c46b27822e5ba366c6feb7dd8a71">dtm_cmd_t</a>&#160;</td>
+          <td class="paramname"><em>cmd</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_data</em>, </td>
+          <td class="paramtype"><a class="el" href="a01001.html#ga678d75ffdbe6263fd2395ec5550de11a">dtm_freq_t</a>&#160;</td>
+          <td class="paramname"><em>freq</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00316.html">ble_racp_value_t</a> *&#160;</td>
-          <td class="paramname"><em>p_racp_val</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>length</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a01001.html#ga22c1d34e8bc119600a2986ddd1e2d972">dtm_pkt_type_t</a>&#160;</td>
+          <td class="paramname"><em>payload</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -544,54 +629,132 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for decoding a Record Access Control Point write. </p>
-<p>This call decodes a write to the Record Access Control Point.</p>
+<p>Function for calling when a complete command has been prepared by the Tester. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">data_len</td><td>Length of data in received write. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Pointer to received data. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_racp_val</td><td>Pointer to decoded Record Access Control Point write. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cmd</td><td>One of the DTM_CMD values (bits 14:15 in the 16-bit UART format). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">freq</td><td>Phys. channel no - actual frequency = (2402 + freq * 2) MHz (bits 8:13 in the 16-bit UART format). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Payload length, 0..37 (bits 2:7 in the 16-bit UART format). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">payload</td><td>One of the DTM_PKT values (bits 0:1 in the 16-bit UART format).</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>This does not do a data copy. It assumes the data pointed to by p_data is persistant until no longer needed. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>DTM_SUCCESS or one of the DTM_ERROR_ values </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga39cb2e39ee6b1c76549968c8defb68ef"></a>
+<a class="anchor" id="ga574ceb36cc9cee237a6e9f77e3c32b36"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_racp_encode </td>
+          <td class="memname">bool dtm_event_get </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00316.html">ble_racp_value_t</a> *&#160;</td>
-          <td class="paramname"><em>p_racp_val</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a01001.html#gaeddc8e448d5f03e66af18dae76476518">dtm_event_t</a> *&#160;</td>
+          <td class="paramname"><em>p_dtm_event</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for encoding a Record Access Control Point response. </p>
-<p>This call encodes a response from the Record Access Control Point response.</p>
+<p>Function for reading the result of a DTM command. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_racp_val</td><td>Pointer to Record Access Control Point to encode. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_data</td><td>Pointer to where encoded data is written. NOTE! It is calling routines respsonsibility to make sure.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_dtm_event</td><td>Pointer to buffer for 16 bit event code according to DTM standard.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Length of encoded data. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>true: new event, false: no event since last call, this event has been read earlier </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga45f73017a4ba401da34571bcc741b564"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t dtm_init </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for initializing or re-initializing DTM module. </p>
+<dl class="section return"><dt>Returns</dt><dd>DTM_SUCCESS on successful initialization of the DTM module. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga283b15cf4583b6282d078dd7752efb5b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool dtm_set_timer </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>new_timer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for configuring the timer to use. </p>
+<dl class="section note"><dt>Note</dt><dd>Must be called when no DTM test is running.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">new_timer</td><td>Index (0..2) of timer to be used by the DTM library</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true: success, new timer was selected, false: parameter error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8fc47d8b727b01821d4287e3c8a6068d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool dtm_set_txpower </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>new_tx_power</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for configuring the transmit power. </p>
+<dl class="section note"><dt>Note</dt><dd>Must be called when no DTM test is running.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">new_tx_power</td><td>New output level, +4..-40, in steps of 4.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true: tx power setting changed, false: parameter error </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gab8114a0b0dd2db821a479ad848a67121"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t dtm_wait </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for giving control to dtmlib for handling timer and radio events. Will return to caller at 625us intervals or whenever another event than radio occurs (such as UART input). Function will put MCU to sleep between events. </p>
+<dl class="section return"><dt>Returns</dt><dd>Time counter, incremented every 625 us. </dd></dl>
 
 </div>
 </div>
@@ -600,7 +763,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

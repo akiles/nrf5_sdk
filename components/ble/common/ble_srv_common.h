@@ -148,7 +148,7 @@ typedef void (*ble_srv_error_handler_t) (uint32_t nrf_error);
 typedef struct
 {
     uint8_t report_id;                                  /**< Non-zero value if these is more than one instance of the same Report Type */
-    uint8_t report_type;                                /**< Type of Report characteristic (see @ref BLE_HIDS_REPORT_TYPE) */
+    uint8_t report_type;                                /**< Type of Report characteristic @if (SD_S110) (see @ref BLE_HIDS_REPORT_TYPE) @endif */
 } ble_srv_report_ref_t;
 
 /**@brief UTF-8 string data type.

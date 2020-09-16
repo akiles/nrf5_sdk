@@ -1,9 +1,9 @@
 var a00258 =
 [
-    [ "rd_auth", "a00258.html#a0d2f2743a556d382513a43607a08c057", null ],
-    [ "read_perm", "a00258.html#a61a4ef92eba3a3b2b3f616557f6b74aa", null ],
-    [ "vlen", "a00258.html#a921e414734cd784e0c3b7309d3a14f39", null ],
-    [ "vloc", "a00258.html#abbd6b9b2d75565fc6fd66074a47308c7", null ],
-    [ "wr_auth", "a00258.html#affcd971025cbaa9525c2ed9ff95d913c", null ],
-    [ "write_perm", "a00258.html#af04a8d72352f3c02dbef021b360f477f", null ]
+    [ "char_uuid", "a00258.html#adbbcf41424e48536f3c3e7f2665005fd", null ],
+    [ "desc_uuid", "a00258.html#a6d909918be5c3a58a93e3f345ad0ae5e", null ],
+    [ "srvc_handle", "a00258.html#a9ec74591a8b40af4354fed5c2ae33efd", null ],
+    [ "srvc_uuid", "a00258.html#a351c0654157494b748a0adcba003e42f", null ],
+    [ "type", "a00258.html#a59115313e869d01234cc2ed3ab2e25d9", null ],
+    [ "value_handle", "a00258.html#a770254b2ade294a3f24fa0db65a2d0fa", null ]
 ];

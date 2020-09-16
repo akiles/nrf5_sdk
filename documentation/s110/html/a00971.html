@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Immediate Alert Service Client</title>
+<title>nRF51 SDK - S110 SoftDevice: Immediate Alert Service</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -102,107 +102,99 @@ $(document).ready(function(){initNavTree('a00971.html','');});
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Immediate Alert Service Client<div class="ingroups"><a class="el" href="a01034.html">BLE Services</a></div></div>  </div>
+<div class="title">Immediate Alert Service<div class="ingroups"><a class="el" href="a01036.html">BLE Services</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Immediate Alert Service Client module.  
+<p>Immediate Alert Service module.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00302.html">ble_ias_c_evt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immediate Alert Service client event.  <a href="a00302.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00306.html">ble_ias_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immediate Alert Service event.  <a href="a00306.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00304.html">ble_ias_c_s</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">IAS Client structure. This contains various status information for the client.  <a href="a00304.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00307.html">ble_ias_init_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immediate Alert Service init structure. This contains all options and data needed for initialization of the service.  <a href="a00307.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00303.html">ble_ias_c_init_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">IAS Client init structure. This contains all options and data needed for initialization of the client.  <a href="a00303.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00308.html">ble_ias_s</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immediate Alert Service structure. This contains various status information for the service.  <a href="a00308.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga4de8fe9971720f3186d60ea307026c54"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4de8fe9971720f3186d60ea307026c54"></a>
-typedef struct <a class="el" href="a00304.html">ble_ias_c_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00971.html#ga4de8fe9971720f3186d60ea307026c54">ble_ias_c_t</a></td></tr>
-<tr class="memdesc:ga4de8fe9971720f3186d60ea307026c54"><td class="mdescLeft">&#160;</td><td class="mdescRight">IAS Client structure. This contains various status information for the client. <br/></td></tr>
-<tr class="separator:ga4de8fe9971720f3186d60ea307026c54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga96adb4273980cee3c28140485a07884f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga96adb4273980cee3c28140485a07884f"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00971.html#ga96adb4273980cee3c28140485a07884f">ble_ias_c_evt_handler_t</a> )(<a class="el" href="a00971.html#ga4de8fe9971720f3186d60ea307026c54">ble_ias_c_t</a> *p_ias_c, <a class="el" href="a00302.html">ble_ias_c_evt_t</a> *p_evt)</td></tr>
-<tr class="memdesc:ga96adb4273980cee3c28140485a07884f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immediate Alert Service client event handler type. <br/></td></tr>
-<tr class="separator:ga96adb4273980cee3c28140485a07884f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a63bc7ea5b311d297838a4095271665"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8a63bc7ea5b311d297838a4095271665"></a>
+typedef struct <a class="el" href="a00308.html">ble_ias_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00971.html#ga8a63bc7ea5b311d297838a4095271665">ble_ias_t</a></td></tr>
+<tr class="memdesc:ga8a63bc7ea5b311d297838a4095271665"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immediate Alert Service structure. This contains various status information for the service. <br/></td></tr>
+<tr class="separator:ga8a63bc7ea5b311d297838a4095271665"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab059c5376beb245a8f876ee3d7b8480a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab059c5376beb245a8f876ee3d7b8480a"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00971.html#gab059c5376beb245a8f876ee3d7b8480a">ble_ias_evt_handler_t</a> )(<a class="el" href="a00971.html#ga8a63bc7ea5b311d297838a4095271665">ble_ias_t</a> *p_ias, <a class="el" href="a00306.html">ble_ias_evt_t</a> *p_evt)</td></tr>
+<tr class="memdesc:gab059c5376beb245a8f876ee3d7b8480a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immediate Alert Service event handler type. <br/></td></tr>
+<tr class="separator:gab059c5376beb245a8f876ee3d7b8480a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga1363ef6107e67c26fd0ace31f6afa7cd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00971.html#ga1363ef6107e67c26fd0ace31f6afa7cd">ble_ias_c_evt_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00971.html#gga1363ef6107e67c26fd0ace31f6afa7cda108c1542b350d15f6acf09092cda957a">BLE_IAS_C_EVT_SRV_DISCOVERED</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00971.html#gga1363ef6107e67c26fd0ace31f6afa7cdaccf3636bb38605fd6b836dc01c05459a">BLE_IAS_C_EVT_SRV_NOT_FOUND</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00971.html#gga1363ef6107e67c26fd0ace31f6afa7cdac1eac62d545a853750a6b3f5a8ceb3f5">BLE_IAS_C_EVT_DISCONN_COMPLETE</a>
-<br/>
+<tr class="memitem:gaa55445ca6b845393a2dc353e0afa38ec"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00971.html#gaa55445ca6b845393a2dc353e0afa38ec">ble_ias_evt_type_t</a> { <a class="el" href="a00971.html#ggaa55445ca6b845393a2dc353e0afa38ecaf04e8963239be8fd6c09d876f88db8ff">BLE_IAS_EVT_ALERT_LEVEL_UPDATED</a>
  }</td></tr>
-<tr class="memdesc:ga1363ef6107e67c26fd0ace31f6afa7cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immediate Alert Service client event type.  <a href="a00971.html#ga1363ef6107e67c26fd0ace31f6afa7cd">More...</a><br/></td></tr>
-<tr class="separator:ga1363ef6107e67c26fd0ace31f6afa7cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gaa55445ca6b845393a2dc353e0afa38ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immediate Alert Service event type.  <a href="a00971.html#gaa55445ca6b845393a2dc353e0afa38ec">More...</a><br/></td></tr>
+<tr class="separator:gaa55445ca6b845393a2dc353e0afa38ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaf0c1bf8a8837220f03442c18448e50ad"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00971.html#gaf0c1bf8a8837220f03442c18448e50ad">ble_ias_c_init</a> (<a class="el" href="a00971.html#ga4de8fe9971720f3186d60ea307026c54">ble_ias_c_t</a> *p_ias_c, const <a class="el" href="a00303.html">ble_ias_c_init_t</a> *p_ias_c_init)</td></tr>
-<tr class="memdesc:gaf0c1bf8a8837220f03442c18448e50ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Immediate Alert Service client.  <a href="#gaf0c1bf8a8837220f03442c18448e50ad">More...</a><br/></td></tr>
-<tr class="separator:gaf0c1bf8a8837220f03442c18448e50ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab37ce69f8533cd510dc5620effba4409"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00971.html#gab37ce69f8533cd510dc5620effba4409">ble_ias_c_send_alert_level</a> (const <a class="el" href="a00971.html#ga4de8fe9971720f3186d60ea307026c54">ble_ias_c_t</a> *p_ias_c, uint8_t alert_level)</td></tr>
-<tr class="memdesc:gab37ce69f8533cd510dc5620effba4409"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for sending alert level to the peer.  <a href="#gab37ce69f8533cd510dc5620effba4409">More...</a><br/></td></tr>
-<tr class="separator:gab37ce69f8533cd510dc5620effba4409"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7f98bafec49ce5bf78e444e46c628a1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00971.html#ga7f98bafec49ce5bf78e444e46c628a1f">ble_ias_c_on_ble_evt</a> (<a class="el" href="a00971.html#ga4de8fe9971720f3186d60ea307026c54">ble_ias_c_t</a> *p_ias_c, const <a class="el" href="a00202.html">ble_evt_t</a> *p_ble_evt)</td></tr>
-<tr class="memdesc:ga7f98bafec49ce5bf78e444e46c628a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling the Application's BLE Stack events for Immediate Alert Service client.  <a href="#ga7f98bafec49ce5bf78e444e46c628a1f">More...</a><br/></td></tr>
-<tr class="separator:ga7f98bafec49ce5bf78e444e46c628a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa1d939e0499a5e34f6c9752347f6b974"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00971.html#gaa1d939e0499a5e34f6c9752347f6b974">ble_ias_init</a> (<a class="el" href="a00971.html#ga8a63bc7ea5b311d297838a4095271665">ble_ias_t</a> *p_ias, const <a class="el" href="a00307.html">ble_ias_init_t</a> *p_ias_init)</td></tr>
+<tr class="memdesc:gaa1d939e0499a5e34f6c9752347f6b974"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Immediate Alert Service.  <a href="#gaa1d939e0499a5e34f6c9752347f6b974">More...</a><br/></td></tr>
+<tr class="separator:gaa1d939e0499a5e34f6c9752347f6b974"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7aceea1ccf7fa036d066a08e19fe1504"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00971.html#ga7aceea1ccf7fa036d066a08e19fe1504">ble_ias_on_ble_evt</a> (<a class="el" href="a00971.html#ga8a63bc7ea5b311d297838a4095271665">ble_ias_t</a> *p_ias, <a class="el" href="a00203.html">ble_evt_t</a> *p_ble_evt)</td></tr>
+<tr class="memdesc:ga7aceea1ccf7fa036d066a08e19fe1504"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling the Application's BLE Stack events.  <a href="#ga7aceea1ccf7fa036d066a08e19fe1504">More...</a><br/></td></tr>
+<tr class="separator:ga7aceea1ccf7fa036d066a08e19fe1504"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b433148292e1fdf6ab22633e2d8dde1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00971.html#ga2b433148292e1fdf6ab22633e2d8dde1">ble_ias_alert_level_get</a> (<a class="el" href="a00971.html#ga8a63bc7ea5b311d297838a4095271665">ble_ias_t</a> *p_ias, uint8_t *p_alert_level)</td></tr>
+<tr class="memdesc:ga2b433148292e1fdf6ab22633e2d8dde1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting current value of the Alert Level characteristic.  <a href="#ga2b433148292e1fdf6ab22633e2d8dde1">More...</a><br/></td></tr>
+<tr class="separator:ga2b433148292e1fdf6ab22633e2d8dde1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Immediate Alert Service Client module. </p>
-<p>This module implements the Immediate Alert Service client - locator role of the Find Me profile. On <a class="el" href="a01046.html#ggada486dd3c0cce897b23a887bed284fefaa0b4789724d202a13a5e7eab85c52957">BLE_GAP_EVT_CONNECTED</a> event, this module starts discovery of the Immediate Alert Service with Alert Level characteristic at the peer. This module will indicate the application about a successful service &amp; characteristic discovery using <a class="el" href="a00971.html#gga1363ef6107e67c26fd0ace31f6afa7cda108c1542b350d15f6acf09092cda957a">BLE_IAS_C_EVT_SRV_DISCOVERED</a> event. The application can use <a class="el" href="a00971.html#gab37ce69f8533cd510dc5620effba4409">ble_ias_c_send_alert_level</a> function to signal alerts to the peer.</p>
-<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to this module by calling <a class="el" href="a00971.html#ga7f98bafec49ce5bf78e444e46c628a1f" title="Function for handling the Application&#39;s BLE Stack events for Immediate Alert Service client...">ble_ias_c_on_ble_evt()</a> from the <a class="el" href="a00791.html">SoftDevice Event Handler</a> callback function. </dd></dl>
+<p>Immediate Alert Service module. </p>
+<p>This module implements the Immediate Alert Service with the Alert Level characteristic. During initialization it adds the Immediate Alert Service and Alert Level characteristic to the BLE stack database.</p>
+<p>The application must supply an event handler for receiving Immediate Alert Service events. Using this handler, the service will notify the application when the Alert Level characteristic value changes.</p>
+<p>The service also provides a function for letting the application poll the current value of the Alert Level characteristic.</p>
+<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Immediate Alert Service module by calling <a class="el" href="a00971.html#ga7aceea1ccf7fa036d066a08e19fe1504" title="Function for handling the Application&#39;s BLE Stack events.">ble_ias_on_ble_evt()</a> from the <a class="el" href="a00954.html">SoftDevice Event Handler</a> callback.</dd>
+<dd>
+Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profile qualification listings, this section of source code must not be modified. </dd></dl>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga1363ef6107e67c26fd0ace31f6afa7cd"></a>
+<a class="anchor" id="gaa55445ca6b845393a2dc353e0afa38ec"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00971.html#ga1363ef6107e67c26fd0ace31f6afa7cd">ble_ias_c_evt_type_t</a></td>
+          <td class="memname">enum <a class="el" href="a00971.html#gaa55445ca6b845393a2dc353e0afa38ec">ble_ias_evt_type_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Immediate Alert Service client event type. </p>
+<p>Immediate Alert Service event type. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1363ef6107e67c26fd0ace31f6afa7cda108c1542b350d15f6acf09092cda957a"></a>BLE_IAS_C_EVT_SRV_DISCOVERED</em>&nbsp;</td><td class="fielddoc">
-<p>Event indicating that the Immediate Alert Service is found at the peer. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1363ef6107e67c26fd0ace31f6afa7cdaccf3636bb38605fd6b836dc01c05459a"></a>BLE_IAS_C_EVT_SRV_NOT_FOUND</em>&nbsp;</td><td class="fielddoc">
-<p>Event indicating that the Immediate Alert Service is not found at the peer. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1363ef6107e67c26fd0ace31f6afa7cdac1eac62d545a853750a6b3f5a8ceb3f5"></a>BLE_IAS_C_EVT_DISCONN_COMPLETE</em>&nbsp;</td><td class="fielddoc">
-<p>Event indicating that the Immediate Alert Service client module has completed the processing of BLE_GAP_EVT_DISCONNECTED event. This event is raised only if a valid instance of IAS was found at the peer during the discovery phase. This event can be used the application to do clean up related to the IAS Client. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa55445ca6b845393a2dc353e0afa38ecaf04e8963239be8fd6c09d876f88db8ff"></a>BLE_IAS_EVT_ALERT_LEVEL_UPDATED</em>&nbsp;</td><td class="fielddoc">
+<p>Alert Level Updated event. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaf0c1bf8a8837220f03442c18448e50ad"></a>
+<a class="anchor" id="ga2b433148292e1fdf6ab22633e2d8dde1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_ias_c_init </td>
+          <td class="memname">uint32_t ble_ias_alert_level_get </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00971.html#ga4de8fe9971720f3186d60ea307026c54">ble_ias_c_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ias_c</em>, </td>
+          <td class="paramtype"><a class="el" href="a00971.html#ga8a63bc7ea5b311d297838a4095271665">ble_ias_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ias</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00303.html">ble_ias_c_init_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ias_c_init</em>&#160;</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_alert_level</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -212,33 +204,67 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for initializing the Immediate Alert Service client. </p>
-<p>This call allows the application to initialize the Immediate Alert Service client.</p>
+<p>Function for getting current value of the Alert Level characteristic. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_ias_c</td><td>Immediate Alert Service client structure. This structure will have to be supplied by the application. It will be initialized by this function, and will later be used to identify this particular client instance. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ias_c_init</td><td>Information needed to initialize the Immediate Alert Service client.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ias</td><td>Immediate Alert Service structure. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_alert_level</td><td>Current Alert Level value. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization of service. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga7f98bafec49ce5bf78e444e46c628a1f"></a>
+<a class="anchor" id="gaa1d939e0499a5e34f6c9752347f6b974"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ble_ias_c_on_ble_evt </td>
+          <td class="memname">uint32_t ble_ias_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00971.html#ga4de8fe9971720f3186d60ea307026c54">ble_ias_c_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ias_c</em>, </td>
+          <td class="paramtype"><a class="el" href="a00971.html#ga8a63bc7ea5b311d297838a4095271665">ble_ias_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ias</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00202.html">ble_evt_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00307.html">ble_ias_init_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ias_init</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for initializing the Immediate Alert Service. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_ias</td><td>Immediate Alert Service structure. This structure will have to be supplied by the application. It will be initialized by this function, and will later be used to identify this particular service instance. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ias_init</td><td>Information needed to initialize the service.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization of service, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7aceea1ccf7fa036d066a08e19fe1504"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ble_ias_on_ble_evt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00971.html#ga8a63bc7ea5b311d297838a4095271665">ble_ias_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ias</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00203.html">ble_evt_t</a> *&#160;</td>
           <td class="paramname"><em>p_ble_evt</em>&#160;</td>
         </tr>
         <tr>
@@ -249,52 +275,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for handling the Application's BLE Stack events for Immediate Alert Service client. </p>
-<p>Handles all events from the BLE stack of interest to the Immediate Alert Service client.</p>
+<p>Function for handling the Application's BLE Stack events. </p>
+<p>Handles all events from the BLE stack of interest to the Immediate Alert Service.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ias_c</td><td>Immediate Alert Service client structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ias</td><td>Immediate Alert Service structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>Event received from the BLE stack. </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="gab37ce69f8533cd510dc5620effba4409"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_ias_c_send_alert_level </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00971.html#ga4de8fe9971720f3186d60ea307026c54">ble_ias_c_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ias_c</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>alert_level</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for sending alert level to the peer. </p>
-<p>This function allows the application to send an alert to the peer.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ias_c</td><td>Immediate Alert Service client structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">alert_level</td><td>Required alert level to be sent to the peer.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
@@ -303,7 +292,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

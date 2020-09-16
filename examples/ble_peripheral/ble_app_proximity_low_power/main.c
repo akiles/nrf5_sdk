@@ -58,8 +58,9 @@
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT   0                                                 /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
-#define SIGNAL_ALERT_BOND_DELETE_BUTTON_ID  0                                                 /**< Button used for send or cancel High Alert to the peer. */
-#define STOP_ALERTING_BUTTON_ID             1                                                 /**< Button used for clearing the Alert LED that may be blinking or turned ON because of alerts from the central. */
+#define SIGNAL_ALERT_BUTTON_ID            0                                                 /**< Button used for send or cancel High Alert to the peer. */
+#define STOP_ALERTING_BUTTON_ID           1                                                 /**< Button used for clearing the Alert LED that may be blinking or turned ON because of alerts from the central. */
+#define BOND_DELETE_ALL_BUTTON_ID         1                                                 /**< Button used for deleting all bonded centrals/services during startup. */
 
 #define DEVICE_NAME                       "Nordic_Prox"                                     /**< Name of device. Will be included in the advertising data. */
 #define APP_ADV_INTERVAL_FAST             0x0028                                            /**< Fast advertising interval (in units of 0.625 ms. This value corresponds to 25 ms.). */
@@ -148,31 +149,6 @@ static void on_lls_evt(ble_lls_t * p_lls, ble_lls_evt_t * p_evt);
 static void on_ias_c_evt(ble_ias_c_t * p_lls, ble_ias_c_evt_t * p_evt);
 static void on_bas_evt(ble_bas_t * p_bas, ble_bas_evt_t * p_evt);
 static void advertising_init(uint8_t adv_flags);
-
-
-/**@brief Function for error handling, which is called when an error has occurred. 
- *
- * @warning This handler is an example only and does not fit a final product. You need to analyze 
- *          how your product is supposed to react in case of error.
- *
- * @param[in] error_code  Error code supplied to the handler.
- * @param[in] line_num    Line number where the handler is called.
- * @param[in] p_file_name Pointer to the file name. 
- */
-void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
-{
-    // This call can be used for debug purposes during application development.
-    // @note CAUTION: Activating this code will write the stack to flash on an error.
-    //                This function should NOT be used in a final product.
-    //                It is intended STRICTLY for development/debugging purposes.
-    //                The flash write will happen EVEN if the radio is active, thus interrupting
-    //                any communication.
-    //                Use with care. Un-comment the line below to use.
-    // ble_debug_assert_handler(error_code, line_num, p_file_name);
-
-    // On assert, the system can only recover with a reset.
-    NVIC_SystemReset();
-}
 
 
 /**@brief Callback function for asserts in the SoftDevice.
@@ -726,7 +702,7 @@ static void on_ias_c_evt(ble_ias_c_t * p_ias_c, ble_ias_c_evt_t * p_evt)
         case BLE_IAS_C_EVT_SRV_DISCOVERED:
             // IAS is found on peer. The Find Me Locator functionality of this app will work.
             // Start handling button presses
-            err_code = bsp_buttons_enable( (1 << SIGNAL_ALERT_BOND_DELETE_BUTTON_ID) | ( 1 << STOP_ALERTING_BUTTON_ID));
+            err_code = bsp_buttons_enable( (1 << SIGNAL_ALERT_BUTTON_ID) | ( 1 << STOP_ALERTING_BUTTON_ID) | ( 1 << BOND_DELETE_ALL_BUTTON_ID));
             APP_ERROR_CHECK(err_code);
             break;
 
@@ -736,7 +712,7 @@ static void on_ias_c_evt(ble_ias_c_t * p_ias_c, ble_ias_c_evt_t * p_evt)
 
         case BLE_IAS_C_EVT_DISCONN_COMPLETE:
             // disable alert buttons
-            err_code = bsp_buttons_enable(~((1 << SIGNAL_ALERT_BOND_DELETE_BUTTON_ID) | ( 1 << STOP_ALERTING_BUTTON_ID)));
+            err_code = bsp_buttons_enable(~((1 << SIGNAL_ALERT_BUTTON_ID) | ( 1 << STOP_ALERTING_BUTTON_ID) | ( 1 << BOND_DELETE_ALL_BUTTON_ID)));
             APP_ERROR_CHECK(err_code);
             break;
 
@@ -817,7 +793,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                     m_advertising_mode = BLE_NO_ADV;
                     
                     // enable buttons to wake-up from power off
-                    err_code = bsp_buttons_enable( (1 << SIGNAL_ALERT_BOND_DELETE_BUTTON_ID) );
+                    err_code = bsp_buttons_enable( (1 << BOND_DELETE_ALL_BUTTON_ID) | (1 << SIGNAL_ALERT_BUTTON_ID));
                     APP_ERROR_CHECK(err_code);
 
                     // Go to system-off mode
@@ -957,7 +933,8 @@ static void device_manager_init(void)
     APP_ERROR_CHECK(err_code);
 
     // Clear all bonded centrals if the Bonds Delete button is pushed.
-    init_data.clear_persistent_data = bsp_buttons_state_get() & (1 << SIGNAL_ALERT_BOND_DELETE_BUTTON_ID);
+    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID,&(init_data.clear_persistent_data));
+    APP_ERROR_CHECK(err_code);
 
     err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);
@@ -1024,13 +1001,6 @@ static void button_event_handler(bsp_event_t event)
     }    
 }
 
-/**@brief Function for initializing the GPIOTE handler module.
- */
-static void gpiote_init(void)
-{
-    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
-}
-
 
 /**@brief Function for the Power manager.
  */
@@ -1049,7 +1019,7 @@ int main(void)
     // Initialize.
     app_trace_init();
     timers_init();
-    gpiote_init();
+    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
     ble_stack_init();
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), button_event_handler);
     APP_ERROR_CHECK(err_code);

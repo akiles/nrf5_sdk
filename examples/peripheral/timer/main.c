@@ -16,9 +16,8 @@
  * @ingroup nrf_dev_timer_example
  * @brief Timer Example Application main file.
  *
- * This file contains the source code for a sample application using Timer0, Timer1 and Timer2.
+ * This file contains the source code for a sample application using Timer0.
  *
- * @image html example_board_setup_a.jpg "Use board setup A for this example."
  */
 
 #include <stdbool.h>
@@ -84,7 +83,7 @@ static void timer_init()
 static void nrf_timer_delay_ms(uint_fast16_t volatile number_of_ms)
 {
     NRF_TIMER0->TASKS_CLEAR = 1;                           // clear the task first to be usable for later.
-	
+
     // With 32 us ticks, we need to multiply by 31.25 to get milliseconds.
     NRF_TIMER0->CC[0]       = number_of_ms * 31;
     NRF_TIMER0->CC[0]      += number_of_ms / 4;

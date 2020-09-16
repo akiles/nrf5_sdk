@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Temperature Example</title>
+<title>nRF51 SDK - S110 SoftDevice: Timer Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,19 +97,18 @@ $(document).ready(function(){initNavTree('a00037.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Temperature Example </div>  </div>
+<div class="title">Timer Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Temperature Example shows how to use a temperature sensor and print the measurement.</p>
-<p>The application starts with configuring the temperature module and simple_uart. The main loop reads the temperature sensor and prints measurement every 500 milliseconds.</p>
-<p>The name of the example is <b>temperature_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\temperature</code> </p>
-<h1><a class="anchor" id="temperature_example_testing"></a>
+<div class="textblock"><p>The Timer Example demonstrates the use of the timer peripherals. This example replaces the less accurate busy delay in the Blinky Example with a more accurate hardware timer based delay.</p>
+<p>When the application starts, some GPIO pins are configured as outputs to drive the LEDs. The applications then loops while toggling the state of one of the LEDs every 500 milliseconds.</p>
+<p>The name of the example is <b>timer_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\timer</code> </p>
+<h1><a class="anchor" id="nrf_dev_timer_example_testing"></a>
 Testing</h1>
-<p>Test the Temperature Example application by performing the following steps:</p>
+<p>Test the Timer Example application by performing the following steps:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Start a COM listener like PUTTY and connect to the used COM port at 38400 baud rate.</li>
-<li>Observe that a temperature value is printed every 500 milliseconds. </li>
+<li>Observe that the LEDs state is changed every 500 milliseconds. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
@@ -117,7 +116,7 @@ Testing</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00019.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:18 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:04 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

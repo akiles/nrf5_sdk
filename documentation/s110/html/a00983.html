@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: General Events</title>
+<title>nRF51 SDK - S110 SoftDevice: Service/Protocol Types</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,47 +99,77 @@ $(document).ready(function(){initNavTree('a00983.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">General Events<div class="ingroups"><a class="el" href="a00982.html">Device Manager Events</a></div></div>  </div>
+<div class="title">Service/Protocol Types<div class="ingroups"><a class="el" href="a00982.html">Device Manager</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>General or miscellaneous events.  
+<p>Describes the possible types of Service/Protocol Contexts for a bonded/peer device.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gad038033184e5745ddd4fef4d52bfcea4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00983.html#gad038033184e5745ddd4fef4d52bfcea4">DM_EVT_RFU</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:gad038033184e5745ddd4fef4d52bfcea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga14b9e8a4e4dd9d6223d414bf25762f7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00983.html#ga14b9e8a4e4dd9d6223d414bf25762f7b">DM_EVT_ERROR</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:ga14b9e8a4e4dd9d6223d414bf25762f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf4cac13e3128b3131c16d52760393932"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00983.html#gaf4cac13e3128b3131c16d52760393932">DM_PROTOCOL_CNTXT_NONE</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:gaf4cac13e3128b3131c16d52760393932"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga40fd38aabb6b0c4ab56549d5189ff366"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00983.html#ga40fd38aabb6b0c4ab56549d5189ff366">DM_PROTOCOL_CNTXT_GATT_SRVR_ID</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga40fd38aabb6b0c4ab56549d5189ff366"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga20cd764cccd94fd71cc07c9f5f2c681a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00983.html#ga20cd764cccd94fd71cc07c9f5f2c681a">DM_PROTOCOL_CNTXT_GATT_CLI_ID</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:ga20cd764cccd94fd71cc07c9f5f2c681a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabf3d92dc785166cb06763af1c6616b94"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00983.html#gabf3d92dc785166cb06763af1c6616b94">DM_PROTOCOL_CNTXT_ALL</a>&#160;&#160;&#160;(<a class="el" href="a00983.html#ga40fd38aabb6b0c4ab56549d5189ff366">DM_PROTOCOL_CNTXT_GATT_SRVR_ID</a> | <a class="el" href="a00983.html#ga20cd764cccd94fd71cc07c9f5f2c681a">DM_PROTOCOL_CNTXT_GATT_CLI_ID</a>)</td></tr>
+<tr class="separator:gabf3d92dc785166cb06763af1c6616b94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>General or miscellaneous events. </p>
-<p>This category of events are general events not pertaining to a peer or context. </p>
+<p>Describes the possible types of Service/Protocol Contexts for a bonded/peer device. </p>
+<p>Possible Service/Protocol context per peer device. The Device Manager provides the functionality of persistently storing the Service/Protocol context and can automatically load them when needed. For example system attributes for a GATT Server. Based on the nature of the application, not all service types may be needed. The application can specify only the service/protocol context it wants to use at the time of registration. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga14b9e8a4e4dd9d6223d414bf25762f7b"></a>
+<a class="anchor" id="gabf3d92dc785166cb06763af1c6616b94"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_ERROR&#160;&#160;&#160;0x01</td>
+          <td class="memname">#define DM_PROTOCOL_CNTXT_ALL&#160;&#160;&#160;(<a class="el" href="a00983.html#ga40fd38aabb6b0c4ab56549d5189ff366">DM_PROTOCOL_CNTXT_GATT_SRVR_ID</a> | <a class="el" href="a00983.html#ga20cd764cccd94fd71cc07c9f5f2c681a">DM_PROTOCOL_CNTXT_GATT_CLI_ID</a>)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Device Manager Event Error. </p>
+<p>All Service/Protocol Context, this implies that the application wants to associate all Service/Protocol Information with the bonded device. This is configurable based on system requirements. If the application has only one type of service, this define could be altered to reflect the same. </p>
 
 </div>
 </div>
-<a class="anchor" id="gad038033184e5745ddd4fef4d52bfcea4"></a>
+<a class="anchor" id="ga20cd764cccd94fd71cc07c9f5f2c681a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_RFU&#160;&#160;&#160;0x00</td>
+          <td class="memname">#define DM_PROTOCOL_CNTXT_GATT_CLI_ID&#160;&#160;&#160;0x02</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Reserved for future use, is never notified. </p>
+<p>GATT Client Service Context, this implies the application does associate GATT Client with the peer device and this information will be loaded when needed for a bonded device </p>
+
+</div>
+</div>
+<a class="anchor" id="ga40fd38aabb6b0c4ab56549d5189ff366"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DM_PROTOCOL_CNTXT_GATT_SRVR_ID&#160;&#160;&#160;0x01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>GATT Server Service Context, this implies the application does associate GATT Server with the peer device and this information will be loaded when needed for a bonded device </p>
+
+</div>
+</div>
+<a class="anchor" id="gaf4cac13e3128b3131c16d52760393932"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DM_PROTOCOL_CNTXT_NONE&#160;&#160;&#160;0x00</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>No Service Context, this implies the application does not want to associate any service/protocol context with the peer device </p>
 
 </div>
 </div>
@@ -148,7 +178,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

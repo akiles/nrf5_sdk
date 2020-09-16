@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Radio Test Example</title>
+<title>nRF51 SDK - S110 SoftDevice: Radio Transmitter Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,37 +97,19 @@ $(document).ready(function(){initNavTree('a00029.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Radio Test Example </div>  </div>
+<div class="title">Radio Transmitter Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Radio Test Example shows how to configure the radio as a constant RX/TX carrier, modulated TX carrier, and RX/TX sweep. The tests are controlled with simple one-letter commands via the serial port at 38400 baud. At any time during the tests, you can set the radio parameters output power, bit rate, and channel. You can also set the time on each channel in sweep mode, in steps of 1 millisecond from 1 millisecond to 99 milliseconds.</p>
-<p>The application starts with enabling the 16 MHz crystal oscillator and configuring the UART and interrupts. The main loop waits until it receives a command through the UART. Then it initiates the requested command.</p>
-<p>The following one-letter commands are available:<br/>
-</p>
-<ul>
-<li>a: Enter start channel for sweep/channel for constant carrier.</li>
-<li>b: Enter end channel for sweep.</li>
-<li>c: Start TX carrier.</li>
-<li>d: Enter time on each channel (1 ms - 99 ms).</li>
-<li>e: Cancel sweep/carrier.</li>
-<li>m: Enter data rate.</li>
-<li>o: Start modulated TX carrier.</li>
-<li>p: Enter output power.</li>
-<li>s: Print current delay, channels and so on.</li>
-<li>r: Start RX sweep.</li>
-<li>t: Start TX sweep.</li>
-<li>x: Start RX carrier.</li>
-</ul>
-<p>The name of the example is <b>radio_test_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\radio_test</code> </p>
-<h1><a class="anchor" id="nrf_radio_test_example_testing"></a>
+<div class="textblock"><p>The Radio Transmitter Example shows how to transmit data with the NRF_RADIO peripheral. The transmitter is configured to send packets on button press.</p>
+<p>The application first enables the 16 MHz crystal oscillator and configures the BSP module and the radio. When you press a button, the button state is read and the radio is enabled. When an event is ready, the packet is transmitted and the value is printed in a COM listener (for example PUTTY) using UART. Radio and events are then disabled.</p>
+<p>The name of the example is <b>transmitter_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\radio\transmitter</code> </p>
+<h1><a class="anchor" id="nrf_dev_radio_tx_example_testing"></a>
 Testing</h1>
-<p>Test the Radio Test Example application by performing the following steps:</p>
+<p>Test the Radio Transmitter Example application by performing the following steps:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Start a COM listener like PUTTY and connect to the used COM port at 38400 baud rate.</li>
-<li>The text "RF Test" should appear at the top of the terminal.</li>
-<li>Type any of the letters described above. An output text should be displayed in the PUTTY window, or a sweep or signal should be started.</li>
-<li>Use a spectrum analyzer to confirm the behavior of the radio module. </li>
+<li>Program the Radio Receiver Example application to another board.</li>
+<li>Press buttons on the transmitter board and observe the PUTTY terminal connected to receiver board. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
@@ -135,7 +117,7 @@ Testing</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00019.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:18 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:04 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

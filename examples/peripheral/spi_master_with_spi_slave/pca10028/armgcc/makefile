@@ -47,9 +47,9 @@ C_SOURCE_FILES += \
 ../../../../../components/libraries/timer/app_timer.c \
 ../../../../../components/libraries/scheduler/app_scheduler.c \
 ../../../../../components/libraries/util/nrf_assert.c \
-../../../../../components/drivers_nrf/hal/nrf_delay.c \
 ../../../../../components/drivers_nrf/spi_master/spi_master.c \
 ../../../../../components/drivers_nrf/nrf_soc_nosd/nrf_soc.c \
+../../../../../components/drivers_nrf/hal/nrf_delay.c \
 ../../../../bsp/bsp.c \
 
 #assembly files common to all targets
@@ -58,16 +58,16 @@ ASM_SOURCE_FILES  = ../../../../../components/toolchain/gcc/gcc_startup_nrf51.s
 #includes common to all targets
 INC_PATHS  = -I../../
 INC_PATHS += -I../../../../../components/toolchain/gcc
-INC_PATHS += -I../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../components/toolchain
-INC_PATHS += -I../../../../../components/libraries/util
-INC_PATHS += -I../../../../../components/libraries/gpiote
 INC_PATHS += -I../../../../../components/drivers_nrf/spi_master
-INC_PATHS += -I../../../../bsp
+INC_PATHS += -I../../../../../components/libraries/gpiote
 INC_PATHS += -I../../../../../components/libraries/button
+INC_PATHS += -I../../../../bsp
 INC_PATHS += -I../../../../../components/drivers_nrf/nrf_soc_nosd
 INC_PATHS += -I../../../../../components/libraries/timer
+INC_PATHS += -I../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../components/libraries/scheduler
+INC_PATHS += -I../../../../../components/libraries/util
 
 OBJECT_DIRECTORY = _build
 LISTING_DIRECTORY = $(OBJECT_DIRECTORY)

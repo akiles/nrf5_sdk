@@ -19,7 +19,6 @@
 *
 * This file contains the source code for a sample application using PPI to communicate between timers.
 *
-* @image html example_board_setup_a.jpg "Use board setup A for this example."
 */
 
 #include <stdbool.h>
@@ -30,9 +29,10 @@
 #include "app_error.h"
 #include "app_gpiote.h"
 #include "boards.h"
+#include "nordic_common.h"
 
 #define UART_TX_BUF_SIZE 256                                                          /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 1                                                          /**< UART RX buffer size. */
+#define UART_RX_BUF_SIZE 1                                                            /**< UART RX buffer size. */
 
 void uart_error_handle(app_uart_evt_t * p_event)
 {
@@ -159,7 +159,7 @@ int main(void)
                     APP_IRQ_PRIORITY_LOW,
                     err_code);
 
-    (void)err_code;
+    APP_ERROR_CHECK(err_code);
 
     // Enabling constant latency as indicated by PAN 11 "HFCLK: Base current with HFCLK 
     // running is too high" found at Product Anomaly document found at

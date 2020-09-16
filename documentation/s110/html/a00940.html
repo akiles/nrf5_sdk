@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Packets decoder in the connectivity chip</title>
+<title>nRF51 SDK - S110 SoftDevice: Bootloader settings API.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,50 +99,40 @@ $(document).ready(function(){initNavTree('a00940.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Packets decoder in the connectivity chip<div class="ingroups"><a class="el" href="a01082.html">Connectivity application code</a></div></div>  </div>
+<div class="title">Bootloader settings API.<div class="ingroups"><a class="el" href="a01040.html">Bootloader/DFU API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Decoder for serialized packets from an Application Chip.  
+<p>Bootloader settings module interface.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gad559e91ce1be69927a87c644069154c0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00940.html#gad559e91ce1be69927a87c644069154c0">ser_conn_received_pkt_process</a> (<a class="el" href="a00381.html">ser_hal_transport_evt_rx_pkt_received_params_t</a> *p_rx_pkt_params)</td></tr>
-<tr class="memdesc:gad559e91ce1be69927a87c644069154c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for dispatching packets from an Application Chip to an appropriate decoder.  <a href="#gad559e91ce1be69927a87c644069154c0">More...</a><br/></td></tr>
-<tr class="separator:gad559e91ce1be69927a87c644069154c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4eb23ec5cff141b518e2d9c9976bcbe7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00940.html#ga4eb23ec5cff141b518e2d9c9976bcbe7">bootloader_util_settings_get</a> (const <a class="el" href="a00339.html">bootloader_settings_t</a> **pp_bootloader_settings)</td></tr>
+<tr class="memdesc:ga4eb23ec5cff141b518e2d9c9976bcbe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the bootloader settings.  <a href="#ga4eb23ec5cff141b518e2d9c9976bcbe7">More...</a><br/></td></tr>
+<tr class="separator:ga4eb23ec5cff141b518e2d9c9976bcbe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Decoder for serialized packets from an Application Chip. </p>
-<p>This file contains declaration of common function used for processing packets (packets dispatcher) received by the transport layer. </p>
+<p>Bootloader settings module interface. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gad559e91ce1be69927a87c644069154c0"></a>
+<a class="anchor" id="ga4eb23ec5cff141b518e2d9c9976bcbe7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ser_conn_received_pkt_process </td>
+          <td class="memname">void bootloader_util_settings_get </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00381.html">ser_hal_transport_evt_rx_pkt_received_params_t</a> *&#160;</td>
-          <td class="paramname"><em>p_rx_pkt_params</em></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="a00339.html">bootloader_settings_t</a> **&#160;</td>
+          <td class="paramname"><em>pp_bootloader_settings</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>A function for dispatching packets from an Application Chip to an appropriate decoder. </p>
-<p>The function is called to process received packets from a transport layer. The function analyzes packet type and calls appropriate command decoder which among other things processes command and sends a response. Then a received packet is freed.</p>
+<p>Function for getting the bootloader settings. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_rx_pkt_params</td><td>A pointer to a transport layer event of type <a class="el" href="a00381.html">ser_hal_transport_evt_rx_pkt_received_params_t</a>.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INTERNAL</td><td>Operation failure. Internal error ocurred. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_bootloader_settings</td><td>Bootloader settings. </td></tr>
   </table>
   </dd>
 </dl>
@@ -154,7 +144,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

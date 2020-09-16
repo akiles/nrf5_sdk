@@ -1,4 +1,4 @@
 var a00940 =
 [
-    [ "ser_conn_received_pkt_process", "a00940.html#gad559e91ce1be69927a87c644069154c0", null ]
+    [ "bootloader_util_settings_get", "a00940.html#ga4eb23ec5cff141b518e2d9c9976bcbe7", null ]
 ];

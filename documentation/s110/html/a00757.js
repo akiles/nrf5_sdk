@@ -1,12 +1,27 @@
 var a00757 =
 [
-    [ "nrf_gpiote_outinit_t", "a00757.html#gab280bbb7269ab98a97e7b47d906ef9aa", [
-      [ "NRF_GPIOTE_INITIAL_VALUE_LOW", "a00757.html#ggab280bbb7269ab98a97e7b47d906ef9aaae0df1a0e930bfe3b198a9692d9916667", null ],
-      [ "NRF_GPIOTE_INITIAL_VALUE_HIGH", "a00757.html#ggab280bbb7269ab98a97e7b47d906ef9aaa1fc9af8ce3fcd7165b3c090b564e9aa4", null ]
+    [ "nrf_gpio_pin_dir_t", "a00757.html#ga4089fa9e3311c34d254d4d00029911bc", [
+      [ "NRF_GPIO_PIN_DIR_INPUT", "a00757.html#gga4089fa9e3311c34d254d4d00029911bcadcb15e081def4002ed564fd8abbaa29d", null ],
+      [ "NRF_GPIO_PIN_DIR_OUTPUT", "a00757.html#gga4089fa9e3311c34d254d4d00029911bca51b31d6f52c664433688ecc535e49f54", null ]
     ] ],
-    [ "nrf_gpiote_polarity_t", "a00757.html#ga9a424db0997c11092f8f69d52155dd9d", [
-      [ "NRF_GPIOTE_POLARITY_LOTOHI", "a00757.html#gga9a424db0997c11092f8f69d52155dd9da59dda358a841a81671bd372058b46498", null ],
-      [ "NRF_GPIOTE_POLARITY_HITOLO", "a00757.html#gga9a424db0997c11092f8f69d52155dd9da97c193ac03f0691bea38c2283b55fa8a", null ],
-      [ "NRF_GPIOTE_POLARITY_TOGGLE", "a00757.html#gga9a424db0997c11092f8f69d52155dd9da00487cd8286ff071ca751cd4a00295d5", null ]
+    [ "nrf_gpio_pin_pull_t", "a00757.html#ga07e0c8c0b30499cf0a7b79dbe62d3fcc", [
+      [ "NRF_GPIO_PIN_NOPULL", "a00757.html#gga07e0c8c0b30499cf0a7b79dbe62d3fcca13ffcb94eb78be866c66b5f5b516af65", null ],
+      [ "NRF_GPIO_PIN_PULLDOWN", "a00757.html#gga07e0c8c0b30499cf0a7b79dbe62d3fcca314d4b349d7e59ea3373a1ced4f32e4d", null ],
+      [ "NRF_GPIO_PIN_PULLUP", "a00757.html#gga07e0c8c0b30499cf0a7b79dbe62d3fccad60f768c699495d9976a45fa7a9f51c6", null ]
+    ] ],
+    [ "nrf_gpio_pin_sense_t", "a00757.html#ga0708136c752d69015962a2ccb4c59fbd", [
+      [ "NRF_GPIO_PIN_NOSENSE", "a00757.html#gga0708136c752d69015962a2ccb4c59fbda60d9e9b3abe91c66a618e34d88444e95", null ],
+      [ "NRF_GPIO_PIN_SENSE_LOW", "a00757.html#gga0708136c752d69015962a2ccb4c59fbda48aaaa3fc33a295d9c65f094e03aba24", null ],
+      [ "NRF_GPIO_PIN_SENSE_HIGH", "a00757.html#gga0708136c752d69015962a2ccb4c59fbda8fe882a266370654fa6d664be3e1ecce", null ]
+    ] ],
+    [ "nrf_gpio_port_dir_t", "a00757.html#ga494d7ac30db1cbb6366e0b9ebd5b49b4", [
+      [ "NRF_GPIO_PORT_DIR_OUTPUT", "a00757.html#gga494d7ac30db1cbb6366e0b9ebd5b49b4a90b7ce7a76775cb7534487635755be3f", null ],
+      [ "NRF_GPIO_PORT_DIR_INPUT", "a00757.html#gga494d7ac30db1cbb6366e0b9ebd5b49b4a6ec5811669635e30b9dc014e1f494936", null ]
+    ] ],
+    [ "nrf_gpio_port_select_t", "a00757.html#gaa1a5c145e334817f2d960317d64fcb3d", [
+      [ "NRF_GPIO_PORT_SELECT_PORT0", "a00757.html#ggaa1a5c145e334817f2d960317d64fcb3dada4c86d9760e81857ec0482c1cc78190", null ],
+      [ "NRF_GPIO_PORT_SELECT_PORT1", "a00757.html#ggaa1a5c145e334817f2d960317d64fcb3da9209d7820d65eb58c7804e676581bf40", null ],
+      [ "NRF_GPIO_PORT_SELECT_PORT2", "a00757.html#ggaa1a5c145e334817f2d960317d64fcb3daf83f3be082e45a73102618f149448fc8", null ],
+      [ "NRF_GPIO_PORT_SELECT_PORT3", "a00757.html#ggaa1a5c145e334817f2d960317d64fcb3da9075a015252fd02d27ba7ca897aa564d", null ]
     ] ]
 ];

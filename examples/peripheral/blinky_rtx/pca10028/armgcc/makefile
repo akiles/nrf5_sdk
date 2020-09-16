@@ -51,8 +51,8 @@ LIBS  = ../../../../../external/rtx/source/GCC/libRTX_CM0.a
 #includes common to all targets
 INC_PATHS  = -I../../
 INC_PATHS += -I../../../../../components/toolchain/gcc
-INC_PATHS += -I../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../components/toolchain
+INC_PATHS += -I../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../components/libraries/util
 INC_PATHS += -I../../../../../external/rtx/include
 INC_PATHS += -I../../../../bsp

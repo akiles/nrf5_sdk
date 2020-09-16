@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: GATTC Connectivity event encoders</title>
+<title>nRF51 SDK - S120 SoftDevice: GATTS Connectivity event encoders</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,55 +99,43 @@ $(document).ready(function(){initNavTree('a00672.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">GATTC Connectivity event encoders<div class="ingroups"><a class="el" href="a00783.html">Connectivity s120 codecs</a></div></div>  </div>
+<div class="title">GATTS Connectivity event encoders<div class="ingroups"><a class="el" href="a00785.html">Connectivity s120 codecs</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GATTC Connectivity event encoders.  
+<p>GATTS Connectivity event encoders.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaf8c1a3eff3b637d8a9db2d44f67742eb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00672.html#gaf8c1a3eff3b637d8a9db2d44f67742eb">ble_gattc_evt_char_disc_rsp_enc</a> (<a class="el" href="a00103.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:gaf8c1a3eff3b637d8a9db2d44f67742eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes ble_gattc_evt_char_disc_rsp event.  <a href="#gaf8c1a3eff3b637d8a9db2d44f67742eb">More...</a><br/></td></tr>
-<tr class="separator:gaf8c1a3eff3b637d8a9db2d44f67742eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac26625716572381fea40c8d613f838dd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00672.html#gac26625716572381fea40c8d613f838dd">ble_gattc_evt_char_val_by_uuid_read_rsp_enc</a> (<a class="el" href="a00103.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:gac26625716572381fea40c8d613f838dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes ble_gattc_evt_char_val_by_uuid_read_rsp event.  <a href="#gac26625716572381fea40c8d613f838dd">More...</a><br/></td></tr>
-<tr class="separator:gac26625716572381fea40c8d613f838dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6ee65faef5d1af3f60fdc8477d12038e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00672.html#ga6ee65faef5d1af3f60fdc8477d12038e">ble_gattc_evt_char_vals_read_rsp_enc</a> (<a class="el" href="a00103.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga6ee65faef5d1af3f60fdc8477d12038e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes ble_gattc_evt_char_vals_read_rsp event.  <a href="#ga6ee65faef5d1af3f60fdc8477d12038e">More...</a><br/></td></tr>
-<tr class="separator:ga6ee65faef5d1af3f60fdc8477d12038e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae2e97cacaa4cbbbfb407ca12405cf95d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00672.html#gae2e97cacaa4cbbbfb407ca12405cf95d">ble_gattc_evt_desc_disc_rsp_enc</a> (<a class="el" href="a00103.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:gae2e97cacaa4cbbbfb407ca12405cf95d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes ble_gattc_evt_desc_disc_rsp event.  <a href="#gae2e97cacaa4cbbbfb407ca12405cf95d">More...</a><br/></td></tr>
-<tr class="separator:gae2e97cacaa4cbbbfb407ca12405cf95d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae1e4a71f425cd5536aa4b22c119f85ac"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00672.html#gae1e4a71f425cd5536aa4b22c119f85ac">ble_gattc_evt_hvx_enc</a> (<a class="el" href="a00103.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:gae1e4a71f425cd5536aa4b22c119f85ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes ble_gattc_evt_hvx event.  <a href="#gae1e4a71f425cd5536aa4b22c119f85ac">More...</a><br/></td></tr>
-<tr class="separator:gae1e4a71f425cd5536aa4b22c119f85ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa7c696cbff1b0d1b6538aca76789195f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00672.html#gaa7c696cbff1b0d1b6538aca76789195f">ble_gattc_evt_prim_srvc_disc_rsp_enc</a> (<a class="el" href="a00103.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:gaa7c696cbff1b0d1b6538aca76789195f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes ble_gattc_evt_prim_srvc_disc_rsp event.  <a href="#gaa7c696cbff1b0d1b6538aca76789195f">More...</a><br/></td></tr>
-<tr class="separator:gaa7c696cbff1b0d1b6538aca76789195f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5808156fdb9bc6fccf7b0b3a711a5f7e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00672.html#ga5808156fdb9bc6fccf7b0b3a711a5f7e">ble_gattc_evt_read_rsp_enc</a> (<a class="el" href="a00103.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga5808156fdb9bc6fccf7b0b3a711a5f7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes ble_gattc_evt_read_rsp event.  <a href="#ga5808156fdb9bc6fccf7b0b3a711a5f7e">More...</a><br/></td></tr>
-<tr class="separator:ga5808156fdb9bc6fccf7b0b3a711a5f7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf5abb2cfd5546226e3d2f16e65e098f9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00672.html#gaf5abb2cfd5546226e3d2f16e65e098f9">ble_gattc_evt_rel_disc_rsp_enc</a> (<a class="el" href="a00103.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:gaf5abb2cfd5546226e3d2f16e65e098f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes ble_gattc_evt_rel_disc_rsp event.  <a href="#gaf5abb2cfd5546226e3d2f16e65e098f9">More...</a><br/></td></tr>
-<tr class="separator:gaf5abb2cfd5546226e3d2f16e65e098f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad98cd947b04d0d25bc7179e92f0fd860"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00672.html#gad98cd947b04d0d25bc7179e92f0fd860">ble_gattc_evt_timeout_enc</a> (<a class="el" href="a00103.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:gad98cd947b04d0d25bc7179e92f0fd860"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes ble_gattc_evt_timeout event.  <a href="#gad98cd947b04d0d25bc7179e92f0fd860">More...</a><br/></td></tr>
-<tr class="separator:gad98cd947b04d0d25bc7179e92f0fd860"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga606a63a12e8c05605a6ddea0214a13f8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00672.html#ga606a63a12e8c05605a6ddea0214a13f8">ble_gattc_evt_write_rsp_enc</a> (<a class="el" href="a00103.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
-<tr class="memdesc:ga606a63a12e8c05605a6ddea0214a13f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes ble_gattc_evt_write_rsp event.  <a href="#ga606a63a12e8c05605a6ddea0214a13f8">More...</a><br/></td></tr>
-<tr class="separator:ga606a63a12e8c05605a6ddea0214a13f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92bd0dc46fb4a0c1ae82ceb3bbc8a6ad"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00672.html#ga92bd0dc46fb4a0c1ae82ceb3bbc8a6ad">ble_gatts_evt_hvc_enc</a> (<a class="el" href="a00103.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
+<tr class="memdesc:ga92bd0dc46fb4a0c1ae82ceb3bbc8a6ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a00757.html#ggae537647902af1b05c1e32f12d6b401c7af6a065c5c7e0682989ddd6cc557e0ffa">BLE_GATTS_EVT_HVC</a> event.  <a href="#ga92bd0dc46fb4a0c1ae82ceb3bbc8a6ad">More...</a><br/></td></tr>
+<tr class="separator:ga92bd0dc46fb4a0c1ae82ceb3bbc8a6ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad97259766bcb63e51ee5af3a990d7952"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00672.html#gad97259766bcb63e51ee5af3a990d7952">ble_gatts_evt_rw_authorize_request_enc</a> (<a class="el" href="a00103.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
+<tr class="memdesc:gad97259766bcb63e51ee5af3a990d7952"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a00757.html#ggae537647902af1b05c1e32f12d6b401c7a333a0e896f77ea1c7f9a0e1e11f8240d">BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST</a> event.  <a href="#gad97259766bcb63e51ee5af3a990d7952">More...</a><br/></td></tr>
+<tr class="separator:gad97259766bcb63e51ee5af3a990d7952"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga81d5893fd48beaedf26f68db593d849d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00672.html#ga81d5893fd48beaedf26f68db593d849d">ble_gatts_evt_sc_confirm_enc</a> (<a class="el" href="a00103.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
+<tr class="memdesc:ga81d5893fd48beaedf26f68db593d849d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a00757.html#ggae537647902af1b05c1e32f12d6b401c7a052eae0b3eb431b7e984107b2308ad50">BLE_GATTS_EVT_SC_CONFIRM</a> event.  <a href="#ga81d5893fd48beaedf26f68db593d849d">More...</a><br/></td></tr>
+<tr class="separator:ga81d5893fd48beaedf26f68db593d849d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b02ec50dc37f8a7a11d7fcb0fc2306b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00672.html#ga8b02ec50dc37f8a7a11d7fcb0fc2306b">ble_gatts_evt_sys_attr_missing_enc</a> (<a class="el" href="a00103.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
+<tr class="memdesc:ga8b02ec50dc37f8a7a11d7fcb0fc2306b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a00757.html#ggae537647902af1b05c1e32f12d6b401c7ae3776204f11a583e105aed0e477601da">BLE_GATTS_EVT_SYS_ATTR_MISSING</a> event.  <a href="#ga8b02ec50dc37f8a7a11d7fcb0fc2306b">More...</a><br/></td></tr>
+<tr class="separator:ga8b02ec50dc37f8a7a11d7fcb0fc2306b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb66f2107ccbefe9dba0c1f193a3490e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00672.html#gaeb66f2107ccbefe9dba0c1f193a3490e">ble_gatts_evt_timeout_enc</a> (<a class="el" href="a00103.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
+<tr class="memdesc:gaeb66f2107ccbefe9dba0c1f193a3490e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a00757.html#ggae537647902af1b05c1e32f12d6b401c7a6a06b6ca6c9e46ed778b79522867301c">BLE_GATTS_EVT_TIMEOUT</a> event.  <a href="#gaeb66f2107ccbefe9dba0c1f193a3490e">More...</a><br/></td></tr>
+<tr class="separator:gaeb66f2107ccbefe9dba0c1f193a3490e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3b88ce7a76853a6c1dbe1c91475c82e2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00672.html#ga3b88ce7a76853a6c1dbe1c91475c82e2">ble_gatts_evt_write_enc</a> (<a class="el" href="a00103.html">ble_evt_t</a> const *const p_event, uint32_t event_len, uint8_t *const p_buf, uint32_t *const p_buf_len)</td></tr>
+<tr class="memdesc:ga3b88ce7a76853a6c1dbe1c91475c82e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a00757.html#ggae537647902af1b05c1e32f12d6b401c7aa68b7764f5264ff092d2ad17851355ed">BLE_GATTS_EVT_WRITE</a> event.  <a href="#ga3b88ce7a76853a6c1dbe1c91475c82e2">More...</a><br/></td></tr>
+<tr class="separator:ga3b88ce7a76853a6c1dbe1c91475c82e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>GATTC Connectivity event encoders. </p>
+<p>GATTS Connectivity event encoders. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gaf8c1a3eff3b637d8a9db2d44f67742eb"></a>
+<a class="anchor" id="ga92bd0dc46fb4a0c1ae82ceb3bbc8a6ad"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gattc_evt_char_disc_rsp_enc </td>
+          <td class="memname">uint32_t ble_gatts_evt_hvc_enc </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00103.html">ble_evt_t</a> const *const&#160;</td>
           <td class="paramname"><em>p_event</em>, </td>
@@ -178,8 +166,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes ble_gattc_evt_char_disc_rsp event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00065.html#nrf51_gattc_evt_char_disc_rsp_encoding">0x32 - BLE_GATTC_EVT_CHAR_DISC_RSP</a> for packet format.</dd></dl>
+<p>Encodes <a class="el" href="a00757.html#ggae537647902af1b05c1e32f12d6b401c7af6a065c5c7e0682989ddd6cc557e0ffa">BLE_GATTS_EVT_HVC</a> event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00066.html#nrf51_gatts_evt_hvc_encoding">0x53 - BLE_GATTS_EVT_HVC</a> for packet format.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_event</td><td>Pointer to the <a class="el" href="a00103.html">ble_evt_t</a> buffer that shall be encoded. </td></tr>
@@ -200,12 +188,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gac26625716572381fea40c8d613f838dd"></a>
+<a class="anchor" id="gad97259766bcb63e51ee5af3a990d7952"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gattc_evt_char_val_by_uuid_read_rsp_enc </td>
+          <td class="memname">uint32_t ble_gatts_evt_rw_authorize_request_enc </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00103.html">ble_evt_t</a> const *const&#160;</td>
           <td class="paramname"><em>p_event</em>, </td>
@@ -236,8 +224,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes ble_gattc_evt_char_val_by_uuid_read_rsp event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00065.html#nrf51_gattc_evt_char_val_by_uuid_read_rsp_encoding">0x34 - BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP</a> for packet format.</dd></dl>
+<p>Encodes <a class="el" href="a00757.html#ggae537647902af1b05c1e32f12d6b401c7a333a0e896f77ea1c7f9a0e1e11f8240d">BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST</a> event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00066.html#nrf51_evt_rw_authorize_request">0x51 - BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST</a> for packet format.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_event</td><td>Pointer to the <a class="el" href="a00103.html">ble_evt_t</a> buffer that shall be encoded. </td></tr>
@@ -258,12 +246,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga6ee65faef5d1af3f60fdc8477d12038e"></a>
+<a class="anchor" id="ga81d5893fd48beaedf26f68db593d849d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gattc_evt_char_vals_read_rsp_enc </td>
+          <td class="memname">uint32_t ble_gatts_evt_sc_confirm_enc </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00103.html">ble_evt_t</a> const *const&#160;</td>
           <td class="paramname"><em>p_event</em>, </td>
@@ -294,8 +282,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes ble_gattc_evt_char_vals_read_rsp event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00065.html#nrf51_gattc_evt_char_vals_read_rsp_encoding">0x36 - BLE_GATTC_EVT_CHAR_VALS_READ_RSP</a> for packet format.</dd></dl>
+<p>Encodes <a class="el" href="a00757.html#ggae537647902af1b05c1e32f12d6b401c7a052eae0b3eb431b7e984107b2308ad50">BLE_GATTS_EVT_SC_CONFIRM</a> event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00066.html#nrf51_gatts_evt_sc_confirm_encoding">0x54 - BLE_GATTS_EVT_SC_CONFIRM</a> for packet format.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_event</td><td>Pointer to the <a class="el" href="a00103.html">ble_evt_t</a> buffer that shall be encoded. </td></tr>
@@ -316,12 +304,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gae2e97cacaa4cbbbfb407ca12405cf95d"></a>
+<a class="anchor" id="ga8b02ec50dc37f8a7a11d7fcb0fc2306b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gattc_evt_desc_disc_rsp_enc </td>
+          <td class="memname">uint32_t ble_gatts_evt_sys_attr_missing_enc </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00103.html">ble_evt_t</a> const *const&#160;</td>
           <td class="paramname"><em>p_event</em>, </td>
@@ -352,8 +340,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes ble_gattc_evt_desc_disc_rsp event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00065.html#nrf51_gattc_evt_desc_disc_rsp_encoding">0x33 - BLE_GATTC_EVT_DESC_DISC_RSP</a> for packet format.</dd></dl>
+<p>Encodes <a class="el" href="a00757.html#ggae537647902af1b05c1e32f12d6b401c7ae3776204f11a583e105aed0e477601da">BLE_GATTS_EVT_SYS_ATTR_MISSING</a> event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00066.html#nrf51_evt_sys_attr_missing_encoding">0x52 - BLE_GATTS_EVT_SYS_ATTR_MISSING</a> for packet format.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_event</td><td>Pointer to the <a class="el" href="a00103.html">ble_evt_t</a> buffer that shall be encoded. </td></tr>
@@ -374,12 +362,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gae1e4a71f425cd5536aa4b22c119f85ac"></a>
+<a class="anchor" id="gaeb66f2107ccbefe9dba0c1f193a3490e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gattc_evt_hvx_enc </td>
+          <td class="memname">uint32_t ble_gatts_evt_timeout_enc </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00103.html">ble_evt_t</a> const *const&#160;</td>
           <td class="paramname"><em>p_event</em>, </td>
@@ -410,8 +398,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes ble_gattc_evt_hvx event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00065.html#nrf51_gattc_evt_hvx_encoding">0x38 - BLE_GATTC_EVT_HVX</a> for packet format.</dd></dl>
+<p>Encodes <a class="el" href="a00757.html#ggae537647902af1b05c1e32f12d6b401c7a6a06b6ca6c9e46ed778b79522867301c">BLE_GATTS_EVT_TIMEOUT</a> event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00066.html#nrf51_gatts_evt_timeout_encoding">0x55 - BLE_GATTS_EVT_TIMEOUT</a> for packet format.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_event</td><td>Pointer to the <a class="el" href="a00103.html">ble_evt_t</a> buffer that shall be encoded. </td></tr>
@@ -432,12 +420,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaa7c696cbff1b0d1b6538aca76789195f"></a>
+<a class="anchor" id="ga3b88ce7a76853a6c1dbe1c91475c82e2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gattc_evt_prim_srvc_disc_rsp_enc </td>
+          <td class="memname">uint32_t ble_gatts_evt_write_enc </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00103.html">ble_evt_t</a> const *const&#160;</td>
           <td class="paramname"><em>p_event</em>, </td>
@@ -468,240 +456,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Encodes ble_gattc_evt_prim_srvc_disc_rsp event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00065.html#nrf51_gattc_evt_prim_srvc_disc_rsp_encoding">0x30 - BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP</a> for packet format.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_event</td><td>Pointer to the <a class="el" href="a00103.html">ble_evt_t</a> buffer that shall be encoded. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_len</td><td>Size (in bytes) of <code>p_event</code> buffer. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of a buffer for encoded event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> Size (in bytes) of <code>p_buf</code> buffer. <code>out:</code> Length of encoded contents in <code>p_buf</code>.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5808156fdb9bc6fccf7b0b3a711a5f7e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gattc_evt_read_rsp_enc </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00103.html">ble_evt_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_event</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>event_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes ble_gattc_evt_read_rsp event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00065.html#nrf51_gattc_evt_read_rsp_encoding">0x35 - BLE_GATTC_EVT_READ_RSP</a> for packet format.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_event</td><td>Pointer to the <a class="el" href="a00103.html">ble_evt_t</a> buffer that shall be encoded. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_len</td><td>Size (in bytes) of <code>p_event</code> buffer. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of a buffer for encoded event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> Size (in bytes) of <code>p_buf</code> buffer. <code>out:</code> Length of encoded contents in <code>p_buf</code>.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf5abb2cfd5546226e3d2f16e65e098f9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gattc_evt_rel_disc_rsp_enc </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00103.html">ble_evt_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_event</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>event_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes ble_gattc_evt_rel_disc_rsp event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00065.html#nrf51_gattc_evt_rel_disc_rsp_encoding">0x31 - BLE_GATTC_EVT_REL_DISC_RSP</a> for packet format.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_event</td><td>Pointer to the <a class="el" href="a00103.html">ble_evt_t</a> buffer that shall be encoded. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_len</td><td>Size (in bytes) of <code>p_event</code> buffer. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of a buffer for encoded event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> Size (in bytes) of <code>p_buf</code> buffer. <code>out:</code> Length of encoded contents in <code>p_buf</code>.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gad98cd947b04d0d25bc7179e92f0fd860"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gattc_evt_timeout_enc </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00103.html">ble_evt_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_event</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>event_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes ble_gattc_evt_timeout event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00065.html#nrf51_gattc_evt_timeout_encoding">0x39 - BLE_GATTC_EVT_TIMEOUT</a> for packet format.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_event</td><td>Pointer to the <a class="el" href="a00103.html">ble_evt_t</a> buffer that shall be encoded. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_len</td><td>Size (in bytes) of <code>p_event</code> buffer. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to the beginning of a buffer for encoded event packet. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> Size (in bytes) of <code>p_buf</code> buffer. <code>out:</code> Length of encoded contents in <code>p_buf</code>.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga606a63a12e8c05605a6ddea0214a13f8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_gattc_evt_write_rsp_enc </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00103.html">ble_evt_t</a> const *const&#160;</td>
-          <td class="paramname"><em>p_event</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>event_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes ble_gattc_evt_write_rsp event. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00065.html#nrf51_gattc_evt_write_rsp_encoding">0x37 - BLE_GATTC_EVT_WRITE_RSP</a> for packet format.</dd></dl>
+<p>Encodes <a class="el" href="a00757.html#ggae537647902af1b05c1e32f12d6b401c7aa68b7764f5264ff092d2ad17851355ed">BLE_GATTS_EVT_WRITE</a> event. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00066.html#nrf51_evt_write_encoding">0x50 - BLE_GATTS_EVT_WRITE</a> for packet format.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_event</td><td>Pointer to the <a class="el" href="a00103.html">ble_evt_t</a> buffer that shall be encoded. </td></tr>
@@ -727,7 +483,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:25 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

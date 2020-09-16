@@ -1,7 +1,6 @@
 var a00528 =
 [
-    [ "BLE_ERROR_INVALID_ATTR_HANDLE", "a00528.html#ga6346bb5ec3bcd4a25332dc782c1b7e01", null ],
-    [ "BLE_ERROR_INVALID_CONN_HANDLE", "a00528.html#gabdc27cbc2ffac4a50640a0ce992c03af", null ],
-    [ "BLE_ERROR_INVALID_ROLE", "a00528.html#ga1d92ffe1952beeff89e5bf768657460f", null ],
-    [ "BLE_ERROR_NO_TX_BUFFERS", "a00528.html#ga901e1bc3ccae29eff9fb31cabdbb5e02", null ]
+    [ "BLE_GAP_ROLE_CENTRAL", "a00528.html#ga6b9440660a70146392d27c849431fadb", null ],
+    [ "BLE_GAP_ROLE_INVALID", "a00528.html#ga8164b32f4fd65997d0523cd7c5735166", null ],
+    [ "BLE_GAP_ROLE_PERIPH", "a00528.html#ga12e431897d73a3ce88fab8a4dbd90497", null ]
 ];

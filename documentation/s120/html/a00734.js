@@ -1,9 +1,6 @@
 var a00734 =
 [
-    [ "Database Discovery", "a00693.html", "a00693" ],
-    [ "Peripheral Drivers", "a00735.html", "a00735" ],
-    [ "BLE Services", "a00736.html", "a00736" ],
-    [ "BLE Libraries", "a00737.html", "a00737" ],
-    [ "BLE Serialization", "a00738.html", "a00738" ],
-    [ "SDK Common Libraries", "a00739.html", "a00739" ]
+    [ "BLE_CHAR_ALERT_LEVEL_HIGH_ALERT", "a00734.html#ga9fc865fa1b7f643d40c5e43dc81c0556", null ],
+    [ "BLE_CHAR_ALERT_LEVEL_MILD_ALERT", "a00734.html#gaf4fb46aeec8acd50f37f0e6277e45cee", null ],
+    [ "BLE_CHAR_ALERT_LEVEL_NO_ALERT", "a00734.html#ga19af58d002f35b548719d7043562cee7", null ]
 ];

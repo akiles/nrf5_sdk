@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Common service definitions</title>
+<title>nRF51 SDK - S120 SoftDevice: Radio Notification Event Handler</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,111 +97,53 @@ $(document).ready(function(){initNavTree('a00729.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Common service definitions<div class="ingroups"><a class="el" href="a00736.html">BLE Services</a></div></div>  </div>
+<div class="title">Radio Notification Event Handler<div class="ingroups"><a class="el" href="a00739.html">BLE Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Constants, type definitions and functions that are common to all services.  
+<p>Module for propagating Radio Notification events to the application.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00730"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00730.html">Service UUID definitions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00731"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00731.html">Characteristic UUID definitions</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00732"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00732.html">Definitions for the Alert Level characteristic values</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00188.html">ble_srv_report_ref_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value of a Report Reference descriptor.  <a href="a00188.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00190.html">ble_srv_utf8_str_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">UTF-8 string data type.  <a href="a00190.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html">ble_srv_security_mode_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Security settings structure.  <a href="a00189.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00187.html">ble_srv_cccd_security_mode_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Security settings structure.  <a href="a00187.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gafbfc0ef111ca725cc8bb500fd93301cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00729.html#gafbfc0ef111ca725cc8bb500fd93301cc">BLE_SRV_ENCODED_REPORT_REF_LEN</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:gafbfc0ef111ca725cc8bb500fd93301cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa5c29b2eac30fc2688b11741f5895697"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00729.html#gaa5c29b2eac30fc2688b11741f5895697">BLE_CCCD_VALUE_LEN</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:gaa5c29b2eac30fc2688b11741f5895697"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gac10076d39c0ddcfe333252fe8810a1f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac10076d39c0ddcfe333252fe8810a1f1"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00729.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> )(uint32_t nrf_error)</td></tr>
-<tr class="memdesc:gac10076d39c0ddcfe333252fe8810a1f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type definition for error handler function which will be called in case of an error in a service or a service library module. <br/></td></tr>
-<tr class="separator:gac10076d39c0ddcfe333252fe8810a1f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d22caf17609042ff0c07873c1ad2a13"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7d22caf17609042ff0c07873c1ad2a13"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00729.html#ga7d22caf17609042ff0c07873c1ad2a13">ble_radio_notification_evt_handler_t</a> )(bool radio_active)</td></tr>
+<tr class="memdesc:ga7d22caf17609042ff0c07873c1ad2a13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application radio notification event handler type. <br/></td></tr>
+<tr class="separator:ga7d22caf17609042ff0c07873c1ad2a13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaebc3fc5316f1a6a67e830516b8f9aed5"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00729.html#gaebc3fc5316f1a6a67e830516b8f9aed5">ble_srv_report_ref_encode</a> (uint8_t *p_encoded_buffer, const <a class="el" href="a00188.html">ble_srv_report_ref_t</a> *p_report_ref)</td></tr>
-<tr class="memdesc:gaebc3fc5316f1a6a67e830516b8f9aed5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for encoding a Report Reference Descriptor.  <a href="#gaebc3fc5316f1a6a67e830516b8f9aed5">More...</a><br/></td></tr>
-<tr class="separator:gaebc3fc5316f1a6a67e830516b8f9aed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga611dfcf7209a57c2e45964e8bb4c5756"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00729.html#ga611dfcf7209a57c2e45964e8bb4c5756">ble_srv_ascii_to_utf8</a> (<a class="el" href="a00190.html">ble_srv_utf8_str_t</a> *p_utf8, char *p_ascii)</td></tr>
-<tr class="memdesc:ga611dfcf7209a57c2e45964e8bb4c5756"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for making UTF-8 structure refer to an ASCII string.  <a href="#ga611dfcf7209a57c2e45964e8bb4c5756">More...</a><br/></td></tr>
-<tr class="separator:ga611dfcf7209a57c2e45964e8bb4c5756"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0e02811c4ce9dff7bd190daa42b7a58b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00729.html#ga0e02811c4ce9dff7bd190daa42b7a58b">ble_radio_notification_init</a> (<a class="el" href="a00776.html#ga2b45edb07b58c30c52475c673d0db856">nrf_app_irq_priority_t</a> irq_priority, <a class="el" href="a00776.html#ga2be0dce389b0d728a857b178b0f3d7ae">nrf_radio_notification_distance_t</a> distance, <a class="el" href="a00729.html#ga7d22caf17609042ff0c07873c1ad2a13">ble_radio_notification_evt_handler_t</a> evt_handler)</td></tr>
+<tr class="memdesc:ga0e02811c4ce9dff7bd190daa42b7a58b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Radio Notification module.  <a href="#ga0e02811c4ce9dff7bd190daa42b7a58b">More...</a><br/></td></tr>
+<tr class="separator:ga0e02811c4ce9dff7bd190daa42b7a58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Constants, type definitions and functions that are common to all services. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gaa5c29b2eac30fc2688b11741f5895697"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_CCCD_VALUE_LEN&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The length of a CCCD value. </p>
-
-</div>
-</div>
-<a class="anchor" id="gafbfc0ef111ca725cc8bb500fd93301cc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_SRV_ENCODED_REPORT_REF_LEN&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The length of an encoded Report Reference Descriptor. </p>
-
-</div>
-</div>
+<p>Module for propagating Radio Notification events to the application. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga611dfcf7209a57c2e45964e8bb4c5756"></a>
+<a class="anchor" id="ga0e02811c4ce9dff7bd190daa42b7a58b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ble_srv_ascii_to_utf8 </td>
+          <td class="memname">uint32_t ble_radio_notification_init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00190.html">ble_srv_utf8_str_t</a> *&#160;</td>
-          <td class="paramname"><em>p_utf8</em>, </td>
+          <td class="paramtype"><a class="el" href="a00776.html#ga2b45edb07b58c30c52475c673d0db856">nrf_app_irq_priority_t</a>&#160;</td>
+          <td class="paramname"><em>irq_priority</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>p_ascii</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00776.html#ga2be0dce389b0d728a857b178b0f3d7ae">nrf_radio_notification_distance_t</a>&#160;</td>
+          <td class="paramname"><em>distance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00729.html#ga7d22caf17609042ff0c07873c1ad2a13">ble_radio_notification_evt_handler_t</a>&#160;</td>
+          <td class="paramname"><em>evt_handler</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -211,50 +153,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for making UTF-8 structure refer to an ASCII string. </p>
+<p>Function for initializing the Radio Notification module. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_utf8</td><td>UTF-8 structure to be set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ascii</td><td>ASCII string to be referred to. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">irq_priority</td><td>Interrupt priority for the Radio Notification interrupt handler. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">distance</td><td>The time from an Active event until the radio is activated. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">evt_handler</td><td>Handler to be executed when a radio notification event has been received.</td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="gaebc3fc5316f1a6a67e830516b8f9aed5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_srv_report_ref_encode </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_encoded_buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00188.html">ble_srv_report_ref_t</a> *&#160;</td>
-          <td class="paramname"><em>p_report_ref</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for encoding a Report Reference Descriptor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_encoded_buffer</td><td>The buffer of the encoded data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_report_ref</td><td>Report Reference value to be encoded.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Length of the encoded data. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization, otherwise an error code. </dd></dl>
 
 </div>
 </div>
@@ -263,7 +171,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:39 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:25 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

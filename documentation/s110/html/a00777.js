@@ -1,26 +1,21 @@
 var a00777 =
 [
-    [ "CRC compute", "a00771.html", "a00771" ],
-    [ "hci_transport_evt_t", "a00361.html", [
-      [ "evt_type", "a00361.html#ad8b8284f5d85ee34da6a3db177c35d20", null ]
+    [ "hci_slip_evt_t", "a00361.html", [
+      [ "evt_type", "a00361.html#ac7e76a07c099aed4eb9d8180a15368d8", null ],
+      [ "packet", "a00361.html#a005a67172eb3d6a4645d536db7fbb98f", null ],
+      [ "packet_length", "a00361.html#ac31d16ccc1a5fc4bd8852c58d710f821", null ]
     ] ],
-    [ "hci_transport_event_handler_t", "a00777.html#ga7efe3de4ca7194b952f224c078e98137", null ],
-    [ "hci_transport_tx_done_handler_t", "a00777.html#ga5f292ecaadba029ac812506329fe4cdc", null ],
-    [ "hci_transport_evt_type_t", "a00777.html#ga1679bda84cf17b2f9c2dd5e323078c5a", [
-      [ "HCI_TRANSPORT_RX_RDY", "a00777.html#gga1679bda84cf17b2f9c2dd5e323078c5aa2d702ba14161b60cb74a7dd5c2c71d5b", null ],
-      [ "HCI_TRANSPORT_EVT_TYPE_MAX", "a00777.html#gga1679bda84cf17b2f9c2dd5e323078c5aa7abdd63991cc440f4fdd54e02ce945bf", null ]
+    [ "hci_slip_event_handler_t", "a00777.html#gab1b3735b482e480ee925e78c544f84d0", null ],
+    [ "hci_slip_evt_type_t", "a00777.html#gaf03d61e05dd64c3a61644580c29aa0b4", [
+      [ "HCI_SLIP_RX_RDY", "a00777.html#ggaf03d61e05dd64c3a61644580c29aa0b4a518c3406525586d68bf2f476c1935eb9", null ],
+      [ "HCI_SLIP_TX_DONE", "a00777.html#ggaf03d61e05dd64c3a61644580c29aa0b4a507424cf2788c502b25b730450fa3c1b", null ],
+      [ "HCI_SLIP_RX_OVERFLOW", "a00777.html#ggaf03d61e05dd64c3a61644580c29aa0b4acd2a18f379c0f764d52782bf13ae7f60", null ],
+      [ "HCI_SLIP_ERROR", "a00777.html#ggaf03d61e05dd64c3a61644580c29aa0b4a89ce814e3c2dbfc49432118d735d6eef", null ],
+      [ "HCI_SLIP_EVT_TYPE_MAX", "a00777.html#ggaf03d61e05dd64c3a61644580c29aa0b4a1922de9f57ef7bf2c0e2af37877224f1", null ]
     ] ],
-    [ "hci_transport_tx_done_result_t", "a00777.html#gae80211a61fd86e95a2ad0d7e8dcf8a5c", [
-      [ "HCI_TRANSPORT_TX_DONE_SUCCESS", "a00777.html#ggae80211a61fd86e95a2ad0d7e8dcf8a5ca0f6139241ce530ef3bd92baa428b6d73", null ],
-      [ "HCI_TRANSPORT_TX_DONE_FAILURE", "a00777.html#ggae80211a61fd86e95a2ad0d7e8dcf8a5ca99f0852942a9bdd2a80ef9318ecb508b", null ]
-    ] ],
-    [ "hci_transport_close", "a00777.html#ga1e88949d8bf4e67f16af9e2577750e70", null ],
-    [ "hci_transport_evt_handler_reg", "a00777.html#gad7d6efd012a22ff3b4749944b8049467", null ],
-    [ "hci_transport_open", "a00777.html#ga5bb2e014f346a3a51a6687545b26b0ce", null ],
-    [ "hci_transport_pkt_write", "a00777.html#gac59c8369494bbe394a6fb075115263ba", null ],
-    [ "hci_transport_rx_pkt_consume", "a00777.html#ga5fa929e7796b2b4af481c8c0a86a51c7", null ],
-    [ "hci_transport_rx_pkt_extract", "a00777.html#ga3fcd4cdf510a2e66a2938f2806f677f0", null ],
-    [ "hci_transport_tx_alloc", "a00777.html#ga319b29010ea99d069018e543e7042121", null ],
-    [ "hci_transport_tx_done_register", "a00777.html#ga84d8c08bb7ff0cc2e1c7c51015762937", null ],
-    [ "hci_transport_tx_free", "a00777.html#ga59e21e1c13ebf70dde8ec9c4449e3a4a", null ]
+    [ "hci_slip_close", "a00777.html#gac07c6af846ecdbdaa3def1860aff6e47", null ],
+    [ "hci_slip_evt_handler_register", "a00777.html#ga5174ac7933b8633a86c1560e645dcf43", null ],
+    [ "hci_slip_open", "a00777.html#ga395ec28c5fd6a5ca2f8dcd68817cced1", null ],
+    [ "hci_slip_rx_buffer_register", "a00777.html#gabd00a0b89127a66990a2ea728fd39b3f", null ],
+    [ "hci_slip_write", "a00777.html#gaba13b94dd501034bd33b1d10941ded4b", null ]
 ];

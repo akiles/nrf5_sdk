@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Scheduler</title>
+<title>nRF51 SDK - S110 SoftDevice: HCI Transport</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,214 +97,225 @@ $(document).ready(function(){initNavTree('a00778.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
+<a href="#groups">Modules</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Scheduler<div class="ingroups"><a class="el" href="a01037.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">HCI Transport<div class="ingroups"><a class="el" href="a01039.html">SDK Common Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>The scheduler is used for transferring execution from the interrupt context to the main context.  
+<p>HCI transport module implementation.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga6ec6d3a526d13df66e0aff7d20049e20"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga6ec6d3a526d13df66e0aff7d20049e20">APP_SCHED_EVENT_HEADER_SIZE</a>&#160;&#160;&#160;8</td></tr>
-<tr class="separator:ga6ec6d3a526d13df66e0aff7d20049e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga197748a0733d615e809ce71effa6dc48"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga197748a0733d615e809ce71effa6dc48">APP_SCHED_BUF_SIZE</a>(EVENT_SIZE, QUEUE_SIZE)&#160;&#160;&#160;(((EVENT_SIZE) + <a class="el" href="a00778.html#ga6ec6d3a526d13df66e0aff7d20049e20">APP_SCHED_EVENT_HEADER_SIZE</a>) * ((QUEUE_SIZE) + 1))</td></tr>
-<tr class="memdesc:ga197748a0733d615e809ce71effa6dc48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute number of bytes required to hold the scheduler buffer.  <a href="#ga197748a0733d615e809ce71effa6dc48">More...</a><br/></td></tr>
-<tr class="separator:ga197748a0733d615e809ce71effa6dc48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa9670ed0053a67304c3d2d0cb3eb1333"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#gaa9670ed0053a67304c3d2d0cb3eb1333">APP_SCHED_INIT</a>(EVENT_SIZE, QUEUE_SIZE)</td></tr>
-<tr class="memdesc:gaa9670ed0053a67304c3d2d0cb3eb1333"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for initializing the event scheduler.  <a href="#gaa9670ed0053a67304c3d2d0cb3eb1333">More...</a><br/></td></tr>
-<tr class="separator:gaa9670ed0053a67304c3d2d0cb3eb1333"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00772"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00772.html">CRC compute</a></td></tr>
+<tr class="memdesc:a00772"><td class="mdescLeft">&#160;</td><td class="mdescRight">This module implements the CRC-16 calculation in the blocks. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00362.html">hci_transport_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct containing events from the Transport layer.  <a href="a00362.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gad36ea5cb15b82aa724a13f1ba24ef005"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad36ea5cb15b82aa724a13f1ba24ef005"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#gad36ea5cb15b82aa724a13f1ba24ef005">app_sched_event_handler_t</a> )(void *p_event_data, uint16_t event_size)</td></tr>
-<tr class="memdesc:gad36ea5cb15b82aa724a13f1ba24ef005"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scheduler event handler type. <br/></td></tr>
-<tr class="separator:gad36ea5cb15b82aa724a13f1ba24ef005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7efe3de4ca7194b952f224c078e98137"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga7efe3de4ca7194b952f224c078e98137">hci_transport_event_handler_t</a> )(<a class="el" href="a00362.html">hci_transport_evt_t</a> event)</td></tr>
+<tr class="memdesc:ga7efe3de4ca7194b952f224c078e98137"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transport layer generic event callback function type.  <a href="#ga7efe3de4ca7194b952f224c078e98137">More...</a><br/></td></tr>
+<tr class="separator:ga7efe3de4ca7194b952f224c078e98137"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5f292ecaadba029ac812506329fe4cdc"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga5f292ecaadba029ac812506329fe4cdc">hci_transport_tx_done_handler_t</a> )(<a class="el" href="a00778.html#gae80211a61fd86e95a2ad0d7e8dcf8a5c">hci_transport_tx_done_result_t</a> result)</td></tr>
+<tr class="memdesc:ga5f292ecaadba029ac812506329fe4cdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transport layer TX done event callback function type.  <a href="#ga5f292ecaadba029ac812506329fe4cdc">More...</a><br/></td></tr>
+<tr class="separator:ga5f292ecaadba029ac812506329fe4cdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga1679bda84cf17b2f9c2dd5e323078c5a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga1679bda84cf17b2f9c2dd5e323078c5a">hci_transport_evt_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00778.html#gga1679bda84cf17b2f9c2dd5e323078c5aa2d702ba14161b60cb74a7dd5c2c71d5b">HCI_TRANSPORT_RX_RDY</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00778.html#gga1679bda84cf17b2f9c2dd5e323078c5aa7abdd63991cc440f4fdd54e02ce945bf">HCI_TRANSPORT_EVT_TYPE_MAX</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga1679bda84cf17b2f9c2dd5e323078c5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic event callback function events.  <a href="a00778.html#ga1679bda84cf17b2f9c2dd5e323078c5a">More...</a><br/></td></tr>
+<tr class="separator:ga1679bda84cf17b2f9c2dd5e323078c5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae80211a61fd86e95a2ad0d7e8dcf8a5c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#gae80211a61fd86e95a2ad0d7e8dcf8a5c">hci_transport_tx_done_result_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00778.html#ggae80211a61fd86e95a2ad0d7e8dcf8a5ca0f6139241ce530ef3bd92baa428b6d73">HCI_TRANSPORT_TX_DONE_SUCCESS</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00778.html#ggae80211a61fd86e95a2ad0d7e8dcf8a5ca99f0852942a9bdd2a80ef9318ecb508b">HCI_TRANSPORT_TX_DONE_FAILURE</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gae80211a61fd86e95a2ad0d7e8dcf8a5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX done event callback function result codes.  <a href="a00778.html#gae80211a61fd86e95a2ad0d7e8dcf8a5c">More...</a><br/></td></tr>
+<tr class="separator:gae80211a61fd86e95a2ad0d7e8dcf8a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaf021e02dd6ca1767b428c250d1ded56c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#gaf021e02dd6ca1767b428c250d1ded56c">app_sched_init</a> (uint16_t max_event_size, uint16_t queue_size, void *p_evt_buffer)</td></tr>
-<tr class="memdesc:gaf021e02dd6ca1767b428c250d1ded56c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Scheduler.  <a href="#gaf021e02dd6ca1767b428c250d1ded56c">More...</a><br/></td></tr>
-<tr class="separator:gaf021e02dd6ca1767b428c250d1ded56c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab725820c32a8d05379db4567cf30e862"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#gab725820c32a8d05379db4567cf30e862">app_sched_execute</a> (void)</td></tr>
-<tr class="memdesc:gab725820c32a8d05379db4567cf30e862"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for executing all scheduled events.  <a href="#gab725820c32a8d05379db4567cf30e862">More...</a><br/></td></tr>
-<tr class="separator:gab725820c32a8d05379db4567cf30e862"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga49ec0ad278ece44b5dc56b86ac44489c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga49ec0ad278ece44b5dc56b86ac44489c">app_sched_event_put</a> (void *p_event_data, uint16_t event_size, <a class="el" href="a00778.html#gad36ea5cb15b82aa724a13f1ba24ef005">app_sched_event_handler_t</a> handler)</td></tr>
-<tr class="memdesc:ga49ec0ad278ece44b5dc56b86ac44489c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for scheduling an event.  <a href="#ga49ec0ad278ece44b5dc56b86ac44489c">More...</a><br/></td></tr>
-<tr class="separator:ga49ec0ad278ece44b5dc56b86ac44489c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad7d6efd012a22ff3b4749944b8049467"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#gad7d6efd012a22ff3b4749944b8049467">hci_transport_evt_handler_reg</a> (<a class="el" href="a00778.html#ga7efe3de4ca7194b952f224c078e98137">hci_transport_event_handler_t</a> event_handler)</td></tr>
+<tr class="memdesc:gad7d6efd012a22ff3b4749944b8049467"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering a generic event handler.  <a href="#gad7d6efd012a22ff3b4749944b8049467">More...</a><br/></td></tr>
+<tr class="separator:gad7d6efd012a22ff3b4749944b8049467"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84d8c08bb7ff0cc2e1c7c51015762937"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga84d8c08bb7ff0cc2e1c7c51015762937">hci_transport_tx_done_register</a> (<a class="el" href="a00778.html#ga5f292ecaadba029ac812506329fe4cdc">hci_transport_tx_done_handler_t</a> event_handler)</td></tr>
+<tr class="memdesc:ga84d8c08bb7ff0cc2e1c7c51015762937"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering a handler for TX done event.  <a href="#ga84d8c08bb7ff0cc2e1c7c51015762937">More...</a><br/></td></tr>
+<tr class="separator:ga84d8c08bb7ff0cc2e1c7c51015762937"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5bb2e014f346a3a51a6687545b26b0ce"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga5bb2e014f346a3a51a6687545b26b0ce">hci_transport_open</a> (void)</td></tr>
+<tr class="memdesc:ga5bb2e014f346a3a51a6687545b26b0ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for opening the transport channel and initializing the transport layer.  <a href="#ga5bb2e014f346a3a51a6687545b26b0ce">More...</a><br/></td></tr>
+<tr class="separator:ga5bb2e014f346a3a51a6687545b26b0ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1e88949d8bf4e67f16af9e2577750e70"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga1e88949d8bf4e67f16af9e2577750e70">hci_transport_close</a> (void)</td></tr>
+<tr class="memdesc:ga1e88949d8bf4e67f16af9e2577750e70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for closing the transport channel.  <a href="#ga1e88949d8bf4e67f16af9e2577750e70">More...</a><br/></td></tr>
+<tr class="separator:ga1e88949d8bf4e67f16af9e2577750e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga319b29010ea99d069018e543e7042121"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga319b29010ea99d069018e543e7042121">hci_transport_tx_alloc</a> (uint8_t **pp_memory)</td></tr>
+<tr class="memdesc:ga319b29010ea99d069018e543e7042121"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for allocating tx packet memory.  <a href="#ga319b29010ea99d069018e543e7042121">More...</a><br/></td></tr>
+<tr class="separator:ga319b29010ea99d069018e543e7042121"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59e21e1c13ebf70dde8ec9c4449e3a4a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga59e21e1c13ebf70dde8ec9c4449e3a4a">hci_transport_tx_free</a> (void)</td></tr>
+<tr class="memdesc:ga59e21e1c13ebf70dde8ec9c4449e3a4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for freeing tx packet memory.  <a href="#ga59e21e1c13ebf70dde8ec9c4449e3a4a">More...</a><br/></td></tr>
+<tr class="separator:ga59e21e1c13ebf70dde8ec9c4449e3a4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac59c8369494bbe394a6fb075115263ba"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#gac59c8369494bbe394a6fb075115263ba">hci_transport_pkt_write</a> (const uint8_t *p_buffer, uint16_t length)</td></tr>
+<tr class="memdesc:gac59c8369494bbe394a6fb075115263ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for writing a packet.  <a href="#gac59c8369494bbe394a6fb075115263ba">More...</a><br/></td></tr>
+<tr class="separator:gac59c8369494bbe394a6fb075115263ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3fcd4cdf510a2e66a2938f2806f677f0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga3fcd4cdf510a2e66a2938f2806f677f0">hci_transport_rx_pkt_extract</a> (uint8_t **pp_buffer, uint16_t *p_length)</td></tr>
+<tr class="memdesc:ga3fcd4cdf510a2e66a2938f2806f677f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for extracting received packet.  <a href="#ga3fcd4cdf510a2e66a2938f2806f677f0">More...</a><br/></td></tr>
+<tr class="separator:ga3fcd4cdf510a2e66a2938f2806f677f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5fa929e7796b2b4af481c8c0a86a51c7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00778.html#ga5fa929e7796b2b4af481c8c0a86a51c7">hci_transport_rx_pkt_consume</a> (uint8_t *p_buffer)</td></tr>
+<tr class="memdesc:ga5fa929e7796b2b4af481c8c0a86a51c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for consuming extracted packet described by p_buffer.  <a href="#ga5fa929e7796b2b4af481c8c0a86a51c7">More...</a><br/></td></tr>
+<tr class="separator:ga5fa929e7796b2b4af481c8c0a86a51c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>The scheduler is used for transferring execution from the interrupt context to the main context. </p>
-<p>See <a class="el" href="a00014.html#seq_diagrams_sched">Applications using the Scheduler</a> for sequence diagrams illustrating the flow of events when using the Scheduler.</p>
-<h1><a class="anchor" id="app_scheduler_req"></a>
-Requirements:</h1>
-<h2><a class="anchor" id="main_context_logic"></a>
-Logic in main context:</h2>
-<ul>
-<li>Define an event handler for each type of event expected.</li>
-<li>Initialize the scheduler by calling the <a class="el" href="a00778.html#gaa9670ed0053a67304c3d2d0cb3eb1333" title="Macro for initializing the event scheduler.">APP_SCHED_INIT()</a> macro before entering the application main loop.</li>
-<li>Call <a class="el" href="a00778.html#gab725820c32a8d05379db4567cf30e862" title="Function for executing all scheduled events.">app_sched_execute()</a> from the main loop each time the application wakes up because of an event (typically when <a class="el" href="a01073.html#ga11d88d38ac99fb72cde74c9385d36433" title="Waits for an application event.">sd_app_evt_wait()</a> returns).</li>
+<p>HCI transport module implementation. </p>
+<p>This module implements certain specific features from the three-wire UART transport layer, defined by the Bluetooth specification version 4.0 [Vol 4] part D.</p>
+<dl class="section user"><dt>Features supported</dt><dd><ul>
+<li>Transmission and reception of Vendor Specific HCI packet type application packets.</li>
+<li>Transmission and reception of reliable packets: defined by chapter 6 of the specification.</li>
 </ul>
-<h2><a class="anchor" id="int_context_logic"></a>
-Logic in interrupt context:</h2>
-<ul>
-<li>In the interrupt handler, call <a class="el" href="a00778.html#ga49ec0ad278ece44b5dc56b86ac44489c" title="Function for scheduling an event.">app_sched_event_put()</a> with the appropriate data and event handler. This will insert an event into the scheduler's queue. The <a class="el" href="a00778.html#gab725820c32a8d05379db4567cf30e862" title="Function for executing all scheduled events.">app_sched_execute()</a> function will pull this event and call its handler in the main context.</li>
+</dd></dl>
+<dl class="section user"><dt>Features not supported</dt><dd><ul>
+<li>Link establishment procedure: defined by chapter 8 of the specification.</li>
+<li>Low power: defined by chapter 9 of the specification.</li>
 </ul>
-<p>For an example usage of the scheduler, please see the implementations of <a class="el" href="a00053.html">HID Mouse Application</a> and <a class="el" href="a00052.html">HID Keyboard Application</a>.</p>
+</dd></dl>
+<dl class="section user"><dt>Implementation specific behaviour</dt><dd><ul>
+<li>As Link establishment procedure is not supported following static link configuration parameters are used:</li>
+<li>TX window size is 1.</li>
+<li>16 bit CCITT-CRC must be used.</li>
+<li>Out of frame software flow control not supported.</li>
+<li>Parameters specific for resending reliable packets are compile time configurable (clarifed later in this document).</li>
+<li>Acknowledgement packet transmissions are not timeout driven , meaning they are delivered for transmission within same context which the corresponding application packet was received.</li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>Implementation specific limitations</dt><dd>Current implementation has the following limitations which will have impact to system wide behaviour:<ul>
+<li>Delayed acknowledgement scheduling not implemented: There exists a possibility that acknowledgement TX packet and application TX packet will collide in the TX pipeline having the end result that acknowledgement packet will be excluded from the TX pipeline which will trigger the retransmission algorithm within the peer protocol entity.</li>
+<li>Delayed retransmission scheduling not implemented: There exists a possibility that retransmitted application TX packet and acknowledgement TX packet will collide in the TX pipeline having the end result that retransmitted application TX packet will be excluded from the TX pipeline.</li>
+<li>Processing of the acknowledgement number from RX application packets: Acknowledgement number is not processed from the RX application packets having the end result that unnecessary application packet retransmissions can occur.</li>
+</ul>
+</dd></dl>
+<p>The application TX packet processing flow is illustrated by the statemachine below.</p>
 <div class="image">
-<img src="scheduler_working.jpg" alt="scheduler_working.jpg"/>
+<img src="hci_transport_tx_sm.png" alt="hci_transport_tx_sm.png"/>
 <div class="caption">
-The high level design of the scheduler</div></div>
- <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga197748a0733d615e809ce71effa6dc48"></a>
+TX - application packet statemachine</div></div>
+ <dl class="section user"><dt>Component specific configuration options</dt><dd></dd></dl>
+<p>The following compile time configuration options are available, and used to configure the application TX packet retransmission interval, in order to suite various application specific implementations:</p>
+<ul>
+<li>MAC_PACKET_SIZE_IN_BITS Maximum size of a single application packet in bits.</li>
+<li>USED_BAUD_RATE Used uart baudrate.</li>
+</ul>
+<p>The following compile time configuration option is available to configure module specific behaviour:</p>
+<ul>
+<li>MAX_RETRY_COUNT Max retransmission retry count for applicaton packets. </li>
+</ul>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga7efe3de4ca7194b952f224c078e98137"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define APP_SCHED_BUF_SIZE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">EVENT_SIZE, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">QUEUE_SIZE&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;(((EVENT_SIZE) + <a class="el" href="a00778.html#ga6ec6d3a526d13df66e0aff7d20049e20">APP_SCHED_EVENT_HEADER_SIZE</a>) * ((QUEUE_SIZE) + 1))</td>
+          <td class="memname">typedef void(* hci_transport_event_handler_t)(<a class="el" href="a00362.html">hci_transport_evt_t</a> event)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Compute number of bytes required to hold the scheduler buffer. </p>
+<p>Transport layer generic event callback function type. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">EVENT_SIZE</td><td>Maximum size of events to be passed through the scheduler. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">QUEUE_SIZE</td><td>Number of entries in scheduler queue (i.e. the maximum number of events that can be scheduled for execution).</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>Transport layer event. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Required scheduler buffer size (in bytes). </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga6ec6d3a526d13df66e0aff7d20049e20"></a>
+<a class="anchor" id="ga5f292ecaadba029ac812506329fe4cdc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define APP_SCHED_EVENT_HEADER_SIZE&#160;&#160;&#160;8</td>
+          <td class="memname">typedef void(* hci_transport_tx_done_handler_t)(<a class="el" href="a00778.html#gae80211a61fd86e95a2ad0d7e8dcf8a5c">hci_transport_tx_done_result_t</a> result)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Size of app_scheduler.event_header_t (only for use inside <a class="el" href="a00778.html#ga197748a0733d615e809ce71effa6dc48" title="Compute number of bytes required to hold the scheduler buffer.">APP_SCHED_BUF_SIZE()</a>). </p>
 
-</div>
-</div>
-<a class="anchor" id="gaa9670ed0053a67304c3d2d0cb3eb1333"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define APP_SCHED_INIT</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">EVENT_SIZE, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">QUEUE_SIZE&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>                                                                                             \</div>
-<div class="line">    {                                                                                              \</div>
-<div class="line">        static uint32_t APP_SCHED_BUF[<a class="code" href="a00782.html#ga7aaa817cfd7ed354f09db5675ffe1427" title="Perform integer division, making sure the result is rounded up.">CEIL_DIV</a>(<a class="code" href="a00778.html#ga197748a0733d615e809ce71effa6dc48" title="Compute number of bytes required to hold the scheduler buffer.">APP_SCHED_BUF_SIZE</a>((EVENT_SIZE), (QUEUE_SIZE)),     \</div>
-<div class="line">                                               <span class="keyword">sizeof</span>(uint32_t))];                                 \</div>
-<div class="line">        uint32_t ERR_CODE = <a class="code" href="a00778.html#gaf021e02dd6ca1767b428c250d1ded56c" title="Function for initializing the Scheduler.">app_sched_init</a>((EVENT_SIZE), (QUEUE_SIZE), APP_SCHED_BUF);             \</div>
-<div class="line">        APP_ERROR_CHECK(ERR_CODE);                                                                 \</div>
-<div class="line">    } <span class="keywordflow">while</span> (0)</div>
-</div><!-- fragment -->
-<p>Macro for initializing the event scheduler. </p>
-<p>It will also handle dimensioning and allocation of the memory buffer required by the scheduler, making sure the buffer is correctly aligned.</p>
+<p>Transport layer TX done event callback function type. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">EVENT_SIZE</td><td>Maximum size of events to be passed through the scheduler. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">QUEUE_SIZE</td><td>Number of entries in scheduler queue (i.e. the maximum number of events that can be scheduled for execution).</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">result</td><td>TX done event result code. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Since this macro allocates a buffer, it must only be called once (it is OK to call it several times as long as it is from the same location, e.g. to do a reinitialization). </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="ga1679bda84cf17b2f9c2dd5e323078c5a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00778.html#ga1679bda84cf17b2f9c2dd5e323078c5a">hci_transport_evt_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generic event callback function events. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1679bda84cf17b2f9c2dd5e323078c5aa2d702ba14161b60cb74a7dd5c2c71d5b"></a>HCI_TRANSPORT_RX_RDY</em>&nbsp;</td><td class="fielddoc">
+<p>An event indicating that RX packet is ready for read. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1679bda84cf17b2f9c2dd5e323078c5aa7abdd63991cc440f4fdd54e02ce945bf"></a>HCI_TRANSPORT_EVT_TYPE_MAX</em>&nbsp;</td><td class="fielddoc">
+<p>Enumeration upper bound. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gae80211a61fd86e95a2ad0d7e8dcf8a5c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00778.html#gae80211a61fd86e95a2ad0d7e8dcf8a5c">hci_transport_tx_done_result_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>TX done event callback function result codes. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae80211a61fd86e95a2ad0d7e8dcf8a5ca0f6139241ce530ef3bd92baa428b6d73"></a>HCI_TRANSPORT_TX_DONE_SUCCESS</em>&nbsp;</td><td class="fielddoc">
+<p>Transmission success, peer transport entity has acknowledged the transmission. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae80211a61fd86e95a2ad0d7e8dcf8a5ca99f0852942a9bdd2a80ef9318ecb508b"></a>HCI_TRANSPORT_TX_DONE_FAILURE</em>&nbsp;</td><td class="fielddoc">
+<p>Transmission failure. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga49ec0ad278ece44b5dc56b86ac44489c"></a>
+<a class="anchor" id="ga1e88949d8bf4e67f16af9e2577750e70"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t app_sched_event_put </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>p_event_data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>event_size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00778.html#gad36ea5cb15b82aa724a13f1ba24ef005">app_sched_event_handler_t</a>&#160;</td>
-          <td class="paramname"><em>handler</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for scheduling an event. </p>
-<p>Puts an event into the event queue.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_event_data</td><td>Pointer to event data to be scheduled. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_size</td><td>Size of event data to be scheduled. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">handler</td><td>Event handler to receive the event.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gab725820c32a8d05379db4567cf30e862"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void app_sched_execute </td>
+          <td class="memname">uint32_t hci_transport_close </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -313,32 +324,90 @@ The high level design of the scheduler</div></div>
       </table>
 </div><div class="memdoc">
 
-<p>Function for executing all scheduled events. </p>
-<p>This function must be called from within the main loop. It will execute all events scheduled since the last time it was called. </p>
+<p>Function for closing the transport channel. </p>
+<dl class="section note"><dt>Note</dt><dd>Can be called multiple times and also for not opened channel.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf021e02dd6ca1767b428c250d1ded56c"></a>
+<a class="anchor" id="gad7d6efd012a22ff3b4749944b8049467"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t app_sched_init </td>
+          <td class="memname">uint32_t hci_transport_evt_handler_reg </td>
           <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>max_event_size</em>, </td>
+          <td class="paramtype"><a class="el" href="a00778.html#ga7efe3de4ca7194b952f224c078e98137">hci_transport_event_handler_t</a>&#160;</td>
+          <td class="paramname"><em>event_handler</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for registering a generic event handler. </p>
+<dl class="section note"><dt>Note</dt><dd>Multiple registration requests will overwrite any possible existing registration.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">event_handler</td><td>The function to be called by the transport layer upon an event.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5bb2e014f346a3a51a6687545b26b0ce"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t hci_transport_open </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for opening the transport channel and initializing the transport layer. </p>
+<dl class="section warning"><dt>Warning</dt><dd>Must not be called for a channel which has been allready opened.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INTERNAL</td><td>Operation failure. Internal error ocurred. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac59c8369494bbe394a6fb075115263ba"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t hci_transport_pkt_write </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>p_buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>queue_size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>p_evt_buffer</em>&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -348,21 +417,183 @@ The high level design of the scheduler</div></div>
       </table>
 </div><div class="memdoc">
 
-<p>Function for initializing the Scheduler. </p>
-<p>It must be called before entering the main loop.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">max_event_size</td><td>Maximum size of events to be passed through the scheduler. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">queue_size</td><td>Number of entries in scheduler queue (i.e. the maximum number of events that can be scheduled for execution). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_evt_buffer</td><td>Pointer to memory buffer for holding the scheduler queue. It must be dimensioned using the APP_SCHED_BUFFER_SIZE() macro. The buffer must be aligned to a 4 byte boundary.</td></tr>
+<p>Function for writing a packet. </p>
+<dl class="section note"><dt>Note</dt><dd>Completion of this method does not guarantee that actual peripheral transmission would have completed.</dd>
+<dd>
+In case of 0 byte packet length write request, message will consist of only transport module specific headers.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. Packet was added to the transmission queue and an event will be send upon transmission completion. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>Operation failure. Transmission queue is full and packet was not added to the transmission queue. User should wait for a appropriate event prior issuing this operation again. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_DATA_SIZE</td><td>Operation failure. Packet size exceeds limit. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Operation failure. Channel is not open. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Normally initialization should be done using the <a class="el" href="a00778.html#gaa9670ed0053a67304c3d2d0cb3eb1333" title="Macro for initializing the event scheduler.">APP_SCHED_INIT()</a> macro, as that will both allocate the scheduler buffer, and also align the buffer correctly.</dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5fa929e7796b2b4af481c8c0a86a51c7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t hci_transport_rx_pkt_consume </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_buffer</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for consuming extracted packet described by p_buffer. </p>
+<p>RX memory pointed to by p_buffer is freed and can be reused by the underlying transport layer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to the buffer that has been consumed.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Successful initialization. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Invalid parameter (buffer not aligned to a 4 byte boundary). </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>Operation failure. No packet available to consume. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>Operation failure. Not a valid pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3fcd4cdf510a2e66a2938f2806f677f0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t hci_transport_rx_pkt_extract </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t **&#160;</td>
+          <td class="paramname"><em>pp_buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t *&#160;</td>
+          <td class="paramname"><em>p_length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for extracting received packet. </p>
+<dl class="section note"><dt>Note</dt><dd>Extracted memory can't be reused by the underlying transport layer untill freed by call to <a class="el" href="a00778.html#ga5fa929e7796b2b4af481c8c0a86a51c7" title="Function for consuming extracted packet described by p_buffer.">hci_transport_rx_pkt_consume()</a>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_buffer</td><td>Pointer to the packet data. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_length</td><td>Length of packet data in bytes.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. Packet was extracted. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>Operation failure. No packet available to extract. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga319b29010ea99d069018e543e7042121"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t hci_transport_tx_alloc </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t **&#160;</td>
+          <td class="paramname"><em>pp_memory</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for allocating tx packet memory. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">pp_memory</td><td>Pointer to the packet data.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. Memory was allocated. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>Operation failure. No memory available. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga84d8c08bb7ff0cc2e1c7c51015762937"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t hci_transport_tx_done_register </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00778.html#ga5f292ecaadba029ac812506329fe4cdc">hci_transport_tx_done_handler_t</a>&#160;</td>
+          <td class="paramname"><em>event_handler</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for registering a handler for TX done event. </p>
+<dl class="section note"><dt>Note</dt><dd>Multiple registration requests will overwrite any possible existing registration.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">event_handler</td><td>The function to be called by the transport layer upon TX done event.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga59e21e1c13ebf70dde8ec9c4449e3a4a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t hci_transport_tx_free </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for freeing tx packet memory. </p>
+<dl class="section note"><dt>Note</dt><dd>Memory management works in FIFO principle meaning that free order must match the alloc order.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. Memory was freed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -374,7 +605,7 @@ The high level design of the scheduler</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:19 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:05 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

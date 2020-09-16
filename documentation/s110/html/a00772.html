@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: FIFO implementation</title>
+<title>nRF51 SDK - S110 SoftDevice: CRC compute</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,85 +97,45 @@ $(document).ready(function(){initNavTree('a00772.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">FIFO implementation<div class="ingroups"><a class="el" href="a01037.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">CRC compute<div class="ingroups"><a class="el" href="a00778.html">HCI Transport</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>FIFO implementation.  
+<p>This module implements the CRC-16 calculation in the blocks.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00142.html">app_fifo_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the information about which memory is allocated for the buffer and its size. This needs to be initialized by <a class="el" href="a00772.html#gafc2ba3545e60f0134689fac2aa87f493" title="Function for initializing the FIFO.">app_fifo_init()</a> before use.  <a href="a00142.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gafc2ba3545e60f0134689fac2aa87f493"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00772.html#gafc2ba3545e60f0134689fac2aa87f493">app_fifo_init</a> (<a class="el" href="a00142.html">app_fifo_t</a> *p_fifo, uint8_t *p_buf, uint16_t buf_size)</td></tr>
-<tr class="memdesc:gafc2ba3545e60f0134689fac2aa87f493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the FIFO.  <a href="#gafc2ba3545e60f0134689fac2aa87f493">More...</a><br/></td></tr>
-<tr class="separator:gafc2ba3545e60f0134689fac2aa87f493"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga76ac40c5174cc17b8b6ebd8d86cf0f0e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00772.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">app_fifo_put</a> (<a class="el" href="a00142.html">app_fifo_t</a> *p_fifo, uint8_t byte)</td></tr>
-<tr class="memdesc:ga76ac40c5174cc17b8b6ebd8d86cf0f0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for adding an element to the FIFO.  <a href="#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">More...</a><br/></td></tr>
-<tr class="separator:ga76ac40c5174cc17b8b6ebd8d86cf0f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab6292f78e91737ba0df83d6755e0abb9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00772.html#gab6292f78e91737ba0df83d6755e0abb9">app_fifo_get</a> (<a class="el" href="a00142.html">app_fifo_t</a> *p_fifo, uint8_t *p_byte)</td></tr>
-<tr class="memdesc:gab6292f78e91737ba0df83d6755e0abb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the next element from the FIFO.  <a href="#gab6292f78e91737ba0df83d6755e0abb9">More...</a><br/></td></tr>
-<tr class="separator:gab6292f78e91737ba0df83d6755e0abb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0944439787b55aafb3288a836efa3b9b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00772.html#ga0944439787b55aafb3288a836efa3b9b">app_fifo_flush</a> (<a class="el" href="a00142.html">app_fifo_t</a> *p_fifo)</td></tr>
-<tr class="memdesc:ga0944439787b55aafb3288a836efa3b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for flushing the FIFO.  <a href="#ga0944439787b55aafb3288a836efa3b9b">More...</a><br/></td></tr>
-<tr class="separator:ga0944439787b55aafb3288a836efa3b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8708f07a37b9c76f74f69dd00db983b6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00772.html#ga8708f07a37b9c76f74f69dd00db983b6">crc16_compute</a> (const uint8_t *p_data, uint32_t size, const uint16_t *p_crc)</td></tr>
+<tr class="memdesc:ga8708f07a37b9c76f74f69dd00db983b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for calculating CRC-16 in blocks.  <a href="#ga8708f07a37b9c76f74f69dd00db983b6">More...</a><br/></td></tr>
+<tr class="separator:ga8708f07a37b9c76f74f69dd00db983b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>FIFO implementation. </p>
+<p>This module implements the CRC-16 calculation in the blocks. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga0944439787b55aafb3288a836efa3b9b"></a>
+<a class="anchor" id="ga8708f07a37b9c76f74f69dd00db983b6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t app_fifo_flush </td>
+          <td class="memname">uint16_t crc16_compute </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00142.html">app_fifo_t</a> *&#160;</td>
-          <td class="paramname"><em>p_fifo</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for flushing the FIFO. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_fifo</td><td>Pointer to the FIFO.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If the FIFO flushed successfully. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab6292f78e91737ba0df83d6755e0abb9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t app_fifo_get </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00142.html">app_fifo_t</a> *&#160;</td>
-          <td class="paramname"><em>p_fifo</em>, </td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>p_data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_byte</em>&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t *&#160;</td>
+          <td class="paramname"><em>p_crc</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -185,113 +145,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for getting the next element from the FIFO. </p>
+<p>Function for calculating CRC-16 in blocks. </p>
+<p>Feed each consecutive data block into this function, along with the current value of p_crc as returned by the previous call of this function. The first call of this function should pass NULL as the initial value of the crc in p_crc.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_fifo</td><td>Pointer to the FIFO. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_byte</td><td>Byte fetched from the FIFO.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>The input data block for computation. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The size of the input data block in bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_crc</td><td>The previous calculated CRC-16 value or NULL if first call.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If an element was returned. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NOT_FOUND</td><td>If there is no more elements in the queue. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gafc2ba3545e60f0134689fac2aa87f493"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t app_fifo_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00142.html">app_fifo_t</a> *&#160;</td>
-          <td class="paramname"><em>p_fifo</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>buf_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for initializing the FIFO. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_fifo</td><td>FIFO object. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>FIFO buffer for storing data. The buffer size has to be a power of two. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">buf_size</td><td>Size of the FIFO buffer provided, has to be a power of 2.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If initialization was successful. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>If a NULL pointer is provided as buffer. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>If size of buffer provided is not a power of two. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga76ac40c5174cc17b8b6ebd8d86cf0f0e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t app_fifo_put </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00142.html">app_fifo_t</a> *&#160;</td>
-          <td class="paramname"><em>p_fifo</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>byte</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for adding an element to the FIFO. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_fifo</td><td>Pointer to the FIFO. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">byte</td><td>Data byte to add to the FIFO.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If an element has been successfully added to the FIFO. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>If the FIFO is full. </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>The updated CRC-16 value, based on the input supplied. </dd></dl>
 
 </div>
 </div>
@@ -300,7 +164,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:19 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:05 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

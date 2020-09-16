@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Enumerations</title>
+<title>nRF51 SDK - S110 SoftDevice: Bootloader/DFU API</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,116 +97,57 @@ $(document).ready(function(){initNavTree('a01040.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Enumerations<div class="ingroups"><a class="el" href="a00794.html">Events, type definitions and API calls</a></div></div>  </div>
+<div class="title">Bootloader/DFU API<div class="ingroups"><a class="el" href="a01034.html">nRF51 SDK</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gab53f87e96c3cbbb977a1c1b1004d7526"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01040.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a> { <br/>
-&#160;&#160;<a class="el" href="a01040.html#ggab53f87e96c3cbbb977a1c1b1004d7526a5bc269d863f4f35451475890b2c04adc">SD_BLE_ENABLE</a> = 0x60, 
-<br/>
-&#160;&#160;<a class="el" href="a01040.html#ggab53f87e96c3cbbb977a1c1b1004d7526a0d32aa9b47a0efe1af65bf138ac0b617">SD_BLE_EVT_GET</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a01040.html#ggab53f87e96c3cbbb977a1c1b1004d7526a377ad568f58eb2ccb2c0f3e9229f69fd">SD_BLE_TX_BUFFER_COUNT_GET</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a01040.html#ggab53f87e96c3cbbb977a1c1b1004d7526a0974926f3c11748769d7a51c1407ee48">SD_BLE_UUID_VS_ADD</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a01040.html#ggab53f87e96c3cbbb977a1c1b1004d7526a893795930e05c96fff604f861c8689c4">SD_BLE_UUID_DECODE</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a01040.html#ggab53f87e96c3cbbb977a1c1b1004d7526af9ed6f002dd3c6798457e7f8316b9122">SD_BLE_UUID_ENCODE</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a01040.html#ggab53f87e96c3cbbb977a1c1b1004d7526a955b5bde398b0a62db9f51843fc2ffb3">SD_BLE_VERSION_GET</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a01040.html#ggab53f87e96c3cbbb977a1c1b1004d7526a9235db5aeac0058167d9d2fdfb81a3bd">SD_BLE_USER_MEM_REPLY</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a01040.html#ggab53f87e96c3cbbb977a1c1b1004d7526a0a3fca033f8d3bdf363edf6f47368489">SD_BLE_OPT_SET</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a01040.html#ggab53f87e96c3cbbb977a1c1b1004d7526acf5a51bcf12d98abd706ab94ae304a55">SD_BLE_OPT_GET</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gab53f87e96c3cbbb977a1c1b1004d7526"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common API SVC numbers.  <a href="a01040.html#gab53f87e96c3cbbb977a1c1b1004d7526">More...</a><br/></td></tr>
-<tr class="separator:gab53f87e96c3cbbb977a1c1b1004d7526"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab104c3b3aebea136806077a7a8d20d00"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01040.html#gab104c3b3aebea136806077a7a8d20d00">BLE_COMMON_OPTS</a> { <a class="el" href="a01040.html#ggab104c3b3aebea136806077a7a8d20d00abec3e50a45802caa9c024ad219e294ba">BLE_COMMON_OPT_RADIO_CPU_MUTEX</a> = 0x01
- }</td></tr>
-<tr class="memdesc:gab104c3b3aebea136806077a7a8d20d00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common Option IDs. IDs that uniquely identify a common option.  <a href="a01040.html#gab104c3b3aebea136806077a7a8d20d00">More...</a><br/></td></tr>
-<tr class="separator:gab104c3b3aebea136806077a7a8d20d00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00951"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00951.html">HCI Transport Layer Configuration</a></td></tr>
+<tr class="memdesc:a00951"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of HCI Transport Layer configurable parameters. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00939"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html">Bootloader API.</a></td></tr>
+<tr class="memdesc:a00939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bootloader module interface. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00940"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00940.html">Bootloader settings API.</a></td></tr>
+<tr class="memdesc:a00940"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bootloader settings module interface. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00950"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00950.html">DFU BLE packet handling in Application</a></td></tr>
+<tr class="memdesc:a00950"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU BLE packet handling for application. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00943"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00943.html">Device Firmware Update API.</a></td></tr>
+<tr class="memdesc:a00943"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Firmware Update module interface. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00947"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00947.html">Init packet handling in DFU.</a></td></tr>
+<tr class="memdesc:a00947"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Firmware Update module type and function declaration for init packet handling. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00948"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00948.html">DFU transport API.</a></td></tr>
+<tr class="memdesc:a00948"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU transport module interface. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00942"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00942.html">Bootloader util API.</a></td></tr>
+<tr class="memdesc:a00942"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bootloader util module interface. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00944"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00944.html">Device Firmware Update internal header for bank handling in DFU.</a></td></tr>
+<tr class="memdesc:a00944"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Firmware Update Bank handling module interface. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01085"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01085.html">Ble_sdk_app_bootloader_main</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00945"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00945.html">DFU BLE SVC</a></td></tr>
+<tr class="memdesc:a00945"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU BLE SVC in bootloader. The DFU BLE SuperVisor Calls allow an application to execute functions in the installed bootloader. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00946"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00946.html">DFU BLE SVC internal</a></td></tr>
+<tr class="memdesc:a00946"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU BLE SVC internal functions in bootloader. The DFU BLE SuperVisor Calls allow an application to execute functions in the installed bootloader. This interface provides internal Bootloader DFU functions for retrieving data exchanged through SuperVisor Calls. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gab104c3b3aebea136806077a7a8d20d00"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a01040.html#gab104c3b3aebea136806077a7a8d20d00">BLE_COMMON_OPTS</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Common Option IDs. IDs that uniquely identify a common option. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab104c3b3aebea136806077a7a8d20d00abec3e50a45802caa9c024ad219e294ba"></a>BLE_COMMON_OPT_RADIO_CPU_MUTEX</em>&nbsp;</td><td class="fielddoc">
-<p>Common BLE Option base. Radio CPU mutex option. <a class="el" href="a00177.html">ble_common_opt_radio_cpu_mutex_t</a> </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="gab53f87e96c3cbbb977a1c1b1004d7526"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a01040.html#gab53f87e96c3cbbb977a1c1b1004d7526">BLE_COMMON_SVCS</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Common API SVC numbers. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab53f87e96c3cbbb977a1c1b1004d7526a5bc269d863f4f35451475890b2c04adc"></a>SD_BLE_ENABLE</em>&nbsp;</td><td class="fielddoc">
-<p>Enable and initialize the BLE stack </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab53f87e96c3cbbb977a1c1b1004d7526a0d32aa9b47a0efe1af65bf138ac0b617"></a>SD_BLE_EVT_GET</em>&nbsp;</td><td class="fielddoc">
-<p>Get an event from the pending events queue. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab53f87e96c3cbbb977a1c1b1004d7526a377ad568f58eb2ccb2c0f3e9229f69fd"></a>SD_BLE_TX_BUFFER_COUNT_GET</em>&nbsp;</td><td class="fielddoc">
-<p>Get the total number of available application transmission buffers from the stack. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab53f87e96c3cbbb977a1c1b1004d7526a0974926f3c11748769d7a51c1407ee48"></a>SD_BLE_UUID_VS_ADD</em>&nbsp;</td><td class="fielddoc">
-<p>Add a Vendor Specific UUID. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab53f87e96c3cbbb977a1c1b1004d7526a893795930e05c96fff604f861c8689c4"></a>SD_BLE_UUID_DECODE</em>&nbsp;</td><td class="fielddoc">
-<p>Decode UUID bytes. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab53f87e96c3cbbb977a1c1b1004d7526af9ed6f002dd3c6798457e7f8316b9122"></a>SD_BLE_UUID_ENCODE</em>&nbsp;</td><td class="fielddoc">
-<p>Encode UUID bytes. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab53f87e96c3cbbb977a1c1b1004d7526a955b5bde398b0a62db9f51843fc2ffb3"></a>SD_BLE_VERSION_GET</em>&nbsp;</td><td class="fielddoc">
-<p>Get the local version information (company id, Link Layer Version, Link Layer Subversion). </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab53f87e96c3cbbb977a1c1b1004d7526a9235db5aeac0058167d9d2fdfb81a3bd"></a>SD_BLE_USER_MEM_REPLY</em>&nbsp;</td><td class="fielddoc">
-<p>User Memory Reply. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab53f87e96c3cbbb977a1c1b1004d7526a0a3fca033f8d3bdf363edf6f47368489"></a>SD_BLE_OPT_SET</em>&nbsp;</td><td class="fielddoc">
-<p>Set a BLE option. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab53f87e96c3cbbb977a1c1b1004d7526acf5a51bcf12d98abd706ab94ae304a55"></a>SD_BLE_OPT_GET</em>&nbsp;</td><td class="fielddoc">
-<p>Get a BLE option. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:26 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:12 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

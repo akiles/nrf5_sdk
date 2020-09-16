@@ -1,9 +1,6 @@
 var a00818 =
 [
-    [ "BLE_GATT_OP_EXEC_WRITE_REQ", "a00818.html#ga7b4e1d78a5c63acda9f936be6293b513", null ],
-    [ "BLE_GATT_OP_INVALID", "a00818.html#ga608ba17cf0f6dd37f68bcca0f5bcc6c6", null ],
-    [ "BLE_GATT_OP_PREP_WRITE_REQ", "a00818.html#ga2a14ca8931148c5b97289f12acbb2a02", null ],
-    [ "BLE_GATT_OP_SIGN_WRITE_CMD", "a00818.html#ga9a87ace6849f8d15ba3117a5c50ec481", null ],
-    [ "BLE_GATT_OP_WRITE_CMD", "a00818.html#gac70b760454146bc15a51a3e2bbdccf9a", null ],
-    [ "BLE_GATT_OP_WRITE_REQ", "a00818.html#ga07b9cb136bbd9c0b85d0fff54dbe0103", null ]
+    [ "BLE_GATT_HVX_INDICATION", "a00818.html#ga47f3222bcefb5eb4aed9a1dc7c796b1f", null ],
+    [ "BLE_GATT_HVX_INVALID", "a00818.html#gae454efaf8b3f8c6871dca5d2db5ac724", null ],
+    [ "BLE_GATT_HVX_NOTIFICATION", "a00818.html#gad5784996b45947f6d7f0cb81c9a4c9ed", null ]
 ];

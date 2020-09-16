@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Defines</title>
+<title>nRF51 SDK - S110 SoftDevice: Utility APIs</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,44 +97,246 @@ $(document).ready(function(){initNavTree('a00993.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Defines<div class="ingroups"><a class="el" href="a00992.html">Database Discovery</a></div></div>  </div>
+<div class="title">Utility APIs<div class="ingroups"><a class="el" href="a00989.html">Device Module APIs</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>This section describes the utility APIs offered by the module.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaf1f2ccd6a3638aab1ef6a6a68866fe71"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00993.html#gaf1f2ccd6a3638aab1ef6a6a68866fe71">BLE_DB_DISCOVERY_MAX_SRV</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:gaf1f2ccd6a3638aab1ef6a6a68866fe71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae17633bce497fe1c216826ed096ababd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00993.html#gae17633bce497fe1c216826ed096ababd">BLE_DB_DISCOVERY_MAX_CHAR_PER_SRV</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:gae17633bce497fe1c216826ed096ababd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gad3a18ce58b434ecdcf78c9071163df1d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00785.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00993.html#gad3a18ce58b434ecdcf78c9071163df1d">dm_application_instance_set</a> (<a class="el" href="a00988.html#ga3c013385ac2ef5502370f598308d0339">dm_application_instance_t</a> const *p_appl_instance, <a class="el" href="a00988.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> *p_handle)</td></tr>
+<tr class="memdesc:gad3a18ce58b434ecdcf78c9071163df1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for Setting/Copying Application instance to Device Manager handle.  <a href="#gad3a18ce58b434ecdcf78c9071163df1d">More...</a><br/></td></tr>
+<tr class="separator:gad3a18ce58b434ecdcf78c9071163df1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga550783ada0aa766e7f0c96ba003ffda2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00785.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00993.html#ga550783ada0aa766e7f0c96ba003ffda2">dm_peer_addr_get</a> (<a class="el" href="a00988.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> const *p_handle, <a class="el" href="a00207.html">ble_gap_addr_t</a> *p_addr)</td></tr>
+<tr class="memdesc:ga550783ada0aa766e7f0c96ba003ffda2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting a peer's device address.  <a href="#ga550783ada0aa766e7f0c96ba003ffda2">More...</a><br/></td></tr>
+<tr class="separator:ga550783ada0aa766e7f0c96ba003ffda2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga191fbd9074dab75ced9706282f6c9dff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00785.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00993.html#ga191fbd9074dab75ced9706282f6c9dff">dm_peer_addr_set</a> (<a class="el" href="a00988.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> const *p_handle, <a class="el" href="a00207.html">ble_gap_addr_t</a> const *p_addr)</td></tr>
+<tr class="memdesc:ga191fbd9074dab75ced9706282f6c9dff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting/updating a peer's device address.  <a href="#ga191fbd9074dab75ced9706282f6c9dff">More...</a><br/></td></tr>
+<tr class="separator:ga191fbd9074dab75ced9706282f6c9dff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaade48957b4fee06f203158a283b69b89"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00785.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00993.html#gaade48957b4fee06f203158a283b69b89">dm_handle_initialize</a> (<a class="el" href="a00988.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> *p_handle)</td></tr>
+<tr class="memdesc:gaade48957b4fee06f203158a283b69b89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing Device Manager handle.  <a href="#gaade48957b4fee06f203158a283b69b89">More...</a><br/></td></tr>
+<tr class="separator:gaade48957b4fee06f203158a283b69b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d155d67c9463c911a2a04b81101d919"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00785.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00993.html#ga1d155d67c9463c911a2a04b81101d919">dm_distributed_keys_get</a> (<a class="el" href="a00988.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> const *p_handle, <a class="el" href="a00358.html">dm_sec_keyset_t</a> *p_key_dist)</td></tr>
+<tr class="memdesc:ga1d155d67c9463c911a2a04b81101d919"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting distributed keys for a device.  <a href="#ga1d155d67c9463c911a2a04b81101d919">More...</a><br/></td></tr>
+<tr class="separator:ga1d155d67c9463c911a2a04b81101d919"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gae17633bce497fe1c216826ed096ababd"></a>
+<p>This section describes the utility APIs offered by the module. </p>
+<p>APIs defined in this section are utility or assisting/helper APIs. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gad3a18ce58b434ecdcf78c9071163df1d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_DB_DISCOVERY_MAX_CHAR_PER_SRV&#160;&#160;&#160;3</td>
+          <td class="memname"><a class="el" href="a00785.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a> dm_application_instance_set </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00988.html#ga3c013385ac2ef5502370f598308d0339">dm_application_instance_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_appl_instance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00988.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>p_handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Maximum number of characteristics per service supported by this module. </p>
+
+<p>Function for Setting/Copying Application instance to Device Manager handle. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_appl_instance</td><td>Application instance to be set. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_handle</td><td>Device Manager handle for which the instance is to be copied.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>On success, else an error code indicating reason for failure. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If the API is called without module initialization and/or application registration. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>If p_handle and/or p_addr is NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf1f2ccd6a3638aab1ef6a6a68866fe71"></a>
+<a class="anchor" id="ga1d155d67c9463c911a2a04b81101d919"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_DB_DISCOVERY_MAX_SRV&#160;&#160;&#160;2</td>
+          <td class="memname"><a class="el" href="a00785.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a> dm_distributed_keys_get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00988.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00358.html">dm_sec_keyset_t</a> *&#160;</td>
+          <td class="paramname"><em>p_key_dist</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Maximum number of services supported by this module. This also indicates the maximum number of users allowed to be registered to this module. (one user per service). </p>
+
+<p>Function for getting distributed keys for a device. </p>
+<p>This routine is used to get distributed keys with a bonded device. This API is currently only available on S120 (GAP Central role).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_handle</td><td>Device Manager handle identifying the peer.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_key_dist</td><td>Pointer to distributed keys.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>On success, else an error code indicating reason for failure. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If the API is called without module initialization and/or application registration. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>If the p_handle and/or p_key_dist pointer is NULL. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>If the peer is not identified by the handle provided by the application. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaade48957b4fee06f203158a283b69b89"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00785.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a> dm_handle_initialize </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00988.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> *&#160;</td>
+          <td class="paramname"><em>p_handle</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for initializing Device Manager handle. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_handle</td><td>Device Manager handle to be initialized.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>On success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>If p_handle is NULL.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This routine is permitted before initialization of the module. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga550783ada0aa766e7f0c96ba003ffda2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00785.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a> dm_peer_addr_get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00988.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00207.html">ble_gap_addr_t</a> *&#160;</td>
+          <td class="paramname"><em>p_addr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for getting a peer's device address. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_handle</td><td>Identifies the peer device whose address is requested. Can not be NULL. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_addr</td><td>Pointer where address is to be copied. Can not be NULL.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>On success, else an error code indicating reason for failure. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If the API is called without module initialization and/or application registration. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>If p_handle and/or p_addr is NULL. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NOT_FOUND</td><td>If the peer could not be identified. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga191fbd9074dab75ced9706282f6c9dff"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00785.html#ga981ace296dd50082e82b56dc820295a9">api_result_t</a> dm_peer_addr_set </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00988.html#gaf4616538d9102b901e86d92fc4e82c5c">dm_handle_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00207.html">ble_gap_addr_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_addr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for setting/updating a peer's device address. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_handle</td><td>Identifies the peer device whose address is requested to be set/updated. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_addr</td><td>Address to be set/updated.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>On success, else an error code indicating reason for failure. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If the API is called without module initialization and/or application registration. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>If p_handle and/or p_addr is NULL. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>If the peer is not identified by the handle provided by the application. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>If this procedure is requested while connected to the peer or if the address type was set to BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Setting or updating a peer's device address is permitted only for a peer that is bonded and disconnected. </dd>
+<dd>
+Updated address is reflected only after DM_EVT_DEVICE_CONTEXT_STORED is notified to the application for this bonded device instance. In order to avoid abnormal behaviour, it is recommended to not invite/initiate connections on the updated address unless this event has been notified. </dd></dl>
 
 </div>
 </div>
@@ -143,7 +345,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

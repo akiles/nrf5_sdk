@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['ant_5fevt_5ft',['ant_evt_t',['../a00050.html',1,'']]],
   ['app_5fbutton_5fcfg_5ft',['app_button_cfg_t',['../a00051.html',1,'']]],
   ['app_5ffifo_5ft',['app_fifo_t',['../a00052.html',1,'']]],
   ['app_5fuart_5fbuffers_5ft',['app_uart_buffers_t',['../a00053.html',1,'']]],

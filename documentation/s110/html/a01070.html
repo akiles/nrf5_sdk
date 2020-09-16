@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Functions</title>
+<title>nRF51 SDK - S110 SoftDevice: Enumerations</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,180 +97,179 @@ $(document).ready(function(){initNavTree('a01070.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Functions<div class="ingroups"><a class="el" href="a00842.html">SoftDevice Manager API</a></div></div>  </div>
+<div class="title">Enumerations<div class="ingroups"><a class="el" href="a00840.html">SoftDevice Manager API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga26ecfde6eee7363f88bed8a8b711122a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01070.html#ga26ecfde6eee7363f88bed8a8b711122a">sd_softdevice_enable</a> (<a class="el" href="a01069.html#gabfecdd0b916a4022bd5688d4f842c473">nrf_clock_lfclksrc_t</a> clock_source, <a class="el" href="a01069.html#gaddfb569a9b86648e642ed0d7e3a83034">softdevice_assertion_handler_t</a> assertion_handler)</td></tr>
-<tr class="memdesc:ga26ecfde6eee7363f88bed8a8b711122a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the SoftDevice and by extension the protocol stack.  <a href="#ga26ecfde6eee7363f88bed8a8b711122a">More...</a><br/></td></tr>
-<tr class="separator:ga26ecfde6eee7363f88bed8a8b711122a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga45900ecbe6d5ebf9ae78894fe6c75b23"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01070.html#ga45900ecbe6d5ebf9ae78894fe6c75b23">sd_softdevice_disable</a> (void)</td></tr>
-<tr class="memdesc:ga45900ecbe6d5ebf9ae78894fe6c75b23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the SoftDevice and by extension the protocol stack.  <a href="#ga45900ecbe6d5ebf9ae78894fe6c75b23">More...</a><br/></td></tr>
-<tr class="separator:ga45900ecbe6d5ebf9ae78894fe6c75b23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga830210fec2b272bbd27af26e3b314d35"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01070.html#ga830210fec2b272bbd27af26e3b314d35">sd_softdevice_is_enabled</a> (uint8_t *p_softdevice_enabled)</td></tr>
-<tr class="memdesc:ga830210fec2b272bbd27af26e3b314d35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the SoftDevice is enabled.  <a href="#ga830210fec2b272bbd27af26e3b314d35">More...</a><br/></td></tr>
-<tr class="separator:ga830210fec2b272bbd27af26e3b314d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga46d2ce943076d65947ea8919198be106"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01070.html#ga46d2ce943076d65947ea8919198be106">sd_softdevice_vector_table_base_set</a> (uint32_t address)</td></tr>
-<tr class="memdesc:ga46d2ce943076d65947ea8919198be106"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the base address of the interrupt vector table for interrupts forwarded from the SoftDevice.  <a href="#ga46d2ce943076d65947ea8919198be106">More...</a><br/></td></tr>
-<tr class="separator:ga46d2ce943076d65947ea8919198be106"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ga4528cbf3f1a34d4712822ac456b1b305"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01070.html#ga4528cbf3f1a34d4712822ac456b1b305">NRF_SD_SVCS</a> { <br/>
+&#160;&#160;<a class="el" href="a01070.html#gga4528cbf3f1a34d4712822ac456b1b305ab692ec521a2f791184f7a4644897f781">SD_SOFTDEVICE_ENABLE</a> = (0x10), 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#gga4528cbf3f1a34d4712822ac456b1b305ab48ef4bb34f9d37c0a7005f7b7d13692">SD_SOFTDEVICE_DISABLE</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#gga4528cbf3f1a34d4712822ac456b1b305a6f89d282c869fd898e2c75141ac2bc5f">SD_SOFTDEVICE_IS_ENABLED</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#gga4528cbf3f1a34d4712822ac456b1b305a5e19adec24f31566eb74ff8222c7ab06">SD_SOFTDEVICE_VECTOR_TABLE_BASE_SET</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#gga4528cbf3f1a34d4712822ac456b1b305a11216cbdd9009464a16286385173bb5a">SVC_SDM_LAST</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga4528cbf3f1a34d4712822ac456b1b305"><td class="mdescLeft">&#160;</td><td class="mdescRight">nRF SoftDevice Manager API SVC numbers.  <a href="a01070.html#ga4528cbf3f1a34d4712822ac456b1b305">More...</a><br/></td></tr>
+<tr class="separator:ga4528cbf3f1a34d4712822ac456b1b305"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef6aabaa8887cb4d7265d7e21b3ec242"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01070.html#gaef6aabaa8887cb4d7265d7e21b3ec242">NRF_CLOCK_LFCLKSRCS</a> { <br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242ad1191ed01bdf8e562500d9a38a059b39">NRF_CLOCK_LFCLKSRC_SYNTH_250_PPM</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242abadb40f1cba74435f3ad04f04c700c86">NRF_CLOCK_LFCLKSRC_XTAL_500_PPM</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a65044d23edf148cbeb93dd4e785f581d">NRF_CLOCK_LFCLKSRC_XTAL_250_PPM</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a02019daada779a6cdb69fa13dad053e2">NRF_CLOCK_LFCLKSRC_XTAL_150_PPM</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242ab5bb363243d2e2b382bc4c1dad745a33">NRF_CLOCK_LFCLKSRC_XTAL_100_PPM</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a87f389b60383a850468327a5970cb395">NRF_CLOCK_LFCLKSRC_XTAL_75_PPM</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a2d5febc7eb0c8f35c3279a705d7974dd">NRF_CLOCK_LFCLKSRC_XTAL_50_PPM</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242ad2464539b8d78659dc83998a4ae66fa6">NRF_CLOCK_LFCLKSRC_XTAL_30_PPM</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a1c5e9917211a50eac336a3fd2e467756">NRF_CLOCK_LFCLKSRC_XTAL_20_PPM</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a0263c1cff2fbded3ada7b18a691eeda5">NRF_CLOCK_LFCLKSRC_RC_250_PPM_250MS_CALIBRATION</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242aaa9263dbc5c7bfa094d654941dc36d55">NRF_CLOCK_LFCLKSRC_RC_250_PPM_500MS_CALIBRATION</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a7f2111bcf8ef8c355ca609a9fb84712c">NRF_CLOCK_LFCLKSRC_RC_250_PPM_1000MS_CALIBRATION</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242ad94caa1c4bbc8b28e8fd062a012defd7">NRF_CLOCK_LFCLKSRC_RC_250_PPM_2000MS_CALIBRATION</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a4b75e480fdf08028b4ad36e960474411">NRF_CLOCK_LFCLKSRC_RC_250_PPM_4000MS_CALIBRATION</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a2c0772805e06ad3966b4dc69abd3f247">NRF_CLOCK_LFCLKSRC_RC_250_PPM_8000MS_CALIBRATION</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a23b8dfa27131f4e191c90cf7b4e115f5">NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_1000MS_CALIBRATION</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242abb90009e7d3b437a38688790a086d475">NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_2000MS_CALIBRATION</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a4a1524c1e9bf9fdcab3c88282a272b0a">NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_4000MS_CALIBRATION</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a7fca54df825052849f20136cf5186c02">NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_8000MS_CALIBRATION</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a01070.html#ggaef6aabaa8887cb4d7265d7e21b3ec242aa5f637eab2568c5a631337656d390b2e">NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_16000MS_CALIBRATION</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaef6aabaa8887cb4d7265d7e21b3ec242"><td class="mdescLeft">&#160;</td><td class="mdescRight">Possible lfclk oscillator sources.  <a href="a01070.html#gaef6aabaa8887cb4d7265d7e21b3ec242">More...</a><br/></td></tr>
+<tr class="separator:gaef6aabaa8887cb4d7265d7e21b3ec242"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga45900ecbe6d5ebf9ae78894fe6c75b23"></a>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gaef6aabaa8887cb4d7265d7e21b3ec242"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_softdevice_disable </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="memname">enum <a class="el" href="a01070.html#gaef6aabaa8887cb4d7265d7e21b3ec242">NRF_CLOCK_LFCLKSRCS</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Disables the SoftDevice and by extension the protocol stack. </p>
-<p>Idempotent function to disable the SoftDevice.</p>
-<dl class="section post"><dt>Postcondition</dt><dd>SoC library and protocol stack APIs are made unavailable. </dd>
-<dd>
-All interrupts that was protected by the SoftDevice will be disabled and initialized to priority 0 (highest). </dd>
-<dd>
-All peripherals used by the SoftDevice will be reset to default values. </dd>
-<dd>
-All of RAM become available. </dd>
-<dd>
-All interrupts are forwarded to the application. </dd>
-<dd>
-LFCLK source chosen in <a class="el" href="a01070.html#ga26ecfde6eee7363f88bed8a8b711122a" title="Enables the SoftDevice and by extension the protocol stack.">sd_softdevice_enable</a> will be left running.</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00840.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Possible lfclk oscillator sources. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242ad1191ed01bdf8e562500d9a38a059b39"></a>NRF_CLOCK_LFCLKSRC_SYNTH_250_PPM</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK Synthesized from HFCLK. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242abadb40f1cba74435f3ad04f04c700c86"></a>NRF_CLOCK_LFCLKSRC_XTAL_500_PPM</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK crystal oscillator 500 PPM accuracy. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a65044d23edf148cbeb93dd4e785f581d"></a>NRF_CLOCK_LFCLKSRC_XTAL_250_PPM</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK crystal oscillator 250 PPM accuracy. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a02019daada779a6cdb69fa13dad053e2"></a>NRF_CLOCK_LFCLKSRC_XTAL_150_PPM</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK crystal oscillator 150 PPM accuracy. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242ab5bb363243d2e2b382bc4c1dad745a33"></a>NRF_CLOCK_LFCLKSRC_XTAL_100_PPM</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK crystal oscillator 100 PPM accuracy. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a87f389b60383a850468327a5970cb395"></a>NRF_CLOCK_LFCLKSRC_XTAL_75_PPM</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK crystal oscillator 75 PPM accuracy. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a2d5febc7eb0c8f35c3279a705d7974dd"></a>NRF_CLOCK_LFCLKSRC_XTAL_50_PPM</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK crystal oscillator 50 PPM accuracy. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242ad2464539b8d78659dc83998a4ae66fa6"></a>NRF_CLOCK_LFCLKSRC_XTAL_30_PPM</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK crystal oscillator 30 PPM accuracy. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a1c5e9917211a50eac336a3fd2e467756"></a>NRF_CLOCK_LFCLKSRC_XTAL_20_PPM</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK crystal oscillator 20 PPM accuracy. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a0263c1cff2fbded3ada7b18a691eeda5"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_250MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK RC oscillator, 250ms calibration interval. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242aaa9263dbc5c7bfa094d654941dc36d55"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_500MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK RC oscillator, 500ms calibration interval. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a7f2111bcf8ef8c355ca609a9fb84712c"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_1000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK RC oscillator, 1000ms calibration interval. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242ad94caa1c4bbc8b28e8fd062a012defd7"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_2000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK RC oscillator, 2000ms calibration interval. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a4b75e480fdf08028b4ad36e960474411"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_4000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK RC oscillator, 4000ms calibration interval. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a2c0772805e06ad3966b4dc69abd3f247"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_8000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK RC oscillator, 8000ms calibration interval. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a23b8dfa27131f4e191c90cf7b4e115f5"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_1000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK RC oscillator. Temperature checked every 1000ms, if changed above a threshold, a calibration is done. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242abb90009e7d3b437a38688790a086d475"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_2000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK RC oscillator. Temperature checked every 2000ms, if changed above a threshold, a calibration is done. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a4a1524c1e9bf9fdcab3c88282a272b0a"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_4000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK RC oscillator. Temperature checked every 4000ms, if changed above a threshold, a calibration is done. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a7fca54df825052849f20136cf5186c02"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_8000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK RC oscillator. Temperature checked every 8000ms, if changed above a threshold, a calibration is done. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242aa5f637eab2568c5a631337656d390b2e"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_16000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
+<p>LFCLK RC oscillator. Temperature checked every 16000ms, if changed above a threshold, a calibration is done. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
-<a class="anchor" id="ga26ecfde6eee7363f88bed8a8b711122a"></a>
+<a class="anchor" id="ga4528cbf3f1a34d4712822ac456b1b305"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_softdevice_enable </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01069.html#gabfecdd0b916a4022bd5688d4f842c473">nrf_clock_lfclksrc_t</a>&#160;</td>
-          <td class="paramname"><em>clock_source</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01069.html#gaddfb569a9b86648e642ed0d7e3a83034">softdevice_assertion_handler_t</a>&#160;</td>
-          <td class="paramname"><em>assertion_handler</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">enum <a class="el" href="a01070.html#ga4528cbf3f1a34d4712822ac456b1b305">NRF_SD_SVCS</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Enables the SoftDevice and by extension the protocol stack. </p>
-<p>Idempotent function to enable the SoftDevice.</p>
-<dl class="section note"><dt>Note</dt><dd>Some care must be taken if a low frequency clock source is already running when calling this function: If the LF clock has a different source then the one currently running, it will be stopped. Then, the new clock source will be started.</dd>
-<dd>
-This function has no effect when returning with an error.</dd></dl>
-<dl class="section post"><dt>Postcondition</dt><dd>If return code is <a class="el" href="a00840.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a><ul>
-<li>SoC library and protocol stack APIs are made available</li>
-<li>A portion of RAM will be unavailable (see relevant SDS documentation)</li>
-<li>Some peripherals will be unavailable or available only through the SoC API (see relevant SDS documentation)</li>
-<li>Interrupts will not arrive from protected peripherals or interrupts</li>
-<li>nrf_nvic_ functions must be used instead of CMSIS NVIC_ functions for reliable usage of the softdevice.</li>
-<li>Interrupt latency may be affected by the SoftDevice (see relevant SDS documentation)</li>
-<li>Chosen low frequency clock source will be running</li>
-</ul>
-</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">clock_source</td><td>Low frequency clock source and accuracy. (Note: In the case of XTAL source, the PPM accuracy of the chosen clock source must be greater than or equal to the actual characteristics of your XTAL clock). </td></tr>
-    <tr><td class="paramname">assertion_handler</td><td>Callback for SoftDevice assertions.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00840.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td></td></tr>
-    <tr><td class="paramname"><a class="el" href="a00843.html#ga5e01566a9b1b0f6fdec349198401e5bd" title="Incorrect interrupt configuration (can be caused by using illegal priority levels, or having enabled SoftDevice interrupts)">NRF_ERROR_SDM_INCORRECT_INTERRUPT_CONFIGURATION</a></td><td>SoftDeviceinterrupt is already enabled, or an enabled interrupt has an illegal priority level </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00843.html#ga987f38ed25beabe507da1d5dd31bbeae" title="Unknown lfclk source.">NRF_ERROR_SDM_LFCLK_SOURCE_UNKNOWN</a></td><td>Unknown low frequency clock source selected </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga830210fec2b272bbd27af26e3b314d35"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t sd_softdevice_is_enabled </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_softdevice_enabled</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Check if the SoftDevice is enabled. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_softdevice_enabled</td><td>If the SoftDevice is enabled: 1 else 0.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00840.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga46d2ce943076d65947ea8919198be106"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t sd_softdevice_vector_table_base_set </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>address</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets the base address of the interrupt vector table for interrupts forwarded from the SoftDevice. </p>
-<p>This function is only intended to be called when a bootloader is enabled.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The base address of the interrupt vector table for forwarded interrupts.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00840.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<p>nRF SoftDevice Manager API SVC numbers. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4528cbf3f1a34d4712822ac456b1b305ab692ec521a2f791184f7a4644897f781"></a>SD_SOFTDEVICE_ENABLE</em>&nbsp;</td><td class="fielddoc">
+<p><a class="el" href="a01072.html#ga26ecfde6eee7363f88bed8a8b711122a" title="Enables the SoftDevice and by extension the protocol stack.">sd_softdevice_enable</a> </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga4528cbf3f1a34d4712822ac456b1b305ab48ef4bb34f9d37c0a7005f7b7d13692"></a>SD_SOFTDEVICE_DISABLE</em>&nbsp;</td><td class="fielddoc">
+<p><a class="el" href="a01072.html#ga45900ecbe6d5ebf9ae78894fe6c75b23" title="Disables the SoftDevice and by extension the protocol stack.">sd_softdevice_disable</a> </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga4528cbf3f1a34d4712822ac456b1b305a6f89d282c869fd898e2c75141ac2bc5f"></a>SD_SOFTDEVICE_IS_ENABLED</em>&nbsp;</td><td class="fielddoc">
+<p><a class="el" href="a01072.html#ga830210fec2b272bbd27af26e3b314d35" title="Check if the SoftDevice is enabled.">sd_softdevice_is_enabled</a> </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga4528cbf3f1a34d4712822ac456b1b305a5e19adec24f31566eb74ff8222c7ab06"></a>SD_SOFTDEVICE_VECTOR_TABLE_BASE_SET</em>&nbsp;</td><td class="fielddoc">
+<p><a class="el" href="a01072.html#ga46d2ce943076d65947ea8919198be106" title="Sets the base address of the interrupt vector table for interrupts forwarded from the SoftDevice...">sd_softdevice_vector_table_base_set</a> </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga4528cbf3f1a34d4712822ac456b1b305a11216cbdd9009464a16286385173bb5a"></a>SVC_SDM_LAST</em>&nbsp;</td><td class="fielddoc">
+<p>Placeholder for last SDM SVC </p>
+</td></tr>
+</table>
 
 </div>
 </div>
@@ -279,7 +278,7 @@ This function has no effect when returning with an error.</dd></dl>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:26 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:12 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

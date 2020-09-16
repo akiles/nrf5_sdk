@@ -1,7 +1,6 @@
 var a00540 =
 [
-    [ "BLE_GAP_ADV_TYPE_ADV_DIRECT_IND", "a00540.html#gafefde83f6b598e7fb14868e0610bdf43", null ],
-    [ "BLE_GAP_ADV_TYPE_ADV_IND", "a00540.html#ga6cc0db53453977ee0a31e59f07de2b86", null ],
-    [ "BLE_GAP_ADV_TYPE_ADV_NONCONN_IND", "a00540.html#ga8c86ca45ebffc3938fd97f9556daa49c", null ],
-    [ "BLE_GAP_ADV_TYPE_ADV_SCAN_IND", "a00540.html#ga594ca8490efef1702e8ccb6a28d2a1de", null ]
+    [ "BLE_GAP_DISC_MODE_GENERAL", "a00540.html#ga124514248a211b305eeac9cc370c7d77", null ],
+    [ "BLE_GAP_DISC_MODE_LIMITED", "a00540.html#ga5c5243da93bae524088eefd608656012", null ],
+    [ "BLE_GAP_DISC_MODE_NOT_DISCOVERABLE", "a00540.html#gafdd0b7bc7d226295035ba29cee3280f6", null ]
 ];

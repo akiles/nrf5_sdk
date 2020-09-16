@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: GAP Roles</title>
+<title>nRF51 SDK - S110 SoftDevice: GAP Address types</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,58 +99,72 @@ $(document).ready(function(){initNavTree('a00799.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">GAP Roles<div class="ingroups"><a class="el" href="a01045.html">Defines</a></div></div>  </div>
+<div class="title">GAP Address types<div class="ingroups"><a class="el" href="a01047.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga8164b32f4fd65997d0523cd7c5735166"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00799.html#ga8164b32f4fd65997d0523cd7c5735166">BLE_GAP_ROLE_INVALID</a>&#160;&#160;&#160;0x0</td></tr>
-<tr class="separator:ga8164b32f4fd65997d0523cd7c5735166"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga12e431897d73a3ce88fab8a4dbd90497"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00799.html#ga12e431897d73a3ce88fab8a4dbd90497">BLE_GAP_ROLE_PERIPH</a>&#160;&#160;&#160;0x1</td></tr>
-<tr class="separator:ga12e431897d73a3ce88fab8a4dbd90497"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6b9440660a70146392d27c849431fadb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00799.html#ga6b9440660a70146392d27c849431fadb">BLE_GAP_ROLE_CENTRAL</a>&#160;&#160;&#160;0x2</td></tr>
-<tr class="separator:ga6b9440660a70146392d27c849431fadb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5e499423d88b16817efd4d5ec10fd6e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00799.html#gaa5e499423d88b16817efd4d5ec10fd6e">BLE_GAP_ADDR_TYPE_PUBLIC</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:gaa5e499423d88b16817efd4d5ec10fd6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe27b8f22c3a52413fa064c2ee1e4fba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00799.html#gabe27b8f22c3a52413fa064c2ee1e4fba">BLE_GAP_ADDR_TYPE_RANDOM_STATIC</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:gabe27b8f22c3a52413fa064c2ee1e4fba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae166d654401b0ed83ad7073f31467b70"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00799.html#gae166d654401b0ed83ad7073f31467b70">BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:gae166d654401b0ed83ad7073f31467b70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga86fe5e506ba152ec4d60ac6daaca2aef"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00799.html#ga86fe5e506ba152ec4d60ac6daaca2aef">BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE</a>&#160;&#160;&#160;0x03</td></tr>
+<tr class="separator:ga86fe5e506ba152ec4d60ac6daaca2aef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<dl class="section note"><dt>Note</dt><dd>Not explicitly used in peripheral API, but will be relevant for central API. </dd></dl>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga6b9440660a70146392d27c849431fadb"></a>
+<a class="anchor" id="gaa5e499423d88b16817efd4d5ec10fd6e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GAP_ROLE_CENTRAL&#160;&#160;&#160;0x2</td>
+          <td class="memname">#define BLE_GAP_ADDR_TYPE_PUBLIC&#160;&#160;&#160;0x00</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Central Role. </p>
+<p>Public address. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga8164b32f4fd65997d0523cd7c5735166"></a>
+<a class="anchor" id="ga86fe5e506ba152ec4d60ac6daaca2aef"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GAP_ROLE_INVALID&#160;&#160;&#160;0x0</td>
+          <td class="memname">#define BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE&#160;&#160;&#160;0x03</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Invalid Role. </p>
+<p>Private Non-Resolvable address. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga12e431897d73a3ce88fab8a4dbd90497"></a>
+<a class="anchor" id="gae166d654401b0ed83ad7073f31467b70"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_GAP_ROLE_PERIPH&#160;&#160;&#160;0x1</td>
+          <td class="memname">#define BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE&#160;&#160;&#160;0x02</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Peripheral Role. </p>
+<p>Private Resolvable address. </p>
+
+</div>
+</div>
+<a class="anchor" id="gabe27b8f22c3a52413fa064c2ee1e4fba"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADDR_TYPE_RANDOM_STATIC&#160;&#160;&#160;0x01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Random Static address. </p>
 
 </div>
 </div>
@@ -159,7 +173,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:19 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:05 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

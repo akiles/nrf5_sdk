@@ -1,5 +1,4 @@
 var a00924 =
 [
-    [ "ble_dtm_init_req_dec", "a00924.html#ga83c3902e3f26071b27f53d8394ea6fed", null ],
-    [ "ble_dtm_init_rsp_enc", "a00924.html#ga17ecedcb46b8807bb5af3f3ae3bef469", null ]
+    [ "ble_evt_tx_complete_enc", "a00924.html#ga044c29bd0438f9cee2843e5ac753b548", null ]
 ];

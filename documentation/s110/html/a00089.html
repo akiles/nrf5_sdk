@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: BLE S110 Events</title>
+<title>nRF51 SDK - S110 SoftDevice: BLE S110 L2CAP Functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,41 +97,164 @@ $(document).ready(function(){initNavTree('a00089.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BLE S110 Events </div>  </div>
+<div class="title">BLE S110 L2CAP Functions </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#nrf51_evt_tx_complete_encoding">0x01 - BLE_EVT_TX_COMPLETE</a><ul><li class="level2"><a href="#nrf51_evt_tx_complete_encoding_sec">Event encoding</a></li>
-<li class="level2"><a href="#nrf51_evt_tx_complete_encoding_sub_a">Packet layout</a></li>
+<ul><li class="level1"><a href="#nrf51_ble_l2cap_cid_register">0xB0 - sd_ble_l2cap_cid_register</a><ul><li class="level2"><a href="#nrf51_ble_l2cap_cid_register_req_enc">Function packet format</a></li>
+<li class="level2"><a href="#nrf51_ble_l2cap_cid_register_rsp_dec">Response packet format</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#nrf51_ble_l2cap_cid_unregister">0xB1 - sd_ble_l2cap_cid_unregister</a><ul><li class="level2"><a href="#nrf51_ble_l2cap_cid_unregister_req_enc">Function packet format</a></li>
+<li class="level2"><a href="#nrf51_ble_l2cap_cid_unregister_rsp_dec">Response packet format</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#nrf51_ble_l2cap_tx">0xB2 - sd_ble_l2cap_tx</a><ul><li class="level2"><a href="#nrf51_ble_l2cap_tx_req_enc">Function packet format</a></li>
+<li class="level2"><a href="#nrf51_ble_l2cap_tx_rsp_dec">Response packet format</a></li>
 </ul>
 </li>
 </ul>
 </div>
-<div class="textblock"><h1><a class="anchor" id="nrf51_evt_tx_complete_encoding"></a>
-0x01 - BLE_EVT_TX_COMPLETE</h1>
-<h2><a class="anchor" id="nrf51_evt_tx_complete_encoding_sec"></a>
-Event encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a01042.html#ggaa55e423bfea45f03764a636f2cec7a8ba408a77f131a2d314fbf477cdb2d1e0f6">BLE_EVT_TX_COMPLETE</a> packet.</p>
-<p>Event ID = 0x01 for BLE_EVT_TX_COMPLETE</p>
-<p>All BLE Events, <a class="el" href="a00202.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00201.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
-<p>The event contains a connection handle, and for the BLE TX complete, the <a class="el" href="a00203.html">ble_evt_tx_complete_t</a> is encoded after connection handle as seen in Figure 1.</p>
-<p>The order of the encoding is:</p>
+<div class="textblock"><h1><a class="anchor" id="nrf51_ble_l2cap_cid_register"></a>
+0xB0 - sd_ble_l2cap_cid_register</h1>
+<h2><a class="anchor" id="nrf51_ble_l2cap_cid_register_req_enc"></a>
+Function packet format</h2>
+<p>Frame format encoding of the <a class="el" href="a01063.html#ga124cd974cfc529057218a14af8ee9780">sd_ble_l2cap_cid_register</a> packet.</p>
+<p>The parameters are encoded in the following order:</p>
 <table class="doxtable">
 <tr>
 <th>Length </th><th>Parameter </th><th>Value</th></tr>
 <tr>
-<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00176.html#ad7c997d8d0c6e0d3d24de3ecad426645">ble_common_evt_t::conn_handle</a> </td></tr>
+<td>1 byte </td><td>Operation Code </td><td>0xB0, see <a class="el" href="a01061.html#ga08e7b23691ec76610bbd89735c642322">BLE_L2CAP_SVCS</a> </td></tr>
 <tr>
-<td>1 byte </td><td>Count </td><td>see <a class="el" href="a00203.html">ble_evt_tx_complete_t</a> </td></tr>
+<td>2 bytes</td><td>CID </td><td>L2CAP CID </td></tr>
 </table>
 <p><br/>
 </p>
-<h2><a class="anchor" id="nrf51_evt_tx_complete_encoding_sub_a"></a>
-Packet layout</h2>
 <div class="image">
-<img src="event_tx_complete.png" alt="event_tx_complete.png"/>
+<img src="ble_l2cap_cid_un_register_packet.png" alt="ble_l2cap_cid_un_register_packet.png"/>
 <div class="caption">
-Figure 1: Encoding of BLE_EVT_TX_COMPLETE event.</div></div>
+Figure 1: Packet format for sd_ble_l2cap_cid_register function.</div></div>
+<p> <br/>
+</p>
+<h2><a class="anchor" id="nrf51_ble_l2cap_cid_register_rsp_dec"></a>
+Response packet format</h2>
+<p>Frame format encoding of the <a class="el" href="a01063.html#ga124cd974cfc529057218a14af8ee9780">sd_ble_l2cap_cid_register</a> response packet:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>1 byte </td><td>Operation Code </td><td>0xB0, see <a class="el" href="a01061.html#ga08e7b23691ec76610bbd89735c642322">BLE_L2CAP_SVCS</a> </td></tr>
+<tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a01063.html#ga124cd974cfc529057218a14af8ee9780">sd_ble_l2cap_cid_register</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<div class="image">
+<img src="default_response_packet_generic.png" alt="default_response_packet_generic.png"/>
+<div class="caption">
+Figure 2: Packet format for sd_ble_l2cap_cid_register response.</div></div>
+<p> <br/>
+</p>
+<h1><a class="anchor" id="nrf51_ble_l2cap_cid_unregister"></a>
+0xB1 - sd_ble_l2cap_cid_unregister</h1>
+<h2><a class="anchor" id="nrf51_ble_l2cap_cid_unregister_req_enc"></a>
+Function packet format</h2>
+<p>Frame format encoding of the <a class="el" href="a01063.html#ga78af254844e078b90868b3c827200e25">sd_ble_l2cap_cid_unregister</a> packet.</p>
+<p>The parameters are encoded in the following order:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>1 byte </td><td>Operation Code </td><td>0xB1, see <a class="el" href="a01061.html#ga08e7b23691ec76610bbd89735c642322">BLE_L2CAP_SVCS</a> </td></tr>
+<tr>
+<td>2 bytes</td><td>CID </td><td>L2CAP CID </td></tr>
+</table>
+<p><br/>
+</p>
+<div class="image">
+<img src="ble_l2cap_cid_un_register_packet.png" alt="ble_l2cap_cid_un_register_packet.png"/>
+<div class="caption">
+Figure 1: Packet format for sd_ble_l2cap_cid_unregister function.</div></div>
+<p> <br/>
+</p>
+<h2><a class="anchor" id="nrf51_ble_l2cap_cid_unregister_rsp_dec"></a>
+Response packet format</h2>
+<p>Frame format encoding of the <a class="el" href="a01063.html#ga78af254844e078b90868b3c827200e25">sd_ble_l2cap_cid_unregister</a> response packet:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>1 byte </td><td>Operation Code </td><td>0xB1, see <a class="el" href="a01061.html#ga08e7b23691ec76610bbd89735c642322">BLE_L2CAP_SVCS</a> </td></tr>
+<tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a01063.html#ga78af254844e078b90868b3c827200e25">sd_ble_l2cap_cid_unregister</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<div class="image">
+<img src="default_response_packet_generic.png" alt="default_response_packet_generic.png"/>
+<div class="caption">
+Figure 2: Packet format for sd_ble_l2cap_cid_unregister response.</div></div>
+<p> <br/>
+</p>
+<h1><a class="anchor" id="nrf51_ble_l2cap_tx"></a>
+0xB2 - sd_ble_l2cap_tx</h1>
+<h2><a class="anchor" id="nrf51_ble_l2cap_tx_req_enc"></a>
+Function packet format</h2>
+<p>Frame format encoding of the <a class="el" href="a01063.html#gaddb9c946774f03aeb65bb19697759a7c">sd_ble_l2cap_tx</a> packet.</p>
+<p>The parameters are encoded in the following order:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>1 byte </td><td>Operation Code </td><td>0xB2, see <a class="el" href="a01061.html#ga08e7b23691ec76610bbd89735c642322">BLE_L2CAP_SVCS</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>Handle Value </td></tr>
+<tr>
+<td>1 byte </td><td>L2CAP Header present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
+<tr>
+<td>3 bytes </td><td>Conditional: L2CAP Header </td><td>see <a class="el" href="a00311.html">ble_l2cap_header_t</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Data present </td><td>0x00 Field not present, 0x01 Field present </td></tr>
+<tr>
+<td>0...<em>n</em> bytes</td><td>Conditional: Data </td><td>Data to be transmitted </td></tr>
+</table>
+<p><br/>
+</p>
+<p>As can also be seen inside Figure 1 the 3 bytes inside <a class="el" href="a00311.html" title="Packet header format for L2CAP transmission.">ble_l2cap_header_t</a> are encoded as:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes</td><td>Length </td><td>see <a class="el" href="a00311.html#a754900407e75298f4af89a59febed5b8">ble_l2cap_header_t::len</a> </td></tr>
+<tr>
+<td>2 bytes</td><td>CID </td><td>see <a class="el" href="a00311.html#a6e40f192db4382919b6c1f3db8e70d46">ble_l2cap_header_t::cid</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<div class="image">
+<img src="ble_l2cap_tx_packet.png" alt="ble_l2cap_tx_packet.png"/>
+<div class="caption">
+Figure 1: Packet format for sd_ble_l2cap_tx function.</div></div>
+<p> <br/>
+</p>
+<h2><a class="anchor" id="nrf51_ble_l2cap_tx_rsp_dec"></a>
+Response packet format</h2>
+<p>Frame format encoding of the <a class="el" href="a01063.html#gaddb9c946774f03aeb65bb19697759a7c">sd_ble_l2cap_tx</a> response packet:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>1 byte </td><td>Operation Code </td><td>0xB2, see <a class="el" href="a01061.html#ga08e7b23691ec76610bbd89735c642322">BLE_L2CAP_SVCS</a> </td></tr>
+<tr>
+<td>4 bytes </td><td>nRF Error Code </td><td>see <a class="el" href="a01063.html#gaddb9c946774f03aeb65bb19697759a7c">sd_ble_l2cap_tx</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<div class="image">
+<img src="default_response_packet_generic.png" alt="default_response_packet_generic.png"/>
+<div class="caption">
+Figure 2: Packet format for sd_ble_l2cap_tx response.</div></div>
 <p> <br/>
  </p>
 </div></div><!-- contents -->
@@ -139,8 +262,8 @@ Figure 1: Encoding of BLE_EVT_TX_COMPLETE event.</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00082.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00084.html">Serialization Codecs</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:19 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00073.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00075.html">Serialization Codecs</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:05 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

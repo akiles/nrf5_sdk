@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: SLIP module</title>
+<title>nRF51 SDK - S210 SoftDevice: Scheduler</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,201 +97,184 @@ $(document).ready(function(){initNavTree('a00231.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">SLIP module<div class="ingroups"><a class="el" href="a00270.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">Scheduler<div class="ingroups"><a class="el" href="a00265.html">SDK Common Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>SLIP layer for supporting packet framing in HCI transport.  
+<p>The scheduler is used for transferring execution from the interrupt context to the main context.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html">hci_slip_evt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure containing an event from the SLIP layer.  <a href="a00056.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga6ec6d3a526d13df66e0aff7d20049e20"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#ga6ec6d3a526d13df66e0aff7d20049e20">APP_SCHED_EVENT_HEADER_SIZE</a>&#160;&#160;&#160;8</td></tr>
+<tr class="separator:ga6ec6d3a526d13df66e0aff7d20049e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga197748a0733d615e809ce71effa6dc48"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#ga197748a0733d615e809ce71effa6dc48">APP_SCHED_BUF_SIZE</a>(EVENT_SIZE, QUEUE_SIZE)&#160;&#160;&#160;(((EVENT_SIZE) + <a class="el" href="a00231.html#ga6ec6d3a526d13df66e0aff7d20049e20">APP_SCHED_EVENT_HEADER_SIZE</a>) * ((QUEUE_SIZE) + 1))</td></tr>
+<tr class="memdesc:ga197748a0733d615e809ce71effa6dc48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute number of bytes required to hold the scheduler buffer.  <a href="#ga197748a0733d615e809ce71effa6dc48">More...</a><br/></td></tr>
+<tr class="separator:ga197748a0733d615e809ce71effa6dc48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa9670ed0053a67304c3d2d0cb3eb1333"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#gaa9670ed0053a67304c3d2d0cb3eb1333">APP_SCHED_INIT</a>(EVENT_SIZE, QUEUE_SIZE)</td></tr>
+<tr class="memdesc:gaa9670ed0053a67304c3d2d0cb3eb1333"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for initializing the event scheduler.  <a href="#gaa9670ed0053a67304c3d2d0cb3eb1333">More...</a><br/></td></tr>
+<tr class="separator:gaa9670ed0053a67304c3d2d0cb3eb1333"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gab1b3735b482e480ee925e78c544f84d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab1b3735b482e480ee925e78c544f84d0"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#gab1b3735b482e480ee925e78c544f84d0">hci_slip_event_handler_t</a> )(<a class="el" href="a00056.html">hci_slip_evt_t</a> event)</td></tr>
-<tr class="memdesc:gab1b3735b482e480ee925e78c544f84d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for the SLIP layer event callback. <br/></td></tr>
-<tr class="separator:gab1b3735b482e480ee925e78c544f84d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gaf03d61e05dd64c3a61644580c29aa0b4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00231.html#ggaf03d61e05dd64c3a61644580c29aa0b4a518c3406525586d68bf2f476c1935eb9">HCI_SLIP_RX_RDY</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00231.html#ggaf03d61e05dd64c3a61644580c29aa0b4a507424cf2788c502b25b730450fa3c1b">HCI_SLIP_TX_DONE</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00231.html#ggaf03d61e05dd64c3a61644580c29aa0b4acd2a18f379c0f764d52782bf13ae7f60">HCI_SLIP_RX_OVERFLOW</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00231.html#ggaf03d61e05dd64c3a61644580c29aa0b4a89ce814e3c2dbfc49432118d735d6eef">HCI_SLIP_ERROR</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00231.html#ggaf03d61e05dd64c3a61644580c29aa0b4a1922de9f57ef7bf2c0e2af37877224f1">HCI_SLIP_EVT_TYPE_MAX</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gaf03d61e05dd64c3a61644580c29aa0b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event types from the SLIP Layer.  <a href="a00231.html#gaf03d61e05dd64c3a61644580c29aa0b4">More...</a><br/></td></tr>
-<tr class="separator:gaf03d61e05dd64c3a61644580c29aa0b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad36ea5cb15b82aa724a13f1ba24ef005"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad36ea5cb15b82aa724a13f1ba24ef005"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#gad36ea5cb15b82aa724a13f1ba24ef005">app_sched_event_handler_t</a> )(void *p_event_data, uint16_t event_size)</td></tr>
+<tr class="memdesc:gad36ea5cb15b82aa724a13f1ba24ef005"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scheduler event handler type. <br/></td></tr>
+<tr class="separator:gad36ea5cb15b82aa724a13f1ba24ef005"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga5174ac7933b8633a86c1560e645dcf43"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#ga5174ac7933b8633a86c1560e645dcf43">hci_slip_evt_handler_register</a> (<a class="el" href="a00231.html#gab1b3735b482e480ee925e78c544f84d0">hci_slip_event_handler_t</a> event_handler)</td></tr>
-<tr class="memdesc:ga5174ac7933b8633a86c1560e645dcf43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering the event handler provided as parameter and this event handler will be used by SLIP layer to send events described in <a class="el" href="a00231.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a>.  <a href="#ga5174ac7933b8633a86c1560e645dcf43">More...</a><br/></td></tr>
-<tr class="separator:ga5174ac7933b8633a86c1560e645dcf43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga395ec28c5fd6a5ca2f8dcd68817cced1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#ga395ec28c5fd6a5ca2f8dcd68817cced1">hci_slip_open</a> (void)</td></tr>
-<tr class="memdesc:ga395ec28c5fd6a5ca2f8dcd68817cced1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for opening the SLIP layer. This function must be called before <a class="el" href="a00231.html#gaba13b94dd501034bd33b1d10941ded4b">hci_slip_write</a> and before any data can be received.  <a href="#ga395ec28c5fd6a5ca2f8dcd68817cced1">More...</a><br/></td></tr>
-<tr class="separator:ga395ec28c5fd6a5ca2f8dcd68817cced1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac07c6af846ecdbdaa3def1860aff6e47"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#gac07c6af846ecdbdaa3def1860aff6e47">hci_slip_close</a> (void)</td></tr>
-<tr class="memdesc:gac07c6af846ecdbdaa3def1860aff6e47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for closing the SLIP layer. After this function is called no data can be transmitted or received in this layer.  <a href="#gac07c6af846ecdbdaa3def1860aff6e47">More...</a><br/></td></tr>
-<tr class="separator:gac07c6af846ecdbdaa3def1860aff6e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaba13b94dd501034bd33b1d10941ded4b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#gaba13b94dd501034bd33b1d10941ded4b">hci_slip_write</a> (const uint8_t *p_buffer, uint32_t length)</td></tr>
-<tr class="memdesc:gaba13b94dd501034bd33b1d10941ded4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for writing a packet with SLIP encoding. Packet transmission is confirmed when the HCI_SLIP_TX_DONE event is received by the function caller.  <a href="#gaba13b94dd501034bd33b1d10941ded4b">More...</a><br/></td></tr>
-<tr class="separator:gaba13b94dd501034bd33b1d10941ded4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabd00a0b89127a66990a2ea728fd39b3f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#gabd00a0b89127a66990a2ea728fd39b3f">hci_slip_rx_buffer_register</a> (uint8_t *p_buffer, uint32_t length)</td></tr>
-<tr class="memdesc:gabd00a0b89127a66990a2ea728fd39b3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering a receive buffer. The receive buffer will be used for storage of received and SLIP decoded data. No data can be received by the SLIP layer until a receive buffer has been registered.  <a href="#gabd00a0b89127a66990a2ea728fd39b3f">More...</a><br/></td></tr>
-<tr class="separator:gabd00a0b89127a66990a2ea728fd39b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf021e02dd6ca1767b428c250d1ded56c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#gaf021e02dd6ca1767b428c250d1ded56c">app_sched_init</a> (uint16_t max_event_size, uint16_t queue_size, void *p_evt_buffer)</td></tr>
+<tr class="memdesc:gaf021e02dd6ca1767b428c250d1ded56c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Scheduler.  <a href="#gaf021e02dd6ca1767b428c250d1ded56c">More...</a><br/></td></tr>
+<tr class="separator:gaf021e02dd6ca1767b428c250d1ded56c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab725820c32a8d05379db4567cf30e862"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#gab725820c32a8d05379db4567cf30e862">app_sched_execute</a> (void)</td></tr>
+<tr class="memdesc:gab725820c32a8d05379db4567cf30e862"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for executing all scheduled events.  <a href="#gab725820c32a8d05379db4567cf30e862">More...</a><br/></td></tr>
+<tr class="separator:gab725820c32a8d05379db4567cf30e862"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga49ec0ad278ece44b5dc56b86ac44489c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#ga49ec0ad278ece44b5dc56b86ac44489c">app_sched_event_put</a> (void *p_event_data, uint16_t event_size, <a class="el" href="a00231.html#gad36ea5cb15b82aa724a13f1ba24ef005">app_sched_event_handler_t</a> handler)</td></tr>
+<tr class="memdesc:ga49ec0ad278ece44b5dc56b86ac44489c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for scheduling an event.  <a href="#ga49ec0ad278ece44b5dc56b86ac44489c">More...</a><br/></td></tr>
+<tr class="separator:ga49ec0ad278ece44b5dc56b86ac44489c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>SLIP layer for supporting packet framing in HCI transport. </p>
-<p>This module implements SLIP packet framing as described in the Bluetooth Core Specification 4.0, Volume 4, Part D, Chapter 3 SLIP Layer.</p>
-<p>SLIP framing ensures that all packets sent on the UART are framed as: &lt;0xC0&gt; SLIP packet 1 &lt;0xC0&gt; &lt;0xC0&gt; SLIP packet 2 &lt;0xC0&gt;.</p>
-<p>The SLIP layer uses events to notify the upper layer when data transmission is complete and when a SLIP packet is received. </p>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaf03d61e05dd64c3a61644580c29aa0b4"></a>
+<p>The scheduler is used for transferring execution from the interrupt context to the main context. </p>
+<p>See <a class="el" href="a00013.html#seq_diagrams_sched">Applications using the Scheduler</a> for sequence diagrams illustrating the flow of events when using the Scheduler.</p>
+<h1><a class="anchor" id="app_scheduler_req"></a>
+Requirements:</h1>
+<h2><a class="anchor" id="main_context_logic"></a>
+Logic in main context:</h2>
+<ul>
+<li>Define an event handler for each type of event expected.</li>
+<li>Initialize the scheduler by calling the <a class="el" href="a00231.html#gaa9670ed0053a67304c3d2d0cb3eb1333" title="Macro for initializing the event scheduler.">APP_SCHED_INIT()</a> macro before entering the application main loop.</li>
+<li>Call <a class="el" href="a00231.html#gab725820c32a8d05379db4567cf30e862" title="Function for executing all scheduled events.">app_sched_execute()</a> from the main loop each time the application wakes up because of an event (typically when <a class="el" href="a00276.html#ga11d88d38ac99fb72cde74c9385d36433" title="Waits for an application event.">sd_app_evt_wait()</a> returns).</li>
+</ul>
+<h2><a class="anchor" id="int_context_logic"></a>
+Logic in interrupt context:</h2>
+<ul>
+<li>In the interrupt handler, call <a class="el" href="a00231.html#ga49ec0ad278ece44b5dc56b86ac44489c" title="Function for scheduling an event.">app_sched_event_put()</a> with the appropriate data and event handler. This will insert an event into the scheduler's queue. The <a class="el" href="a00231.html#gab725820c32a8d05379db4567cf30e862" title="Function for executing all scheduled events.">app_sched_execute()</a> function will pull this event and call its handler in the main context.</li>
+</ul>
+<div class="image">
+<img src="scheduler_working.jpg" alt="scheduler_working.jpg"/>
+<div class="caption">
+The high level design of the scheduler</div></div>
+ <h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga197748a0733d615e809ce71effa6dc48"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00231.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a></td>
+          <td class="memname">#define APP_SCHED_BUF_SIZE</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">EVENT_SIZE, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">QUEUE_SIZE&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;(((EVENT_SIZE) + <a class="el" href="a00231.html#ga6ec6d3a526d13df66e0aff7d20049e20">APP_SCHED_EVENT_HEADER_SIZE</a>) * ((QUEUE_SIZE) + 1))</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Event types from the SLIP Layer. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4a518c3406525586d68bf2f476c1935eb9"></a>HCI_SLIP_RX_RDY</em>&nbsp;</td><td class="fielddoc">
-<p>An event indicating that an RX packet is ready to be read. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4a507424cf2788c502b25b730450fa3c1b"></a>HCI_SLIP_TX_DONE</em>&nbsp;</td><td class="fielddoc">
-<p>An event indicating write completion of the TX packet provided in the function call <a class="el" href="a00231.html#gaba13b94dd501034bd33b1d10941ded4b">hci_slip_write</a> . </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4acd2a18f379c0f764d52782bf13ae7f60"></a>HCI_SLIP_RX_OVERFLOW</em>&nbsp;</td><td class="fielddoc">
-<p>An event indicating that RX data has been discarded due to lack of free RX memory. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4a89ce814e3c2dbfc49432118d735d6eef"></a>HCI_SLIP_ERROR</em>&nbsp;</td><td class="fielddoc">
-<p>An event indicating that an unrecoverable error has occurred. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4a1922de9f57ef7bf2c0e2af37877224f1"></a>HCI_SLIP_EVT_TYPE_MAX</em>&nbsp;</td><td class="fielddoc">
-<p>Enumeration upper bound. </p>
-</td></tr>
-</table>
+<p>Compute number of bytes required to hold the scheduler buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">EVENT_SIZE</td><td>Maximum size of events to be passed through the scheduler. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">QUEUE_SIZE</td><td>Number of entries in scheduler queue (i.e. the maximum number of events that can be scheduled for execution).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Required scheduler buffer size (in bytes). </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6ec6d3a526d13df66e0aff7d20049e20"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_SCHED_EVENT_HEADER_SIZE&#160;&#160;&#160;8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size of app_scheduler.event_header_t (only for use inside <a class="el" href="a00231.html#ga197748a0733d615e809ce71effa6dc48" title="Compute number of bytes required to hold the scheduler buffer.">APP_SCHED_BUF_SIZE()</a>). </p>
+
+</div>
+</div>
+<a class="anchor" id="gaa9670ed0053a67304c3d2d0cb3eb1333"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_SCHED_INIT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">EVENT_SIZE, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">QUEUE_SIZE&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>                                                                                             \</div>
+<div class="line">    {                                                                                              \</div>
+<div class="line">        static uint32_t APP_SCHED_BUF[<a class="code" href="a00235.html#ga7aaa817cfd7ed354f09db5675ffe1427" title="Perform integer division, making sure the result is rounded up.">CEIL_DIV</a>(<a class="code" href="a00231.html#ga197748a0733d615e809ce71effa6dc48" title="Compute number of bytes required to hold the scheduler buffer.">APP_SCHED_BUF_SIZE</a>((EVENT_SIZE), (QUEUE_SIZE)),     \</div>
+<div class="line">                                               <span class="keyword">sizeof</span>(uint32_t))];                                 \</div>
+<div class="line">        uint32_t ERR_CODE = <a class="code" href="a00231.html#gaf021e02dd6ca1767b428c250d1ded56c" title="Function for initializing the Scheduler.">app_sched_init</a>((EVENT_SIZE), (QUEUE_SIZE), APP_SCHED_BUF);             \</div>
+<div class="line">        APP_ERROR_CHECK(ERR_CODE);                                                                 \</div>
+<div class="line">    } <span class="keywordflow">while</span> (0)</div>
+</div><!-- fragment -->
+<p>Macro for initializing the event scheduler. </p>
+<p>It will also handle dimensioning and allocation of the memory buffer required by the scheduler, making sure the buffer is correctly aligned.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">EVENT_SIZE</td><td>Maximum size of events to be passed through the scheduler. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">QUEUE_SIZE</td><td>Number of entries in scheduler queue (i.e. the maximum number of events that can be scheduled for execution).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Since this macro allocates a buffer, it must only be called once (it is OK to call it several times as long as it is from the same location, e.g. to do a reinitialization). </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gac07c6af846ecdbdaa3def1860aff6e47"></a>
+<a class="anchor" id="ga49ec0ad278ece44b5dc56b86ac44489c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t hci_slip_close </td>
+          <td class="memname">uint32_t app_sched_event_put </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for closing the SLIP layer. After this function is called no data can be transmitted or received in this layer. </p>
-<dl class="section note"><dt>Note</dt><dd>This function can be called multiple times and also for an unopened channel.</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5174ac7933b8633a86c1560e645dcf43"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t hci_slip_evt_handler_register </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00231.html#gab1b3735b482e480ee925e78c544f84d0">hci_slip_event_handler_t</a>&#160;</td>
-          <td class="paramname"><em>event_handler</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for registering the event handler provided as parameter and this event handler will be used by SLIP layer to send events described in <a class="el" href="a00231.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a>. </p>
-<dl class="section note"><dt>Note</dt><dd>Multiple registration requests will overwrite any existing registration.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_handler</td><td>This function is called by the SLIP layer upon an event.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga395ec28c5fd6a5ca2f8dcd68817cced1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t hci_slip_open </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for opening the SLIP layer. This function must be called before <a class="el" href="a00231.html#gaba13b94dd501034bd33b1d10941ded4b">hci_slip_write</a> and before any data can be received. </p>
-<dl class="section note"><dt>Note</dt><dd>Can be called multiple times.</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>The SLIP layer module will propagate errors from underlying sub-modules. This implementation is using UART module as a physical transmission layer, and hci_slip_open executes <a class="el" href="a00224.html#gae650b57bf30da0f26ae409782de9fcbd">app_uart_init</a> . For an extended error list, please refer to <a class="el" href="a00224.html#gae650b57bf30da0f26ae409782de9fcbd">app_uart_init</a> . </p>
-
-</div>
-</div>
-<a class="anchor" id="gabd00a0b89127a66990a2ea728fd39b3f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t hci_slip_rx_buffer_register </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_buffer</em>, </td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_event_data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>length</em>&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>event_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00231.html#gad36ea5cb15b82aa724a13f1ba24ef005">app_sched_event_handler_t</a>&#160;</td>
+          <td class="paramname"><em>handler</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -301,40 +284,60 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for registering a receive buffer. The receive buffer will be used for storage of received and SLIP decoded data. No data can be received by the SLIP layer until a receive buffer has been registered. </p>
-<dl class="section note"><dt>Note</dt><dd>The lifetime of the buffer must be valid during complete reception of data. A static buffer is recommended.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>Multiple registration requests will overwrite any existing registration.</dd></dl>
+<p>Function for scheduling an event. </p>
+<p>Puts an event into the event queue.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to receive buffer. The received and SLIP decoded packet will be placed in this buffer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Buffer length, in bytes.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_event_data</td><td>Pointer to event data to be scheduled. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event_size</td><td>Size of event data to be scheduled. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">handler</td><td>Event handler to receive the event.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaba13b94dd501034bd33b1d10941ded4b"></a>
+<a class="anchor" id="gab725820c32a8d05379db4567cf30e862"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t hci_slip_write </td>
+          <td class="memname">void app_sched_execute </td>
           <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>p_buffer</em>, </td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for executing all scheduled events. </p>
+<p>This function must be called from within the main loop. It will execute all events scheduled since the last time it was called. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaf021e02dd6ca1767b428c250d1ded56c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t app_sched_init </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>max_event_size</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>length</em>&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>queue_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_evt_buffer</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -344,20 +347,21 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for writing a packet with SLIP encoding. Packet transmission is confirmed when the HCI_SLIP_TX_DONE event is received by the function caller. </p>
+<p>Function for initializing the Scheduler. </p>
+<p>It must be called before entering the main loop.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to the packet to transmit. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Packet length, in bytes.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">max_event_size</td><td>Maximum size of events to be passed through the scheduler. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">queue_size</td><td>Number of entries in scheduler queue (i.e. the maximum number of events that can be scheduled for execution). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_evt_buffer</td><td>Pointer to memory buffer for holding the scheduler queue. It must be dimensioned using the APP_SCHED_BUFFER_SIZE() macro. The buffer must be aligned to a 4 byte boundary.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>Normally initialization should be done using the <a class="el" href="a00231.html#gaa9670ed0053a67304c3d2d0cb3eb1333" title="Macro for initializing the event scheduler.">APP_SCHED_INIT()</a> macro, as that will both allocate the scheduler buffer, and also align the buffer correctly.</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. Packet was encoded and added to the transmission queue and an event will be sent upon transmission completion. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>Operation failure. Transmission queue is full and packet was not added to the transmission queue. Application shall wait for the <a class="el" href="a00231.html#ggaf03d61e05dd64c3a61644580c29aa0b4a507424cf2788c502b25b730450fa3c1b">HCI_SLIP_TX_DONE</a> event. After HCI_SLIP_TX_DONE this function can be executed for transmission of next packet. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>If a NULL pointer is provided. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Operation failure. Module is not open. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Successful initialization. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Invalid parameter (buffer not aligned to a 4 byte boundary). </td></tr>
   </table>
   </dd>
 </dl>
@@ -369,7 +373,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:42 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:29 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

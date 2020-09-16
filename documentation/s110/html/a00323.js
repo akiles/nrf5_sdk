@@ -1,6 +1,6 @@
 var a00323 =
 [
-    [ "location_list", "a00323.html#a860ef19c2966b3d1582be678aa301c26", null ],
-    [ "opcode", "a00323.html#a155379662bc1d70f1006fdb6cb3993cb", null ],
-    [ "status", "a00323.html#a2879f0a89583e6148c81d3b8127fe520", null ]
+    [ "encoded_ctrl_rsp", "a00323.html#adf17b1a0cd599ca5bd71dba42e318e06", null ],
+    [ "len", "a00323.html#afb2e07899dd914805f45b9da0694e0af", null ],
+    [ "status", "a00323.html#a978ed1543a79395ebdefc4f92233dfb7", null ]
 ];

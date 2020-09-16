@@ -1,7 +1,6 @@
 var a00366 =
 [
-    [ "num_channel_switches", "a00366.html#a7de898270a84874aa41f00361e6d801c", null ],
-    [ "num_tx_attempts", "a00366.html#a9627a112584a28e5c3935e801eebbe6f", null ],
-    [ "payload_received_in_ack", "a00366.html#aba51c6772b538a69a1582bacb6c5c940", null ],
-    [ "rssi", "a00366.html#ac337221c62fa79c2ed581793d1c758b2", null ]
+    [ "ciphertext", "a00366.html#a478942ae65d7433678164a95e4944115", null ],
+    [ "cleartext", "a00366.html#ad4c798195f0d6d399a7f75d09ef89793", null ],
+    [ "key", "a00366.html#aab4ea408dd38499ceff3935ecb5fa39f", null ]
 ];

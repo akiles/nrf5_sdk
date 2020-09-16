@@ -7,8 +7,7 @@
  *
  */
 
-/** @example Board/nrf6310/s120/experimental/ble_app_hrs_c/main.c
- *
+/** 
  * @brief BLE Heart Rate Collector application main file.
  *
  * This file contains the source code for a sample heart rate collector.
@@ -36,8 +35,8 @@
 #include "app_gpiote.h"
 #include "bsp.h"
 
-#define UART_TX_BUF_SIZE 256                                                        /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 1                                                          /**< UART RX buffer size. */
+#define UART_TX_BUF_SIZE           256                                /**< UART TX buffer size. */
+#define UART_RX_BUF_SIZE           1                                  /**< UART RX buffer size. */
 
 #define STRING_BUFFER_LEN          50
 #define BOND_DELETE_ALL_BUTTON_ID  0                                  /**< Button used for deleting all bonded centrals during startup. */
@@ -79,15 +78,15 @@
 /**@brief Variable length data encapsulation in terms of length and pointer to data */
 typedef struct
 {
-    uint8_t     * p_data;                                         /**< Pointer to data. */
-    uint16_t      data_len;                                       /**< Length of data. */
+    uint8_t     * p_data;                                             /**< Pointer to data. */
+    uint16_t      data_len;                                           /**< Length of data. */
 }data_t;
 
 typedef enum
 {
-    BLE_NO_SCAN,                                                  /**< No advertising running. */
-    BLE_WHITELIST_SCAN,                                           /**< Advertising with whitelist. */
-    BLE_FAST_SCAN,                                                /**< Fast advertising running. */
+    BLE_NO_SCAN,                                                     /**< No advertising running. */
+    BLE_WHITELIST_SCAN,                                              /**< Advertising with whitelist. */
+    BLE_FAST_SCAN,                                                   /**< Fast advertising running. */
 } ble_advertising_mode_t;
 
 static ble_db_discovery_t           m_ble_db_discovery;                  /**< Structure used to identify the DB Discovery module. */
@@ -513,7 +512,8 @@ static void device_manager_init(void)
     APP_ERROR_CHECK(err_code);
 
     // Clear all bonded devices if user requests to.
-    init_param.clear_persistent_data = bsp_buttons_state_get() & (1 << BOND_DELETE_ALL_BUTTON_ID);
+    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID,&(init_param.clear_persistent_data));
+    APP_ERROR_CHECK(err_code);
 
     err_code = dm_init(&init_param);
     APP_ERROR_CHECK(err_code);
@@ -757,7 +757,7 @@ int main(void)
                           APP_IRQ_PRIORITY_LOW,
                           err_code);
 
-
+    APP_ERROR_CHECK(err_code);
     app_trace_init();
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
     APP_GPIOTE_INIT(1);

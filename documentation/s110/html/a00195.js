@@ -1,13 +1,13 @@
 var a00195 =
 [
-    [ "dis_attr_md", "a00195.html#aa2ce530bbd1e27c0714bf8bdeda214d7", null ],
-    [ "fw_rev_str", "a00195.html#ace17346ac188ea3168ce89650b051960", null ],
-    [ "hw_rev_str", "a00195.html#af3ae591191cef78f2f0142f50f896191", null ],
-    [ "manufact_name_str", "a00195.html#a6980c3b02e2eb6513ba564c17aea32af", null ],
-    [ "model_num_str", "a00195.html#a764354961cfdd26b3e400c6292354574", null ],
-    [ "p_pnp_id", "a00195.html#a2bf4b6d703f519f7f52f0f9c757f7e11", null ],
-    [ "p_reg_cert_data_list", "a00195.html#a8fc7c6e19578a044415f703f1a753034", null ],
-    [ "p_sys_id", "a00195.html#a27dd370a69462b8e535284eabba9b3e5", null ],
-    [ "serial_num_str", "a00195.html#a4acba0dc5f1b3c9ef39845594a1d1daa", null ],
-    [ "sw_rev_str", "a00195.html#a2b68d1ba95abca2b58f71a3d11907154", null ]
+    [ "conn_handle", "a00195.html#a48a44e4e8cd1e67fbb32989de8a99b36", null ],
+    [ "dfu_ctrl_pt_handles", "a00195.html#a2b5f5316143335f6f2b8a41058097d17", null ],
+    [ "dfu_pkt_handles", "a00195.html#a759fe67aab5aa380ef2fb004b162fd7d", null ],
+    [ "dfu_rev_handles", "a00195.html#af8b39480165e6ca20294d3f1e3fbedcc", null ],
+    [ "dfu_status_rep_handles", "a00195.html#a458dbd2ff5429f61da7adb60e0905ba8", null ],
+    [ "error_handler", "a00195.html#a49fa8cfd9bce660ff46708670a6b0eef", null ],
+    [ "evt_handler", "a00195.html#a306430130c5f0868b715478449009be0", null ],
+    [ "revision", "a00195.html#afbf5763274c4a206786ad93ff22a05c4", null ],
+    [ "service_handle", "a00195.html#abac31261d78df5dfec65e37ba3d456fb", null ],
+    [ "uuid_type", "a00195.html#a8e4c2d2d6901dc489294370ecff5632b", null ]
 ];

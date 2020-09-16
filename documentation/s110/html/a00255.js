@@ -1,5 +1,5 @@
 var a00255 =
 [
-    [ "handle_range", "a00255.html#ab54f33f930899f4e27df1d5819670958", null ],
-    [ "uuid", "a00255.html#a3f00e5eb4b0f87085de2ea1e9464258b", null ]
+    [ "handle", "a00255.html#ab1f14809099e66b0dc7a4a70cb3dc124", null ],
+    [ "included_srvc", "a00255.html#a3342baabc3197898f17ce875e7a5ba80", null ]
 ];

@@ -1,14 +1,23 @@
 var a00947 =
 [
-    [ "DFU BLE SVC internal", "a00948.html", "a00948" ],
-    [ "dfu_ble_peer_data_t", "a00342.html", [
-      [ "addr", "a00342.html#a254efa46b45f5707510660ee0ae9edc3", null ],
-      [ "enc_info", "a00342.html#a8edc7904f78de5fddc021504d06ae029", null ],
-      [ "irk", "a00342.html#ac8c0e0d99c8c5cc39adfa07073253d58", null ]
+    [ "dfu_init_packet_t", "a00346.html", [
+      [ "app_version", "a00346.html#a2af05679dfa350f574a5aa0d403ca05e", null ],
+      [ "device_rev", "a00346.html#acfdd24f9e67a34b585c49d43d5fb9230", null ],
+      [ "device_type", "a00346.html#a880fe28496a9999f4554b47662485064", null ],
+      [ "softdevice", "a00346.html#a3b1f79aeef3c148827d1740aec3daa3d", null ],
+      [ "softdevice_len", "a00346.html#a86e254a1d13edd634ce1c1aad34e87ea", null ]
     ] ],
-    [ "BOOTLOADER_SVC_BASE", "a00947.html#ga40250c4367f60f8adf2f36ca02a620d2", null ],
-    [ "BOOTLOADER_SVCS", "a00947.html#gab61a9eaf497f22e66f7a0f76d8203133", [
-      [ "DFU_BLE_SVC_SET_PEER_DATA", "a00947.html#ggab61a9eaf497f22e66f7a0f76d8203133a343827596c1f6effeaf0ff0149cb5734", null ]
+    [ "dfu_device_info_t", "a00345.html", [
+      [ "device_rev", "a00345.html#a35291383c3fc311def52bf828fc99386", null ],
+      [ "device_type", "a00345.html#a1a77c3ef129c3527681c089fce4b95a5", null ]
     ] ],
-    [ "dfu_ble_svc_set_peer_data", "a00947.html#ga8d962d1d241de6a5778d01eaebfa0460", null ]
+    [ "DFU_DEVICE_INFO", "a00947.html#ga0739b7c5c51d4dd06d88df8fb562e186", null ],
+    [ "DFU_DEVICE_INFO_BASE", "a00947.html#gacdac816b4730617eedc86394ca32f145", null ],
+    [ "DFU_DEVICE_REVISION_EMPTY", "a00947.html#gab5e1b5ab912c1a30149be52c8cea371d", null ],
+    [ "DFU_DEVICE_TYPE_EMPTY", "a00947.html#gaa80004af35800b51c972eb5441641b02", null ],
+    [ "DFU_SOFTDEVICE_ANY", "a00947.html#ga963498faf6af23086555c594504b4152", null ],
+    [ "UICR_CUSTOMER_DEVICE_INFO_OFFSET", "a00947.html#ga7dbc00b26886d263bc3ff6fed3314df0", null ],
+    [ "UICR_CUSTOMER_RESERVED_OFFSET", "a00947.html#gaf398722d5fa37c34e7e1554a4c23b31f", null ],
+    [ "dfu_init_postvalidate", "a00947.html#ga1926c2d8e3484641d16f9beb654ac5f1", null ],
+    [ "dfu_init_prevalidate", "a00947.html#ga585131c480f3f4e51293e954b4c26aeb", null ]
 ];

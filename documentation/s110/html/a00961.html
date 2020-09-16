@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Cycling Speed and Cadence Service feature bits</title>
+<title>nRF51 SDK - S110 SoftDevice: Cycling Speed and Cadence Service</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,59 +97,214 @@ $(document).ready(function(){initNavTree('a00961.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#groups">Modules</a> &#124;
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Cycling Speed and Cadence Service feature bits<div class="ingroups"><a class="el" href="a00960.html">Cycling Speed and Cadence Service</a></div></div>  </div>
+<div class="title">Cycling Speed and Cadence Service<div class="ingroups"><a class="el" href="a01036.html">BLE Services</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Cycling Speed and Cadence Service module.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga740497a07aa6d00eca58fa70ec71b8a4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00961.html#ga740497a07aa6d00eca58fa70ec71b8a4">BLE_CSCS_FEATURE_WHEEL_REV_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 0)</td></tr>
-<tr class="separator:ga740497a07aa6d00eca58fa70ec71b8a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae8a3b12ea932fb3d6d9bfc13bfb1ed38"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00961.html#gae8a3b12ea932fb3d6d9bfc13bfb1ed38">BLE_CSCS_FEATURE_CRANK_REV_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 1)</td></tr>
-<tr class="separator:gae8a3b12ea932fb3d6d9bfc13bfb1ed38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaf07908111823b6edcc9f09c3b00c9af"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00961.html#gaaf07908111823b6edcc9f09c3b00c9af">BLE_CSCS_FEATURE_MULTIPLE_SENSORS_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 2)</td></tr>
-<tr class="separator:gaaf07908111823b6edcc9f09c3b00c9af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00962"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00962.html">Cycling Speed and Cadence Service feature bits</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00183.html">ble_cscs_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycling Speed and Cadence Service event.  <a href="a00183.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00184.html">ble_cscs_init_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycling Speed and Cadence Service init structure. This contains all options and data needed for initialization of the service.  <a href="a00184.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00186.html">ble_cscs_s</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycling Speed and Cadence Service structure. This contains various status information for the service.  <a href="a00186.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00185.html">ble_cscs_meas_s</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycling Speed and Cadence Service measurement structure. This contains a Cycling Speed and Cadence Service measurement.  <a href="a00185.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga8fb5ed5d9c117d85db4c59a4470bb627"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8fb5ed5d9c117d85db4c59a4470bb627"></a>
+typedef struct <a class="el" href="a00186.html">ble_cscs_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00961.html#ga8fb5ed5d9c117d85db4c59a4470bb627">ble_cscs_t</a></td></tr>
+<tr class="memdesc:ga8fb5ed5d9c117d85db4c59a4470bb627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycling Speed and Cadence Service structure. This contains various status information for the service. <br/></td></tr>
+<tr class="separator:ga8fb5ed5d9c117d85db4c59a4470bb627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga10281fbc8ffe1192d6047d3e9fa0ddc0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga10281fbc8ffe1192d6047d3e9fa0ddc0"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00961.html#ga10281fbc8ffe1192d6047d3e9fa0ddc0">ble_cscs_evt_handler_t</a> )(<a class="el" href="a00961.html#ga8fb5ed5d9c117d85db4c59a4470bb627">ble_cscs_t</a> *p_cscs, <a class="el" href="a00183.html">ble_cscs_evt_t</a> *p_evt)</td></tr>
+<tr class="memdesc:ga10281fbc8ffe1192d6047d3e9fa0ddc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycling Speed and Cadence Service event handler type. <br/></td></tr>
+<tr class="separator:ga10281fbc8ffe1192d6047d3e9fa0ddc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48ac37bca68e48cda3c1ef093398c9c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga48ac37bca68e48cda3c1ef093398c9c6"></a>
+typedef struct <a class="el" href="a00185.html">ble_cscs_meas_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00961.html#ga48ac37bca68e48cda3c1ef093398c9c6">ble_cscs_meas_t</a></td></tr>
+<tr class="memdesc:ga48ac37bca68e48cda3c1ef093398c9c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycling Speed and Cadence Service measurement structure. This contains a Cycling Speed and Cadence Service measurement. <br/></td></tr>
+<tr class="separator:ga48ac37bca68e48cda3c1ef093398c9c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gabd8c3101d93c08174d2e0d2085e2f02b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00961.html#gabd8c3101d93c08174d2e0d2085e2f02b">ble_cscs_evt_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00961.html#ggabd8c3101d93c08174d2e0d2085e2f02ba0a1409a9c76ef90b22cd76e03fde4b50">BLE_CSCS_EVT_NOTIFICATION_ENABLED</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00961.html#ggabd8c3101d93c08174d2e0d2085e2f02ba47805a8eed422166cb4d8415b91d13ee">BLE_CSCS_EVT_NOTIFICATION_DISABLED</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gabd8c3101d93c08174d2e0d2085e2f02b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycling Speed and Cadence Service event type.  <a href="a00961.html#gabd8c3101d93c08174d2e0d2085e2f02b">More...</a><br/></td></tr>
+<tr class="separator:gabd8c3101d93c08174d2e0d2085e2f02b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga12394192a629326cb7f4cab0b59dff1e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00961.html#ga12394192a629326cb7f4cab0b59dff1e">ble_cscs_init</a> (<a class="el" href="a00961.html#ga8fb5ed5d9c117d85db4c59a4470bb627">ble_cscs_t</a> *p_cscs, const <a class="el" href="a00184.html">ble_cscs_init_t</a> *p_cscs_init)</td></tr>
+<tr class="memdesc:ga12394192a629326cb7f4cab0b59dff1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Cycling Speed and Cadence Service.  <a href="#ga12394192a629326cb7f4cab0b59dff1e">More...</a><br/></td></tr>
+<tr class="separator:ga12394192a629326cb7f4cab0b59dff1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabcc0bd0d90b6d40220468349ba190b98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00961.html#gabcc0bd0d90b6d40220468349ba190b98">ble_cscs_on_ble_evt</a> (<a class="el" href="a00961.html#ga8fb5ed5d9c117d85db4c59a4470bb627">ble_cscs_t</a> *p_cscs, <a class="el" href="a00203.html">ble_evt_t</a> *p_ble_evt)</td></tr>
+<tr class="memdesc:gabcc0bd0d90b6d40220468349ba190b98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling the Application's BLE Stack events.  <a href="#gabcc0bd0d90b6d40220468349ba190b98">More...</a><br/></td></tr>
+<tr class="separator:gabcc0bd0d90b6d40220468349ba190b98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga445c4e7578c68607b1573e175c20323f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00961.html#ga445c4e7578c68607b1573e175c20323f">ble_cscs_measurement_send</a> (<a class="el" href="a00961.html#ga8fb5ed5d9c117d85db4c59a4470bb627">ble_cscs_t</a> *p_cscs, <a class="el" href="a00961.html#ga48ac37bca68e48cda3c1ef093398c9c6">ble_cscs_meas_t</a> *p_measurement)</td></tr>
+<tr class="memdesc:ga445c4e7578c68607b1573e175c20323f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for sending cycling speed and cadence measurement if notification has been enabled.  <a href="#ga445c4e7578c68607b1573e175c20323f">More...</a><br/></td></tr>
+<tr class="separator:ga445c4e7578c68607b1573e175c20323f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gae8a3b12ea932fb3d6d9bfc13bfb1ed38"></a>
+<p>Cycling Speed and Cadence Service module. </p>
+<p>This module implements the Cycling Speed and Cadence Service. If enabled, notification of the Cycling Speead and Candence Measurement is performed when the application calls <a class="el" href="a00961.html#ga445c4e7578c68607b1573e175c20323f" title="Function for sending cycling speed and cadence measurement if notification has been enabled...">ble_cscs_measurement_send()</a>.</p>
+<p>To use this service, you need to provide the the supported features (<a class="el" href="a00962.html">Cycling Speed and Cadence Service feature bits</a>). If you choose to support Wheel revolution data (feature bit <a class="el" href="a00962.html#ga740497a07aa6d00eca58fa70ec71b8a4">BLE_CSCS_FEATURE_WHEEL_REV_BIT</a>), you then need to support the 'setting of cumulative value' operation by the supporting the Speed and Cadence Control Point (<a class="el" href="a00975.html">Speed and Cadence Control Point</a>) by setting the <a class="el" href="a00976.html#ga057b47633228ff5da51d9c924f346637">BLE_SRV_SC_CTRLPT_CUM_VAL_OP_SUPPORTED</a> bit of the ctrplt_supported_functions in the <a class="el" href="a00184.html">ble_cscs_init_t</a> structure. If you want to support the 'start autocalibration' control point feature, you need, after the <a class="el" href="a00975.html#ggab3b9b97d8227deb568c21630514be078a59069c22afe68d6277c1ac033f14f1c5">BLE_SC_CTRLPT_EVT_START_CALIBRATION</a> has been received and the auto calibration is finished, to call the <a class="el" href="a00975.html#gaabf81487a67f728731c0358384452618">ble_sc_ctrlpt_rsp_send</a> to indicate that the operation is finished and thus be able to receive new control point operations. If you want to support the 'sensor location' related operation, you need to provide a list of supported location in the <a class="el" href="a00184.html">ble_cscs_init_t</a> structure.</p>
+<dl class="section note"><dt>Note</dt><dd>The application or the service using this module must propagate BLE stack events to the Cycling Speead and Candence Service module by calling <a class="el" href="a00961.html#gabcc0bd0d90b6d40220468349ba190b98" title="Function for handling the Application&#39;s BLE Stack events.">ble_cscs_on_ble_evt()</a> from the from the <a class="el" href="a00954.html">SoftDevice Event Handler</a> function. This service will forward the event to the <a class="el" href="a00975.html">Speed and Cadence Control Point</a> module.</dd>
+<dd>
+Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profile qualification listings, this section of source code must not be modified. </dd></dl>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gabd8c3101d93c08174d2e0d2085e2f02b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_CSCS_FEATURE_CRANK_REV_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 1)</td>
+          <td class="memname">enum <a class="el" href="a00961.html#gabd8c3101d93c08174d2e0d2085e2f02b">ble_cscs_evt_type_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Crank Revolution Data Supported bit. </p>
+
+<p>Cycling Speed and Cadence Service event type. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabd8c3101d93c08174d2e0d2085e2f02ba0a1409a9c76ef90b22cd76e03fde4b50"></a>BLE_CSCS_EVT_NOTIFICATION_ENABLED</em>&nbsp;</td><td class="fielddoc">
+<p>Cycling Speed and Cadence value notification enabled event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabd8c3101d93c08174d2e0d2085e2f02ba47805a8eed422166cb4d8415b91d13ee"></a>BLE_CSCS_EVT_NOTIFICATION_DISABLED</em>&nbsp;</td><td class="fielddoc">
+<p>Cycling Speed and Cadence value notification disabled event. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
-<a class="anchor" id="gaaf07908111823b6edcc9f09c3b00c9af"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga12394192a629326cb7f4cab0b59dff1e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_CSCS_FEATURE_MULTIPLE_SENSORS_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 2)</td>
+          <td class="memname">uint32_t ble_cscs_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00961.html#ga8fb5ed5d9c117d85db4c59a4470bb627">ble_cscs_t</a> *&#160;</td>
+          <td class="paramname"><em>p_cscs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00184.html">ble_cscs_init_t</a> *&#160;</td>
+          <td class="paramname"><em>p_cscs_init</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Multiple Sensor Locations Supported bit. </p>
+
+<p>Function for initializing the Cycling Speed and Cadence Service. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_cscs</td><td>Cycling Speed and Cadence Service structure. This structure will have to be supplied by the application. It will be initialized by this function, and will later be used to identify this particular service instance. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cscs_init</td><td>Information needed to initialize the service.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization of service, otherwise an error code. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga740497a07aa6d00eca58fa70ec71b8a4"></a>
+<a class="anchor" id="ga445c4e7578c68607b1573e175c20323f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_CSCS_FEATURE_WHEEL_REV_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 0)</td>
+          <td class="memname">uint32_t ble_cscs_measurement_send </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00961.html#ga8fb5ed5d9c117d85db4c59a4470bb627">ble_cscs_t</a> *&#160;</td>
+          <td class="paramname"><em>p_cscs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00961.html#ga48ac37bca68e48cda3c1ef093398c9c6">ble_cscs_meas_t</a> *&#160;</td>
+          <td class="paramname"><em>p_measurement</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Wheel Revolution Data Supported bit. </p>
+
+<p>Function for sending cycling speed and cadence measurement if notification has been enabled. </p>
+<p>The application calls this function after having performed a Cycling Speed and Cadence Service measurement. If notification has been enabled, the measurement data is encoded and sent to the client.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cscs</td><td>Cycling Speed and Cadence Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_measurement</td><td>Pointer to new cycling speed and cadence measurement.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, otherwise an error code. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gabcc0bd0d90b6d40220468349ba190b98"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ble_cscs_on_ble_evt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00961.html#ga8fb5ed5d9c117d85db4c59a4470bb627">ble_cscs_t</a> *&#160;</td>
+          <td class="paramname"><em>p_cscs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00203.html">ble_evt_t</a> *&#160;</td>
+          <td class="paramname"><em>p_ble_evt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for handling the Application's BLE Stack events. </p>
+<p>Handles all events from the BLE stack of interest to the Cycling Speed and Cadence Service.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_cscs</td><td>Cycling Speed and Cadence Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>Event received from the BLE stack. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -158,7 +313,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

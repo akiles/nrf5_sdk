@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_bas_c_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_ans_control_point_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,52 +106,48 @@ $(document).ready(function(){initNavTree('a00165.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_bas_c_evt_t Struct Reference<div class="ingroups"><a class="el" href="a01005.html">Structures</a></div></div>  </div>
+<div class="title">ble_ans_control_point_t Struct Reference<div class="ingroups"><a class="el" href="a00958.html">Alert Notification Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Battery Service Client Event structure.  
+<p>Alert Notification Control Point structure.  
  <a href="a00165.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_bas_c.h&gt;</code></p>
+<p><code>#include &lt;ble_ans_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a19f2646a4734d1fc7cb27fdd7055fa55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01004.html#ga825ba0a7f2d9094574df073de10a3a15">ble_bas_c_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00165.html#a19f2646a4734d1fc7cb27fdd7055fa55">evt_type</a></td></tr>
-<tr class="separator:a19f2646a4734d1fc7cb27fdd7055fa55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52a976df15e8a974e3980b36e813a6dc"><td class="memItemLeft" ><a class="anchor" id="a52a976df15e8a974e3980b36e813a6dc"></a>
-union {</td></tr>
-<tr class="memitem:af6f01e79966672cfe3a67efe4cb8f719"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00165.html#aa06f57fc8285fed61a3c0dd89671f6d3">battery_level</a></td></tr>
-<tr class="separator:af6f01e79966672cfe3a67efe4cb8f719"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52a976df15e8a974e3980b36e813a6dc"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:a52a976df15e8a974e3980b36e813a6dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a884740fe58c776baff9984a9aeb2364a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00958.html#ga27cf2fcb0272333911649738907a64ff">ble_ans_command_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00165.html#a884740fe58c776baff9984a9aeb2364a">command</a></td></tr>
+<tr class="separator:a884740fe58c776baff9984a9aeb2364a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fdff51ec3bc842205991b1d94a6203d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00958.html#gaadf812c0e22b456c6dd0ed92f9bff200">ble_ans_category_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00165.html#a4fdff51ec3bc842205991b1d94a6203d">category</a></td></tr>
+<tr class="separator:a4fdff51ec3bc842205991b1d94a6203d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Battery Service Client Event structure. </p>
+<div class="textblock"><p>Alert Notification Control Point structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aa06f57fc8285fed61a3c0dd89671f6d3"></a>
+<a class="anchor" id="a4fdff51ec3bc842205991b1d94a6203d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_bas_c_evt_t::battery_level</td>
+          <td class="memname"><a class="el" href="a00958.html#gaadf812c0e22b456c6dd0ed92f9bff200">ble_ans_category_id_t</a> ble_ans_control_point_t::category</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Battery level received from peer. This field will be used for the events <a class="el" href="a01004.html#gga825ba0a7f2d9094574df073de10a3a15a9d1d37260864fc90e1a1c56c6de13657">BLE_BAS_C_EVT_BATT_NOTIFICATION</a> and <a class="el" href="a01004.html#gga825ba0a7f2d9094574df073de10a3a15a424840c39dfabd3c63e1c10d0fc30f6c">BLE_BAS_C_EVT_BATT_READ_RESP</a>. </p>
+<p>The category for the control point for which the command applies, see <a class="el" href="a00958.html#gaadf812c0e22b456c6dd0ed92f9bff200">ble_ans_category_id_t</a>. </p>
 
 </div>
 </div>
-<a class="anchor" id="a19f2646a4734d1fc7cb27fdd7055fa55"></a>
+<a class="anchor" id="a884740fe58c776baff9984a9aeb2364a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a01004.html#ga825ba0a7f2d9094574df073de10a3a15">ble_bas_c_evt_type_t</a> ble_bas_c_evt_t::evt_type</td>
+          <td class="memname"><a class="el" href="a00958.html#ga27cf2fcb0272333911649738907a64ff">ble_ans_command_id_t</a> ble_ans_control_point_t::command</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Event Type. </p>
+<p>The command to be written to the control point, see <a class="el" href="a00958.html#ga27cf2fcb0272333911649738907a64ff">ble_ans_command_id_t</a>. </p>
 
 </div>
 </div>
@@ -160,8 +156,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00165.html">ble_bas_c_evt_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:26 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00165.html">ble_ans_control_point_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:12 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

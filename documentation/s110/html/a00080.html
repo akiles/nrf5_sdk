@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: RTX Support</title>
+<title>nRF51 SDK - S110 SoftDevice: BLE S110 Events</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,55 +97,50 @@ $(document).ready(function(){initNavTree('a00080.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">RTX Support </div>  </div>
+<div class="title">BLE S110 Events </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The SDK provides an implementation of an extension to ARM Keil RTX that is referred to as tickless mode. It allows waking up the MCU only when it is needed.</p>
-<h1><a class="anchor" id="rtx_limitation"></a>
-Limitations</h1>
-<p>You should be aware of the following limitations when using RTX:</p>
-<ul>
-<li>nRF51 does not have a SysTick timer. Therefore, RTC1 is used instead.</li>
-<li>To provide the early wake-up mechanism, the rtos_suspend variable must be cleared in every interrupt handler that uses system services. See <a class="el" href="a00080.html#rtx_interrupt">Examples</a> for a code example.</li>
-<li><p class="startli">All interrupts are passed to the application through the SoftDevice, which generates additional interrupt latency. See the SoftDevice and RTX specification for more information.</p>
-<p class="startli">The following table lists the additional latency according to the specifications for RTX (V4.74) and S110 nRF51822 (v1.2): </p>
-<table class="doxtable">
-<tr>
-<th>Interrupt </th><th>S110 (CPU cycles)</th><th>RTX (CPU cycles)</th></tr>
-<tr>
-<td>Open peripheral interrupt </td><td>50 </td><td>&lt; 20 </td></tr>
-<tr>
-<td>Blocked or restricted peripheral interrupt </td><td>63 </td><td>&lt; 20 </td></tr>
-<tr>
-<td>Application SVC interrupt </td><td>14 </td><td>≈ 35 </td></tr>
-</table>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#nrf51_evt_tx_complete_encoding">0x01 - BLE_EVT_TX_COMPLETE</a><ul><li class="level2"><a href="#nrf51_evt_tx_complete_encoding_sec">Event encoding</a></li>
+<li class="level2"><a href="#nrf51_evt_tx_complete_encoding_sub_a">Packet layout</a></li>
+</ul>
 </li>
 </ul>
-<h1><a class="anchor" id="rtx_softdevice"></a>
-Cooperation with the SoftDevice</h1>
-<p>RTX shares the SVC interrupt with the SoftDevice. Therefore, it works on the same interrupt priority (UpperStack) as the SoftDevice API functions.</p>
-<h1><a class="anchor" id="rtx_interrupt"></a>
-Examples</h1>
-<p>This example shows how to use the system function in interrupt handlers. </p>
-<dl class="section warning"><dt>Warning</dt><dd>You must always clear the rtos_suspend variable in interrupt handlers that use RTX functions. Not clearing it might cause undefined behaviour.</dd></dl>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> ***_IRQHandler(<span class="keywordtype">void</span>);</div>
-<div class="line">{<span class="comment"></span></div>
-<div class="line"><span class="comment">    /**</span></div>
-<div class="line"><span class="comment">    *implementation of handler</span></div>
-<div class="line"><span class="comment">    */</span></div>
-<div class="line">    rtos_suspend = 0;</div>
-<div class="line">    osSignalSet (thread_id, SIGNAL); <span class="comment">//example of system function</span></div>
-<div class="line">}</div>
-</div><!-- fragment --><p>The following example applications demonstrate the use of RTX:</p>
-<p><a class="el" href="a00021.html">Blinky RTX Example</a></p>
-<p><a class="el" href="a00055.html">Heart Rate Application with RTX</a> </p>
+</div>
+<div class="textblock"><h1><a class="anchor" id="nrf51_evt_tx_complete_encoding"></a>
+0x01 - BLE_EVT_TX_COMPLETE</h1>
+<h2><a class="anchor" id="nrf51_evt_tx_complete_encoding_sec"></a>
+Event encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a01044.html#ggaa55e423bfea45f03764a636f2cec7a8ba408a77f131a2d314fbf477cdb2d1e0f6">BLE_EVT_TX_COMPLETE</a> packet.</p>
+<p>Event ID = 0x01 for BLE_EVT_TX_COMPLETE</p>
+<p>All BLE Events, <a class="el" href="a00203.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00202.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
+<p>The event contains a connection handle, and for the BLE TX complete, the <a class="el" href="a00204.html">ble_evt_tx_complete_t</a> is encoded after connection handle as seen in Figure 1.</p>
+<p>The order of the encoding is:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>see <a class="el" href="a00177.html#ad7c997d8d0c6e0d3d24de3ecad426645">ble_common_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Count </td><td>see <a class="el" href="a00204.html">ble_evt_tx_complete_t</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_evt_tx_complete_encoding_sub_a"></a>
+Packet layout</h2>
+<div class="image">
+<img src="event_tx_complete.png" alt="event_tx_complete.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE_EVT_TX_COMPLETE event.</div></div>
+<p> <br/>
+ </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00079.html">RTOS support</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:19 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00073.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00075.html">Serialization Codecs</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:04 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

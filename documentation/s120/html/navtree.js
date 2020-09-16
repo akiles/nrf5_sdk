@@ -22,18 +22,18 @@ var NAVTREEINDEX =
 [
 "a00001.html",
 "a00066.html#nrf51_evt_sys_attr_missing_encoding",
-"a00083.html#lib_device_manager_init_evt",
-"a00139.html#af2d04383bf2e1c7a4447e024528b7db9",
-"a00197.html#a584d9c286a840f2aa29cf3f6e76362d4",
-"a00487.html#gae9609bc1e796e528ca2f4ad3311662e4",
-"a00509.html#ggae80211a61fd86e95a2ad0d7e8dcf8a5ca0f6139241ce530ef3bd92baa428b6d73",
-"a00546.html#gab86b31f7e0c4a669cdffa4eb71bb0e89",
-"a00573.html#ga71c0d429a3168558cb8adede902550f8",
-"a00652.html#gafc3eca145880ebe2963c75829fbaf171",
-"a00671.html#ga6fa3c13b18c3c4fd3ee5faf11c9930f7",
-"a00727.html#ga0e02811c4ce9dff7bd190daa42b7a58b",
-"a00751.html#gga1861d83550e6998efd13d44b09ec1ba9ae34d35052cd94de5fd4e6c5263d898ab",
-"functions_0x65.html"
+"a00083.html#lib_device_manaegerit",
+"a00139.html#ab87edb24814869990c89391036c4f842",
+"a00196.html#a763895cc4380ab52a871637ad5156d94",
+"a00487.html#ga69e4fcd00a7c2249c5c94210c1c21c90",
+"a00509.html#gga1679bda84cf17b2f9c2dd5e323078c5aa2d702ba14161b60cb74a7dd5c2c71d5b",
+"a00545.html#gadda6e71a42de04bd48870afcad38a81c",
+"a00570.html#gacd99c2b7b0fce1a331709f3bdd98e1fc",
+"a00651.html#gabcd5e98ab720b8e96d47b88b24c6e113",
+"a00670.html#ga5808156fdb9bc6fccf7b0b3a711a5f7e",
+"a00727.html#gae8d2c3303667273a59d407df6445c54b",
+"a00751.html#gaf0a71c5d9dd3b12235312bd40fd2175e",
+"a00782.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: dfu_update_status_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dfu_update_packet_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,108 +106,67 @@ $(document).ready(function(){initNavTree('a00348.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dfu_update_status_t Struct Reference<div class="ingroups"><a class="el" href="a00951.html">Types and definitions.</a></div></div>  </div>
+<div class="title">dfu_update_packet_t Struct Reference<div class="ingroups"><a class="el" href="a00949.html">Types and definitions.</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure holding DFU complete event.  
+<p>Structure for holding dfu update packet. Packet type indicate the type of packet.  
  <a href="a00348.html#details">More...</a></p>
 
 <p><code>#include &lt;dfu_types.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac8f74ba3fe25a5db401c156ad55360b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00951.html#ga53842ec56bb0c14aa506551bfdc0c652">dfu_update_status_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00348.html#ac8f74ba3fe25a5db401c156ad55360b1">status_code</a></td></tr>
-<tr class="separator:ac8f74ba3fe25a5db401c156ad55360b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad23c5de3d64733cea90d62aece2cf641"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00348.html#ad23c5de3d64733cea90d62aece2cf641">app_crc</a></td></tr>
-<tr class="separator:ad23c5de3d64733cea90d62aece2cf641"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92316af9b2c88f35230d266ee6f632d5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00348.html#a92316af9b2c88f35230d266ee6f632d5">sd_size</a></td></tr>
-<tr class="separator:a92316af9b2c88f35230d266ee6f632d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af34c4a8d41f65c0d8c1c431809417254"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00348.html#af34c4a8d41f65c0d8c1c431809417254">bl_size</a></td></tr>
-<tr class="separator:af34c4a8d41f65c0d8c1c431809417254"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a3071d6e7b79e59aae9aa9022b462c1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00348.html#a5a3071d6e7b79e59aae9aa9022b462c1">app_size</a></td></tr>
-<tr class="separator:a5a3071d6e7b79e59aae9aa9022b462c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa68f84c4e5bd2283886d3dce05001262"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00348.html#aa68f84c4e5bd2283886d3dce05001262">sd_image_start</a></td></tr>
-<tr class="separator:aa68f84c4e5bd2283886d3dce05001262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab181d68ce3f0f88e0f4020c1e07bb14d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00348.html#ab181d68ce3f0f88e0f4020c1e07bb14d">packet_type</a></td></tr>
+<tr class="separator:ab181d68ce3f0f88e0f4020c1e07bb14d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c3103bae03f6af6824b7cf81834469f"><td class="memItemLeft" ><a class="anchor" id="a2c3103bae03f6af6824b7cf81834469f"></a>
+union {</td></tr>
+<tr class="memitem:adf2c3e62c8d8ef42f8b1ce22808a3857"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00344.html">dfu_data_packet_t</a>&#160;&#160;&#160;<a class="el" href="a00348.html#acefd384a51f51514c417758c5d870a10">data_packet</a></td></tr>
+<tr class="separator:adf2c3e62c8d8ef42f8b1ce22808a3857"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4665f2e64cf730b21853a1d12e58dff3"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00347.html">dfu_start_packet_t</a> *&#160;&#160;&#160;<a class="el" href="a00348.html#a3a677307c9b4796855cdc9d208cd8dee">start_packet</a></td></tr>
+<tr class="separator:a4665f2e64cf730b21853a1d12e58dff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c3103bae03f6af6824b7cf81834469f"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
+<tr class="separator:a2c3103bae03f6af6824b7cf81834469f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure holding DFU complete event. </p>
+<div class="textblock"><p>Structure for holding dfu update packet. Packet type indicate the type of packet. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ad23c5de3d64733cea90d62aece2cf641"></a>
+<a class="anchor" id="acefd384a51f51514c417758c5d870a10"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t dfu_update_status_t::app_crc</td>
+          <td class="memname"><a class="el" href="a00344.html">dfu_data_packet_t</a> dfu_update_packet_t::data_packet</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>CRC of the recieved application. </p>
+<p>Used when packet type is INIT_PACKET or DATA_PACKET. Packet contains data received for init or data. </p>
 
 </div>
 </div>
-<a class="anchor" id="a5a3071d6e7b79e59aae9aa9022b462c1"></a>
+<a class="anchor" id="ab181d68ce3f0f88e0f4020c1e07bb14d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t dfu_update_status_t::app_size</td>
+          <td class="memname">uint32_t dfu_update_packet_t::packet_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Size of the recieved Application. </p>
+<p>Packet type, used to identify the content of the received packet referenced by data packet. </p>
 
 </div>
 </div>
-<a class="anchor" id="af34c4a8d41f65c0d8c1c431809417254"></a>
+<a class="anchor" id="a3a677307c9b4796855cdc9d208cd8dee"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t dfu_update_status_t::bl_size</td>
+          <td class="memname"><a class="el" href="a00347.html">dfu_start_packet_t</a>* dfu_update_packet_t::start_packet</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Size of the recieved BootLoader. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa68f84c4e5bd2283886d3dce05001262"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t dfu_update_status_t::sd_image_start</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Location in flash where the received SoftDevice image is stored. </p>
-
-</div>
-</div>
-<a class="anchor" id="a92316af9b2c88f35230d266ee6f632d5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t dfu_update_status_t::sd_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of the recieved SoftDevice. </p>
-
-</div>
-</div>
-<a class="anchor" id="ac8f74ba3fe25a5db401c156ad55360b1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00951.html#ga53842ec56bb0c14aa506551bfdc0c652">dfu_update_status_code_t</a> dfu_update_status_t::status_code</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Device Firmware Update status. </p>
+<p>Used when packet type is START_DATA_PACKET. Will contain information on software to be updtaed, i.e. SoftDevice, Bootloader and/or Application along with image sizes. </p>
 
 </div>
 </div>
@@ -216,8 +175,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00348.html">dfu_update_status_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00348.html">dfu_update_packet_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

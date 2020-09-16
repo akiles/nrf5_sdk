@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gls_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gls_rec_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,144 +106,48 @@ $(document).ready(function(){initNavTree('a00280.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gls_s Struct Reference<div class="ingroups"><a class="el" href="a00965.html">Glucose Service</a></div></div>  </div>
+<div class="title">ble_gls_rec_t Struct Reference<div class="ingroups"><a class="el" href="a00966.html">Glucose Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Glucose Service structure. This contains various status information for the service.  
+<p>Glucose measurement record.  
  <a href="a00280.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gls.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aea357d52245f373e6aed7e75d10c0e80"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00965.html#ga3ce1768be78844adcb2729acbf38a99f">ble_gls_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00280.html#aea357d52245f373e6aed7e75d10c0e80">evt_handler</a></td></tr>
-<tr class="separator:aea357d52245f373e6aed7e75d10c0e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99953e3d617e280b5e2af8cefce53786"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00975.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00280.html#a99953e3d617e280b5e2af8cefce53786">error_handler</a></td></tr>
-<tr class="separator:a99953e3d617e280b5e2af8cefce53786"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af41bbddc33e6fd21be56b5953733ea92"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00280.html#af41bbddc33e6fd21be56b5953733ea92">service_handle</a></td></tr>
-<tr class="separator:af41bbddc33e6fd21be56b5953733ea92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6d4433547db64cf7b1d166f83d72c10"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00260.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00280.html#ac6d4433547db64cf7b1d166f83d72c10">glm_handles</a></td></tr>
-<tr class="separator:ac6d4433547db64cf7b1d166f83d72c10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04a7dd42f5a8645f568c5ad91a36cc85"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00260.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00280.html#a04a7dd42f5a8645f568c5ad91a36cc85">glm_context_handles</a></td></tr>
-<tr class="separator:a04a7dd42f5a8645f568c5ad91a36cc85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab165cc78412830043bb851ffc6e6dc85"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00260.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00280.html#ab165cc78412830043bb851ffc6e6dc85">glf_handles</a></td></tr>
-<tr class="separator:ab165cc78412830043bb851ffc6e6dc85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab48807f749f83b1d6b48101e3409cced"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00260.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00280.html#ab48807f749f83b1d6b48101e3409cced">racp_handles</a></td></tr>
-<tr class="separator:ab48807f749f83b1d6b48101e3409cced"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58872790eba51c45b267473235ebd32d"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00280.html#a58872790eba51c45b267473235ebd32d">conn_handle</a></td></tr>
-<tr class="separator:a58872790eba51c45b267473235ebd32d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a738170bfd0b71e8a4befe527b74b8377"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a738170bfd0b71e8a4befe527b74b8377"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>feature</b></td></tr>
-<tr class="separator:a738170bfd0b71e8a4befe527b74b8377"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8550b67974545fd563afbbaaddf2bf7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae8550b67974545fd563afbbaaddf2bf7"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_context_supported</b></td></tr>
-<tr class="separator:ae8550b67974545fd563afbbaaddf2bf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02b5dfbcd8fadfd476e956714007a679"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00279.html">ble_gls_meas_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00280.html#a02b5dfbcd8fadfd476e956714007a679">meas</a></td></tr>
+<tr class="separator:a02b5dfbcd8fadfd476e956714007a679"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22ff0b5a0e6b034b6021996257ed1161"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00278.html">ble_gls_meas_context_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00280.html#a22ff0b5a0e6b034b6021996257ed1161">context</a></td></tr>
+<tr class="separator:a22ff0b5a0e6b034b6021996257ed1161"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Glucose Service structure. This contains various status information for the service. </p>
+<div class="textblock"><p>Glucose measurement record. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a58872790eba51c45b267473235ebd32d"></a>
+<a class="anchor" id="a22ff0b5a0e6b034b6021996257ed1161"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gls_s::conn_handle</td>
+          <td class="memname"><a class="el" href="a00278.html">ble_gls_meas_context_t</a> ble_gls_rec_t::context</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
+<p>Glucose measurement context </p>
 
 </div>
 </div>
-<a class="anchor" id="a99953e3d617e280b5e2af8cefce53786"></a>
+<a class="anchor" id="a02b5dfbcd8fadfd476e956714007a679"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00975.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_gls_s::error_handler</td>
+          <td class="memname"><a class="el" href="a00279.html">ble_gls_meas_t</a> ble_gls_rec_t::meas</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Function to be called in case of an error. </p>
-
-</div>
-</div>
-<a class="anchor" id="aea357d52245f373e6aed7e75d10c0e80"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00965.html#ga3ce1768be78844adcb2729acbf38a99f">ble_gls_evt_handler_t</a> ble_gls_s::evt_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event handler to be called for handling events in the Glucose Service. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab165cc78412830043bb851ffc6e6dc85"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00260.html">ble_gatts_char_handles_t</a> ble_gls_s::glf_handles</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handles related to the Glucose Feature characteristic. </p>
-
-</div>
-</div>
-<a class="anchor" id="a04a7dd42f5a8645f568c5ad91a36cc85"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00260.html">ble_gatts_char_handles_t</a> ble_gls_s::glm_context_handles</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handles related to the Glucose Measurement Context characteristic. </p>
-
-</div>
-</div>
-<a class="anchor" id="ac6d4433547db64cf7b1d166f83d72c10"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00260.html">ble_gatts_char_handles_t</a> ble_gls_s::glm_handles</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handles related to the Glucose Measurement characteristic. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab48807f749f83b1d6b48101e3409cced"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00260.html">ble_gatts_char_handles_t</a> ble_gls_s::racp_handles</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handles related to the Record Access Control Point characteristic. </p>
-
-</div>
-</div>
-<a class="anchor" id="af41bbddc33e6fd21be56b5953733ea92"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gls_s::service_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle of Glucose Service (as provided by the BLE stack). </p>
+<p>Glucose measurement </p>
 
 </div>
 </div>
@@ -252,8 +156,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_context_supported<
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00280.html">ble_gls_s</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00280.html">ble_gls_rec_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,6 +1,7 @@
 var a00577 =
 [
-    [ "NRF_ERROR_SDM_INCORRECT_CLENR0", "a00577.html#gaa612f324901ce4390c4010751c935d94", null ],
-    [ "NRF_ERROR_SDM_INCORRECT_INTERRUPT_CONFIGURATION", "a00577.html#ga5e01566a9b1b0f6fdec349198401e5bd", null ],
-    [ "NRF_ERROR_SDM_LFCLK_SOURCE_UNKNOWN", "a00577.html#ga987f38ed25beabe507da1d5dd31bbeae", null ]
+    [ "Defines", "a00767.html", "a00767" ],
+    [ "Enumerations", "a00768.html", "a00768" ],
+    [ "Types", "a00769.html", "a00769" ],
+    [ "Functions", "a00770.html", "a00770" ]
 ];

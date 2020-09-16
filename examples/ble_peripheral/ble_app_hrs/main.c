@@ -34,7 +34,7 @@
 #ifdef BLE_DFU_APP_SUPPORT
 #include "ble_dfu.h"
 #include "dfu_app_handler.h"
-#endif
+#endif // BLE_DFU_APP_SUPPORT
 #include "ble_conn_params.h"
 #include "boards.h"
 #include "ble_sensorsim.h"
@@ -735,7 +735,7 @@ static void ble_stack_init(void)
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
 
-#ifdef S110
+#if defined(S110) || defined(S310)
     // Enable BLE stack 
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
@@ -771,6 +771,9 @@ static uint32_t device_manager_evt_handler(dm_handle_t const * p_handle,
         case DM_EVT_SECURITY_SETUP_COMPLETE:
             dfu_app_set_dm_handle(p_handle);
             break;
+        case DM_EVT_DISCONNECTION:
+            dfu_app_set_dm_handle(NULL);
+            break;
 #endif // BLE_DFU_APP_SUPPORT    
     }
 
@@ -791,7 +794,8 @@ static void device_manager_init(void)
     APP_ERROR_CHECK(err_code);
 
     // Clear all bonded centrals if the Bonds Delete button is pushed.
-    init_data.clear_persistent_data = bsp_buttons_state_get() & (1 << BOND_DELETE_ALL_BUTTON_ID);
+    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID,&(init_data.clear_persistent_data));
+    APP_ERROR_CHECK(err_code);
 
     err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);

@@ -1,11 +1,7 @@
 var a00953 =
 [
-    [ "HCI_SLIP_UART_BAUDRATE", "a00953.html#ga32bbc9330e57446dca60392c29857b89", null ],
-    [ "HCI_SLIP_UART_CTS_PIN_NUMBER", "a00953.html#ga9b29fdaf1844f05115940fbf2401fd5f", null ],
-    [ "HCI_SLIP_UART_MODE", "a00953.html#ga3f2a196e8e6fd828a7408cbce3625a39", null ],
-    [ "HCI_SLIP_UART_RTS_PIN_NUMBER", "a00953.html#gabef88f732922a13c3dc4e3dd514c36fc", null ],
-    [ "HCI_SLIP_UART_RX_PIN_NUMBER", "a00953.html#ga563b2db0be6fc39f6bdc43275fce4a6c", null ],
-    [ "HCI_SLIP_UART_TX_PIN_NUMBER", "a00953.html#ga37627f12f64e2d3a9ff5df63fd872003", null ],
-    [ "MAX_PACKET_SIZE_IN_BITS", "a00953.html#ga7f50bc31550595e28cbf7a9eb3597b69", null ],
-    [ "USED_BAUD_RATE", "a00953.html#ga191602a3878cbd9811815ba22f8fea51", null ]
+    [ "BLE_STACK_EVT_MSG_BUF_SIZE", "a00953.html#gab11d82da68bcf71c064b936f8398fb26", null ],
+    [ "BLE_STACK_HANDLER_SCHED_EVT_SIZE", "a00953.html#ga5cdd71430c9268465e479ababfa08dc3", null ],
+    [ "ble_evt_handler_t", "a00953.html#ga2363934d42202759e09f9039ab5b60a5", null ],
+    [ "softdevice_ble_evt_handler_set", "a00953.html#gae54951e939156d5f05fa4d27fed1dc65", null ]
 ];

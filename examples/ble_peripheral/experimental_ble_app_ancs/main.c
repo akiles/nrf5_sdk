@@ -50,16 +50,16 @@
 #error "Not enough resources on board"
 #endif
 
-#define UART_TX_BUF_SIZE 256                                                        /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 1                                                          /**< UART RX buffer size. */
+#define UART_TX_BUF_SIZE 256                                                                 /**< UART TX buffer size. */
+#define UART_RX_BUF_SIZE 1                                                                   /**< UART RX buffer size. */
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT 0                                                    /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
 #define MAX_CHARACTERS_PER_LINE         16                                                   /**< Maximum characters that are visible in one line on nRF6350 display */
 #define DISPLAY_BUFFER_SIZE             ANCS_ATTRIBUTE_DATA_MAX                              /**< Size of LCD display buffer */
 
-#define BOND_DELETE_ALL_WAKEUP_BUTTON_ID 0                                             /**< Button used for deleting all bonded masters/services during startup and to wake up */
-#define DISPLAY_MESSAGE_BUTTON_ID        1                                             /**< Button used to display message contents */
+#define BOND_DELETE_ALL_WAKEUP_BUTTON_ID 0                                                   /**< Button used for deleting all bonded masters/services during startup and to wake up */
+#define DISPLAY_MESSAGE_BUTTON_ID        1                                                   /**< Button used to display message contents */
 
 #define DEVICE_NAME                     "ANCC"                                               /**< Name of device. Will be included in the advertising data. */
 #define APP_ADV_INTERVAL                40                                                   /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
@@ -258,16 +258,6 @@ static void on_ancs_c_evt(ble_ancs_c_evt_t * p_evt)
     }
 }
 
-/**@brief Function for the Timer initialization.
- *
- * @details Initializes the timer module.
- */
-static void timers_init(void)
-{
-    // Initialize timer module.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
-}
-
 
 /**@brief Function for the GAP initialization.
  *
@@ -448,8 +438,9 @@ static void device_manager_init(void)
     APP_ERROR_CHECK(err_code);
 
     // Clear all bonded centrals if the "delete all bonds" button is pushed.
-    init_data.clear_persistent_data = bsp_buttons_state_get() & (1 << BOND_DELETE_ALL_WAKEUP_BUTTON_ID);
-
+    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_WAKEUP_BUTTON_ID,&(init_data.clear_persistent_data));
+    APP_ERROR_CHECK(err_code);
+	
     err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);
     
@@ -570,14 +561,6 @@ static void button_event_handler(bsp_event_t event)
 }
 
 
-/**@brief Function for initializing the GPIOTE handler module.
- */
-static void gpiote_init(void)
-{
-    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
-}
-
-
 /**@brief Function for dispatching a BLE stack event to all modules with a BLE stack event handler.
  *
  * @details This function is called from the BLE Stack event interrupt handler after a BLE stack
@@ -674,7 +657,8 @@ static void service_add(void)
     APP_ERROR_CHECK(err_code);
     
     // Clear all discovered and stored services if the  "delete all bonds" button is pushed.
-    services_delete = bsp_buttons_state_get() & (1 << BOND_DELETE_ALL_WAKEUP_BUTTON_ID);
+    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_WAKEUP_BUTTON_ID,&(services_delete));
+    APP_ERROR_CHECK(err_code);
 
     if (services_delete)
     {
@@ -714,11 +698,11 @@ int main(void)
                           err_code);
     APP_ERROR_CHECK(err_code);
                      
-    timers_init();
-    gpiote_init();
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
     ble_stack_init();
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), button_event_handler);
-		APP_ERROR_CHECK(err_code);
+    APP_ERROR_CHECK(err_code);
     printf("BLE ANCS\n");
     device_manager_init();
     gap_params_init();

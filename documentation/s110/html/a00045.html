@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Alert Notification Application</title>
+<title>nRF51 SDK - S110 SoftDevice: Experimental: Apple Notification Center Service (ANCS) Client Application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,61 +97,54 @@ $(document).ready(function(){initNavTree('a00045.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Alert Notification Application </div>  </div>
+<div class="title">Experimental: Apple Notification Center Service (ANCS) Client Application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Alert Notification Application is an example that implements the client role of the Alert Notification Profile using the hardware delivered in the nRF51 Development Kit.</p>
-<p>The application includes one mandatory client needed for the Alert Notification Profile:</p>
+<div class="textblock"><p>The ANCS Client Application is an example that implements the Apple Notification Center Service using the hardware delivered in the nRF51 Development Kit.</p>
+<p>For detailed information about the Apple Notification Center Service, visit <a href="https://developer.apple.com/library/ios/documentation/CoreBluetooth/Reference/AppleNotificationCenterServiceSpecification/Introduction/Introduction.html">Apple's Developer pages.</a></p>
+<p>The application will accept many kinds of iOS generated notifications and print them to the nRF6350 Display module. When the application receives a notification, it will send a Get Notification Attributes command to the iOS device, requesting the attributes of a specific iOS notification. For this application, the Get Notification Attribute command will always request the attributes:</p>
 <ul>
-<li><a class="el" href="a00957.html">Alert Notification Service Client</a></li>
+<li>NotificationAttributeIDTitle</li>
+<li>NotificationAttributeIDMessage</li>
 </ul>
+<p>If a response, in form of a Title and Message, is returned from the iOS device to this Get Notification Attribute command, the response will be printed on the UART.</p>
 <dl class="section note"><dt>Note</dt><dd>This application is not power optimized! </dd>
 <dd>
-The application will stop advertising after 3 minutes and 30 seconds and go to system-off mode. Push the button 1 to wake it up and to make it restart advertising.</dd></dl>
-<h1><a class="anchor" id="project_alert_notification_setup"></a>
+The application will stop advertising after 3 minutes and go to system-off mode. Push the button 1 restart advertising.</dd></dl>
+<h1><a class="anchor" id="project_ancs_setup"></a>
 Setup</h1>
-<p>The name of the example is <b>ble_app_alert_notification_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_alert_notification</code> </p>
-<p>Button assignments when in system-off:</p>
+<p>The name of the example is <b>experimental_ble_app_ancs_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\experimental_ble_app_ancs</code> </p>
+<p>Button assignments:</p>
 <ul>
 <li>Button 1: Wake up from system-off and restart advertising.</li>
-<li>Button 2: Wake up from system-off, erase all bonds, and restart advertising.</li>
+<li>Button 2: Wake up, erase all bonds, and restart advertising; send iOS notification message contents on UART.</li>
 </ul>
-<p>Button assignments when connected:</p>
-<ul>
-<li>Button 1: Check the current state of new alert and enable, disable, or clear the alert depending on the state.</li>
-<li>Button 2: Check the current state of unread alert and enable, disable, or clear the alert depending on the state.</li>
-<li>Button 3: Request peer to notify all current alert statuses.</li>
-</ul>
-<p>The Alert Notification Application does fast advertising for 30 seconds at power up and also after a disconnection. It will then switch to slow advertising mode for 180 seconds. After 180 seconds of slow advertising, the board will go to system-off.</p>
-<p>When a new alert notification is received, this is indicated by the state <a class="el" href="a00042.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a>. When an unread alert notification is received, this is indicated by the state <a class="el" href="a00042.html#BSP_INDICATE_ALERT_1">BSP_INDICATE_ALERT_1</a>. The alert state can be cleared by pressing the corresponding button.</p>
-<h1><a class="anchor" id="project_alert_notification_test"></a>
+<h1><a class="anchor" id="project_ancs_test"></a>
 Testing</h1>
-<p>Test the Alert Notification Application with the Master Control Panel by performing the following steps:</p>
+<p>Test the ANCS Client Application with the nRF Toolbox app, which is available on both iOS (Apple Store) and Android (Google Play).</p>
+<p>You can also test the application with the Master Control Panel by performing the following steps:</p>
 <ol type="1">
-<li>Compile and program the application. Observe that the <a class="el" href="a00042.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
-<li>In the Master Control Panel, create the Alert Notification Service (ANS) server by performing the following steps:<ol type="a">
-<li>Click File -&gt; Server Setup. In the window that opens up, click File -&gt; Load setup.</li>
-<li>In the resulting window, navigate to the ble_app_alert_notification folder and load the file named AlertNotifServer.bin.</li>
-<li>Click 'Stop server' and then 'Start server'.</li>
-<li>Set the values of characteristics with UUID 0x2A47 and 0x2A48 to 0xFF.</li>
-<li>You must keep the 'Server Setup' window opened.</li>
-</ol>
+<li>Make sure that a UART terminal is set up on your computer.</li>
+<li>Compile and program the application. Observe that the <a class="el" href="a00041.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>In the Master Control Panel, create the Apple Notification Center Service (ANCS) server by doing the following steps:<ul>
+<li>Click File -&gt; Server Setup. In the window that opened up, click File -&gt; Load setup.</li>
+<li>In the resulting window, navigate to ble_app_ancs folder and load the file named ANCS_central.bin.</li>
+<li>It is important to keep the 'Server Setup' window opened.</li>
+</ul>
 </li>
-<li>Select the device from Master Control Panel (the device will be advertising as 'Nordic_Alert_Notif'), then connect and perform service discovery. Observe that the <a class="el" href="a00042.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
-<li>Upon connection, verify in the 'Server Setup' that the Client Characteristic Configuration descriptors (CCCD) for 0x2A45 and 0x2A46 are set to 0001.</li>
-<li>Upon connection, verify in the 'Server Setup' that the Alert Notification Control Point, 0x2A44, is written with the values 0x01 0x03.</li>
-<li>Set the value of characteristic 0x2A46 to '01-02' in the 'Server Setup' and press 'update'. Verify that the <a class="el" href="a00042.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> state is indicated.</li>
-<li>Press button 1 one time. Verify that the <a class="el" href="a00042.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> state is cleared.</li>
-<li>Press button 1 again. Verify in 'Server Setup' that the CCCD for 0x2A46 is set to 0000.</li>
-<li>Set the value of characteristic 0x2A46 to '01-03' in the 'Server Setup' and press 'update'. Verify that the <a class="el" href="a00042.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> state is cleared.</li>
-<li>Press button 1 again. Verify in 'Server Setup' that the CCCD for 0x2A46 is set to 0001. Verify that the <a class="el" href="a00042.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> state is cleared.</li>
-<li>Set the value of characteristic 0x2A46 to '01-03' in the 'Server Setup' and press 'update'. Verify that the <a class="el" href="a00042.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> state is indicated.</li>
-<li>Set the value of characteristic 0x2A45 to '01-02-41-42-43' in the 'Server Setup' and press 'update'. Verify that the <a class="el" href="a00042.html#BSP_INDICATE_ALERT_1">BSP_INDICATE_ALERT_1</a> state is indicated.</li>
-<li>Press button 2 one time. Verify that the <a class="el" href="a00042.html#BSP_INDICATE_ALERT_1">BSP_INDICATE_ALERT_1</a> state is cleared.</li>
-<li>Press button 2 again. Verify in 'Server Setup' that the CCCD for 0x2A45 is set to 0000.</li>
-<li>Disconnect from the Master Control Panel and observe that the <a class="el" href="a00042.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
-<li>Wait until the application goes to system-off (<a class="el" href="a00042.html#BSP_INDICATE_IDLE">BSP_INDICATE_IDLE</a>).</li>
-<li>Press button 1 and connect to the Master Control Panel. Observe that the <a class="el" href="a00042.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Select the device from Master Control Panel (the device will be advertising as 'ANCC'), then connect, bond and perform service discovery.</li>
+<li>Observe that the <a class="el" href="a00041.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Observe that the server is started.</li>
+<li>Upon bonding, verify in the 'Server Setup', that the Client Characteristic Configuration descriptor (CCCD) for 0x120D and 0xC6E9 are set to 0001.</li>
+<li>Set the value of characteristic 0x120D to 00-01-06-02-01-02-03-04 in the 'Server Setup', and press 'update'.</li>
+<li>Verify that the UART has received: Email\n Added 01020304.</li>
+<li>Verify in the 'Server Setup', that the Client Characteristic Configuration descriptor (CCCD) for 0xD8F3 is updated to 00-01-06-03-04-01-20-00-03-20-00.</li>
+<li>The response on 0xD8F3 is a Get Notification Attribute command, requesting the Title and Message for the Email notification.</li>
+<li>Respond in the 'Server Setup', by setting the Client Characteristic Configuration descriptor (CCCD) for 0xC6E9 to 00-01-02-03-04-01-03-00-6E-52-46-03-03-00-34-32-32.</li>
+<li>Verify that the UART console connected to the device shows: nRF422</li>
+<li>Disconnect from the Master Control Panel and observe that the <a class="el" href="a00041.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>Wait until the application goes to system-off (<a class="el" href="a00041.html#BSP_INDICATE_IDLE">BSP_INDICATE_IDLE</a>).</li>
+<li>Press button 0 and connect to the Master Control Panel. Observe that the <a class="el" href="a00041.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
 <li>Disconnect from the Master Control Panel. </li>
 </ol>
 </div></div><!-- contents -->
@@ -159,8 +152,8 @@ Testing</h1>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00044.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:18 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00043.html">BLE Peripheral</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:04 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

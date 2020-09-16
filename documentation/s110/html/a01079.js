@@ -1,4 +1,4 @@
 var a01079 =
 [
-    [ "Serialization SoftDevice Transport", "a00920.html", "a00920" ]
+    [ "DTM Application command request encoders and command response decoders", "a00905.html", "a00905" ]
 ];

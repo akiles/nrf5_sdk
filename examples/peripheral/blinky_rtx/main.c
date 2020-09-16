@@ -11,9 +11,9 @@
  */
 
 /** @file
- * @defgroup blinky_example_rtx_pca10001_main main.c
+ * @defgroup blinky_example_main main.c
  * @{
- * @ingroup blinky_example_rtx_pca10001
+ * @ingroup blinky_example_rtx
  *
  * @brief Blinky RTX Example Application main file.
  *
@@ -28,8 +28,8 @@
 #include "cmsis_os.h"
 #include "nordic_common.h"
 
-#define OUTPUT_0_INTERVAL 100                                       /**< LED_0 toggle interval (ms). */
-#define OUTPUT_1_INTERVAL 400                                       /**< LED_1 toggle interval (ms). */
+#define OUTPUT_0_INTERVAL 100                                       /**< BSP_LED_0 toggle interval (ms). */
+#define OUTPUT_1_INTERVAL 400                                       /**< BSP_LED_1 toggle interval (ms). */
 
 #ifdef BSP_LED_0
     #define GPIO_OUTPUT_0 BSP_LED_0  /**< Pin number for output. */
@@ -56,7 +56,7 @@ osTimerDef(led_toggle_timer, led_toggle_timer_handler);          /**< Definition
 
 /**@brief Thread for toggling GPIO_OUTPUT_1.
  *
- * @details This thread is receiving signals from main loop and toggle LED_1.
+ * @details This thread is receiving signals from main loop and toggle BSP_LED_1.
  *
  * @param[in]   arg   Pointer used for passing some arbitrary information (context) from the
  *                    osThreadCreate() call to the thread.
@@ -119,8 +119,8 @@ int main(void)
 
     while (true)
     {
-        (void)osSignalSet(blinky_thread_id, SIGNAL_OUTPUT_1_TOGGLE);
-        (void)osDelay(OUTPUT_1_INTERVAL);
+        UNUSED_VARIABLE(osSignalSet(blinky_thread_id, SIGNAL_OUTPUT_1_TOGGLE));
+        UNUSED_VARIABLE(osDelay(OUTPUT_1_INTERVAL));
     }
 }
 

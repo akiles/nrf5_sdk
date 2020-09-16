@@ -59,9 +59,9 @@
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT  0                                              /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
-#define KEY_PRESS_BUTTON_ID                 0                                           /**< Button used as Keyboard key press. */
-#define BOND_DELETE_BUTTON_ID               1                                           /**< Button used for deleting all bonded centrals during startup. */
-#define SHIFT_BUTTON_ID                     1                                           /**< Button used as 'SHIFT' Key. */
+#define KEY_PRESS_BUTTON_ID              0                                              /**< Button used as Keyboard key press. */
+#define BOND_DELETE_BUTTON_ID            1                                              /**< Button used for deleting all bonded centrals during startup. */
+#define SHIFT_BUTTON_ID                  1                                              /**< Button used as 'SHIFT' Key. */
 
 #define DEVICE_NAME                      "Nordic_Keyboard"                              /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME                "NordicSemiconductor"                          /**< Manufacturer. Will be passed to Device Information Service. */
@@ -772,7 +772,10 @@ static void advertising_start(void)
  */
 static bool is_shift_key_pressed(void)
 {
-    return bsp_buttons_state_get() & (1 << SHIFT_BUTTON_ID);
+    bool result;
+    uint32_t err_code = bsp_button_is_pressed(SHIFT_BUTTON_ID,&result);
+    APP_ERROR_CHECK(err_code);
+    return result;
 }
 
 
@@ -891,7 +894,7 @@ static void buffer_init(void)
 }
 
 
-/**@brief Function for enqueueing key scan patterns that could not be transmitted either completely
+/**@brief Function for enqueuing key scan patterns that could not be transmitted either completely
  *        or partially.
  *
  * @warning This handler is an example only. You need to analyze how you wish to send the key
@@ -1026,7 +1029,7 @@ static void keys_send(uint8_t key_pattern_len, uint8_t * p_key_pattern)
         // Rationale: Its better to have a a few keys missing than have a system
         // reset. Recommendation is to work out most optimal value for
         // MAX_BUFFER_ENTRIES to minimize chances of buffer queue full condition
-        (void) buffer_enqueue(&m_hids, p_key_pattern, key_pattern_len, actual_len);
+        UNUSED_VARIABLE(buffer_enqueue(&m_hids, p_key_pattern, key_pattern_len, actual_len));
     }
 
 
@@ -1399,13 +1402,6 @@ static void button_event_handler(bsp_event_t event)
 }
 
 
-/**@brief Function for initializing the GPIOTE handler module.
- */
-static void gpiote_init(void)
-{
-    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
-}
-
 /**@brief Function for handling the Device Manager events.
  *
  * @param[in]   p_evt   Data associated to the device manager event.
@@ -1445,7 +1441,8 @@ static void device_manager_init(void)
     APP_ERROR_CHECK(err_code);
 
     // Clear all bonded centrals if the "delete all bonds" button is pushed.
-    init_data.clear_persistent_data = bsp_buttons_state_get() & (1 << BOND_DELETE_BUTTON_ID);
+    err_code = bsp_button_is_pressed(BOND_DELETE_BUTTON_ID,&(init_data.clear_persistent_data));
+    APP_ERROR_CHECK(err_code);
 
     err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);
@@ -1485,9 +1482,9 @@ int main(void)
 
     app_trace_init();
     timers_init();
-    gpiote_init();
+    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
     ble_stack_init();
-    
+
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), button_event_handler);
     APP_ERROR_CHECK(err_code);
 

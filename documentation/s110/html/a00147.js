@@ -1,9 +1,8 @@
 var a00147 =
 [
-    [ "baud_rate", "a00147.html#af3f1e2f02e0c2d6fdfbc09fc335a373a", null ],
-    [ "cts_pin_no", "a00147.html#a3db286645aa6ca3d00b4050837dfac81", null ],
-    [ "rts_pin_no", "a00147.html#a7bd1bcc691294dfa173105c79e926318", null ],
-    [ "rx_pin_no", "a00147.html#a1bb6d6aa16efc7c4d2caee51d8058213", null ],
-    [ "tx_pin_no", "a00147.html#aa13645e8ecb6cb1970dba53fabe08b40", null ],
-    [ "use_parity", "a00147.html#a52a6d334142f15d9c5ab04c988a40b91", null ]
+    [ "data", "a00147.html#a9241052870696d4d825c91c4a834a84f", null ],
+    [ "error_code", "a00147.html#ab2aeea864de0050ec22790a186a4e9b1", null ],
+    [ "error_communication", "a00147.html#ae2f48256edd4052e8273d098bb8249c4", null ],
+    [ "evt_type", "a00147.html#ae89e1d236d49d18fa5be6fa32ba3c0d8", null ],
+    [ "value", "a00147.html#a9e34eabccc01fe3eeff1c7392d737d84", null ]
 ];

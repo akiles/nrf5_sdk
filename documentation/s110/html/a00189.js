@@ -1,7 +1,8 @@
 var a00189 =
 [
-    [ "char_count", "a00189.html#a199d43a17b0e41d7904da316db6b98ae", null ],
-    [ "charateristics", "a00189.html#aeeb1c850a101a81108ca109c2f117166", null ],
-    [ "handle_range", "a00189.html#a2300f7ac7bc453bc13fb060d3ff05efc", null ],
-    [ "srv_uuid", "a00189.html#a97887d3332bca8ac17806b8d328e4a2c", null ]
+    [ "conn_handle", "a00189.html#a38b408b3785dce063725d6fcc194b1c8", null ],
+    [ "discovered_db", "a00189.html#a551f5595d71fa2887fa74dff31eb5f40", null ],
+    [ "err_code", "a00189.html#aade9f798ada6b7c0f601cb7dfac3d85f", null ],
+    [ "evt_type", "a00189.html#accba73434b8696cbafbe758022bb45ec", null ],
+    [ "params", "a00189.html#a4acd4ae50b0d34689da113cb1ffa8b2b", null ]
 ];

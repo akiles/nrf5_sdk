@@ -104,9 +104,7 @@ void RTC0_IRQHandler()
  */
 int main(void)
 {
-    nrf_gpio_cfg_output(TICK_EVENT_OUTPUT);
-    nrf_gpio_cfg_output(COMPARE_EVENT_OUTPUT);
-
+    LEDS_CONFIGURE(((1<<COMPARE_EVENT_OUTPUT) | (1<<TICK_EVENT_OUTPUT)));
     LEDS_OFF((1<<COMPARE_EVENT_OUTPUT) | (1<<TICK_EVENT_OUTPUT));
 
     lfclk_config();

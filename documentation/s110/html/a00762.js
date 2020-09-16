@@ -1,9 +1,8 @@
 var a00762 =
 [
-    [ "pstorage_module_param_t", "a00374.html", [
-      [ "block_count", "a00374.html#a7bb96f4e9d1b68cb94fd5c75570e5a99", null ],
-      [ "block_size", "a00374.html#a95b58714824957d4c930a5da78d7109a", null ],
-      [ "cb", "a00374.html#a3495db72b9ff587f0c9ea0ab38d5e9f8", null ]
-    ] ],
-    [ "pstorage_ntf_cb_t", "a00762.html#gaac1d429f24eb2850da6d8f8773a14c47", null ]
+    [ "PSTORAGE_CLEAR_OP_CODE", "a00762.html#gaf2ce8b4e460358a23ae82516167df79c", null ],
+    [ "PSTORAGE_ERROR_OP_CODE", "a00762.html#ga31c301088ac2d5534ebdc5ed44bd3b55", null ],
+    [ "PSTORAGE_LOAD_OP_CODE", "a00762.html#ga4e04e36e3adf60869073dce4af46b7d5", null ],
+    [ "PSTORAGE_STORE_OP_CODE", "a00762.html#gad1415b8815fc4e0ba8f4f6bc2d8e3ce6", null ],
+    [ "PSTORAGE_UPDATE_OP_CODE", "a00762.html#gae66936fc791b79a9f85a7058ea83423a", null ]
 ];

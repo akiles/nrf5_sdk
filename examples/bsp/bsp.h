@@ -17,9 +17,11 @@
  * @ingroup app_common
  *
  * @brief BSP module.
- * @details This module provides a layer of abstraction from the board. It allows the user to indicate certain states on LEDs in a simple way.
+ * @details This module provides a layer of abstraction from the board.
+ *          It allows the user to indicate certain states on LEDs in a simple way.
  *          Module functionality can be modified by additional defines:
- *          - BSP_SIMPLE reduces functionality of this module to enable(bsp_buttons_enable(uint32_t buttons)) and read state of the buttons (bsp_buttons_state_get()) 
+ *          - BSP_SIMPLE reduces functionality of this module to enable 
+ *            and read state of the buttons
  *          - BSP_UART_SUPPORT enables support for UART
  */
 
@@ -27,8 +29,12 @@
 #define BSP_H__
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "boards.h"
 
+/* BSP_UART_SUPPORT
+ * This define enable uart support module.
+ */
 #ifdef BSP_UART_SUPPORT
 #include "app_uart.h"
 #endif // BSP_UART_SUPPORT
@@ -42,17 +48,18 @@
 #define BSP_BUTTONS_NONE     0
 
 #if LEDS_NUMBER > 0
-/**@brief  Number of @ref app_timer instances required by BSP with LED support
+/**@def BSP_APP_TIMERS_NUMBER
+ * Number of @ref app_timer instances required by BSP with LED support
  */
 #define BSP_APP_TIMERS_NUMBER 2
 #endif // LEDS_NUMBER > 0
 
 /**@brief Types of BSP initialization
  */
-#define BSP_INIT_NONE    0            /**< This define specifies the type of initialization without support for LEDs and buttons @ref bsp_init.*/
-#define BSP_INIT_LED     (1 << 0)     /**< This bit enables LEDs during initialization (@ref bsp_init).*/
-#define BSP_INIT_BUTTONS (1 << 1)     /**< This bit enables buttons during initialization (@ref bsp_init).*/
-#define BSP_INIT_UART    (1 << 2)     /**< This bit enables UART during initialization (@ref bsp_init).*/
+#define BSP_INIT_NONE    0        /**< This define specifies the type of initialization without support for LEDs and buttons @ref bsp_init.*/
+#define BSP_INIT_LED     (1 << 0) /**< This bit enables LEDs during initialization (@ref bsp_init).*/
+#define BSP_INIT_BUTTONS (1 << 1) /**< This bit enables buttons during initialization (@ref bsp_init).*/
+#define BSP_INIT_UART    (1 << 2) /**< This bit enables UART during initialization (@ref bsp_init).*/
 
 #define BSP_INDICATIONS_LIST {                    \
         "BSP_INDICATE_IDLE\n\r",                  \
@@ -106,7 +113,7 @@ typedef enum
     BSP_INDICATE_ALERT_1,                    /**< See \ref BSP_INDICATE_ALERT_1.*/
     BSP_INDICATE_ALERT_2,                    /**< See \ref BSP_INDICATE_ALERT_2.*/
     BSP_INDICATE_ALERT_3,                    /**< See \ref BSP_INDICATE_ALERT_3.*/
-    BSP_INDICATE_ALERT_OFF,                  /**< See \ref BSP_INDICATE_ALERT_OFF.*/ 
+    BSP_INDICATE_ALERT_OFF,                  /**< See \ref BSP_INDICATE_ALERT_OFF.*/
     BSP_INDICATE_USER_STATE_OFF,             /**< See \ref BSP_INDICATE_USER_STATE_OFF.*/
     BSP_INDICATE_USER_STATE_0,               /**< See \ref BSP_INDICATE_USER_STATE_0.*/
     BSP_INDICATE_USER_STATE_1,               /**< See \ref BSP_INDICATE_USER_STATE_1.*/
@@ -117,7 +124,8 @@ typedef enum
 } bsp_indication_t;
 
 /**@brief BSP events.
- * @note SP_EVENT_KEYS are by default assigned to buttons.
+ *
+ * @note Events from BSP_EVENT_KEY_0 to BSP_EVENT_KEY_LAST are by default assigned to buttons.
  */
 typedef enum
 {
@@ -143,14 +151,14 @@ typedef enum
     BSP_EVENT_KEY_LAST = BSP_EVENT_KEY_7,
 } bsp_event_t;
 
-/**@brief Function for handling BSP event callback.
+/**@brief BSP module event callback function type.
  *
  * @details Upon an event in the BSP module, this callback function will be called to notify
  *          the application about the event.
  *
  * @param[in]   bsp_event_t BSP event type.
  */
-typedef void (*bsp_event_callback_t)(bsp_event_t);
+typedef void (* bsp_event_callback_t)(bsp_event_t);
 
 /**@brief       Function for initializing BSP.
  *
@@ -163,7 +171,7 @@ typedef void (*bsp_event_callback_t)(bsp_event_t);
  *
  * @param[in]   type               Type of peripherals used.
  * @param[in]   ticks_per_100ms    Number of RTC ticks for 100 ms.
- * @param[in]   callback_p         Function to be called when button press/event is detected.
+ * @param[in]   callback           Function to be called when button press/event is detected.
  *
  * @retval      NRF_SUCCESS               BSP module was successfully initialized.
  * @retval      NRF_ERROR_INVALID_STATE   Application timer module has not been initialized.
@@ -171,19 +179,35 @@ typedef void (*bsp_event_callback_t)(bsp_event_t);
  * @retval      NRF_ERROR_INVALID_PARAM   GPIOTE has too many users.
  * @retval      NRF_ERROR_INVALID_STATE   Button or GPIOTE not initialized.
  */
-uint32_t bsp_init(uint32_t type, uint32_t ticks_per_100ms, bsp_event_callback_t callback_p);
+uint32_t bsp_init(uint32_t type, uint32_t ticks_per_100ms, bsp_event_callback_t callback);
 
 /**@brief       Function for getting buttons states.
  *
- * @details     This function returns the state of all buttons. Button 0 state is
- *              represented by bit 0 (1=pressed), Button 1 state by bit 1, and so on.
+ * @details     This function allows to get the state of all buttons.
+ *
+ * @param[in]   p_buttons_state          This variable will store buttons state. Button 0 state is
+ *                                       represented by bit 0 (1=pressed), Button 1 state by bit 1, and so on.
+ *
+ * @retval      NRF_SUCCESS              Buttons state was successfully read.
  */
-uint32_t bsp_buttons_state_get(void);
+uint32_t bsp_buttons_state_get(uint32_t * p_buttons_state);
+
+/**@brief       Function for checking buttons states.
+ *
+ * @details     This function for checking if the button is pressed.
+ *
+ * @param[in]   button                   Button ID to check.
+ * @param[in]   p_state                  This variable will store the information whether the specified button is pressed(true) or not.
+ *
+ * @retval      NRF_SUCCESS              Button state was successfully read.
+ * @retval      NRF_ERROR_INVALID_PARAM  Invalid button ID.
+ */
+uint32_t bsp_button_is_pressed(uint32_t button, bool * p_state);
 
 /**@brief       Function for assigning specific event to button.
  *
  * @details     This function allows redefinition of standard events assigned to buttons.
- *              To unassign events, provide the event BSP_EVENT_NOTHING.
+ *              To unassign events, provide the event @ ref BSP_EVENT_NOTHING.
  *
  * @param[in]   button                   Button ID to be redefined.
  * @param[in]   event                    Event to be assigned to button.
@@ -203,8 +227,8 @@ uint32_t bsp_event_to_button_assign(uint32_t button, bsp_event_t event);
  *
  * @retval      NRF_SUCCESS               State was successfully indicated.
  * @retval      NRF_ERROR_NO_MEM          Internal timer operations queue was full.
- * @retval      NRF_ERROR_INVALID_STATE   Application timer module has not been initialized, or internal
- *                                        timer has not been created.
+ * @retval      NRF_ERROR_INVALID_STATE   Application timer module has not been initialized,
+ *                                        or internal timer has not been created.
  */
 uint32_t bsp_indication_set(bsp_indication_t indicate);
 
@@ -219,18 +243,19 @@ uint32_t bsp_indication_set(bsp_indication_t indicate);
  * @param[in]   p_text     Text to be output on UART.
  *
  * @retval      NRF_SUCCESS               State was successfully indicated.
- * @retval      NRF_ERROR_NO_MEM          Internal Timer operations queue was full.
- * @retval      NRF_ERROR_INVALID_STATE   Internal timer module has not been initialized, or timer
+ * @retval      NRF_ERROR_NO_MEM          Internal timer operations queue was full.
+ * @retval      NRF_ERROR_INVALID_STATE   Application timer module has not been initialized, or timer
  *                                        has not been created.
  */
 uint32_t bsp_indication_text_set(bsp_indication_t indicate, const char * p_text);
 
 /**@brief       Function for enabling specified buttons (others are disabled).
  *
- * @details     This function enables the specified buttons and configures them to be scanned. 
+ * @details     This function enables the specified buttons and configures them to be scanned.
  *              All other buttons are disabled (inactive).
  *
- * @param[in]   buttons  Buttons to be enabled, encoded as bits (bit 0 = button 0, bit 1 = button 1, etc).
+ * @param[in]   buttons  Buttons to be enabled, encoded as bits
+ *                       (bit 0 = button 0, bit 1 = button 1, etc).
  *
  * @retval      NRF_SUCCESS Successfully enabled.
  */

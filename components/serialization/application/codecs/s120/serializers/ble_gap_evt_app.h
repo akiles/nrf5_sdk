@@ -310,7 +310,7 @@ uint32_t ble_gap_evt_timeout_dec(uint8_t const * const p_buf,
 /**
  * @brief Decodes ble_gap_evt_sec_request event.
  *
- * @sa @ref nrf51_gap_evt_sec_request_encoding for packet format.
+ * @sa @ref nrf51_evt_sec_request_encoding for packet format.
  *
  * If \p p_event is null, the required length of \p p_event is returned in \p p_event_len.
  *
@@ -335,7 +335,7 @@ uint32_t ble_gap_evt_sec_request_dec(uint8_t const * const p_buf,
 /**
  * @brief Decodes ble_gap_evt_conn_param_update_request event.
  *
- * @sa @ref nrf51_gap_evt_conn_param_update_request_encoding for packet format.
+ * @sa @ref nrf51_evt_conn_param_update_request_encoding for packet format.
  *
  * If \p p_event is null, the required length of \p p_event is returned in \p p_event_len.
  *
@@ -359,7 +359,7 @@ uint32_t ble_gap_evt_conn_param_update_request_dec(uint8_t const * const p_buf,
 /**
  * @brief Decodes ble_gap_evt_adv_report event.
  *
- * @sa @ref nrf51_gap_evt_adv_report_encoding for packet format.
+ * @sa @ref nrf51_evt_adv_report_encoding for packet format.
  *
  * If \p p_event is null, the required length of \p p_event is returned in \p p_event_len.
  *

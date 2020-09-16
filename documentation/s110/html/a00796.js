@@ -1,7 +1,6 @@
 var a00796 =
 [
-    [ "BLE_ERROR_INVALID_ATTR_HANDLE", "a00796.html#ga6346bb5ec3bcd4a25332dc782c1b7e01", null ],
-    [ "BLE_ERROR_INVALID_CONN_HANDLE", "a00796.html#gabdc27cbc2ffac4a50640a0ce992c03af", null ],
-    [ "BLE_ERROR_NO_TX_BUFFERS", "a00796.html#ga901e1bc3ccae29eff9fb31cabdbb5e02", null ],
-    [ "BLE_ERROR_NOT_ENABLED", "a00796.html#ga521db6a097589b80939d76cb453fad3c", null ]
+    [ "BLE_ERROR_GAP_DISCOVERABLE_WITH_WHITELIST", "a00796.html#gaa65c2f6a6eba52654e2b6febc5c3ba8c", null ],
+    [ "BLE_ERROR_GAP_INVALID_BLE_ADDR", "a00796.html#ga3eda228736d6c1dcbcf9aba2bd059068", null ],
+    [ "BLE_ERROR_GAP_UUID_LIST_MISMATCH", "a00796.html#ga996146eb2c3b244f044b5cd121f8b826", null ]
 ];

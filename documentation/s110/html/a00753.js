@@ -1,7 +1,7 @@
 var a00753 =
 [
-    [ "mpu6050_init", "a00753.html#ga69d0fa94f347b662e7312e313595773e", null ],
-    [ "mpu6050_register_read", "a00753.html#ga2a262546c837f7d4841c95099eb93c87", null ],
-    [ "mpu6050_register_write", "a00753.html#ga2435390ec63c2d17ab67c32a55ccc867", null ],
-    [ "mpu6050_verify_product_id", "a00753.html#ga3af875981ed613d4377fd457753f323d", null ]
+    [ "ds1624_init", "a00753.html#ga0ea8c0c4d140fde9b5b575caed79de6a", null ],
+    [ "ds1624_is_temp_conversion_done", "a00753.html#ga9ac065c4738652386d500c9b35447ada", null ],
+    [ "ds1624_start_temp_conversion", "a00753.html#gace297981d492fc044ba97a1954f98c83", null ],
+    [ "ds1624_temp_read", "a00753.html#ga554dc82a94c2878635c336b0fb691144", null ]
 ];

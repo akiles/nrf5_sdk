@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: SOC Connectivity command request decoders and command response encoders</title>
+<title>nRF51 SDK - S120 SoftDevice: Command decoder in the connectivity chip</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,43 +99,38 @@ $(document).ready(function(){initNavTree('a00677.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">SOC Connectivity command request decoders and command response encoders<div class="ingroups"><a class="el" href="a00783.html">Connectivity s120 codecs</a></div></div>  </div>
+<div class="title">Command decoder in the connectivity chip<div class="ingroups"><a class="el" href="a00786.html">Connectivity application code</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>SOC Connectivity command request decoders and command response encoderss.  
+<p>Decoder for serialized commands from an Application Chip.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga3b111e9000d467d4a358cda27a558b37"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00677.html#ga3b111e9000d467d4a358cda27a558b37">power_system_off_req_dec</a> (uint8_t const *const p_buf, uint16_t packet_len)</td></tr>
-<tr class="memdesc:ga3b111e9000d467d4a358cda27a558b37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes <a class="el" href="a00775.html#ga774947ee0e200456ea3aec3fc7f8bd6b">sd_power_system_off</a> command request.  <a href="#ga3b111e9000d467d4a358cda27a558b37">More...</a><br/></td></tr>
-<tr class="separator:ga3b111e9000d467d4a358cda27a558b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3c4e3f76e2c264210ef7aa17233f00fa"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00677.html#ga3c4e3f76e2c264210ef7aa17233f00fa">temp_get_req_dec</a> (uint8_t const *const p_buf, uint32_t buf_len, int32_t **const pp_temp)</td></tr>
-<tr class="memdesc:ga3c4e3f76e2c264210ef7aa17233f00fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decodes <a class="el" href="a00775.html#gade0ea69f513ff1feab2c4f6e1c393313">sd_temp_get</a> command request.  <a href="#ga3c4e3f76e2c264210ef7aa17233f00fa">More...</a><br/></td></tr>
-<tr class="separator:ga3c4e3f76e2c264210ef7aa17233f00fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4ec27ca18b068637552f9f9b6a87095c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00677.html#ga4ec27ca18b068637552f9f9b6a87095c">temp_get_rsp_enc</a> (uint32_t return_code, uint8_t *const p_buf, uint32_t *const p_buf_len, int32_t *const p_temp)</td></tr>
-<tr class="memdesc:ga4ec27ca18b068637552f9f9b6a87095c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encodes <a class="el" href="a00775.html#gade0ea69f513ff1feab2c4f6e1c393313">sd_temp_get</a> command response.  <a href="#ga4ec27ca18b068637552f9f9b6a87095c">More...</a><br/></td></tr>
-<tr class="separator:ga4ec27ca18b068637552f9f9b6a87095c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab420730a43ded81ff7cfc50aa796329a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00677.html#gab420730a43ded81ff7cfc50aa796329a">ser_conn_command_process</a> (uint8_t *p_command, uint16_t command_len)</td></tr>
+<tr class="memdesc:gab420730a43ded81ff7cfc50aa796329a"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function decodes an encoded command and sends a response to an Application Chip.  <a href="#gab420730a43ded81ff7cfc50aa796329a">More...</a><br/></td></tr>
+<tr class="separator:gab420730a43ded81ff7cfc50aa796329a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>SOC Connectivity command request decoders and command response encoderss. </p>
+<p>Decoder for serialized commands from an Application Chip. </p>
+<p>This file contains declaration of common function used for commands decoding and sending responses back to an Application Chip after a command is processed. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga3b111e9000d467d4a358cda27a558b37"></a>
+<a class="anchor" id="gab420730a43ded81ff7cfc50aa796329a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t power_system_off_req_dec </td>
+          <td class="memname">uint32_t ser_conn_command_process </td>
           <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_command</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>packet_len</em>&#160;</td>
+          <td class="paramname"><em>command_len</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -145,129 +140,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Decodes <a class="el" href="a00775.html#ga774947ee0e200456ea3aec3fc7f8bd6b">sd_power_system_off</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00068.html#nrf51_sd_power_off">0x34 - sd_power_system_off</a> for packet format.</dd></dl>
+<p>A function decodes an encoded command and sends a response to an Application Chip. </p>
+<p>The function decodes an encoded command and calls a SoftDevice API function when a command decoder was found or forms a common response with error code NRF_ERROR_NOT_SUPPORTED otherwise. Then the function sends a SoftDevice response or the response with NRF_ERROR_NOT_SUPPORTED error code to an Application Chip.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">packet_len</td><td>Length (in bytes) of request packet.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_command</td><td>The encoded command. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">command_len</td><td>Length of the encoded command including opcode.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Encoding failure. Incorrect parameter. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3c4e3f76e2c264210ef7aa17233f00fa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t temp_get_req_dec </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t const *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>buf_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int32_t **const&#160;</td>
-          <td class="paramname"><em>pp_temp</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Decodes <a class="el" href="a00775.html#gade0ea69f513ff1feab2c4f6e1c393313">sd_temp_get</a> command request. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00068.html#nrf51_sd_temp_get">0x52 - sd_temp_get</a> for packet format. <a class="el" href="a00677.html#ga4ec27ca18b068637552f9f9b6a87095c">temp_get_rsp_enc</a> for response encoding.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command will be returned. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">buf_len</td><td>Length (in bytes) of request packet. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pp_temp</td><td>Pointer to pointer to result of temperature measurement.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Encoding failure. Incorrect parameter. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4ec27ca18b068637552f9f9b6a87095c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t temp_get_rsp_enc </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>return_code</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *const&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t *const&#160;</td>
-          <td class="paramname"><em>p_buf_len</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int32_t *const&#160;</td>
-          <td class="paramname"><em>p_temp</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Encodes <a class="el" href="a00775.html#gade0ea69f513ff1feab2c4f6e1c393313">sd_temp_get</a> command response. </p>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="a00068.html#nrf51_sd_temp_get">0x52 - sd_temp_get</a> for packet format. <a class="el" href="a00677.html#ga3c4e3f76e2c264210ef7aa17233f00fa">temp_get_req_dec</a> for request decoding.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">return_code</td><td>Return code indicating if command was successful or not. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_buf</td><td>Pointer to buffer where encoded data command response will be returned. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_buf_len</td><td><code>in:</code> size of <code>p_buf</code> buffer. <code>out:</code> Length of encoded command response packet. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_temp</td><td>Pointer to result of temperature measurement.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Encoding success. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Encoding failure. NULL pointer supplied. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>Encoding failure. Incorrect buffer length. </td></tr>
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>Operation failure. NULL pointer supplied. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INTERNAL</td><td>Operation failure. Internal error ocurred. . </td></tr>
   </table>
   </dd>
 </dl>
@@ -279,7 +165,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:38 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:25 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

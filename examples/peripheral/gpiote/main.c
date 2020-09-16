@@ -18,8 +18,6 @@
 * @brief GPIOTE Example Application main file.
 *
 * This file contains the source code for a sample application using GPIOTE. 
-*
-* @image html example_board_setup_a.jpg "Use board setup A for this example."
 */
 
 #include <stdbool.h>

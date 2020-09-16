@@ -1,6 +1,8 @@
 var a00692 =
 [
-    [ "ble_hrs_c_hrm_notif_enable", "a00692.html#gab4bcaf5864ee2e17bc0abf2ae585a68b", null ],
-    [ "ble_hrs_c_init", "a00692.html#ga9ec622429b01bc15e65fbcd3613a8b8b", null ],
-    [ "ble_hrs_c_on_ble_evt", "a00692.html#ga062e0829a2ebd211d4e51a23c520ab1f", null ]
+    [ "Defines", "a00693.html", "a00693" ],
+    [ "Enumerations", "a00694.html", "a00694" ],
+    [ "Structures", "a00695.html", "a00695" ],
+    [ "Types", "a00696.html", "a00696" ],
+    [ "Functions", "a00697.html", "a00697" ]
 ];

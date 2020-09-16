@@ -41,8 +41,13 @@ C_SOURCE_FILES += \
 ../../../../../components/toolchain/system_nrf51.c \
 ../../main.c \
 ../../radio_test.c \
-../../../../../components/drivers_nrf/simple_uart/simple_uart.c \
+../../../../../components/libraries/uart/retarget.c \
+../../../../../components/libraries/fifo/app_fifo.c \
+../../../../../components/libraries/util/app_error.c \
+../../../../../components/libraries/util/app_util_platform.c \
+../../../../../components/libraries/gpiote/app_gpiote.c \
 ../../../../../components/drivers_nrf/hal/nrf_delay.c \
+../../../../../components/drivers_nrf/uart/app_uart_fifo.c \
 
 #assembly files common to all targets
 ASM_SOURCE_FILES  = ../../../../../components/toolchain/gcc/gcc_startup_nrf51.s
@@ -50,10 +55,14 @@ ASM_SOURCE_FILES  = ../../../../../components/toolchain/gcc/gcc_startup_nrf51.s
 #includes common to all targets
 INC_PATHS  = -I../../
 INC_PATHS += -I../../../../../components/toolchain/gcc
-INC_PATHS += -I../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../components/toolchain
-INC_PATHS += -I../../../../../components/drivers_nrf/simple_uart
+INC_PATHS += -I../../../../../components/drivers_nrf/uart
+INC_PATHS += -I../../../../../components/libraries/fifo
 INC_PATHS += -I../../../../bsp
+INC_PATHS += -I../../../../../components/libraries/util
+INC_PATHS += -I../../../../../components/drivers_nrf/nrf_soc_nosd
+INC_PATHS += -I../../../../../components/libraries/gpiote
+INC_PATHS += -I../../../../../components/drivers_nrf/hal
 
 OBJECT_DIRECTORY = _build
 LISTING_DIRECTORY = $(OBJECT_DIRECTORY)

@@ -1,6 +1,5 @@
 var a00935 =
 [
-    [ "power_system_off_req_dec", "a00935.html#ga3b111e9000d467d4a358cda27a558b37", null ],
-    [ "temp_get_req_dec", "a00935.html#ga3c4e3f76e2c264210ef7aa17233f00fa", null ],
-    [ "temp_get_rsp_enc", "a00935.html#ga4ec27ca18b068637552f9f9b6a87095c", null ]
+    [ "ser_conn_dtm_command_process", "a00935.html#gacfb3c2ef316693343db81a60b90825c9", null ],
+    [ "ser_conn_is_ready_to_enter_dtm", "a00935.html#gaaa54a0f290a11c67643ff1b3da42a59f", null ]
 ];

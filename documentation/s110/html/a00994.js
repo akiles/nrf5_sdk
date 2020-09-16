@@ -1,8 +1,8 @@
 var a00994 =
 [
-    [ "ble_db_discovery_evt_type_t", "a00994.html#gaa16075c6c77a4f3f32fb567d5ce45462", [
-      [ "BLE_DB_DISCOVERY_COMPLETE", "a00994.html#ggaa16075c6c77a4f3f32fb567d5ce45462ad6925ee73dada1191de4934d7891dc1f", null ],
-      [ "BLE_DB_DISCOVERY_ERROR", "a00994.html#ggaa16075c6c77a4f3f32fb567d5ce45462aca629cd78939015c22a44c9e3797043b", null ],
-      [ "BLE_DB_DISCOVERY_SRV_NOT_FOUND", "a00994.html#ggaa16075c6c77a4f3f32fb567d5ce45462a16f218739c505cfa820990dce92e412d", null ]
-    ] ]
+    [ "Defines", "a00995.html", "a00995" ],
+    [ "Enumerations", "a00996.html", "a00996" ],
+    [ "Structures", "a00997.html", "a00997" ],
+    [ "Types", "a00998.html", "a00998" ],
+    [ "Functions", "a00999.html", "a00999" ]
 ];

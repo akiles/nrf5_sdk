@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Codes reserved as identification for module where the error occurred.</title>
+<title>nRF51 SDK - S110 SoftDevice: Base defined for SDK Modules</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,23 +99,51 @@ $(document).ready(function(){initNavTree('a00786.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Codes reserved as identification for module where the error occurred.<div class="ingroups"><a class="el" href="a00784.html">SDK Error codes</a></div></div>  </div>
+<div class="title">Base defined for SDK Modules<div class="ingroups"><a class="el" href="a00785.html">SDK Error codes</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga6aff12892a34b315afb1a97a879ab98d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6aff12892a34b315afb1a97a879ab98d"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DEVICE_MANAGER_ERR_BASE</b>&#160;&#160;&#160;(0x8000)</td></tr>
-<tr class="separator:ga6aff12892a34b315afb1a97a879ab98d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3756b7defda416b28928be1af33c4257"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00786.html#ga3756b7defda416b28928be1af33c4257">SDK_ERROR_BASE</a>&#160;&#160;&#160;(<a class="el" href="a00839.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 0x8000)</td></tr>
+<tr class="separator:ga3756b7defda416b28928be1af33c4257"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1fa2dae6c4a22d6592184236f7f8ed4e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00786.html#ga1fa2dae6c4a22d6592184236f7f8ed4e">SDK_COMMON_ERROR_BASE</a>&#160;&#160;&#160;(<a class="el" href="a00839.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 0x0080)</td></tr>
+<tr class="separator:ga1fa2dae6c4a22d6592184236f7f8ed4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga1fa2dae6c4a22d6592184236f7f8ed4e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SDK_COMMON_ERROR_BASE&#160;&#160;&#160;(<a class="el" href="a00839.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 0x0080)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Base error value to be used for SDK error values. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga3756b7defda416b28928be1af33c4257"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SDK_ERROR_BASE&#160;&#160;&#160;(<a class="el" href="a00839.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 0x8000)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Base value defined for SDK module identifiers. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:19 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:05 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

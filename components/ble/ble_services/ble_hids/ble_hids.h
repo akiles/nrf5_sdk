@@ -44,10 +44,14 @@
 #include "ble.h"
 #include "ble_srv_common.h"
 
+/** @name Report Type values
+ * @anchor BLE_HIDS_REPORT_TYPE @{
+ */
 // Report Type values
 #define BLE_HIDS_REP_TYPE_INPUT                 1
 #define BLE_HIDS_REP_TYPE_OUTPUT                2
 #define BLE_HIDS_REP_TYPE_FEATURE               3
+/** @} */
 
 // Maximum number of the various Report Types
 #define BLE_HIDS_MAX_INPUT_REP                  10

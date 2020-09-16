@@ -1,6 +1,4 @@
 var a00307 =
 [
-    [ "alert_level_handles", "a00307.html#a67d6395f4804c00de308270dddf15b7e", null ],
-    [ "evt_handler", "a00307.html#a6304bcdac9c7d2758f64aa1dd5844959", null ],
-    [ "service_handle", "a00307.html#afa6a28eec3f1b9b4f7ea596af7ee2c29", null ]
+    [ "evt_handler", "a00307.html#a5e40f1f02a66e26a1da20bbf3e2a275a", null ]
 ];

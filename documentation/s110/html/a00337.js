@@ -1,6 +1,5 @@
 var a00337 =
 [
-    [ "company_id", "a00337.html#a39ff6a37dbb096bf608d850d0845d252", null ],
-    [ "subversion_number", "a00337.html#abd81a16510bfbcf3778af4daab021369", null ],
-    [ "version_number", "a00337.html#af18ca1a9b3d80b05042d9121e9d3c9ed", null ]
+    [ "type", "a00337.html#ae233c47cdd5f63de456f413a158bb16f", null ],
+    [ "uuid", "a00337.html#ac9ccd46e82b1b51d561f17d49282348c", null ]
 ];

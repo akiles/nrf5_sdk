@@ -624,9 +624,12 @@ static __INLINE api_result_t device_instance_allocate(uint8_t              * p_d
     for (index = 0; index < DEVICE_MANAGER_MAX_BONDS; index++)
     {
         DM_TRC("[DM]: Device Addr 0x%02X 0x%02X 0x%02X 0x%02X 0x%02X 0x%02X.\r\n",
-               m_peer_table[index].peer_addr.addr[0], m_peer_table[index].peer_addr.addr[1],
-               m_peer_table[index].peer_addr.addr[2], m_peer_table[index].peer_addr.addr[3],
-               m_peer_table[index].peer_addr.addr[4], m_peer_table[index].peer_addr.addr[5]);
+               m_peer_table[index].peer_id.id_addr_info.addr[0],
+               m_peer_table[index].peer_id.id_addr_info.addr[1],
+               m_peer_table[index].peer_id.id_addr_info.addr[2],
+               m_peer_table[index].peer_id.id_addr_info.addr[3],
+               m_peer_table[index].peer_id.id_addr_info.addr[4],
+               m_peer_table[index].peer_id.id_addr_info.addr[5]);
 
         if (m_peer_table[index].id_bitmap == UNASSIGNED)
         {
@@ -733,11 +736,15 @@ static api_result_t device_instance_find(ble_gap_addr_t const * p_addr, uint32_t
     for (index = 0; index < DEVICE_MANAGER_MAX_BONDS; index++)
     {
         DM_LOG("[DM]:[DI 0x%02X]: Device type 0x%02X.\r\n",
-               index, m_peer_table[index].peer_addr.addr_type);
+               index, m_peer_table[index].peer_id.id_addr_info.addr_type);
+
         DM_LOG("[DM]: Device Addr 0x%02X 0x%02X 0x%02X 0x%02X 0x%02X 0x%02X.\r\n",
-               m_peer_table[index].peer_addr.addr[0], m_peer_table[index].peer_addr.addr[1],
-               m_peer_table[index].peer_addr.addr[2], m_peer_table[index].peer_addr.addr[3],
-               m_peer_table[index].peer_addr.addr[4], m_peer_table[index].peer_addr.addr[5]);
+               m_peer_table[index].peer_id.id_addr_info.addr[0],
+               m_peer_table[index].peer_id.id_addr_info.addr[1],
+               m_peer_table[index].peer_id.id_addr_info.addr[2],
+               m_peer_table[index].peer_id.id_addr_info.addr[3],
+               m_peer_table[index].peer_id.id_addr_info.addr[4],
+               m_peer_table[index].peer_id.id_addr_info.addr[5]);
 
         if (((NULL == p_addr) && (div == m_peer_table[index].div)) ||
             ((NULL != p_addr) && (memcmp(&m_peer_table[index].peer_id.id_addr_info, p_addr, sizeof(ble_gap_addr_t)) == 0)))
@@ -1482,14 +1489,14 @@ api_result_t dm_init(dm_init_param_t const * const p_init_param)
                     {
                         DM_TRC("[DM]:[DI 0x%02X]: Device type 0x%02X.\r\n",
                                index,
-                               m_peer_table[index].peer_addr.addr_type);
+                               m_peer_table[index].peer_id.id_addr_info.addr_type);
                         DM_TRC("[DM]: Device Addr 0x%02X 0x%02X 0x%02X 0x%02X 0x%02X 0x%02X.\r\n",
-                               m_peer_table[index].peer_addr.addr[0],
-                               m_peer_table[index].peer_addr.addr[1],
-                               m_peer_table[index].peer_addr.addr[2],
-                               m_peer_table[index].peer_addr.addr[3],
-                               m_peer_table[index].peer_addr.addr[4],
-                               m_peer_table[index].peer_addr.addr[5]);
+                               m_peer_table[index].peer_id.id_addr_info.addr[0],
+                               m_peer_table[index].peer_id.id_addr_info.addr[1],
+                               m_peer_table[index].peer_id.id_addr_info.addr[2],
+                               m_peer_table[index].peer_id.id_addr_info.addr[3],
+                               m_peer_table[index].peer_id.id_addr_info.addr[4],
+                               m_peer_table[index].peer_id.id_addr_info.addr[5]);
                     }
                 }
                 else
@@ -2571,9 +2578,9 @@ void dm_ble_evt_handler(ble_evt_t * p_ble_evt)
 
                             if (p_ble_evt->evt.gap_evt.params.auth_status.central_kex.irk == 1)
                             {
-                                                                m_peer_table[index].peer_id.id_info =
+                                m_peer_table[device_index].peer_id.id_info =
                                     p_ble_evt->evt.gap_evt.params.auth_status.central_keys.irk;
-                                m_peer_table[index].id_bitmap &= (~IRK_ENTRY);
+                                m_peer_table[device_index].id_bitmap &= (~IRK_ENTRY);
                             }
 
                             device_context_store(&handle, FIRST_BOND_STORE);
@@ -2658,7 +2665,7 @@ api_result_t dm_distributed_keys_get(dm_handle_t const * p_handle,
 
     DM_TRC("[DM]: >> dm_distributed_keys_get\r\n");
 
-    p_key_dist->keys_central.enc_key.p_enc_info = &m_bond_table[p_handle->device_id].local_enc_info;
+    p_key_dist->keys_central.enc_key.p_enc_info = &m_bond_table[p_handle->connection_id].local_enc_info;
     p_key_dist->keys_central.p_id_key           = (dm_id_key_t *)&m_peer_table[p_handle->device_id].peer_id;
     p_key_dist->keys_central.p_sign_key         = NULL;
     p_key_dist->keys_periph.p_id_key            = NULL;

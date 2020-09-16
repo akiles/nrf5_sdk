@@ -1,4 +1,4 @@
 var a00998 =
 [
-    [ "ble_debug_assert_handler", "a00998.html#ga516d223d23265c3c1095e1543d3691ae", null ]
+    [ "ble_db_discovery_evt_handler_t", "a00998.html#gaaea9ce1a02e970ac3197820075062382", null ]
 ];

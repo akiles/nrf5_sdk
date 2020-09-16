@@ -1,56 +1,32 @@
 var a00959 =
 [
-    [ "ble_bps_evt_t", "a00171.html", [
-      [ "evt_type", "a00171.html#a83328e50ff25cb6d23ccd0922452590d", null ]
+    [ "ble_bas_evt_t", "a00169.html", [
+      [ "evt_type", "a00169.html#a6c48fd8a78c416e452d5b01add737b6e", null ]
     ] ],
-    [ "ieee_float16_t", "a00363.html", [
-      [ "exponent", "a00363.html#a42d83a992fc160d167482ec70b58d17c", null ],
-      [ "mantissa", "a00363.html#a4668d8cc50fe654da1cfff425c16c5c0", null ]
+    [ "ble_bas_init_t", "a00170.html", [
+      [ "battery_level_char_attr_md", "a00170.html#aba436d52b264fb93a74de510a9e7ef07", null ],
+      [ "battery_level_report_read_perm", "a00170.html#a07135d9b12640710f520ef87d7a4f1be", null ],
+      [ "evt_handler", "a00170.html#a84932ecefd721efa23840b01ca3ce7eb", null ],
+      [ "initial_batt_level", "a00170.html#a22993ab4d63fdbd764624856605d1b7f", null ],
+      [ "p_report_ref", "a00170.html#afcbdf538aff06891b6f0057015b5c6e0", null ],
+      [ "support_notification", "a00170.html#ad4f3272ae66ece4ee5a4b8c3ff7fba88", null ]
     ] ],
-    [ "ble_bps_init_t", "a00172.html", [
-      [ "bps_feature_attr_md", "a00172.html#aa811a90c7dd0b8bea4434fe2ef2c4ede", null ],
-      [ "bps_meas_attr_md", "a00172.html#a977afca322fd5a03271e0fa35300a164", null ],
-      [ "evt_handler", "a00172.html#a22943d0794c7a162398ddb54872d1751", null ],
-      [ "feature", "a00172.html#a811bba9e34ca00cad260b8d50aadbe5f", null ]
+    [ "ble_bas_s", "a00171.html", [
+      [ "battery_level_handles", "a00171.html#ade3d3767c6bec8d2c8fc37ed8303d4fb", null ],
+      [ "battery_level_last", "a00171.html#a90db9b31ace864a1952fd520957cb831", null ],
+      [ "conn_handle", "a00171.html#a4906d1aa3c702704f4392d90cd8102f0", null ],
+      [ "evt_handler", "a00171.html#a84827e57e33bae7cf628c4c5826b1ac4", null ],
+      [ "is_notification_supported", "a00171.html#a877690be6248d047f102fc238ab0c527", null ],
+      [ "report_ref_handle", "a00171.html#a70d124cbed946045d133aa76acd9581a", null ],
+      [ "service_handle", "a00171.html#af8c61a4fe0b938cc1b47989d67a20c4c", null ]
     ] ],
-    [ "ble_bps_s", "a00174.html", [
-      [ "conn_handle", "a00174.html#acb6ea6f96806c80017f6d80a65fa1c40", null ],
-      [ "evt_handler", "a00174.html#ad503c598af64ae0973fcbd69c2564f6c", null ],
-      [ "feature", "a00174.html#ab6a6c9882bfb4ca35a22b2b46e6cc342", null ],
-      [ "feature_handles", "a00174.html#ad7b6cace6c499b77b40be59b7d9ed843", null ],
-      [ "meas_handles", "a00174.html#ab61b1c5af5765ac4f24f617a24a81cd0", null ],
-      [ "service_handle", "a00174.html#a08ca745c921f74e622b3226b74a5453a", null ]
+    [ "ble_bas_evt_handler_t", "a00959.html#ga07fd95f8afa679110161bb8391496abd", null ],
+    [ "ble_bas_t", "a00959.html#gaea81f98230816bcfcbfd6ccbb4db3999", null ],
+    [ "ble_bas_evt_type_t", "a00959.html#gab63b7f474ce48636cd355f6b75ea1ca9", [
+      [ "BLE_BAS_EVT_NOTIFICATION_ENABLED", "a00959.html#ggab63b7f474ce48636cd355f6b75ea1ca9a657f8681ada82fd2990d5458442ed85a", null ],
+      [ "BLE_BAS_EVT_NOTIFICATION_DISABLED", "a00959.html#ggab63b7f474ce48636cd355f6b75ea1ca9afcba4bddb1a583374bb27d3f3ed5b8d1", null ]
     ] ],
-    [ "ble_bps_meas_s", "a00173.html", [
-      [ "blood_pressure_diastolic", "a00173.html#aed7e0a29d6cda87a84a69f4f7551fb6c", null ],
-      [ "blood_pressure_systolic", "a00173.html#ab097c85436eecc592213cdb75435f596", null ],
-      [ "blood_pressure_units_in_kpa", "a00173.html#a3d4f46ef4a031f2c849bba6ac9d68ba3", null ],
-      [ "mean_arterial_pressure", "a00173.html#a2455e564b8569f3f3bc999420efa7c1d", null ],
-      [ "measurement_status", "a00173.html#aa825f66cc38338e2f8bb4f767cdc8805", null ],
-      [ "measurement_status_present", "a00173.html#a80874044508391d1569ff1c476a4b5a7", null ],
-      [ "pulse_rate", "a00173.html#a4cec6cfcf650361edada4efe2d612461", null ],
-      [ "pulse_rate_present", "a00173.html#adcd3739c6e00a92c9c9026894e4248b8", null ],
-      [ "time_stamp", "a00173.html#a5724947dd197246dea1db93935a24b32", null ],
-      [ "time_stamp_present", "a00173.html#a5ed42a9cdaf140e3e18dc44e1b1baa5b", null ],
-      [ "user_id", "a00173.html#a68b822db90d51c550cddfb74fec7b1a7", null ],
-      [ "user_id_present", "a00173.html#a48e9ed959366ea1e7c7c8bb284a01979", null ]
-    ] ],
-    [ "BLE_BPS_FEATURE_BODY_MOVEMENT_BIT", "a00959.html#gab290c8fad6602966bdf90d503234c1d4", null ],
-    [ "BLE_BPS_FEATURE_CUFF_FIT_BIT", "a00959.html#gad99e5cdbef5e342fc386a0fe2fda3dbb", null ],
-    [ "BLE_BPS_FEATURE_IRREGULAR_PULSE_BIT", "a00959.html#gab9c335e57d829d3025d24412c630ec01", null ],
-    [ "BLE_BPS_FEATURE_MEASUREMENT_POSITION_BIT", "a00959.html#ga0a92ff47d40fe0c771b52bc3c40c2854", null ],
-    [ "BLE_BPS_FEATURE_MULTIPLE_BOND_BIT", "a00959.html#ga4e7f65094b9653a90bbfbc9c56176d76", null ],
-    [ "BLE_BPS_FEATURE_PULSE_RATE_RANGE_BIT", "a00959.html#gadd2fb490c4220a74a6b3654b7c424500", null ],
-    [ "ble_bps_evt_handler_t", "a00959.html#ga4c7199796f540fc4ea76d6eb9cd98809", null ],
-    [ "ble_bps_meas_t", "a00959.html#ga806d743979c29aa0326b9b155ae920fd", null ],
-    [ "ble_bps_t", "a00959.html#ga242d78f65ee0028e8b2e87a954811158", null ],
-    [ "ble_bps_evt_type_t", "a00959.html#ga98f1cefcd43052be0eede287994762e6", [
-      [ "BLE_BPS_EVT_INDICATION_ENABLED", "a00959.html#gga98f1cefcd43052be0eede287994762e6a4ea1567592db55227fffc3d07af1ba09", null ],
-      [ "BLE_BPS_EVT_INDICATION_DISABLED", "a00959.html#gga98f1cefcd43052be0eede287994762e6a26c6a093dd2ab03e8a1a9f31cb3783ba", null ],
-      [ "BLE_BPS_EVT_INDICATION_CONFIRMED", "a00959.html#gga98f1cefcd43052be0eede287994762e6afbd5349a29d34a241d1380a7d6e28668", null ]
-    ] ],
-    [ "ble_bps_init", "a00959.html#gaefd86b5ffa856f1d3b22a11939ea318b", null ],
-    [ "ble_bps_is_indication_enabled", "a00959.html#gab2de420367180bd1762ea7dc7e269fee", null ],
-    [ "ble_bps_measurement_send", "a00959.html#gafa33eb35e243d0fca55b44ac136f1f68", null ],
-    [ "ble_bps_on_ble_evt", "a00959.html#gaa5b69f0e2e6a3063254e198ca426c39a", null ]
+    [ "ble_bas_battery_level_update", "a00959.html#ga58d8f4336cce49ea5b3a2f8997bfe00e", null ],
+    [ "ble_bas_init", "a00959.html#gacb8ac9205dcec39e216575c76261c807", null ],
+    [ "ble_bas_on_ble_evt", "a00959.html#ga01b70d77540660d7e312121d9f1d3b3a", null ]
 ];

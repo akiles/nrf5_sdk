@@ -1,5 +1,7 @@
 var a00209 =
 [
-    [ "lv", "a00209.html#a3c0b55f3c9f8c589ca46e85d2c8f235c", null ],
-    [ "sm", "a00209.html#ab1014e45933756f4e790ef8181730f7f", null ]
+    [ "conn_sup_timeout", "a00209.html#ab644e629af7eb4915b0f3a93f682f7ae", null ],
+    [ "max_conn_interval", "a00209.html#abd7a6e16a723de1d779afadae3f3113e", null ],
+    [ "min_conn_interval", "a00209.html#a4d1975f7d25263004c405e0321fbae34", null ],
+    [ "slave_latency", "a00209.html#aa5caf55715aaac33f56cc996f91a92cc", null ]
 ];

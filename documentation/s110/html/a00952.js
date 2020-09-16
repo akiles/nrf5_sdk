@@ -1,7 +1,12 @@
 var a00952 =
 [
-    [ "dfu_app_reset_prepare_t", "a00952.html#gacb9c231addcf47494f127d60d875232c", null ],
-    [ "dfu_app_on_dfu_evt", "a00952.html#ga0b5bc3c6d3daca444ec05d33d065f369", null ],
-    [ "dfu_app_reset_prepare_set", "a00952.html#ga46ec5bb0ed70dfa3207ba06a25ce2347", null ],
-    [ "dfu_app_set_dm_handle", "a00952.html#gaab1fd97fd650257c8bf02fbffc63baf6", null ]
+    [ "ant_evt_t", "a00141.html", [
+      [ "channel", "a00141.html#a5e084957ed6c0f93b78203d74a268e36", null ],
+      [ "event", "a00141.html#a8449b66e97f4dfce737478dc751199e1", null ],
+      [ "evt_buffer", "a00141.html#a0945895af053724b710662f5beea9ed5", null ]
+    ] ],
+    [ "ANT_STACK_EVT_MSG_BUF_SIZE", "a00952.html#gafcf5a1211ca1625c5c111871c6139d79", null ],
+    [ "ANT_STACK_EVT_STRUCT_SIZE", "a00952.html#ga099e8f139d53724bf7238bb77c9e32e0", null ],
+    [ "ant_evt_handler_t", "a00952.html#ga2b0ca4dbb952df8f26cb58d4e7341115", null ],
+    [ "softdevice_ant_evt_handler_set", "a00952.html#gac05d1d266aef077ae88818dff3775010", null ]
 ];

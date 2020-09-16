@@ -1,6 +1,6 @@
 var a00342 =
 [
-    [ "addr", "a00342.html#a254efa46b45f5707510660ee0ae9edc3", null ],
-    [ "enc_info", "a00342.html#a8edc7904f78de5fddc021504d06ae029", null ],
-    [ "irk", "a00342.html#ac8c0e0d99c8c5cc39adfa07073253d58", null ]
+    [ "activate", "a00342.html#af00135287925be9fcd8216ca9f926106", null ],
+    [ "cleared", "a00342.html#ae4f65f28daba87c601079fdb99ed986b", null ],
+    [ "prepare", "a00342.html#a836a20b948e91ba36fb2a77f09d97aa4", null ]
 ];

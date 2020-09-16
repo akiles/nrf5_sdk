@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['heart_20rate_20service_20client',['Heart Rate Service Client',['../a00688.html',1,'']]],
+  ['heart_20rate_20service_20client',['Heart Rate Service Client',['../a00687.html',1,'']]],
   ['hardware_20peripheral_20examples',['Hardware Peripheral Examples',['../a00018.html',1,'examples']]],
   ['handle',['handle',['../a00159.html#ab1f14809099e66b0dc7a4a70cb3dc124',1,'ble_gattc_include_t::handle()'],['../a00145.html#ada1f0c9228867fd73fd596d6d7241c67',1,'ble_gattc_desc_t::handle()'],['../a00161.html#a4b5cec7a8b33f482114d99026b2ee92d',1,'ble_gattc_write_params_t::handle()'],['../a00158.html#af1b50c1fd1d5be05d0d0cf25e0925fd0',1,'ble_gattc_handle_value_t::handle()'],['../a00152.html#a54644f05780b15248eba975decdd4e48',1,'ble_gattc_evt_read_rsp_t::handle()'],['../a00156.html#ae8e1aafaf1cbc9b6f7b5fcd163dd5cac',1,'ble_gattc_evt_write_rsp_t::handle()'],['../a00150.html#a96ee6ce1546af608cf4b3b9d81cd7f09',1,'ble_gattc_evt_hvx_t::handle()'],['../a00175.html#a1a0552b266c588f67d3a6abc712bbfd6',1,'ble_gatts_hvx_params_t::handle()'],['../a00174.html#ae0637f8a8c322380f80f113edc931751',1,'ble_gatts_evt_write_t::handle()'],['../a00169.html#a79c55f70b9d10f1e11b35bb2cc13fdbd',1,'ble_gatts_evt_read_t::handle()'],['../a00168.html#ae09ecd90f134500a4297c4be1063985b',1,'ble_gatts_evt_hvc_t::handle()']]],
   ['handle_5fdecl',['handle_decl',['../a00144.html#a2ba0a3bc741d666e765ca29285946de8',1,'ble_gattc_char_t']]],
@@ -59,5 +59,5 @@ var searchData=
   ['hw_5ferror',['hw_error',['../a00225.html#a8c0fc51957a092a41e2161a3f7d400e0',1,'ser_phy_evt_t::hw_error()'],['../a00228.html#ae1d5196e1872407a376d8afb69f4ffab',1,'ser_phy_hci_slip_evt_t::hw_error()']]],
   ['hw_5ferror_5fcode',['hw_error_code',['../a00219.html#ae3d54d4d1e511ad693f7927ea4da5d05',1,'ser_hal_transport_evt_phy_error_params_t']]],
   ['hci_20transport_20library',['HCI transport library',['../a00050.html',1,'transport_libraries']]],
-  ['hci_20serialization_20phy',['HCI Serialization PHY',['../a00665.html',1,'']]]
+  ['hci_20serialization_20phy',['HCI Serialization PHY',['../a00663.html',1,'']]]
 ];

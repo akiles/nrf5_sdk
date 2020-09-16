@@ -9,5 +9,5 @@ var searchData=
   ['app_5fuart_5fconnection_5fstate_5ft',['app_uart_connection_state_t',['../a00501.html#ga683d8281c00679b243c06fd9b7815557',1,'app_uart.h']]],
   ['app_5fuart_5fevt_5ftype_5ft',['app_uart_evt_type_t',['../a00501.html#ga9346b21b144fd9499e24853bbf781e17',1,'app_uart.h']]],
   ['app_5fuart_5fflow_5fcontrol_5ft',['app_uart_flow_control_t',['../a00501.html#gad0b0f33b12902ce08681e06f304f0cba',1,'app_uart.h']]],
-  ['app_5fuart_5fstream_5fbaud_5frate_5ft',['app_uart_stream_baud_rate_t',['../a00649.html#ga4f36ceda1498e6231fbd9a48ceebdb65',1,'dtm_uart_params.h']]]
+  ['app_5fuart_5fstream_5fbaud_5frate_5ft',['app_uart_stream_baud_rate_t',['../a00646.html#ga4f36ceda1498e6231fbd9a48ceebdb65',1,'dtm_uart_params.h']]]
 ];

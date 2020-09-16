@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_hts_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_hts_meas_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,108 +106,123 @@ $(document).ready(function(){initNavTree('a00301.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_hts_s Struct Reference<div class="ingroups"><a class="el" href="a00969.html">Health Thermometer Service</a></div></div>  </div>
+<div class="title">ble_hts_meas_s Struct Reference<div class="ingroups"><a class="el" href="a00970.html">Health Thermometer Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Health Thermometer Service structure. This contains various status information for the service.  
+<p>Health Thermometer Service measurement structure. This contains a Health Thermometer measurement.  
  <a href="a00301.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_hts.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ab0392a7012b01ace2dad863bc8f573cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00969.html#ga78edebed11dc6c480b65706199500862">ble_hts_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#ab0392a7012b01ace2dad863bc8f573cc">evt_handler</a></td></tr>
-<tr class="separator:ab0392a7012b01ace2dad863bc8f573cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac62f9c0c453beef41d04c488c5d19ecc"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#ac62f9c0c453beef41d04c488c5d19ecc">service_handle</a></td></tr>
-<tr class="separator:ac62f9c0c453beef41d04c488c5d19ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e3f96502d28802be863f09b2839817d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00260.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a6e3f96502d28802be863f09b2839817d">meas_handles</a></td></tr>
-<tr class="separator:a6e3f96502d28802be863f09b2839817d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a514df962e0856554cd6eee1e2b11bf26"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00260.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a514df962e0856554cd6eee1e2b11bf26">temp_type_handles</a></td></tr>
-<tr class="separator:a514df962e0856554cd6eee1e2b11bf26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71533de99d438bb326730e08da1d402a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a71533de99d438bb326730e08da1d402a">conn_handle</a></td></tr>
-<tr class="separator:a71533de99d438bb326730e08da1d402a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8e572095f9a6cecdf4bcde49c527aab"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#ad8e572095f9a6cecdf4bcde49c527aab">temp_type</a></td></tr>
-<tr class="separator:ad8e572095f9a6cecdf4bcde49c527aab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16e05739a1ac3b03a2b4dc683bc1eacd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a16e05739a1ac3b03a2b4dc683bc1eacd">temp_in_fahr_units</a></td></tr>
+<tr class="separator:a16e05739a1ac3b03a2b4dc683bc1eacd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21a7a430b8f85908438c9bd1fc2e0dce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a21a7a430b8f85908438c9bd1fc2e0dce">time_stamp_present</a></td></tr>
+<tr class="separator:a21a7a430b8f85908438c9bd1fc2e0dce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10dadb1129dd55a6d597e4e08764d7ff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a10dadb1129dd55a6d597e4e08764d7ff">temp_type_present</a></td></tr>
+<tr class="separator:a10dadb1129dd55a6d597e4e08764d7ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4065a89fde57ebf2effce6a1401e38c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00365.html">ieee_float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a4065a89fde57ebf2effce6a1401e38c4">temp_in_celcius</a></td></tr>
+<tr class="separator:a4065a89fde57ebf2effce6a1401e38c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0120700a8a6185ce21e1a05391fbc706"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00365.html">ieee_float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a0120700a8a6185ce21e1a05391fbc706">temp_in_fahr</a></td></tr>
+<tr class="separator:a0120700a8a6185ce21e1a05391fbc706"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab4240703a233a4bd2cd1a7b3a5997c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00187.html">ble_date_time_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#aab4240703a233a4bd2cd1a7b3a5997c0">time_stamp</a></td></tr>
+<tr class="separator:aab4240703a233a4bd2cd1a7b3a5997c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12b9d8fddee8e461bfcedb3489bd5f92"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00301.html#a12b9d8fddee8e461bfcedb3489bd5f92">temp_type</a></td></tr>
+<tr class="separator:a12b9d8fddee8e461bfcedb3489bd5f92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Health Thermometer Service structure. This contains various status information for the service. </p>
+<div class="textblock"><p>Health Thermometer Service measurement structure. This contains a Health Thermometer measurement. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a71533de99d438bb326730e08da1d402a"></a>
+<a class="anchor" id="a4065a89fde57ebf2effce6a1401e38c4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_hts_s::conn_handle</td>
+          <td class="memname"><a class="el" href="a00365.html">ieee_float32_t</a> ble_hts_meas_s::temp_in_celcius</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
+<p>Temperature Measurement Value (Celcius). </p>
 
 </div>
 </div>
-<a class="anchor" id="ab0392a7012b01ace2dad863bc8f573cc"></a>
+<a class="anchor" id="a0120700a8a6185ce21e1a05391fbc706"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00969.html#ga78edebed11dc6c480b65706199500862">ble_hts_evt_handler_t</a> ble_hts_s::evt_handler</td>
+          <td class="memname"><a class="el" href="a00365.html">ieee_float32_t</a> ble_hts_meas_s::temp_in_fahr</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Event handler to be called for handling events in the Health Thermometer Service. </p>
+<p>Temperature Measurement Value (Fahrenheit). </p>
 
 </div>
 </div>
-<a class="anchor" id="a6e3f96502d28802be863f09b2839817d"></a>
+<a class="anchor" id="a16e05739a1ac3b03a2b4dc683bc1eacd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00260.html">ble_gatts_char_handles_t</a> ble_hts_s::meas_handles</td>
+          <td class="memname">bool ble_hts_meas_s::temp_in_fahr_units</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handles related to the Health Thermometer Measurement characteristic. </p>
+<p>True if Temperature is in Fahrenheit units, Celcius otherwise. </p>
 
 </div>
 </div>
-<a class="anchor" id="ac62f9c0c453beef41d04c488c5d19ecc"></a>
+<a class="anchor" id="a12b9d8fddee8e461bfcedb3489bd5f92"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_hts_s::service_handle</td>
+          <td class="memname">uint8_t ble_hts_meas_s::temp_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of Health Thermometer Service (as provided by the BLE stack). </p>
+<p>Temperature Type. </p>
 
 </div>
 </div>
-<a class="anchor" id="ad8e572095f9a6cecdf4bcde49c527aab"></a>
+<a class="anchor" id="a10dadb1129dd55a6d597e4e08764d7ff"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_hts_s::temp_type</td>
+          <td class="memname">bool ble_hts_meas_s::temp_type_present</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Temperature type indicates where the measurement was taken. </p>
+<p>True if Temperature Type is present. </p>
 
 </div>
 </div>
-<a class="anchor" id="a514df962e0856554cd6eee1e2b11bf26"></a>
+<a class="anchor" id="aab4240703a233a4bd2cd1a7b3a5997c0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00260.html">ble_gatts_char_handles_t</a> ble_hts_s::temp_type_handles</td>
+          <td class="memname"><a class="el" href="a00187.html">ble_date_time_t</a> ble_hts_meas_s::time_stamp</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handles related to the Health Thermometer Temperature Type characteristic. </p>
+<p>Time Stamp. </p>
+
+</div>
+</div>
+<a class="anchor" id="a21a7a430b8f85908438c9bd1fc2e0dce"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ble_hts_meas_s::time_stamp_present</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>True if Time Stamp is present. </p>
 
 </div>
 </div>
@@ -216,8 +231,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00301.html">ble_hts_s</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:27 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00301.html">ble_hts_meas_s</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:13 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

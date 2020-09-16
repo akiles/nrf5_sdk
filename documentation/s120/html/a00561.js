@@ -1,6 +1,6 @@
 var a00561 =
 [
-    [ "BLE_GATTS_SRVC_TYPE_INVALID", "a00561.html#ga07c49b0b262d0b5bd709d282b659436d", null ],
-    [ "BLE_GATTS_SRVC_TYPE_PRIMARY", "a00561.html#ga881b91f3ac789bf6fcefee7f815dcf7e", null ],
-    [ "BLE_GATTS_SRVC_TYPE_SECONDARY", "a00561.html#ga1aa1898278ef4d0034858d752eac29b0", null ]
+    [ "BLE_GATTS_VLOC_INVALID", "a00561.html#ga0b0c153e71bddb01a4ba803a9110a6e4", null ],
+    [ "BLE_GATTS_VLOC_STACK", "a00561.html#gaf51ee5f68c7eea401ee79cd250c1fb16", null ],
+    [ "BLE_GATTS_VLOC_USER", "a00561.html#gaddb51f959e18123c5e215e22af0c31a9", null ]
 ];

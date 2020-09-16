@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Bootloader API.</title>
+<title>nRF51 SDK - S110 SoftDevice: Types and definitions.</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,286 +97,57 @@ $(document).ready(function(){initNavTree('a00941.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Bootloader API.<div class="ingroups"><a class="el" href="a01038.html">Bootloader/DFU API</a></div></div>  </div>
+<div class="title">Types and definitions.<div class="ingroups"><a class="el" href="a00939.html">Bootloader API.</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Bootloader module interface.  
+<p>Bootloader module type and definitions.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00943"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00943.html">Types and definitions.</a></td></tr>
-<tr class="memdesc:a00943"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bootloader module type and definitions. <br/></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html">bootloader_settings_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure holding bootloader settings for application and bank data.  <a href="a00339.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaa821efb3c4074cee13cb2a7377e793f1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00941.html#gaa821efb3c4074cee13cb2a7377e793f1">bootloader_init</a> (void)</td></tr>
-<tr class="memdesc:gaa821efb3c4074cee13cb2a7377e793f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Bootloader.  <a href="#gaa821efb3c4074cee13cb2a7377e793f1">More...</a><br/></td></tr>
-<tr class="separator:gaa821efb3c4074cee13cb2a7377e793f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabd325fffda0cb29f1a8b917eb61d2494"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00941.html#gabd325fffda0cb29f1a8b917eb61d2494">bootloader_app_is_valid</a> (uint32_t app_addr)</td></tr>
-<tr class="memdesc:gabd325fffda0cb29f1a8b917eb61d2494"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for validating application region in flash.  <a href="#gabd325fffda0cb29f1a8b917eb61d2494">More...</a><br/></td></tr>
-<tr class="separator:gabd325fffda0cb29f1a8b917eb61d2494"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf11a485218863db81385fe18437b5961"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00941.html#gaf11a485218863db81385fe18437b5961">bootloader_dfu_start</a> (void)</td></tr>
-<tr class="memdesc:gaf11a485218863db81385fe18437b5961"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for starting the Device Firmware Update.  <a href="#gaf11a485218863db81385fe18437b5961">More...</a><br/></td></tr>
-<tr class="separator:gaf11a485218863db81385fe18437b5961"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4fc5191d040a4abb9a23b52e22f56101"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00941.html#ga4fc5191d040a4abb9a23b52e22f56101">bootloader_app_start</a> (uint32_t app_addr)</td></tr>
-<tr class="memdesc:ga4fc5191d040a4abb9a23b52e22f56101"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for exiting bootloader and booting into application.  <a href="#ga4fc5191d040a4abb9a23b52e22f56101">More...</a><br/></td></tr>
-<tr class="separator:ga4fc5191d040a4abb9a23b52e22f56101"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a5868fa37d3f3ef4cdb3cd54cb81684"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00941.html#ga5a5868fa37d3f3ef4cdb3cd54cb81684">bootloader_settings_get</a> (<a class="el" href="a00338.html">bootloader_settings_t</a> *const p_settings)</td></tr>
-<tr class="memdesc:ga5a5868fa37d3f3ef4cdb3cd54cb81684"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for retrieving the bootloader settings.  <a href="#ga5a5868fa37d3f3ef4cdb3cd54cb81684">More...</a><br/></td></tr>
-<tr class="separator:ga5a5868fa37d3f3ef4cdb3cd54cb81684"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaebf46c5b600b9c2a5609c7f36954adef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00941.html#gaebf46c5b600b9c2a5609c7f36954adef">bootloader_dfu_update_process</a> (<a class="el" href="a00348.html">dfu_update_status_t</a> update_status)</td></tr>
-<tr class="memdesc:gaebf46c5b600b9c2a5609c7f36954adef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for processing DFU status update.  <a href="#gaebf46c5b600b9c2a5609c7f36954adef">More...</a><br/></td></tr>
-<tr class="separator:gaebf46c5b600b9c2a5609c7f36954adef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga360affe1c4d4326b4daa465dee005330"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00941.html#ga360affe1c4d4326b4daa465dee005330">bootloader_dfu_sd_in_progress</a> (void)</td></tr>
-<tr class="memdesc:ga360affe1c4d4326b4daa465dee005330"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function getting state of SoftDevice update in progress. After a successfull SoftDevice transfer the system restarts in orderto disable SoftDevice and complete the update.  <a href="#ga360affe1c4d4326b4daa465dee005330">More...</a><br/></td></tr>
-<tr class="separator:ga360affe1c4d4326b4daa465dee005330"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2edc94128b91cbdc2551be36dc692ef0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00941.html#ga2edc94128b91cbdc2551be36dc692ef0">bootloader_dfu_sd_update_continue</a> (void)</td></tr>
-<tr class="memdesc:ga2edc94128b91cbdc2551be36dc692ef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for continuing the Device Firmware Update of a SoftDevice.  <a href="#ga2edc94128b91cbdc2551be36dc692ef0">More...</a><br/></td></tr>
-<tr class="separator:ga2edc94128b91cbdc2551be36dc692ef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga252165c548d698c2f001261314fecfce"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00941.html#ga252165c548d698c2f001261314fecfce">bootloader_dfu_sd_update_finalize</a> (void)</td></tr>
-<tr class="memdesc:ga252165c548d698c2f001261314fecfce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for finalizing the Device Firmware Update of a SoftDevice.  <a href="#ga252165c548d698c2f001261314fecfce">More...</a><br/></td></tr>
-<tr class="separator:ga252165c548d698c2f001261314fecfce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga5590b8ff0089e88358e46c506f54a688"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5590b8ff0089e88358e46c506f54a688"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOTLOADER_DFU_START</b>&#160;&#160;&#160;0xB1</td></tr>
+<tr class="separator:ga5590b8ff0089e88358e46c506f54a688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1a6cf12d596e671a8a7a47d2bb35c6e9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1a6cf12d596e671a8a7a47d2bb35c6e9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOTLOADER_SVC_APP_DATA_PTR_GET</b>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:ga1a6cf12d596e671a8a7a47d2bb35c6e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaa42a54966d007c04ca5fbca6775187f2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00941.html#gaa42a54966d007c04ca5fbca6775187f2">bootloader_bank_code_t</a> { <br/>
+&#160;&#160;<b>BANK_VALID_APP</b> = 0x01, 
+<br/>
+&#160;&#160;<b>BANK_VALID_SD</b> = 0xA5, 
+<br/>
+&#160;&#160;<b>BANK_VALID_BOOT</b> = 0xAA, 
+<br/>
+&#160;&#160;<b>BANK_ERASED</b> = 0xFE, 
+<br/>
+&#160;&#160;<b>BANK_INVALID_APP</b> = 0xFF
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaa42a54966d007c04ca5fbca6775187f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">DFU Bank state code, which indicates wether the bank contains: A valid image, invalid image, or an erased flash. <br/></td></tr>
+<tr class="separator:gaa42a54966d007c04ca5fbca6775187f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Bootloader module interface. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gabd325fffda0cb29f1a8b917eb61d2494"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool bootloader_app_is_valid </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>app_addr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for validating application region in flash. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">app_addr</td><td>Address to the region in flash where the application is stored.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>If Application region is valid. </td></tr>
-    <tr><td class="paramname">false</td><td>If Application region is not valid. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4fc5191d040a4abb9a23b52e22f56101"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void bootloader_app_start </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>app_addr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for exiting bootloader and booting into application. </p>
-<p>This function will disable SoftDevice and all interrupts before jumping to application. The SoftDevice vector table base for interrupt forwarding will be set the application address.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">app_addr</td><td>Address to the region where the application is stored. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga360affe1c4d4326b4daa465dee005330"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool bootloader_dfu_sd_in_progress </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function getting state of SoftDevice update in progress. After a successfull SoftDevice transfer the system restarts in orderto disable SoftDevice and complete the update. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>A SoftDevice update is in progress. This indicates that second stage of a SoftDevice update procedure can be initiated. </td></tr>
-    <tr><td class="paramname">false</td><td>No SoftDevice update is in progress. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2edc94128b91cbdc2551be36dc692ef0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t bootloader_dfu_sd_update_continue </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for continuing the Device Firmware Update of a SoftDevice. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If the final stage of SoftDevice update was successful. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga252165c548d698c2f001261314fecfce"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t bootloader_dfu_sd_update_finalize </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for finalizing the Device Firmware Update of a SoftDevice. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If the final stage of SoftDevice update was successful. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf11a485218863db81385fe18437b5961"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t bootloader_dfu_start </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for starting the Device Firmware Update. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If new application image was successfully transferred. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaebf46c5b600b9c2a5609c7f36954adef"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void bootloader_dfu_update_process </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00348.html">dfu_update_status_t</a>&#160;</td>
-          <td class="paramname"><em>update_status</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for processing DFU status update. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">update_status</td><td>DFU update status. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa821efb3c4074cee13cb2a7377e793f1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t bootloader_init </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for initializing the Bootloader. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If bootloader was succesfully initialized. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5a5868fa37d3f3ef4cdb3cd54cb81684"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void bootloader_settings_get </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00338.html">bootloader_settings_t</a> *const&#160;</td>
-          <td class="paramname"><em>p_settings</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for retrieving the bootloader settings. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_settings</td><td>A copy of the current bootloader settings is returned in the structure provided. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
+<p>Bootloader module type and definitions. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:25 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:11 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

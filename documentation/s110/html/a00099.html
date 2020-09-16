@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: SPI RAW protocol</title>
+<title>nRF51 SDK - S110 SoftDevice: Gazell</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,94 +97,19 @@ $(document).ready(function(){initNavTree('a00099.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">SPI RAW protocol </div>  </div>
+<div class="title">Gazell </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="SPI_RAW_PROTOCOL"></a>
-SPI RAW protocol</h1>
-<p><b>SPI RAW</b> protocol implements <a class="el" href="a00085.html">Serialization PHY</a> API for <b>SPI</b> interface.<br/>
-</p>
-<p>In standard implementation <b>SPI RAW</b> interface uses 6 lines: four standard (<b>CLK</b>,<b>MOSI</b>,<b>MISO</b>,<b>/CS</b>) and two additional (<b>/RDY</b>, <b>/REQ</b>).<br/>
- Application processor is a <b>SPI</b> bus master, <b>nRF51</b> chip is a slave device.<br/>
- A 5 wire variant, which does not use <b>/RDY</b> line ( <a class="el" href="a00100.html">SPI_5W RAW protocol</a>) was also implemented . <br/>
-</p>
-<p><b>SPI RAW</b> protocol facilitates transfer of packets with variable length.<br/>
- Due to variable length of the packets and master-slave architecture of <b>SPI</b> interface, each packet transfer is done in a simplex mode.<br/>
- Every bus transaction transfers data either from application processor to <b>nRF51</b> or from <b>nRF51</b> to application processor, but not simultaneously in both directions. <br/>
- Transfer of data consists of bus transactions. Each transaction starts with falling edge and ends with rising edge of <b>/CS</b> signal.<br/>
- Read transactions are not interleaved with write transactions. Once started, all transactions needed to read or write of the whole packet must be completed.<br/>
-</p>
-<p>Both <b>/REQ</b>, <b>/RDY</b> lines are active low and driven by slave device.<br/>
- Line <b>/REQ</b>, when asserted, signals that slave device has data to be read.<br/>
- Line <b>/RDY</b> when asserted, signals that slave device is ready for a transaction.<br/>
-</p>
-<p>Payload transfer is preceded by 2 bytes of physical layer header, which defines the size of packet. <br/>
- Header is transmitted as least significant byte first. <br/>
- <b>SPI</b> slave device uses <b>DMA</b>, and due to the maximum size of <b>DMA</b> buffers, packets are divided into frames. <br/>
- The size of frame is determined by the <b>MTU</b> constant, which is currently set to <b>255</b> (SER_PHY_SPI_MTU_SIZE = 255). <br/>
- All packets bigger than <b>MTU</b> are divided into frames with maximum size of <b>MTU</b>. <br/>
- For example, a packet with the length of 1024 bytes, will be divided into 5 frames (1024= 4x255 + 4) <br/>
- <br/>
- <b>[255][255][255][255][4]</b><br/>
- <br/>
- Each frame is transferred as one bus transaction. <br/>
- <b>MTU</b> size may be set to lower value to accommodate different architecture of the master device.</p>
-<h1><a class="anchor" id="SPI_RAW_BUS_TX"></a>
-SPI RAW - packet writing</h1>
-<p>Packets are transmitted in a following format :<br/>
-</p>
-<p><b>TX_RAW_PACKET = [TX_HEADER][TX_FRAME][TX_FRAME][TX_FRAME]... </b><br/>
-</p>
-<div class="image">
-<img src="spi_6W_tx_medium.png" alt="spi_6W_tx_medium.png"/>
-<div class="caption">
-Figure 1: Transmission of single packet </div></div>
-<p> Packet length is send as a <b>[TX_HEADER]=[0x0004]</b> in the first transaction. <br/>
- When transaction ends, signal <b>/RDY</b> is deasserted by slave device. <br/>
- After some 100us, when <b>DMA</b> buffers are serviced and set for next transaction, <b>/RDY</b> line is asserted again. <br/>
- Second transaction transfers payload <b>[TX_FRAME]=[0x00, 0x78, 0x00, 0x03]</b>. <br/>
-</p>
-<h1><a class="anchor" id="SPI_RAW_BUS_RX"></a>
-SPI RAW - packet reading</h1>
-<p>Packets are received in a following format :<br/>
-</p>
-<p><b>SPI_RAW_PACKET = [ZERO_HEADER][RX_HEADER][RX_FRAME][RX_FRAME][RX_FRAME]... </b><br/>
-</p>
-<div class="image">
-<img src="spi_6W_rx_medium.png" alt="spi_6W_rx_medium.png"/>
-<div class="caption">
-Figure 2: Reception of the packet </div></div>
-<p>Slave request for reading of a packet is signalled by assertion of <b>/REQ</b> line.<br/>
- When master device is ready to read a packet, it sends <b>[ZERO_HEADER]=[0x0000]</b>. <br/>
- <b>[ZERO_HEADER]</b> is an indication, that master device is initiating a packet read operation. <br/>
- When <b>[ZERO_HEADER]</b> is detected by slave, <b>/REQ</b> line is deasserted.<br/>
- In the next transaction a <b>[RX_HEADER]=[0x0006]</b> defining received payload length is read by master device. <br/>
- Third transaction transfers payload of 6 bytes <b>[RX_FRAME]=[0x01, 0x7C, 0x00, 0x00, 0x00, 0x00]</b>.</p>
-<h1><a class="anchor" id="SPI_RAW_DRIVER_MASTER"></a>
-Master device driver</h1>
-<p><b>SPI RAW</b> protocol for master device is implemented in ser_phy_spi_phy_driver_master file. <br/>
- The operation of ser_phy_switch_state() function is illustrated by <a href="http://en.wikipedia.org/wiki/State_diagram_(UML)">UML state diagram .</a> <br/>
- </p>
-<div class="image">
-<img src="app_uml1_medium.png" alt="app_uml1_medium.png"/>
-<div class="caption">
-Figure 3: UML state diagram for master device</div></div>
-<h1><a class="anchor" id="SPI_RAW_DRIVER_SLAVE"></a>
-Slave device driver</h1>
-<p><b>SPI RAW </b> protocol for slave device is implemented in ser_phy_spi_phy_driver_slave file. <br/>
- The operation of spi_slave_event_handle() function is illustrated by <a href="http://en.wikipedia.org/wiki/State_diagram_(UML)">UML state diagram. </a> <br/>
- </p>
-<div class="image">
-<img src="conn_uml1_medium.png" alt="conn_uml1_medium.png"/>
-<div class="caption">
-Figure 4: UML state diagram for slave device</div></div>
- </div></div><!-- contents -->
+<div class="textblock"><p><a class="el" href="a00101.html">Device/Host example</a></p>
+<p><a class="el" href="a00100.html">Desktop device emulator</a></p>
+<p><a class="el" href="a00102.html">Pairing Device with Dynamic Pairing</a> </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00082.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00085.html">Serialization PHY</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:19 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00107.html">Nordic proprietary protocols</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:05 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

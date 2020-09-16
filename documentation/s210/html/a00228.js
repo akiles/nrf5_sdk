@@ -1,20 +1,12 @@
 var a00228 =
 [
-    [ "APP_GPIOTE_BUF_SIZE", "a00228.html#ga1776902d69e12c277659e609fcbf2fe5", null ],
-    [ "APP_GPIOTE_INIT", "a00228.html#gaed385f30da9f44fb5bf4591eef4d27d9", null ],
-    [ "GPIOTE_USER_NODE_SIZE", "a00228.html#ga873de058f1a74896f2117c6576e1b4e2", null ],
-    [ "NO_OF_PINS", "a00228.html#ga9ceabb78fed1102abd4f0f331a04e190", null ],
-    [ "app_gpiote_event_handler_t", "a00228.html#ga23c3e3e3c8e271614548b30684a0f4da", null ],
-    [ "app_gpiote_input_event_handler_t", "a00228.html#gaebc08f58d1b9e90b05832bb3205f93a9", null ],
-    [ "app_gpiote_disable_interrupts", "a00228.html#ga81f2b093519e072e7e875d3752948778", null ],
-    [ "app_gpiote_enable_interrupts", "a00228.html#ga328efc6349aeb671173d4934008996f3", null ],
-    [ "app_gpiote_end_irq_event_handler_register", "a00228.html#ga156c09d369b6f4169640f0c5f3b58d8c", null ],
-    [ "app_gpiote_end_irq_event_handler_unregister", "a00228.html#gab19aa3044fd57a44ac309b2275958580", null ],
-    [ "app_gpiote_init", "a00228.html#ga573b71494c38cc4c32b209a13708c78d", null ],
-    [ "app_gpiote_input_event_handler_register", "a00228.html#gadb3478898eb54905aa38d7ddf731d480", null ],
-    [ "app_gpiote_input_event_handler_unregister", "a00228.html#ga87444fbfe469eb73229d43fdf8cd61fc", null ],
-    [ "app_gpiote_pins_state_get", "a00228.html#ga5eaa7bc1dcd21b11a809dbd13b714d75", null ],
-    [ "app_gpiote_user_disable", "a00228.html#ga486576266f08b96279e514f080911350", null ],
-    [ "app_gpiote_user_enable", "a00228.html#ga50622a63550c442d6ad8a8a0d34b166d", null ],
-    [ "app_gpiote_user_register", "a00228.html#gaa0fe3334c8940d86fc48af00ccb8e0ed", null ]
+    [ "Memory Pool Internal", "a00227.html", "a00227" ],
+    [ "hci_mem_pool_close", "a00228.html#ga46bf92027fa4fe402e53a8764713c99f", null ],
+    [ "hci_mem_pool_open", "a00228.html#gaadd0dcc9a737d2401c05dbd0cd350a13", null ],
+    [ "hci_mem_pool_rx_consume", "a00228.html#ga961c95e86995f3a6ad1a14822745c368", null ],
+    [ "hci_mem_pool_rx_data_size_set", "a00228.html#ga7aae0da2e09ccedb4deb30e01940c303", null ],
+    [ "hci_mem_pool_rx_extract", "a00228.html#gaf29059c4fa6204e2313069e90e7db51a", null ],
+    [ "hci_mem_pool_rx_produce", "a00228.html#ga06c527499f6006d354a540268b4ea124", null ],
+    [ "hci_mem_pool_tx_alloc", "a00228.html#gad1da3c1e38317a5c312650396d9da6e8", null ],
+    [ "hci_mem_pool_tx_free", "a00228.html#ga44dd78500f42bf6cddc5f90a03abd7af", null ]
 ];

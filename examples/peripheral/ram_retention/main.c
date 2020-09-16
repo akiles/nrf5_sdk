@@ -89,9 +89,9 @@ int main(void)
 {
     uint32_t * volatile p_ram_test = (uint32_t *)RAM_MEMORY_TEST_ADDRESS;
     uint32_t            loop_count = 0;
-	
+
     LEDS_CONFIGURE(LEDS_MASK);
-	  LEDS_OFF(LEDS_MASK);
+    LEDS_OFF(LEDS_MASK);
 
     // This pin is used for waking up from System OFF and is active low, enabling sense capabilities.
     nrf_gpio_cfg_sense_input(PIN_GPIO_WAKEUP, BUTTON_PULL, NRF_GPIO_PIN_SENSE_LOW);

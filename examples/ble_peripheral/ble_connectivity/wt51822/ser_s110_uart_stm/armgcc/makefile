@@ -62,9 +62,6 @@ C_SOURCE_FILES += \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gap_evt_sec_info_request.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gap_evt_sec_params_request.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gap_evt_timeout.c \
-../../../../../../components/serialization/common/ble_serialization.c \
-../../../../../../components/serialization/common/cond_field_serialization.c \
-../../../../../../components/serialization/common/struct_ser/s110/ble_gap_struct_serialization.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gattc_evt_char_disc_rsp.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gattc_evt_char_val_by_uuid_read_rsp.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gattc_evt_char_vals_read_rsp.c \
@@ -75,15 +72,12 @@ C_SOURCE_FILES += \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gattc_evt_rel_disc_rsp.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gattc_evt_timeout.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gattc_evt_write_rsp.c \
-../../../../../../components/serialization/common/struct_ser/s110/ble_gattc_struct_serialization.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gatts_evt_hvc.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gatts_evt_rw_authorize_request.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gatts_evt_sc_confirm.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gatts_evt_sys_attr_missing.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gatts_evt_timeout.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gatts_evt_write.c \
-../../../../../../components/serialization/common/struct_ser/s110/ble_gatts_struct_serialization.c \
-../../../../../../components/serialization/common/struct_ser/s110/ble_struct_serialization.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_l2cap_evt_rx.c \
 ../../../../../../components/serialization/connectivity/ser_conn_pkt_decoder.c \
 ../../../../../../components/serialization/connectivity/ser_conn_cmd_decoder.c \
@@ -126,6 +120,7 @@ C_SOURCE_FILES += \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gap_sec_info_reply.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gap_sec_params_reply.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gap_tx_power_set.c \
+../../../../../../components/serialization/common/struct_ser/s110/ble_gap_struct_serialization.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/middleware/conn_mw_ble_gattc.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gattc_char_value_by_uuid_read.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gattc_char_values_read.c \
@@ -136,6 +131,7 @@ C_SOURCE_FILES += \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gattc_read.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gattc_relationships_discover.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gattc_write.c \
+../../../../../../components/serialization/common/struct_ser/s110/ble_gattc_struct_serialization.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/middleware/conn_mw_ble_gatts.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gatts_characteristic_add.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gatts_descriptor_add.c \
@@ -148,6 +144,8 @@ C_SOURCE_FILES += \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gatts_sys_attr_set.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gatts_value_get.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_gatts_value_set.c \
+../../../../../../components/serialization/common/struct_ser/s110/ble_gatts_struct_serialization.c \
+../../../../../../components/serialization/common/struct_ser/s110/ble_struct_serialization.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/middleware/conn_mw_ble_l2cap.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_l2cap_cid_register.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/ble_l2cap_cid_unregister.c \
@@ -155,38 +153,41 @@ C_SOURCE_FILES += \
 ../../../../../../components/serialization/connectivity/codecs/s110/middleware/conn_mw_nrf_soc.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/power_system_off.c \
 ../../../../../../components/serialization/connectivity/codecs/s110/serializers/temp_get.c \
+../../../../../../components/serialization/common/ble_serialization.c \
+../../../../../../components/serialization/common/cond_field_serialization.c \
 ../../../../../../components/serialization/common/transport/ser_hal_transport.c \
 ../../../../../../components/ble/common/ble_conn_params.c \
-../../../../../../components/ble/common/ble_srv_common.c \
 ../../../../../../components/ble/common/ble_advdata.c \
+../../../../../../components/ble/common/ble_srv_common.c \
 
 #assembly files common to all targets
 ASM_SOURCE_FILES  = ../../../../../../components/toolchain/gcc/gcc_startup_nrf51.s
 
 #includes common to all targets
 INC_PATHS  = -I../../../../../../components/toolchain/gcc
-INC_PATHS += -I../../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../../components/toolchain
 INC_PATHS += -I../../../
-INC_PATHS += -I../../../../../../components/serialization/connectivity/codecs/common
 INC_PATHS += -I../../../../../../components/serialization/connectivity/codecs/s110/middleware
-INC_PATHS += -I../../../../../../components/serialization/connectivity/codecs/s110/serializers
-INC_PATHS += -I../../../../../../components/serialization/common
-INC_PATHS += -I../../../../../../components/serialization/common/struct_ser/s110
 INC_PATHS += -I../../../../../../components/serialization/connectivity
 INC_PATHS += -I../../../../../../components/serialization/connectivity/hal
 INC_PATHS += -I../../../../../../components/ble/ble_dtm
+INC_PATHS += -I../../../../../../components/serialization/connectivity/codecs/common
 INC_PATHS += -I../../../../../../components/softdevice/s110/headers
 INC_PATHS += -I../../../../../../components/ble/common
 INC_PATHS += -I../../../../../../components/libraries/scheduler
-INC_PATHS += -I../../../../../../components/libraries/util
-INC_PATHS += -I../../../../../bsp
 INC_PATHS += -I../../../../../../components/serialization/common/transport/ser_phy
 INC_PATHS += -I../../../../../../components/serialization/common/transport/ser_phy/config
+INC_PATHS += -I../../../../../bsp
+INC_PATHS += -I../../../../../../components/serialization/connectivity/codecs/s110/middleware
+INC_PATHS += -I../../../../../../components/serialization/common/struct_ser/s110
+INC_PATHS += -I../../../../../../components/serialization/connectivity/codecs/s110/serializers
 INC_PATHS += -I../../../../../../components/serialization/common/transport
+INC_PATHS += -I../../../../../../components/serialization/common
 INC_PATHS += -I../../../../../../components/softdevice/common/softdevice_handler
 INC_PATHS += -I../../../../../../components/libraries/timer
+INC_PATHS += -I../../../../../../components/libraries/util
 INC_PATHS += -I../../../../../../components/libraries/gpiote
+INC_PATHS += -I../../../../../../components/drivers_nrf/hal
 
 OBJECT_DIRECTORY = _build
 LISTING_DIRECTORY = $(OBJECT_DIRECTORY)

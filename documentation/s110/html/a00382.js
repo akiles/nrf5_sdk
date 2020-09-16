@@ -1,7 +1,5 @@
 var a00382 =
 [
-    [ "evt_params", "a00382.html#a93ce86e2fdc1e3c64d3d545d3b6419f8", null ],
-    [ "evt_type", "a00382.html#a084775a085056cceca5175e7e5026e97", null ],
-    [ "phy_error", "a00382.html#a7186bdccc491957a3f07275385aeec58", null ],
-    [ "rx_pkt_received", "a00382.html#a9cc1eff2ee2b68876628553920d5d831", null ]
+    [ "num_of_bytes", "a00382.html#ac7195123250d62fa6ea18a433f1b002c", null ],
+    [ "p_buffer", "a00382.html#a54c012dbcda11f6bc5af7bbab3ba07d5", null ]
 ];

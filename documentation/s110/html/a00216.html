@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_evt_connected_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gap_evt_conn_sec_update_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,33 @@ $(document).ready(function(){initNavTree('a00216.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_evt_connected_t Struct Reference<div class="ingroups"><a class="el" href="a00851.html">Generic Access Profile (GAP)</a></div></div>  </div>
+<div class="title">ble_gap_evt_conn_sec_update_t Struct Reference<div class="ingroups"><a class="el" href="a00849.html">Generic Access Profile (GAP)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event data for connected event.  
+<p>Event data for connection security update event.  
  <a href="a00216.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a2107b9536488cbcb75ca3f059e5ab72e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00206.html">ble_gap_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#a2107b9536488cbcb75ca3f059e5ab72e">peer_addr</a></td></tr>
-<tr class="separator:a2107b9536488cbcb75ca3f059e5ab72e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade7ff1956c46e2832bf82c95711a408f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#ade7ff1956c46e2832bf82c95711a408f">irk_match</a>:1</td></tr>
-<tr class="separator:ade7ff1956c46e2832bf82c95711a408f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40ac77b4be795c7085f8eece5adc9d73"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#a40ac77b4be795c7085f8eece5adc9d73">irk_match_idx</a>:7</td></tr>
-<tr class="separator:a40ac77b4be795c7085f8eece5adc9d73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b48983984c9a6eca0b81380f8af8a05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00208.html">ble_gap_conn_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#a0b48983984c9a6eca0b81380f8af8a05">conn_params</a></td></tr>
-<tr class="separator:a0b48983984c9a6eca0b81380f8af8a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7495cc138b411d5589196b79bca5bb7a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00211.html">ble_gap_conn_sec_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#a7495cc138b411d5589196b79bca5bb7a">conn_sec</a></td></tr>
+<tr class="separator:a7495cc138b411d5589196b79bca5bb7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event data for connected event. </p>
+<div class="textblock"><p>Event data for connection security update event. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a0b48983984c9a6eca0b81380f8af8a05"></a>
+<a class="anchor" id="a7495cc138b411d5589196b79bca5bb7a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00208.html">ble_gap_conn_params_t</a> ble_gap_evt_connected_t::conn_params</td>
+          <td class="memname"><a class="el" href="a00211.html">ble_gap_conn_sec_t</a> ble_gap_evt_conn_sec_update_t::conn_sec</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GAP Connection Parameters. </p>
-
-</div>
-</div>
-<a class="anchor" id="ade7ff1956c46e2832bf82c95711a408f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_evt_connected_t::irk_match</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>If 1, peer device's address resolved using an IRK. </p>
-
-</div>
-</div>
-<a class="anchor" id="a40ac77b4be795c7085f8eece5adc9d73"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_evt_connected_t::irk_match_idx</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Index in IRK list where the address was matched. </p>
-
-</div>
-</div>
-<a class="anchor" id="a2107b9536488cbcb75ca3f059e5ab72e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00206.html">ble_gap_addr_t</a> ble_gap_evt_connected_t::peer_addr</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Bluetooth address of the peer device. </p>
+<p>Connection security level. </p>
 
 </div>
 </div>
@@ -186,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00216.html">ble_gap_evt_connected_t</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:26 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00216.html">ble_gap_evt_conn_sec_update_t</a></li>
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:12 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

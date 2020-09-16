@@ -124,7 +124,7 @@ Initialization</h2>
 <div class="line"></div>
 <div class="line">retval = <a class="code" href="a00495.html#ga729ef8b64fc0cb6bfdabb2543a565d32" title="Module Initialization Routine.">pstorage_init</a>();</div>
 <div class="line"></div>
-<div class="line"><span class="keywordflow">if</span>(retval == <a class="code" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span>(retval == <a class="code" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Module initialization successful.</span></div>
 <div class="line">}</div>
@@ -145,7 +145,7 @@ Registration</h2>
 <div class="line">param.<a class="code" href="a00212.html#a3495db72b9ff587f0c9ea0ab38d5e9f8">cb</a>          = example_cb_handler;</div>
 <div class="line">    </div>
 <div class="line">retval = <a class="code" href="a00495.html#ga0a57b964c8945eaca2d267835ef6688c" title="Register with persistent storage interface.">pstorage_register</a>(&amp;param, &amp;handle);</div>
-<div class="line"><span class="keywordflow">if</span> (retval == <a class="code" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span> (retval == <a class="code" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Registration successful.</span></div>
 <div class="line">}</div>
@@ -173,7 +173,7 @@ Get Block Identifier</h2>
 <div class="line"><span class="comment">// Request to get identifier for 3rd block. </span></div>
 <div class="line">retval = <a class="code" href="a00495.html#gafdeeb475e4f2db19863226bc55d507b5" title="Function to get block id with reference to base block identifier provided at time of registration...">pstorage_block_identifier_get</a>(&amp;base_handle, 2, &amp;block_handle);</div>
 <div class="line"></div>
-<div class="line"><span class="keywordflow">if</span> (retval == <a class="code" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span> (retval == <a class="code" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Get Block Identifier successful.</span></div>
 <div class="line">}</div>
@@ -192,7 +192,7 @@ Load Data</h2>
 <div class="line"><span class="comment">// Request to read 4 bytes from block at an offset of 12 bytes.</span></div>
 <div class="line">retval = <a class="code" href="a00495.html#ga99402440650cc2d2ee63d8866760a25b" title="Routine to load persistently stored data of length &#39;size&#39; from &#39;p_src&#39; address to &#39;p_dest&#39; address; E...">pstorage_load</a>(dest_data, &amp;block_handle, 4, 12);</div>
 <div class="line"></div>
-<div class="line"><span class="keywordflow">if</span> (retval == <a class="code" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span> (retval == <a class="code" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Load successful. Consume data.</span></div>
 <div class="line">}</div>
@@ -212,7 +212,7 @@ Store Data</h2>
 <div class="line"><span class="comment">// Request to write 8 bytes to block at an offset of 20 bytes.</span></div>
 <div class="line">retval = <a class="code" href="a00495.html#ga12e52da12709de8d43bfb8389b80af6d" title="Routine to persistently store data of length &#39;size&#39; contained in &#39;p_src&#39; address in storage module at...">pstorage_store</a>(&amp;block_handle, source_data, 8, 20);</div>
 <div class="line"></div>
-<div class="line"><span class="keywordflow">if</span> (retval == <a class="code" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span> (retval == <a class="code" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Store successfully requested. Wait for operation result.</span></div>
 <div class="line">}</div>
@@ -238,7 +238,7 @@ Store Data</h2>
 <div class="line">       .</div>
 <div class="line">       .</div>
 <div class="line">       <span class="keywordflow">case</span> <a class="code" href="a00493.html#ga4e04e36e3adf60869073dce4af46b7d5">PSTORAGE_LOAD_OP_CODE</a>:</div>
-<div class="line">           <span class="keywordflow">if</span> (result == <a class="code" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line">           <span class="keywordflow">if</span> (result == <a class="code" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">           {</div>
 <div class="line">               <span class="comment">// Store operation successful.</span></div>
 <div class="line">           }</div>
@@ -264,7 +264,7 @@ Update Data</h2>
 <div class="line"><span class="comment">// Request update of one blocks. Block size is 16 bytes.</span></div>
 <div class="line">retval = <a class="code" href="a00495.html#ga0316f640da7481e9bd03ed51b29a3e65" title="Routine to update persistently stored data of length &#39;size&#39; contained in &#39;p_src&#39; address in storage m...">pstorage_update</a>(&amp;base_handle, source_data, 16, 0);</div>
 <div class="line"></div>
-<div class="line"><span class="keywordflow">if</span> (retval == <a class="code" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span> (retval == <a class="code" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Update successfully requested. Wait for operation result.</span></div>
 <div class="line">}</div>
@@ -290,7 +290,7 @@ Update Data</h2>
 <div class="line">       .</div>
 <div class="line">       .</div>
 <div class="line">       <span class="keywordflow">case</span> <a class="code" href="a00493.html#gae66936fc791b79a9f85a7058ea83423a">PSTORAGE_UPDATE_OP_CODE</a>:</div>
-<div class="line">           <span class="keywordflow">if</span> (result == <a class="code" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line">           <span class="keywordflow">if</span> (result == <a class="code" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">           {</div>
 <div class="line">               <span class="comment">// Update operation successful.</span></div>
 <div class="line">           }</div>
@@ -317,7 +317,7 @@ Clear Data</h2>
 <div class="line"><span class="comment">// Request clearing of one block where block size is 16 bytes.</span></div>
 <div class="line">retval = <a class="code" href="a00495.html#ga64d9814f864c3f771a99eb7574e87dd0" title="Routine to clear data in persistent memory.">pstorage_clear</a>(&amp;base_handle, 16);</div>
 <div class="line"></div>
-<div class="line"><span class="keywordflow">if</span> (retval == <a class="code" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line"><span class="keywordflow">if</span> (retval == <a class="code" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Clear successfully requested. Wait for operation result.</span></div>
 <div class="line">}</div>
@@ -343,7 +343,7 @@ Clear Data</h2>
 <div class="line">       .</div>
 <div class="line">       .</div>
 <div class="line">       <span class="keywordflow">case</span> <a class="code" href="a00493.html#gaf2ce8b4e460358a23ae82516167df79c">PSTORAGE_CLEAR_OP_CODE</a>:</div>
-<div class="line">           <span class="keywordflow">if</span> (result == <a class="code" href="a00574.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line">           <span class="keywordflow">if</span> (result == <a class="code" href="a00571.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
 <div class="line">           {</div>
 <div class="line">               <span class="comment">// Clear operation successful.</span></div>
 <div class="line">           }</div>
@@ -410,14 +410,14 @@ Specifics and limitations of the SDK implementation</h1>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> ble_ant_stack_init(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">// Initialize SoftDevice</span></div>
-<div class="line">    <a class="code" href="a00523.html#ga9ff2f68caf148f0645c9953c93aa2ec7" title="Macro for initializing the stack event handler.">SOFTDEVICE_HANDLER_INIT</a>(<a class="code" href="a00770.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a1c5e9917211a50eac336a3fd2e467756">NRF_CLOCK_LFCLKSRC_XTAL_20_PPM</a>, <span class="keyword">false</span>);</div>
+<div class="line">    <a class="code" href="a00700.html#ga9ff2f68caf148f0645c9953c93aa2ec7" title="Macro for initializing the stack event handler.">SOFTDEVICE_HANDLER_INIT</a>(<a class="code" href="a00772.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a1c5e9917211a50eac336a3fd2e467756">NRF_CLOCK_LFCLKSRC_XTAL_20_PPM</a>, <span class="keyword">false</span>);</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Subscribe for BLE events.</span></div>
-<div class="line">    uint32_t err_code = <a class="code" href="a00522.html#gae54951e939156d5f05fa4d27fed1dc65" title="Function for registering for BLE events.">softdevice_ble_evt_handler_set</a>(ble_evt_dispatch);</div>
+<div class="line">    uint32_t err_code = <a class="code" href="a00699.html#gae54951e939156d5f05fa4d27fed1dc65" title="Function for registering for BLE events.">softdevice_ble_evt_handler_set</a>(ble_evt_dispatch);</div>
 <div class="line">    <a class="code" href="a00513.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
 <div class="line">    </div>
 <div class="line">    <span class="comment">// Register with the SoftDevice handler module for System events.</span></div>
-<div class="line">    err_code = <a class="code" href="a00523.html#ga200d4e1f1c70a46e6de6343f0a7d84b1" title="Function for registering for System (SOC) events.">softdevice_sys_evt_handler_set</a>(sys_evt_dispatch);</div>
+<div class="line">    err_code = <a class="code" href="a00700.html#ga200d4e1f1c70a46e6de6343f0a7d84b1" title="Function for registering for System (SOC) events.">softdevice_sys_evt_handler_set</a>(sys_evt_dispatch);</div>
 <div class="line">    <a class="code" href="a00513.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
 <div class="line">}</div>
 </div><!-- fragment --></li>
@@ -451,7 +451,7 @@ Specifics and limitations of the SDK implementation</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

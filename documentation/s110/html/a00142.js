@@ -1,7 +1,7 @@
 var a00142 =
 [
-    [ "buf_size_mask", "a00142.html#a03c6c7fcf087b5c1e0cfd5ce09661870", null ],
-    [ "p_buf", "a00142.html#a64eafd180a65260208be3b845f6acbf5", null ],
-    [ "read_pos", "a00142.html#aabcc538faf2ea4a374702c9896ae52d6", null ],
-    [ "write_pos", "a00142.html#a12631a6575aae2c98f1cca4034b38eaf", null ]
+    [ "active_state", "a00142.html#af55e02af042a4d038dac26a7658536f6", null ],
+    [ "button_handler", "a00142.html#ad06ea1e496c4b37802492b289b54a875", null ],
+    [ "pin_no", "a00142.html#af6a18934c420213be9eee710854e1ab9", null ],
+    [ "pull_cfg", "a00142.html#abf23ae362a2ecdfbc73c9f6736ce0ba8", null ]
 ];

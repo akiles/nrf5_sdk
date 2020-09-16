@@ -403,17 +403,6 @@ static void on_ans_c_evt(ble_ans_c_evt_t * p_evt)
 }
 
 
-/**@brief Function for the Timer initialization.
- *
- * @details Initializes the timer module.
- */
-static void timers_init(void)
-{
-    // Initialize timer module.
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
-}
-
-
 /**@brief Function for the GAP initialization.
  *
  * @details This function sets up all the necessary GAP (Generic Access Profile) parameters of the
@@ -553,7 +542,8 @@ static void alert_notification_init(void)
     APP_ERROR_CHECK(err_code);
 
     // Clear all discovered and stored services if the "delete all bonds" button is pushed.
-    services_delete = bsp_buttons_state_get() & (1 << BOND_DELETE_ALL_BUTTON_ID);
+    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID,&services_delete);
+    APP_ERROR_CHECK(err_code);
 
     if (services_delete)
     {
@@ -626,7 +616,8 @@ static void device_manager_init(void)
     APP_ERROR_CHECK(err_code);
 
     // Clear all bonded centrals if the "delete all bonds" button is pushed.
-    init_data.clear_persistent_data = bsp_buttons_state_get() & (1 << BOND_DELETE_ALL_BUTTON_ID);
+    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID,&(init_data.clear_persistent_data));
+    APP_ERROR_CHECK(err_code);
 
     err_code = dm_init(&init_data);
     APP_ERROR_CHECK(err_code);
@@ -704,7 +695,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                     // enable button 0 and button 1 to wake-up MCU
                     err_code = bsp_buttons_enable( (1<<WAKEUP_BUTTON_ID) | (1<<BOND_DELETE_ALL_BUTTON_ID) );
                     APP_ERROR_CHECK(err_code);
-									
+
                     // Go to system-off mode (function will not return; wakeup will cause a reset).
                     err_code = sd_power_system_off();
                     APP_ERROR_CHECK(err_code);
@@ -775,14 +766,6 @@ static void button_event_handler(bsp_event_t event)
         default:
             break;
     }
-}
-
-
-/**@brief Function for initializing the GPIOTE handler module.
- */
-static void gpiote_init(void)
-{
-    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
 }
 
 
@@ -861,8 +844,9 @@ int main(void)
 
     // Initialize.
     app_trace_init();
-    timers_init();
-    gpiote_init();
+    // Initialize timer module.
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
+    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
 
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), button_event_handler);
     APP_ERROR_CHECK(err_code);

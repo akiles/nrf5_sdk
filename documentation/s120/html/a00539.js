@@ -1,5 +1,5 @@
 var a00539 =
 [
-    [ "BLE_GAP_SCAN_TIMEOUT_MAX", "a00539.html#gaf9f03221006c77debca100889d5c59f4", null ],
-    [ "BLE_GAP_SCAN_TIMEOUT_MIN", "a00539.html#ga4baffc2a25f63a57ddf48babb53f2b5a", null ]
+    [ "BLE_GAP_ADV_TIMEOUT_GENERAL_UNLIMITED", "a00539.html#ga09100a0666512ed8cd2e600627197254", null ],
+    [ "BLE_GAP_ADV_TIMEOUT_LIMITED_MAX", "a00539.html#ga015a498d3d56d7642dc7456fb12e08b6", null ]
 ];

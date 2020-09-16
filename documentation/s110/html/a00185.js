@@ -1,11 +1,9 @@
 var a00185 =
 [
-    [ "conn_handle", "a00185.html#a84ba1f5c9a2f30359b12cc4dcbda3478", null ],
-    [ "ctrl_pt", "a00185.html#a90f150d8ecb3b79596f1ec3807867f1a", null ],
-    [ "evt_handler", "a00185.html#ac2e6ecdcdab44250a58bebd85104143b", null ],
-    [ "feature", "a00185.html#a32ce63e283663bde451653a25fc5b4bd", null ],
-    [ "feature_handles", "a00185.html#a967fca5b0492cbf671183eed800fcd3a", null ],
-    [ "meas_handles", "a00185.html#a9596e5fc4db125abaae55fc329982dfd", null ],
-    [ "sensor_loc_handles", "a00185.html#a3572c357aed7775240aee4a217ddaf60", null ],
-    [ "service_handle", "a00185.html#a3850255dd1cc2f89b7086771201eb8e0", null ]
+    [ "cumulative_crank_revs", "a00185.html#abaf971426cea9d234838ad3896a5ebb0", null ],
+    [ "cumulative_wheel_revs", "a00185.html#a28e443636699abf5ac97850f4fb9eb39", null ],
+    [ "is_crank_rev_data_present", "a00185.html#a6750c3a77be5be56ef6e563164b85a4a", null ],
+    [ "is_wheel_rev_data_present", "a00185.html#ae78a3f62b14426e5a3fcc65d5cc54d7c", null ],
+    [ "last_crank_event_time", "a00185.html#a5ddda2de7f892024636795e85b9ba914", null ],
+    [ "last_wheel_event_time", "a00185.html#ab1b12075f983b9149eacf65f318f0482", null ]
 ];

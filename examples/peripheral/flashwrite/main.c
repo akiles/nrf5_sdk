@@ -26,6 +26,7 @@
 #include "app_uart.h"
 #include "app_error.h"
 #include "app_gpiote.h"
+#include "nordic_common.h"
 
 #define UART_TX_BUF_SIZE 256                                                        /**< UART TX buffer size. */
 #define UART_RX_BUF_SIZE 1                                                          /**< UART RX buffer size. */
@@ -120,8 +121,8 @@ int main(void)
     uint32_t   pg_num;
 
     uint32_t err_code;
-   APP_GPIOTE_INIT(1);
-   const app_uart_comm_params_t comm_params =
+    APP_GPIOTE_INIT(1);
+    const app_uart_comm_params_t comm_params =
       {
           RX_PIN_NUMBER,
           TX_PIN_NUMBER,
@@ -132,16 +133,16 @@ int main(void)
           UART_BAUDRATE_BAUDRATE_Baud38400
       };
 
-   APP_UART_FIFO_INIT(&comm_params,
+    APP_UART_FIFO_INIT(&comm_params,
                          UART_RX_BUF_SIZE,
                          UART_TX_BUF_SIZE,
                          uart_error_handle,
                          APP_IRQ_PRIORITY_LOW,
                          err_code);
 
-   (void)err_code;
+    APP_ERROR_CHECK(err_code);
 
-			printf("Flashwrite example\n");
+    printf("Flashwrite example\n");
     patold  = 0;
     pg_size = NRF_FICR->CODEPAGESIZE;
     pg_num  = NRF_FICR->CODESIZE - 1;  // Use last page in flash
@@ -159,18 +160,18 @@ int main(void)
             printf("Enter char to write to flash\n\r");
 
             // Read char from uart, and write it to flash:
-			do
-			{
-			    err_code = app_uart_get(&patwr);
-			}
-			while(err_code == NRF_ERROR_NOT_FOUND);
-						
+            do
+            {
+               err_code = app_uart_get(&patwr);
+            }
+            while(err_code == NRF_ERROR_NOT_FOUND);
+
             if (patold != patwr)
             {
                 patold = patwr;
                 flash_word_write(++addr, (uint32_t)patwr);
                 i += 4;
-				printf("'%c' was write to flash\n\r", patwr);
+                printf("'%c' was write to flash\n\r", patwr);
             }
             // Read pattern from flash and send it back:
             patrd = (uint8_t)*addr;

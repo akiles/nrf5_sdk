@@ -1,5 +1,4 @@
 var a00388 =
 [
-    [ "num_of_bytes", "a00388.html#a52ba1214757a5bbc308333735cdbf0d2", null ],
-    [ "p_buffer", "a00388.html#ae2d1620a22cdf63f23e5f13965412cb8", null ]
+    [ "error_code", "a00388.html#a7eaf11dd296c086b350d204844e30c6d", null ]
 ];

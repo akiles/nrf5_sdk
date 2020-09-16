@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: UART Example</title>
+<title>nRF51 SDK - S210 SoftDevice: UICR Config Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,28 +97,72 @@ $(document).ready(function(){initNavTree('a00038.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">UART Example </div>  </div>
+<div class="title">UICR Config Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The UART Example demonstrates basic UART usage for communicating with a PC terminal. It transmits and receives data through the configured pins as a serial device. The configured pins must be redirected to a COM port. Terminal programs (for example PUTTY) can listen to this COM port through a terminal session.</p>
-<p>When the application starts, it transmits "START: " through the serial device using <a class="el" href="a00220.html#ga76e6bde269950e02affbff121c79d408">simple_uart_putstring</a>. This will be output on the terminal. If you type characters on the terminal, they are transmitted to the application through <a class="el" href="a00220.html#gabae30008064ce450ab819949a692c511">simple_uart_get</a>. If you type an exit character 'q' or 'Q', the program transmits "EXIT!" on a new line and ends into an infinite loop.</p>
-<p>This example can be used for any UART connection, not only COM ports. COM port redirection is used for visual verification.</p>
-<dl class="section note"><dt>Note</dt><dd>If you set the define ENABLE_LOOPBACK_TEST, the application will assume that the TX_PIN_NUMBER is connected to RX_PIN_NUMBER and RTS_PIN_NUMBER is connected to CTS_PIN_NUMBER, used to test in loopback. In this case, no COM port can be used because the data flows from TX to RX. If data is lost, ERROR_PIN is set high.</dd>
-<dd>
-Settings:<ul>
-<li>Baud: 38400</li>
-<li>Data bits: 8</li>
-<li>Stop bits: 1</li>
+<div class="textblock"><p>This example shows how to include UICR values into the application hex file. Also, it shows how to setup Keil to download and debug the hexfile generated.</p>
+<p>The project uses the "uicr_config.h" to define the User Information Configuration Registers (UICR) values to be included into the hex file.</p>
+<p>The file declares one variable per register of the UICR area and informs the linker where to place them. To include the desired value in the desired address, uncomment the variable with the proper address at the target area and update the assignment value. As shown below, the UICR register with address 0x10001080 will be assigned the value 0x12345678.</p>
+<div class="fragment"><div class="line"><span class="keyword">const</span> uint32_t UICR_ADDR_0x80 __attribute__((at(0x10001080))) __attribute__((used)) = 0x12345678;</div>
+<div class="line"><span class="comment">// const uint32_t UICR_ADDR_0x84 __attribute__((at(0x10001084))) __attribute__((used)) = 0xFFFFFFFF;</span></div>
+<div class="line"><span class="comment">// const uint32_t UICR_ADDR_0x88 __attribute__((at(0x10001088))) __attribute__((used)) = 0xFFFFFFFF;</span></div>
+</div><!-- fragment --><p>When compiling the project with the uicr_config.h stated above it will add the section shown below into the hex. The two lines (intel hex format) shows that we have successfully generated a hex file which will fill the value 0x12345678 into the UICR address. </p>
+<div class="fragment"><div class="line">:020000041000EA</div>
+<div class="line">:041080007856341258</div>
+</div><!-- fragment --><p>Note that UICR values are stored in a reserved area of the flash and should only be stored into when downloading a hex file. Do not use these defined variables to store data at run time.</p>
+<dl class="section note"><dt>Note</dt><dd>The file uses one non-standard attribute ("at"). It will only function with the ARMCC compiler toolset.</dd></dl>
+<p>The hex file generated when this file is included will fail to download when using the standard download algorithm provided by Nordic. How to configure Keil to download the hex is shown below.</p>
+<p>The name of the example is <b>uicr_config_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\uicr_config</code> </p>
+<h1><a class="anchor" id="uicr_config_keil_config"></a>
+Keil Configuration</h1>
+<p>To configure Keil to not use the standard download algorithm follow these steps:</p>
+<ul>
+<li>Open "Target Options" by selecting the target in the project window, then pressing Alt+F7.</li>
+<li>Select the tab labeled "Utilities".</li>
+<li>Select the radio button "Use External Tool for Flash Programming".</li>
+<li>Fill in "nrfjprog.exe" in the "Command" text field.</li>
+<li>Fill "Arguments" according to the chip variant and use of SoftDevice (See below).</li>
 </ul>
-</dd></dl>
-<p>The name of the example is <b>uart_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\example\peripheral\uart</code> </p>
-<h1><a class="anchor" id="uart_example_testing"></a>
+<p><code>nrfjprog.exe</code> is an extra tool installed with the SDK. And will be located in system path.</p>
+<h2><a class="anchor" id="uicr_config_example_ant"></a>
+nrf51422 256K with S210 SoftDevice (ANT)</h2>
+<div class="image">
+<img src="uicr_example_ant_aa.png" alt="uicr_example_ant_aa.png"/>
+<div class="caption">
+Figure 1: Example settings for nrf51422.</div></div>
+<h2><a class="anchor" id="uicr_config_example_nrf51822_blank"></a>
+nrf51822 128K/256K without SoftDevice</h2>
+<div class="image">
+<img src="uicr_example_blank_aa_ab.png" alt="uicr_example_blank_aa_ab.png"/>
+<div class="caption">
+Figure 2: Example settings for nrf51822 without SoftDevice.</div></div>
+<h2><a class="anchor" id="uicr_config_example_nrf51822_ble"></a>
+nrf51822 128K/256K with S110 SoftDevice (BLE)</h2>
+<p>The SoftDevice must first be flashed by other means. If using nRFgo Studio, remember to uncheck "Enable SoftDevice protection". </p>
+<div class="image">
+<img src="uicr_example_ble_aa_ab.png" alt="uicr_example_ble_aa_ab.png"/>
+<div class="caption">
+Figure 3: Example settings for nrf51822 with SoftDevice. SoftDevice must be flashed separately.</div></div>
+<h1><a class="anchor" id="uicr_trouble_sec"></a>
+Troubleshooting</h1>
+<p>This section covers some known issues and their solution for the UICR example project</p>
+<table class="doxtable">
+<tr>
+<th>Error </th><th>Solution</th></tr>
+<tr>
+<td>No Algorithm found for: 10001014H - 10001017H <br/>
+ Partial Erase Done (areas with no algorithms skipped!) <br/>
+ No Algorithm found for: 10001014H - 10001017H </td><td>Those error messages are seen when trying to flash with the J-Link Target Driver, as it does not support writing of UICR. Use <code>nrjjprog.exe</code> instead. </td></tr>
+<tr>
+<td>&mdash; Error: failed to execute '"nrfjprog.exe" ..... </td><td>nrfjprog.exe could not be found in windows path. Add nrfjprog.exe to windows %PATH% or specify full path to nrfjprog in Keil-'Options for Target'-'Utilities' as seen in the above figures. </td></tr>
+</table>
+<h1><a class="anchor" id="uicr_config_example_testing"></a>
 Testing</h1>
-<p>Test the UART Example application by performing the following steps:</p>
+<p>Test the UICR Configuration Example application by performing the following steps:</p>
 <ol type="1">
-<li>Compile and program the application.</li>
-<li>Start a COM listener like PUTTY and connect to the used COM port at 38400 baud rate. The text "Start:" should appear at the top of the terminal.</li>
-<li>Type 'Q' or 'q' in the terminal. The response should be 'Exit!'. </li>
+<li>Compile and program the application with the chip variant configuration as described in <a class="el" href="a00038.html#uicr_config_keil_config">Keil Configuration</a>.</li>
+<li>Verify that the UICR register with the address 0x10001080 has been assigned the value 0x12345678 with this nrfjprog command: <div class="fragment"><div class="line">nrfjprog --memrd 0x10001080 --n 4</div>
+</div><!-- fragment --> </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
@@ -126,7 +170,7 @@ Testing</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00018.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:42 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:29 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

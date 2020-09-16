@@ -1,8 +1,9 @@
 var a00271 =
 [
-    [ "handle", "a00271.html#a1a0552b266c588f67d3a6abc712bbfd6", null ],
-    [ "offset", "a00271.html#a07033f6e0e63974b67627ae84bc12fc9", null ],
-    [ "p_data", "a00271.html#a68325153be760c7742d1bec69da625cf", null ],
-    [ "p_len", "a00271.html#a8b0b2dadb3128b0838c71235661f8174", null ],
-    [ "type", "a00271.html#a2971c791821bea067f3bc2bbc35b9193", null ]
+    [ "context", "a00271.html#a1728a17f5c77bff7285e29c1a8afe6e8", null ],
+    [ "data", "a00271.html#abe4bd839db7c40829ccdbff3d1f79a57", null ],
+    [ "handle", "a00271.html#ae0637f8a8c322380f80f113edc931751", null ],
+    [ "len", "a00271.html#a56b5ec3ad2054c52588721d6273eb109", null ],
+    [ "offset", "a00271.html#afc84657816fd23a1e7c5f4b0e848e69d", null ],
+    [ "op", "a00271.html#a4e27117bb9e805b03a2c198b0684c621", null ]
 ];

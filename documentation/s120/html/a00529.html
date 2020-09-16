@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Module specific error code subranges</title>
+<title>nRF51 SDK - S120 SoftDevice: GAP Timeout sources</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,77 +99,72 @@ $(document).ready(function(){initNavTree('a00529.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Module specific error code subranges<div class="ingroups"><a class="el" href="a00525.html">BLE SoftDevice Common</a></div></div>  </div>
+<div class="title">GAP Timeout sources<div class="ingroups"><a class="el" href="a00747.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Assignment of subranges for module specific error codes.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga82756b5d44b6b5757c3968513b4928ac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00529.html#ga82756b5d44b6b5757c3968513b4928ac">NRF_L2CAP_ERR_BASE</a>&#160;&#160;&#160;(<a class="el" href="a00575.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x100)</td></tr>
-<tr class="separator:ga82756b5d44b6b5757c3968513b4928ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga29249baa158d723505c601121d003034"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00529.html#ga29249baa158d723505c601121d003034">NRF_GAP_ERR_BASE</a>&#160;&#160;&#160;(<a class="el" href="a00575.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x200)</td></tr>
-<tr class="separator:ga29249baa158d723505c601121d003034"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga200400dc8ad79918acee9cd038336165"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00529.html#ga200400dc8ad79918acee9cd038336165">NRF_GATTC_ERR_BASE</a>&#160;&#160;&#160;(<a class="el" href="a00575.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x300)</td></tr>
-<tr class="separator:ga200400dc8ad79918acee9cd038336165"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7bc503f781e56a86cdd044d6043629b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00529.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a>&#160;&#160;&#160;(<a class="el" href="a00575.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x400)</td></tr>
-<tr class="separator:ga7bc503f781e56a86cdd044d6043629b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf298619c157c6bfe41261dad1c446f91"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00529.html#gaf298619c157c6bfe41261dad1c446f91">BLE_GAP_TIMEOUT_SRC_ADVERTISING</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:gaf298619c157c6bfe41261dad1c446f91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga21e86dcbf84f6bb4e21c809d5c1032e4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00529.html#ga21e86dcbf84f6bb4e21c809d5c1032e4">BLE_GAP_TIMEOUT_SRC_SECURITY_REQUEST</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga21e86dcbf84f6bb4e21c809d5c1032e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga21e47e99c7d0a1fa0ed70c7c4c5b5228"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00529.html#ga21e47e99c7d0a1fa0ed70c7c4c5b5228">BLE_GAP_TIMEOUT_SRC_SCAN</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:ga21e47e99c7d0a1fa0ed70c7c4c5b5228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4995bd8f53f3bd0805fed51c63e63918"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00529.html#ga4995bd8f53f3bd0805fed51c63e63918">BLE_GAP_TIMEOUT_SRC_CONN</a>&#160;&#160;&#160;0x03</td></tr>
+<tr class="separator:ga4995bd8f53f3bd0805fed51c63e63918"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Assignment of subranges for module specific error codes. </p>
-<dl class="section note"><dt>Note</dt><dd>For specific error codes, see ble_&lt;module&gt;.h or ble_error_&lt;module&gt;.h. </dd></dl>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga29249baa158d723505c601121d003034"></a>
+<a class="anchor" id="gaf298619c157c6bfe41261dad1c446f91"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define NRF_GAP_ERR_BASE&#160;&#160;&#160;(<a class="el" href="a00575.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x200)</td>
+          <td class="memname">#define BLE_GAP_TIMEOUT_SRC_ADVERTISING&#160;&#160;&#160;0x00</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GAP specific errors. </p>
+<p>Advertising timeout. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga200400dc8ad79918acee9cd038336165"></a>
+<a class="anchor" id="ga4995bd8f53f3bd0805fed51c63e63918"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define NRF_GATTC_ERR_BASE&#160;&#160;&#160;(<a class="el" href="a00575.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x300)</td>
+          <td class="memname">#define BLE_GAP_TIMEOUT_SRC_CONN&#160;&#160;&#160;0x03</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GATT client specific errors. </p>
+<p>Connection timeout. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga7bc503f781e56a86cdd044d6043629b8"></a>
+<a class="anchor" id="ga21e47e99c7d0a1fa0ed70c7c4c5b5228"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define NRF_GATTS_ERR_BASE&#160;&#160;&#160;(<a class="el" href="a00575.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x400)</td>
+          <td class="memname">#define BLE_GAP_TIMEOUT_SRC_SCAN&#160;&#160;&#160;0x02</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GATT server specific errors. </p>
+<p>Scanning timeout. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga82756b5d44b6b5757c3968513b4928ac"></a>
+<a class="anchor" id="ga21e86dcbf84f6bb4e21c809d5c1032e4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define NRF_L2CAP_ERR_BASE&#160;&#160;&#160;(<a class="el" href="a00575.html#gaf090abe440a1752161646079114acaaf">NRF_ERROR_STK_BASE_NUM</a>+0x100)</td>
+          <td class="memname">#define BLE_GAP_TIMEOUT_SRC_SECURITY_REQUEST&#160;&#160;&#160;0x01</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>L2CAP specific errors. </p>
+<p>Security request timeout. </p>
 
 </div>
 </div>
@@ -178,7 +173,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:18 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

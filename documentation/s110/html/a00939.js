@@ -1,8 +1,13 @@
 var a00939 =
 [
-    [ "SER_CONN_SCHED_MAX_EVENT_DATA_SIZE", "a00939.html#ga5508122ed8d7b8cb77083029b94409a5", null ],
-    [ "SER_CONN_SCHED_QUEUE_SIZE", "a00939.html#gabe46fa937b6ab21f8abe633f65f4c83c", null ],
-    [ "ser_conn_ble_event_handle", "a00939.html#gae2a8e4f2e6b95721efde0b078a1115e8", null ],
-    [ "ser_conn_hal_transport_event_handle", "a00939.html#gacb462e8702726a11cd69a15c363fd1f9", null ],
-    [ "ser_conn_rx_process", "a00939.html#gab029dd228fa3d5f09ac7a2f343ff7918", null ]
+    [ "Types and definitions.", "a00941.html", "a00941" ],
+    [ "bootloader_app_is_valid", "a00939.html#gabd325fffda0cb29f1a8b917eb61d2494", null ],
+    [ "bootloader_app_start", "a00939.html#ga4fc5191d040a4abb9a23b52e22f56101", null ],
+    [ "bootloader_dfu_sd_in_progress", "a00939.html#ga360affe1c4d4326b4daa465dee005330", null ],
+    [ "bootloader_dfu_sd_update_continue", "a00939.html#ga2edc94128b91cbdc2551be36dc692ef0", null ],
+    [ "bootloader_dfu_sd_update_finalize", "a00939.html#ga252165c548d698c2f001261314fecfce", null ],
+    [ "bootloader_dfu_start", "a00939.html#gaf11a485218863db81385fe18437b5961", null ],
+    [ "bootloader_dfu_update_process", "a00939.html#gaebf46c5b600b9c2a5609c7f36954adef", null ],
+    [ "bootloader_init", "a00939.html#gaa821efb3c4074cee13cb2a7377e793f1", null ],
+    [ "bootloader_settings_get", "a00939.html#ga5a5868fa37d3f3ef4cdb3cd54cb81684", null ]
 ];

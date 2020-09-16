@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Nordic Semiconductor. All Rights Reserved.
+/* Copyright (c) 2014 Nordic Semiconductor. All Rights Reserved.
  *
  * The information contained herein is property of Nordic Semiconductor ASA.
  * Terms and conditions of usage are described in detail in NORDIC
@@ -50,7 +50,7 @@ void app_trace_init(void)
         TX_PIN_NUMBER, 
         RTS_PIN_NUMBER, 
         CTS_PIN_NUMBER, 
-        APP_UART_FLOW_CONTROL_ENABLED, 
+        APP_UART_FLOW_CONTROL_DISABLED, 
         false, 
         UART_BAUDRATE_BAUDRATE_Baud115200
     }; 
@@ -61,7 +61,7 @@ void app_trace_init(void)
                        uart_error_handle, 
                        APP_IRQ_PRIORITY_LOW,
                        err_code);
-		UNUSED_VARIABLE(err_code);
+    UNUSED_VARIABLE(err_code);
 }
 
 void app_trace_dump(uint8_t * p_buffer, uint32_t len)

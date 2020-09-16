@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['power_5fsystem_5foff_5freq_5fdec',['power_system_off_req_dec',['../a00677.html#ga3b111e9000d467d4a358cda27a558b37',1,'nrf_soc_conn.h']]],
-  ['power_5fsystem_5foff_5freq_5fenc',['power_system_off_req_enc',['../a00660.html#ga70416ff6e25fd59181a1ffaf24aeece8',1,'nrf_soc_app.h']]],
+  ['power_5fsystem_5foff_5freq_5fdec',['power_system_off_req_dec',['../a00676.html#ga3b111e9000d467d4a358cda27a558b37',1,'nrf_soc_conn.h']]],
+  ['power_5fsystem_5foff_5freq_5fenc',['power_system_off_req_enc',['../a00658.html#ga70416ff6e25fd59181a1ffaf24aeece8',1,'nrf_soc_app.h']]],
   ['pstorage_5faccess_5fstatus_5fget',['pstorage_access_status_get',['../a00495.html#ga1553a4d6d6d8ddf070d0eb4960b72d62',1,'pstorage.h']]],
   ['pstorage_5fblock_5fidentifier_5fget',['pstorage_block_identifier_get',['../a00495.html#gafdeeb475e4f2db19863226bc55d507b5',1,'pstorage.h']]],
   ['pstorage_5fclear',['pstorage_clear',['../a00495.html#ga64d9814f864c3f771a99eb7574e87dd0',1,'pstorage.h']]],

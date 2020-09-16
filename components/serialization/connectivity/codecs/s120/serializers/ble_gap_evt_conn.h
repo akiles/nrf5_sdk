@@ -255,7 +255,7 @@ uint32_t ble_gap_evt_timeout_enc(ble_evt_t const * const p_event,
 /**
  * @brief Encodes ble_gap_evt_sec_request event.
  *
- * @sa @ref nrf51_gap_evt_sec_request_encoding for packet format.
+ * @sa @ref nrf51_evt_sec_request_encoding for packet format.
  *
  * @param[in] p_event          Pointer to the \ref ble_evt_t buffer that shall be encoded.
  * @param[in] event_len        Size (in bytes) of \p p_event buffer.
@@ -275,7 +275,7 @@ uint32_t ble_gap_evt_sec_request_enc(ble_evt_t const * const p_event,
 /**
  * @brief Encodes ble_gap_evt_conn_param_update_request event.
  *
- * @sa @ref nrf51_gap_evt_conn_param_update_request_encoding for packet format.
+ * @sa @ref nrf51_evt_conn_param_update_request_encoding for packet format.
  *
  * @param[in] p_event          Pointer to the \ref ble_evt_t buffer that shall be encoded.
  * @param[in] event_len        Size (in bytes) of \p p_event buffer.
@@ -295,7 +295,7 @@ uint32_t ble_gap_evt_conn_param_update_request_enc(ble_evt_t const * const p_eve
 /**
  * @brief Encodes ble_gap_evt_adv_report event.
  *
- * @sa @ref nrf51_gap_evt_conn_param_update_request_encoding for packet format.
+ * @sa @ref nrf51_evt_adv_report_encoding for packet format.
  *
  * @param[in] p_event          Pointer to the \ref ble_evt_t buffer that shall be encoded.
  * @param[in] event_len        Size (in bytes) of \p p_event buffer.

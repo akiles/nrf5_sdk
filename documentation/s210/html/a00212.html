@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: GPIOTE abstraction</title>
+<title>nRF51 SDK - S210 SoftDevice: TEMP (temperature) abstraction</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,92 +97,32 @@ $(document).ready(function(){initNavTree('a00212.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">GPIOTE abstraction<div class="ingroups"><a class="el" href="a00269.html">Peripheral Drivers</a></div></div>  </div>
+<div class="title">TEMP (temperature) abstraction<div class="ingroups"><a class="el" href="a00264.html">Peripheral Drivers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GPIOTE abstraction for configuration of channels.  
+<p>Temperature module init and read functions.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga9a424db0997c11092f8f69d52155dd9d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#ga9a424db0997c11092f8f69d52155dd9d">nrf_gpiote_polarity_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00212.html#gga9a424db0997c11092f8f69d52155dd9da59dda358a841a81671bd372058b46498">NRF_GPIOTE_POLARITY_LOTOHI</a> = GPIOTE_CONFIG_POLARITY_LoToHi, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#gga9a424db0997c11092f8f69d52155dd9da97c193ac03f0691bea38c2283b55fa8a">NRF_GPIOTE_POLARITY_HITOLO</a> = GPIOTE_CONFIG_POLARITY_HiToLo, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#gga9a424db0997c11092f8f69d52155dd9da00487cd8286ff071ca751cd4a00295d5">NRF_GPIOTE_POLARITY_TOGGLE</a> = GPIOTE_CONFIG_POLARITY_Toggle
-<br/>
- }</td></tr>
-<tr class="memdesc:ga9a424db0997c11092f8f69d52155dd9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Polarity for GPIOTE channel enumerator.  <a href="a00212.html#ga9a424db0997c11092f8f69d52155dd9d">More...</a><br/></td></tr>
-<tr class="separator:ga9a424db0997c11092f8f69d52155dd9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab280bbb7269ab98a97e7b47d906ef9aa"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00212.html#gab280bbb7269ab98a97e7b47d906ef9aa">nrf_gpiote_outinit_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00212.html#ggab280bbb7269ab98a97e7b47d906ef9aaae0df1a0e930bfe3b198a9692d9916667">NRF_GPIOTE_INITIAL_VALUE_LOW</a> = GPIOTE_CONFIG_OUTINIT_Low, 
-<br/>
-&#160;&#160;<a class="el" href="a00212.html#ggab280bbb7269ab98a97e7b47d906ef9aaa1fc9af8ce3fcd7165b3c090b564e9aa4">NRF_GPIOTE_INITIAL_VALUE_HIGH</a> = GPIOTE_CONFIG_OUTINIT_High
-<br/>
- }</td></tr>
-<tr class="memdesc:gab280bbb7269ab98a97e7b47d906ef9aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial output value for GPIOTE channel enumerator.  <a href="a00212.html#gab280bbb7269ab98a97e7b47d906ef9aa">More...</a><br/></td></tr>
-<tr class="separator:gab280bbb7269ab98a97e7b47d906ef9aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga35bcd12671e3b2efd6081c847750b825"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga35bcd12671e3b2efd6081c847750b825"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MASK_SIGN</b>&#160;&#160;&#160;(0x00000200UL)</td></tr>
+<tr class="separator:ga35bcd12671e3b2efd6081c847750b825"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga04cf7aed7e99e20a6d6d4e54d128179e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga04cf7aed7e99e20a6d6d4e54d128179e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MASK_SIGN_EXTENSION</b>&#160;&#160;&#160;(0xFFFFFC00UL)</td></tr>
+<tr class="separator:ga04cf7aed7e99e20a6d6d4e54d128179e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>GPIOTE abstraction for configuration of channels. </p>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gab280bbb7269ab98a97e7b47d906ef9aa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00212.html#gab280bbb7269ab98a97e7b47d906ef9aa">nrf_gpiote_outinit_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initial output value for GPIOTE channel enumerator. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab280bbb7269ab98a97e7b47d906ef9aaae0df1a0e930bfe3b198a9692d9916667"></a>NRF_GPIOTE_INITIAL_VALUE_LOW</em>&nbsp;</td><td class="fielddoc">
-<p>Low to high. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab280bbb7269ab98a97e7b47d906ef9aaa1fc9af8ce3fcd7165b3c090b564e9aa4"></a>NRF_GPIOTE_INITIAL_VALUE_HIGH</em>&nbsp;</td><td class="fielddoc">
-<p>High to low. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga9a424db0997c11092f8f69d52155dd9d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00212.html#ga9a424db0997c11092f8f69d52155dd9d">nrf_gpiote_polarity_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Polarity for GPIOTE channel enumerator. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9a424db0997c11092f8f69d52155dd9da59dda358a841a81671bd372058b46498"></a>NRF_GPIOTE_POLARITY_LOTOHI</em>&nbsp;</td><td class="fielddoc">
-<p>Low to high. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9a424db0997c11092f8f69d52155dd9da97c193ac03f0691bea38c2283b55fa8a"></a>NRF_GPIOTE_POLARITY_HITOLO</em>&nbsp;</td><td class="fielddoc">
-<p>High to low. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga9a424db0997c11092f8f69d52155dd9da00487cd8286ff071ca751cd4a00295d5"></a>NRF_GPIOTE_POLARITY_TOGGLE</em>&nbsp;</td><td class="fielddoc">
-<p>Toggle. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
+<p>Temperature module init and read functions. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:42 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:29 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

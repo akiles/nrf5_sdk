@@ -41,7 +41,7 @@
 #define UART_TX_BUF_SIZE 256                                 /**< UART TX buffer size. */
 #define UART_RX_BUF_SIZE 1                                   /**< UART RX buffer size. */
 
-static uint8_t                   packet[4];                  /**< Packet to transmit. */
+static uint32_t                   packet;                    /**< Packet to transmit. */
 
 void uart_error_handle(app_uart_evt_t * p_event)
 {
@@ -87,32 +87,33 @@ void send_packet()
  */
 void bsp_evt_handler(bsp_event_t evt)
 {
+    uint32_t err_code = NRF_SUCCESS;
     switch (evt)
     {
         case BSP_EVENT_KEY_0:
-                    /* fall through */
-                case BSP_EVENT_KEY_1:
-                    /* fall through */
-                case BSP_EVENT_KEY_2:
-                    /* fall through */
-                case BSP_EVENT_KEY_3:
-                    /* fall through */
-                case BSP_EVENT_KEY_4:
-                    /* fall through */
-                case BSP_EVENT_KEY_5:
-                    /* fall through */
-                case BSP_EVENT_KEY_6:
-                    /* fall through */
-                case BSP_EVENT_KEY_7:
+             /* fall through */
+        case BSP_EVENT_KEY_1:
+             /* fall through */
+        case BSP_EVENT_KEY_2:
+             /* fall through */
+        case BSP_EVENT_KEY_3:
+             /* fall through */
+        case BSP_EVENT_KEY_4:
+             /* fall through */
+        case BSP_EVENT_KEY_5:
+             /* fall through */
+        case BSP_EVENT_KEY_6:
+             /* fall through */
+        case BSP_EVENT_KEY_7:
             // get actual button state
-            packet[0] = (uint8_t)bsp_buttons_state_get();
+            err_code = bsp_buttons_state_get(&packet);
+            APP_ERROR_CHECK(err_code);
             send_packet();
-            printf("The contents of the package was %d\n\r", (int) packet[0]);
+            printf("The contents of the package was %u\n\r", (unsigned int)packet);
             break;
-
-
         default:
-            return; // no implementation needed
+            // no implementation needed
+            break;
     }
 }
 
@@ -183,7 +184,7 @@ int main(void)
     radio_configure();
 
     // Set payload pointer
-    NRF_RADIO->PACKETPTR = (uint32_t)packet;
+    NRF_RADIO->PACKETPTR = (uint32_t)&packet;
 
     err_code = bsp_indication_text_set(BSP_INDICATE_USER_STATE_OFF, "Press Any Button\n\r");
     APP_ERROR_CHECK(err_code);

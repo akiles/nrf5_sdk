@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: BSP indication states</title>
+<title>nRF51 SDK - S210 SoftDevice: ANT</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,76 +97,25 @@ $(document).ready(function(){initNavTree('a00041.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BSP indication states </div>  </div>
+<div class="title">ANT </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>To abstract from the actual hardware that is used to run an example, some examples use BSP states instead of a fast assignment of LEDs to indicate states. In this way, examples can easily be tested on different boards, like the development board and the dongle. States are indicated in different ways depending on the hardware that is used.</p>
-<p>The following table lists how the BSP states are indicated on PCA10028 and PCA10031:</p>
-<table class="doxtable">
-<tr>
-<th>BSP state </th><th>PCA10028 </th><th>PCA10031</th></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_IDLE"></a>BSP_INDICATE_IDLE </td><td>All LEDs are off </td><td>All LEDs are off </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_SCANNING"></a>BSP_INDICATE_SCANNING </td><td>LED 1 is blinking (period 2 sec, duty cycle: 10%) </td><td>Red LED is blinking (period 2 sec, duty cycle: 10%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ADVERTISING"></a>BSP_INDICATE_ADVERTISING </td><td>LED 1 is blinking (period 2 sec, duty cycle: 10%) </td><td>Red LED is blinking (period 2 sec, duty cycle: 10%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ADVERTISING_WHITELIST"></a>BSP_INDICATE_ADVERTISING_WHITELIST </td><td>LED 1 is blinking fast (period 1 sec, duty cycle: 20%) </td><td>Red LED is blinking fast (period 1 sec, duty cycle: 20%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ADVERTISING_SLOW"></a>BSP_INDICATE_ADVERTISING_SLOW </td><td>LED 1 is blinking slowly (period 4.4 sec, duty cycle: 10%) </td><td>Red LED is is blinking slowly (period 4.4 sec, duty cycle: 10%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ADVERTISING_DIRECTED"></a>BSP_INDICATE_ADVERTISING_DIRECTED </td><td>LED 1 is blinking very fast (period 0.6 sec, duty cycle: 50%) </td><td>Red LED is blinking very fast (period 0.6 sec, duty cycle: 50%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_BONDING"></a>BSP_INDICATE_BONDING </td><td>LED 1 is blinking (period 200 msec, duty cycle: 50%) </td><td>Red LED is blinking (period 200 msec, duty cycle: 50%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_CONNECTED"></a>BSP_INDICATE_CONNECTED </td><td>LED 1 is on </td><td>Red LED is on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_SENT_OK"></a>BSP_INDICATE_SENT_OK </td><td>LED 2 is on for 100 msec </td><td>Green LED is on for 100 msec </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_SEND_ERROR"></a>BSP_INDICATE_SEND_ERROR </td><td>LED 2 is on for 500 msec </td><td>Green LED is on for 500 msec </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_RCV_OK"></a>BSP_INDICATE_RCV_OK </td><td>LED 2 is on for 100 msec </td><td>Green LED is on for 100 msec </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_RCV_ERROR"></a>BSP_INDICATE_RCV_ERROR </td><td>LED 2 is on for 500 msec </td><td>Green LED is on for 500 msec </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_FATAL_ERROR"></a>BSP_INDICATE_FATAL_ERROR </td><td>All LEDs are on </td><td>All LEDs are on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_OFF"></a>BSP_INDICATE_USER_STATE_OFF </td><td>All LEDs are off </td><td>All LEDs are off </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_0"></a>BSP_INDICATE_USER_STATE_0 </td><td>LEDs 2, 3, and 4 are off, LED 1 is on </td><td>Green and blue LEDs are off, red LED is on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_1"></a>BSP_INDICATE_USER_STATE_1 </td><td>LEDs 1, 3, and 4 are off, LED 2 is on </td><td>Red and blue LED are off, green LED is on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_2"></a>BSP_INDICATE_USER_STATE_2 </td><td>LEDs 3 and 4 are off, LEDs 1 and 2 are on </td><td>Blue LED is off, red and green LEDs are on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_3"></a>BSP_INDICATE_USER_STATE_3 </td><td>All LEDs are on </td><td>All LEDs are on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_USER_STATE_ON"></a>BSP_INDICATE_USER_STATE_ON </td><td>All LEDs are on </td><td>All LEDs are on </td></tr>
-</table>
-<p>The following BSP alerts can be indicated on top of the states described in the previous table: </p>
-<table class="doxtable">
-<tr>
-<th>BSP alert </th><th>PCA10028 </th><th>PCA10031</th></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ALERT_0"></a>BSP_INDICATE_ALERT_0 </td><td>LED 3 is blinking (period 1200 msec, duty cycle: 50%) </td><td>Blue LED is blinking (period 1200 msec, duty cycle: 50%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ALERT_1"></a>BSP_INDICATE_ALERT_1 </td><td>LED 3 is blinking (period 800 msec, duty cycle: 50%) </td><td>Blue LED is blinking (period 800 msec, duty cycle: 50%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ALERT_2"></a>BSP_INDICATE_ALERT_2 </td><td>LED 3 is blinking (period 400 msec, duty cycle: 50%) </td><td>Blue LED is blinking (period 400 msec, duty cycle: 50%) </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ALERT_3"></a>BSP_INDICATE_ALERT_3 </td><td>LED 3 is on </td><td>Blue LED is on </td></tr>
-<tr>
-<td><a class="anchor" id="BSP_INDICATE_ALERT_OFF"></a>BSP_INDICATE_ALERT_OFF </td><td>LED 3 is off </td><td>Blue LED is off </td></tr>
-</table>
-<p>The states are defined in <a class="el" href="a00247.html#ga1e44400c2a8fe4979010bb62a6ca8a55">bsp_indication_t</a>. </p>
+<div class="textblock"><p><a class="el" href="a00046.html">Broadcast</a></p>
+<p><a class="el" href="a00047.html">ANT-FS Client</a></p>
+<p><a class="el" href="a00048.html">Heart Rate</a></p>
+<p><a class="el" href="a00049.html">Speed and Cadence</a></p>
+<p><a class="el" href="a00045.html">Bicycle Speed and Cadence</a></p>
+<p><a class="el" href="a00044.html">Bicycle Power</a></p>
+<p><a class="el" href="a00042.html">Experimental: ANT Bootloader/DFU</a></p>
+<p><a class="el" href="a00043.html">Experimental: Background Scanning</a></p>
+<p><a class="el" href="a00050.html">Experimental: Relay</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:42 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:29 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

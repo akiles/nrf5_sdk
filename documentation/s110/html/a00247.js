@@ -1,7 +1,5 @@
 var a00247 =
 [
-    [ "data", "a00247.html#adaf3ed862b2c96947da60d9b576b31c9", null ],
-    [ "handle", "a00247.html#a54644f05780b15248eba975decdd4e48", null ],
-    [ "len", "a00247.html#a5131e80ad4da52f707a84aed7240f2ee", null ],
-    [ "offset", "a00247.html#a1ed66c83e153fd6471056d19b10fac67", null ]
+    [ "count", "a00247.html#a742e7bdddc67ae7054c2758382973c2c", null ],
+    [ "services", "a00247.html#ade86618d036b675b570e0f92d95e9755", null ]
 ];

@@ -151,7 +151,7 @@ $(document).ready(function(){initNavTree('a00065.html','');});
 0x30 - BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP</h1>
 <h2><a class="anchor" id="nrf51_gattc_evt_prim_srvc_disc_rsp_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00751.html#ggafd9b8b42eeb832d688e33f4561f97efcaa4ebe118aada0a7d38163ea11492f020">BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00753.html#ggafd9b8b42eeb832d688e33f4561f97efcaa4ebe118aada0a7d38163ea11492f020">BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP</a> packet.</p>
 <p>Event ID = 0x30 for BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC Primary Service Discovery Response event, the <a class="el" href="a00151.html">ble_gattc_evt_prim_srvc_disc_rsp_t</a> is encoded after the GATTC Event header as seen in Figure 1 and 2.</p>
@@ -207,7 +207,7 @@ Figure 2: Encoding of Service data.</div></div>
 0x31 - BLE_GATTC_EVT_REL_DISC_RSP</h1>
 <h2><a class="anchor" id="nrf51_gattc_evt_rel_disc_rsp_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00751.html#ggafd9b8b42eeb832d688e33f4561f97efcac52e2f11dc65da2efe53f7041d0ead6b">BLE_GATTC_EVT_REL_DISC_RSP</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00753.html#ggafd9b8b42eeb832d688e33f4561f97efcac52e2f11dc65da2efe53f7041d0ead6b">BLE_GATTC_EVT_REL_DISC_RSP</a> packet.</p>
 <p>Event ID = 0x31 for BLE_GATTC_EVT_REL_DISC_RSP</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC Read multiple Response event, the <a class="el" href="a00153.html">ble_gattc_evt_rel_disc_rsp_t</a> is encoded after the GATTC Event header as seen in Figure 1.</p>
@@ -265,7 +265,7 @@ Figure 2: Encoding of Include.</div></div>
 0x32 - BLE_GATTC_EVT_CHAR_DISC_RSP</h1>
 <h2><a class="anchor" id="nrf51_gattc_evt_char_disc_rsp_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00751.html#ggafd9b8b42eeb832d688e33f4561f97efcac385b5d8f35de9cfd0df5b5aea9cb310">BLE_GATTC_EVT_CHAR_DISC_RSP</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00753.html#ggafd9b8b42eeb832d688e33f4561f97efcac385b5d8f35de9cfd0df5b5aea9cb310">BLE_GATTC_EVT_CHAR_DISC_RSP</a> packet.</p>
 <p>Event ID = 0x32 for BLE_GATTC_EVT_CHAR_DISC_RSP</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC Characteristics Discovery Response event, the <a class="el" href="a00146.html">ble_gattc_evt_char_disc_rsp_t</a> is encoded after the GATTC Event header as seen in Figure 1 and 2.</p>
@@ -359,7 +359,7 @@ Figure 2: Encoding of Service data.</div></div>
 0x33 - BLE_GATTC_EVT_DESC_DISC_RSP</h1>
 <h2><a class="anchor" id="nrf51_gattc_evt_desc_disc_rsp_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00751.html#ggafd9b8b42eeb832d688e33f4561f97efca990d593e0c54f813ee6d6bb7fad619a2">BLE_GATTC_EVT_DESC_DISC_RSP</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00753.html#ggafd9b8b42eeb832d688e33f4561f97efca990d593e0c54f813ee6d6bb7fad619a2">BLE_GATTC_EVT_DESC_DISC_RSP</a> packet.</p>
 <p>Event ID = 0x33 for BLE_GATTC_EVT_DESC_DISC_RSP</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC Descriptor Discovery Response event, the <a class="el" href="a00149.html">ble_gattc_evt_desc_disc_rsp_t</a> is encoded after the GATTC Event header as seen in Figure 1 and 2.</p>
@@ -411,7 +411,7 @@ Figure 2: Encoding of Descriptor data.</div></div>
 0x34 - BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP</h1>
 <h2><a class="anchor" id="nrf51_gattc_evt_char_val_by_uuid_read_rsp_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00751.html#ggafd9b8b42eeb832d688e33f4561f97efca9741363d5e934220a35f1c01f62a194c">BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00753.html#ggafd9b8b42eeb832d688e33f4561f97efca9741363d5e934220a35f1c01f62a194c">BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP</a> packet.</p>
 <p>Event ID = 0x34 for BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC Read multiple Response event, the <a class="el" href="a00147.html">ble_gattc_evt_char_val_by_uuid_read_rsp_t</a> is encoded after the GATTC Event header as seen in Figure 1.</p>
@@ -463,7 +463,7 @@ Figure 2: Encoding of ble_gattc_handle_value_t</div></div>
 0x35 - BLE_GATTC_EVT_READ_RSP</h1>
 <h2><a class="anchor" id="nrf51_gattc_evt_read_rsp_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00751.html#ggafd9b8b42eeb832d688e33f4561f97efca2355be2e3b5c9bd1c235f7abbc56ef6d">BLE_GATTC_EVT_READ_RSP</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00753.html#ggafd9b8b42eeb832d688e33f4561f97efca2355be2e3b5c9bd1c235f7abbc56ef6d">BLE_GATTC_EVT_READ_RSP</a> packet.</p>
 <p>Event ID = 0x35 for BLE_GATTC_EVT_READ_RSP</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC Read Response event, the <a class="el" href="a00152.html">ble_gattc_evt_read_rsp_t</a> is encoded after the GATTC Event header as seen in Figure 1.</p>
@@ -500,7 +500,7 @@ Figure 1: Encoding of BLE_GATTC_EVT_READ_RSP event.</div></div>
 0x36 - BLE_GATTC_EVT_CHAR_VALS_READ_RSP</h1>
 <h2><a class="anchor" id="nrf51_gattc_evt_char_vals_read_rsp_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00751.html#ggafd9b8b42eeb832d688e33f4561f97efcaab8322d0d775f2726cfc0215ef63f298">BLE_GATTC_EVT_CHAR_VALS_READ_RSP</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00753.html#ggafd9b8b42eeb832d688e33f4561f97efcaab8322d0d775f2726cfc0215ef63f298">BLE_GATTC_EVT_CHAR_VALS_READ_RSP</a> packet.</p>
 <p>Event ID = 0x36 for BLE_GATTC_EVT_CHAR_VALS_READ_RSP</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC Read multiple Response event, the <a class="el" href="a00148.html">ble_gattc_evt_char_vals_read_rsp_t</a> is encoded after the GATTC Event header as seen in Figure 1.</p>
@@ -533,7 +533,7 @@ Figure 1: Encoding of BLE_GATTC_EVT_CHAR_VALS_READ_RSP event.</div></div>
 0x37 - BLE_GATTC_EVT_WRITE_RSP</h1>
 <h2><a class="anchor" id="nrf51_gattc_evt_write_rsp_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00751.html#ggafd9b8b42eeb832d688e33f4561f97efca6a70fe83b91997c8d3cd47b6cd98a91a">BLE_GATTC_EVT_WRITE_RSP</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00753.html#ggafd9b8b42eeb832d688e33f4561f97efca6a70fe83b91997c8d3cd47b6cd98a91a">BLE_GATTC_EVT_WRITE_RSP</a> packet.</p>
 <p>Event ID = 0x37 for BLE_GATTC_EVT_WRITE_RSP</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC Write Response event, the <a class="el" href="a00156.html">ble_gattc_evt_write_rsp_t</a> is encoded after the GATTC Event header as seen in Figure 1.</p>
@@ -572,7 +572,7 @@ Figure 1: Encoding of BLE_GATTC_EVT_WRITE_RSP event.</div></div>
 0x38 - BLE_GATTC_EVT_HVX</h1>
 <h2><a class="anchor" id="nrf51_gattc_evt_hvx_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00751.html#ggafd9b8b42eeb832d688e33f4561f97efca0f71b4e016b2049dfbd74fa2e46b9cd3">BLE_GATTC_EVT_HVX</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00753.html#ggafd9b8b42eeb832d688e33f4561f97efca0f71b4e016b2049dfbd74fa2e46b9cd3">BLE_GATTC_EVT_HVX</a> packet.</p>
 <p>Event ID = 0x38 for BLE_GATTC_EVT_HVX</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GATTC event contains a GATTC Event header (connection handle, GATT Status and error handle) and for the BLE GATTC HVX event, the <a class="el" href="a00150.html">ble_gattc_evt_hvx_t</a> is encoded after the GATTC Event header as seen in Figure 1.</p>
@@ -609,7 +609,7 @@ Figure 1: Encoding of BLE_GATTC_EVT_HVX event.</div></div>
 0x39 - BLE_GATTC_EVT_TIMEOUT</h1>
 <h2><a class="anchor" id="nrf51_gattc_evt_timeout_encoding_sec"></a>
 Event packet encoding</h2>
-<p>Frame format encoding of the <a class="el" href="a00751.html#ggafd9b8b42eeb832d688e33f4561f97efcacdb80367c0f97c95db04e19665ebf2fc">BLE_GATTC_EVT_TIMEOUT</a> packet.</p>
+<p>Frame format encoding of the <a class="el" href="a00753.html#ggafd9b8b42eeb832d688e33f4561f97efcacdb80367c0f97c95db04e19665ebf2fc">BLE_GATTC_EVT_TIMEOUT</a> packet.</p>
 <p>Event ID = 0x39 for BLE_GATTC_EVT_TIMEOUT</p>
 <p>All BLE Events, <a class="el" href="a00103.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00102.html">ble_evt_hdr_t</a> first, containing only the 'Event ID', followed by the event. The 'Event Length' will not be encoded as the size of the event could be of different sizes depending on decoder architecture.</p>
 <p>The BLE GATTC event contains a connection handle, and for the BLE GATTC Timeout event, the <a class="el" href="a00155.html">ble_gattc_evt_timeout_t</a> is encoded after connection handle as seen in Figure 1.</p>
@@ -638,7 +638,7 @@ Figure 1: Encoding of BLE GATTC Timeout event.</div></div>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00056.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00058.html">Serialization Codecs</a></li>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:31 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:17 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

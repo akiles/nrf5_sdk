@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Persistent Storage Access Operation Codes</title>
+<title>nRF51 SDK - S110 SoftDevice: Persistent Storage Interface</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,103 +97,36 @@ $(document).ready(function(){initNavTree('a00761.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Persistent Storage Access Operation Codes<div class="ingroups"><a class="el" href="a00760.html">Persistent Storage Interface</a></div></div>  </div>
+<div class="title">Persistent Storage Interface<div class="ingroups"><a class="el" href="a01039.html">SDK Common Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Persistent Storage Access Operation Codes. These are used to report any error during a persistent storage access operation or any general error that may occur in the interface.  
+<p>Abstracted flash interface.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga31c301088ac2d5534ebdc5ed44bd3b55"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#ga31c301088ac2d5534ebdc5ed44bd3b55">PSTORAGE_ERROR_OP_CODE</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:ga31c301088ac2d5534ebdc5ed44bd3b55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad1415b8815fc4e0ba8f4f6bc2d8e3ce6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#gad1415b8815fc4e0ba8f4f6bc2d8e3ce6">PSTORAGE_STORE_OP_CODE</a>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:gad1415b8815fc4e0ba8f4f6bc2d8e3ce6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4e04e36e3adf60869073dce4af46b7d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#ga4e04e36e3adf60869073dce4af46b7d5">PSTORAGE_LOAD_OP_CODE</a>&#160;&#160;&#160;0x03</td></tr>
-<tr class="separator:ga4e04e36e3adf60869073dce4af46b7d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf2ce8b4e460358a23ae82516167df79c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#gaf2ce8b4e460358a23ae82516167df79c">PSTORAGE_CLEAR_OP_CODE</a>&#160;&#160;&#160;0x04</td></tr>
-<tr class="separator:gaf2ce8b4e460358a23ae82516167df79c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae66936fc791b79a9f85a7058ea83423a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#gae66936fc791b79a9f85a7058ea83423a">PSTORAGE_UPDATE_OP_CODE</a>&#160;&#160;&#160;0x05</td></tr>
-<tr class="separator:gae66936fc791b79a9f85a7058ea83423a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00762"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00762.html">Persistent Storage Access Operation Codes</a></td></tr>
+<tr class="memdesc:a00762"><td class="mdescLeft">&#160;</td><td class="mdescRight">Persistent Storage Access Operation Codes. These are used to report any error during a persistent storage access operation or any general error that may occur in the interface. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00763"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00763.html">Persistent Memory Interface Data Types</a></td></tr>
+<tr class="memdesc:a00763"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data Types needed for interfacing with persistent memory. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00764"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00764.html">Persistent Storage Access Routines</a></td></tr>
+<tr class="memdesc:a00764"><td class="mdescLeft">&#160;</td><td class="mdescRight">Functions/Interface SDK modules use to persistently store data. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Persistent Storage Access Operation Codes. These are used to report any error during a persistent storage access operation or any general error that may occur in the interface. </p>
-<p>Persistent Storage Access Operation Codes used in error notification callback registered with the interface to report any error during an persistent storage access operation or any general error that may occur in the interface. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gaf2ce8b4e460358a23ae82516167df79c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PSTORAGE_CLEAR_OP_CODE&#160;&#160;&#160;0x04</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Error when Clear Operation was requested </p>
-
-</div>
-</div>
-<a class="anchor" id="ga31c301088ac2d5534ebdc5ed44bd3b55"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PSTORAGE_ERROR_OP_CODE&#160;&#160;&#160;0x01</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>General Error Code </p>
-
-</div>
-</div>
-<a class="anchor" id="ga4e04e36e3adf60869073dce4af46b7d5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PSTORAGE_LOAD_OP_CODE&#160;&#160;&#160;0x03</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Error when Load Operation was requested </p>
-
-</div>
-</div>
-<a class="anchor" id="gad1415b8815fc4e0ba8f4f6bc2d8e3ce6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PSTORAGE_STORE_OP_CODE&#160;&#160;&#160;0x02</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Error when Store Operation was requested </p>
-
-</div>
-</div>
-<a class="anchor" id="gae66936fc791b79a9f85a7058ea83423a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PSTORAGE_UPDATE_OP_CODE&#160;&#160;&#160;0x05</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Update an already touched storage block </p>
-
-</div>
-</div>
+<p>Abstracted flash interface. </p>
+<p>In order to ensure that the SDK and application be moved to alternate persistent storage options other than the default provided with NRF solution, an abstracted interface is provided by the module to ensure SDK modules and application can be ported to alternate option with ease. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Nov 4 2014 12:30:19 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Wed Nov 26 2014 11:57:05 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>
