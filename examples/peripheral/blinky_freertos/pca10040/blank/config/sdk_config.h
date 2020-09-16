@@ -1854,13 +1854,6 @@
 
 // </e>
 
-// <q> MEM_MANAGER_ENABLE_LOGS  - Enable debug trace in the module.
- 
-
-#ifndef MEM_MANAGER_ENABLE_LOGS
-#define MEM_MANAGER_ENABLE_LOGS 0
-#endif
-
 // <e> NRF_BALLOC_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef NRF_BALLOC_CONFIG_LOG_ENABLED
@@ -2316,6 +2309,57 @@
 
 #ifndef NRF_SDH_SOC_DEBUG_COLOR
 #define NRF_SDH_SOC_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_SORTLIST_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_SORTLIST_CONFIG_LOG_ENABLED
+#define NRF_SORTLIST_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_SORTLIST_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_SORTLIST_CONFIG_LOG_LEVEL
+#define NRF_SORTLIST_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_INFO_COLOR
+#define NRF_SORTLIST_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_DEBUG_COLOR
+#define NRF_SORTLIST_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>

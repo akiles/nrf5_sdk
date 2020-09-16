@@ -60,7 +60,7 @@ uint32_t bluetooth_init(void);
  *
  * @param[in]   p_ble_evt  Event received from the BLE stack.
  */
-void bluetooth_on_ble_evt(ble_evt_t * p_ble_evt);
+void bluetooth_on_ble_evt(ble_evt_t const * p_ble_evt);
 
 
 #ifdef __cplusplus

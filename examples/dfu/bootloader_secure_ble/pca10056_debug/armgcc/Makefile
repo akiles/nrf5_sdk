@@ -6,7 +6,7 @@ SDK_ROOT := ../../../../..
 PROJ_DIR := ../..
 
 $(OUTPUT_DIRECTORY)/nrf52840_xxaa_s140.out: \
-  LINKER_SCRIPT  := $(PROJ_DIR)/secure_dfu_gcc_pca10056_debug.ld
+  LINKER_SCRIPT  := secure_dfu_ble_gcc_nrf52.ld
 
 # Source files common to all targets
 SRC_FILES += \
@@ -23,6 +23,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/hci/hci_mem_pool.c \
   $(SDK_ROOT)/components/libraries/mem_manager/mem_manager.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
+  $(SDK_ROOT)/components/libraries/atomic_fifo/nrf_atfifo.c \
   $(SDK_ROOT)/components/libraries/balloc/nrf_balloc.c \
   $(SDK_ROOT)/external/fprintf/nrf_fprintf.c \
   $(SDK_ROOT)/external/fprintf/nrf_fprintf_format.c \
@@ -46,6 +47,7 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_handling_error.c \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_mbr.c \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_settings.c \
+  $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_settings_svci.c \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_transport.c \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_utils.c \
   $(SDK_ROOT)/components/boards/boards.c \
@@ -63,10 +65,11 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_mem.c \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_rng.c \
   $(PROJ_DIR)/main.c \
+  $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_svci.c \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_svci_handler.c \
   $(SDK_ROOT)/components/libraries/svc/nrf_svc_handler.c \
-  $(SDK_ROOT)/external/segger_rtt/RTT_Syscalls_GCC.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
+  $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_Syscalls_GCC.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
   $(SDK_ROOT)/components/libraries/bootloader/ble_dfu/nrf_ble_dfu.c \
   $(SDK_ROOT)/external/nano-pb/pb_common.c \
@@ -118,6 +121,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/external/fprintf \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/components/libraries/balloc \
+  $(SDK_ROOT)/components/libraries/atomic_fifo \
   $(SDK_ROOT)/external/micro-ecc/micro-ecc \
   $(PROJ_DIR) \
   $(SDK_ROOT)/components/libraries/crypto/backend/nrf_crypto_sw \
@@ -147,6 +151,7 @@ CFLAGS += -DCONFIG_GPIO_AS_PINRESET
 CFLAGS += -DNRF52840_XXAA
 CFLAGS += -DNRF_DFU_DEBUG_VERSION
 CFLAGS += -DNRF_DFU_SETTINGS_VERSION=1
+CFLAGS += -DNRF_DFU_SVCI_ENABLED
 CFLAGS += -DNRF_SD_BLE_API_VERSION=5
 CFLAGS += -DS140
 CFLAGS += -DSOFTDEVICE_PRESENT
@@ -175,6 +180,7 @@ ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
 ASMFLAGS += -DNRF52840_XXAA
 ASMFLAGS += -DNRF_DFU_DEBUG_VERSION
 ASMFLAGS += -DNRF_DFU_SETTINGS_VERSION=1
+ASMFLAGS += -DNRF_DFU_SVCI_ENABLED
 ASMFLAGS += -DNRF_SD_BLE_API_VERSION=5
 ASMFLAGS += -DS140
 ASMFLAGS += -DSOFTDEVICE_PRESENT
@@ -206,9 +212,12 @@ default: nrf52840_xxaa_s140
 # Print all targets that can be built
 help:
 	@echo following targets are available:
-	@echo 	nrf52840_xxaa_s140
+	@echo		nrf52840_xxaa_s140
+	@echo		sdk_config - starting external tool for editing sdk_config.h
+	@echo		flash      - flashing binary
 
 TEMPLATE_PATH := $(SDK_ROOT)/components/toolchain/gcc
+
 
 include $(TEMPLATE_PATH)/Makefile.common
 
@@ -224,3 +233,8 @@ flash: $(OUTPUT_DIRECTORY)/nrf52840_xxaa_s140.hex
 
 erase:
 	nrfjprog -f nrf52 --eraseall
+
+SDK_CONFIG_FILE := ../config/sdk_config.h
+CMSIS_CONFIG_TOOL := $(SDK_ROOT)/external_tools/cmsisconfig/CMSIS_Configuration_Wizard.jar
+sdk_config:
+	java -jar $(CMSIS_CONFIG_TOOL) $(SDK_CONFIG_FILE)

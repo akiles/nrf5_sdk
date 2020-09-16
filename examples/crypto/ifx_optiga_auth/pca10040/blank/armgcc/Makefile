@@ -18,7 +18,6 @@ SRC_FILES += \
   $(SDK_ROOT)/components/boards/boards.c \
   $(SDK_ROOT)/components/libraries/util/app_error.c \
   $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
-  $(SDK_ROOT)/components/libraries/twi/app_twi.c \
   $(SDK_ROOT)/components/libraries/util/app_util_platform.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
   $(SDK_ROOT)/components/libraries/balloc/nrf_balloc.c \
@@ -29,20 +28,19 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/queue/nrf_queue.c \
   $(SDK_ROOT)/components/libraries/experimental_section_vars/nrf_section_iter.c \
   $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
+  $(SDK_ROOT)/components/libraries/twi_mngr/nrf_twi_mngr.c \
   $(SDK_ROOT)/components/drivers_nrf/clock/nrf_drv_clock.c \
   $(SDK_ROOT)/components/drivers_nrf/common/nrf_drv_common.c \
+  $(SDK_ROOT)/components/drivers_nrf/rtc/nrf_drv_rtc.c \
   $(SDK_ROOT)/components/drivers_nrf/twi_master/nrf_drv_twi.c \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd/nrf_nvic.c \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd/nrf_soc.c \
-  $(SDK_ROOT)/external/infineon/ifx_i2c_data_link_layer.c \
-  $(SDK_ROOT)/external/infineon/ifx_i2c_hal_nordic_nrf.c \
-  $(SDK_ROOT)/external/infineon/ifx_i2c_physical_layer.c \
-  $(SDK_ROOT)/external/infineon/ifx_i2c_transport_layer.c \
-  $(SDK_ROOT)/external/infineon/ifx_optiga_command_library.c \
+  $(SDK_ROOT)/external/infineon/ifx_i2c/ifx_i2c_data_link_layer.c \
+  $(SDK_ROOT)/external/infineon/ifx_i2c/ifx_i2c_hal_nordic_nrf.c \
+  $(SDK_ROOT)/external/infineon/ifx_i2c/ifx_i2c_physical_layer.c \
+  $(SDK_ROOT)/external/infineon/ifx_i2c/ifx_i2c_transport_layer.c \
+  $(SDK_ROOT)/external/infineon/ifx_optiga/ifx_optiga_command_library.c \
   $(PROJ_DIR)/main.c \
-  $(SDK_ROOT)/external/segger_rtt/RTT_Syscalls_GCC.c \
-  $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
-  $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
   $(SDK_ROOT)/external/mbedtls/library/aes.c \
   $(SDK_ROOT)/external/mbedtls/library/aesni.c \
   $(SDK_ROOT)/external/mbedtls/library/arc4.c \
@@ -110,14 +108,20 @@ SRC_FILES += \
   $(SDK_ROOT)/external/mbedtls/library/xtea.c \
   $(SDK_ROOT)/components/toolchain/gcc/gcc_startup_nrf52.S \
   $(SDK_ROOT)/components/toolchain/system_nrf52.c \
+  $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
+  $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_Syscalls_GCC.c \
+  $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
 
 # Include folders common to all targets
 INC_FOLDERS += \
   $(SDK_ROOT)/components \
+  $(SDK_ROOT)/external/infineon/ifx_i2c \
   $(SDK_ROOT)/components/libraries/experimental_log \
   $(SDK_ROOT)/components/drivers_nrf/twi_master \
   $(SDK_ROOT)/components/libraries/pwr_mgmt \
+  $(SDK_ROOT)/components/libraries/twi_mngr \
   $(SDK_ROOT)/components/libraries/strerror \
+  $(SDK_ROOT)/external/infineon/ifx_optiga \
   $(SDK_ROOT)/components/drivers_nrf/delay \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/components/libraries/util \
@@ -133,16 +137,16 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/experimental_log/src \
   $(SDK_ROOT)/external/segger_rtt \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
+  $(SDK_ROOT)/components/toolchain \
   $(SDK_ROOT)/components/libraries/atomic \
   $(SDK_ROOT)/components/boards \
   $(SDK_ROOT)/components/drivers_nrf/hal \
   $(SDK_ROOT)/components/libraries/experimental_memobj \
   $(SDK_ROOT)/components/toolchain/gcc \
-  $(SDK_ROOT)/components/toolchain \
+  $(SDK_ROOT)/components/drivers_nrf/rtc \
   $(SDK_ROOT)/components/drivers_nrf/common \
   $(SDK_ROOT)/components/libraries/twi \
   $(SDK_ROOT)/components/drivers_nrf/clock \
-  $(SDK_ROOT)/external/infineon \
   $(SDK_ROOT)/external/fprintf \
 
 # Libraries common to all targets
@@ -211,9 +215,12 @@ default: nrf52832_xxaa
 # Print all targets that can be built
 help:
 	@echo following targets are available:
-	@echo 	nrf52832_xxaa
+	@echo		nrf52832_xxaa
+	@echo		sdk_config - starting external tool for editing sdk_config.h
+	@echo		flash      - flashing binary
 
 TEMPLATE_PATH := $(SDK_ROOT)/components/toolchain/gcc
+
 
 include $(TEMPLATE_PATH)/Makefile.common
 
@@ -229,3 +236,8 @@ flash: $(OUTPUT_DIRECTORY)/nrf52832_xxaa.hex
 
 erase:
 	nrfjprog -f nrf52 --eraseall
+
+SDK_CONFIG_FILE := ../config/sdk_config.h
+CMSIS_CONFIG_TOOL := $(SDK_ROOT)/external_tools/cmsisconfig/CMSIS_Configuration_Wizard.jar
+sdk_config:
+	java -jar $(CMSIS_CONFIG_TOOL) $(SDK_CONFIG_FILE)

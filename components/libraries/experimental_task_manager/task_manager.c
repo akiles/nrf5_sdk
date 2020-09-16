@@ -37,7 +37,8 @@
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-#include "sdk_config.h"
+#include "sdk_common.h"
+#if NRF_MODULE_ENABLED(TASK_MANAGER)
 #include "nrf_mpu.h"
 #include "nrf_atomic.h"
 #include "app_util_platform.h"
@@ -61,6 +62,7 @@ NRF_LOG_MODULE_REGISTER();
 #define STACK_GUARD_SIZE    (1 << (TASK_MANAGER_CONFIG_STACK_GUARD + 1))
 #endif
 
+STATIC_ASSERT((TASK_MANAGER_CONFIG_MAX_TASKS) > 0);
 STATIC_ASSERT((TASK_MANAGER_CONFIG_STACK_SIZE % 8) == 0);
 STATIC_ASSERT((TASK_MANAGER_CONFIG_STACK_SIZE % STACK_GUARD_SIZE) == 0);
 
@@ -531,3 +533,9 @@ NRF_CLI_CREATE_STATIC_SUBCMD_SET(m_sub_task_mngr)
 
 NRF_CLI_CMD_REGISTER(task_manager, &m_sub_task_mngr, "commands for task manager", NULL);
 #endif //TASK_MANAGER_CLI_CMDS
+#else //TASK_MANAGER_ENABLED
+void *task_schedule(void *p_stack)
+{
+    return (void *)0;
+}
+#endif //TASK_MANAGER_ENABLED

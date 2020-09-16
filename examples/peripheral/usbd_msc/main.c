@@ -546,7 +546,7 @@ int main(void)
     ret = nrf_drv_power_init(NULL);
     APP_ERROR_CHECK(ret);
 
-    ret = NRF_LOG_INIT(NULL);
+    ret = NRF_LOG_INIT(app_usbd_sof_timestamp_get);
     APP_ERROR_CHECK(ret);
     NRF_LOG_DEFAULT_BACKENDS_INIT();
     NRF_LOG_INFO("Hello USB!");

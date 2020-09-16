@@ -81,18 +81,14 @@
  * @{
  *
  */
-#define LED_USB_RESUME     (BSP_BOARD_LED_0)
-#define LED_CDC_ACM_OPEN   (BSP_BOARD_LED_1)
-#define LED_CDC_ACM_RX     (BSP_BOARD_LED_2)
-#define LED_CDC_ACM_TX     (BSP_BOARD_LED_3)
 
 #define CLI_EXAMPLE_MAX_CMD_CNT (20u)
 #define CLI_EXAMPLE_MAX_CMD_LEN (33u)
+
 /* buffer holding dynamicly created user commands */
 static char m_dynamic_cmd_buffer[CLI_EXAMPLE_MAX_CMD_CNT][CLI_EXAMPLE_MAX_CMD_LEN];
 /* commands counter */
 static uint8_t m_dynamic_cmd_cnt;
-
 
 #ifdef BOARD_PCA10056
 /**
@@ -179,7 +175,6 @@ static bool usb_connection_handle(bool last_usb_conn_status)
 static uint32_t m_counter;
 static bool m_counter_active = false;
 
-
 /**
  * @brief Command line interface instance
  * */
@@ -207,6 +202,8 @@ NRF_CLI_DEF(m_cli_rtt,
 
 static void timer_handle(void * p_context)
 {
+    UNUSED_PARAMETER(p_context);
+
     if (m_counter_active)
     {
         m_counter++;
@@ -239,9 +236,6 @@ int main(void)
 
     ret = nrf_drv_power_init(NULL);
     APP_ERROR_CHECK(ret);
-
-    bsp_board_leds_init();
-    bsp_board_buttons_init();
 
     ret = app_timer_init();
     APP_ERROR_CHECK(ret);
@@ -289,10 +283,11 @@ int main(void)
     cli_start();
 
     NRF_LOG_RAW_INFO("Command Line Interface example.\r\n");
-    NRF_LOG_RAW_INFO("Please press <Tab> to see all available commands.\r\n");
+    NRF_LOG_RAW_INFO("Please press the Tab key to see all available commands.\r\n");
+
     while (true)
     {
-        (void)NRF_LOG_PROCESS();
+        UNUSED_RETURN_VALUE(NRF_LOG_PROCESS());
 
         nrf_cli_process(&m_cli_rtt);
         nrf_cli_process(&m_cli_uart);
@@ -353,6 +348,9 @@ static void cmd_print(nrf_cli_t const * p_cli, size_t argc, char **argv)
 
 static void cmd_python(nrf_cli_t const * p_cli, size_t argc, char **argv)
 {
+    UNUSED_PARAMETER(argc);
+    UNUSED_PARAMETER(argv);
+
     nrf_cli_fprintf(p_cli, NRF_CLI_ERROR, "Nice joke ;)\r\n");
 }
 
@@ -599,6 +597,9 @@ static void cmd_counter(nrf_cli_t const * p_cli, size_t argc, char **argv)
 
 static void cmd_nordic(nrf_cli_t const * p_cli, size_t argc, char **argv)
 {
+    UNUSED_PARAMETER(argc);
+    UNUSED_PARAMETER(argv);
+
     if (nrf_cli_help_requested(p_cli))
     {
         nrf_cli_help_print(p_cli, NULL, 0);

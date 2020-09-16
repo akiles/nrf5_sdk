@@ -98,6 +98,70 @@
 #define PERIPHERAL_RESOURCE_SHARING_ENABLED 0
 #endif
 
+// <e> RTC_ENABLED - nrf_drv_rtc - RTC peripheral driver
+//==========================================================
+#ifndef RTC_ENABLED
+#define RTC_ENABLED 1
+#endif
+// <o> RTC_DEFAULT_CONFIG_FREQUENCY - Frequency  <16-32768> 
+
+
+#ifndef RTC_DEFAULT_CONFIG_FREQUENCY
+#define RTC_DEFAULT_CONFIG_FREQUENCY 32768
+#endif
+
+// <q> RTC_DEFAULT_CONFIG_RELIABLE  - Ensures safe compare event triggering
+ 
+
+#ifndef RTC_DEFAULT_CONFIG_RELIABLE
+#define RTC_DEFAULT_CONFIG_RELIABLE 0
+#endif
+
+// <o> RTC_DEFAULT_CONFIG_IRQ_PRIORITY  - Interrupt priority
+ 
+
+// <i> Priorities 0,2 (nRF51) and 0,1,4,5 (nRF52) are reserved for SoftDevice
+// <0=> 0 (highest) 
+// <1=> 1 
+// <2=> 2 
+// <3=> 3 
+// <4=> 4 
+// <5=> 5 
+// <6=> 6 
+// <7=> 7 
+
+#ifndef RTC_DEFAULT_CONFIG_IRQ_PRIORITY
+#define RTC_DEFAULT_CONFIG_IRQ_PRIORITY 7
+#endif
+
+// <q> RTC0_ENABLED  - Enable RTC0 instance
+ 
+
+#ifndef RTC0_ENABLED
+#define RTC0_ENABLED 0
+#endif
+
+// <q> RTC1_ENABLED  - Enable RTC1 instance
+ 
+
+#ifndef RTC1_ENABLED
+#define RTC1_ENABLED 0
+#endif
+
+// <q> RTC2_ENABLED  - Enable RTC2 instance
+ 
+
+#ifndef RTC2_ENABLED
+#define RTC2_ENABLED 1
+#endif
+
+// <o> NRF_MAXIMUM_LATENCY_US - Maximum possible time[us] in highest priority interrupt 
+#ifndef NRF_MAXIMUM_LATENCY_US
+#define NRF_MAXIMUM_LATENCY_US 2000
+#endif
+
+// </e>
+
 // <e> TWI_ENABLED - nrf_drv_twi - TWI/TWIM peripheral driver
 //==========================================================
 #ifndef TWI_ENABLED
@@ -193,11 +257,11 @@
 // <h> nRF_Libraries 
 
 //==========================================================
-// <q> APP_TWI_ENABLED  - app_twi - TWI transaction manager
+// <q> APP_TWI_ENABLED  - app_twi - TWI transaction manager wrapper. Switch to nrf_twi_mngr usage.
  
 
 #ifndef APP_TWI_ENABLED
-#define APP_TWI_ENABLED 1
+#define APP_TWI_ENABLED 0
 #endif
 
 // <e> NRF_BALLOC_ENABLED - nrf_balloc - Block allocator module
@@ -389,6 +453,13 @@
 
 #ifndef NRF_STRERROR_ENABLED
 #define NRF_STRERROR_ENABLED 1
+#endif
+
+// <q> NRF_TWI_MNGR_ENABLED  - nrf_twi_mngr - TWI transaction manager
+ 
+
+#ifndef NRF_TWI_MNGR_ENABLED
+#define NRF_TWI_MNGR_ENABLED 1
 #endif
 
 // </h> 
@@ -1979,13 +2050,6 @@
 
 // </e>
 
-// <q> MEM_MANAGER_ENABLE_LOGS  - Enable debug trace in the module.
- 
-
-#ifndef MEM_MANAGER_ENABLE_LOGS
-#define MEM_MANAGER_ENABLE_LOGS 0
-#endif
-
 // <e> NRF_BALLOC_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef NRF_BALLOC_CONFIG_LOG_ENABLED
@@ -2441,6 +2505,57 @@
 
 #ifndef NRF_SDH_SOC_DEBUG_COLOR
 #define NRF_SDH_SOC_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_SORTLIST_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_SORTLIST_CONFIG_LOG_ENABLED
+#define NRF_SORTLIST_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_SORTLIST_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_SORTLIST_CONFIG_LOG_LEVEL
+#define NRF_SORTLIST_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_INFO_COLOR
+#define NRF_SORTLIST_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_DEBUG_COLOR
+#define NRF_SORTLIST_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>

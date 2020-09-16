@@ -109,19 +109,25 @@
 #ifndef PEER_MANAGER_ENABLED
 #define PEER_MANAGER_ENABLED 0
 #endif
-// <o> PM_MAX_REGISTRANTS  
-// <i> Number of event handlers that can be registered.
-
+// <o> PM_MAX_REGISTRANTS - Number of event handlers that can be registered. 
 #ifndef PM_MAX_REGISTRANTS
 #define PM_MAX_REGISTRANTS 3
 #endif
 
-// <o> PM_FLASH_BUFFERS  
-// <i> Number of internal buffers for flash operations.
+// <o> PM_FLASH_BUFFERS - Number of internal buffers for flash operations. 
 // <i> Decrease this value to lower RAM usage.
 
 #ifndef PM_FLASH_BUFFERS
-#define PM_FLASH_BUFFERS 8
+#define PM_FLASH_BUFFERS 2
+#endif
+
+// <q> PM_CENTRAL_ENABLED  - Enable/disable central-specific Peer Manager functionality.
+ 
+
+// <i> Enable/disable central-specific Peer Manager functionality.
+
+#ifndef PM_CENTRAL_ENABLED
+#define PM_CENTRAL_ENABLED 1
 #endif
 
 // </e>
@@ -379,6 +385,19 @@
 #endif
 
 // </e>
+
+// <q> APP_USBD_CONFIG_PROVIDE_SOF_TIMESTAMP  - Provide a function that generates timestamps for logs based on the current SOF
+ 
+
+// <i> The function app_usbd_sof_timestamp_get will be implemented if the logger is enabled. 
+// <i> Use it when initializing the logger. 
+// <i> SOF processing will be always enabled when this configuration parameter is active. 
+// <i> Notice that this option is configured outside of APP_USBD_CONFIG_LOG_ENABLED. 
+// <i> This means that it will work even if the logging in this very module is disabled. 
+
+#ifndef APP_USBD_CONFIG_PROVIDE_SOF_TIMESTAMP
+#define APP_USBD_CONFIG_PROVIDE_SOF_TIMESTAMP 0
+#endif
 
 // <e> APP_USBD_CONFIG_LOG_ENABLED - Enable logging in the module
 //==========================================================
@@ -1426,6 +1445,30 @@
 #define SPI_DEFAULT_CONFIG_IRQ_PRIORITY 7
 #endif
 
+// <o> SPI_DEFAULT_FREQUENCY  - SPI frequency
+ 
+// <33554432=> 125 kHz 
+// <67108864=> 250 kHz 
+// <134217728=> 500 kHz 
+// <268435456=> 1 MHz 
+// <536870912=> 2 MHz 
+// <1073741824=> 4 MHz 
+// <2147483648=> 8 MHz 
+
+#ifndef SPI_DEFAULT_FREQUENCY
+#define SPI_DEFAULT_FREQUENCY 1073741824
+#endif
+
+// <o> NRF_SPI_DRV_MISO_PULLUP_CFG  - MISO PIN pull-up configuration.
+ 
+// <0=> NRF_GPIO_PIN_NOPULL 
+// <1=> NRF_GPIO_PIN_PULLDOWN 
+// <3=> NRF_GPIO_PIN_PULLUP 
+
+#ifndef NRF_SPI_DRV_MISO_PULLUP_CFG
+#define NRF_SPI_DRV_MISO_PULLUP_CFG 1
+#endif
+
 // <e> SPI0_ENABLED - Enable SPI0 instance
 //==========================================================
 #ifndef SPI0_ENABLED
@@ -1436,20 +1479,6 @@
 
 #ifndef SPI0_USE_EASY_DMA
 #define SPI0_USE_EASY_DMA 1
-#endif
-
-// <o> SPI0_DEFAULT_FREQUENCY  - SPI frequency
- 
-// <33554432=> 125 kHz 
-// <67108864=> 250 kHz 
-// <134217728=> 500 kHz 
-// <268435456=> 1 MHz 
-// <536870912=> 2 MHz 
-// <1073741824=> 4 MHz 
-// <2147483648=> 8 MHz 
-
-#ifndef SPI0_DEFAULT_FREQUENCY
-#define SPI0_DEFAULT_FREQUENCY 1073741824
 #endif
 
 // </e>
@@ -1466,20 +1495,6 @@
 #define SPI1_USE_EASY_DMA 1
 #endif
 
-// <o> SPI1_DEFAULT_FREQUENCY  - SPI frequency
- 
-// <33554432=> 125 kHz 
-// <67108864=> 250 kHz 
-// <134217728=> 500 kHz 
-// <268435456=> 1 MHz 
-// <536870912=> 2 MHz 
-// <1073741824=> 4 MHz 
-// <2147483648=> 8 MHz 
-
-#ifndef SPI1_DEFAULT_FREQUENCY
-#define SPI1_DEFAULT_FREQUENCY 1073741824
-#endif
-
 // </e>
 
 // <e> SPI2_ENABLED - Enable SPI2 instance
@@ -1492,20 +1507,6 @@
 
 #ifndef SPI2_USE_EASY_DMA
 #define SPI2_USE_EASY_DMA 1
-#endif
-
-// <o> SPI2_DEFAULT_FREQUENCY  - SPI frequency
- 
-// <33554432=> 125 kHz 
-// <67108864=> 250 kHz 
-// <134217728=> 500 kHz 
-// <268435456=> 1 MHz 
-// <536870912=> 2 MHz 
-// <1073741824=> 4 MHz 
-// <2147483648=> 8 MHz 
-
-#ifndef SPI2_DEFAULT_FREQUENCY
-#define SPI2_DEFAULT_FREQUENCY 1073741824
 #endif
 
 // </e>
@@ -2073,7 +2074,7 @@
 
 // </e>
 
-// <q> APP_TWI_ENABLED  - app_twi - TWI transaction manager
+// <q> APP_TWI_ENABLED  - app_twi - TWI transaction manager wrapper. Switch to nrf_twi_mngr usage.
  
 
 #ifndef APP_TWI_ENABLED
@@ -2512,6 +2513,57 @@
 #define MEMORY_MANAGER_XXSMALL_BLOCK_SIZE 32
 #endif
 
+// <e> MEM_MANAGER_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef MEM_MANAGER_CONFIG_LOG_ENABLED
+#define MEM_MANAGER_CONFIG_LOG_ENABLED 0
+#endif
+// <o> MEM_MANAGER_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef MEM_MANAGER_CONFIG_LOG_LEVEL
+#define MEM_MANAGER_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> MEM_MANAGER_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef MEM_MANAGER_CONFIG_INFO_COLOR
+#define MEM_MANAGER_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> MEM_MANAGER_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef MEM_MANAGER_CONFIG_DEBUG_COLOR
+#define MEM_MANAGER_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
 // <q> MEM_MANAGER_DISABLE_API_PARAM_CHECK  - Disable API parameter checks in the module.
  
 
@@ -2841,6 +2893,13 @@
 #define NRF_STRERROR_ENABLED 1
 #endif
 
+// <q> NRF_TWI_MNGR_ENABLED  - nrf_twi_mngr - TWI transaction manager
+ 
+
+#ifndef NRF_TWI_MNGR_ENABLED
+#define NRF_TWI_MNGR_ENABLED 0
+#endif
+
 // <q> SLIP_ENABLED  - slip - SLIP encoding and decoding
  
 
@@ -2848,31 +2907,38 @@
 #define SLIP_ENABLED 0
 #endif
 
-// <h> nrf_cli - Command line interface.
+// <h> nrf_cli - Command line interface
 
 //==========================================================
-// <q> NRF_CLI_ENABLED  - Enable/disable CLI module.
+// <q> NRF_CLI_ENABLED  - Enable/disable the CLI module.
  
 
 #ifndef NRF_CLI_ENABLED
 #define NRF_CLI_ENABLED 0
 #endif
 
-// <o> NRF_CLI_ARGC_MAX - Maximum number of parameters passed to command handler. 
+// <o> NRF_CLI_ARGC_MAX - Maximum number of parameters passed to the command handler. 
 #ifndef NRF_CLI_ARGC_MAX
 #define NRF_CLI_ARGC_MAX 12
 #endif
 
-// <q> NRF_CLI_BUILD_IN_CMDS_ENABLED  - CLI build in commands.
+// <q> NRF_CLI_BUILD_IN_CMDS_ENABLED  - CLI built-in commands.
  
 
 #ifndef NRF_CLI_BUILD_IN_CMDS_ENABLED
 #define NRF_CLI_BUILD_IN_CMDS_ENABLED 1
 #endif
 
-// <o> NRF_CLI_CMD_BUFF_SIZE - Maximum buffer size for single command. 
+// <o> NRF_CLI_CMD_BUFF_SIZE - Maximum buffer size for a single command. 
 #ifndef NRF_CLI_CMD_BUFF_SIZE
 #define NRF_CLI_CMD_BUFF_SIZE 128
+#endif
+
+// <q> NRF_CLI_ECHO_STATUS  - CLI echo status. If set, echo is ON.
+ 
+
+#ifndef NRF_CLI_ECHO_STATUS
+#define NRF_CLI_ECHO_STATUS 1
 #endif
 
 // <o> NRF_CLI_PRINTF_BUFF_SIZE - Maximum print buffer size. 
@@ -2885,12 +2951,12 @@
 #ifndef NRF_CLI_HISTORY_ENABLED
 #define NRF_CLI_HISTORY_ENABLED 1
 #endif
-// <o> NRF_CLI_HISTORY_ELEMENT_SIZE - Size of one memory object reserved for CLI history 
+// <o> NRF_CLI_HISTORY_ELEMENT_SIZE - Size of one memory object reserved for CLI history. 
 #ifndef NRF_CLI_HISTORY_ELEMENT_SIZE
 #define NRF_CLI_HISTORY_ELEMENT_SIZE 32
 #endif
 
-// <o> NRF_CLI_HISTORY_ELEMENT_COUNT - Number of history memory objects 
+// <o> NRF_CLI_HISTORY_ELEMENT_COUNT - Number of history memory objects. 
 #ifndef NRF_CLI_HISTORY_ELEMENT_COUNT
 #define NRF_CLI_HISTORY_ELEMENT_COUNT 8
 #endif
@@ -2902,6 +2968,13 @@
 
 #ifndef NRF_CLI_VT100_COLORS_ENABLED
 #define NRF_CLI_VT100_COLORS_ENABLED 1
+#endif
+
+// <q> NRF_CLI_STATISTICS_ENABLED  - Enable CLI statistics.
+ 
+
+#ifndef NRF_CLI_STATISTICS_ENABLED
+#define NRF_CLI_STATISTICS_ENABLED 1
 #endif
 
 // <q> NRF_CLI_LOG_BACKEND  - Enable logger backend interface.
@@ -4554,13 +4627,6 @@
 
 // </e>
 
-// <q> MEM_MANAGER_ENABLE_LOGS  - Enable debug trace in the module.
- 
-
-#ifndef MEM_MANAGER_ENABLE_LOGS
-#define MEM_MANAGER_ENABLE_LOGS 0
-#endif
-
 // <e> NRF_BALLOC_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef NRF_BALLOC_CONFIG_LOG_ENABLED
@@ -5020,6 +5086,57 @@
 
 // </e>
 
+// <e> NRF_SORTLIST_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_SORTLIST_CONFIG_LOG_ENABLED
+#define NRF_SORTLIST_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_SORTLIST_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_SORTLIST_CONFIG_LOG_LEVEL
+#define NRF_SORTLIST_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_INFO_COLOR
+#define NRF_SORTLIST_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_DEBUG_COLOR
+#define NRF_SORTLIST_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
 // </h> 
 //==========================================================
 
@@ -5148,7 +5265,7 @@
 // <i> The priority level of a handler determines the order in which it receives events, with respect to other handlers.
 
 #ifndef NRF_SDH_BLE_OBSERVER_PRIO_LEVELS
-#define NRF_SDH_BLE_OBSERVER_PRIO_LEVELS 3
+#define NRF_SDH_BLE_OBSERVER_PRIO_LEVELS 4
 #endif
 
 // <h> BLE Observers priorities - Invididual priorities
@@ -5158,7 +5275,7 @@
 // <i> Priority with which BLE events are dispatched to the Advertising module.
 
 #ifndef BLE_ADV_BLE_OBSERVER_PRIO
-#define BLE_ADV_BLE_OBSERVER_PRIO 2
+#define BLE_ADV_BLE_OBSERVER_PRIO 1
 #endif
 
 // <o> BLE_ANCS_C_BLE_OBSERVER_PRIO  
@@ -5200,7 +5317,7 @@
 // <i> Priority with which BLE events are dispatched to the Connection parameters module.
 
 #ifndef BLE_CONN_PARAMS_BLE_OBSERVER_PRIO
-#define BLE_CONN_PARAMS_BLE_OBSERVER_PRIO 2
+#define BLE_CONN_PARAMS_BLE_OBSERVER_PRIO 1
 #endif
 
 // <o> BLE_CONN_STATE_BLE_OBSERVER_PRIO  
@@ -5392,6 +5509,13 @@
 #define NRF_BLE_CGMS_BLE_OBSERVER_PRIO 2
 #endif
 
+// <o> NRF_BLE_ES_BLE_OBSERVER_PRIO  
+// <i> Priority with which BLE events are dispatched to the Eddystone module.
+
+#ifndef NRF_BLE_ES_BLE_OBSERVER_PRIO
+#define NRF_BLE_ES_BLE_OBSERVER_PRIO 2
+#endif
+
 // <o> NRF_BLE_GATTS_C_BLE_OBSERVER_PRIO  
 // <i> Priority with which BLE events are dispatched to the GATT Service Client.
 
@@ -5403,7 +5527,7 @@
 // <i> Priority with which BLE events are dispatched to the GATT module.
 
 #ifndef NRF_BLE_GATT_BLE_OBSERVER_PRIO
-#define NRF_BLE_GATT_BLE_OBSERVER_PRIO 2
+#define NRF_BLE_GATT_BLE_OBSERVER_PRIO 1
 #endif
 
 // <o> NRF_BLE_QWR_BLE_OBSERVER_PRIO  
@@ -5413,11 +5537,9 @@
 #define NRF_BLE_QWR_BLE_OBSERVER_PRIO 2
 #endif
 
-// <o> PM_BLE_OBSERVER_PRIO  
-// <i> Priority with which BLE events are dispatched to the Peer Manager module.
-
+// <o> PM_BLE_OBSERVER_PRIO - Priority with which BLE events are dispatched to the Peer Manager module. 
 #ifndef PM_BLE_OBSERVER_PRIO
-#define PM_BLE_OBSERVER_PRIO 2
+#define PM_BLE_OBSERVER_PRIO 1
 #endif
 
 // </h> 

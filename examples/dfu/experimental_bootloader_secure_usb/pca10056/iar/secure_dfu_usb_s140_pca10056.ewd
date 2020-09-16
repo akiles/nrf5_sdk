@@ -2,7 +2,7 @@
 
 <project>
   <fileVersion>2</fileVersion>  <configuration>
-    <name>nrf52840_xxaa</name>
+    <name>nrf52840_xxaa_S140</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>

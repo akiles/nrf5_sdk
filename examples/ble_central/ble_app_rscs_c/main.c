@@ -74,7 +74,7 @@
 
 
 #define APP_BLE_CONN_CFG_TAG        1                                   /**< A tag identifying the SoftDevice BLE configuration. */
-#define APP_BLE_OBSERVER_PRIO       1                                   /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_OBSERVER_PRIO       3                                   /**< Application's BLE observer priority. You shouldn't need to modify this value. */
 #define APP_SOC_OBSERVER_PRIO       1                                   /**< Applications' SoC observer priority. You shoulnd't need to modify this value. */
 
 #define SEC_PARAM_BOND              1                                   /**< Perform bonding. */
@@ -207,6 +207,32 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
             // Reject pairing request from an already bonded peer.
             pm_conn_sec_config_t conn_sec_config = {.allow_repairing = false};
             pm_conn_sec_config_reply(p_evt->conn_handle, &conn_sec_config);
+        } break;
+
+        case PM_EVT_CONN_SEC_PARAMS_REQ:
+        {
+            ble_gap_sec_params_t sec_param;
+
+            memset(&sec_param, 0, sizeof(ble_gap_sec_params_t));
+
+            // Security parameters to be used for all security procedures.
+            sec_param.bond           = SEC_PARAM_BOND;
+            sec_param.mitm           = SEC_PARAM_MITM;
+            sec_param.lesc           = SEC_PARAM_LESC;
+            sec_param.keypress       = SEC_PARAM_KEYPRESS;
+            sec_param.io_caps        = SEC_PARAM_IO_CAPABILITIES;
+            sec_param.oob            = SEC_PARAM_OOB;
+            sec_param.min_key_size   = SEC_PARAM_MIN_KEY_SIZE;
+            sec_param.max_key_size   = SEC_PARAM_MAX_KEY_SIZE;
+            sec_param.kdist_own.enc  = 1;
+            sec_param.kdist_own.id   = 1;
+            sec_param.kdist_peer.enc = 1;
+            sec_param.kdist_peer.id  = 1;
+
+            err_code = pm_conn_sec_params_reply(p_evt->conn_handle,
+                                               &sec_param,
+                                                p_evt->params.conn_sec_params_req.p_context);
+            APP_ERROR_CHECK(err_code);
         } break;
 
         case PM_EVT_STORAGE_FULL:
@@ -351,7 +377,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
         case BLE_GAP_EVT_CONNECTED:
         {
             // Discover peer's services.
-            memset(&m_db_disc, 0x00, sizeof(ble_db_discovery_t));
             err_code = ble_db_discovery_start(&m_db_disc, p_ble_evt->evt.gap_evt.conn_handle);
             APP_ERROR_CHECK(err_code);
 
@@ -457,7 +482,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             }
         } break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -675,29 +700,9 @@ static void rscs_c_init(void)
  */
 static void peer_manager_init()
 {
-    ble_gap_sec_params_t sec_param;
-    ret_code_t           err_code;
+    ret_code_t err_code;
 
     err_code = pm_init();
-    APP_ERROR_CHECK(err_code);
-
-    memset(&sec_param, 0, sizeof(ble_gap_sec_params_t));
-
-    // Security parameters to be used for all security procedures.
-    sec_param.bond           = SEC_PARAM_BOND;
-    sec_param.mitm           = SEC_PARAM_MITM;
-    sec_param.lesc           = SEC_PARAM_LESC;
-    sec_param.keypress       = SEC_PARAM_KEYPRESS;
-    sec_param.io_caps        = SEC_PARAM_IO_CAPABILITIES;
-    sec_param.oob            = SEC_PARAM_OOB;
-    sec_param.min_key_size   = SEC_PARAM_MIN_KEY_SIZE;
-    sec_param.max_key_size   = SEC_PARAM_MAX_KEY_SIZE;
-    sec_param.kdist_own.enc  = 1;
-    sec_param.kdist_own.id   = 1;
-    sec_param.kdist_peer.enc = 1;
-    sec_param.kdist_peer.id  = 1;
-
-    err_code = pm_sec_params_set(&sec_param);
     APP_ERROR_CHECK(err_code);
 
     err_code = pm_register(pm_evt_handler);

@@ -65,7 +65,7 @@
 
 #define DEVICE_NAME                          "Nordic_OTS"                               /**< Name of device. Will be included in the advertising data. */
 
-#define APP_BLE_OBSERVER_PRIO                1                                          /**< Application's BLE observer priority. You shoulnd't need to modify this value. */
+#define APP_BLE_OBSERVER_PRIO                3                                          /**< Application's BLE observer priority. You shoulnd't need to modify this value. */
 
 #define APP_ADV_INTERVAL                     40                                         /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
 #define APP_ADV_TIMEOUT_IN_SECONDS           180                                        /**< The advertising timeout in units of seconds. */
@@ -395,7 +395,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             m_conn_handle = BLE_CONN_HANDLE_INVALID;
             break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");

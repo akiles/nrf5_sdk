@@ -78,6 +78,30 @@
 #define SPI_DEFAULT_CONFIG_IRQ_PRIORITY 7
 #endif
 
+// <o> SPI_DEFAULT_FREQUENCY  - SPI frequency
+ 
+// <33554432=> 125 kHz 
+// <67108864=> 250 kHz 
+// <134217728=> 500 kHz 
+// <268435456=> 1 MHz 
+// <536870912=> 2 MHz 
+// <1073741824=> 4 MHz 
+// <2147483648=> 8 MHz 
+
+#ifndef SPI_DEFAULT_FREQUENCY
+#define SPI_DEFAULT_FREQUENCY 1073741824
+#endif
+
+// <o> NRF_SPI_DRV_MISO_PULLUP_CFG  - MISO PIN pull-up configuration.
+ 
+// <0=> NRF_GPIO_PIN_NOPULL 
+// <1=> NRF_GPIO_PIN_PULLDOWN 
+// <3=> NRF_GPIO_PIN_PULLUP 
+
+#ifndef NRF_SPI_DRV_MISO_PULLUP_CFG
+#define NRF_SPI_DRV_MISO_PULLUP_CFG 1
+#endif
+
 // <e> SPI0_ENABLED - Enable SPI0 instance
 //==========================================================
 #ifndef SPI0_ENABLED
@@ -88,20 +112,6 @@
 
 #ifndef SPI0_USE_EASY_DMA
 #define SPI0_USE_EASY_DMA 1
-#endif
-
-// <o> SPI0_DEFAULT_FREQUENCY  - SPI frequency
- 
-// <33554432=> 125 kHz 
-// <67108864=> 250 kHz 
-// <134217728=> 500 kHz 
-// <268435456=> 1 MHz 
-// <536870912=> 2 MHz 
-// <1073741824=> 4 MHz 
-// <2147483648=> 8 MHz 
-
-#ifndef SPI0_DEFAULT_FREQUENCY
-#define SPI0_DEFAULT_FREQUENCY 1073741824
 #endif
 
 // </e>
@@ -118,20 +128,6 @@
 #define SPI1_USE_EASY_DMA 1
 #endif
 
-// <o> SPI1_DEFAULT_FREQUENCY  - SPI frequency
- 
-// <33554432=> 125 kHz 
-// <67108864=> 250 kHz 
-// <134217728=> 500 kHz 
-// <268435456=> 1 MHz 
-// <536870912=> 2 MHz 
-// <1073741824=> 4 MHz 
-// <2147483648=> 8 MHz 
-
-#ifndef SPI1_DEFAULT_FREQUENCY
-#define SPI1_DEFAULT_FREQUENCY 1073741824
-#endif
-
 // </e>
 
 // <e> SPI2_ENABLED - Enable SPI2 instance
@@ -144,20 +140,6 @@
 
 #ifndef SPI2_USE_EASY_DMA
 #define SPI2_USE_EASY_DMA 1
-#endif
-
-// <o> SPI2_DEFAULT_FREQUENCY  - SPI frequency
- 
-// <33554432=> 125 kHz 
-// <67108864=> 250 kHz 
-// <134217728=> 500 kHz 
-// <268435456=> 1 MHz 
-// <536870912=> 2 MHz 
-// <1073741824=> 4 MHz 
-// <2147483648=> 8 MHz 
-
-#ifndef SPI2_DEFAULT_FREQUENCY
-#define SPI2_DEFAULT_FREQUENCY 1073741824
 #endif
 
 // </e>
@@ -2047,13 +2029,6 @@
 
 // </e>
 
-// <q> MEM_MANAGER_ENABLE_LOGS  - Enable debug trace in the module.
- 
-
-#ifndef MEM_MANAGER_ENABLE_LOGS
-#define MEM_MANAGER_ENABLE_LOGS 0
-#endif
-
 // <e> NRF_BALLOC_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef NRF_BALLOC_CONFIG_LOG_ENABLED
@@ -2509,6 +2484,57 @@
 
 #ifndef NRF_SDH_SOC_DEBUG_COLOR
 #define NRF_SDH_SOC_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_SORTLIST_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_SORTLIST_CONFIG_LOG_ENABLED
+#define NRF_SORTLIST_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_SORTLIST_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_SORTLIST_CONFIG_LOG_LEVEL
+#define NRF_SORTLIST_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_INFO_COLOR
+#define NRF_SORTLIST_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_DEBUG_COLOR
+#define NRF_SORTLIST_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>

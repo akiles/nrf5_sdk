@@ -43,6 +43,7 @@
 #include "fds.h"
 #include "sdk_errors.h"
 #include "peer_manager.h"
+#include "nfc_ble_pair_lib.h"
 
 #define NRF_LOG_MODULE_NAME PM_M
 #include "nrf_log.h"
@@ -85,6 +86,14 @@ void pm_evt_handler(pm_evt_t const * p_evt)
             // Reject pairing request from an already bonded peer.
             pm_conn_sec_config_t conn_sec_config = {.allow_repairing = false};
             pm_conn_sec_config_reply(p_evt->conn_handle, &conn_sec_config);
+        } break;
+
+        case PM_EVT_CONN_SEC_PARAMS_REQ:
+        {
+            // Send event to the NFC BLE pairing library as it may dynamically alternate
+            // security parameters to achieve highest possible security level.
+            err_code = nfc_ble_pair_on_pm_params_req(p_evt);
+            APP_ERROR_CHECK(err_code);
         } break;
 
         case PM_EVT_STORAGE_FULL:

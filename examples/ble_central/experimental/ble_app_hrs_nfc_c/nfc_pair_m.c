@@ -50,6 +50,7 @@
 #include "ble_m.h"
 #include "ecc.h"
 #include "peer_manager.h"
+#include "nrf_drv_rng.h"
 #include "nrf_sdh_ble.h"
 
 #define NRF_LOG_MODULE_NAME NFC_PAIR_M
@@ -114,6 +115,9 @@ void nfc_init(void)
     ecc_init(true);
 
     ret_code_t err_code = adafruit_pn532_init(false);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_drv_rng_init(NULL);
     APP_ERROR_CHECK(err_code);
 
     // Generate Diffie-Hellman pairing keys.
@@ -292,9 +296,9 @@ void ch_ndef_msg_handle(nfc_ndef_msg_desc_t * p_ch_msg_desc)
             nfc_oob_data_printout(&le_oob_record_pairing_data);
             /** @snippet [NFC CH Parser usage_0] */
 
-            uint8_t mem_diff = memcmp(&m_device_addr,
-                                      le_oob_record_pairing_data.p_device_addr,
-                                      sizeof(ble_gap_addr_t));
+            int mem_diff = memcmp(&m_device_addr,
+                                  le_oob_record_pairing_data.p_device_addr,
+                                  sizeof(ble_gap_addr_t));
             if ((mem_diff != 0) || m_same_tag_disconnected)
             {
                 nfc_essential_pairing_data_copy(&le_oob_record_pairing_data);

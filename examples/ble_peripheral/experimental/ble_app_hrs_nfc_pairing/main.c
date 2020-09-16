@@ -73,7 +73,7 @@
 #define DEVICE_NAME                      "Nordic_HRM_NFC"                            /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME                "NordicSemiconductor"                       /**< Manufacturer. Will be passed to Device Information Service. */
 
-#define APP_BLE_OBSERVER_PRIO            1                                           /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_OBSERVER_PRIO            3                                           /**< Application's BLE observer priority. You shouldn't need to modify this value. */
 #define APP_BLE_CONN_CFG_TAG             1                                           /**< A tag identifying the SoftDevice BLE configuration. */
 
 #define APP_ADV_INTERVAL                 300                                         /**< The advertising interval (in units of 0.625 ms. This value corresponds to 187.5 ms). */
@@ -218,6 +218,16 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
             pm_conn_sec_config_reply(p_evt->conn_handle, &conn_sec_config);
         } break;
 
+        /** @snippet [NFC Pairing Lib usage_1] */
+        case PM_EVT_CONN_SEC_PARAMS_REQ:
+        {
+            // Send event to the NFC BLE pairing library as it may dynamically alternate
+            // security parameters to achieve highest possible security level.
+            err_code = nfc_ble_pair_on_pm_params_req(p_evt);
+            APP_ERROR_CHECK(err_code);
+        } break;
+        /** @snippet [NFC Pairing Lib usage_1] */
+
         case PM_EVT_STORAGE_FULL:
         {
             // Run garbage collection on the flash.
@@ -338,6 +348,7 @@ static void heart_rate_meas_timeout_handler(void * p_context)
     if ((err_code != NRF_SUCCESS) &&
         (err_code != NRF_ERROR_INVALID_STATE) &&
         (err_code != NRF_ERROR_RESOURCES) &&
+        (err_code != NRF_ERROR_FORBIDDEN) &&
         (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
        )
     {
@@ -490,7 +501,7 @@ static void services_init(void)
     hrs_init.p_body_sensor_location      = &body_sensor_location;
 
     // Here the sec level for the Heart Rate Service can be changed/increased.
-    BLE_GAP_CONN_SEC_MODE_SET_OPEN(&hrs_init.hrs_hrm_attr_md.cccd_write_perm);
+    BLE_GAP_CONN_SEC_MODE_SET_LESC_ENC_WITH_MITM(&hrs_init.hrs_hrm_attr_md.cccd_write_perm);
     BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&hrs_init.hrs_hrm_attr_md.read_perm);
     BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&hrs_init.hrs_hrm_attr_md.write_perm);
 
@@ -715,15 +726,12 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 
         case BLE_GAP_EVT_DISCONNECTED:
             NRF_LOG_INFO("Disconnected");
-            err_code = bsp_indication_set(BSP_INDICATE_IDLE);
-            APP_ERROR_CHECK(err_code);
+            // LED indication will be changed when advertising starts.
             m_conn_handle = BLE_CONN_HANDLE_INVALID;
             m_is_connected = false;
-            err_code = ble_advertising_start(&m_advertising, BLE_ADV_MODE_FAST);
-            APP_ERROR_CHECK(err_code);
             break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -788,7 +796,9 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
         } break; // BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST
 
         case BLE_GAP_EVT_CONN_SEC_UPDATE:
-            NRF_LOG_INFO("Security mode: %u",
+            NRF_LOG_INFO("BLE_GAP_EVT_CONN_SEC_UPDATE");
+            NRF_LOG_INFO("Security mode: %u. Security level: %u",
+                         p_ble_evt->evt.gap_evt.params.conn_sec_update.conn_sec.sec_mode.sm,
                          p_ble_evt->evt.gap_evt.params.conn_sec_update.conn_sec.sec_mode.lv);
             break;
 
@@ -990,7 +1000,7 @@ int main(void)
     timers_init();
     buttons_leds_init(&erase_bonds);
 
-    /** @snippet [NFC Pairing Lib usage_1] */
+    /** @snippet [NFC Pairing Lib usage_2] */
     ble_stack_init();
     gap_params_init();
     gatt_init();
@@ -1001,7 +1011,7 @@ int main(void)
     }
     advertising_init();
     nrf_ble_pairing_init();
-    /** @snippet [NFC Pairing Lib usage_1] */
+    /** @snippet [NFC Pairing Lib usage_2] */
 
     services_init();
     sensor_simulator_init();

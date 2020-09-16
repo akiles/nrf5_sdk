@@ -5,7 +5,7 @@
 
   <Header>### uVision Project, (C) Keil Software</Header>
   <Target>
-    <TargetName>nrf52840_xxaa</TargetName>
+    <TargetName>nrf52840_xxaa_S140</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>

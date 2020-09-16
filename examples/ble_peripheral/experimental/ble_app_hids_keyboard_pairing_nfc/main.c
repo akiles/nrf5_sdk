@@ -91,7 +91,7 @@
 #define DEVICE_NAME                      "Nordic_Keyboard"                              /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME                "NordicSemiconductor"                          /**< Manufacturer. Will be passed to Device Information Service. */
 
-#define APP_BLE_OBSERVER_PRIO            1                                              /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_OBSERVER_PRIO            3                                              /**< Application's BLE observer priority. You shouldn't need to modify this value. */
 #define APP_BLE_CONN_CFG_TAG             1                                              /**< A tag identifying the SoftDevice BLE configuration. */
 
 #define BATTERY_LEVEL_MEAS_INTERVAL      APP_TIMER_TICKS(2000)                          /**< Battery level measurement interval (ticks). */
@@ -212,8 +212,6 @@ static pm_peer_id_t  m_peer_id;                                             /**<
 static pm_peer_id_t  m_whitelist_peers[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];   /**< List of peers currently in the whitelist. */
 static uint32_t      m_whitelist_peer_cnt;                                  /**< Number of peers currently in the whitelist. */
 static bool          m_in_boot_mode = false;                                /**< Current protocol mode. */
-static bool          m_is_wl_changed;                                       /**< Indicates if the whitelist has been changed since last time it has been updated in the Peer Manager. */
-static bool          m_is_connected = false;                                /**< Flag for keeping connection state. */
 static bool          m_caps_on = false;                                     /**< Variable to indicate if Caps Lock is turned on. */
 
 static sensorsim_cfg_t   m_battery_sim_cfg;                                 /**< Battery Level sensor simulator configuration. */
@@ -1050,12 +1048,10 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
 
         case BLE_ADV_EVT_IDLE:
             NRF_LOG_INFO("Advertising stopped.");
-            if (!m_is_connected)
-            {
-                err_code = bsp_indication_set(BSP_INDICATE_IDLE);
-                APP_ERROR_CHECK(err_code);
-                sleep_mode_enter();
-            }
+            err_code = bsp_indication_set(BSP_INDICATE_IDLE);
+            APP_ERROR_CHECK(err_code);
+            sleep_mode_enter();
+
             break;//BLE_ADV_EVT_IDLE
 
         case BLE_ADV_EVT_WHITELIST_REQUEST:
@@ -1126,17 +1122,17 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
             m_conn_handle   = p_ble_evt->evt.gap_evt.conn_handle;
-            m_is_connected  = true;
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
         {
-            NRF_LOG_INFO("Disonnected");
+            NRF_LOG_INFO("Disconnected");
+            // LED indication will be changed when advertising starts.
+
             // Dequeue all keys without transmission.
             (void) buffer_dequeue(false);
 
             m_conn_handle  = BLE_CONN_HANDLE_INVALID;
-            m_is_connected = false;
 
             // Reset m_caps_on variable. Upon reconnect, the HID host will re-send the Output
             // report containing the Caps lock state.
@@ -1144,27 +1140,9 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             // disabling alert 3. signal - used for capslock ON
             err_code = bsp_indication_set(BSP_INDICATE_ALERT_OFF);
             APP_ERROR_CHECK(err_code);
-
-            err_code = bsp_indication_set(BSP_INDICATE_IDLE);
-            APP_ERROR_CHECK(err_code);
-
-            if (m_is_wl_changed)
-            {
-                // The whitelist has been modified, update it in the Peer Manager.
-                err_code = pm_whitelist_set(m_whitelist_peers, m_whitelist_peer_cnt);
-                APP_ERROR_CHECK(err_code);
-
-                err_code = pm_device_identities_list_set(m_whitelist_peers, m_whitelist_peer_cnt);
-                if (err_code != NRF_ERROR_NOT_SUPPORTED)
-                {
-                    APP_ERROR_CHECK(err_code);
-                }
-
-                m_is_wl_changed = false;
-            }
         } break; // BLE_GAP_EVT_DISCONNECTED
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -1354,22 +1332,6 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
                          p_evt->params.conn_sec_succeeded.procedure);
 
             m_peer_id = p_evt->peer_id;
-
-            // Note: You should check on what kind of white list policy your application should use.
-            if (p_evt->params.conn_sec_succeeded.procedure == PM_LINK_SECURED_PROCEDURE_BONDING)
-            {
-                NRF_LOG_DEBUG("New Bond, add the peer to the whitelist if possible");
-                NRF_LOG_DEBUG("\tm_whitelist_peer_cnt %d, MAX_PEERS_WLIST %d",
-                               m_whitelist_peer_cnt + 1,
-                               BLE_GAP_WHITELIST_ADDR_MAX_COUNT);
-
-                if (m_whitelist_peer_cnt < BLE_GAP_WHITELIST_ADDR_MAX_COUNT)
-                {
-                    // Bonded to a new peer, add it to the whitelist.
-                    m_whitelist_peers[m_whitelist_peer_cnt++] = m_peer_id;
-                    m_is_wl_changed = true;
-                }
-            }
         } break;
 
         case PM_EVT_CONN_SEC_FAILED:
@@ -1387,6 +1349,14 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
             // Reject pairing request from an already bonded peer.
             pm_conn_sec_config_t conn_sec_config = {.allow_repairing = false};
             pm_conn_sec_config_reply(p_evt->conn_handle, &conn_sec_config);
+        } break;
+
+        case PM_EVT_CONN_SEC_PARAMS_REQ:
+        {
+            // Send event to the NFC BLE pairing library as it may dynamically alternate
+            // security parameters to achieve highest possible security level.
+            err_code = nfc_ble_pair_on_pm_params_req(p_evt);
+            APP_ERROR_CHECK(err_code);
         } break;
 
         case PM_EVT_STORAGE_FULL:
@@ -1407,6 +1377,35 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
         {
             // The local database has likely changed, send service changed indications.
             pm_local_database_has_changed();
+        } break;
+
+        case PM_EVT_PEER_DATA_UPDATE_SUCCEEDED:
+        {
+            // Note: You should check on what kind of white list policy your application should use.
+            if (     p_evt->params.peer_data_update_succeeded.flash_changed
+                 && (p_evt->params.peer_data_update_succeeded.data_id == PM_PEER_DATA_ID_BONDING))
+            {
+                NRF_LOG_DEBUG("New Bond, add the peer to the whitelist if possible");
+                NRF_LOG_DEBUG("\tm_whitelist_peer_cnt %d, MAX_PEERS_WLIST %d",
+                               m_whitelist_peer_cnt + 1,
+                               BLE_GAP_WHITELIST_ADDR_MAX_COUNT);
+
+                if (m_whitelist_peer_cnt < BLE_GAP_WHITELIST_ADDR_MAX_COUNT)
+                {
+                    // Bonded to a new peer, add it to the whitelist.
+                    m_whitelist_peers[m_whitelist_peer_cnt++] = m_peer_id;
+
+                    // The whitelist has been modified, update it in the Peer Manager.
+                    err_code = pm_device_identities_list_set(m_whitelist_peers, m_whitelist_peer_cnt);
+                    if (err_code != NRF_ERROR_NOT_SUPPORTED)
+                    {
+                        APP_ERROR_CHECK(err_code);
+                    }
+
+                    err_code = pm_whitelist_set(m_whitelist_peers, m_whitelist_peer_cnt);
+                    APP_ERROR_CHECK(err_code);
+                }
+            }
         } break;
 
         case PM_EVT_PEER_DATA_UPDATE_FAILED:
@@ -1435,7 +1434,6 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
 
         case PM_EVT_CONN_SEC_START:
         case PM_EVT_PEERS_DELETE_SUCCEEDED:
-        case PM_EVT_PEER_DATA_UPDATE_SUCCEEDED:
         case PM_EVT_PEER_DELETE_SUCCEEDED:
         case PM_EVT_LOCAL_DB_CACHE_APPLIED:
         case PM_EVT_SERVICE_CHANGED_IND_SENT:
@@ -1522,9 +1520,6 @@ static void whitelist_load(void)
 
     peer_list_get(m_whitelist_peers, &m_whitelist_peer_cnt);
 
-    ret = pm_whitelist_set(m_whitelist_peers, m_whitelist_peer_cnt);
-    APP_ERROR_CHECK(ret);
-
     // Setup the device identies list.
     // Some SoftDevices do not support this feature.
     ret = pm_device_identities_list_set(m_whitelist_peers, m_whitelist_peer_cnt);
@@ -1533,7 +1528,8 @@ static void whitelist_load(void)
         APP_ERROR_CHECK(ret);
     }
 
-    m_is_wl_changed = false;
+    ret = pm_whitelist_set(m_whitelist_peers, m_whitelist_peer_cnt);
+    APP_ERROR_CHECK(ret);
 }
 
 

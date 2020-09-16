@@ -64,7 +64,7 @@
 #include "sdk_macros.h"
 #include "nrf_crypto.h"
 
-#define NRF_LOG_MODULE_NAME dfq_req_handling
+#define NRF_LOG_MODULE_NAME dfu_req_handling
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 NRF_LOG_MODULE_REGISTER();
@@ -273,20 +273,23 @@ static nrf_dfu_res_code_t dfu_handle_prevalidate(dfu_signed_command_t const * p_
         }
 
 #ifdef SOFTDEVICE_PRESENT
-        // Precheck the SoftDevice version
-        bool found_sd_ver = false;
-        for (int i = 0; i < p_init->sd_req_count; i++)
+        // Precheck the SoftDevice version if SoftDevice is not included in incoming package or if SoftDevice only update.
+        if (p_init->type != DFU_FW_TYPE_SOFTDEVICE_BOOTLOADER)
         {
-            if (p_init->sd_req[i] == SD_FWID_GET(MBR_SIZE))
+            bool found_sd_ver = false;
+            for (int i = 0; i < p_init->sd_req_count; i++)
             {
-                found_sd_ver = true;
-                break;
+                if (p_init->sd_req[i] == SD_FWID_GET(MBR_SIZE))
+                {
+                    found_sd_ver = true;
+                    break;
+                }
             }
-        }
-        if (!found_sd_ver)
-        {
-            NRF_LOG_ERROR("SD req not met");
-            return ext_error_set(NRF_DFU_EXT_ERROR_SD_VERSION_FAILURE);
+            if (!found_sd_ver)
+            {
+                NRF_LOG_ERROR("SD req not met");
+                return ext_error_set(NRF_DFU_EXT_ERROR_SD_VERSION_FAILURE);
+            }
         }
 #endif
 

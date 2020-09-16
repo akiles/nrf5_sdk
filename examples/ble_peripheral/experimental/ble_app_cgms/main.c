@@ -86,7 +86,7 @@
 
 #define USE_AUTHORIZATION_CODE          1
 
-#define APP_BLE_OBSERVER_PRIO           1                                           /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_OBSERVER_PRIO           3                                           /**< Application's BLE observer priority. You shouldn't need to modify this value. */
 #define APP_BLE_CONN_CFG_TAG            1                                           /**< A tag identifying the SoftDevice BLE configuration. */
 
 #define SECURITY_REQUEST_DELAY          APP_TIMER_TICKS(4000)                       /**< Delay after connection until Security Request is sent, if necessary (ticks). */
@@ -225,6 +225,27 @@ static void battery_level_update(void)
 }
 
 
+/**@brief Function for determening if there are one or more connections with bonds that are flagged
+ *        for deletion.
+*/
+bool delete_bonds_pending(void)
+{
+    sdk_mapped_flags_key_list_t conn_handle_list = ble_conn_state_conn_handles();
+
+    for (uint32_t i = 0; i < conn_handle_list.len; i++)
+    {
+        uint16_t conn_handle = conn_handle_list.flag_keys[i];
+        bool pending         = ble_conn_state_user_flag_get(conn_handle, m_bms_bonds_to_delete);
+
+        if (pending == true)
+        {
+            return pending;
+        }
+    }
+    return false;
+}
+
+
 /**@brief Fetch the list of peer manager peer IDs.
  *
  * @param[inout] p_peers   The buffer where to store the list of peer IDs.
@@ -292,7 +313,7 @@ static void advertising_start(bool erase_bonds)
             APP_ERROR_CHECK(ret);
         }
 
-        ret = ble_advertising_start(&m_advertising, BLE_ADV_MODE_FAST);
+        ret = ble_advertising_start(&m_advertising, BLE_ADV_MODE_DIRECTED);
         APP_ERROR_CHECK(ret);
     }
 }
@@ -575,6 +596,8 @@ static void delete_disconnected_bonds(void)
                 APP_ERROR_CHECK(err_code);
             }
         }
+        // Deletion is no longer pending for the bonds of this peer. Clear the flag.
+        ble_conn_state_user_flag_set(conn_handle, m_bms_bonds_to_delete, false);
     }
 }
 
@@ -950,11 +973,19 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 
         case BLE_GAP_EVT_DISCONNECTED:
             NRF_LOG_INFO("Disconnected");
-            delete_disconnected_bonds();
             m_conn_handle = BLE_CONN_HANDLE_INVALID;
+            if (delete_bonds_pending())
+            {
+                // Advertising is started by PM_EVT_PEERS_DELETE_SUCCEEDED or PM_EVT_PEERS_DELETE_SUCCEEDED event.
+                delete_disconnected_bonds();
+            }
+            else
+            {
+                advertising_start(false);
+            }
             break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -1101,7 +1132,6 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
         case PM_EVT_CONN_SEC_FAILED:
         {
             NRF_LOG_INFO("Failed to secure connection. Disconnecting.");
-            m_conn_handle = BLE_CONN_HANDLE_INVALID;
             err_code = sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
         } break;
@@ -1124,6 +1154,14 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
             else
             {
                 APP_ERROR_CHECK(err_code);
+            }
+        } break;
+
+        case PM_EVT_PEER_DELETE_SUCCEEDED:
+        {
+            if (!delete_bonds_pending())
+            {
+                advertising_start(false);
             }
         } break;
 
@@ -1164,7 +1202,6 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
 
         case PM_EVT_CONN_SEC_START:
         case PM_EVT_PEER_DATA_UPDATE_SUCCEEDED:
-        case PM_EVT_PEER_DELETE_SUCCEEDED:
         case PM_EVT_LOCAL_DB_CACHE_APPLIED:
         case PM_EVT_SERVICE_CHANGED_IND_SENT:
         case PM_EVT_SERVICE_CHANGED_IND_CONFIRMED:
@@ -1225,6 +1262,7 @@ static void advertising_init(void)
     init.advdata.uuids_complete.uuid_cnt       = sizeof(m_adv_uuids) / sizeof(m_adv_uuids[0]);
     init.advdata.uuids_complete.p_uuids        = m_adv_uuids;
 
+    init.config.ble_adv_on_disconnect_disabled = true;
     init.config.ble_adv_whitelist_enabled      = true;
     init.config.ble_adv_directed_enabled       = true;
     init.config.ble_adv_directed_slow_enabled  = false;

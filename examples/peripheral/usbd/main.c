@@ -402,6 +402,44 @@ static volatile bool m_usbd_suspend_state_req = false;
  */
 static volatile bool m_system_off_req = false;
 
+
+/**
+ * @brief Setup all the endpoints for selected configuration
+ *
+ * Function sets all the endpoints for specific configuration.
+ *
+ * @note
+ * Setting the configuration index 0 means technically disabling the HID interface.
+ * Such configuration should be set when device is starting or USB reset is detected.
+ *
+ * @param index Configuration index
+ *
+ * @retval NRF_ERROR_INVALID_PARAM Invalid configuration
+ * @retval NRF_SUCCESS             Configuration successfully set
+ */
+static ret_code_t ep_configuration(uint8_t index)
+{
+    if ( index == 1 )
+    {
+        nrf_drv_usbd_ep_dtoggle_clear(NRF_DRV_USBD_EPIN1);
+        nrf_drv_usbd_ep_stall_clear(NRF_DRV_USBD_EPIN1);
+        nrf_drv_usbd_ep_enable(NRF_DRV_USBD_EPIN1);
+        m_usbd_configured = true;
+        nrf_drv_usbd_setup_clear();
+    }
+    else if ( index == 0 )
+    {
+        nrf_drv_usbd_ep_disable(NRF_DRV_USBD_EPIN1);
+        m_usbd_configured = false;
+        nrf_drv_usbd_setup_clear();
+    }
+    else
+    {
+        return NRF_ERROR_INVALID_PARAM;
+    }
+    return NRF_SUCCESS;
+}
+
 /**
  * @name Processing setup requests
  *
@@ -712,25 +750,13 @@ static void usbd_setup_SetConfig(nrf_drv_usbd_setup_t const * const p_setup)
     if ((p_setup->bmRequestType) == 0x00)
     {
         // accept only 0 and 1
-        if (((p_setup->wIndex) == 0) && ((p_setup->wLength) == 0))
+        if (((p_setup->wIndex) == 0) && ((p_setup->wLength) == 0) &&
+            ((p_setup->wValue) <= UINT8_MAX))
         {
-            if ( (p_setup->wValue) == 1 )
+            if (NRF_SUCCESS == ep_configuration((uint8_t)(p_setup->wValue)))
             {
-                nrf_drv_usbd_ep_enable(NRF_DRV_USBD_EPIN1);
-                m_usbd_configured = true;
                 nrf_drv_usbd_setup_clear();
                 return;
-            }
-            else if ( (p_setup->wValue) == 0 )
-            {
-                nrf_drv_usbd_ep_disable(NRF_DRV_USBD_EPIN1);
-                m_usbd_configured = false;
-                nrf_drv_usbd_setup_clear();
-                return;
-            }
-            else
-            {
-                // Wrong value
             }
         }
     }
@@ -793,8 +819,13 @@ static void usbd_event_handler(nrf_drv_usbd_evt_t const * const p_event)
         m_usbd_suspend_state_req = false;
         break;
     case NRF_DRV_USBD_EVT_RESET:
-        m_usbd_suspend_state_req = false;
-        break;
+        {
+            ret_code_t ret = ep_configuration(0);
+            ASSERT(ret == NRF_SUCCESS);
+            UNUSED_VARIABLE(ret);
+            m_usbd_suspend_state_req = false;
+            break;
+        }
     case NRF_DRV_USBD_EVT_SOF:
         {
             static uint32_t cycle = 0;
@@ -1143,6 +1174,8 @@ int main(void)
         if (!nrf_drv_usbd_is_enabled())
         {
             nrf_drv_usbd_enable();
+            ret = ep_configuration(0);
+            APP_ERROR_CHECK(ret);
         }
         /* Wait for regulator power up */
         while (NRF_DRV_POWER_USB_STATE_CONNECTED

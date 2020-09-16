@@ -44,7 +44,7 @@ GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)\n
 HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT\n
 LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT\n
 OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n
-  </licenseText>
+        </licenseText>
   <addressUnitBits>8</addressUnitBits>
   <width>32</width>
   <size>32</size>
@@ -274,9 +274,9 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                     <value>0x41414230</value>
                   </enumeratedValue>
                   <enumeratedValue>
-                    <name>SPA0</name>
-                    <description>SPA0</description>
-                    <value>0x53504130</value>
+                    <name>AAE0</name>
+                    <description>AAE0</description>
+                    <value>0x41414530</value>
                   </enumeratedValue>
                   <enumeratedValue>
                     <name>Unspecified</name>
@@ -314,6 +314,11 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                     <name>CI</name>
                     <description>CIxx - 7x8 WLCSP 56 balls</description>
                     <value>0x2002</value>
+                  </enumeratedValue>
+                  <enumeratedValue>
+                    <name>CK</name>
+                    <description>CKxx - 7x8 WLCSP 56 balls with backside coating for light protection</description>
+                    <value>0x2005</value>
                   </enumeratedValue>
                   <enumeratedValue>
                     <name>Unspecified</name>
@@ -27088,7 +27093,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <name>LOAD</name>
               <description>How a sequence is read from RAM and spread to the compare register</description>
               <lsb>0</lsb>
-              <msb>2</msb>
+              <msb>1</msb>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>Common</name>

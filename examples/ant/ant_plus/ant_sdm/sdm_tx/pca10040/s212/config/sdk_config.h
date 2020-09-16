@@ -322,6 +322,96 @@
 #define BPWR_MODEL_NUMBER 21845
 #endif
 
+// <o> BPWR_HW_REVISION - Hardware revision for manufacturer's identification common page 
+#ifndef BPWR_HW_REVISION
+#define BPWR_HW_REVISION 127
+#endif
+
+// <o> BPWR_MANUFACTURER_ID - Manufacturer ID for manufacturer's identification common page 
+#ifndef BPWR_MANUFACTURER_ID
+#define BPWR_MANUFACTURER_ID 43690
+#endif
+
+// <o> BPWR_MODEL_NUMBER - Model number for manufacturer's identification common page 
+#ifndef BPWR_MODEL_NUMBER
+#define BPWR_MODEL_NUMBER 21845
+#endif
+
+// <o> BPWR_HW_REVISION - Hardware revision for manufacturer's identification common page 
+#ifndef BPWR_HW_REVISION
+#define BPWR_HW_REVISION 127
+#endif
+
+// <o> BPWR_MANUFACTURER_ID - Manufacturer ID for manufacturer's identification common page 
+#ifndef BPWR_MANUFACTURER_ID
+#define BPWR_MANUFACTURER_ID 43690
+#endif
+
+// <o> BPWR_MODEL_NUMBER - Model number for manufacturer's identification common page 
+#ifndef BPWR_MODEL_NUMBER
+#define BPWR_MODEL_NUMBER 21845
+#endif
+
+// <o> BPWR_HW_REVISION - Hardware revision for manufacturer's identification common page 
+#ifndef BPWR_HW_REVISION
+#define BPWR_HW_REVISION 127
+#endif
+
+// <o> BPWR_MANUFACTURER_ID - Manufacturer ID for manufacturer's identification common page 
+#ifndef BPWR_MANUFACTURER_ID
+#define BPWR_MANUFACTURER_ID 43690
+#endif
+
+// <o> BPWR_MODEL_NUMBER - Model number for manufacturer's identification common page 
+#ifndef BPWR_MODEL_NUMBER
+#define BPWR_MODEL_NUMBER 21845
+#endif
+
+// <o> SDM_HW_REVISION - Hardware revision for manufacturer's identification common page 
+#ifndef SDM_HW_REVISION
+#define SDM_HW_REVISION 127
+#endif
+
+// <o> SDM_MANUFACTURER_ID - Manufacturer ID for manufacturer's identification common page 
+#ifndef SDM_MANUFACTURER_ID
+#define SDM_MANUFACTURER_ID 43690
+#endif
+
+// <o> SDM_MODEL_NUMBER - Model number for manufacturer's identification common page 
+#ifndef SDM_MODEL_NUMBER
+#define SDM_MODEL_NUMBER 21845
+#endif
+
+// <o> SDM_HW_REVISION - Hardware revision for manufacturer's identification common page 
+#ifndef SDM_HW_REVISION
+#define SDM_HW_REVISION 127
+#endif
+
+// <o> SDM_MANUFACTURER_ID - Manufacturer ID for manufacturer's identification common page 
+#ifndef SDM_MANUFACTURER_ID
+#define SDM_MANUFACTURER_ID 43690
+#endif
+
+// <o> SDM_MODEL_NUMBER - Model number for manufacturer's identification common page 
+#ifndef SDM_MODEL_NUMBER
+#define SDM_MODEL_NUMBER 21845
+#endif
+
+// <o> SDM_HW_REVISION - Hardware revision for manufacturer's identification common page 
+#ifndef SDM_HW_REVISION
+#define SDM_HW_REVISION 127
+#endif
+
+// <o> SDM_MANUFACTURER_ID - Manufacturer ID for manufacturer's identification common page 
+#ifndef SDM_MANUFACTURER_ID
+#define SDM_MANUFACTURER_ID 43690
+#endif
+
+// <o> SDM_MODEL_NUMBER - Model number for manufacturer's identification common page 
+#ifndef SDM_MODEL_NUMBER
+#define SDM_MODEL_NUMBER 21845
+#endif
+
 // <o> SDM_HW_REVISION - Hardware revision for manufacturer's identification common page 
 #ifndef SDM_HW_REVISION
 #define SDM_HW_REVISION 127
@@ -554,6 +644,30 @@
  
 
 // <i> It can be updated by buttons or periodically rise and fall in auto mode
+// <0=> MODIFICATION_TYPE_BUTTON 
+// <1=> MODIFICATION_TYPE_AUTO 
+// <0=> MODIFICATION_TYPE_BUTTON 
+// <1=> MODIFICATION_TYPE_AUTO 
+// <0=> MODIFICATION_TYPE_BUTTON 
+// <1=> MODIFICATION_TYPE_AUTO 
+// <0=> MODIFICATION_TYPE_BUTTON 
+// <1=> MODIFICATION_TYPE_AUTO 
+// <0=> MODIFICATION_TYPE_BUTTON 
+// <1=> MODIFICATION_TYPE_AUTO 
+// <0=> MODIFICATION_TYPE_BUTTON 
+// <1=> MODIFICATION_TYPE_AUTO 
+// <0=> MODIFICATION_TYPE_BUTTON 
+// <1=> MODIFICATION_TYPE_AUTO 
+// <0=> MODIFICATION_TYPE_BUTTON 
+// <1=> MODIFICATION_TYPE_AUTO 
+// <0=> MODIFICATION_TYPE_BUTTON 
+// <1=> MODIFICATION_TYPE_AUTO 
+// <0=> MODIFICATION_TYPE_BUTTON 
+// <1=> MODIFICATION_TYPE_AUTO 
+// <0=> MODIFICATION_TYPE_BUTTON 
+// <1=> MODIFICATION_TYPE_AUTO 
+// <0=> MODIFICATION_TYPE_BUTTON 
+// <1=> MODIFICATION_TYPE_AUTO 
 // <0=> MODIFICATION_TYPE_BUTTON 
 // <1=> MODIFICATION_TYPE_AUTO 
 // <0=> MODIFICATION_TYPE_BUTTON 
@@ -939,6 +1053,96 @@
 // <o> BPWR_SERIAL_NUMBER - Serial number for product information common page 
 #ifndef BPWR_SERIAL_NUMBER
 #define BPWR_SERIAL_NUMBER 12345678
+#endif
+
+// <o> BPWR_SW_REVISION_MAJOR - Software revision major number for product information common page 
+#ifndef BPWR_SW_REVISION_MAJOR
+#define BPWR_SW_REVISION_MAJOR 170
+#endif
+
+// <o> BPWR_SW_REVISION_MINOR - Software revision minor number for product information common page, unused value 
+#ifndef BPWR_SW_REVISION_MINOR
+#define BPWR_SW_REVISION_MINOR 255
+#endif
+
+// <o> BPWR_SERIAL_NUMBER - Serial number for product information common page 
+#ifndef BPWR_SERIAL_NUMBER
+#define BPWR_SERIAL_NUMBER 12345678
+#endif
+
+// <o> BPWR_SW_REVISION_MAJOR - Software revision major number for product information common page 
+#ifndef BPWR_SW_REVISION_MAJOR
+#define BPWR_SW_REVISION_MAJOR 170
+#endif
+
+// <o> BPWR_SW_REVISION_MINOR - Software revision minor number for product information common page, unused value 
+#ifndef BPWR_SW_REVISION_MINOR
+#define BPWR_SW_REVISION_MINOR 255
+#endif
+
+// <o> BPWR_SERIAL_NUMBER - Serial number for product information common page 
+#ifndef BPWR_SERIAL_NUMBER
+#define BPWR_SERIAL_NUMBER 12345678
+#endif
+
+// <o> BPWR_SW_REVISION_MAJOR - Software revision major number for product information common page 
+#ifndef BPWR_SW_REVISION_MAJOR
+#define BPWR_SW_REVISION_MAJOR 170
+#endif
+
+// <o> BPWR_SW_REVISION_MINOR - Software revision minor number for product information common page, unused value 
+#ifndef BPWR_SW_REVISION_MINOR
+#define BPWR_SW_REVISION_MINOR 255
+#endif
+
+// <o> BPWR_SERIAL_NUMBER - Serial number for product information common page 
+#ifndef BPWR_SERIAL_NUMBER
+#define BPWR_SERIAL_NUMBER 12345678
+#endif
+
+// <o> SDM_SW_REVISION_MAJOR - Software revision major number for product information common page 
+#ifndef SDM_SW_REVISION_MAJOR
+#define SDM_SW_REVISION_MAJOR 170
+#endif
+
+// <o> SDM_SW_REVISION_MINOR - Software revision minor number for product information common page, unused value 
+#ifndef SDM_SW_REVISION_MINOR
+#define SDM_SW_REVISION_MINOR 255
+#endif
+
+// <o> SDM_SERIAL_NUMBER - Serial number for product information common page 
+#ifndef SDM_SERIAL_NUMBER
+#define SDM_SERIAL_NUMBER 1234567
+#endif
+
+// <o> SDM_SW_REVISION_MAJOR - Software revision major number for product information common page 
+#ifndef SDM_SW_REVISION_MAJOR
+#define SDM_SW_REVISION_MAJOR 170
+#endif
+
+// <o> SDM_SW_REVISION_MINOR - Software revision minor number for product information common page, unused value 
+#ifndef SDM_SW_REVISION_MINOR
+#define SDM_SW_REVISION_MINOR 255
+#endif
+
+// <o> SDM_SERIAL_NUMBER - Serial number for product information common page 
+#ifndef SDM_SERIAL_NUMBER
+#define SDM_SERIAL_NUMBER 1234567
+#endif
+
+// <o> SDM_SW_REVISION_MAJOR - Software revision major number for product information common page 
+#ifndef SDM_SW_REVISION_MAJOR
+#define SDM_SW_REVISION_MAJOR 170
+#endif
+
+// <o> SDM_SW_REVISION_MINOR - Software revision minor number for product information common page, unused value 
+#ifndef SDM_SW_REVISION_MINOR
+#define SDM_SW_REVISION_MINOR 255
+#endif
+
+// <o> SDM_SERIAL_NUMBER - Serial number for product information common page 
+#ifndef SDM_SERIAL_NUMBER
+#define SDM_SERIAL_NUMBER 1234567
 #endif
 
 // <o> SDM_SW_REVISION_MAJOR - Software revision major number for product information common page 
@@ -1435,6 +1639,126 @@
 // <o> SIMULATOR_INCR - Cadence increment 
 #ifndef SIMULATOR_INCR
 #define SIMULATOR_INCR 2
+#endif
+
+// <o> SIMULATOR_MIN - Minimal cadence 
+#ifndef SIMULATOR_MIN
+#define SIMULATOR_MIN 60
+#endif
+
+// <o> SIMULATOR_MAX - Maximal cadence 
+#ifndef SIMULATOR_MAX
+#define SIMULATOR_MAX 200
+#endif
+
+// <o> SIMULATOR_INCR - Cadence increment 
+#ifndef SIMULATOR_INCR
+#define SIMULATOR_INCR 2
+#endif
+
+// <o> SIMULATOR_MIN - Minimal cadence 
+#ifndef SIMULATOR_MIN
+#define SIMULATOR_MIN 60
+#endif
+
+// <o> SIMULATOR_MAX - Maximal cadence 
+#ifndef SIMULATOR_MAX
+#define SIMULATOR_MAX 200
+#endif
+
+// <o> SIMULATOR_INCR - Cadence increment 
+#ifndef SIMULATOR_INCR
+#define SIMULATOR_INCR 2
+#endif
+
+// <o> SIMULATOR_MIN - Minimal cadence 
+#ifndef SIMULATOR_MIN
+#define SIMULATOR_MIN 60
+#endif
+
+// <o> SIMULATOR_MAX - Maximal cadence 
+#ifndef SIMULATOR_MAX
+#define SIMULATOR_MAX 200
+#endif
+
+// <o> SIMULATOR_INCR - Cadence increment 
+#ifndef SIMULATOR_INCR
+#define SIMULATOR_INCR 2
+#endif
+
+// <o> SIMULATOR_MIN - Minimal cadence 
+#ifndef SIMULATOR_MIN
+#define SIMULATOR_MIN 60
+#endif
+
+// <o> SIMULATOR_MAX - Maximal cadence 
+#ifndef SIMULATOR_MAX
+#define SIMULATOR_MAX 200
+#endif
+
+// <o> SIMULATOR_INCR - Cadence increment 
+#ifndef SIMULATOR_INCR
+#define SIMULATOR_INCR 2
+#endif
+
+// <o> SIMULATOR_STRIDE_LEN - Length of one stride 
+#ifndef SIMULATOR_STRIDE_LEN
+#define SIMULATOR_STRIDE_LEN 75
+#endif
+
+// <o> SIMULATOR_BURN_RATE - Calories burn rate 
+#ifndef SIMULATOR_BURN_RATE
+#define SIMULATOR_BURN_RATE 62
+#endif
+
+// <o> SIMULATOR_MIN - Minimal cadence 
+#ifndef SIMULATOR_MIN
+#define SIMULATOR_MIN 60
+#endif
+
+// <o> SIMULATOR_MAX - Maximal cadence 
+#ifndef SIMULATOR_MAX
+#define SIMULATOR_MAX 200
+#endif
+
+// <o> SIMULATOR_INCR - Cadence increment 
+#ifndef SIMULATOR_INCR
+#define SIMULATOR_INCR 2
+#endif
+
+// <o> SIMULATOR_STRIDE_LEN - Length of one stride 
+#ifndef SIMULATOR_STRIDE_LEN
+#define SIMULATOR_STRIDE_LEN 75
+#endif
+
+// <o> SIMULATOR_BURN_RATE - Calories burn rate 
+#ifndef SIMULATOR_BURN_RATE
+#define SIMULATOR_BURN_RATE 62
+#endif
+
+// <o> SIMULATOR_MIN - Minimal cadence 
+#ifndef SIMULATOR_MIN
+#define SIMULATOR_MIN 60
+#endif
+
+// <o> SIMULATOR_MAX - Maximal cadence 
+#ifndef SIMULATOR_MAX
+#define SIMULATOR_MAX 200
+#endif
+
+// <o> SIMULATOR_INCR - Cadence increment 
+#ifndef SIMULATOR_INCR
+#define SIMULATOR_INCR 2
+#endif
+
+// <o> SIMULATOR_STRIDE_LEN - Length of one stride 
+#ifndef SIMULATOR_STRIDE_LEN
+#define SIMULATOR_STRIDE_LEN 75
+#endif
+
+// <o> SIMULATOR_BURN_RATE - Calories burn rate 
+#ifndef SIMULATOR_BURN_RATE
+#define SIMULATOR_BURN_RATE 62
 #endif
 
 // <o> SIMULATOR_MIN - Minimal cadence 
@@ -4125,13 +4449,6 @@
 
 // </e>
 
-// <q> MEM_MANAGER_ENABLE_LOGS  - Enable debug trace in the module.
- 
-
-#ifndef MEM_MANAGER_ENABLE_LOGS
-#define MEM_MANAGER_ENABLE_LOGS 0
-#endif
-
 // <e> NRF_BALLOC_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef NRF_BALLOC_CONFIG_LOG_ENABLED
@@ -4587,6 +4904,57 @@
 
 #ifndef NRF_SDH_SOC_DEBUG_COLOR
 #define NRF_SDH_SOC_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_SORTLIST_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_SORTLIST_CONFIG_LOG_ENABLED
+#define NRF_SORTLIST_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_SORTLIST_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_SORTLIST_CONFIG_LOG_LEVEL
+#define NRF_SORTLIST_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_INFO_COLOR
+#define NRF_SORTLIST_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_DEBUG_COLOR
+#define NRF_SORTLIST_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>

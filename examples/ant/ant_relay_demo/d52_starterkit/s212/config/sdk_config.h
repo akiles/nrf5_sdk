@@ -207,12 +207,67 @@
 #define ANT_MOBILE_CHANNEL_NUMBER 0
 #endif
 
+// <o> MOBILE_CHAN_ID_DEV_TYPE - Mobile Channel ID: Device Type. 
+#ifndef MOBILE_CHAN_ID_DEV_TYPE
+#define MOBILE_CHAN_ID_DEV_TYPE 2
+#endif
+
+// <o> MOBILE_CHAN_ID_TRANS_TYPE - Mobile Channel ID: Transmission type. 
+#ifndef MOBILE_CHAN_ID_TRANS_TYPE
+#define MOBILE_CHAN_ID_TRANS_TYPE 5
+#endif
+
+// <o> MOBILE_RF_FREQ - Mobile RF Frequency. 
+#ifndef MOBILE_RF_FREQ
+#define MOBILE_RF_FREQ 77
+#endif
+
+// <o> MOBILE_CHAN_PERIOD - Mobile Channel Period (in 32 kHz counts). 
+#ifndef MOBILE_CHAN_PERIOD
+#define MOBILE_CHAN_PERIOD 8192
+#endif
+
+// <o> ANT_MOBILE_CHANNEL_NUMBER - Mobile ANT channel number. 
+#ifndef ANT_MOBILE_CHANNEL_NUMBER
+#define ANT_MOBILE_CHANNEL_NUMBER 0
+#endif
+
 // </h> 
 //==========================================================
 
 // <h> RELAY CHANNEL 
 
 //==========================================================
+// <o> RELAY_CHAN_ID_DEV_TYPE - Relay Channel ID: Device Type. 
+#ifndef RELAY_CHAN_ID_DEV_TYPE
+#define RELAY_CHAN_ID_DEV_TYPE 1
+#endif
+
+// <o> RELAY_CHAN_ID_TRANS_TYPE - Relay Channel ID: Transmission type. 
+#ifndef RELAY_CHAN_ID_TRANS_TYPE
+#define RELAY_CHAN_ID_TRANS_TYPE 5
+#endif
+
+// <o> RELAY_RF_FREQ - Relay RF Frequency. 
+#ifndef RELAY_RF_FREQ
+#define RELAY_RF_FREQ 72
+#endif
+
+// <o> RELAY_CHAN_PERIOD - Relay Channel Period (in 32 kHz counts). 
+#ifndef RELAY_CHAN_PERIOD
+#define RELAY_CHAN_PERIOD 8192
+#endif
+
+// <o> ANT_RELAY_MASTER_CHANNEL_NUMBER - Relay master ANT channel number. 
+#ifndef ANT_RELAY_MASTER_CHANNEL_NUMBER
+#define ANT_RELAY_MASTER_CHANNEL_NUMBER 1
+#endif
+
+// <o> ANT_RELAY_SLAVE_CHANNEL_NUMBER - Relay slave ANT channel number. 
+#ifndef ANT_RELAY_SLAVE_CHANNEL_NUMBER
+#define ANT_RELAY_SLAVE_CHANNEL_NUMBER 2
+#endif
+
 // <o> RELAY_CHAN_ID_DEV_TYPE - Relay Channel ID: Device Type. 
 #ifndef RELAY_CHAN_ID_DEV_TYPE
 #define RELAY_CHAN_ID_DEV_TYPE 1
@@ -2455,13 +2510,6 @@
 
 // </e>
 
-// <q> MEM_MANAGER_ENABLE_LOGS  - Enable debug trace in the module.
- 
-
-#ifndef MEM_MANAGER_ENABLE_LOGS
-#define MEM_MANAGER_ENABLE_LOGS 0
-#endif
-
 // <e> NRF_BALLOC_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef NRF_BALLOC_CONFIG_LOG_ENABLED
@@ -2917,6 +2965,57 @@
 
 #ifndef NRF_SDH_SOC_DEBUG_COLOR
 #define NRF_SDH_SOC_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_SORTLIST_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_SORTLIST_CONFIG_LOG_ENABLED
+#define NRF_SORTLIST_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_SORTLIST_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_SORTLIST_CONFIG_LOG_LEVEL
+#define NRF_SORTLIST_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_INFO_COLOR
+#define NRF_SORTLIST_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_DEBUG_COLOR
+#define NRF_SORTLIST_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>

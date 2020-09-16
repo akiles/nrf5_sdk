@@ -139,7 +139,11 @@ void get_datarate(void)
 {
     uint8_t c;
 
+#ifndef NRF52840_XXAA
     printf("Enter data rate ('0'=250 Kbit/s, '1'=1 Mbit/s and '2'=2 Mbit/s):\r\n");
+#else
+    printf("Enter data rate ('1'=1 Mbit/s and '2'=2 Mbit/s):\r\n");
+#endif //NRF52840_XXAA
     while (true)
     {
         scanf("%c",&c);
@@ -153,14 +157,17 @@ void get_datarate(void)
             printf("%c\r\n",BELL);
         }
     }
-    if (c == '0')
-    {
-        mode_ = RADIO_MODE_MODE_Nrf_250Kbit;
-    }
-    else if (c == '1')
+
+    if (c == '1')
     {
         mode_ = RADIO_MODE_MODE_Nrf_1Mbit;
     }
+#ifndef NRF52840_XXAA
+    else if (c == '0')
+    {
+        mode_ = RADIO_MODE_MODE_Nrf_250Kbit;
+    }
+#endif //NRF52840_XXAA
     else
     {
         mode_ = RADIO_MODE_MODE_Nrf_2Mbit;
@@ -238,9 +245,11 @@ void print_parameters(void)
     printf("Parameters:\r\n");
     switch (mode_)
     {
+#ifndef NRF52840_XXAA
         case RADIO_MODE_MODE_Nrf_250Kbit:
             printf("Data rate...........: 250 Kbit/s\r\n");
             break;
+#endif //NRF52840_XXAA
 
         case RADIO_MODE_MODE_Nrf_1Mbit:
             printf("Data rate...........: 1 Mbit/s\r\n");
@@ -312,7 +321,7 @@ int main(void)
         TX_PIN_NUMBER,
         RTS_PIN_NUMBER,
         CTS_PIN_NUMBER,
-        APP_UART_FLOW_CONTROL_ENABLED,
+        APP_UART_FLOW_CONTROL_DISABLED,
         false,
         UART_BAUDRATE_BAUDRATE_Baud115200
     };

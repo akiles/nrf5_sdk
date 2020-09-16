@@ -124,7 +124,7 @@
 /**@brief   Priority of the application BLE event handler.
  * @note    You shouldn't need to modify this value.
  */
-#define APP_BLE_OBSERVER_PRIO           1
+#define APP_BLE_OBSERVER_PRIO           3
 
 #define BLE_GAP_LESC_P256_SK_LEN        32
 
@@ -156,9 +156,11 @@ NRF_BLE_GATT_DEF(m_gatt);                                                   /**<
 BLE_ADVERTISING_DEF(m_advertising);                                         /**< Advertising module instance. */
 BLE_DB_DISCOVERY_DEF(m_db_disc);                                            /**< DB discovery module instance. */
 
-static uint16_t           m_conn_handle_hrs_c = BLE_CONN_HANDLE_INVALID;    /**< Connection handle for the HRS central application. */
-static bool               m_numneric_match_requested = false;
-static uint16_t           m_num_comp_conn_handle;
+static uint16_t           m_conn_handle_hrs_c                = BLE_CONN_HANDLE_INVALID;  /**< Connection handle for the HRS central application. */
+volatile static uint16_t  m_conn_handle_num_comp_central     = BLE_CONN_HANDLE_INVALID;  /**< Connection handle for central that needs a numeric comparison button press. */
+volatile static uint16_t  m_conn_handle_num_comp_peripheral  = BLE_CONN_HANDLE_INVALID;  /**< Connection handle for peripheral that needs a numeric comparison button press. */
+volatile static uint16_t  m_conn_handle_dhkey_req_central    = BLE_CONN_HANDLE_INVALID;  /**< Connection handle for central that needs a dhkey to be calculated. */
+volatile static uint16_t  m_conn_handle_dhkey_req_peripheral = BLE_CONN_HANDLE_INVALID;  /**< Connection handle for peripheral that needs a dhkey to be calculated. */
 static conn_peer_t        m_connected_peers[NRF_BLE_LINK_COUNT];
 
 /** @brief Parameters used when scanning. */
@@ -223,9 +225,11 @@ NRF_CRYPTO_ECC_PRIVATE_KEY_CREATE(m_private_key, SECP256R1);
  */
 NRF_CRYPTO_ECC_PUBLIC_KEY_CREATE(m_public_key, SECP256R1);
 
-/**@brief Allocated peer public key type to use for LESC DH generation
+/**@brief Allocated peer public keys to use for LESC DH generation.
+ * Create two keys to allow concurrent reception of DHKEY_REQUEST.
  */
-NRF_CRYPTO_ECC_PUBLIC_KEY_CREATE(m_peer_public_key, SECP256R1);
+NRF_CRYPTO_ECC_PUBLIC_KEY_CREATE(m_peer_public_key_central, SECP256R1);
+NRF_CRYPTO_ECC_PUBLIC_KEY_CREATE(m_peer_public_key_peripheral, SECP256R1);
 
 /**@brief Allocated raw public key to use for LESC DH.
  */
@@ -656,13 +660,62 @@ static bool is_already_connected(ble_gap_addr_t const * p_connected_adr)
 }
 
 
+/** @brief Function to handle a numeric comparison match request. */
+static void on_match_request(uint16_t conn_handle, uint8_t role)
+{
+    // Mark the appropriate conn_handle as pending. The rest is handled on button press.
+    NRF_LOG_INFO("Press Button 1 to confirm, Button 2 to reject");
+    if (role == BLE_GAP_ROLE_CENTRAL)
+    {
+        m_conn_handle_num_comp_central = conn_handle;
+    }
+    else if (role == BLE_GAP_ROLE_PERIPH)
+    {
+        m_conn_handle_num_comp_peripheral = conn_handle;
+    }
+}
+
+
+/** @brief Function to handle a request for calculation of a DH key. */
+static void on_dhkey_request(uint16_t                                 conn_handle,
+                             ble_gap_evt_lesc_dhkey_request_t const * p_dhkey_request,
+                             uint8_t                                  role)
+{
+    ret_code_t         err_code;
+    nrf_value_length_t peer_public_key_raw = {0};
+
+    peer_public_key_raw.p_value = &p_dhkey_request->p_pk_peer->pk[0];
+    peer_public_key_raw.length  = BLE_GAP_LESC_P256_PK_LEN;
+
+    // Prepare the key and mark it for calculation. The calculation will be performed in main to
+    // not block normal operation.
+    if (role == BLE_GAP_ROLE_CENTRAL)
+    {
+        err_code = nrf_crypto_ecc_public_key_from_raw(NRF_CRYPTO_BLE_ECDH_CURVE_INFO,
+                                                      &peer_public_key_raw,
+                                                      &m_peer_public_key_central);
+        APP_ERROR_CHECK(err_code);
+
+        m_conn_handle_dhkey_req_central = conn_handle;
+    }
+    else if (role == BLE_GAP_ROLE_PERIPH)
+    {
+        err_code = nrf_crypto_ecc_public_key_from_raw(NRF_CRYPTO_BLE_ECDH_CURVE_INFO,
+                                                      &peer_public_key_raw,
+                                                      &m_peer_public_key_peripheral);
+        APP_ERROR_CHECK(err_code);
+
+        m_conn_handle_dhkey_req_peripheral = conn_handle;
+    }
+}
+
+
 /**@brief Function for handling BLE Stack events common to both the central and peripheral roles.
  * @param[in] conn_handle Connection Handle.
  * @param[in] p_ble_evt  Bluetooth stack event.
  */
 static void on_ble_evt(uint16_t conn_handle, ble_evt_t const * p_ble_evt)
 {
-    ret_code_t err_code;
     char passkey[BLE_GAP_PASSKEY_LEN + 1];
     uint16_t role = ble_conn_state_role(conn_handle);
 
@@ -691,9 +744,7 @@ static void on_ble_evt(uint16_t conn_handle, ble_evt_t const * p_ble_evt)
 
             if (p_ble_evt->evt.gap_evt.params.passkey_display.match_request)
             {
-                NRF_LOG_INFO("Press Button 1 to confirm, Button 2 to reject");
-                m_num_comp_conn_handle = conn_handle;
-                m_numneric_match_requested = true;
+                on_match_request(conn_handle, role);
             }
             break;
 
@@ -703,25 +754,7 @@ static void on_ble_evt(uint16_t conn_handle, ble_evt_t const * p_ble_evt)
 
         case BLE_GAP_EVT_LESC_DHKEY_REQUEST:
             NRF_LOG_INFO("%s: BLE_GAP_EVT_LESC_DHKEY_REQUEST", nrf_log_push(roles_str[role]));
-
-            static nrf_value_length_t peer_public_key_raw = {0};
-
-            peer_public_key_raw.p_value = &p_ble_evt->evt.gap_evt.params.lesc_dhkey_request.p_pk_peer->pk[0];
-            peer_public_key_raw.length = BLE_GAP_LESC_P256_PK_LEN;
-
-            err_code = nrf_crypto_ecc_public_key_from_raw(NRF_CRYPTO_BLE_ECDH_CURVE_INFO,
-                                                          &peer_public_key_raw,
-                                                          &m_peer_public_key);
-            APP_ERROR_CHECK(err_code);
-
-            err_code = nrf_crypto_ecdh_shared_secret_compute(NRF_CRYPTO_BLE_ECDH_CURVE_INFO,
-                                                             &m_private_key,
-                                                             &m_peer_public_key,
-                                                             &m_dh_key);
-            APP_ERROR_CHECK(err_code);
-
-            err_code = sd_ble_gap_lesc_dhkey_reply(conn_handle, &m_lesc_dh_key);
-            APP_ERROR_CHECK(err_code);
+            on_dhkey_request(conn_handle, &p_ble_evt->evt.gap_evt.params.lesc_dhkey_request, role);
             break;
 
          case BLE_GAP_EVT_AUTH_STATUS:
@@ -733,7 +766,19 @@ static void on_ble_evt(uint16_t conn_handle, ble_evt_t const * p_ble_evt)
                           *((uint8_t *)&p_ble_evt->evt.gap_evt.params.auth_status.kdist_own),
                           *((uint8_t *)&p_ble_evt->evt.gap_evt.params.auth_status.kdist_peer));
             break;
-
+#ifndef S140
+        case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
+        {
+            NRF_LOG_DEBUG("PHY update request.");
+            ble_gap_phys_t const phys =
+            {
+                .rx_phys = BLE_GAP_PHY_AUTO,
+                .tx_phys = BLE_GAP_PHY_AUTO,
+            };
+            ret_code_t err_code = sd_ble_gap_phy_update(p_ble_evt->evt.gap_evt.conn_handle, &phys);
+            APP_ERROR_CHECK(err_code);
+        } break;
+#endif
         default:
             // No implementation needed.
             break;
@@ -770,7 +815,6 @@ static void on_ble_central_evt(ble_evt_t const * p_ble_evt)
             {
                 NRF_LOG_INFO("CENTRAL: Searching for HRS on conn_handle 0x%x", p_gap_evt->conn_handle);
 
-                memset(&m_db_disc, 0x00, sizeof(ble_db_discovery_t));
                 err_code = ble_db_discovery_start(&m_db_disc, p_gap_evt->conn_handle);
                 APP_ERROR_CHECK(err_code);
             }
@@ -894,7 +938,7 @@ static void on_ble_peripheral_evt(ble_evt_t const * p_ble_evt)
             NRF_LOG_INFO("PERIPHERAL: Disconnected, handle %d, reason 0x%x.",
                          p_ble_evt->evt.gap_evt.conn_handle,
                          p_ble_evt->evt.gap_evt.params.disconnected.reason);
-            bsp_board_led_off(PERIPHERAL_CONNECTED_LED);
+            // LED indication will be changed when advertising starts.
         break;
 
         case BLE_GATTC_EVT_TIMEOUT:
@@ -964,6 +1008,7 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
     {
         case BLE_ADV_EVT_FAST:
             bsp_board_led_on(PERIPHERAL_ADVERTISING_LED);
+            bsp_board_led_off(PERIPHERAL_CONNECTED_LED);
             break;
 
         case BLE_ADV_EVT_IDLE:
@@ -1109,6 +1154,47 @@ static void delete_bonds(void)
 }
 
 
+/** @brief Function to accept or reject a numeric comparison. */
+static void num_comp_reply(uint16_t conn_handle, bool accept)
+{
+    uint8_t    key_type;
+    ret_code_t err_code;
+
+    if (accept)
+    {
+        NRF_LOG_INFO("Numeric Match. Conn handle: %d", conn_handle);
+        key_type = BLE_GAP_AUTH_KEY_TYPE_PASSKEY;
+    }
+    else
+    {
+        NRF_LOG_INFO("Numeric REJECT. Conn handle: %d", conn_handle);
+        key_type = BLE_GAP_AUTH_KEY_TYPE_NONE;
+    }
+
+    err_code = sd_ble_gap_auth_key_reply(conn_handle,
+                                         key_type,
+                                         NULL);
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/** @brief Function to handle button presses for numeric comparison match requests. */
+static void on_num_comp_button_press(bool accept)
+{
+    // Check whether any links have pending match requests, and if so, send a reply.
+    if (m_conn_handle_num_comp_central != BLE_CONN_HANDLE_INVALID)
+    {
+        num_comp_reply(m_conn_handle_num_comp_central, accept);
+        m_conn_handle_num_comp_central = BLE_CONN_HANDLE_INVALID;
+    }
+    else if (m_conn_handle_num_comp_peripheral != BLE_CONN_HANDLE_INVALID)
+    {
+        num_comp_reply(m_conn_handle_num_comp_peripheral, accept);
+        m_conn_handle_num_comp_peripheral = BLE_CONN_HANDLE_INVALID;
+    }
+}
+
+
 /**@brief Function for handling events from the BSP module.
  *
  * @param[in]   event   Event generated by button press.
@@ -1128,23 +1214,12 @@ static void bsp_event_handler(bsp_event_t event)
             {
                 APP_ERROR_HANDLER(err_code);
             }
-            if (m_numneric_match_requested)
-            {
-                NRF_LOG_INFO("Numeric Match");
-                err_code = sd_ble_gap_auth_key_reply(m_num_comp_conn_handle, BLE_GAP_AUTH_KEY_TYPE_PASSKEY, NULL);
-                APP_ERROR_CHECK(err_code);
-                m_numneric_match_requested = false;
-            }
+
+            on_num_comp_button_press(true);
             break;
 
       case BSP_EVENT_KEY_1:
-            if (m_numneric_match_requested)
-            {
-                NRF_LOG_INFO("Numeric REJECT");
-                err_code = sd_ble_gap_auth_key_reply(m_num_comp_conn_handle, BLE_GAP_AUTH_KEY_TYPE_NONE, NULL);//Reject
-                APP_ERROR_CHECK(err_code);
-                m_numneric_match_requested = false;
-            }
+            on_num_comp_button_press(false);
             break;
 
         default:
@@ -1348,6 +1423,39 @@ static void power_manage(void)
 }
 
 
+/** @brief Function to calculate a dhkey and give it to the SoftDevice. */
+static void compute_and_give_dhkey(nrf_value_length_t * p_peer_public_key, uint16_t conn_handle)
+{
+    ret_code_t err_code = nrf_crypto_ecdh_shared_secret_compute(NRF_CRYPTO_BLE_ECDH_CURVE_INFO,
+                                                                &m_private_key,
+                                                                p_peer_public_key,
+                                                                &m_dh_key);
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_INFO("Calling sd_ble_gap_lesc_dhkey_reply on conn_handle: %d", conn_handle);
+    err_code = sd_ble_gap_lesc_dhkey_reply(conn_handle, &m_lesc_dh_key);
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/** @brief Function to check whether a key needs calculation, and calculate it. */
+static void service_dhkey_requests(void)
+{
+    if (m_conn_handle_dhkey_req_central != BLE_CONN_HANDLE_INVALID)
+    {
+        // The central link has received a DHKEY_REQUEST.
+        compute_and_give_dhkey(&m_peer_public_key_central, m_conn_handle_dhkey_req_central);
+        m_conn_handle_dhkey_req_central = BLE_CONN_HANDLE_INVALID;
+    }
+    else if (m_conn_handle_dhkey_req_peripheral != BLE_CONN_HANDLE_INVALID)
+    {
+        // The peripheral link has received a DHKEY_REQUEST.
+        compute_and_give_dhkey(&m_peer_public_key_peripheral, m_conn_handle_dhkey_req_peripheral);
+        m_conn_handle_dhkey_req_peripheral = BLE_CONN_HANDLE_INVALID;
+    }
+}
+
+
 int main(void)
 {
     bool erase_bonds;
@@ -1380,6 +1488,8 @@ int main(void)
 
     for (;;)
     {
+        service_dhkey_requests();
+
         if (NRF_LOG_PROCESS() == false)
         {
             // Wait for BLE events.

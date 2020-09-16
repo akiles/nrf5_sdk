@@ -55,6 +55,7 @@
 #include "nrf.h"
 #include "app_error.h"
 #include "ble.h"
+#include "ble_err.h"
 #include "ble_hci.h"
 #include "ble_srv_common.h"
 #include "ble_advdata.h"
@@ -82,7 +83,7 @@
 #define APP_ADV_INTERVAL_FAST           0x0028                                  /**< Fast advertising interval (in units of 0.625 ms. This value corresponds to 25 ms.). */
 #define APP_ADV_INTERVAL_SLOW           0x0C80                                  /**< Slow advertising interval (in units of 0.625 ms. This value corresponds to 2 seconds). */
 
-#define APP_BLE_OBSERVER_PRIO           1                                       /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_OBSERVER_PRIO           3                                       /**< Application's BLE observer priority. You shouldn't need to modify this value. */
 #define APP_BLE_CONN_CFG_TAG            1                                       /**< A tag identifying the SoftDevice BLE configuration. */
 
 #define MIN_CONN_INTERVAL               MSEC_TO_UNITS(500, UNIT_1_25_MS)        /**< Minimum acceptable connection interval (0.5 seconds).  */
@@ -535,8 +536,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
     {
         case BLE_GAP_EVT_DISCONNECTED:
             NRF_LOG_INFO("Disconnected.");
-            err_code = bsp_indication_set(BSP_INDICATE_IDLE);
-            APP_ERROR_CHECK(err_code);
+            // LED indication will be changed when advertising starts.
             break;
 
         case BLE_GAP_EVT_CONNECTED:
@@ -546,13 +546,12 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             APP_ERROR_CHECK(err_code);
 
             // Discover peer's services.
-            memset(&m_ble_db_discovery, 0x00, sizeof(m_ble_db_discovery));
             err_code = ble_db_discovery_start(&m_ble_db_discovery,
                                               p_ble_evt->evt.gap_evt.conn_handle);
             APP_ERROR_CHECK(err_code);
         } break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -723,13 +722,13 @@ static void bsp_event_handler(bsp_event_t event)
                     err_code = ble_ias_c_send_alert_level(&m_ias_c, BLE_CHAR_ALERT_LEVEL_NO_ALERT);
                     m_is_mild_alert_signalled = false;
                     m_is_high_alert_signalled = false;
-                    NRF_LOG_INFO("Mild Alert set.");
+                    NRF_LOG_INFO("No Alert set.");
                 }
                 else
                 {
                     err_code = ble_ias_c_send_alert_level(&m_ias_c, BLE_CHAR_ALERT_LEVEL_MILD_ALERT);
                     m_is_mild_alert_signalled = true;
-                    NRF_LOG_INFO("Alert Off.");
+                    NRF_LOG_INFO("Mild Alert set.");
                 }
 
                 if (err_code == NRF_SUCCESS)

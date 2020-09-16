@@ -156,12 +156,12 @@ int main(void)
     APP_ERROR_CHECK(err_code);
 
     NRF_LOG_RAW_INFO("Flashwrite example.\r\n");
-    NRF_LOG_RAW_INFO("Execute flash -h for more information "
-                     "or press <Tab> to see all available commands.\r\n");
+    NRF_LOG_RAW_INFO("Execute: <flash -h> for more information "
+                     "or press the Tab button to see all available commands.\r\n");
 
     while (true)
     {
-        NRF_LOG_FLUSH();
+        UNUSED_RETURN_VALUE(NRF_LOG_PROCESS());
         nrf_cli_process(&m_cli_uart);
     }
 }
@@ -304,16 +304,15 @@ static void flashwrite_cmd(nrf_cli_t const * p_cli, size_t argc, char **argv)
 
 NRF_CLI_CREATE_STATIC_SUBCMD_SET(m_sub_flash)
 {
-    NRF_CLI_CMD(erase, NULL,"Erase flash.", flashwrite_erase_cmd),
+    NRF_CLI_CMD(erase, NULL, "Erase flash.",          flashwrite_erase_cmd),
     NRF_CLI_CMD(read,  NULL, "Read data from flash.", flashwrite_read_cmd),
     NRF_CLI_CMD(write, NULL, "Write data to flash.\n"
                              "Limitations:\n"
                              "- maximum 16 entries,\n"
                              "- each entry is maximum 62 chars long.",
-                             flashwrite_write_cmd),
+                                                      flashwrite_write_cmd),
     NRF_CLI_SUBCMD_SET_END
 };
-
 NRF_CLI_CMD_REGISTER(flash, &m_sub_flash, "Flash access command.", flashwrite_cmd);
 
 /** @} */

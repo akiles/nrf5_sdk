@@ -69,7 +69,7 @@
 
 
 #define APP_BLE_CONN_CFG_TAG      1                                     /**< A tag that refers to the BLE stack configuration we set with @ref sd_ble_cfg_set. Default tag is @ref APP_BLE_CONN_CFG_TAG. */
-#define APP_BLE_OBSERVER_PRIO     1                                     /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_OBSERVER_PRIO     3                                     /**< Application's BLE observer priority. You shouldn't need to modify this value. */
 
 #define CENTRAL_SCANNING_LED      BSP_BOARD_LED_0
 #define CENTRAL_CONNECTED_LED     BSP_BOARD_LED_1
@@ -342,7 +342,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
                                                 NULL);
             APP_ERROR_CHECK(err_code);
 
-            memset(&m_db_disc[p_gap_evt->conn_handle], 0x00, sizeof(ble_db_discovery_t));
             err_code = ble_db_discovery_start(&m_db_disc[p_gap_evt->conn_handle],
                                               p_gap_evt->conn_handle);
             if (err_code != NRF_ERROR_BUSY)
@@ -412,7 +411,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             APP_ERROR_CHECK(err_code);
         } break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");

@@ -589,7 +589,6 @@ uint32_t dtm_wait(void)
     }
 }
 
-
 uint32_t dtm_cmd(dtm_cmd_t cmd, dtm_freq_t freq, uint32_t length, dtm_pkt_type_t payload)
 {
     // Save specified packet in static variable for tx/rx functions to use.

@@ -179,6 +179,7 @@
           <state>BOARD_PCA10056</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52840_XXAA</state>
+          <state>RETARGET_ENABLED=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -498,6 +499,7 @@
           <state>BOARD_PCA10056</state>
           <state>CONFIG_GPIO_AS_PINRESET</state>
           <state>NRF52840_XXAA</state>
+          <state>RETARGET_ENABLED=1</state>
         </option>
         <option>
           <name>AList</name>
@@ -1043,8 +1045,8 @@
     <name>$PROJ_DIR$\..\..\..\..\security.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\uart.c</name>    </file>  </group>  <group>
   <name>nRF_Segger_RTT</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\external\segger_rtt\RTT_Syscalls_IAR.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT_Syscalls_IAR.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT_printf.c</name>    </file>  </group>  <group>
   <name>Device</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\..\..\components\toolchain\iar\iar_startup_nrf52840.s</name>    </file>    <file>

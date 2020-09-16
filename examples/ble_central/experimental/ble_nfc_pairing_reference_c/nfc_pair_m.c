@@ -294,9 +294,9 @@ void ch_ndef_msg_handle(nfc_ndef_msg_desc_t * p_ch_msg_desc)
         {
             nfc_oob_data_printout(&le_oob_record_pairing_data);
 
-            uint8_t mem_diff = memcmp(&m_device_addr,
-                                      le_oob_record_pairing_data.p_device_addr,
-                                      sizeof(ble_gap_addr_t));
+            int mem_diff = memcmp(&m_device_addr,
+                                  le_oob_record_pairing_data.p_device_addr,
+                                  sizeof(ble_gap_addr_t));
             if ((mem_diff != 0) || m_same_tag_disconnected)
             {
                 nfc_essential_pairing_data_copy(&le_oob_record_pairing_data);

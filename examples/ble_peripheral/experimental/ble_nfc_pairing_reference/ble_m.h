@@ -90,7 +90,7 @@ void ble_disconnect(void);
 void ble_set_device_name(char const * device_name);
 
 
-/**@breif Function for getting the advertising module instance.
+/**@brief Function for getting the advertising module instance.
  *
  * @return Pointer to the advertising module instance.
  */

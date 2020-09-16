@@ -82,6 +82,7 @@ static nrf_pwm_sequence_t const    m_demo1_seq =
     .repeats             = 0,
     .end_delay           = 0
 };
+
 static void demo1_handler(nrf_drv_pwm_evt_type_t event_type)
 {
     if (event_type == NRF_DRV_PWM_EVT_FINISHED)
@@ -496,8 +497,6 @@ static void demo5(void)
 }
 
 
-
-
 static void bsp_evt_handler(bsp_event_t evt)
 {
     void (* const demos[])(void) =
@@ -570,10 +569,6 @@ static void init_bsp()
 
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
-    #ifdef DEBUG
-    app_error_print(id, pc, info);
-    #endif
-
     bsp_board_leds_on();
     app_error_save_and_stop(id, pc, info);
 }

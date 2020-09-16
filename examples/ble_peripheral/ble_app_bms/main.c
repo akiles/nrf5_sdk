@@ -79,7 +79,7 @@
 #define DEVICE_NAME                     "Nordic_BMS"                            //!< Name of device. Will be included in the advertising data.
 #define MANUFACTURER_NAME               "NordicSemiconductor"                   //!< Manufacturer. Will be passed to Device Information Service.
 
-#define APP_BLE_OBSERVER_PRIO           1                                       //!< Application's BLE observer priority. You shouldn't need to modify this value.
+#define APP_BLE_OBSERVER_PRIO           3                                       //!< Application's BLE observer priority. You shouldn't need to modify this value.
 #define APP_BLE_CONN_CFG_TAG            1                                       //!< A tag identifying the SoftDevice BLE configuration.
 
 #define SECURITY_REQUEST_DELAY          APP_TIMER_TICKS(4000)                   //!< Delay after connection until Security Request is sent, if necessary (ticks).
@@ -118,7 +118,6 @@ NRF_BLE_GATT_DEF(m_gatt);                                                       
 BLE_ADVERTISING_DEF(m_advertising);                                             //!< Advertising module instance.
 
 static uint16_t                      m_conn_handle = BLE_CONN_HANDLE_INVALID;   //!< Handle of the current connection.
-static pm_peer_id_t                  m_peer_id;                                 //!< Device reference handle to the current bonded central.
 static uint8_t                       m_qwr_mem[MEM_BUFF_SIZE];                  //!< Write buffer for the Queued Write module.
 static ble_conn_state_user_flag_id_t m_bms_bonds_to_delete;                     //!< Flags used to identify bonds that should be deleted.
 
@@ -212,21 +211,17 @@ static void advertising_start(bool erase_bonds)
 static void sec_req_timeout_handler(void * p_context)
 {
     ret_code_t              err_code;
-    uint16_t                conn_handle;
     pm_conn_sec_status_t    status;
 
-    if (m_peer_id != PM_PEER_ID_INVALID)
+    if (m_conn_handle != BLE_CONN_HANDLE_INVALID)
     {
-        err_code = pm_conn_handle_get(m_peer_id, &conn_handle);
-        APP_ERROR_CHECK(err_code);
-
-        err_code = pm_conn_sec_status_get(conn_handle, &status);
+        err_code = pm_conn_sec_status_get(m_conn_handle, &status);
         APP_ERROR_CHECK(err_code);
 
         // If the link is still not secured by the peer, initiate security procedure.
         if (!status.encrypted)
         {
-            err_code = pm_conn_secure(conn_handle, false);
+            err_code = pm_conn_secure(m_conn_handle, false);
             APP_ERROR_CHECK(err_code);
         }
     }
@@ -619,7 +614,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             APP_ERROR_CHECK(err_code);
             break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");

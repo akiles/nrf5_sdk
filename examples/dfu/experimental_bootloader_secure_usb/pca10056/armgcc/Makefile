@@ -1,12 +1,12 @@
 PROJECT_NAME     := secure_dfu_usb_s140_pca10056
-TARGETS          := nrf52840_xxaa
+TARGETS          := nrf52840_xxaa_S140
 OUTPUT_DIRECTORY := _build
 
 SDK_ROOT := ../../../../..
 PROJ_DIR := ../..
 
-$(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: \
-  LINKER_SCRIPT  := $(PROJ_DIR)/secure_dfu_gcc.ld
+$(OUTPUT_DIRECTORY)/nrf52840_xxaa_S140.out: \
+  LINKER_SCRIPT  := secure_dfu_usb_gcc_nrf52.ld
 
 # Source files common to all targets
 SRC_FILES += \
@@ -52,8 +52,6 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_mem.c \
   $(SDK_ROOT)/components/libraries/crypto/nrf_crypto_rng.c \
   $(PROJ_DIR)/main.c \
-  $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_svci_handler.c \
-  $(SDK_ROOT)/components/libraries/svc/nrf_svc_handler.c \
   $(SDK_ROOT)/components/libraries/bootloader/nrf_bootloader.c \
   $(SDK_ROOT)/components/libraries/bootloader/nrf_bootloader_app_start.c \
   $(SDK_ROOT)/components/libraries/bootloader/nrf_bootloader_app_start_asm.c \
@@ -199,14 +197,17 @@ LIB_FILES += -lc -lnosys -lm
 .PHONY: default help
 
 # Default target - first one defined
-default: nrf52840_xxaa
+default: nrf52840_xxaa_S140
 
 # Print all targets that can be built
 help:
 	@echo following targets are available:
-	@echo 	nrf52840_xxaa
+	@echo		nrf52840_xxaa_S140
+	@echo		sdk_config - starting external tool for editing sdk_config.h
+	@echo		flash      - flashing binary
 
 TEMPLATE_PATH := $(SDK_ROOT)/components/toolchain/gcc
+
 
 include $(TEMPLATE_PATH)/Makefile.common
 
@@ -215,10 +216,15 @@ $(foreach target, $(TARGETS), $(call define_target, $(target)))
 .PHONY: flash erase
 
 # Flash the program
-flash: $(OUTPUT_DIRECTORY)/nrf52840_xxaa.hex
+flash: $(OUTPUT_DIRECTORY)/nrf52840_xxaa_S140.hex
 	@echo Flashing: $<
 	nrfjprog -f nrf52 --program $< --sectorerase
 	nrfjprog -f nrf52 --reset
 
 erase:
 	nrfjprog -f nrf52 --eraseall
+
+SDK_CONFIG_FILE := ../config/sdk_config.h
+CMSIS_CONFIG_TOOL := $(SDK_ROOT)/external_tools/cmsisconfig/CMSIS_Configuration_Wizard.jar
+sdk_config:
+	java -jar $(CMSIS_CONFIG_TOOL) $(SDK_CONFIG_FILE)

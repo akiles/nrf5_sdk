@@ -10,13 +10,28 @@ $(OUTPUT_DIRECTORY)/nrf52840_xxaa.out: \
 
 # Source files common to all targets
 SRC_FILES += \
+  $(SDK_ROOT)/components/libraries/experimental_log/src/nrf_log_backend_rtt.c \
+  $(SDK_ROOT)/components/libraries/experimental_log/src/nrf_log_backend_serial.c \
+  $(SDK_ROOT)/components/libraries/experimental_log/src/nrf_log_backend_uart.c \
+  $(SDK_ROOT)/components/libraries/experimental_log/src/nrf_log_default_backends.c \
+  $(SDK_ROOT)/components/libraries/experimental_log/src/nrf_log_frontend.c \
+  $(SDK_ROOT)/components/libraries/experimental_log/src/nrf_log_str_formatter.c \
   $(SDK_ROOT)/components/boards/boards.c \
+  $(SDK_ROOT)/components/libraries/util/app_error.c \
+  $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
   $(SDK_ROOT)/components/libraries/util/app_util_platform.c \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
+  $(SDK_ROOT)/components/libraries/balloc/nrf_balloc.c \
+  $(SDK_ROOT)/external/fprintf/nrf_fprintf.c \
+  $(SDK_ROOT)/external/fprintf/nrf_fprintf_format.c \
+  $(SDK_ROOT)/components/libraries/experimental_memobj/nrf_memobj.c \
+  $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
+  $(SDK_ROOT)/components/drivers_nrf/common/nrf_drv_common.c \
+  $(SDK_ROOT)/components/drivers_nrf/uart/nrf_drv_uart.c \
   $(PROJ_DIR)/integration_test_ssi_aes_vectors.c \
   $(PROJ_DIR)/main.c \
-  $(SDK_ROOT)/external/segger_rtt/RTT_Syscalls_GCC.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
+  $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_Syscalls_GCC.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
   $(SDK_ROOT)/external/nrf_cc310/common/integration_test_plat_utils.c \
   $(SDK_ROOT)/components/toolchain/gcc/gcc_startup_nrf52840.S \
@@ -24,21 +39,31 @@ SRC_FILES += \
 
 # Include folders common to all targets
 INC_FOLDERS += \
-  $(SDK_ROOT)/components/device \
-  $(SDK_ROOT)/external/segger_rtt \
-  ../config \
-  $(SDK_ROOT)/components/libraries/bsp \
-  $(SDK_ROOT)/components/toolchain/cmsis/include \
+  $(SDK_ROOT)/external/fprintf \
   $(PROJ_DIR) \
-  $(SDK_ROOT)/components/boards \
+  $(SDK_ROOT)/components/libraries/experimental_section_vars \
+  $(SDK_ROOT)/components/libraries/experimental_log \
+  $(SDK_ROOT)/components/drivers_nrf/uart \
+  $(SDK_ROOT)/components/libraries/experimental_memobj \
+  $(SDK_ROOT)/components/libraries/atomic \
+  $(SDK_ROOT)/components/device \
+  ../config \
+  $(SDK_ROOT)/components/toolchain/cmsis/include \
+  $(SDK_ROOT)/components/libraries/balloc \
   $(SDK_ROOT)/components/drivers_nrf/hal \
-  $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
   $(SDK_ROOT)/components \
-  $(SDK_ROOT)/components/libraries/util \
+  $(SDK_ROOT)/components/libraries/strerror \
+  $(SDK_ROOT)/components/libraries/experimental_log/src \
+  $(SDK_ROOT)/components/drivers_nrf/common \
+  $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
+  $(SDK_ROOT)/external/segger_rtt \
+  $(SDK_ROOT)/components/toolchain/gcc \
   $(SDK_ROOT)/external/nrf_cc310/include \
+  $(SDK_ROOT)/components/libraries/bsp \
+  $(SDK_ROOT)/components/boards \
+  $(SDK_ROOT)/components/libraries/util \
   $(SDK_ROOT)/external/nrf_cc310/common \
   $(SDK_ROOT)/components/toolchain \
-  $(SDK_ROOT)/components/toolchain/gcc \
 
 # Libraries common to all targets
 LIB_FILES += \
@@ -60,8 +85,6 @@ CFLAGS += -DDEBUG_NRF
 CFLAGS += -DDX_CC_TEE
 CFLAGS += -DNRF52840_XXAA
 CFLAGS += -DNRF_LOG_BACKEND_RTT_OUTPUT_BUFFER_SIZE=2048
-CFLAGS += -DNRF_LOG_ENABLED=1
-CFLAGS += -DNRF_LOG_USES_RTT=1
 CFLAGS += -DNRF_SDK_PRESENT
 CFLAGS += -DSEGGER_RTT_BLOCKING
 CFLAGS += -D__STACK_SIZE=2048
@@ -90,8 +113,6 @@ ASMFLAGS += -DDEBUG_NRF
 ASMFLAGS += -DDX_CC_TEE
 ASMFLAGS += -DNRF52840_XXAA
 ASMFLAGS += -DNRF_LOG_BACKEND_RTT_OUTPUT_BUFFER_SIZE=2048
-ASMFLAGS += -DNRF_LOG_ENABLED=1
-ASMFLAGS += -DNRF_LOG_USES_RTT=1
 ASMFLAGS += -DNRF_SDK_PRESENT
 ASMFLAGS += -DSEGGER_RTT_BLOCKING
 ASMFLAGS += -D__STACK_SIZE=2048
@@ -120,9 +141,12 @@ default: nrf52840_xxaa
 # Print all targets that can be built
 help:
 	@echo following targets are available:
-	@echo 	nrf52840_xxaa
+	@echo		nrf52840_xxaa
+	@echo		sdk_config - starting external tool for editing sdk_config.h
+	@echo		flash      - flashing binary
 
 TEMPLATE_PATH := $(SDK_ROOT)/components/toolchain/gcc
+
 
 include $(TEMPLATE_PATH)/Makefile.common
 
@@ -138,3 +162,8 @@ flash: $(OUTPUT_DIRECTORY)/nrf52840_xxaa.hex
 
 erase:
 	nrfjprog -f nrf52 --eraseall
+
+SDK_CONFIG_FILE := ../config/sdk_config.h
+CMSIS_CONFIG_TOOL := $(SDK_ROOT)/external_tools/cmsisconfig/CMSIS_Configuration_Wizard.jar
+sdk_config:
+	java -jar $(CMSIS_CONFIG_TOOL) $(SDK_CONFIG_FILE)

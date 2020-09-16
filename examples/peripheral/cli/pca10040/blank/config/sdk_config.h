@@ -489,7 +489,7 @@
 
 // </e>
 
-// <q> NRF_CLI_UART_ENABLED  - nrf_cli_uart - UART command line interface transport.
+// <q> NRF_CLI_UART_ENABLED  - nrf_cli_uart - UART command line interface transport
  
 
 #ifndef NRF_CLI_UART_ENABLED
@@ -638,31 +638,38 @@
 #define NRF_STRERROR_ENABLED 1
 #endif
 
-// <h> nrf_cli - Command line interface.
+// <h> nrf_cli - Command line interface
 
 //==========================================================
-// <q> NRF_CLI_ENABLED  - Enable/disable CLI module.
+// <q> NRF_CLI_ENABLED  - Enable/disable the CLI module.
  
 
 #ifndef NRF_CLI_ENABLED
 #define NRF_CLI_ENABLED 1
 #endif
 
-// <o> NRF_CLI_ARGC_MAX - Maximum number of parameters passed to command handler. 
+// <o> NRF_CLI_ARGC_MAX - Maximum number of parameters passed to the command handler. 
 #ifndef NRF_CLI_ARGC_MAX
 #define NRF_CLI_ARGC_MAX 12
 #endif
 
-// <q> NRF_CLI_BUILD_IN_CMDS_ENABLED  - CLI build in commands.
+// <q> NRF_CLI_BUILD_IN_CMDS_ENABLED  - CLI built-in commands.
  
 
 #ifndef NRF_CLI_BUILD_IN_CMDS_ENABLED
 #define NRF_CLI_BUILD_IN_CMDS_ENABLED 1
 #endif
 
-// <o> NRF_CLI_CMD_BUFF_SIZE - Maximum buffer size for single command. 
+// <o> NRF_CLI_CMD_BUFF_SIZE - Maximum buffer size for a single command. 
 #ifndef NRF_CLI_CMD_BUFF_SIZE
 #define NRF_CLI_CMD_BUFF_SIZE 128
+#endif
+
+// <q> NRF_CLI_ECHO_STATUS  - CLI echo status. If set, echo is ON.
+ 
+
+#ifndef NRF_CLI_ECHO_STATUS
+#define NRF_CLI_ECHO_STATUS 1
 #endif
 
 // <o> NRF_CLI_PRINTF_BUFF_SIZE - Maximum print buffer size. 
@@ -675,12 +682,12 @@
 #ifndef NRF_CLI_HISTORY_ENABLED
 #define NRF_CLI_HISTORY_ENABLED 1
 #endif
-// <o> NRF_CLI_HISTORY_ELEMENT_SIZE - Size of one memory object reserved for CLI history 
+// <o> NRF_CLI_HISTORY_ELEMENT_SIZE - Size of one memory object reserved for CLI history. 
 #ifndef NRF_CLI_HISTORY_ELEMENT_SIZE
 #define NRF_CLI_HISTORY_ELEMENT_SIZE 32
 #endif
 
-// <o> NRF_CLI_HISTORY_ELEMENT_COUNT - Number of history memory objects 
+// <o> NRF_CLI_HISTORY_ELEMENT_COUNT - Number of history memory objects. 
 #ifndef NRF_CLI_HISTORY_ELEMENT_COUNT
 #define NRF_CLI_HISTORY_ELEMENT_COUNT 8
 #endif
@@ -692,6 +699,13 @@
 
 #ifndef NRF_CLI_VT100_COLORS_ENABLED
 #define NRF_CLI_VT100_COLORS_ENABLED 1
+#endif
+
+// <q> NRF_CLI_STATISTICS_ENABLED  - Enable CLI statistics.
+ 
+
+#ifndef NRF_CLI_STATISTICS_ENABLED
+#define NRF_CLI_STATISTICS_ENABLED 1
 #endif
 
 // <q> NRF_CLI_LOG_BACKEND  - Enable logger backend interface.
@@ -711,10 +725,10 @@
 // </h> 
 //==========================================================
 
-// <h> nrf_cli_cdc_acm - CDC ACM command line interface transport.
+// <h> nrf_cli_cdc_acm - CDC ACM command line interface transport
 
 //==========================================================
-// <q> NRF_CLI_CDC_ACM_ENABLED  - Enable/disable CLI CDC ACM module.
+// <q> NRF_CLI_CDC_ACM_ENABLED  - Enable/disable the CLI CDC ACM module.
  
 
 #ifndef NRF_CLI_CDC_ACM_ENABLED
@@ -749,10 +763,10 @@
 // </h> 
 //==========================================================
 
-// <h> nrf_cli_rtt - RTT command line interface transport.
+// <h> nrf_cli_rtt - RTT command line interface transport
 
 //==========================================================
-// <q> NRF_CLI_RTT_ENABLED  - Enable/disable CLI RTT module.
+// <q> NRF_CLI_RTT_ENABLED  - Enable/disable the CLI RTT module.
  
 
 #ifndef NRF_CLI_RTT_ENABLED
@@ -2400,13 +2414,6 @@
 
 // </e>
 
-// <q> MEM_MANAGER_ENABLE_LOGS  - Enable debug trace in the module.
- 
-
-#ifndef MEM_MANAGER_ENABLE_LOGS
-#define MEM_MANAGER_ENABLE_LOGS 0
-#endif
-
 // <e> NRF_BALLOC_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef NRF_BALLOC_CONFIG_LOG_ENABLED
@@ -2862,6 +2869,57 @@
 
 #ifndef NRF_SDH_SOC_DEBUG_COLOR
 #define NRF_SDH_SOC_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_SORTLIST_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_SORTLIST_CONFIG_LOG_ENABLED
+#define NRF_SORTLIST_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_SORTLIST_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_SORTLIST_CONFIG_LOG_LEVEL
+#define NRF_SORTLIST_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_INFO_COLOR
+#define NRF_SORTLIST_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_DEBUG_COLOR
+#define NRF_SORTLIST_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>

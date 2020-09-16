@@ -261,6 +261,9 @@ int main(void)
         // Generate new samples.
         noise = !noise;
         // Sine wave frequency must be positive number so cast rand to unsigned number.
+        // stdlib using with Segger Embedded Studio uses rand() configured to return values up to
+        // 32767 instead of 0x7fffffff configured in other compilers. It causes that generated sine
+        // frequency is smaller, but example works in the same way.
         sine_freq = (((uint32_t)rand()) % ((uint32_t)(SINE_WAVE_FREQ_MAX * SIGNALS_RESOLUTION)))
                     / SIGNALS_RESOLUTION;
         fft_generate_samples(m_fft_input_f32,

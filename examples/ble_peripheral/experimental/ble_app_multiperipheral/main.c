@@ -51,6 +51,7 @@
 #include "boards.h"
 #include "app_error.h"
 #include "ble.h"
+#include "ble_err.h"
 #include "ble_hci.h"
 #include "ble_srv_common.h"
 #include "ble_advdata.h"
@@ -99,7 +100,7 @@
 /**@brief   Priority of the application BLE event handler.
  * @note    You shouldn't need to modify this value.
  */
-#define APP_BLE_OBSERVER_PRIO    1
+#define APP_BLE_OBSERVER_PRIO    3
 
 
 BLE_LBS_DEF(m_lbs);                                                             /**< LED Button Service instance. */
@@ -422,7 +423,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             APP_ERROR_CHECK(err_code);
             break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");

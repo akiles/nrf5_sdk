@@ -4,5 +4,7 @@
     <path>$WS_DIR$\pca10056\blank\iar\saadc_pca10056.ewp</path>
   </project>  <project>
     <path>$WS_DIR$\pca10040\blank\iar\saadc_pca10040.ewp</path>
+  </project>  <project>
+    <path>$WS_DIR$\pca10040e\blank\iar\saadc_pca10040e.ewp</path>
   </project>  <batchBuild/>
 </workspace>

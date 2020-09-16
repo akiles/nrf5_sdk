@@ -203,12 +203,8 @@ static void data_handler(uint32_t const * p_data_received,
 
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
-    #ifdef DEBUG
-    app_error_print(id, pc, info);
-    #endif
-
     bsp_board_leds_on();
-    while (1);
+    app_error_save_and_stop(id, pc, info);
 }
 
 

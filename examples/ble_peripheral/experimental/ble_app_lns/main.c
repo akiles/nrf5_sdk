@@ -55,6 +55,7 @@
 #include "nrf.h"
 #include "nrf_assert.h"
 #include "nrf_error.h"
+#include "ble_err.h"
 #include "ble.h"
 #include "ble_hci.h"
 #include "ble_srv_common.h"
@@ -83,7 +84,7 @@
 #define DEVICE_NAME                         "Nordic_LNS"                            /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME                   "NordicSemiconductor"                   /**< Manufacturer. Will be passed to Device Information Service. */
 
-#define APP_BLE_OBSERVER_PRIO               1                                       /**< Application's BLE observer priority. You shoulnd't need to modify this value. */
+#define APP_BLE_OBSERVER_PRIO               3                                       /**< Application's BLE observer priority. You shoulnd't need to modify this value. */
 #define APP_BLE_CONN_CFG_TAG                1                                       /**< A tag identifying the SoftDevice BLE configuration. */
 
 #define APP_ADV_INTERVAL                    40                                      /**< The advertising interval (in units of 0.625 ms; this value corresponds to 25 ms). */
@@ -934,12 +935,11 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 
         case BLE_GAP_EVT_DISCONNECTED:
             NRF_LOG_INFO("Disconnected.");
-            err_code = bsp_indication_set(BSP_INDICATE_IDLE);
-            APP_ERROR_CHECK(err_code);
+            // LED indication will be changed when advertising starts.
             m_conn_handle = BLE_CONN_HANDLE_INVALID;
             break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");

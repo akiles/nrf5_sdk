@@ -50,10 +50,10 @@
              in Bluetooth Specification Version 5.0 Vol 3, Part G Section 7.
 */
 
-#include "app_pm.h"
-#include "app_adv.h"
 #include <stdint.h>
 #include <string.h>
+
+#include "app_adv.h"
 #include "nordic_common.h"
 #include "nrf.h"
 #include "app_error.h"
@@ -77,19 +77,22 @@
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
 
+#define APP_BLE_OBSERVER_PRIO 3                                     /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_CONN_CFG_TAG  1                                     /**< A tag identifying the SoftDevice BLE configuration. */
+#define FEATURE_NOT_SUPPORTED BLE_GATT_STATUS_ATTERR_APP_BEGIN + 2  /**< Reply when unsupported features are requested. */
+#define DEAD_BEEF             0xDEADBEEF                            /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
-#define APP_BLE_OBSERVER_PRIO       1                                       /**< Application's BLE observer priority. You shouldn't need to modify this value. */
-#define APP_BLE_CONN_CFG_TAG        1                                       /**< A tag identifying the SoftDevice BLE configuration. */
-#define FEATURE_NOT_SUPPORTED       BLE_GATT_STATUS_ATTERR_APP_BEGIN + 2    /**< Reply when unsupported features are requested. */
-#define DEAD_BEEF                   0xDEADBEEF                              /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
+NRF_BLE_GATT_DEF(m_gatt);                                           /**< GATT module instance. */
+NRF_BLE_GATTS_C_DEF(m_gatts_c);                                     /**< GATT Service client instance. Handles Service Changed indications from the peer. */
+BLE_DB_DISCOVERY_DEF(m_ble_db_discovery);                           /**< DB discovery module instance. */
 
-NRF_BLE_GATT_DEF(m_gatt);                                                   /**< GATT module instance. */
-NRF_BLE_GATTS_C_DEF(m_gatts_c);                                             /**< GATT Service client instance. Handles Service Changed indications from the peer. */
-BLE_DB_DISCOVERY_DEF(m_ble_db_discovery);                                   /**< DB discovery module instance. */
+static bool    m_erase_bonds;                                       /**< Bool to determine if bonds should be erased before advertising starts. Based on button push upon startup. */
 
-static bool m_erase_bonds;                                                  /**< Bool to determine if bonds should be erased before advertising starts. Based on button push upon startup. */
-
+static uint8_t m_pm_peer_srv_buffer[ALIGN_NUM(4, sizeof(ble_gatt_db_srv_t))] = {0}; /**< Data written to flash by peer manager must be aligned on 4 bytes.
+                                                                                         When loading and storing we will treat this byte array as a ble_gatt_db_srv_t.
+                                                                                         We use a static variable because it is written asynchronously. */
 
 /**@brief Function for assert macro callback.
 
@@ -168,7 +171,7 @@ static void gap_params_init(void)
 */
 static void buttons_leds_init(bool * p_erase_bonds)
 {
-    ret_code_t err_code;
+    ret_code_t  err_code;
     bsp_event_t startup_event;
 
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, NULL);
@@ -189,35 +192,265 @@ static void gatts_evt_handler(nrf_ble_gatts_c_evt_t * p_evt)
 {
     ret_code_t err_code;
 
+    NRF_LOG_INFO("GATTS Service client disconnected connection handle %i.", p_evt->conn_handle);
+
     switch (p_evt->evt_type)
     {
-      case NRF_BLE_GATTS_C_EVT_DISCOVERY_COMPLETE:
-            NRF_LOG_INFO("GATT Service and Service Changed characteristic found on server.\r\n");
+        case NRF_BLE_GATTS_C_EVT_DISCOVERY_COMPLETE:
+        {
+            NRF_LOG_INFO("GATT Service and Service Changed characteristic found on server.");
 
-            err_code = nrf_ble_gatts_c_handles_assign(&m_gatts_c, p_evt->conn_handle, &p_evt->params.gatts_handles);
+            ble_gatt_db_char_t service_changed_handles = p_evt->params.service.charateristics[0];
+            err_code = nrf_ble_gatts_c_handles_assign(&m_gatts_c, p_evt->conn_handle,
+                                                      &service_changed_handles);
+            APP_ERROR_CHECK(err_code);
+
+            pm_peer_id_t peer_id;
+            err_code = pm_peer_id_get(p_evt->conn_handle, &peer_id);
+            APP_ERROR_CHECK(err_code);
+
+            memcpy(m_pm_peer_srv_buffer, &(p_evt->params.service), sizeof(ble_gatt_db_srv_t));
+
+            err_code = pm_peer_data_remote_db_store(peer_id,
+                                                    (ble_gatt_db_srv_t *)m_pm_peer_srv_buffer,
+                                                    sizeof(m_pm_peer_srv_buffer),
+                                                    NULL);
+
+            if (err_code == NRF_ERROR_STORAGE_FULL)
+            {
+                err_code = fds_gc();
+            }
             APP_ERROR_CHECK(err_code);
 
             err_code = nrf_ble_gatts_c_enable_indication(&m_gatts_c, true);
             APP_ERROR_CHECK(err_code);
-        break;
+        } break;
 
-      case NRF_BLE_GATTS_C_EVT_DISCOVERY_FAILED:
-            NRF_LOG_INFO("GATT Service or Service Changed characteristic not found on server.\r\n");
-        break;
+        case NRF_BLE_GATTS_C_EVT_DISCOVERY_FAILED:
+            NRF_LOG_INFO("GATT Service or Service Changed characteristic not found on server.");
+            break;
 
-      case NRF_BLE_GATTS_C_EVT_DISCONN_COMPLETE:
-            NRF_LOG_INFO("GATTS Service disconnected.\r\n");
-          break;
+        case NRF_BLE_GATTS_C_EVT_DISCONN_COMPLETE:
+            NRF_LOG_INFO("GATTS Service client disconnected");
+            break;
 
-      case NRF_BLE_GATTS_C_EVT_SRV_CHANGED:
-          NRF_LOG_INFO("Service Changed on peer device.\r\n");
-          NRF_LOG_INFO("Handle range start: %04x", p_evt->params.handle_range.start_handle);
-          NRF_LOG_INFO("Handle range end: %04x", p_evt->params.handle_range.end_handle);
-        break;
+        case NRF_BLE_GATTS_C_EVT_SRV_CHANGED:
+            NRF_LOG_INFO("Service Changed indication received.");
+            NRF_LOG_INFO("Handle range start: %04x", p_evt->params.handle_range.start_handle);
+            NRF_LOG_INFO("Handle range end: %04x", p_evt->params.handle_range.end_handle);
+            break;
 
-      default:
-        break;
+        default:
+            break;
     }
+}
+
+
+/**@brief Function for handling File Data Storage events.
+ *
+ * @param[in] p_evt  Flash Data Storage event.
+ *
+ */
+static void fds_evt_handler(fds_evt_t const * const p_evt)
+{
+    if (p_evt->id == FDS_EVT_GC)
+    {
+        NRF_LOG_DEBUG("GC completed.");
+    }
+}
+
+
+/**@brief Function for handling Peer Manager events.
+ *
+ * @param[in] p_evt  Peer Manager event.
+ */
+static void pm_evt_handler(pm_evt_t const * p_evt)
+{
+    ret_code_t err_code;
+
+    switch (p_evt->evt_id)
+    {
+        case PM_EVT_BONDED_PEER_CONNECTED:
+        {
+            NRF_LOG_INFO("Connected to a previously bonded device.");
+            pm_peer_id_t peer_id;
+            err_code = pm_peer_id_get(p_evt->conn_handle, &peer_id);
+            APP_ERROR_CHECK(err_code);
+            if (peer_id != PM_PEER_ID_INVALID)
+            {
+
+                ble_gatt_db_srv_t * remote_db;
+                remote_db         = (ble_gatt_db_srv_t *)m_pm_peer_srv_buffer;
+                uint16_t data_len = sizeof(m_pm_peer_srv_buffer);
+
+                err_code = pm_peer_data_remote_db_load(peer_id, remote_db, &data_len);
+                if (err_code == NRF_ERROR_NOT_FOUND)
+                {
+                    NRF_LOG_DEBUG("Could not find the remote database in flash.");
+                    err_code = nrf_ble_gatts_c_handles_assign(&m_gatts_c, p_evt->conn_handle, NULL);
+                    APP_ERROR_CHECK(err_code);
+
+                    // Discover peer's services.
+                    memset(&m_ble_db_discovery, 0x00, sizeof(m_ble_db_discovery));
+                    err_code = ble_db_discovery_start(&m_ble_db_discovery, p_evt->conn_handle);
+                    APP_ERROR_CHECK(err_code);
+                }
+                else
+                {
+                    // Check if the load was successful.
+                    NRF_LOG_INFO("Remote Database loaded from flash.");
+                    APP_ERROR_CHECK(err_code);
+
+                    // Assign the loaded handles to the GATT Service client module.
+                    ble_gatt_db_char_t service_changed_handles = remote_db->charateristics[0];
+                    err_code = nrf_ble_gatts_c_handles_assign(&m_gatts_c,
+                                                              p_evt->conn_handle,
+                                                              &service_changed_handles);
+                    APP_ERROR_CHECK(err_code);
+
+                    // Enable indications.
+                    err_code = nrf_ble_gatts_c_enable_indication(&m_gatts_c, true);
+                    APP_ERROR_CHECK(err_code);
+                }
+            }
+        } break;
+
+        case PM_EVT_CONN_SEC_SUCCEEDED:
+        {
+            NRF_LOG_INFO("Connection secured: role: %d, conn_handle: 0x%x, procedure: %d.",
+                         ble_conn_state_role(p_evt->conn_handle),
+                         p_evt->conn_handle,
+                         p_evt->params.conn_sec_succeeded.procedure);
+
+            // Check it the Service Changed characteristic handle exists in our client instance.
+            // If it is invalid, we know service discovery is needed.
+            // (No database was loaded during @ref PM_EVT_BONDED_PEER_CONNECTED)
+            if (m_gatts_c.srv_changed_char.characteristic.handle_value == BLE_GATT_HANDLE_INVALID)
+            {
+                err_code = nrf_ble_gatts_c_handles_assign(&m_gatts_c, p_evt->conn_handle, NULL);
+                APP_ERROR_CHECK(err_code);
+                   
+                // Discover peer's services.
+                memset(&m_ble_db_discovery, 0x00, sizeof(m_ble_db_discovery));
+                err_code = ble_db_discovery_start(&m_ble_db_discovery, p_evt->conn_handle);
+                APP_ERROR_CHECK(err_code);
+            }
+
+        } break;
+
+        case PM_EVT_CONN_SEC_FAILED:
+            // Often, when securing fails, it should not be restarted, for security reasons.
+            // Other times, it can be restarted directly.
+            // Sometimes it can be restarted, but only after changing some Security Parameters.
+            // Sometimes, it cannot be restarted until the link is disconnected and reconnected.
+            // Sometimes it is impossible to secure the link, or the peer device does not support it.
+            // How to handle this error is highly application dependent.
+            NRF_LOG_INFO("Connection security failed: role: %d, conn_handle: 0x%x, procedure: %d, error: %d.",
+                         ble_conn_state_role(p_evt->conn_handle),
+                         p_evt->conn_handle,
+                         p_evt->params.conn_sec_failed.procedure,
+                         p_evt->params.conn_sec_failed.error);
+            break;
+
+        case PM_EVT_CONN_SEC_CONFIG_REQ:
+        {
+            // Reject pairing request from an already bonded peer.
+            pm_conn_sec_config_t conn_sec_config = {.allow_repairing = false};
+            pm_conn_sec_config_reply(p_evt->conn_handle, &conn_sec_config);
+            break;
+        }
+
+        case PM_EVT_STORAGE_FULL:
+            // Run garbage collection on the flash.
+            err_code = fds_gc();
+            if (err_code == FDS_ERR_BUSY || err_code == FDS_ERR_NO_SPACE_IN_QUEUES)
+            {
+                // Retry.
+            }
+            else
+            {
+                APP_ERROR_CHECK(err_code);
+            }
+            break;
+
+        case PM_EVT_PEERS_DELETE_SUCCEEDED:
+            // Peer data was cleared from the flash. Start advertising with an empty list of peers.
+            NRF_LOG_DEBUG("PM_EVT_PEERS_DELETE_SUCCEEDED");
+            advertising_start(false);
+            break;
+
+        case PM_EVT_LOCAL_DB_CACHE_APPLY_FAILED:
+            // The local database has likely changed, send Service Changed indications.
+            pm_local_database_has_changed();
+            break;
+
+        case PM_EVT_PEER_DATA_UPDATE_FAILED:
+            APP_ERROR_CHECK(p_evt->params.peer_data_update_failed.error);
+            break;
+
+        case PM_EVT_PEER_DELETE_FAILED:
+            APP_ERROR_CHECK(p_evt->params.peer_delete_failed.error);
+            break;
+
+        case PM_EVT_PEERS_DELETE_FAILED:
+            APP_ERROR_CHECK(p_evt->params.peers_delete_failed_evt.error);
+            break;
+
+        case PM_EVT_ERROR_UNEXPECTED:
+            APP_ERROR_CHECK(p_evt->params.error_unexpected.error);
+            break;
+
+        case PM_EVT_CONN_SEC_START:
+        // fall-through.
+        case PM_EVT_PEER_DATA_UPDATE_SUCCEEDED:
+        // fall-through.
+        case PM_EVT_PEER_DELETE_SUCCEEDED:
+        // fall-through.
+        case PM_EVT_LOCAL_DB_CACHE_APPLIED:
+        // fall-through.
+        case PM_EVT_SERVICE_CHANGED_IND_SENT:
+        // fall-through.
+        case PM_EVT_SERVICE_CHANGED_IND_CONFIRMED:
+        // fall-through.
+        default:
+            // No implementation needed.
+            break;
+    }
+}
+
+
+/**@brief Function for initializing the Peer Manager.
+ */
+void peer_manager_init(void)
+{
+    ret_code_t           err_code;
+    ble_gap_sec_params_t sec_param;
+
+    err_code = pm_init();
+    APP_ERROR_CHECK(err_code);
+
+    memset(&sec_param, 0, sizeof(ble_gap_sec_params_t));
+
+    // Security parameters to be used for all security procedures.
+    sec_param.bond           = SEC_PARAM_BOND;
+    sec_param.mitm           = SEC_PARAM_MITM;
+    sec_param.io_caps        = SEC_PARAM_IO_CAPABILITIES;
+    sec_param.oob            = SEC_PARAM_OOB;
+    sec_param.min_key_size   = SEC_PARAM_MIN_KEY_SIZE;
+    sec_param.max_key_size   = SEC_PARAM_MAX_KEY_SIZE;
+    sec_param.kdist_own.enc  = 1;
+    sec_param.kdist_own.id   = 1;
+    sec_param.kdist_peer.enc = 1;
+    sec_param.kdist_peer.id  = 1;
+
+    err_code = pm_sec_params_set(&sec_param);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = pm_register(pm_evt_handler);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = fds_register(fds_evt_handler);
+    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -242,12 +475,7 @@ static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
 static void on_connect(ble_evt_t const * p_ble_evt)
 {
     ret_code_t err_code;
-    NRF_LOG_INFO("Connected.\r\n");
-    err_code = nrf_ble_gatts_c_handles_assign(&m_gatts_c, p_ble_evt->evt.gap_evt.conn_handle, NULL);
-    APP_ERROR_CHECK(err_code);
-
-    err_code = ble_db_discovery_start(&m_ble_db_discovery, p_ble_evt->evt.gap_evt.conn_handle);
-    APP_ERROR_CHECK(err_code);
+    NRF_LOG_INFO("Connected.");
 
     err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
     APP_ERROR_CHECK(err_code);
@@ -288,6 +516,7 @@ static void on_rw_authorize_req(ble_evt_t const * p_ble_evt)
     }
 }
 
+
 /**@brief Function for handling timeout BLE stack events.
 
    @param[in] p_ble_evt Bluetooth stack event.
@@ -299,14 +528,14 @@ static void on_timeout(ble_evt_t const * p_ble_evt)
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GATTC_EVT_TIMEOUT:
-            NRF_LOG_DEBUG("GATT Client Timeout.\r\n");
+            NRF_LOG_DEBUG("GATT Client Timeout.");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gattc_evt.conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_GATTS_EVT_TIMEOUT:
-            NRF_LOG_DEBUG("GATT Server Timeout.\r\n");
+            NRF_LOG_DEBUG("GATT Server Timeout.");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gatts_evt.conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
@@ -331,14 +560,15 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
+        {
             on_connect(p_ble_evt);
-            break;
+        } break;
 
         case BLE_GAP_EVT_DISCONNECTED:
-            NRF_LOG_INFO("Disconnected. \r\n");
+            NRF_LOG_INFO("Disconnected.");
             break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -359,7 +589,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             break;
 
         case BLE_GATTC_EVT_TIMEOUT:
-            //fall-through.
+            // fall-through.
         case BLE_GATTS_EVT_TIMEOUT:
             on_timeout(p_ble_evt);
             break;
@@ -411,6 +641,7 @@ static void ble_stack_init(void)
 static void db_discovery_init(void)
 {
     ret_code_t err_code = ble_db_discovery_init(db_disc_handler);
+
     APP_ERROR_CHECK(err_code);
 }
 
@@ -420,7 +651,10 @@ static void db_discovery_init(void)
 static void log_init(void)
 {
     ret_code_t err_code = NRF_LOG_INIT(NULL);
+
     APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
 }
 
 
@@ -442,6 +676,7 @@ static void idle_state_handle(void)
 static void gatt_init(void)
 {
     ret_code_t err_code = nrf_ble_gatt_init(&m_gatt, NULL);
+
     APP_ERROR_CHECK(err_code);
 }
 
@@ -486,7 +721,7 @@ int main(void)
     modules_init();
 
     // Start execution.
-    NRF_LOG_INFO("GATT Service client started.\r\n");
+    NRF_LOG_INFO("GATT Service client started.");
     advertising_start(m_erase_bonds);
 
     // Enter main loop.

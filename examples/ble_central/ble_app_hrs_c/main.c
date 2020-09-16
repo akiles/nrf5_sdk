@@ -75,7 +75,7 @@
 
 #define APP_BLE_CONN_CFG_TAG        1                                   /**< A tag identifying the SoftDevice BLE configuration. */
 
-#define APP_BLE_OBSERVER_PRIO       1                                   /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_OBSERVER_PRIO       3                                   /**< Application's BLE observer priority. You shouldn't need to modify this value. */
 #define APP_SOC_OBSERVER_PRIO       1                                   /**< Applications' SoC observer priority. You shoulnd't need to modify this value. */
 
 #define SEC_PARAM_BOND              1                                   /**< Perform bonding. */
@@ -97,7 +97,7 @@
 
 #define TARGET_UUID                 BLE_UUID_HEART_RATE_SERVICE         /**< Target device name that application is looking for. */
 
-/**@breif Macro to unpack 16bit unsigned UUID from octet stream. */
+/**@brief Macro to unpack 16bit unsigned UUID from octet stream. */
 #define UUID16_EXTRACT(DST, SRC) \
     do                           \
     {                            \
@@ -123,8 +123,6 @@ BLE_DB_DISCOVERY_DEF(m_db_disc);                                    /**< DB disc
 static uint16_t m_conn_handle;                                      /**< Current connection handle. */
 static bool     m_whitelist_disabled;                               /**< True if whitelist has been temporarily disabled. */
 static bool     m_memory_access_in_progress;                        /**< Flag to keep track of ongoing operations on persistent memory. */
-static bool     m_retry_db_disc;                                    /**< Flag to keep track of whether the DB discovery should be retried. */
-static uint16_t m_pending_db_disc_conn = BLE_CONN_HANDLE_INVALID;   /**< Connection handle for which the DB discovery is retried. */
 
 static ble_gap_scan_params_t m_scan_param;                          /**< Scan parameters requested for scanning and connection. */
 
@@ -492,19 +490,10 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
         case BLE_GAP_EVT_CONNECTED:
         {
             NRF_LOG_INFO("Connected.");
-            m_pending_db_disc_conn = p_ble_evt->evt.gap_evt.conn_handle;
-            m_retry_db_disc = false;
+
             // Discover peer's services.
-            err_code = ble_db_discovery_start(&m_db_disc, m_pending_db_disc_conn);
-            if (err_code == NRF_ERROR_BUSY)
-            {
-                NRF_LOG_INFO("ble_db_discovery_start() returned busy, will retry later.");
-                m_retry_db_disc = true;
-            }
-            else
-            {
-                APP_ERROR_CHECK(err_code);
-            }
+            err_code = ble_db_discovery_start(&m_db_disc, p_ble_evt->evt.gap_evt.conn_handle);
+            APP_ERROR_CHECK(err_code);
 
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
@@ -577,9 +566,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             err_code = bsp_indication_set(BSP_INDICATE_IDLE);
             APP_ERROR_CHECK(err_code);
 
-            // Reset DB discovery structure.
-            memset(&m_db_disc, 0 , sizeof (m_db_disc));
-
             if (ble_conn_state_n_centrals() < NRF_SDH_BLE_CENTRAL_LINK_COUNT)
             {
                 scan_start();
@@ -606,7 +592,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             APP_ERROR_CHECK(err_code);
             break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -1129,27 +1115,6 @@ static void gatt_evt_handler(nrf_ble_gatt_t * p_gatt, nrf_ble_gatt_evt_t const *
 
         default:
             break;
-    }
-
-    if (m_retry_db_disc)
-    {
-        NRF_LOG_DEBUG("Retrying DB discovery.");
-
-        m_retry_db_disc = false;
-
-        // Discover peer's services.
-        ret_code_t err_code;
-        err_code = ble_db_discovery_start(&m_db_disc, m_pending_db_disc_conn);
-
-        if (err_code == NRF_ERROR_BUSY)
-        {
-            NRF_LOG_DEBUG("ble_db_discovery_start() returned busy, will retry later.");
-            m_retry_db_disc = true;
-        }
-        else
-        {
-            APP_ERROR_CHECK(err_code);
-        }
     }
 }
 

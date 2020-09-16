@@ -31,10 +31,10 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/util/nrf_assert.c \
   $(SDK_ROOT)/components/libraries/atomic_fifo/nrf_atfifo.c \
   $(SDK_ROOT)/components/libraries/balloc/nrf_balloc.c \
-  $(SDK_ROOT)/components/libraries/experimental_cli/nrf_cli.c \
-  $(SDK_ROOT)/components/libraries/experimental_cli/cdc_acm/nrf_cli_cdc_acm.c \
-  $(SDK_ROOT)/components/libraries/experimental_cli/rtt/nrf_cli_rtt.c \
-  $(SDK_ROOT)/components/libraries/experimental_cli/uart/nrf_cli_uart.c \
+  $(SDK_ROOT)/components/libraries/cli/nrf_cli.c \
+  $(SDK_ROOT)/components/libraries/cli/cdc_acm/nrf_cli_cdc_acm.c \
+  $(SDK_ROOT)/components/libraries/cli/rtt/nrf_cli_rtt.c \
+  $(SDK_ROOT)/components/libraries/cli/uart/nrf_cli_uart.c \
   $(SDK_ROOT)/external/fprintf/nrf_fprintf.c \
   $(SDK_ROOT)/external/fprintf/nrf_fprintf_format.c \
   $(SDK_ROOT)/components/libraries/experimental_memobj/nrf_memobj.c \
@@ -58,8 +58,8 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/bsp/bsp.c \
   $(SDK_ROOT)/components/libraries/bsp/bsp_nfc.c \
   $(PROJ_DIR)/main.c \
-  $(SDK_ROOT)/external/segger_rtt/RTT_Syscalls_GCC.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
+  $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_Syscalls_GCC.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
   $(SDK_ROOT)/components/toolchain/gcc/gcc_startup_nrf52840.S \
   $(SDK_ROOT)/components/toolchain/system_nrf52840.c \
@@ -68,41 +68,42 @@ SRC_FILES += \
 INC_FOLDERS += \
   $(PROJ_DIR)/config \
   $(SDK_ROOT)/components \
+  $(SDK_ROOT)/components/libraries/cli \
   ../config \
   $(SDK_ROOT)/components/libraries/scheduler \
-  $(SDK_ROOT)/components/libraries/experimental_cli \
+  $(SDK_ROOT)/components/libraries/cli/cdc_acm \
   $(SDK_ROOT)/components/libraries/queue \
-  $(SDK_ROOT)/components/libraries/experimental_section_vars \
+  $(SDK_ROOT)/components/libraries/pwr_mgmt \
   $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/components/drivers_nrf/delay \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/components/libraries/timer \
   $(SDK_ROOT)/components/libraries/util \
-  $(SDK_ROOT)/components/libraries/experimental_cli/cdc_acm \
+  $(SDK_ROOT)/components/libraries/hardfault \
   $(SDK_ROOT)/components/drivers_nrf/uart \
   $(SDK_ROOT)/components/libraries/usbd/class/cdc \
   $(SDK_ROOT)/components/libraries/balloc \
   $(SDK_ROOT)/components/drivers_nrf/usbd \
   $(SDK_ROOT)/components/libraries/hardfault/nrf52 \
+  $(SDK_ROOT)/components/libraries/cli/uart \
   $(SDK_ROOT)/components/libraries/experimental_stack_guard \
   $(SDK_ROOT)/components/libraries/bsp \
   $(SDK_ROOT)/components/device \
   $(SDK_ROOT)/components/libraries/experimental_log \
   $(SDK_ROOT)/external/segger_rtt \
-  $(SDK_ROOT)/components/toolchain \
   $(SDK_ROOT)/components/libraries/button \
-  $(SDK_ROOT)/components/libraries/experimental_cli/uart \
+  $(SDK_ROOT)/components/libraries/experimental_section_vars \
+  $(SDK_ROOT)/components/libraries/experimental_log/src \
   $(SDK_ROOT)/components/libraries/usbd \
   $(SDK_ROOT)/components/libraries/usbd/class/cdc/acm \
   $(SDK_ROOT)/components/libraries/mutex \
   $(PROJ_DIR) \
-  $(SDK_ROOT)/components/libraries/experimental_log/src \
+  $(SDK_ROOT)/components/libraries/cli/rtt \
   $(SDK_ROOT)/components/drivers_nrf/gpiote \
   $(SDK_ROOT)/components/libraries/experimental_mpu \
   $(SDK_ROOT)/components/drivers_nrf/power \
-  $(SDK_ROOT)/components/libraries/pwr_mgmt \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
-  $(SDK_ROOT)/components/libraries/experimental_cli/rtt \
+  $(SDK_ROOT)/components/toolchain \
   $(SDK_ROOT)/components/libraries/atomic \
   $(SDK_ROOT)/components/boards \
   $(SDK_ROOT)/components/libraries/atomic_fifo \
@@ -113,7 +114,6 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/drivers_nrf/common \
   $(SDK_ROOT)/components/drivers_nrf/clock \
   $(SDK_ROOT)/components/libraries/experimental_ringbuf \
-  $(SDK_ROOT)/components/libraries/hardfault \
   $(SDK_ROOT)/components/toolchain/gcc \
   $(SDK_ROOT)/external/fprintf \
 
@@ -180,9 +180,12 @@ default: nrf52840_xxaa
 # Print all targets that can be built
 help:
 	@echo following targets are available:
-	@echo 	nrf52840_xxaa
+	@echo		nrf52840_xxaa
+	@echo		sdk_config - starting external tool for editing sdk_config.h
+	@echo		flash      - flashing binary
 
 TEMPLATE_PATH := $(SDK_ROOT)/components/toolchain/gcc
+
 
 include $(TEMPLATE_PATH)/Makefile.common
 
@@ -198,3 +201,8 @@ flash: $(OUTPUT_DIRECTORY)/nrf52840_xxaa.hex
 
 erase:
 	nrfjprog -f nrf52 --eraseall
+
+SDK_CONFIG_FILE := ../config/sdk_config.h
+CMSIS_CONFIG_TOOL := $(SDK_ROOT)/external_tools/cmsisconfig/CMSIS_Configuration_Wizard.jar
+sdk_config:
+	java -jar $(CMSIS_CONFIG_TOOL) $(SDK_CONFIG_FILE)

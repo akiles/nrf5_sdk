@@ -47,31 +47,43 @@
 * This file contains the source code for a sample application using PPI to communicate between timers.
 *
 */
-
-#include <stdbool.h>
 #include <stdint.h>
-#include <stdio.h>
+
 #include "nrf_delay.h"
 #include "app_error.h"
-#include "boards.h"
+
 #include "nrf_drv_ppi.h"
 #include "nrf_drv_timer.h"
-#include "nordic_common.h"
-
 
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 
-const nrf_drv_timer_t timer0 = NRF_DRV_TIMER_INSTANCE(0);
-const nrf_drv_timer_t timer1 = NRF_DRV_TIMER_INSTANCE(1);
-const nrf_drv_timer_t timer2 = NRF_DRV_TIMER_INSTANCE(2);
+#define PPI_EXAMPLE_TIMERS_PHASE_SHIFT_DELAY    (10)    // 1s = 10 * 100ms (Timer 0 interrupt)
+#define PPI_EXAMPLE_TIMER0_INTERVAL             (100)   // Timer interval in milliseconds
+#define PPI_EXAMPLE_TIMER1_INTERVAL             (2000)  // Timer interval in milliseconds
+#define PPI_EXAMPLE_TIMER2_INTERVAL             (2000)  // Timer interval in milliseconds
 
-nrf_ppi_channel_t ppi_channel1, ppi_channel2;
 
+static const nrf_drv_timer_t m_timer0 = NRF_DRV_TIMER_INSTANCE(0);
+static const nrf_drv_timer_t m_timer1 = NRF_DRV_TIMER_INSTANCE(1);
+static const nrf_drv_timer_t m_timer2 = NRF_DRV_TIMER_INSTANCE(2);
 
-// Timer even handler. Not used since timer is used only for PPI.
-void timer_event_handler(nrf_timer_event_t event_type, void * p_context){}
+static nrf_ppi_channel_t m_ppi_channel1;
+static nrf_ppi_channel_t m_ppi_channel2;
+
+static volatile uint32_t m_counter;
+
+static void timer0_event_handler(nrf_timer_event_t event_type, void * p_context)
+{
+    ++m_counter;
+}
+
+/* Timer event handler. Not used since Timer1 and Timer2 are used only for PPI. */
+static void empty_timer_handler(nrf_timer_event_t event_type, void * p_context)
+{
+}
+
 
 /** @brief Function for initializing the PPI peripheral.
 */
@@ -82,92 +94,107 @@ static void ppi_init(void)
     err_code = nrf_drv_ppi_init();
     APP_ERROR_CHECK(err_code);
 
-    // Configure 1st available PPI channel to stop TIMER0 counter on TIMER1 COMPARE[0] match, which is every even number of seconds.
-    err_code = nrf_drv_ppi_channel_alloc(&ppi_channel1);
+    /* Configure 1st available PPI channel to stop TIMER0 counter on TIMER1 COMPARE[0] match,
+     * which is every even number of seconds.
+     */
+    err_code = nrf_drv_ppi_channel_alloc(&m_ppi_channel1);
     APP_ERROR_CHECK(err_code);
-    err_code = nrf_drv_ppi_channel_assign(ppi_channel1,
-                                          nrf_drv_timer_event_address_get(&timer1, NRF_TIMER_EVENT_COMPARE0),
-                                          nrf_drv_timer_task_address_get(&timer0, NRF_TIMER_TASK_STOP));
+    err_code = nrf_drv_ppi_channel_assign(m_ppi_channel1,
+                                          nrf_drv_timer_event_address_get(&m_timer1,
+                                                                          NRF_TIMER_EVENT_COMPARE0),
+                                          nrf_drv_timer_task_address_get(&m_timer0,
+                                                                         NRF_TIMER_TASK_STOP));
     APP_ERROR_CHECK(err_code);
 
-    // Configure 2nd available PPI channel to start timer0 counter at TIMER2 COMPARE[0] match, which is every odd number of seconds.
-    err_code = nrf_drv_ppi_channel_alloc(&ppi_channel2);
+    /* Configure 2nd available PPI channel to start TIMER0 counter at TIMER2 COMPARE[0] match,
+     * which is every odd number of seconds.
+     */
+    err_code = nrf_drv_ppi_channel_alloc(&m_ppi_channel2);
     APP_ERROR_CHECK(err_code);
-    err_code = nrf_drv_ppi_channel_assign(ppi_channel2,
-                                          nrf_drv_timer_event_address_get(&timer2, NRF_TIMER_EVENT_COMPARE0),
-                                          nrf_drv_timer_task_address_get(&timer0, NRF_TIMER_TASK_START));
+    err_code = nrf_drv_ppi_channel_assign(m_ppi_channel2,
+                                          nrf_drv_timer_event_address_get(&m_timer2,
+                                                                          NRF_TIMER_EVENT_COMPARE0),
+                                          nrf_drv_timer_task_address_get(&m_timer0,
+                                                                         NRF_TIMER_TASK_START));
     APP_ERROR_CHECK(err_code);
 
     // Enable both configured PPI channels
-    err_code = nrf_drv_ppi_channel_enable(ppi_channel1);
+    err_code = nrf_drv_ppi_channel_enable(m_ppi_channel1);
     APP_ERROR_CHECK(err_code);
-    err_code = nrf_drv_ppi_channel_enable(ppi_channel2);
+    err_code = nrf_drv_ppi_channel_enable(m_ppi_channel2);
     APP_ERROR_CHECK(err_code);
 }
 
 
-/** @brief Function for Timer 0 initialization, which will be started and stopped by timer1 and timer2 using PPI.
-*/
+/** @brief Function for Timer 0 initialization.
+ *  @details Timer 0 will be stopped and started by Timer 1 and Timer 2 respectively using PPI.
+ *           It is configured to generate an interrupt every 100ms.
+ */
 static void timer0_init(void)
 {
-    nrf_drv_timer_config_t timer_cfg = NRF_DRV_TIMER_DEFAULT_CONFIG;
-    timer_cfg.mode = NRF_TIMER_MODE_COUNTER;
-    ret_code_t err_code = nrf_drv_timer_init(&timer0, &timer_cfg, timer_event_handler);
-    APP_ERROR_CHECK(err_code);
-}
-
-
-/** @brief Function for Timer 1 initialization.
- *  @details Initializes Timer 1 peripheral, creates event and interrupt every 2 seconds,
- *           by configuring CC[0] to timer overflow value, we create events at even number of seconds
- *           for example, events are created at 2,4,6 ... seconds. This event can be used to stop Timer 0
- *           with Timer1->Event_Compare[0] triggering Timer 0 TASK_STOP through PPI.
-*/
-static void timer1_init(void)
-{
-    // Configure Timer 1 to overflow every 2 seconds. Check TIMER1 configuration for details
-    // The overflow occurs every 0xFFFF/(SysClk/2^PRESCALER).
-    // = 65535/31250 = 2.097 sec
+    // Check TIMER0 configuration for details.
     nrf_drv_timer_config_t timer_cfg = NRF_DRV_TIMER_DEFAULT_CONFIG;
     timer_cfg.frequency = NRF_TIMER_FREQ_31250Hz;
-    ret_code_t err_code = nrf_drv_timer_init(&timer1, &timer_cfg, timer_event_handler);
+    ret_code_t err_code = nrf_drv_timer_init(&m_timer0, &timer_cfg, timer0_event_handler);
     APP_ERROR_CHECK(err_code);
 
-    nrf_drv_timer_extended_compare(&timer1, NRF_TIMER_CC_CHANNEL0, 0xFFFFUL, NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK, false);
+    nrf_drv_timer_extended_compare(&m_timer0,
+                                   NRF_TIMER_CC_CHANNEL0,
+                                   nrf_drv_timer_ms_to_ticks(&m_timer0,
+                                                             PPI_EXAMPLE_TIMER0_INTERVAL),
+                                   NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK,
+                                   true);
+}
+
+/** @brief Function for Timer 1 initialization.
+ *  @details Initializes TIMER1 peripheral to generate an event every 2 seconds. The events are
+ *           generated at even numbers of seconds after starting the example (2, 4, 6 ...) and they
+ *           are used to stop TIMER0 via PPI: TIMER1->EVENT_COMPARE[0] triggers TIMER0->TASK_STOP.
+ */
+static void timer1_init(void)
+{
+    // Check TIMER1 configuration for details.
+    nrf_drv_timer_config_t timer_cfg = NRF_DRV_TIMER_DEFAULT_CONFIG;
+    timer_cfg.frequency = NRF_TIMER_FREQ_31250Hz;
+    ret_code_t err_code = nrf_drv_timer_init(&m_timer1, &timer_cfg, empty_timer_handler);
+    APP_ERROR_CHECK(err_code);
+
+    nrf_drv_timer_extended_compare(&m_timer1,
+                                   NRF_TIMER_CC_CHANNEL0,
+                                   nrf_drv_timer_ms_to_ticks(&m_timer1,
+                                                             PPI_EXAMPLE_TIMER1_INTERVAL),
+                                   NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK,
+                                   false);
 }
 
 
 /** @brief Function for Timer 2 initialization.
- *  @details Initializes Timer 2 peripheral, creates event and interrupt every 2 seconds
- *           by configuring CC[0] to half of timer overflow value. Events are created at odd number of seconds.
- *           For example, events are created at 1,3,5,... seconds. This event can be used to start Timer 0
- *           with Timer2->Event_Compare[0] triggering Timer 0 TASK_START through PPI.
-*/
+ *  @details Initializes TIMER2 peripheral to generate an event every 2 seconds. The events are
+ *           generated at odd numbers of seconds after starting the example (3, 5, 7 ...) and they
+ *           are used to start TIMER0 via PPI: TIMER2->EVENT_COMPARE[0] triggers TIMER0->TASK_START.
+ */
 static void timer2_init(void)
 {
-    // Generate interrupt/event when half of time before the timer overflows has past, that is at 1,3,5,7... seconds from start.
-    // Check TIMER1 configuration for details
-    // now the overflow occurs every 0xFFFF/(SysClk/2^PRESCALER)
-    // = 65535/31250 = 2.097 sec */
+    // Check TIMER2 configuration for details.
     nrf_drv_timer_config_t timer_cfg = NRF_DRV_TIMER_DEFAULT_CONFIG;
     timer_cfg.frequency = NRF_TIMER_FREQ_31250Hz;
-    ret_code_t err_code = nrf_drv_timer_init(&timer2, &timer_cfg, timer_event_handler);
+    ret_code_t err_code = nrf_drv_timer_init(&m_timer2, &timer_cfg, empty_timer_handler);
     APP_ERROR_CHECK(err_code);
 
-    nrf_drv_timer_extended_compare(&timer2, NRF_TIMER_CC_CHANNEL0, 0x7FFFUL, NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK, false);
+    nrf_drv_timer_extended_compare(&m_timer2,
+                                   NRF_TIMER_CC_CHANNEL0,
+                                   nrf_drv_timer_ms_to_ticks(&m_timer2,
+                                                             PPI_EXAMPLE_TIMER2_INTERVAL),
+                                   NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK,
+                                   false);
 }
-
 
 /**
  * @brief Function for application main entry.
  */
 int main(void)
 {
-    timer0_init(); // Timer used to blink the LEDs.
-    timer1_init(); // Timer to generate events on even number of seconds.
-    timer2_init(); // Timer to generate events on odd number of seconds.
-    ppi_init();    // PPI to redirect the event to timer start/stop tasks.
-
+    uint32_t old_val = 0;
     uint32_t err_code;
 
     err_code = NRF_LOG_INIT(NULL);
@@ -175,33 +202,42 @@ int main(void)
 
     NRF_LOG_DEFAULT_BACKENDS_INIT();
 
-    // Enabling constant latency as indicated by PAN 11 "HFCLK: Base current with HFCLK
-    // running is too high" found at Product Anomaly document found at
-    // https://www.nordicsemi.com/eng/Products/Bluetooth-R-low-energy/nRF51822/#Downloads
-    //
-    // @note This example does not go to low power mode therefore constant latency is not needed.
-    //       However this setting will ensure correct behaviour when routing TIMER events through
-    //       PPI (shown in this example) and low power mode simultaneously.
-    NRF_POWER->TASKS_CONSTLAT = 1;
+    ppi_init();
+    timer0_init(); // Timer used to increase m_counter every 100ms.
+    timer1_init(); // Timer to generate events on even number of seconds - stopping Timer 0
+    timer2_init(); // Timer to generate events on odd number of seconds - starting Timer 0
 
     // Start clock.
-    nrf_drv_timer_enable(&timer0);
-    nrf_drv_timer_enable(&timer1);
-    nrf_drv_timer_enable(&timer2);
+    nrf_drv_timer_enable(&m_timer0);
 
-    // Loop and increment the timer count value and capture value into LEDs. @note counter is only incremented between TASK_START and TASK_STOP.
+    /* Below delay is implemented to ensure that Timer0 interrupt will execute before PPI action.
+     * Please be aware that such solution was tested only in this simple example code. In case
+     * of more complex systems with higher level interrupts this may lead to not correct timers
+     * synchronization.
+     */
+    nrf_delay_us(5);
+    nrf_drv_timer_enable(&m_timer1);
+
+    m_counter = (uint32_t)-PPI_EXAMPLE_TIMERS_PHASE_SHIFT_DELAY;
+
+    // Timer 2 will start one second after Timer 1 (m_counter will equal 0 after 1s)
+    while (m_counter != 0) 
+    {
+        // just wait
+    }
+    nrf_drv_timer_enable(&m_timer2);
+
     while (true)
     {
+        uint32_t counter = m_counter;
+        if (old_val != counter)
+        {
+            old_val = counter;
 
-        NRF_LOG_INFO("Current count: %d", (int)nrf_drv_timer_capture(&timer0, NRF_TIMER_CC_CHANNEL0));
-
-        /* increment the counter */
-        nrf_drv_timer_increment(&timer0);
-
-        nrf_delay_ms(100);
-        NRF_LOG_FLUSH();
+            NRF_LOG_INFO("Current count: %u", counter);
+            NRF_LOG_FLUSH();
+        }
     }
 }
-
 
 /** @} */

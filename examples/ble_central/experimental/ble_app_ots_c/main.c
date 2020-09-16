@@ -77,7 +77,7 @@
 #include "nrf_log_default_backends.h"
 
 
-#define APP_BLE_OBSERVER_PRIO     1                                     /**< Application's BLE observer priority. You shoulnd't need to modify this value. */
+#define APP_BLE_OBSERVER_PRIO     3                                     /**< Application's BLE observer priority. You shoulnd't need to modify this value. */
 #define APP_SOC_OBSERVER_PRIO     1                                     /**< Applications' SoC observer priority. You shoulnd't need to modify this value. */
 
 #define SEC_PARAM_BOND            1                                     /**< Perform bonding. */
@@ -109,7 +109,7 @@
 #define L2CAP_TX_MPS              40                                     /**< Size of L2CAP Tx MPS (must be at least BLE_L2CAP_MPS_MIN).*/
 #define L2CAP_RX_MTU              30                                     /**< Rx L2CAP MTU size (must be at least BLE_L2CAP_MTU_MIN).*/
 
-/**@breif Macro to unpack 16bit unsigned UUID from octet stream. */
+/**@brief Macro to unpack 16bit unsigned UUID from octet stream. */
 #define UUID16_EXTRACT(DST, SRC) \
     do                           \
     {                            \
@@ -395,7 +395,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
         {
             NRF_LOG_INFO("Peer Connected. ");
             // Discover peer's services.
-            memset(&m_db_disc, 0x00, sizeof(ble_db_discovery_t));
             err_code = ble_db_discovery_start(&m_db_disc,
                                               p_ble_evt->evt.gap_evt.conn_handle);
             APP_ERROR_CHECK(err_code);
@@ -499,7 +498,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             }
         } break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");

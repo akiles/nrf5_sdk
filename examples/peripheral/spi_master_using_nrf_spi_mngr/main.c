@@ -90,6 +90,12 @@ static lcd_cb_t m_lcd_cb =
     .rotation = NRF_LCD_ROTATE_0
 };
 
+/* Dummy function. Rotation is not used in this example but such function is required
+ * by nrf_gfx module. */
+static void dummy_lcd_rotation_set(nrf_lcd_rotation_t rotation)
+{
+    UNUSED_PARAMETER(rotation);
+}
 
 /* Below functions are used by NRF GFX library. Rotation is not needed in this example. */
 static const nrf_lcd_t m_nrf_lcd =
@@ -99,7 +105,7 @@ static const nrf_lcd_t m_nrf_lcd =
     .lcd_pixel_draw = st7565_pixel_draw,
     .lcd_rect_draw = st7565_rect_draw,
     .lcd_display = st7565_display_screen,
-    .lcd_rotation_set = NULL,
+    .lcd_rotation_set = dummy_lcd_rotation_set,
     .lcd_display_invert = st7565_display_invert,
     .p_lcd_cb = &m_lcd_cb
 };

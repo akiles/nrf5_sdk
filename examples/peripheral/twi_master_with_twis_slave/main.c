@@ -296,14 +296,15 @@ int main(void)
     /* Welcome message */
     NRF_LOG_RAW_INFO(
             "This is TWIS and TWI usage example.\r\n"
-            "You can access simulated EEPROM memory using eeprom command.\r\n"
-            "Execute eeprom -h for more information or press <Tab> to see all commands.\r\n"
+            "You can access simulated EEPROM memory using <eeprom> command.\r\n"
+            "Execute: <eeprom -h> for more information or press the Tab button "
+            "to see all available commands.\r\n"
     );
 
     /* Main loop */
     while (1)
     {
-        NRF_LOG_FLUSH();
+        UNUSED_RETURN_VALUE(NRF_LOG_PROCESS());
         nrf_cli_process(&m_cli_uart);
 
         if (epprom_error != eeprom_simulator_error_check())
@@ -468,19 +469,19 @@ static void eeprom_cmd(nrf_cli_t const * p_cli, size_t argc, char **argv)
 
 NRF_CLI_CREATE_STATIC_SUBCMD_SET(m_sub_eeprom)
 {
-    NRF_CLI_CMD(clear, NULL, "clears the memory (write 0xff)", eeprom_cmd_clear),
-    NRF_CLI_CMD(error, NULL, "gets transmission error byte", eeprom_cmd_error),
+    NRF_CLI_CMD(clear, NULL, "Clear the memory (set 0xff).", eeprom_cmd_clear),
+    NRF_CLI_CMD(error, NULL, "Get transmission error byte.", eeprom_cmd_error),
     NRF_CLI_CMD(read,
                 NULL,
-                "prints the EEPROM contents in a form: address, 16 bytes of code, ASCII form",
+                "Print the EEPROM content in a form: address, 16 bytes of code, ASCII form.",
                 eeprom_cmd_read),
     NRF_CLI_CMD(write,
                 NULL,
-                "writes a string entered within quotes starting from address 0",
+                "Write a string entered within quotes (starting from address 0).",
                 eeprom_cmd_write),
     NRF_CLI_SUBCMD_SET_END
 };
 
-NRF_CLI_CMD_REGISTER(eeprom, &m_sub_eeprom, "eeprom access command", eeprom_cmd);
+NRF_CLI_CMD_REGISTER(eeprom, &m_sub_eeprom, "EEPROM access command.", eeprom_cmd);
 
 /** @} */ /* End of group twi_master_with_twis_slave_example */

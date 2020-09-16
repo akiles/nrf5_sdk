@@ -143,7 +143,7 @@
 /**@brief   Priority of the application BLE event handler.
  * @note    You shouldn't need to modify this value.
  */
-#define APP_BLE_OBSERVER_PRIO           1
+#define APP_BLE_OBSERVER_PRIO           3
 
 /**@brief Macro to unpack 16bit unsigned UUID from an octet stream.
  */
@@ -164,21 +164,17 @@ typedef struct
 } data_t;
 
 
-BLE_HRS_DEF(m_hrs);                                                 /**< Heart rate service instance. */
-BLE_RSCS_DEF(m_rscs);                                               /**< Running speed and cadence service instance. */
-BLE_HRS_C_DEF(m_hrs_c);                                             /**< Heart rate service client instance. */
-BLE_RSCS_C_DEF(m_rscs_c);                                           /**< Running speed and cadence service client instance. */
+static ble_hrs_t m_hrs;                                             /**< Heart rate service instance. */
+static ble_rscs_t m_rscs;                                           /**< Running speed and cadence service instance. */
+static ble_hrs_c_t m_hrs_c;                                         /**< Heart rate service client instance. */
+static ble_rscs_c_t m_rscs_c;                                       /**< Running speed and cadence service client instance. */
 
 NRF_BLE_GATT_DEF(m_gatt);                                           /**< GATT module instance. */
 BLE_ADVERTISING_DEF(m_advertising);                                 /**< Advertising module instance. */
-BLE_DB_DISCOVERY_DEF(m_db_discovery);                               /**< Database discovery module instances. */
+BLE_DB_DISCOVERY_ARRAY_DEF(m_db_discovery, 2);                      /**< Database discovery module instances. */
 
 static uint16_t m_conn_handle_hrs_c  = BLE_CONN_HANDLE_INVALID;     /**< Connection handle for the HRS central application */
 static uint16_t m_conn_handle_rscs_c = BLE_CONN_HANDLE_INVALID;     /**< Connection handle for the RSC central application */
-
-static uint16_t m_conn_handle_to_disc = BLE_CONN_HANDLE_INVALID;    /**< The connection handle on which to retry the DB discovery. */
-static bool     m_retry_db_disc;                                    /**< Retry DB discovery if attempted while busy. */
-static bool     m_do_retry_db_disc;
 
 /**@brief names which the central applications will scan for, and which will be advertised by the peripherals.
  *  if these are set to empty strings, the UUIDs defined below will be used
@@ -670,17 +666,15 @@ static void on_ble_central_evt(ble_evt_t const * p_ble_evt)
                 || (m_conn_handle_rscs_c == BLE_CONN_HANDLE_INVALID))
             {
                 NRF_LOG_INFO("Attempt to find HRS or RSC on conn_handle 0x%x", p_gap_evt->conn_handle);
-                if (m_db_discovery.discovery_in_progress)
+
+                err_code = ble_db_discovery_start(&m_db_discovery[0], p_gap_evt->conn_handle);
+                if (err_code == NRF_ERROR_BUSY)
                 {
-                    NRF_LOG_INFO("DB discovery is already in progress. Will retry later.")
-                    m_retry_db_disc = true;
-                    m_conn_handle_to_disc = p_gap_evt->conn_handle;
+                    err_code = ble_db_discovery_start(&m_db_discovery[1], p_gap_evt->conn_handle);
+                    APP_ERROR_CHECK(err_code);
                 }
                 else
                 {
-                    memset(&m_db_discovery, 0x00, sizeof(m_db_discovery));
-
-                    err_code = ble_db_discovery_start(&m_db_discovery, p_gap_evt->conn_handle);
                     APP_ERROR_CHECK(err_code);
                 }
             }
@@ -791,7 +785,7 @@ static void on_ble_central_evt(ble_evt_t const * p_ble_evt)
             APP_ERROR_CHECK(err_code);
         } break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -850,7 +844,7 @@ static void on_ble_peripheral_evt(ble_evt_t const * p_ble_evt)
             bsp_board_led_off(PERIPHERAL_CONNECTED_LED);
             break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -958,16 +952,6 @@ static bool ble_evt_is_advertising_timeout(ble_evt_t const * p_ble_evt)
 }
 
 
-static void db_discovery_retry(void)
-{
-    m_retry_db_disc = false;
-    NRF_LOG_INFO("Retrying DB discovery on handle 0x%x.", m_conn_handle_to_disc);
-    memset(&m_db_discovery, 0x00, sizeof(m_db_discovery));
-    ret_code_t err_code = ble_db_discovery_start(&m_db_discovery, m_conn_handle_to_disc);
-    APP_ERROR_CHECK(err_code);
-}
-
-
 /**@brief Function for handling BLE events.
  *
  * @param[in]   p_ble_evt   Bluetooth stack event.
@@ -981,17 +965,15 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
     // Based on the role this device plays in the connection, dispatch to the right handler.
     if (role == BLE_GAP_ROLE_PERIPH || ble_evt_is_advertising_timeout(p_ble_evt))
     {
+        ble_hrs_on_ble_evt(p_ble_evt, &m_hrs);
+        ble_rscs_on_ble_evt(p_ble_evt, &m_rscs);
         on_ble_peripheral_evt(p_ble_evt);
     }
     else if ((role == BLE_GAP_ROLE_CENTRAL) || (p_ble_evt->header.evt_id == BLE_GAP_EVT_ADV_REPORT))
     {
+        ble_hrs_c_on_ble_evt(p_ble_evt, &m_hrs_c);
+        ble_rscs_c_on_ble_evt(p_ble_evt, &m_rscs_c);
         on_ble_central_evt(p_ble_evt);
-    }
-
-    if (m_do_retry_db_disc)
-    {
-        m_do_retry_db_disc = false;
-        db_discovery_retry();
     }
 }
 
@@ -1191,19 +1173,6 @@ static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
 {
     ble_hrs_on_db_disc_evt(&m_hrs_c, p_evt);
     ble_rscs_on_db_disc_evt(&m_rscs_c, p_evt);
-
-    if (   (p_evt->evt_type == BLE_DB_DISCOVERY_COMPLETE)
-        && (m_retry_db_disc)
-        && (m_conn_handle_to_disc != BLE_CONN_HANDLE_INVALID))
-    {
-        // DB discovery cannot be restarted directly here because the
-        // database discovery structure would need to be zeroed, however it is still
-        // needed by the module (it might have pending events to send).
-        // Let's set a flag and re-run DB discovery when we receive the next BLE event.
-
-        NRF_LOG_INFO("DB discovery can be retried.");
-        m_do_retry_db_disc = true;
-    }
 }
 
 

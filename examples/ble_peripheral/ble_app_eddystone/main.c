@@ -71,7 +71,7 @@
 /**@brief   Priority of the application BLE event handler.
  * @note    You shouldn't need to modify this value.
  */
-#define APP_BLE_OBSERVER_PRIO           1
+#define APP_BLE_OBSERVER_PRIO           3
 
 
 NRF_BLE_GATT_DEF(m_gatt);                                   //!< GATT module instance.
@@ -126,10 +126,10 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
-            bsp_board_led_off(CONNECTED_LED_PIN);
+            // LED indication will be changed when advertising starts.
             break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             ble_gap_phys_t const phys =
@@ -211,8 +211,10 @@ static void ble_stack_init(void)
     // Configure the maximum number of connections.
     memset(&ble_cfg, 0, sizeof(ble_cfg));
     ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = 1;
+#if !defined (S112)
     ble_cfg.gap_cfg.role_count_cfg.central_role_count = 0;
     ble_cfg.gap_cfg.role_count_cfg.central_sec_count  = 0;
+#endif // !defined (S112)
     err_code = sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &ble_cfg, ram_start);
     APP_ERROR_CHECK(err_code);
 
@@ -270,6 +272,10 @@ static void on_es_evt(nrf_ble_es_evt_t evt)
 
         case NRF_BLE_ES_EVT_CONNECTABLE_ADV_STARTED:
             bsp_board_led_on(CONNECTABLE_ADV_LED_PIN);
+            break;
+
+        case NRF_BLE_ES_EVT_CONNECTABLE_ADV_STOPPED:
+            bsp_board_led_off(CONNECTABLE_ADV_LED_PIN);
             break;
 
         default:

@@ -183,6 +183,7 @@
           <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_74</state>
           <state>NRF_DFU_SETTINGS_VERSION=1</state>
+          <state>NRF_DFU_SVCI_ENABLED</state>
           <state>NRF_SD_BLE_API_VERSION=5</state>
           <state>S132</state>
           <state>SOFTDEVICE_PRESENT</state>
@@ -326,6 +327,8 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\rng</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\atomic</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\atomic_fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\balloc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\ble_dfu</state>
@@ -522,6 +525,7 @@
           <state>NRF52832_XXAA</state>
           <state>NRF52_PAN_74</state>
           <state>NRF_DFU_SETTINGS_VERSION=1</state>
+          <state>NRF_DFU_SVCI_ENABLED</state>
           <state>NRF_SD_BLE_API_VERSION=5</state>
           <state>S132</state>
           <state>SOFTDEVICE_PRESENT</state>
@@ -632,6 +636,8 @@
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\delay</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\rng</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\atomic</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\atomic_fifo</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\balloc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\ble_dfu</state>
@@ -1047,12 +1053,6 @@
       <data/>
     </settings>
   </configuration>  <group>
-  <name>Board Definition</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
-  <name>None</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\dfu_req_handling\dfu-cc.pb.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\dfu_req_handling\dfu_public_key.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\dfu_req_handling\dfu_req_handling.c</name>    </file>  </group>  <group>
   <name>nRF_Libraries</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\util\app_error_weak.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\scheduler\app_scheduler.c</name>    </file>    <file>
@@ -1062,6 +1062,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\hci\hci_mem_pool.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\mem_manager\mem_manager.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\util\nrf_assert.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\atomic_fifo\nrf_atfifo.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\fstorage\nrf_fstorage.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\fstorage\nrf_fstorage_nvmc.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\fstorage\nrf_fstorage_sd.c</name>    </file>    <file>
@@ -1069,6 +1070,12 @@
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\experimental_section_vars\nrf_section_iter.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\strerror\nrf_strerror.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\sha256\sha256.c</name>    </file>  </group>  <group>
+  <name>None</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\dfu_req_handling\dfu-cc.pb.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\dfu_req_handling\dfu_public_key.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\dfu_req_handling\dfu_req_handling.c</name>    </file>  </group>  <group>
+  <name>Board Definition</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\boards\boards.c</name>    </file>  </group>  <group>
   <name>nRF_Drivers</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\clock\nrf_drv_clock.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>    </file>    <file>
@@ -1088,6 +1095,7 @@
     <name>$PROJ_DIR$\..\..\main.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\config\sdk_config.h</name>    </file>  </group>  <group>
   <name>nRF_SVC</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_svci.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_svci_handler.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\svc\nrf_svc_handler.c</name>    </file>  </group>  <group>
   <name>nRF_BLE</name>    <file>
@@ -1102,6 +1110,7 @@
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_handling_error.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_mbr.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_settings.c</name>    </file>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_settings_svci.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_transport.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_utils.c</name>    </file>  </group>  <group>
   <name>nano-pb</name>    <file>

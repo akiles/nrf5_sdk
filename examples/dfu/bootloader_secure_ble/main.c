@@ -59,7 +59,7 @@
 #include "app_error_weak.h"
 #include "nrf_bootloader_info.h"
 
-#define BOOTLOADER_BUTTON   (BSP_BUTTON_3)      /**< Button for entering DFU mode. */
+#define BOOTLOADER_BUTTON   (BSP_BUTTON_3)          /**< Button for entering DFU mode. */
 
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {

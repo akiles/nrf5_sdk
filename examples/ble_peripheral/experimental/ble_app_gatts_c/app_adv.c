@@ -74,13 +74,13 @@ void on_adv_evt(ble_adv_evt_t ble_adv_evt)
     switch (ble_adv_evt)
     {
         case BLE_ADV_EVT_FAST:
-            NRF_LOG_INFO("Fast advertising.\r\n");
+            NRF_LOG_INFO("Fast advertising.");
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
             APP_ERROR_CHECK(err_code);
             break;
 
         case BLE_ADV_EVT_IDLE:
-            NRF_LOG_INFO("Advertising stopped.\r\n");
+            NRF_LOG_INFO("Advertising stopped.");
             break;
 
         default:
@@ -131,7 +131,7 @@ void advertising_start(bool erase_bonds)
     if (erase_bonds == true)
     {
         // Advertising is started by the PM_EVT_PEERS_DELETE_SUCCEEDED event.
-        NRF_LOG_INFO("Erase bonds!\r\n");
+        NRF_LOG_INFO("Erase bonds.");
         err_code = pm_peers_delete();
         APP_ERROR_CHECK(err_code);
     }

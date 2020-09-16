@@ -62,7 +62,7 @@ NRF_LOG_MODULE_REGISTER();
 #define SCAN_WINDOW                 0x0050                                      /**< Determines scan window in units of 0.625 millisecond. */
 #define SCAN_TIMEOUT                0x0000                                      /**< Timout when scanning. 0x0000 disables timeout. */
 
-#define APP_BLE_OBSERVER_PRIO       1                                           /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_OBSERVER_PRIO       3                                           /**< Application's BLE observer priority. You shouldn't need to modify this value. */
 #define APP_SOC_OBSERVER_PRIO       1                                           /**< Applications' SoC observer priority. You shoulnd't need to modify this value. */
 #define APP_BLE_CONN_CFG_TAG        1                                           /**< A tag identifying the SoftDevice BLE configuration. */
 
@@ -106,7 +106,10 @@ void ble_disconnect(void)
     if (m_is_connected)
     {
         err_code = sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
-        APP_ERROR_CHECK(err_code);
+        if (err_code != NRF_ERROR_INVALID_STATE)
+        {
+            APP_ERROR_CHECK(err_code);
+        }
     }
 }
 
@@ -248,7 +251,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             APP_ERROR_CHECK(err_code);
             break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");

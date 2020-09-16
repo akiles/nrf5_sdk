@@ -88,7 +88,7 @@
 #define BUTTON_DETECTION_DELAY          APP_TIMER_TICKS(50)                             /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
 
 #define APP_BLE_CONN_CFG_TAG            1                                               /**< A tag that refers to the BLE stack configuration. */
-#define APP_BLE_OBSERVER_PRIO           1                                               /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_OBSERVER_PRIO           3                                               /**< Application's BLE observer priority. You shouldn't need to modify this value. */
 #define L2CAP_HDR_LEN                   4                                               /**< L2CAP header length. */
 
 
@@ -363,9 +363,6 @@ static void on_ble_gap_evt_connected(ble_gap_evt_t const * p_gap_evt)
     (void) sd_ble_gap_adv_stop();
 
     bsp_board_leds_off();
-
-    // Zero the database before starting discovery.
-    memset(&m_ble_db_discovery, 0x00, sizeof(m_ble_db_discovery));
 
     NRF_LOG_INFO("Discovering GATT database...");
     err_code  = ble_db_discovery_start(&m_ble_db_discovery, p_gap_evt->conn_handle);

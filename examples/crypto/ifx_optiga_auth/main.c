@@ -56,15 +56,27 @@
 #include <stdio.h>
 #include <stdlib.h> // calloc(), free
 #include <stdbool.h> // true, false
-#include "nrf_error.h"
-#include "nrf_pwr_mgmt.h"
+
+#include "app_error.h"
+#include "app_util_platform.h"
 #include "nrf_drv_clock.h"
+#include "nrf_error.h"
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
+#include "nrf_pwr_mgmt.h"
+#include "sdk_config.h"
+
+
+// Disable linting in mbedtls code
+#ifndef __LINT__
+
 #include "mbedtls/platform.h"
 #include "mbedtls/x509_crt.h"
 #include "mbedtls/sha256.h"
+
+#endif
+
 #include "ifx_optiga_command_library.h"
 
 
@@ -173,6 +185,7 @@ int main(void)
     while (true)
     {
         nrf_pwr_mgmt_run();
+        NRF_LOG_FLUSH();
     }
 }
 
@@ -274,7 +287,7 @@ static int verify_signature(
     mbedtls_ecp_keypair    *ecp_keypair;
 
     // Setup memory management
-    (void)mbedtls_platform_set_calloc_free(calloc, free);
+    mbedtls_platform_set_calloc_free(calloc, free);
 
     // Parse certificate and prepare verification context with public key
     mbedtls_x509_crt_init(&x509_certificate);

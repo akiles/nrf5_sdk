@@ -57,7 +57,7 @@
 NRF_LOG_MODULE_REGISTER();
 
 #define APP_BLE_CONN_CFG_TAG        1                                   /**< A tag for a configuration of the BLE stack. */
-#define APP_BLE_OBSERVER_PRIO       1                                   /**< Applications' BLE observer priority. You shoulnd't need to modify this value. */
+#define APP_BLE_OBSERVER_PRIO       3                                   /**< Applications' BLE observer priority. You shoulnd't need to modify this value. */
 #define APP_SOC_OBSERVER_PRIO       1                                   /**< Applications' SoC observer priority. You shoulnd't need to modify this value. */
 
 #define MIN_CONNECTION_INTERVAL     MSEC_TO_UNITS(7.5, UNIT_1_25_MS)    /**< Determines minimum connection interval in milliseconds. */
@@ -147,7 +147,10 @@ void ble_disconnect(void)
     if (m_is_connected)
     {
         err_code = sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
-        APP_ERROR_CHECK(err_code);
+        if (err_code != NRF_ERROR_INVALID_STATE)
+        {
+            APP_ERROR_CHECK(err_code);
+        }
     }
 }
 
@@ -264,7 +267,6 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             m_conn_handle  = BLE_CONN_HANDLE_INVALID;
             m_is_connected = false;
             nfc_oob_pairing_tag_invalidate();
-            memset(&m_db_discovery, 0 , sizeof (m_db_discovery));
             break;
 
         case BLE_GAP_EVT_ADV_REPORT:
@@ -290,7 +292,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             APP_ERROR_CHECK(err_code);
             break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -335,8 +337,21 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
 
         case BLE_GAP_EVT_CONN_SEC_UPDATE:
             NRF_LOG_INFO("BLE_GAP_EVT_CONN_SEC_UPDATE");
-            NRF_LOG_INFO("Security mode: %u",
+            NRF_LOG_INFO("Security mode: %u. Security level: %u",
+                         p_ble_evt->evt.gap_evt.params.conn_sec_update.conn_sec.sec_mode.sm,
                          p_ble_evt->evt.gap_evt.params.conn_sec_update.conn_sec.sec_mode.lv);
+            if (p_ble_evt->evt.gap_evt.params.conn_sec_update.conn_sec.sec_mode.lv >= SECURITY_LEVEL_THR)
+            {
+                NRF_LOG_INFO("Security level high enough to enable HRS notifications.");
+
+                // Enable notifications of Heart Rate Measurement.
+                err_code = ble_hrs_c_hrm_notif_enable(&m_hrs_c);
+                APP_ERROR_CHECK(err_code);
+            }
+            else
+            {
+                NRF_LOG_INFO("Security level too low to enable HRS notifications.");
+            }
             break;
 
         default:
@@ -395,10 +410,6 @@ static void hrs_c_evt_handler(ble_hrs_c_t * p_hrs_c, ble_hrs_c_evt_t * p_hrs_c_e
             {
                 APP_ERROR_CHECK(err_code);
             }
-
-            // Heart rate service discovered. Enable notification of Heart Rate Measurement.
-            err_code = ble_hrs_c_hrm_notif_enable(p_hrs_c);
-            APP_ERROR_CHECK(err_code);
 
             NRF_LOG_DEBUG("Heart rate service discovered ");
             break;

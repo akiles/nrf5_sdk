@@ -44,7 +44,7 @@ GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)\n
 HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT\n
 LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT\n
 OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n
-  </licenseText>
+        </licenseText>
   <addressUnitBits>8</addressUnitBits>
   <width>32</width>
   <size>32</size>
@@ -1044,26 +1044,26 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           </fields>
         </register>
         <register>
-          <name>EXTSUPPLY</name>
-          <description>Enable external circuitry to be supplied from VDD pin. Applicable in high voltage mode only.</description>
+          <name>DCDCDRIVE0</name>
+          <description>Set drive level for REG0 DCDC mode. Using high drive will slightly reduce DCDC efficiency.</description>
           <addressOffset>0x300</addressOffset>
           <access>read-write</access>
           <resetValue>0xFFFFFFFF</resetValue>
           <fields>
             <field>
-              <name>EXTSUPPLY</name>
-              <description>Enable external circuitry to be supplied from VDD pin (output of REG0 stage)</description>
+              <name>DCDCDRIVE0</name>
+              <description>Set drive level for REG0 DCDC mode.</description>
               <lsb>0</lsb>
               <msb>0</msb>
               <enumeratedValues>
                 <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>No current can be drawn from the VDD pin</description>
+                  <name>Low</name>
+                  <description>Low drive</description>
                   <value>0</value>
                 </enumeratedValue>
                 <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>It is allowed to supply external circuitry from the VDD pin</description>
+                  <name>High</name>
+                  <description>High drive</description>
                   <value>1</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -3662,6 +3662,18 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           <access>read-write</access>
         </register>
         <register>
+          <name>EVENTS_CTSTARTED</name>
+          <description>Calibration timer has been started and is ready to process new tasks</description>
+          <addressOffset>0x128</addressOffset>
+          <access>read-write</access>
+        </register>
+        <register>
+          <name>EVENTS_CTSTOPPED</name>
+          <description>Calibration timer has been stopped and is ready to process new tasks</description>
+          <addressOffset>0x12C</addressOffset>
+          <access>read-write</access>
+        </register>
+        <register>
           <name>INTENSET</name>
           <description>Enable interrupt</description>
           <addressOffset>0x304</addressOffset>
@@ -3753,6 +3765,60 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <description>Write '1' to Enable interrupt for CTTO event</description>
               <lsb>4</lsb>
               <msb>4</msb>
+              <enumeratedValues>
+                <usage>read</usage>
+                <enumeratedValue>
+                  <name>Disabled</name>
+                  <description>Read: Disabled</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Enabled</name>
+                  <description>Read: Enabled</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+              <enumeratedValues>
+                <usage>write</usage>
+                <enumeratedValue>
+                  <name>Set</name>
+                  <description>Enable</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>CTSTARTED</name>
+              <description>Write '1' to Enable interrupt for CTSTARTED event</description>
+              <lsb>10</lsb>
+              <msb>10</msb>
+              <enumeratedValues>
+                <usage>read</usage>
+                <enumeratedValue>
+                  <name>Disabled</name>
+                  <description>Read: Disabled</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Enabled</name>
+                  <description>Read: Enabled</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+              <enumeratedValues>
+                <usage>write</usage>
+                <enumeratedValue>
+                  <name>Set</name>
+                  <description>Enable</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>CTSTOPPED</name>
+              <description>Write '1' to Enable interrupt for CTSTOPPED event</description>
+              <lsb>11</lsb>
+              <msb>11</msb>
               <enumeratedValues>
                 <usage>read</usage>
                 <enumeratedValue>
@@ -3869,6 +3935,60 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <description>Write '1' to Disable interrupt for CTTO event</description>
               <lsb>4</lsb>
               <msb>4</msb>
+              <enumeratedValues>
+                <usage>read</usage>
+                <enumeratedValue>
+                  <name>Disabled</name>
+                  <description>Read: Disabled</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Enabled</name>
+                  <description>Read: Enabled</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+              <enumeratedValues>
+                <usage>write</usage>
+                <enumeratedValue>
+                  <name>Clear</name>
+                  <description>Disable</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>CTSTARTED</name>
+              <description>Write '1' to Disable interrupt for CTSTARTED event</description>
+              <lsb>10</lsb>
+              <msb>10</msb>
+              <enumeratedValues>
+                <usage>read</usage>
+                <enumeratedValue>
+                  <name>Disabled</name>
+                  <description>Read: Disabled</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Enabled</name>
+                  <description>Read: Enabled</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+              <enumeratedValues>
+                <usage>write</usage>
+                <enumeratedValue>
+                  <name>Clear</name>
+                  <description>Disable</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>CTSTOPPED</name>
+              <description>Write '1' to Disable interrupt for CTSTOPPED event</description>
+              <lsb>11</lsb>
+              <msb>11</msb>
               <enumeratedValues>
                 <usage>read</usage>
                 <enumeratedValue>
@@ -6323,11 +6443,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                   <name>Nrf_2Mbit</name>
                   <description>2 Mbit/s Nordic proprietary radio mode</description>
                   <value>1</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Nrf_250Kbit</name>
-                  <description>Deprecated enumerator -  250 kbit/s Nordic proprietary radio mode</description>
-                  <value>2</value>
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>Ble_1Mbit</name>
@@ -8796,7 +8911,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <name>MAXCNT</name>
                 <description>Maximum number of bytes in receive buffer</description>
                 <lsb>0</lsb>
-                <msb>9</msb>
+                <msb>15</msb>
               </field>
             </fields>
           </register>
@@ -8810,7 +8925,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <name>AMOUNT</name>
                 <description>Number of bytes transferred in the last transaction</description>
                 <lsb>0</lsb>
-                <msb>9</msb>
+                <msb>15</msb>
               </field>
             </fields>
           </register>
@@ -8844,7 +8959,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <name>MAXCNT</name>
                 <description>Maximum number of bytes in transmit buffer</description>
                 <lsb>0</lsb>
-                <msb>9</msb>
+                <msb>15</msb>
               </field>
             </fields>
           </register>
@@ -8858,7 +8973,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <name>AMOUNT</name>
                 <description>Number of bytes transferred in the last transaction</description>
                 <lsb>0</lsb>
-                <msb>9</msb>
+                <msb>15</msb>
               </field>
             </fields>
           </register>
@@ -10775,6 +10890,86 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           </register>
         </cluster>
         <register>
+          <name>CSNPOL</name>
+          <description>Polarity of CSN output</description>
+          <addressOffset>0x568</addressOffset>
+          <access>read-write</access>
+          <resetValue>0x00000000</resetValue>
+          <fields>
+            <field>
+              <name>CSNPOL</name>
+              <description>Polarity of CSN output</description>
+              <lsb>0</lsb>
+              <msb>0</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>LOW</name>
+                  <description>Active low (idle state high)</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>HIGH</name>
+                  <description>Active high (idle state low)</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>PSELDCX</name>
+          <description>Pin select for DCX signal</description>
+          <addressOffset>0x56C</addressOffset>
+          <access>read-write</access>
+          <resetValue>0xFFFFFFFF</resetValue>
+          <fields>
+            <field>
+              <name>PIN</name>
+              <description>Pin number</description>
+              <lsb>0</lsb>
+              <msb>4</msb>
+            </field>
+            <field>
+              <name>PORT</name>
+              <description>Port number</description>
+              <lsb>5</lsb>
+              <msb>5</msb>
+            </field>
+            <field>
+              <name>CONNECT</name>
+              <description>Connection</description>
+              <lsb>31</lsb>
+              <msb>31</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>Disconnected</name>
+                  <description>Disconnect</description>
+                  <value>1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Connected</name>
+                  <description>Connect</description>
+                  <value>0</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
+          <name>DCXCNT</name>
+          <description>DCX configuration</description>
+          <addressOffset>0x570</addressOffset>
+          <access>read-write</access>
+          <fields>
+            <field>
+              <name>DCXCNT</name>
+              <description>This register specifies the number of command bytes preceding the data bytes. The PSEL.DCX line will be low during transmission of command bytes and high during transmission of data bytes. Value 0xF indicates that all bytes are command bytes.</description>
+              <lsb>0</lsb>
+              <msb>3</msb>
+            </field>
+          </fields>
+        </register>
+        <register>
           <name>ORC</name>
           <description>Byte transmitted after TXD.MAXCNT bytes have been transmitted in the case when RXD.MAXCNT is greater than TXD.MAXCNT</description>
           <addressOffset>0x5C0</addressOffset>
@@ -11358,7 +11553,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <name>MAXCNT</name>
                 <description>Maximum number of bytes in receive buffer</description>
                 <lsb>0</lsb>
-                <msb>7</msb>
+                <msb>15</msb>
               </field>
             </fields>
           </register>
@@ -11372,7 +11567,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <name>AMOUNT</name>
                 <description>Number of bytes received in the last granted transaction</description>
                 <lsb>0</lsb>
-                <msb>7</msb>
+                <msb>15</msb>
               </field>
             </fields>
           </register>
@@ -11406,7 +11601,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <name>MAXCNT</name>
                 <description>Maximum number of bytes in transmit buffer</description>
                 <lsb>0</lsb>
-                <msb>7</msb>
+                <msb>15</msb>
               </field>
             </fields>
           </register>
@@ -11420,7 +11615,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <name>AMOUNT</name>
                 <description>Number of bytes transmitted in last granted transaction</description>
                 <lsb>0</lsb>
-                <msb>7</msb>
+                <msb>15</msb>
               </field>
             </fields>
           </register>
@@ -12467,7 +12662,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <name>MAXCNT</name>
                 <description>Maximum number of bytes in receive buffer</description>
                 <lsb>0</lsb>
-                <msb>7</msb>
+                <msb>15</msb>
               </field>
             </fields>
           </register>
@@ -12481,7 +12676,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <name>AMOUNT</name>
                 <description>Number of bytes transferred in the last transaction. In case of NACK error, includes the NACK'ed byte.</description>
                 <lsb>0</lsb>
-                <msb>7</msb>
+                <msb>15</msb>
               </field>
             </fields>
           </register>
@@ -12541,7 +12736,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <name>MAXCNT</name>
                 <description>Maximum number of bytes in transmit buffer</description>
                 <lsb>0</lsb>
-                <msb>7</msb>
+                <msb>15</msb>
               </field>
             </fields>
           </register>
@@ -12555,7 +12750,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <name>AMOUNT</name>
                 <description>Number of bytes transferred in the last transaction. In case of NACK error, includes the NACK'ed byte.</description>
                 <lsb>0</lsb>
-                <msb>7</msb>
+                <msb>15</msb>
               </field>
             </fields>
           </register>
@@ -13402,7 +13597,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <name>MAXCNT</name>
                 <description>Maximum number of bytes in RXD buffer</description>
                 <lsb>0</lsb>
-                <msb>7</msb>
+                <msb>15</msb>
               </field>
             </fields>
           </register>
@@ -13416,7 +13611,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <name>AMOUNT</name>
                 <description>Number of bytes transferred in the last RXD transaction</description>
                 <lsb>0</lsb>
-                <msb>7</msb>
+                <msb>15</msb>
               </field>
             </fields>
           </register>
@@ -13450,7 +13645,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <name>MAXCNT</name>
                 <description>Maximum number of bytes in TXD buffer</description>
                 <lsb>0</lsb>
-                <msb>7</msb>
+                <msb>15</msb>
               </field>
             </fields>
           </register>
@@ -13464,7 +13659,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 <name>AMOUNT</name>
                 <description>Number of bytes transferred in the last TXD transaction</description>
                 <lsb>0</lsb>
-                <msb>7</msb>
+                <msb>15</msb>
               </field>
             </fields>
           </register>
@@ -20330,32 +20525,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           </fields>
         </register>
         <register>
-          <name>STATUS</name>
-          <description>Timer status</description>
-          <addressOffset>0x400</addressOffset>
-          <access>read-only</access>
-          <fields>
-            <field>
-              <name>STATUS</name>
-              <description>Timer status</description>
-              <lsb>0</lsb>
-              <msb>0</msb>
-              <enumeratedValues>
-                <enumeratedValue>
-                  <name>Stopped</name>
-                  <description>Timer is stopped</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Started</name>
-                  <description>Timer is started</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-          </fields>
-        </register>
-        <register>
           <name>MODE</name>
           <description>Timer mode selection</description>
           <addressOffset>0x504</addressOffset>
@@ -24951,7 +25120,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         </register>
         <register>
           <name>REFSEL</name>
-          <description>Reference source select</description>
+          <description>Reference source select for single-ended mode</description>
           <addressOffset>0x508</addressOffset>
           <access>read-write</access>
           <resetValue>0x00000004</resetValue>
@@ -25001,7 +25170,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <name>EXTREFSEL</name>
               <description>External analog reference select</description>
               <lsb>0</lsb>
-              <msb>0</msb>
+              <msb>2</msb>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>AnalogReference0</name>
@@ -25012,6 +25181,36 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                   <name>AnalogReference1</name>
                   <description>Use AIN1 as external analog reference</description>
                   <value>1</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>AnalogReference2</name>
+                  <description>Use AIN2 as external analog reference</description>
+                  <value>2</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>AnalogReference3</name>
+                  <description>Use AIN3 as external analog reference</description>
+                  <value>3</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>AnalogReference4</name>
+                  <description>Use AIN4 as external analog reference</description>
+                  <value>4</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>AnalogReference5</name>
+                  <description>Use AIN5 as external analog reference</description>
+                  <value>5</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>AnalogReference6</name>
+                  <description>Use AIN6 as external analog reference</description>
+                  <value>6</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>AnalogReference7</name>
+                  <description>Use AIN7 as external analog reference</description>
+                  <value>7</value>
                 </enumeratedValue>
               </enumeratedValues>
             </field>
@@ -25046,13 +25245,13 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           <fields>
             <field>
               <name>SP</name>
-              <description>Speed and power mode</description>
+              <description>Speed and power modes</description>
               <lsb>0</lsb>
               <msb>1</msb>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>Low</name>
-                  <description>Low power mode</description>
+                  <description>Low-power mode</description>
                   <value>0</value>
                 </enumeratedValue>
                 <enumeratedValue>
@@ -25062,20 +25261,20 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>High</name>
-                  <description>High speed mode</description>
+                  <description>High-speed mode</description>
                   <value>2</value>
                 </enumeratedValue>
               </enumeratedValues>
             </field>
             <field>
               <name>MAIN</name>
-              <description>Main operation mode</description>
+              <description>Main operation modes</description>
               <lsb>8</lsb>
               <msb>8</msb>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>SE</name>
-                  <description>Single ended mode</description>
+                  <description>Single-ended mode</description>
                   <value>0</value>
                 </enumeratedValue>
                 <enumeratedValue>
@@ -25108,42 +25307,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
                   <name>Hyst50mV</name>
                   <description>Comparator hysteresis enabled</description>
                   <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-          </fields>
-        </register>
-        <register>
-          <name>ISOURCE</name>
-          <description>Current source select on analog input</description>
-          <addressOffset>0x53C</addressOffset>
-          <access>read-write</access>
-          <fields>
-            <field>
-              <name>ISOURCE</name>
-              <description>Comparator hysteresis</description>
-              <lsb>0</lsb>
-              <msb>1</msb>
-              <enumeratedValues>
-                <enumeratedValue>
-                  <name>Off</name>
-                  <description>Current source disabled</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Ien2mA5</name>
-                  <description>Current source enabled (+/- 2.5 uA)</description>
-                  <value>1</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Ien5mA</name>
-                  <description>Current source enabled (+/- 5 uA)</description>
-                  <value>2</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Ien10mA</name>
-                  <description>Current source enabled (+/- 10 uA)</description>
-                  <value>3</value>
                 </enumeratedValue>
               </enumeratedValues>
             </field>
@@ -25815,13 +25978,13 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <msb>0</msb>
               <enumeratedValues>
                 <enumeratedValue>
-                  <name>NoHyst</name>
+                  <name>Disabled</name>
                   <description>Comparator hysteresis disabled</description>
                   <value>0</value>
                 </enumeratedValue>
                 <enumeratedValue>
-                  <name>Hyst50mV</name>
-                  <description>Comparator hysteresis disabled (typ. 50 mV)</description>
+                  <name>Enabled</name>
+                  <description>Comparator hysteresis enabled</description>
                   <value>1</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -28039,7 +28202,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
               <name>LOAD</name>
               <description>How a sequence is read from RAM and spread to the compare register</description>
               <lsb>0</lsb>
-              <msb>2</msb>
+              <msb>1</msb>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>Common</name>
@@ -28889,6 +29052,32 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           </fields>
         </register>
         <register>
+          <name>READYNEXT</name>
+          <description>Ready flag</description>
+          <addressOffset>0x408</addressOffset>
+          <access>read-only</access>
+          <fields>
+            <field>
+              <name>READYNEXT</name>
+              <description>NVMC can accept a new write operation</description>
+              <lsb>0</lsb>
+              <msb>0</msb>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>Busy</name>
+                  <description>NVMC cannot accept any write operation</description>
+                  <value>0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>Ready</name>
+                  <description>NVMC is ready</description>
+                  <value>1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+          </fields>
+        </register>
+        <register>
           <name>CONFIG</name>
           <description>Configuration register</description>
           <addressOffset>0x504</addressOffset>
@@ -28920,29 +29109,29 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
           </fields>
         </register>
         <register>
-          <name>ERASEPAGE</name>
-          <description>Register for erasing a page in code area</description>
+          <name>ERASEPCR1</name>
+          <description>Deprecated register -  Register for erasing a page in code area. Equivalent to ERASEPAGE.</description>
           <addressOffset>0x508</addressOffset>
           <access>read-write</access>
           <fields>
             <field>
-              <name>ERASEPAGE</name>
-              <description>Register for starting erase of a page in code area</description>
+              <name>ERASEPCR1</name>
+              <description>Register for erasing a page in code area. Equivalent to ERASEPAGE.</description>
               <lsb>0</lsb>
               <msb>31</msb>
             </field>
           </fields>
         </register>
         <register>
-          <name>ERASEPCR1</name>
-          <description>Deprecated register -  Register for erasing a page in code area. Equivalent to ERASEPAGE.</description>
+          <name>ERASEPAGE</name>
+          <description>Register for erasing a page in code area</description>
           <addressOffset>0x508</addressOffset>
           <access>read-write</access>
-          <alternateRegister>ERASEPAGE</alternateRegister>
+          <alternateRegister>ERASEPCR1</alternateRegister>
           <fields>
             <field>
-              <name>ERASEPCR1</name>
-              <description>Register for erasing a page in code area. Equivalent to ERASEPAGE.</description>
+              <name>ERASEPAGE</name>
+              <description>Register for starting erase of a page in code area</description>
               <lsb>0</lsb>
               <msb>31</msb>
             </field>
@@ -41625,7 +41814,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
         </register>
         <register>
           <name>LOWPOWER</name>
-          <description>First silicon only: Controls USBD peripheral low-power mode during USB suspend</description>
+          <description>Controls USBD peripheral low-power mode during USB suspend</description>
           <addressOffset>0x52C</addressOffset>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
@@ -49064,7 +49253,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
     </peripheral>
     <peripheral>
       <name>CRYPTOCELL</name>
-      <description>ARM CryptoCell register interface</description>
+      <description>ARM TrustZone CryptoCell register interface</description>
       <groupName>CRYPTOCELL</groupName>
       <baseAddress>0x5002A000</baseAddress>
       <size>32</size>
@@ -49080,25 +49269,25 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\
       <registers>
         <register>
           <name>ENABLE</name>
-          <description>Control power and clock for ARM CryptoCell subsystem</description>
+          <description>Control power and clock for CRYPTOCELL subsystem</description>
           <addressOffset>0x500</addressOffset>
           <access>read-write</access>
           <resetValue>0x00000000</resetValue>
           <fields>
             <field>
               <name>ENABLE</name>
-              <description>Enable or disable the CryptoCell subsystem</description>
+              <description>Enable or disable the CRYPTOCELL subsystem</description>
               <lsb>0</lsb>
               <msb>0</msb>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>Disabled</name>
-                  <description>CryptoCell subsystem disabled</description>
+                  <description>CRYPTOCELL subsystem disabled</description>
                   <value>0</value>
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>Enabled</name>
-                  <description>CryptoCell subsystem enabled</description>
+                  <description>CRYPTOCELL subsystem enabled</description>
                   <value>1</value>
                 </enumeratedValue>
               </enumeratedValues>

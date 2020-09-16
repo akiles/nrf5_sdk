@@ -325,6 +325,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\rng</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bootloader</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bootloader\dfu</state>
@@ -633,6 +634,7 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\rng</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\atomic</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\balloc</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bootloader</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bootloader\dfu</state>
@@ -1094,9 +1096,8 @@
   <name>Application</name>    <file>
     <name>$PROJ_DIR$\..\..\..\main.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\config\sdk_config.h</name>    </file>  </group>  <group>
-  <name>nRF_SVC</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bootloader\dfu\nrf_dfu_svci_handler.c</name>    </file>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\svc\nrf_svc_handler.c</name>    </file>  </group>  <group>
+  <name>nRF_micro-ecc</name>    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\external\micro-ecc\nrf52_iar\armgcc\micro_ecc_lib_nrf52.a</name>    </file>  </group>  <group>
   <name>nRF_Bootloader</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bootloader\nrf_bootloader.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bootloader\nrf_bootloader_app_start.c</name>    </file>    <file>
@@ -1117,8 +1118,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain\system_nrf52840.c</name>    </file>  </group>  <group>
   <name>nRF_SERIAL_DFU</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\bootloader\serial_dfu\nrf_serial_dfu.c</name>    </file>  </group>  <group>
-  <name>nRF_micro-ecc</name>    <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\external\micro-ecc\nrf52_iar\armgcc\micro_ecc_lib_nrf52.a</name>    </file>  </group>  <group>
   <name>nRF_SoftDevice</name>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\nrf_sdh.c</name>    </file>    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\nrf_sdh_soc.c</name>    </file>  </group>  <group>

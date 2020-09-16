@@ -112,12 +112,13 @@ uint32_t nrf_ble_qwrs_init(nrf_ble_qwrs_init_t *p_qwrs_init, nrf_ble_qwrs_t *p_q
     ble_add_char_params_t add_char_params;
 
     memset(&add_char_params, 0, sizeof(add_char_params));
-    add_char_params.uuid               = BLE_UUID_QWRS_LONG_CHARACTERISTIC;
-    add_char_params.max_len            = BLE_QWRS_MAX_LONG_CHAR_LEN;
-    add_char_params.init_len           = 0;
-    add_char_params.char_props.write   = true;
-    add_char_params.write_access       = SEC_OPEN;
-    add_char_params.is_defered_write   = true;
+    add_char_params.uuid             = BLE_UUID_QWRS_LONG_CHARACTERISTIC;
+    add_char_params.uuid_type        = p_qwrs->uuid_type;
+    add_char_params.max_len          = BLE_QWRS_MAX_LONG_CHAR_LEN;
+    add_char_params.init_len         = 0;
+    add_char_params.char_props.write = true;
+    add_char_params.write_access     = SEC_OPEN;
+    add_char_params.is_defered_write = true;
 
     err_code = characteristic_add(p_qwrs->service_handle,
                               &add_char_params,

@@ -79,6 +79,13 @@
 #define NRF_DFU_POST_SD_BL_TIMEOUT_MS 10000
 #endif
 
+// <q> NRF_DFU_WORKAROUND_PRE_SDK_14_1_0_SD_BL_UPDATE  - Workaround for updating SD+BL with a SD that has increased size. Only valid for updates of SD+BL with BL from SDK 12.x.y - 14.0.x. This workaround has no effect in 14.1.x
+ 
+
+#ifndef NRF_DFU_WORKAROUND_PRE_SDK_14_1_0_SD_BL_UPDATE
+#define NRF_DFU_WORKAROUND_PRE_SDK_14_1_0_SD_BL_UPDATE 1
+#endif
+
 // <h> DFU flash buffers 
 
 //==========================================================
@@ -483,6 +490,57 @@
 #ifndef MEMORY_MANAGER_XXSMALL_BLOCK_SIZE
 #define MEMORY_MANAGER_XXSMALL_BLOCK_SIZE 32
 #endif
+
+// <e> MEM_MANAGER_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef MEM_MANAGER_CONFIG_LOG_ENABLED
+#define MEM_MANAGER_CONFIG_LOG_ENABLED 0
+#endif
+// <o> MEM_MANAGER_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef MEM_MANAGER_CONFIG_LOG_LEVEL
+#define MEM_MANAGER_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> MEM_MANAGER_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef MEM_MANAGER_CONFIG_INFO_COLOR
+#define MEM_MANAGER_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> MEM_MANAGER_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef MEM_MANAGER_CONFIG_DEBUG_COLOR
+#define MEM_MANAGER_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
 
 // <q> MEM_MANAGER_DISABLE_API_PARAM_CHECK  - Disable API parameter checks in the module.
  
@@ -2180,13 +2238,6 @@
 
 // </e>
 
-// <q> MEM_MANAGER_ENABLE_LOGS  - Enable debug trace in the module.
- 
-
-#ifndef MEM_MANAGER_ENABLE_LOGS
-#define MEM_MANAGER_ENABLE_LOGS 0
-#endif
-
 // <e> NRF_BALLOC_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef NRF_BALLOC_CONFIG_LOG_ENABLED
@@ -2646,6 +2697,57 @@
 
 // </e>
 
+// <e> NRF_SORTLIST_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_SORTLIST_CONFIG_LOG_ENABLED
+#define NRF_SORTLIST_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_SORTLIST_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_SORTLIST_CONFIG_LOG_LEVEL
+#define NRF_SORTLIST_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_INFO_COLOR
+#define NRF_SORTLIST_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_DEBUG_COLOR
+#define NRF_SORTLIST_CONFIG_DEBUG_COLOR 0
+#endif
+
+// </e>
+
 // </h> 
 //==========================================================
 
@@ -2724,7 +2826,7 @@
 // <i> The priority level of a handler determines the order in which it receives events, with respect to other handlers.
 
 #ifndef NRF_SDH_BLE_OBSERVER_PRIO_LEVELS
-#define NRF_SDH_BLE_OBSERVER_PRIO_LEVELS 3
+#define NRF_SDH_BLE_OBSERVER_PRIO_LEVELS 4
 #endif
 
 // <h> BLE Observers priorities - Invididual priorities
@@ -2734,7 +2836,7 @@
 // <i> Priority with which BLE events are dispatched to the Advertising module.
 
 #ifndef BLE_ADV_BLE_OBSERVER_PRIO
-#define BLE_ADV_BLE_OBSERVER_PRIO 2
+#define BLE_ADV_BLE_OBSERVER_PRIO 1
 #endif
 
 // <o> BLE_ANCS_C_BLE_OBSERVER_PRIO  
@@ -2776,7 +2878,7 @@
 // <i> Priority with which BLE events are dispatched to the Connection parameters module.
 
 #ifndef BLE_CONN_PARAMS_BLE_OBSERVER_PRIO
-#define BLE_CONN_PARAMS_BLE_OBSERVER_PRIO 2
+#define BLE_CONN_PARAMS_BLE_OBSERVER_PRIO 1
 #endif
 
 // <o> BLE_CONN_STATE_BLE_OBSERVER_PRIO  
@@ -2968,6 +3070,13 @@
 #define NRF_BLE_CGMS_BLE_OBSERVER_PRIO 2
 #endif
 
+// <o> NRF_BLE_ES_BLE_OBSERVER_PRIO  
+// <i> Priority with which BLE events are dispatched to the Eddystone module.
+
+#ifndef NRF_BLE_ES_BLE_OBSERVER_PRIO
+#define NRF_BLE_ES_BLE_OBSERVER_PRIO 2
+#endif
+
 // <o> NRF_BLE_GATTS_C_BLE_OBSERVER_PRIO  
 // <i> Priority with which BLE events are dispatched to the GATT Service Client.
 
@@ -2979,7 +3088,7 @@
 // <i> Priority with which BLE events are dispatched to the GATT module.
 
 #ifndef NRF_BLE_GATT_BLE_OBSERVER_PRIO
-#define NRF_BLE_GATT_BLE_OBSERVER_PRIO 2
+#define NRF_BLE_GATT_BLE_OBSERVER_PRIO 1
 #endif
 
 // <o> NRF_BLE_QWR_BLE_OBSERVER_PRIO  
@@ -2989,11 +3098,9 @@
 #define NRF_BLE_QWR_BLE_OBSERVER_PRIO 2
 #endif
 
-// <o> PM_BLE_OBSERVER_PRIO  
-// <i> Priority with which BLE events are dispatched to the Peer Manager module.
-
+// <o> PM_BLE_OBSERVER_PRIO - Priority with which BLE events are dispatched to the Peer Manager module. 
 #ifndef PM_BLE_OBSERVER_PRIO
-#define PM_BLE_OBSERVER_PRIO 2
+#define PM_BLE_OBSERVER_PRIO 1
 #endif
 
 // </h> 

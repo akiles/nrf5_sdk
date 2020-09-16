@@ -50,6 +50,7 @@
 #include "nrf.h"
 #include "ble_dtm.h"
 #include "boards.h"
+#include "app_uart.h"
 
 
 // @note: The BLE DTM 2-wire UART standard specifies 8 data bits, 1 stop bit, no flow control.
@@ -76,28 +77,47 @@
  */
 #define MAX_ITERATIONS_NEEDED_FOR_NEXT_BYTE ((5000 + 2 * UART_POLL_CYCLE) / UART_POLL_CYCLE)
 
+#define MAX_TEST_DATA_BYTES     (15U)                /**< max number of test bytes to be used for tx and rx. */
+#define UART_TX_BUF_SIZE 256                         /**< UART TX buffer size. */
+#define UART_RX_BUF_SIZE 256                         /**< UART RX buffer size. */
+
+// Error handler for UART
+void uart_error_handle(app_uart_evt_t * p_event)
+{
+    if (p_event->evt_type == APP_UART_COMMUNICATION_ERROR)
+    {
+        APP_ERROR_HANDLER(p_event->data.error_communication);
+    }
+    else if (p_event->evt_type == APP_UART_FIFO_ERROR)
+    {
+        APP_ERROR_HANDLER(p_event->data.error_code);
+    }
+}
+
 /**@brief Function for UART initialization.
  */
 static void uart_init(void)
-{
-    // Configure UART0 pins.
-    nrf_gpio_cfg_output(TX_PIN_NUMBER);
-    nrf_gpio_cfg_input(RX_PIN_NUMBER, NRF_GPIO_PIN_NOPULL);
+{   
+    uint32_t err_code;
+    const app_uart_comm_params_t comm_params =
+      {
+          RX_PIN_NUMBER,
+          TX_PIN_NUMBER,
+          RTS_PIN_NUMBER,
+          CTS_PIN_NUMBER,
+          APP_UART_FLOW_CONTROL_DISABLED,
+          false,
+          DTM_BITRATE
+      };
 
-    NRF_UART0->PSELTXD       = TX_PIN_NUMBER;
-    NRF_UART0->PSELRXD       = RX_PIN_NUMBER;
-    NRF_UART0->BAUDRATE      = DTM_BITRATE;
+    APP_UART_FIFO_INIT(&comm_params,
+                       UART_RX_BUF_SIZE,
+                       UART_TX_BUF_SIZE,
+                       uart_error_handle,
+                       APP_IRQ_PRIORITY_LOWEST,
+                       err_code);
 
-    // Clean out possible events from earlier operations
-    NRF_UART0->EVENTS_RXDRDY = 0;
-    NRF_UART0->EVENTS_TXDRDY = 0;
-    NRF_UART0->EVENTS_ERROR  = 0;
-
-    // Activate UART.
-    NRF_UART0->ENABLE        = UART_ENABLE_ENABLE_Enabled;
-    NRF_UART0->INTENSET      = 0;
-    NRF_UART0->TASKS_STARTTX = 1;
-    NRF_UART0->TASKS_STARTRX = 1;
+    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -133,6 +153,8 @@ int main(void)
     uint8_t     rx_byte;                   // Last byte read from UART.
     dtm_event_t result;                    // Result of a DTM operation.
 
+    bsp_board_leds_init();
+    
     uart_init();
 
     dtm_error_code = dtm_init();
@@ -147,13 +169,11 @@ int main(void)
         // Will return every timeout, 625 us.
         current_time = dtm_wait();
 
-        if (NRF_UART0->EVENTS_RXDRDY == 0)
+        if (app_uart_get(&rx_byte) != NRF_SUCCESS)
         {
             // Nothing read from the UART.
             continue;
         }
-        NRF_UART0->EVENTS_RXDRDY = 0;
-        rx_byte                  = (uint8_t)NRF_UART0->RXD;
 
         if (!is_msb_read)
         {
@@ -194,22 +214,9 @@ int main(void)
         {
             // Report command status on the UART.
             // Transmit MSB of the result.
-            NRF_UART0->TXD = (result >> 8) & 0xFF;
-            // Wait until MSB is sent.
-            while (NRF_UART0->EVENTS_TXDRDY != 1)
-            {
-                // Do nothing.
-            }
-            NRF_UART0->EVENTS_TXDRDY = 0;
-
+            while (app_uart_put((result >> 8) & 0xFF));
             // Transmit LSB of the result.
-            NRF_UART0->TXD = result & 0xFF;
-            // Wait until LSB is sent.
-            while (NRF_UART0->EVENTS_TXDRDY != 1)
-            {
-                // Do nothing.
-            }
-            NRF_UART0->EVENTS_TXDRDY = 0;
+            while (app_uart_put(result & 0xFF));
         }
     }
 }

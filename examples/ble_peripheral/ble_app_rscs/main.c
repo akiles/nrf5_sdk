@@ -44,7 +44,7 @@
  * @ingroup ble_sdk_app_rsc
  * @brief Running Speed and Cadence Service Sample Application main file.
  *
- * This file contains the source code for a sample application using the Running Speed and Cadence service
+ * This file contains the source code for a sample application using the Running Speed and Cadence service.
  * It also includes the sample code for Battery and Device Information services.
  * This application uses the @ref srvlib_conn_params module.
  */
@@ -54,6 +54,7 @@
 #include "nrf.h"
 #include "app_error.h"
 #include "ble.h"
+#include "ble_err.h"
 #include "ble_hci.h"
 #include "ble_srv_common.h"
 #include "ble_advdata.h"
@@ -83,7 +84,7 @@
 #define APP_ADV_INTERVAL                40                                      /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
 #define APP_ADV_TIMEOUT_IN_SECONDS      180                                     /**< The advertising timeout in units of seconds. */
 
-#define APP_BLE_OBSERVER_PRIO           1                                       /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_OBSERVER_PRIO           3                                       /**< Application's BLE observer priority. You shouldn't need to modify this value. */
 #define APP_BLE_CONN_CFG_TAG            1                                       /**< A tag identifying the SoftDevice BLE configuration. */
 
 #define BATTERY_LEVEL_MEAS_INTERVAL     APP_TIMER_TICKS(2000)                   /**< Battery level measurement interval (ticks). */
@@ -214,6 +215,31 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
             // Reject pairing request from an already bonded peer.
             pm_conn_sec_config_t conn_sec_config = {.allow_repairing = false};
             pm_conn_sec_config_reply(p_evt->conn_handle, &conn_sec_config);
+        } break;
+
+        case PM_EVT_CONN_SEC_PARAMS_REQ:
+        {
+            ble_gap_sec_params_t sec_param;
+
+            memset(&sec_param, 0, sizeof(ble_gap_sec_params_t));
+
+            sec_param.bond           = SEC_PARAM_BOND;
+            sec_param.mitm           = SEC_PARAM_MITM;
+            sec_param.lesc           = SEC_PARAM_LESC;
+            sec_param.keypress       = SEC_PARAM_KEYPRESS;
+            sec_param.io_caps        = SEC_PARAM_IO_CAPABILITIES;
+            sec_param.oob            = SEC_PARAM_OOB;
+            sec_param.min_key_size   = SEC_PARAM_MIN_KEY_SIZE;
+            sec_param.max_key_size   = SEC_PARAM_MAX_KEY_SIZE;
+            sec_param.kdist_own.enc  = 1;
+            sec_param.kdist_own.id   = 1;
+            sec_param.kdist_peer.enc = 1;
+            sec_param.kdist_peer.id  = 1;
+
+            err_code = pm_conn_sec_params_reply(p_evt->conn_handle,
+                                               &sec_param,
+                                                p_evt->params.conn_sec_params_req.p_context);
+            APP_ERROR_CHECK(err_code);
         } break;
 
         case PM_EVT_STORAGE_FULL:
@@ -684,7 +710,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             m_conn_handle = BLE_CONN_HANDLE_INVALID;
             break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             NRF_LOG_DEBUG("PHY update request.");
@@ -825,29 +851,9 @@ static void bsp_event_handler(bsp_event_t event)
  */
 static void peer_manager_init(void)
 {
-    ble_gap_sec_params_t sec_param;
-    ret_code_t           err_code;
+    ret_code_t err_code;
 
     err_code = pm_init();
-    APP_ERROR_CHECK(err_code);
-
-    memset(&sec_param, 0, sizeof(ble_gap_sec_params_t));
-
-    // Security parameters to be used for all security procedures.
-    sec_param.bond           = SEC_PARAM_BOND;
-    sec_param.mitm           = SEC_PARAM_MITM;
-    sec_param.lesc           = SEC_PARAM_LESC;
-    sec_param.keypress       = SEC_PARAM_KEYPRESS;
-    sec_param.io_caps        = SEC_PARAM_IO_CAPABILITIES;
-    sec_param.oob            = SEC_PARAM_OOB;
-    sec_param.min_key_size   = SEC_PARAM_MIN_KEY_SIZE;
-    sec_param.max_key_size   = SEC_PARAM_MAX_KEY_SIZE;
-    sec_param.kdist_own.enc  = 1;
-    sec_param.kdist_own.id   = 1;
-    sec_param.kdist_peer.enc = 1;
-    sec_param.kdist_peer.id  = 1;
-
-    err_code = pm_sec_params_set(&sec_param);
     APP_ERROR_CHECK(err_code);
 
     err_code = pm_register(pm_evt_handler);

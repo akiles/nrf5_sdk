@@ -177,12 +177,52 @@
 #define CH0_CHAN_PERIOD 8192
 #endif
 
+// <o> CH0_CHAN_ID_DEV_TYPE - Channel 0 ID: Device Type. 
+#ifndef CH0_CHAN_ID_DEV_TYPE
+#define CH0_CHAN_ID_DEV_TYPE 2
+#endif
+
+// <o> CH0_CHAN_ID_TRANS_TYPE - Channel 0 ID: Transmission type. 
+#ifndef CH0_CHAN_ID_TRANS_TYPE
+#define CH0_CHAN_ID_TRANS_TYPE 1
+#endif
+
+// <o> CH0_RF_FREQ - Channel 0 RF Frequency. 
+#ifndef CH0_RF_FREQ
+#define CH0_RF_FREQ 50
+#endif
+
+// <o> CH0_CHAN_PERIOD - Channel 0 Period (in 32 kHz counts). 
+#ifndef CH0_CHAN_PERIOD
+#define CH0_CHAN_PERIOD 8192
+#endif
+
 // </h> 
 //==========================================================
 
 // <h> CHANNEL 1 
 
 //==========================================================
+// <o> CH1_CHAN_ID_DEV_TYPE - Channel 1 ID: Device Type. 
+#ifndef CH1_CHAN_ID_DEV_TYPE
+#define CH1_CHAN_ID_DEV_TYPE 3
+#endif
+
+// <o> CH1_CHAN_ID_TRANS_TYPE - Channel 1 ID: Transmission type. 
+#ifndef CH1_CHAN_ID_TRANS_TYPE
+#define CH1_CHAN_ID_TRANS_TYPE 1
+#endif
+
+// <o> CH1_RF_FREQ - Channel 1 RF Frequency. 
+#ifndef CH1_RF_FREQ
+#define CH1_RF_FREQ 70
+#endif
+
+// <o> CH1_CHAN_PERIOD - Channel 1 Period (in 32 kHz counts). 
+#ifndef CH1_CHAN_PERIOD
+#define CH1_CHAN_PERIOD 8192
+#endif
+
 // <o> CH1_CHAN_ID_DEV_TYPE - Channel 1 ID: Device Type. 
 #ifndef CH1_CHAN_ID_DEV_TYPE
 #define CH1_CHAN_ID_DEV_TYPE 3
@@ -2276,13 +2316,6 @@
 
 // </e>
 
-// <q> MEM_MANAGER_ENABLE_LOGS  - Enable debug trace in the module.
- 
-
-#ifndef MEM_MANAGER_ENABLE_LOGS
-#define MEM_MANAGER_ENABLE_LOGS 0
-#endif
-
 // <e> NRF_BALLOC_CONFIG_LOG_ENABLED - Enables logging in the module.
 //==========================================================
 #ifndef NRF_BALLOC_CONFIG_LOG_ENABLED
@@ -2738,6 +2771,57 @@
 
 #ifndef NRF_SDH_SOC_DEBUG_COLOR
 #define NRF_SDH_SOC_DEBUG_COLOR 0
+#endif
+
+// </e>
+
+// <e> NRF_SORTLIST_CONFIG_LOG_ENABLED - Enables logging in the module.
+//==========================================================
+#ifndef NRF_SORTLIST_CONFIG_LOG_ENABLED
+#define NRF_SORTLIST_CONFIG_LOG_ENABLED 0
+#endif
+// <o> NRF_SORTLIST_CONFIG_LOG_LEVEL  - Default Severity level
+ 
+// <0=> Off 
+// <1=> Error 
+// <2=> Warning 
+// <3=> Info 
+// <4=> Debug 
+
+#ifndef NRF_SORTLIST_CONFIG_LOG_LEVEL
+#define NRF_SORTLIST_CONFIG_LOG_LEVEL 3
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_INFO_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_INFO_COLOR
+#define NRF_SORTLIST_CONFIG_INFO_COLOR 0
+#endif
+
+// <o> NRF_SORTLIST_CONFIG_DEBUG_COLOR  - ANSI escape code prefix.
+ 
+// <0=> Default 
+// <1=> Black 
+// <2=> Red 
+// <3=> Green 
+// <4=> Yellow 
+// <5=> Blue 
+// <6=> Magenta 
+// <7=> Cyan 
+// <8=> White 
+
+#ifndef NRF_SORTLIST_CONFIG_DEBUG_COLOR
+#define NRF_SORTLIST_CONFIG_DEBUG_COLOR 0
 #endif
 
 // </e>

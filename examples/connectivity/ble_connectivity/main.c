@@ -61,7 +61,6 @@
 #include "nrf_log.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
-NRF_LOG_MODULE_REGISTER();
 
 #include "ser_phy_debug_comm.h"
 

@@ -57,6 +57,7 @@
 #include "nrf.h"
 #include "nrf_soc.h"
 #include "ble.h"
+#include "ble_err.h"
 #include "ble_hci.h"
 #include "bsp.h"
 #include "ble_srv_common.h"
@@ -90,7 +91,7 @@
 #define DEVICE_NAME                     "Nordic_Power_Mgmt"                           /**< Name of device. Will be included in the advertising data. */
 #define COMPANY_IDENTIFIER              0x0059                                        /**< Company identifier for Nordic Semiconductor ASA as per www.bluetooth.org. */
 
-#define APP_BLE_OBSERVER_PRIO           1                                             /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_OBSERVER_PRIO           3                                             /**< Application's BLE observer priority. You shouldn't need to modify this value. */
 #define APP_BLE_CONN_CFG_TAG            1                                             /**< A tag identifying the SoftDevice BLE configuration. */
 
 #define LOCAL_SERVICE_UUID              0x1523                                        /**< Proprietary UUID for local service. */
@@ -585,7 +586,7 @@ static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context)
             APP_ERROR_CHECK(err_code);
             break;
 
-#if defined(S132)
+#ifndef S140
         case BLE_GAP_EVT_PHY_UPDATE_REQUEST:
         {
             ble_gap_phys_t const phys =

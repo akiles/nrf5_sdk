@@ -71,7 +71,7 @@
 #define DEVICE_NAME                         "Nordic_BLE_GZL"                        /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME                   "NordicSemiconductor"                   /**< Manufacturer. Will be passed to Device Information Service. */
 
-#define APP_BLE_OBSERVER_PRIO               1                                       /**< Application's BLE observer priority. You shouldn't need to modify this value. */
+#define APP_BLE_OBSERVER_PRIO               3                                       /**< Application's BLE observer priority. You shouldn't need to modify this value. */
 #define APP_BLE_CONN_CFG_TAG                1                                       /**< A tag for a Bluetooth stack configuration. */
 
 #define APP_ADV_INTERVAL                    40                                      /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */

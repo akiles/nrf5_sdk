@@ -19,8 +19,8 @@ Generate a custom Profile in Bluetooth Developer Studio
 Using a custom Profile in 'my_project'
     - Include the generated h file:
         #include "ble_test_profile_test_service.h"
-    - If you want to use traces, define APP_LOG macro
-        #define APPL_LOG app_trace_log
+    - If you want to use logging, define APP_LOG macro
+        #define APPL_LOG NRF_LOG_INFO
     - Declare a service structure variable:
         static ble_test_profile_test_service_t      m_tests;
     - Create a service event handler function:
@@ -30,7 +30,7 @@ Using a custom Profile in 'my_project'
             switch (p_evt->evt_type)
             {
                 case BLE_TEST_PROFILE_TEST_SERVICE_RX_EVT_WRITE:
-                    APPL_LOG("[APPL]: charact written with value %s. \r\n", p_evt->params.rx.value.p_data);
+                    APPL_LOG("Charact written with value %s. ", p_evt->params.rx.value.p_data);
                     break;
 
                 default:
