@@ -9,6 +9,10 @@ All rights reserved.
 
 #include <stdint.h>
 #include "ant_boot_settings.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 /*
 *
 * A soft-reset(NVIC_SystemReset()) must be executed after the information for the bootloader has been filled in.
@@ -30,5 +34,10 @@ void ant_boot_settings_get(const ant_boot_settings_t ** pp_boot_settings);
 uint32_t ant_boot_settings_clear(ant_boot_settings_t * boot_settings);
 uint32_t ant_boot_settings_save(ant_boot_settings_t * boot_settings);
 void ant_boot_settings_validate(uint8_t enter_boot_mode);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //ANT_BOOT_SETTINGS_API_H_

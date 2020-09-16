@@ -743,7 +743,7 @@ extern "C" {
 	#define portTICK_TYPE_IS_ATOMIC 0
 #endif
 
-#if( portTICK_TYPE_IS_ATOMIC == 0 )
+#if ( portTICK_TYPE_IS_ATOMIC == 0 )
 	/* Either variables of tick type cannot be read atomically, or
 	portTICK_TYPE_IS_ATOMIC was not set - map the critical sections used when
 	the tick count is returned to the standard critical section macros. */

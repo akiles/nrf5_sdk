@@ -99,7 +99,7 @@ typedef portSTACK_TYPE StackType_t;
 typedef long BaseType_t;
 typedef unsigned long UBaseType_t;
 
-#if( configUSE_16_BIT_TICKS == 1 )
+#if ( configUSE_16_BIT_TICKS == 1 )
     typedef uint16_t TickType_t;
     #define portMAX_DELAY ( TickType_t ) 0xffff
 #else
@@ -137,9 +137,9 @@ typedef unsigned long UBaseType_t;
     within the specified behaviour for the architecture. */                     \
     __DSB();                                                                    \
     __ISB();                                                                    \
-}while(0)
+}while (0)
 
-#define portEND_SWITCHING_ISR( xSwitchRequired ) if( (xSwitchRequired) != pdFALSE ) portYIELD()
+#define portEND_SWITCHING_ISR( xSwitchRequired ) if ( (xSwitchRequired) != pdFALSE ) portYIELD()
 #define portYIELD_FROM_ISR( x ) portEND_SWITCHING_ISR( x )
 /*-----------------------------------------------------------*/
 
@@ -180,7 +180,7 @@ not necessary for to use this port.  They are defined so the common demo files
     #define ucPortCountLeadingZeros( bits ) __CLZ( bits )
 
     /* Check the configuration. */
-    #if( configMAX_PRIORITIES > 32 )
+    #if ( configMAX_PRIORITIES > 32 )
         #error configUSE_PORT_OPTIMISED_TASK_SELECTION can only be set to 1 when configMAX_PRIORITIES is less than or equal to 32.  It is very rare that a system requires more than 10 to 15 difference priorities as tasks that share a priority will time slice.
     #endif
 

@@ -19,6 +19,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#if WDT_ENABLED
+
 /**@brief WDT event handler. */
 static nrf_wdt_event_handler_t m_wdt_event_handler;
 
@@ -62,7 +64,13 @@ ret_code_t nrf_drv_wdt_init(nrf_drv_wdt_config_t const * p_config,
     }
 
     nrf_wdt_behaviour_set(p_config->behaviour);
-    nrf_wdt_reload_value_set((p_config->reload_value * 32768) / 1000);
+    
+    if ((((uint64_t)p_config->reload_value * 32768) / 1000) > UINT32_MAX) // Check for overflow
+    {
+        return NRF_ERROR_INVALID_PARAM;
+    }
+    
+    nrf_wdt_reload_value_set((uint32_t)(((uint64_t)p_config->reload_value * 32768) / 1000));
 
     nrf_drv_common_irq_enable(WDT_IRQn, p_config->interrupt_priority);
 
@@ -83,7 +91,7 @@ void nrf_drv_wdt_enable(void)
 void nrf_drv_wdt_feed(void)
 {
     ASSERT(m_state == NRF_DRV_STATE_POWERED_ON);
-    for(uint32_t i = 0; i < m_alloc_index; i++)
+    for (uint32_t i = 0; i < m_alloc_index; i++)
     {
         nrf_wdt_reload_request_set((nrf_wdt_rr_register_t)(NRF_WDT_RR0 + i));
     }
@@ -116,3 +124,4 @@ void nrf_drv_wdt_channel_feed(nrf_drv_wdt_channel_id channel_id)
     ASSERT(m_state == NRF_DRV_STATE_POWERED_ON);
     nrf_wdt_reload_request_set(channel_id);
 }
+#endif //WDT_ENABLED

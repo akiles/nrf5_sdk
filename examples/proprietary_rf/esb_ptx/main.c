@@ -20,12 +20,12 @@
 #include "nrf_esb_error_codes.h"
 #include "nrf_delay.h"
 #include "nrf_gpio.h"
-#include "nrf_log.h"
 #include "boards.h"
 #include "nrf_delay.h"
-#include "nrf_log.h"
 #include "app_util.h"
-
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 static nrf_esb_payload_t        tx_payload = NRF_ESB_CREATE_PAYLOAD(0, 0x01, 0x00, 0x00, 0x00, 0x11, 0x00, 0x00, 0x00);
 
@@ -35,17 +35,17 @@ const uint8_t leds_list[LEDS_NUMBER] = LEDS_LIST;
 
 void nrf_esb_error_handler(uint32_t err_code, uint32_t line)
 {
-    NRF_LOG_PRINTF("App failed at line %d with error code: 0x%08x\r\n",
+    NRF_LOG_ERROR("App failed at line %d with error code: 0x%08x\r\n",
                    line, err_code);
 #if DEBUG //lint -e553
-    while(true);
+    while (true);
 #else
     NVIC_SystemReset();
 #endif
 
 }
 
-#define APP_ERROR_CHECK(err_code) if(err_code) nrf_esb_error_handler(err_code, __LINE__);
+#define APP_ERROR_CHECK(err_code) if (err_code) nrf_esb_error_handler(err_code, __LINE__);
 
 /*lint -save -esym(40, BUTTON_1) -esym(40, BUTTON_2) -esym(40, BUTTON_3) -esym(40, BUTTON_4) -esym(40, LED_1) -esym(40, LED_2) -esym(40, LED_3) -esym(40, LED_4) */
 
@@ -54,20 +54,20 @@ void nrf_esb_event_handler(nrf_esb_evt_t const * p_event)
     switch (p_event->evt_id)
     {
         case NRF_ESB_EVENT_TX_SUCCESS:
-            NRF_LOG("TX SUCCESS EVENT\r\n");
+            NRF_LOG_DEBUG("TX SUCCESS EVENT\r\n");
             break;
         case NRF_ESB_EVENT_TX_FAILED:
-            NRF_LOG("TX FAILED EVENT\r\n");
+            NRF_LOG_DEBUG("TX FAILED EVENT\r\n");
             (void) nrf_esb_flush_tx();
             (void) nrf_esb_start_tx();
             break;
         case NRF_ESB_EVENT_RX_RECEIVED:
-            NRF_LOG("RX RECEIVED EVENT\r\n");
+            NRF_LOG_DEBUG("RX RECEIVED EVENT\r\n");
             while (nrf_esb_read_rx_payload(&rx_payload) == NRF_SUCCESS)
             {
-                if(rx_payload.length > 0)
+                if (rx_payload.length > 0)
                 {
-                    NRF_LOG("RX RECEIVED PAYLOAD\r\n");
+                    NRF_LOG_DEBUG("RX RECEIVED PAYLOAD\r\n");
                 }
             }
             break;
@@ -131,7 +131,7 @@ int main(void)
 
     gpio_init();
 
-    err_code = NRF_LOG_INIT();
+    err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
     clocks_start();
@@ -141,13 +141,11 @@ int main(void)
 
     LEDS_CONFIGURE(LEDS_MASK);
 
-    NRF_LOG("Enhanced ShockBurst Transmitter Example running.\r\n");
+    NRF_LOG_DEBUG("Enhanced ShockBurst Transmitter Example running.\r\n");
 
     while (true)
     {
-        NRF_LOG("Transmitting packet ");
-        NRF_LOG_HEX_CHAR(tx_payload.data[1]);
-        NRF_LOG("\r\n");
+        NRF_LOG_DEBUG("Transmitting packet %02x\r\n", tx_payload.data[1]);
 
         tx_payload.noack = false;
         if (nrf_esb_write_payload(&tx_payload) == NRF_SUCCESS)
@@ -161,7 +159,7 @@ int main(void)
         }
         else
         {
-            NRF_LOG("Sending packet failed\r\n");
+            NRF_LOG_WARNING("Sending packet failed\r\n");
         }
 
         nrf_delay_us(50000);

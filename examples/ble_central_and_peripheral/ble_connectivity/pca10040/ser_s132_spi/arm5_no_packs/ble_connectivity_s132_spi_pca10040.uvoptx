@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <ProjectOpt xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_opt.xsd">
-  
+
   <SchemaVersion>1.0</SchemaVersion>
-  
+
   <Header>### uVision Project, (C) Keil Software</Header>
-  
   <Target>
-    <TargetName>nrf52832_xxaa_s132</TargetName>
+    <TargetName>nrf52832_xxaa</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -111,9 +110,8 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
     </TargetOption>
-  </Target>
-  <Target>
-    <TargetName>flash_s132_nrf52_2.0.0_softdevice</TargetName>
+  </Target>  <Target>
+    <TargetName>flash_s132_nrf52_3.0.0_softdevice</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -218,6 +216,6 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
     </TargetOption>
-  </Target>
-</ProjectOpt>
+  </Target></ProjectOpt>
+
 

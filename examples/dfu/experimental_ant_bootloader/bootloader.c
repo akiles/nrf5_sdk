@@ -60,7 +60,7 @@ uint32_t blocking_flash_page_erase(uint32_t page_number)
     uint32_t err_code;
     do{
         err_code = sd_flash_page_erase(page_number);
-    } while(err_code == NRF_ERROR_BUSY);
+    } while (err_code == NRF_ERROR_BUSY);
     return err_code;
 }
 
@@ -69,7 +69,7 @@ uint32_t blocking_flash_word_write(uint32_t * const p_dst, uint32_t data)
     uint32_t err_code;
     do{
         err_code = sd_flash_write(p_dst, &data, 1);
-    } while(err_code == NRF_ERROR_BUSY);
+    } while (err_code == NRF_ERROR_BUSY);
     return err_code;
 }
 
@@ -84,7 +84,7 @@ static void pstorage_callback_handler(pstorage_handle_t * handle, uint8_t op_cod
         /*Clears bootloader_settings critical flag*/
         if (*((uint32_t *)BOOT_SETTINGS_PEND_ADDRESS) == BOOT_SETTINGS_PEND_VALUE)
         {
-            uint32_t err_code = blocking_flash_page_erase(BOOT_SETTINGS_PEND_ADDRESS/CODE_PAGE_SIZE);
+            uint32_t err_code = blocking_flash_page_erase(BOOT_SETTINGS_PEND_ADDRESS / CODE_PAGE_SIZE);
             APP_ERROR_CHECK(err_code);
         }
     }
@@ -228,7 +228,7 @@ void bootloader_dfu_update_process(dfu_update_status_t update_status)
         /*Clears bootloader_settings critical flag - in case it was used by MBR*/
         if (*((uint32_t *)BOOT_SETTINGS_PEND_ADDRESS) != 0xFFFFFFFF)
         {
-            err_code = blocking_flash_page_erase(BOOT_SETTINGS_PEND_ADDRESS/CODE_PAGE_SIZE);
+            err_code = blocking_flash_page_erase(BOOT_SETTINGS_PEND_ADDRESS / CODE_PAGE_SIZE);
             APP_ERROR_CHECK(err_code);
         }
 
@@ -249,7 +249,7 @@ void bootloader_dfu_update_process(dfu_update_status_t update_status)
         /*Clears bootloader_settings critical flag - in case it was used by MBR*/
         if (*((uint32_t *)BOOT_SETTINGS_PEND_ADDRESS) != 0xFFFFFFFF)
         {
-            err_code = blocking_flash_page_erase(BOOT_SETTINGS_PEND_ADDRESS/CODE_PAGE_SIZE);
+            err_code = blocking_flash_page_erase(BOOT_SETTINGS_PEND_ADDRESS / CODE_PAGE_SIZE);
             APP_ERROR_CHECK(err_code);
         }
 
@@ -395,13 +395,13 @@ uint32_t bootloader_dfu_sd_update_continue()
     bootloader_util_settings_get(&p_bootloader_settings);
 
     /* Ignore update attempts on invalid src_image_address */
-    if( (p_bootloader_settings->src_image_address == SRC_IMAGE_ADDRESS_EMPTY)   ||
+    if ( (p_bootloader_settings->src_image_address == SRC_IMAGE_ADDRESS_EMPTY)   ||
         (p_bootloader_settings->src_image_address == SRC_IMAGE_ADDRESS_INVALID))
     {
         return NRF_SUCCESS;
     }
 
-    if( (p_bootloader_settings->sd_image.st.bank == NEW_IMAGE_BANK_0)           ||
+    if ( (p_bootloader_settings->sd_image.st.bank == NEW_IMAGE_BANK_0)           ||
         (p_bootloader_settings->sd_image.st.bank == NEW_IMAGE_BANK_1))
     {
         debugger_delay();
@@ -427,13 +427,13 @@ uint32_t bootloader_dfu_bl_update_continue(void)
     bootloader_util_settings_get(&p_bootloader_settings);
 
     /* Ignore update attempts on invalid src_image_address */
-    if( (p_bootloader_settings->src_image_address == SRC_IMAGE_ADDRESS_EMPTY)   ||
+    if ( (p_bootloader_settings->src_image_address == SRC_IMAGE_ADDRESS_EMPTY)   ||
         (p_bootloader_settings->src_image_address == SRC_IMAGE_ADDRESS_INVALID))
     {
         return NRF_SUCCESS;
     }
 
-    if( (p_bootloader_settings->bl_image.st.bank == NEW_IMAGE_BANK_0)           ||
+    if ( (p_bootloader_settings->bl_image.st.bank == NEW_IMAGE_BANK_0)           ||
         (p_bootloader_settings->bl_image.st.bank == NEW_IMAGE_BANK_1))
     {
         debugger_delay();
@@ -463,13 +463,13 @@ uint32_t bootloader_dfu_ap_update_continue(void)
     bootloader_util_settings_get(&p_bootloader_settings);
 
     /* Ignore update attempts on invalid src_image_address */
-    if( (p_bootloader_settings->src_image_address == SRC_IMAGE_ADDRESS_EMPTY)   ||
+    if ( (p_bootloader_settings->src_image_address == SRC_IMAGE_ADDRESS_EMPTY)   ||
         (p_bootloader_settings->src_image_address == SRC_IMAGE_ADDRESS_INVALID))
     {
         return NRF_SUCCESS;
     }
 
-    if( (p_bootloader_settings->ap_image.st.bank == NEW_IMAGE_BANK_0)           ||
+    if ( (p_bootloader_settings->ap_image.st.bank == NEW_IMAGE_BANK_0)           ||
         (p_bootloader_settings->ap_image.st.bank == NEW_IMAGE_BANK_1))
     {
         /* If updating application only, we can start the copy right now*/

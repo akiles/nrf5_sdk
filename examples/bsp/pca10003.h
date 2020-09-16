@@ -11,7 +11,11 @@
  */
 #ifndef PCA10003_H
 #define PCA10003_H
- 
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define LED_START      18
 #define LED_0          18
 #define LED_1          19
@@ -59,5 +63,10 @@
                                  .xtal_accuracy = NRF_CLOCK_LF_XTAL_ACCURACY_20_PPM}
 #endif
 
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

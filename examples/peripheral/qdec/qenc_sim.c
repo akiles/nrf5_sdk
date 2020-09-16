@@ -112,7 +112,7 @@ static void qenc_init_gpiote(nrf_qdec_ledpol_t led_pol)
 void qenc_init(nrf_qdec_ledpol_t led_pol)
 {
     qenc_init_gpiote(led_pol);
-}    
+}
 
 // this function is used mainly in tests
 void qenc_pulse_dblpulse_count_set(int32_t pulse_count, uint32_t dble_pulse_count)

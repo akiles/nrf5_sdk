@@ -10,6 +10,8 @@
  *
  */
 
+#include "sdk_config.h"
+#if ANT_SEARCH_CONFIG_ENABLED
 #include "ant_search_config.h"
 #include "ant_interface.h"
 #include "sdk_common.h"
@@ -44,3 +46,5 @@ uint32_t ant_search_init(ant_search_config_t const * p_config)
                                                        p_config->search_sharing_cycles);
     return err_code;
 }
+
+#endif // ANT_SEARCH_CONFIG_ENABLED

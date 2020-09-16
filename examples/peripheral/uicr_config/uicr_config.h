@@ -28,7 +28,7 @@
  *
  */
 
-/* Template files (including this one) are application specific and therefore expected to 
+/* Template files (including this one) are application specific and therefore expected to
    be copied into the application project folder prior to its use! */
 
 #ifndef _UICR_CONFIG_H
@@ -38,23 +38,27 @@
 
 #include <stdint.h>
 
-/* 
- * Include this file in your project if you want to include in your compiled code files data 
- * for the User Information Configuration Registers (UICR) area; see nRF51 Series Reference 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/*
+ * Include this file in your project if you want to include in your compiled code files data
+ * for the User Information Configuration Registers (UICR) area; see nRF51 Series Reference
  * Manual chapter User Information Configuration Registers. This file declares one variable
- * per register of the UICR area and informs the linker where to place them. To include 
+ * per register of the UICR area and informs the linker where to place them. To include
  * the desired value in the desired address, uncomment the variable with the proper address
  * at the target area and update the assignment value.
  *
  * Please note that UICR values are stored in a reserved area of the flash and should only be
- * stored into when downloading a hex file. Do not use these defined variables to store data 
+ * stored into when downloading a hex file. Do not use these defined variables to store data
  * at run time.
- * 
- * Note as well that this file uses one non-standard attribute ("at"). It will only function 
+ *
+ * Note as well that this file uses one non-standard attribute ("at"). It will only function
  * with the ARMCC compiler toolset.
  *
  * Note that the hex file generated when this file is included will fail to download when using
- * the standard download algorithm provided by Nordic. See example project "uicr_config_example" 
+ * the standard download algorithm provided by Nordic. See example project "uicr_config_example"
  * in any of the board example folders for an example of the recommended download method as well
  * as the documentation that follows with the SDK. nrfjprog can be used as normal.
  *
@@ -98,5 +102,10 @@ const uint32_t UICR_ADDR_0x80 __attribute__((at(0x10001080))) __attribute__((use
 // const uint32_t UICR_ADDR_0xFC __attribute__((at(0x100010FC))) __attribute__((used)) = 0xFFFFFFFF;
 
 /*lint --flb "Leave library region" */
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //_UICR_CONFIG_H

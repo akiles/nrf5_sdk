@@ -18,20 +18,33 @@
  * @{
  */
 
-    #define UART_TX_BUF_SIZE         1024 //!< UART TX buffer size.
-    #define UART_RX_BUF_SIZE         32   //!< UART RX buffer size
-    #define EEPROM_SIM_SIZE          128  //!< Simulated EEPROM size
-    #define EEPROM_SIM_SEQ_WRITE_MAX 8    //!< Maximum number of bytes writable in one sequential access
-    #define EEPROM_SIM_ADDR          0x50 //!< Simulated EEPROM TWI address
+#ifndef TWI_MASTER_WITH_TWIS_SLAVE_CONFIG_H__
+#define TWI_MASTER_WITH_TWIS_SLAVE_CONFIG_H__
 
-    #define TWI_SCL_M                3   //!< Master SCL pin
-    #define TWI_SDA_M                4   //!< Master SDA pin
-    #define EEPROM_SIM_SCL_S         31   //!< Slave SCL pin
-    #define EEPROM_SIM_SDA_S         30   //!< Slave SDA pin
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-    #define EEPROM_SIM_TWIS_INST     1    //!< TWIS interface used by EEPROM simulator
-    #define MASTER_TWI_INST          0    //!< TWI interface used as a master accessing EEPROM memory
+#define UART_TX_BUF_SIZE         1024 //!< UART TX buffer size.
+#define UART_RX_BUF_SIZE         32   //!< UART RX buffer size
+#define EEPROM_SIM_SIZE          128  //!< Simulated EEPROM size
+#define EEPROM_SIM_SEQ_WRITE_MAX 8    //!< Maximum number of bytes writable in one sequential access
+#define EEPROM_SIM_ADDR          0x50 //!< Simulated EEPROM TWI address
 
-    #define IN_LINE_PRINT_CNT        16  //<! Number of data bytes printed in single line
+#define TWI_SCL_M                3   //!< Master SCL pin
+#define TWI_SDA_M                4   //!< Master SDA pin
+#define EEPROM_SIM_SCL_S         31   //!< Slave SCL pin
+#define EEPROM_SIM_SDA_S         30   //!< Slave SDA pin
+
+#define EEPROM_SIM_TWIS_INST     1    //!< TWIS interface used by EEPROM simulator
+#define MASTER_TWI_INST          0    //!< TWI interface used as a master accessing EEPROM memory
+
+#define IN_LINE_PRINT_CNT        16  //<! Number of data bytes printed in single line
 
 /** @} */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // TWI_MASTER_WITH_TWIS_SLAVE_CONFIG_H__

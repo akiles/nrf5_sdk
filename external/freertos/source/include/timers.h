@@ -204,7 +204,7 @@ typedef void (*PendedFunction_t)( void *, uint32_t );
  *     lExpireCounters[ lArrayIndex ] += 1;
  *
  *     // If the timer has expired 10 times then stop it from running.
- *     if( lExpireCounters[ lArrayIndex ] == xMaxExpiryCountBeforeStopping )
+ *     if ( lExpireCounters[ lArrayIndex ] == xMaxExpiryCountBeforeStopping )
  *     {
  *         // Do not use a block time if calling a timer API function from a
  *         // timer callback function, as doing so could cause a deadlock!
@@ -219,7 +219,7 @@ typedef void (*PendedFunction_t)( void *, uint32_t );
  *     // Create then start some timers.  Starting the timers before the scheduler
  *     // has been started means the timers will start running immediately that
  *     // the scheduler starts.
- *     for( x = 0; x < NUM_TIMERS; x++ )
+ *     for ( x = 0; x < NUM_TIMERS; x++ )
  *     {
  *         xTimers[ x ] = xTimerCreate(    "Timer",       // Just a text name, not used by the kernel.
  *                                         ( 100 * x ),   // The timer period in ticks.
@@ -228,7 +228,7 @@ typedef void (*PendedFunction_t)( void *, uint32_t );
  *                                         vTimerCallback // Each timer calls the same callback when it expires.
  *                                     );
  *
- *         if( xTimers[ x ] == NULL )
+ *         if ( xTimers[ x ] == NULL )
  *         {
  *             // The timer was not created.
  *         }
@@ -237,7 +237,7 @@ typedef void (*PendedFunction_t)( void *, uint32_t );
  *             // Start the timer.  No block time is specified, and even if one was
  *             // it would be ignored because the scheduler has not yet been
  *             // started.
- *             if( xTimerStart( xTimers[ x ], 0 ) != pdPASS )
+ *             if ( xTimerStart( xTimers[ x ], 0 ) != pdPASS )
  *             {
  *                 // The timer could not be set into the Active state.
  *             }
@@ -253,7 +253,7 @@ typedef void (*PendedFunction_t)( void *, uint32_t );
  *     xTaskStartScheduler();
  *
  *     // Should not reach here.
- *     for( ;; );
+ *     for ( ;; );
  * }
  * @endverbatim
  */
@@ -326,7 +326,7 @@ void vTimerSetTimerID( const TimerHandle_t xTimer, void *pvNewID ) PRIVILEGED_FU
  * // This function assumes xTimer has already been created.
  * void vAFunction( TimerHandle_t xTimer )
  * {
- *     if( xTimerIsTimerActive( xTimer ) != pdFALSE ) // or more simply and equivalently "if( xTimerIsTimerActive( xTimer ) )"
+ *     if ( xTimerIsTimerActive( xTimer ) != pdFALSE ) // or more simply and equivalently "if ( xTimerIsTimerActive( xTimer ) )"
  *     {
  *         // xTimer is active, do something.
  *     }
@@ -498,7 +498,7 @@ TaskHandle_t xTimerGetTimerDaemonTaskHandle( void );
  * // started.
  * void vAFunction( TimerHandle_t xTimer )
  * {
- *     if( xTimerIsTimerActive( xTimer ) != pdFALSE ) // or more simply and equivalently "if( xTimerIsTimerActive( xTimer ) )"
+ *     if ( xTimerIsTimerActive( xTimer ) != pdFALSE ) // or more simply and equivalently "if ( xTimerIsTimerActive( xTimer ) )"
  *     {
  *         // xTimer is already active - delete it.
  *         xTimerDelete( xTimer );
@@ -509,7 +509,7 @@ TaskHandle_t xTimerGetTimerDaemonTaskHandle( void );
  *         // cause the timer to start.  Block for a maximum of 100 ticks if the
  *         // change period command cannot immediately be sent to the timer
  *         // command queue.
- *         if( xTimerChangePeriod( xTimer, 500 / portTICK_PERIOD_MS, 100 ) == pdPASS )
+ *         if ( xTimerChangePeriod( xTimer, 500 / portTICK_PERIOD_MS, 100 ) == pdPASS )
  *         {
  *             // The command was successfully sent.
  *         }
@@ -634,7 +634,7 @@ TaskHandle_t xTimerGetTimerDaemonTaskHandle( void );
  *     // key inactivity.  Wait 10 ticks for the command to be successfully sent
  *     // if it cannot be sent immediately.
  *     vSetBacklightState( BACKLIGHT_ON );
- *     if( xTimerReset( xBacklightTimer, 100 ) != pdPASS )
+ *     if ( xTimerReset( xBacklightTimer, 100 ) != pdPASS )
  *     {
  *         // The reset command was not executed successfully.  Take appropriate
  *         // action here.
@@ -656,7 +656,7 @@ TaskHandle_t xTimerGetTimerDaemonTaskHandle( void );
  *                                     vBacklightTimerCallback     // The callback function that switches the LCD back-light off.
  *                                   );
  *
- *     if( xBacklightTimer == NULL )
+ *     if ( xBacklightTimer == NULL )
  *     {
  *         // The timer was not created.
  *     }
@@ -665,7 +665,7 @@ TaskHandle_t xTimerGetTimerDaemonTaskHandle( void );
  *         // Start the timer.  No block time is specified, and even if one was
  *         // it would be ignored because the scheduler has not yet been
  *         // started.
- *         if( xTimerStart( xBacklightTimer, 0 ) != pdPASS )
+ *         if ( xTimerStart( xBacklightTimer, 0 ) != pdPASS )
  *         {
  *             // The timer could not be set into the Active state.
  *         }
@@ -680,7 +680,7 @@ TaskHandle_t xTimerGetTimerDaemonTaskHandle( void );
  *     xTaskStartScheduler();
  *
  *     // Should not reach here.
- *     for( ;; );
+ *     for ( ;; );
  * }
  * @endverbatim
  */
@@ -749,7 +749,7 @@ TaskHandle_t xTimerGetTimerDaemonTaskHandle( void );
  *     // as both cause the timer to re-calculate its expiry time.
  *     // xHigherPriorityTaskWoken was initialised to pdFALSE when it was
  *     // declared (in this function).
- *     if( xTimerStartFromISR( xBacklightTimer, &xHigherPriorityTaskWoken ) != pdPASS )
+ *     if ( xTimerStartFromISR( xBacklightTimer, &xHigherPriorityTaskWoken ) != pdPASS )
  *     {
  *         // The start command was not executed successfully.  Take appropriate
  *         // action here.
@@ -762,7 +762,7 @@ TaskHandle_t xTimerGetTimerDaemonTaskHandle( void );
  *     // from inside an ISR varies from port to port, and from compiler to
  *     // compiler.  Inspect the demos for the port you are using to find the
  *     // actual syntax required.
- *     if( xHigherPriorityTaskWoken != pdFALSE )
+ *     if ( xHigherPriorityTaskWoken != pdFALSE )
  *     {
  *         // Call the interrupt safe yield function here (actual function
  *         // depends on the FreeRTOS port being used).
@@ -814,7 +814,7 @@ TaskHandle_t xTimerGetTimerDaemonTaskHandle( void );
  *     // xHigherPriorityTaskWoken was set to pdFALSE where it was defined
  *     // (within this function).  As this is an interrupt service routine, only
  *     // FreeRTOS API functions that end in "FromISR" can be used.
- *     if( xTimerStopFromISR( xTimer, &xHigherPriorityTaskWoken ) != pdPASS )
+ *     if ( xTimerStopFromISR( xTimer, &xHigherPriorityTaskWoken ) != pdPASS )
  *     {
  *         // The stop command was not executed successfully.  Take appropriate
  *         // action here.
@@ -825,7 +825,7 @@ TaskHandle_t xTimerGetTimerDaemonTaskHandle( void );
  *     // from inside an ISR varies from port to port, and from compiler to
  *     // compiler.  Inspect the demos for the port you are using to find the
  *     // actual syntax required.
- *     if( xHigherPriorityTaskWoken != pdFALSE )
+ *     if ( xHigherPriorityTaskWoken != pdFALSE )
  *     {
  *         // Call the interrupt safe yield function here (actual function
  *         // depends on the FreeRTOS port being used).
@@ -887,7 +887,7 @@ TaskHandle_t xTimerGetTimerDaemonTaskHandle( void );
  *     // xHigherPriorityTaskWoken was set to pdFALSE where it was defined
  *     // (within this function).  As this is an interrupt service routine, only
  *     // FreeRTOS API functions that end in "FromISR" can be used.
- *     if( xTimerChangePeriodFromISR( xTimer, &xHigherPriorityTaskWoken ) != pdPASS )
+ *     if ( xTimerChangePeriodFromISR( xTimer, &xHigherPriorityTaskWoken ) != pdPASS )
  *     {
  *         // The command to change the timers period was not executed
  *         // successfully.  Take appropriate action here.
@@ -898,7 +898,7 @@ TaskHandle_t xTimerGetTimerDaemonTaskHandle( void );
  *     // from inside an ISR varies from port to port, and from compiler to
  *     // compiler.  Inspect the demos for the port you are using to find the
  *     // actual syntax required.
- *     if( xHigherPriorityTaskWoken != pdFALSE )
+ *     if ( xHigherPriorityTaskWoken != pdFALSE )
  *     {
  *         // Call the interrupt safe yield function here (actual function
  *         // depends on the FreeRTOS port being used).
@@ -971,7 +971,7 @@ TaskHandle_t xTimerGetTimerDaemonTaskHandle( void );
  *     // as both cause the timer to re-calculate its expiry time.
  *     // xHigherPriorityTaskWoken was initialised to pdFALSE when it was
  *     // declared (in this function).
- *     if( xTimerResetFromISR( xBacklightTimer, &xHigherPriorityTaskWoken ) != pdPASS )
+ *     if ( xTimerResetFromISR( xBacklightTimer, &xHigherPriorityTaskWoken ) != pdPASS )
  *     {
  *         // The reset command was not executed successfully.  Take appropriate
  *         // action here.
@@ -984,7 +984,7 @@ TaskHandle_t xTimerGetTimerDaemonTaskHandle( void );
  *     // from inside an ISR varies from port to port, and from compiler to
  *     // compiler.  Inspect the demos for the port you are using to find the
  *     // actual syntax required.
- *     if( xHigherPriorityTaskWoken != pdFALSE )
+ *     if ( xHigherPriorityTaskWoken != pdFALSE )
  *     {
  *         // Call the interrupt safe yield function here (actual function
  *         // depends on the FreeRTOS port being used).

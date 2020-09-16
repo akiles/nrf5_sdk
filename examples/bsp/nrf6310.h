@@ -12,6 +12,10 @@
 #ifndef NRF6310_H__
 #define NRF6310_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define LED_START      8
 #define LED_0          8
 #define LED_1          9
@@ -82,14 +86,14 @@
 
 #define RX_PIN_NUMBER  16    // UART RX pin number.
 #define TX_PIN_NUMBER  17    // UART TX pin number.
-#define CTS_PIN_NUMBER 18    // UART Clear To Send pin number. Not used if HWFC is set to false. 
-#define RTS_PIN_NUMBER 19    // UART Request To Send pin number. Not used if HWFC is set to false. 
+#define CTS_PIN_NUMBER 18    // UART Clear To Send pin number. Not used if HWFC is set to false.
+#define RTS_PIN_NUMBER 19    // UART Request To Send pin number. Not used if HWFC is set to false.
 #define HWFC           false // UART hardware flow control.
 
-#define SPIS_MISO_PIN  20    // SPI MISO signal. 
-#define SPIS_CSN_PIN   21    // SPI CSN signal. 
-#define SPIS_MOSI_PIN  22    // SPI MOSI signal. 
-#define SPIS_SCK_PIN   23    // SPI SCK signal. 
+#define SPIS_MISO_PIN  20    // SPI MISO signal.
+#define SPIS_CSN_PIN   21    // SPI CSN signal.
+#define SPIS_MOSI_PIN  22    // SPI MOSI signal.
+#define SPIS_SCK_PIN   23    // SPI SCK signal.
 
 #define SPIM0_SCK_PIN       23u     /**< SPI clock GPIO pin number. */
 #define SPIM0_MOSI_PIN      20u     /**< SPI Master Out Slave In GPIO pin number. */
@@ -160,5 +164,10 @@
                                  .rc_ctiv       = 0,                                \
                                  .rc_temp_ctiv  = 0,                                \
                                  .xtal_accuracy = NRF_CLOCK_LF_XTAL_ACCURACY_20_PPM}
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // NRF6310_H__

@@ -95,35 +95,35 @@ extern "C" {
  */
 
 /* Type definitions. */
-#define portCHAR		char
-#define portFLOAT		float
-#define portDOUBLE		double
-#define portLONG		long
-#define portSHORT		short
-#define portSTACK_TYPE	uint32_t
-#define portBASE_TYPE	long
+#define portCHAR        char
+#define portFLOAT       float
+#define portDOUBLE      double
+#define portLONG        long
+#define portSHORT       short
+#define portSTACK_TYPE  uint32_t
+#define portBASE_TYPE   long
 
 typedef portSTACK_TYPE StackType_t;
 typedef long BaseType_t;
 typedef unsigned long UBaseType_t;
 
-#if( configUSE_16_BIT_TICKS == 1 )
-	typedef uint16_t TickType_t;
-	#define portMAX_DELAY ( TickType_t ) 0xffff
+#if ( configUSE_16_BIT_TICKS == 1 )
+    typedef uint16_t TickType_t;
+    #define portMAX_DELAY ( TickType_t ) 0xffff
 #else
-	typedef uint32_t TickType_t;
-	#define portMAX_DELAY ( TickType_t ) 0xffffffffUL
+    typedef uint32_t TickType_t;
+    #define portMAX_DELAY ( TickType_t ) 0xffffffffUL
 
-	/* 32-bit tick type on a 32-bit architecture, so reads of the tick count do
-	not need to be guarded with a critical section. */
-	#define portTICK_TYPE_IS_ATOMIC 1
+    /* 32-bit tick type on a 32-bit architecture, so reads of the tick count do
+    not need to be guarded with a critical section. */
+    #define portTICK_TYPE_IS_ATOMIC 1
 #endif
 /*-----------------------------------------------------------*/
 
 /* Architecture specifics. */
-#define portSTACK_GROWTH			( -1 )
-#define portTICK_PERIOD_MS			( ( TickType_t ) 1000 / configTICK_RATE_HZ )
-#define portBYTE_ALIGNMENT			8
+#define portSTACK_GROWTH            ( -1 )
+#define portTICK_PERIOD_MS            ( ( TickType_t ) 1000 / configTICK_RATE_HZ )
+#define portBYTE_ALIGNMENT            8
 
 /* RTC register */
 #define portNRF_RTC_REG        NRF_RTC1
@@ -145,12 +145,12 @@ typedef unsigned long UBaseType_t;
     within the specified behaviour for the architecture. */                     \
     __DSB();                                                                    \
     __ISB();                                                                    \
-}while(0)
+}while (0)
 
 /* Scheduler utilities. */
 #define portYIELD() vPortTaskYield()
 
-#define portEND_SWITCHING_ISR( xSwitchRequired ) if( (xSwitchRequired) != pdFALSE ) { portPendSVSchedule(); }
+#define portEND_SWITCHING_ISR( xSwitchRequired ) if ( (xSwitchRequired) != pdFALSE ) { portPendSVSchedule(); }
 #define portYIELD_FROM_ISR( x ) portEND_SWITCHING_ISR( x )
 /*-----------------------------------------------------------*/
 
@@ -158,12 +158,12 @@ typedef unsigned long UBaseType_t;
 extern void vPortEnterCritical( void );
 extern void vPortExitCritical( void );
 extern void vPortTaskYield( void );
-#define portSET_INTERRUPT_MASK_FROM_ISR()		ulPortDisableISR()
-#define portCLEAR_INTERRUPT_MASK_FROM_ISR(x)	vPortRestoreISR(x)
-#define portDISABLE_INTERRUPTS()				vPortDisableISR()
-#define portENABLE_INTERRUPTS()					vPortEnableISR()
-#define portENTER_CRITICAL()					vPortEnterCritical()
-#define portEXIT_CRITICAL()						vPortExitCritical()
+#define portSET_INTERRUPT_MASK_FROM_ISR()        ulPortDisableISR()
+#define portCLEAR_INTERRUPT_MASK_FROM_ISR(x)     vPortRestoreISR(x)
+#define portDISABLE_INTERRUPTS()                 vPortDisableISR()
+#define portENABLE_INTERRUPTS()                  vPortEnableISR()
+#define portENTER_CRITICAL()                     vPortEnterCritical()
+#define portEXIT_CRITICAL()                      vPortExitCritical()
 
 /*-----------------------------------------------------------*/
 
@@ -176,8 +176,8 @@ not necessary for to use this port.  They are defined so the common demo files
 
 /* Tickless idle/low power functionality. */
 #ifndef portSUPPRESS_TICKS_AND_SLEEP
-	extern void vPortSuppressTicksAndSleep( TickType_t xExpectedIdleTime );
-	#define portSUPPRESS_TICKS_AND_SLEEP( xExpectedIdleTime ) vPortSuppressTicksAndSleep( xExpectedIdleTime )
+    extern void vPortSuppressTicksAndSleep( TickType_t xExpectedIdleTime );
+    #define portSUPPRESS_TICKS_AND_SLEEP( xExpectedIdleTime ) vPortSuppressTicksAndSleep( xExpectedIdleTime )
 #endif
 
 /*-----------------------------------------------------------*/
@@ -187,9 +187,9 @@ __STATIC_INLINE void vPortDisableISR(void)
 #ifdef SOFTDEVICE_PRESENT
     uint32_t primask = __get_PRIMASK();
     /* SVC cannot be called if interrupts are blocked globally */
-    if(!primask)
+    if (!primask)
     {
-        if(softdevice_handler_isEnabled())
+        if (softdevice_handler_is_enabled())
         {
             if (current_int_priority_get() > APP_IRQ_PRIORITY_HIGH)
             {
@@ -212,7 +212,7 @@ __STATIC_INLINE void vPortEnableISR(void)
 {
     __enable_irq();
 #ifdef SOFTDEVICE_PRESENT
-    if(softdevice_handler_isEnabled())
+    if (softdevice_handler_is_enabled())
     {
         if (current_int_priority_get() > APP_IRQ_PRIORITY_HIGH)
         {
@@ -244,10 +244,10 @@ __STATIC_INLINE uint32_t ulPortDisableISR(void)
     portISRState_t isrs = {0};
     uint32_t primask = __get_PRIMASK();
     /* SVC cannot be called if interrupts are blocked globally */
-    if(!primask)
+    if (!primask)
     {
 #ifdef SOFTDEVICE_PRESENT
-        if(softdevice_handler_isEnabled())
+        if (softdevice_handler_is_enabled())
         {
             if (current_int_priority_get() > APP_IRQ_PRIORITY_HIGH)
             {
@@ -272,12 +272,12 @@ isrs.s.primask_used = 1;
 __STATIC_INLINE void vPortRestoreISR(uint32_t state)
 {
     portISRState_t isrs = {state};
-    if(isrs.s.primask_used)
+    if (isrs.s.primask_used)
     {
         __set_PRIMASK(isrs.s.primask);
     }
 #ifdef SOFTDEVICE_PRESENT
-    if(isrs.s.sd_nested_used)
+    if (isrs.s.sd_nested_used)
     {
         UNUSED_VARIABLE(sd_nvic_critical_region_exit(isrs.s.sd_nested));
     }

@@ -18,6 +18,10 @@ All rights reserved.
 #ifndef __COMMANDS_H__
 #define __COMMANDS_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Page numbers
 
 #define DATA_PAGE_IND                   0
@@ -72,6 +76,11 @@ All rights reserved.
 #define ADDRESS_ALL_NODES               ((uint8_t) 0x00)                /**< Send command to all nodes  */
 
 #define RESERVED                        ((uint8_t) 0xFF)                /**< Reserved/Invalid value  */
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

@@ -28,29 +28,19 @@
 #include "nrf_drv_rng.h"
 #include "nrf_assert.h"
 
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
+
 #ifdef SOFTDEVICE_PRESENT
 #include "softdevice_handler.h"
 #endif // SOFTDEVICE_PRESENT
 
-#define UART_TX_BUF_SIZE 256                                                          /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 1                                                            /**< UART RX buffer size. */
 #define RANDOM_BUFF_SIZE 16                                                           /**< Random numbers buffer size. */
 
 void assert_nrf_callback(uint16_t line_num, const uint8_t *file_name)
 {
     /* empty function - needed by softdevice handler */
-}
-
-void uart_error_handle(app_uart_evt_t * p_event)
-{
-    if (p_event->evt_type == APP_UART_COMMUNICATION_ERROR)
-    {
-        APP_ERROR_HANDLER(p_event->data.error_communication);
-    }
-    else if (p_event->evt_type == APP_UART_FIFO_ERROR)
-    {
-        APP_ERROR_HANDLER(p_event->data.error_code);
-    }
 }
 
 /** @brief Function for getting vector of random numbers.
@@ -77,24 +67,8 @@ uint8_t random_vector_generate(uint8_t * p_buff, uint8_t size)
 int main(void)
 {
     uint32_t err_code;
-    const app_uart_comm_params_t comm_params =
-      {
-          RX_PIN_NUMBER,
-          TX_PIN_NUMBER,
-          RTS_PIN_NUMBER,
-          CTS_PIN_NUMBER,
-          APP_UART_FLOW_CONTROL_ENABLED,
-          false,
-          UART_BAUDRATE_BAUDRATE_Baud115200
-      };
 
-    APP_UART_FIFO_INIT(&comm_params,
-                         UART_RX_BUF_SIZE,
-                         UART_TX_BUF_SIZE,
-                         uart_error_handle,
-                         APP_IRQ_PRIORITY_LOW,
-                         err_code);
-
+    err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
 #ifdef SOFTDEVICE_PRESENT
@@ -104,18 +78,16 @@ int main(void)
 
     err_code = nrf_drv_rng_init(NULL);
     APP_ERROR_CHECK(err_code);
-    
+
     while (true)
     {
         uint8_t p_buff[RANDOM_BUFF_SIZE];
         uint8_t length = random_vector_generate(p_buff,RANDOM_BUFF_SIZE);
-        printf("Random Vector:");
-        for(uint8_t i = 0; i < length; i++)
-        {
-            printf(" %3d",(int)p_buff[i]);
-        }
-        printf("\n\r");
+        NRF_LOG_INFO("Random Vector:\r\n");
+        NRF_LOG_HEXDUMP_INFO(p_buff, length);
+        NRF_LOG_INFO("\r\n");
         nrf_delay_ms(100);
+        NRF_LOG_FLUSH();
     }
 }
 

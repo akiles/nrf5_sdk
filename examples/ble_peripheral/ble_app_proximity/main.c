@@ -47,79 +47,86 @@
 #include "app_timer.h"
 #include "ble_ias_c.h"
 #include "app_util.h"
-#include "nrf_log.h"
 #include "bsp.h"
 #include "bsp_btn_ble.h"
 #include "ble_db_discovery.h"
-#include "nrf_log.h"
 #include "peer_manager.h"
 #include "fds.h"
 #include "fstorage.h"
 #include "ble_conn_state.h"
 
-#ifdef NRF51
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
+
+#include "nrf_peripherals.h"
+#ifdef ADC_PRESENT
 #include "nrf_drv_adc.h"
 #else
 #include "nrf_drv_saadc.h"
-#endif //NRF51
+#endif //ADC_PRESENT
 
-#define APP_FEATURE_NOT_SUPPORTED           BLE_GATT_STATUS_ATTERR_APP_BEGIN + 2        /**< Reply when unsupported features are requested. */
+#if (NRF_SD_BLE_API_VERSION == 3)
+#define NRF_BLE_MAX_MTU_SIZE              GATT_MTU_SIZE_DEFAULT                        /**< MTU size used in the softdevice enabling and to reply to a BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST event. */
+#endif
 
-#define IS_SRVC_CHANGED_CHARACT_PRESENT     0                                            /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
+#define APP_FEATURE_NOT_SUPPORTED         BLE_GATT_STATUS_ATTERR_APP_BEGIN + 2         /**< Reply when unsupported features are requested. */
 
-#define CENTRAL_LINK_COUNT                  0                                            /**<number of central links used by the application. When changing this number remember to adjust the RAM settings*/
-#define PERIPHERAL_LINK_COUNT               1                                            /**<number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
+#define IS_SRVC_CHANGED_CHARACT_PRESENT   0                                            /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
-#define SIGNAL_ALERT_BUTTON_ID              0                                            /**< Button used for send or cancel High Alert to the peer. */
-#define STOP_ALERTING_BUTTON_ID             1                                            /**< Button used for clearing the Alert LED that may be blinking or turned ON because of alerts from the central. */
+#define CENTRAL_LINK_COUNT                0                                            /**<number of central links used by the application. When changing this number remember to adjust the RAM settings*/
+#define PERIPHERAL_LINK_COUNT             1                                            /**<number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
 
-#define DEVICE_NAME                         "Nordic_Prox"                                /**< Name of device. Will be included in the advertising data. */
-#define APP_ADV_INTERVAL_FAST               0x0028                                       /**< Fast advertising interval (in units of 0.625 ms. This value corresponds to 25 ms.). */
-#define APP_ADV_INTERVAL_SLOW               0x0C80                                       /**< Slow advertising interval (in units of 0.625 ms. This value corresponds to 2 seconds). */
-#define APP_SLOW_ADV_TIMEOUT                180                                          /**< The duration of the slow advertising period (in seconds). */
-#define APP_FAST_ADV_TIMEOUT                30                                           /**< The duration of the fast advertising period (in seconds). */
+#define SIGNAL_ALERT_BUTTON_ID            0                                            /**< Button used for send or cancel High Alert to the peer. */
+#define STOP_ALERTING_BUTTON_ID           1                                            /**< Button used for clearing the Alert LED that may be blinking or turned ON because of alerts from the central. */
 
-#define APP_TIMER_PRESCALER                 0                                            /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_OP_QUEUE_SIZE             6                                            /**< Size of timer operation queues. */
+#define DEVICE_NAME                       "Nordic_Prox"                                /**< Name of device. Will be included in the advertising data. */
+#define APP_ADV_INTERVAL_FAST             0x0028                                       /**< Fast advertising interval (in units of 0.625 ms. This value corresponds to 25 ms.). */
+#define APP_ADV_INTERVAL_SLOW             0x0C80                                       /**< Slow advertising interval (in units of 0.625 ms. This value corresponds to 2 seconds). */
+#define APP_SLOW_ADV_TIMEOUT              180                                          /**< The duration of the slow advertising period (in seconds). */
+#define APP_FAST_ADV_TIMEOUT              30                                           /**< The duration of the fast advertising period (in seconds). */
 
-#define BATTERY_LEVEL_MEAS_INTERVAL         APP_TIMER_TICKS(120000, APP_TIMER_PRESCALER) /**< Battery level measurement interval (ticks). This value corresponds to 120 seconds. */
+#define APP_TIMER_PRESCALER               0                                            /**< Value of the RTC1 PRESCALER register. */
+#define APP_TIMER_OP_QUEUE_SIZE           6                                            /**< Size of timer operation queues. */
 
-#define ADV_LED_ON_TIME                     APP_TIMER_TICKS(100, APP_TIMER_PRESCALER)    /**< Advertisement LED ON period when in blinking state. */
-#define ADV_LED_OFF_TIME                    APP_TIMER_TICKS(900, APP_TIMER_PRESCALER)    /**< Advertisement LED OFF period when in blinking state. */
+#define BATTERY_LEVEL_MEAS_INTERVAL       APP_TIMER_TICKS(120000, APP_TIMER_PRESCALER) /**< Battery level measurement interval (ticks). This value corresponds to 120 seconds. */
 
-#define MILD_ALERT_LED_ON_TIME              APP_TIMER_TICKS(100, APP_TIMER_PRESCALER)    /**< Alert LED ON period when in blinking state. */
-#define MILD_ALERT_LED_OFF_TIME             APP_TIMER_TICKS(900, APP_TIMER_PRESCALER)    /**< Alert LED OFF period when in blinking state. */
+#define ADV_LED_ON_TIME                   APP_TIMER_TICKS(100, APP_TIMER_PRESCALER)    /**< Advertisement LED ON period when in blinking state. */
+#define ADV_LED_OFF_TIME                  APP_TIMER_TICKS(900, APP_TIMER_PRESCALER)    /**< Advertisement LED OFF period when in blinking state. */
 
-#define MIN_CONN_INTERVAL                   MSEC_TO_UNITS(500, UNIT_1_25_MS)             /**< Minimum acceptable connection interval (0.5 seconds).  */
-#define MAX_CONN_INTERVAL                   MSEC_TO_UNITS(1000, UNIT_1_25_MS)            /**< Maximum acceptable connection interval (1 second). */
-#define SLAVE_LATENCY                       0                                            /**< Slave latency. */
-#define CONN_SUP_TIMEOUT                    MSEC_TO_UNITS(4000, UNIT_10_MS)              /**< Connection supervisory timeout (4 seconds). */
+#define MILD_ALERT_LED_ON_TIME            APP_TIMER_TICKS(100, APP_TIMER_PRESCALER)    /**< Alert LED ON period when in blinking state. */
+#define MILD_ALERT_LED_OFF_TIME           APP_TIMER_TICKS(900, APP_TIMER_PRESCALER)    /**< Alert LED OFF period when in blinking state. */
 
-#define FIRST_CONN_PARAMS_UPDATE_DELAY      APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)   /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
-#define NEXT_CONN_PARAMS_UPDATE_DELAY       APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER)  /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
-#define MAX_CONN_PARAMS_UPDATE_COUNT        3                                            /**< Number of attempts before giving up the connection parameter negotiation. */
+#define MIN_CONN_INTERVAL                 MSEC_TO_UNITS(500, UNIT_1_25_MS)             /**< Minimum acceptable connection interval (0.5 seconds).  */
+#define MAX_CONN_INTERVAL                 MSEC_TO_UNITS(1000, UNIT_1_25_MS)            /**< Maximum acceptable connection interval (1 second). */
+#define SLAVE_LATENCY                     0                                            /**< Slave latency. */
+#define CONN_SUP_TIMEOUT                  MSEC_TO_UNITS(4000, UNIT_10_MS)              /**< Connection supervisory timeout (4 seconds). */
 
-#define SEC_PARAM_BOND                      1                                            /**< Perform bonding. */
-#define SEC_PARAM_MITM                      0                                            /**< Man In The Middle protection not required. */
-#define SEC_PARAM_LESC                      0                                            /**< LE Secure Connections not enabled. */
-#define SEC_PARAM_KEYPRESS                  0                                            /**< Keypress notifications not enabled. */
-#define SEC_PARAM_IO_CAPABILITIES           BLE_GAP_IO_CAPS_NONE                         /**< No I/O capabilities. */
-#define SEC_PARAM_OOB                       0                                            /**< Out Of Band data not available. */
-#define SEC_PARAM_MIN_KEY_SIZE              7                                            /**< Minimum encryption key size. */
-#define SEC_PARAM_MAX_KEY_SIZE              16                                           /**< Maximum encryption key size. */
+#define FIRST_CONN_PARAMS_UPDATE_DELAY    APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)   /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
+#define NEXT_CONN_PARAMS_UPDATE_DELAY     APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER)  /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
+#define MAX_CONN_PARAMS_UPDATE_COUNT      3                                            /**< Number of attempts before giving up the connection parameter negotiation. */
 
-#define INITIAL_LLS_ALERT_LEVEL             BLE_CHAR_ALERT_LEVEL_NO_ALERT                /**< Initial value for the Alert Level characteristic in the Link Loss service. */
-#define TX_POWER_LEVEL                      (-8)                                         /**< TX Power Level value. This will be set both in the TX Power service, in the advertising data, and also used to set the radio transmit power. */
+#define SEC_PARAM_BOND                    1                                            /**< Perform bonding. */
+#define SEC_PARAM_MITM                    0                                            /**< Man In The Middle protection not required. */
+#define SEC_PARAM_LESC                    0                                            /**< LE Secure Connections not enabled. */
+#define SEC_PARAM_KEYPRESS                0                                            /**< Keypress notifications not enabled. */
+#define SEC_PARAM_IO_CAPABILITIES         BLE_GAP_IO_CAPS_NONE                         /**< No I/O capabilities. */
+#define SEC_PARAM_OOB                     0                                            /**< Out Of Band data not available. */
+#define SEC_PARAM_MIN_KEY_SIZE            7                                            /**< Minimum encryption key size. */
+#define SEC_PARAM_MAX_KEY_SIZE            16                                           /**< Maximum encryption key size. */
 
-#define ADC_REF_VOLTAGE_IN_MILLIVOLTS       600                                          /**< Reference voltage (in milli volts) used by ADC while doing conversion. */
-#define ADC_PRE_SCALING_COMPENSATION        6                                            /**< The ADC is configured to use VDD with 1/3 prescaling as input. And hence the result of conversion is to be multiplied by 3 to get the actual value of the battery voltage.*/
-#define DIODE_FWD_VOLT_DROP_MILLIVOLTS      270                                          /**< Typical forward voltage drop of the diode (Part no: SD103ATW-7-F) that is connected in series with the voltage supply. This is the voltage drop when the forward current is 1mA. Source: Data sheet of 'SURFACE MOUNT SCHOTTKY BARRIER DIODE ARRAY' available at www.diodes.com. */
+#define INITIAL_LLS_ALERT_LEVEL           BLE_CHAR_ALERT_LEVEL_NO_ALERT                /**< Initial value for the Alert Level characteristic in the Link Loss service. */
+#define TX_POWER_LEVEL                    (-8)                                         /**< TX Power Level value. This will be set both in the TX Power service, in the advertising data, and also used to set the radio transmit power. */
 
-#define DEAD_BEEF                           0xDEADBEEF                                   /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
+#define ADC_REF_VOLTAGE_IN_MILLIVOLTS     600                                          /**< Reference voltage (in milli volts) used by ADC while doing conversion. */
+#define ADC_PRE_SCALING_COMPENSATION      6                                            /**< The ADC is configured to use VDD with 1/3 prescaling as input. And hence the result of conversion is to be multiplied by 3 to get the actual value of the battery voltage.*/
+#define DIODE_FWD_VOLT_DROP_MILLIVOLTS    270                                          /**< Typical forward voltage drop of the diode (Part no: SD103ATW-7-F) that is connected in series with the voltage supply. This is the voltage drop when the forward current is 1mA. Source: Data sheet of 'SURFACE MOUNT SCHOTTKY BARRIER DIODE ARRAY' available at www.diodes.com. */
 
-#define ADC_REF_VBG_VOLTAGE_IN_MILLIVOLTS   1200                                         /**< Value in millivolts for voltage used as reference in ADC conversion on NRF51. */
-#define ADC_INPUT_PRESCALER                 3                                            /**< Input prescaler for ADC convestion on NRF51. */
-#define ADC_RES_10BIT                       1024                                         /**< Maximum digital value for 10-bit ADC conversion. */
+#define DEAD_BEEF                         0xDEADBEEF                                   /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
+
+#define ADC_REF_VBG_VOLTAGE_IN_MILLIVOLTS 1200                                         /**< Value in millivolts for voltage used as reference in ADC conversion on NRF51. */
+#define ADC_INPUT_PRESCALER               3                                            /**< Input prescaler for ADC convestion on NRF51. */
+#define ADC_RES_10BIT                     1024                                         /**< Maximum digital value for 10-bit ADC conversion. */
 
 /**@brief Macro to convert the result of ADC conversion in millivolts.
  *
@@ -127,19 +134,18 @@
  *
  * @retval     Result converted to millivolts.
  */
-#ifdef NRF51
+#ifdef ADC_PRESENT
 #define ADC_RESULT_IN_MILLI_VOLTS(ADC_VALUE)\
         ((((ADC_VALUE) * ADC_REF_VBG_VOLTAGE_IN_MILLIVOLTS) / ADC_RES_10BIT) * ADC_INPUT_PRESCALER)
-#else // NRF52
+#else // SAADC_PRESENT
 #define ADC_RESULT_IN_MILLI_VOLTS(ADC_VALUE)\
         ((((ADC_VALUE) * ADC_REF_VOLTAGE_IN_MILLIVOLTS) / ADC_RES_10BIT) * ADC_PRE_SCALING_COMPENSATION)
-#endif // NRF51
+#endif // ADC_PRESENT
 
 static ble_db_discovery_t               m_ble_db_discovery;                      /**< Structure used to identify the DB Discovery module. */
 static ble_tps_t                        m_tps;                                   /**< Structure used to identify the TX Power service. */
 static ble_ias_t                        m_ias;                                   /**< Structure used to identify the Immediate Alert service. */
 static ble_lls_t                        m_lls;                                   /**< Structure used to identify the Link Loss service. */
-
 static ble_bas_t                        m_bas;                                   /**< Structure used to identify the battery service. */
 static ble_ias_c_t                      m_ias_c;                                 /**< Structure used to identify the client to the Immediate Alert Service at peer. */
 
@@ -149,14 +155,13 @@ static volatile bool                    m_is_ias_present = false;               
 
 APP_TIMER_DEF(m_battery_timer_id);                                               /**< Battery measurement timer. */
 
-
-#define APP_ADV_INTERVAL               40                                          /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
-#define APP_ADV_TIMEOUT_IN_SECONDS     180                                         /**< The advertising timeout in units of seconds. */
+#define APP_ADV_INTERVAL               40                                        /**< The advertising interval (in units of 0.625 ms. This value corresponds to 25 ms). */
+#define APP_ADV_TIMEOUT_IN_SECONDS     180                                       /**< The advertising timeout in units of seconds. */
 
 static ble_uuid_t m_adv_uuids[] = {{BLE_UUID_IMMEDIATE_ALERT_SERVICE, BLE_UUID_TYPE_BLE},
-                                   {BLE_UUID_BATTERY_SERVICE,         BLE_UUID_TYPE_BLE},
-                                   {BLE_UUID_TX_POWER_SERVICE,        BLE_UUID_TYPE_BLE},
-                                   {BLE_UUID_LINK_LOSS_SERVICE,       BLE_UUID_TYPE_BLE}}; /**< Universally unique service identifiers. */
+                                   {BLE_UUID_BATTERY_SERVICE, BLE_UUID_TYPE_BLE},
+                                   {BLE_UUID_TX_POWER_SERVICE, BLE_UUID_TYPE_BLE},
+                                   {BLE_UUID_LINK_LOSS_SERVICE, BLE_UUID_TYPE_BLE}}; /**< Universally unique service identifiers. */
 
 static void on_ias_evt(ble_ias_t * p_ias, ble_ias_evt_t * p_evt);
 static void on_lls_evt(ble_lls_t * p_lls, ble_lls_evt_t * p_evt);
@@ -165,11 +170,11 @@ static void on_bas_evt(ble_bas_t * p_bas, ble_bas_evt_t * p_evt);
 static void advertising_init(void);
 static void advertising_start(void);
 
-#ifdef NRF51
+#ifdef ADC_PRESENT
 static nrf_adc_value_t adc_buf[1];
 #else
 static nrf_saadc_value_t adc_buf[2];
-#endif //NRF52
+#endif //ADC_PRESENT
 
 /**@brief Callback function for asserts in the SoftDevice.
  *
@@ -209,33 +214,33 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
 {
     ret_code_t err_code;
 
-    switch(p_evt->evt_id)
+    switch (p_evt->evt_id)
     {
         case PM_EVT_BONDED_PEER_CONNECTED:
         {
-            NRF_LOG_PRINTF_DEBUG("Connected to previously bonded device\r\n");
+            NRF_LOG_DEBUG("Connected to previously bonded device\r\n");
             err_code = pm_peer_rank_highest(p_evt->peer_id);
             if (err_code != NRF_ERROR_BUSY)
             {
-                    APP_ERROR_CHECK(err_code);
+                APP_ERROR_CHECK(err_code);
             }
-        }break;//PM_EVT_BONDED_PEER_CONNECTED
+        } break; // PM_EVT_BONDED_PEER_CONNECTED
 
         case PM_EVT_CONN_SEC_START:
-            break;//PM_EVT_CONN_SEC_START
+            break; // PM_EVT_CONN_SEC_START
 
         case PM_EVT_CONN_SEC_SUCCEEDED:
         {
-            NRF_LOG_PRINTF_DEBUG("Link secured. Role: %d. conn_handle: %d, Procedure: %d\r\n",
-                           ble_conn_state_role(p_evt->conn_handle),
-                           p_evt->conn_handle,
-                           p_evt->params.conn_sec_succeeded.procedure);
+            NRF_LOG_DEBUG("Link secured. Role: %d. conn_handle: %d, Procedure: %d\r\n",
+                                 ble_conn_state_role(p_evt->conn_handle),
+                                 p_evt->conn_handle,
+                                 p_evt->params.conn_sec_succeeded.procedure);
             err_code = pm_peer_rank_highest(p_evt->peer_id);
             if (err_code != NRF_ERROR_BUSY)
             {
-                    APP_ERROR_CHECK(err_code);
+                APP_ERROR_CHECK(err_code);
             }
-        }break;//PM_EVT_CONN_SEC_SUCCEEDED
+        } break; // PM_EVT_CONN_SEC_SUCCEEDED
 
         case PM_EVT_CONN_SEC_FAILED:
         {
@@ -253,19 +258,19 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
                     {
                         APP_ERROR_CHECK(err_code);
                     }
-                    break;//PM_CONN_SEC_ERROR_PIN_OR_KEY_MISSING
+                    break; // PM_CONN_SEC_ERROR_PIN_OR_KEY_MISSING
 
                 default:
                     break;
             }
-        }break;//PM_EVT_CONN_SEC_FAILED
+        } break; // PM_EVT_CONN_SEC_FAILED
 
         case PM_EVT_CONN_SEC_CONFIG_REQ:
         {
             // Reject pairing request from an already bonded peer.
             pm_conn_sec_config_t conn_sec_config = {.allow_repairing = false};
             pm_conn_sec_config_reply(p_evt->conn_handle, &conn_sec_config);
-        }break;//PM_EVT_CONN_SEC_CONFIG_REQ
+        } break; // PM_EVT_CONN_SEC_CONFIG_REQ
 
         case PM_EVT_STORAGE_FULL:
         {
@@ -279,51 +284,51 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
             {
                 APP_ERROR_CHECK(err_code);
             }
-        }break;//PM_EVT_STORAGE_FULL
+        } break; // PM_EVT_STORAGE_FULL
 
         case PM_EVT_ERROR_UNEXPECTED:
             // Assert.
             APP_ERROR_CHECK(p_evt->params.error_unexpected.error);
-            break;//PM_EVT_ERROR_UNEXPECTED
+            break; // PM_EVT_ERROR_UNEXPECTED
 
         case PM_EVT_PEER_DATA_UPDATE_SUCCEEDED:
-            break;//PM_EVT_PEER_DATA_UPDATE_SUCCEEDED
+            break; // PM_EVT_PEER_DATA_UPDATE_SUCCEEDED
 
         case PM_EVT_PEER_DATA_UPDATE_FAILED:
             // Assert.
             APP_ERROR_CHECK_BOOL(false);
-            break;//PM_EVT_PEER_DATA_UPDATE_FAILED
+            break; // PM_EVT_PEER_DATA_UPDATE_FAILED
 
         case PM_EVT_PEER_DELETE_SUCCEEDED:
-            break;//PM_EVT_PEER_DELETE_SUCCEEDED
+            break; // PM_EVT_PEER_DELETE_SUCCEEDED
 
         case PM_EVT_PEER_DELETE_FAILED:
             // Assert.
             APP_ERROR_CHECK(p_evt->params.peer_delete_failed.error);
-            break;//PM_EVT_PEER_DELETE_FAILED
+            break; // PM_EVT_PEER_DELETE_FAILED
 
         case PM_EVT_PEERS_DELETE_SUCCEEDED:
             advertising_start();
-            break;//PM_EVT_PEERS_DELETE_SUCCEEDED
+            break; // PM_EVT_PEERS_DELETE_SUCCEEDED
 
         case PM_EVT_PEERS_DELETE_FAILED:
             // Assert.
             APP_ERROR_CHECK(p_evt->params.peers_delete_failed_evt.error);
-            break;//PM_EVT_PEERS_DELETE_FAILED
+            break; // PM_EVT_PEERS_DELETE_FAILED
 
         case PM_EVT_LOCAL_DB_CACHE_APPLIED:
-            break;//PM_EVT_LOCAL_DB_CACHE_APPLIED
+            break; // PM_EVT_LOCAL_DB_CACHE_APPLIED
 
         case PM_EVT_LOCAL_DB_CACHE_APPLY_FAILED:
             // The local database has likely changed, send service changed indications.
             pm_local_database_has_changed();
-            break;//PM_EVT_LOCAL_DB_CACHE_APPLY_FAILED
+            break; // PM_EVT_LOCAL_DB_CACHE_APPLY_FAILED
 
         case PM_EVT_SERVICE_CHANGED_IND_SENT:
-            break;//PM_EVT_SERVICE_CHANGED_IND_SENT
+            break; // PM_EVT_SERVICE_CHANGED_IND_SENT
 
         case PM_EVT_SERVICE_CHANGED_IND_CONFIRMED:
-            break;//PM_EVT_SERVICE_CHANGED_IND_SENT
+            break; // PM_EVT_SERVICE_CHANGED_IND_SENT
 
         default:
             // No implementation needed.
@@ -332,7 +337,7 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
 }
 
 
-#ifdef NRF51
+#ifdef ADC_PRESENT
 /**@brief Function for handling the ADC driver eevent.
  *
  * @details  This function will fetch the conversion result from the ADC, convert the value into
@@ -373,7 +378,7 @@ void adc_event_handler(nrf_drv_adc_evt_t const * p_event)
 }
 
 
-#else // NRF52
+#else // SAADC_PRESENT
 /**@brief Function for handling the ADC interrupt.
  *
  * @details  This function will fetch the conversion result from the ADC, convert the value into
@@ -414,7 +419,7 @@ void saadc_event_handler(nrf_drv_saadc_evt_t const * p_event)
 }
 
 
-#endif // NRF51
+#endif // ADC_PRESENT
 
 
 /**@brief Function for handling database discovery events.
@@ -435,23 +440,25 @@ static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
  */
 static void adc_configure(void)
 {
-    #ifdef NRF51
+    #ifdef ADC_PRESENT
     ret_code_t err_code = nrf_drv_adc_init(NULL, adc_event_handler);
     APP_ERROR_CHECK(err_code);
 
-    static nrf_drv_adc_channel_t channel = NRF_DRV_ADC_DEFAULT_CHANNEL(NRF_ADC_CONFIG_INPUT_DISABLED);
-    //channel.config.config.input = NRF_ADC_CONFIG_SCALING_SUPPLY_ONE_THIRD;
+    static nrf_drv_adc_channel_t channel =
+        NRF_DRV_ADC_DEFAULT_CHANNEL(NRF_ADC_CONFIG_INPUT_DISABLED);
+    // channel.config.config.input = NRF_ADC_CONFIG_SCALING_SUPPLY_ONE_THIRD;
     channel.config.config.input = (uint32_t)NRF_ADC_CONFIG_SCALING_SUPPLY_ONE_THIRD;
     nrf_drv_adc_channel_enable(&channel);
 
     err_code = nrf_drv_adc_buffer_convert(&adc_buf[0], 1);
     APP_ERROR_CHECK(err_code);
-    #else //  NRF52
+    #else //  SAADC_PRESENT
     ret_code_t err_code = nrf_drv_saadc_init(NULL, saadc_event_handler);
     APP_ERROR_CHECK(err_code);
 
-    nrf_saadc_channel_config_t config = NRF_DRV_SAADC_DEFAULT_CHANNEL_CONFIG_SE(NRF_SAADC_INPUT_VDD);
-    err_code = nrf_drv_saadc_channel_init(0,&config);
+    nrf_saadc_channel_config_t config =
+        NRF_DRV_SAADC_DEFAULT_CHANNEL_CONFIG_SE(NRF_SAADC_INPUT_VDD);
+    err_code = nrf_drv_saadc_channel_init(0, &config);
     APP_ERROR_CHECK(err_code);
 
     err_code = nrf_drv_saadc_buffer_convert(&adc_buf[0], 1);
@@ -459,7 +466,7 @@ static void adc_configure(void)
 
     err_code = nrf_drv_saadc_buffer_convert(&adc_buf[1], 1);
     APP_ERROR_CHECK(err_code);
-    #endif //NRF51
+    #endif //ADC_PRESENT
 }
 
 
@@ -474,13 +481,13 @@ static void adc_configure(void)
 static void battery_level_meas_timeout_handler(void * p_context)
 {
     UNUSED_PARAMETER(p_context);
-    #ifdef NRF51
+    #ifdef ADC_PRESENT
     nrf_drv_adc_sample();
-    #else // NRF52
+    #else // SAADC_PRESENT
     uint32_t err_code;
     err_code = nrf_drv_saadc_sample();
     APP_ERROR_CHECK(err_code);
-    #endif // NRF51
+    #endif // ADC_PRESENT
 }
 
 
@@ -572,13 +579,14 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
     switch (ble_adv_evt)
     {
         case BLE_ADV_EVT_FAST:
+            NRF_LOG_INFO("Fast advertising.\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
             APP_ERROR_CHECK(err_code);
-            break;//BLE_ADV_EVT_FAST
+            break; // BLE_ADV_EVT_FAST
 
         case BLE_ADV_EVT_IDLE:
             sleep_mode_enter();
-            break;//BLE_ADV_EVT_IDLE
+            break; // BLE_ADV_EVT_IDLE
 
         default:
             break;
@@ -593,8 +601,9 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
  */
 static void advertising_init(void)
 {
-    uint32_t      err_code;
-    ble_advdata_t advdata;
+    uint32_t               err_code;
+    ble_advdata_t          advdata;
+    ble_adv_modes_config_t options;
 
     // Build and set advertising data.
     memset(&advdata, 0, sizeof(advdata));
@@ -605,8 +614,8 @@ static void advertising_init(void)
     advdata.uuids_complete.uuid_cnt = sizeof(m_adv_uuids) / sizeof(m_adv_uuids[0]);
     advdata.uuids_complete.p_uuids  = m_adv_uuids;
 
-    ble_adv_modes_config_t options = {0};
-    options.ble_adv_fast_enabled  = BLE_ADV_FAST_ENABLED;
+    memset(&options, 0, sizeof(options));
+    options.ble_adv_fast_enabled  = true;
     options.ble_adv_fast_interval = APP_ADV_INTERVAL;
     options.ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;
 
@@ -782,19 +791,22 @@ static void alert_signal(uint8_t alert_level)
     switch (alert_level)
     {
         case BLE_CHAR_ALERT_LEVEL_NO_ALERT:
+            NRF_LOG_INFO("No Alert.\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_ALERT_OFF);
             APP_ERROR_CHECK(err_code);
-            break;//BLE_CHAR_ALERT_LEVEL_NO_ALERT
+            break; // BLE_CHAR_ALERT_LEVEL_NO_ALERT
 
         case BLE_CHAR_ALERT_LEVEL_MILD_ALERT:
+            NRF_LOG_INFO("Mild Alert.\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_ALERT_0);
             APP_ERROR_CHECK(err_code);
-            break;//BLE_CHAR_ALERT_LEVEL_MILD_ALERT
+            break; // BLE_CHAR_ALERT_LEVEL_MILD_ALERT
 
         case BLE_CHAR_ALERT_LEVEL_HIGH_ALERT:
+            NRF_LOG_INFO("HIGH Alert.\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_ALERT_3);
             APP_ERROR_CHECK(err_code);
-            break;//BLE_CHAR_ALERT_LEVEL_HIGH_ALERT
+            break; // BLE_CHAR_ALERT_LEVEL_HIGH_ALERT
 
         default:
             // No implementation needed.
@@ -817,7 +829,7 @@ static void on_ias_evt(ble_ias_t * p_ias, ble_ias_evt_t * p_evt)
     {
         case BLE_IAS_EVT_ALERT_LEVEL_UPDATED:
             alert_signal(p_evt->params.alert_level);
-            break;//BLE_IAS_EVT_ALERT_LEVEL_UPDATED
+            break; // BLE_IAS_EVT_ALERT_LEVEL_UPDATED
 
         default:
             // No implementation needed.
@@ -840,7 +852,7 @@ static void on_lls_evt(ble_lls_t * p_lls, ble_lls_evt_t * p_evt)
     {
         case BLE_LLS_EVT_LINK_LOSS_ALERT:
             alert_signal(p_evt->params.alert_level);
-            break;//BLE_LLS_EVT_LINK_LOSS_ALERT
+            break; // BLE_LLS_EVT_LINK_LOSS_ALERT
 
         default:
             // No implementation needed.
@@ -871,16 +883,16 @@ static void on_ias_c_evt(ble_ias_c_t * p_ias_c, ble_ias_c_evt_t * p_evt)
             APP_ERROR_CHECK(err_code);
 
             m_is_ias_present = true;
-            break;//BLE_IAS_C_EVT_DISCOVERY_COMPLETE
+            break; // BLE_IAS_C_EVT_DISCOVERY_COMPLETE
 
         case BLE_IAS_C_EVT_DISCOVERY_FAILED:
             // IAS is not found on peer. The Find Me Locator functionality of this app will NOT work.
-            break;//BLE_IAS_C_EVT_DISCOVERY_FAILED
+            break; // BLE_IAS_C_EVT_DISCOVERY_FAILED
 
         case BLE_IAS_C_EVT_DISCONN_COMPLETE:
             // Disable alert buttons
             m_is_ias_present = false;
-            break;//BLE_IAS_C_EVT_DISCONN_COMPLETE
+            break; // BLE_IAS_C_EVT_DISCONN_COMPLETE
 
         default:
             break;
@@ -906,12 +918,12 @@ static void on_bas_evt(ble_bas_t * p_bas, ble_bas_evt_t * p_evt)
             // Start battery timer
             err_code = app_timer_start(m_battery_timer_id, BATTERY_LEVEL_MEAS_INTERVAL, NULL);
             APP_ERROR_CHECK(err_code);
-            break;//BLE_BAS_EVT_NOTIFICATION_ENABLED
+            break; // BLE_BAS_EVT_NOTIFICATION_ENABLED
 
         case BLE_BAS_EVT_NOTIFICATION_DISABLED:
             err_code = app_timer_stop(m_battery_timer_id);
             APP_ERROR_CHECK(err_code);
-            break;//BLE_BAS_EVT_NOTIFICATION_DISABLED
+            break; // BLE_BAS_EVT_NOTIFICATION_DISABLED
 
         default:
             // No implementation needed.
@@ -931,50 +943,57 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_DISCONNECTED:
+            NRF_LOG_INFO("Disconnected.\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_IDLE);
             APP_ERROR_CHECK(err_code);
-            break;//BLE_GAP_EVT_DISCONNECTED
+            break; // BLE_GAP_EVT_DISCONNECTED
 
         case BLE_GAP_EVT_CONNECTED:
         {
+            NRF_LOG_INFO("Connected.\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
 
-            err_code           = ble_db_discovery_start(&m_ble_db_discovery,
-                                                        p_ble_evt->evt.gap_evt.conn_handle);
+            err_code = ble_db_discovery_start(&m_ble_db_discovery,
+                                              p_ble_evt->evt.gap_evt.conn_handle);
             APP_ERROR_CHECK(err_code);
-        }break;//BLE_GAP_EVT_CONNECTED
+        } break; // BLE_GAP_EVT_CONNECTED
 
         case BLE_GATTC_EVT_TIMEOUT:
-        // Fall through.
-        case BLE_GATTS_EVT_TIMEOUT:
-            // Disconnect on GATT Server and Client timeout events.
+            // Disconnect on GATT Client timeout event.
+            NRF_LOG_DEBUG("GATT Client Timeout.\r\n");
             err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gattc_evt.conn_handle,
                                              BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
             APP_ERROR_CHECK(err_code);
-            break;//BLE_GATTC_EVT_TIMEOUT and BLE_GATTS_EVT_TIMEOUT
-            
+            break; // BLE_GATTC_EVT_TIMEOUT
+
+        case BLE_GATTS_EVT_TIMEOUT:
+            // Disconnect on GATT Server timeout event.
+            NRF_LOG_DEBUG("GATT Server Timeout.\r\n");
+            err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gatts_evt.conn_handle,
+                                             BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+            APP_ERROR_CHECK(err_code);
+            break; // BLE_GATTS_EVT_TIMEOUT
+
         case BLE_EVT_USER_MEM_REQUEST:
             err_code = sd_ble_user_mem_reply(p_ble_evt->evt.gattc_evt.conn_handle, NULL);
             APP_ERROR_CHECK(err_code);
-            break;//BLE_EVT_USER_MEM_REQUEST
+            break; // BLE_EVT_USER_MEM_REQUEST
 
         case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
         {
+            ble_gatts_evt_rw_authorize_request_t  req;
             ble_gatts_rw_authorize_reply_params_t auth_reply;
 
-            if(p_ble_evt->evt.gatts_evt.params.authorize_request.type
-               != BLE_GATTS_AUTHORIZE_TYPE_INVALID)
+            req = p_ble_evt->evt.gatts_evt.params.authorize_request;
+
+            if (req.type != BLE_GATTS_AUTHORIZE_TYPE_INVALID)
             {
-                if ((p_ble_evt->evt.gatts_evt.params.authorize_request.request.write.op
-                     == BLE_GATTS_OP_PREP_WRITE_REQ)
-                    || (p_ble_evt->evt.gatts_evt.params.authorize_request.request.write.op
-                     == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW)
-                    || (p_ble_evt->evt.gatts_evt.params.authorize_request.request.write.op
-                     == BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL))
+                if ((req.request.write.op == BLE_GATTS_OP_PREP_WRITE_REQ)     ||
+                    (req.request.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW) ||
+                    (req.request.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL))
                 {
-                    if (p_ble_evt->evt.gatts_evt.params.authorize_request.type
-                        == BLE_GATTS_AUTHORIZE_TYPE_WRITE)
+                    if (req.type == BLE_GATTS_AUTHORIZE_TYPE_WRITE)
                     {
                         auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
                     }
@@ -983,12 +1002,20 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                         auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_READ;
                     }
                     auth_reply.params.write.gatt_status = APP_FEATURE_NOT_SUPPORTED;
-                    err_code = sd_ble_gatts_rw_authorize_reply(p_ble_evt->evt.gattc_evt.conn_handle, 
+                    err_code = sd_ble_gatts_rw_authorize_reply(p_ble_evt->evt.gatts_evt.conn_handle,
                                                                &auth_reply);
                     APP_ERROR_CHECK(err_code);
                 }
             }
-        }break;//BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST
+        } break; // BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST
+
+#if (NRF_SD_BLE_API_VERSION == 3)
+        case BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST:
+            err_code = sd_ble_gatts_exchange_mtu_reply(p_ble_evt->evt.gatts_evt.conn_handle,
+                                                       NRF_BLE_MAX_MTU_SIZE);
+            APP_ERROR_CHECK(err_code);
+            break; // BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST
+#endif
 
         default:
             // No implementation needed.
@@ -1030,7 +1057,13 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
  */
 static void sys_evt_dispatch(uint32_t sys_evt)
 {
+    // Dispatch the system event to the fstorage module, where it will be
+    // dispatched to the Flash Data Storage (FDS) module.
     fs_sys_event_handler(sys_evt);
+
+    // Dispatch to the Advertising module last, since it will check if there are any
+    // pending flash operations in fstorage. Let fstorage process system events first,
+    // so that it can report correctly to the Advertising module.
     ble_advertising_on_sys_evt(sys_evt);
 }
 
@@ -1042,9 +1075,9 @@ static void sys_evt_dispatch(uint32_t sys_evt)
 static void ble_stack_init(void)
 {
     uint32_t err_code;
-    
+
     nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-    
+
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
 
@@ -1058,6 +1091,9 @@ static void ble_stack_init(void)
     CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT, PERIPHERAL_LINK_COUNT);
 
     // Enable BLE stack.
+#if (NRF_SD_BLE_API_VERSION == 3)
+    ble_enable_params.gatt_enable_params.att_mtu = NRF_BLE_MAX_MTU_SIZE;
+#endif
     err_code = softdevice_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
 
@@ -1079,7 +1115,7 @@ static void ble_stack_init(void)
 static void peer_manager_init(bool erase_bonds)
 {
     ble_gap_sec_params_t sec_param;
-    ret_code_t err_code;
+    ret_code_t           err_code;
 
     err_code = pm_init();
     APP_ERROR_CHECK(err_code);
@@ -1093,18 +1129,18 @@ static void peer_manager_init(bool erase_bonds)
     memset(&sec_param, 0, sizeof(ble_gap_sec_params_t));
 
     // Security parameters to be used for all security procedures.
-    sec_param.bond              = SEC_PARAM_BOND;
-    sec_param.mitm              = SEC_PARAM_MITM;
-    sec_param.lesc              = SEC_PARAM_LESC;
-    sec_param.keypress          = SEC_PARAM_KEYPRESS;
-    sec_param.io_caps           = SEC_PARAM_IO_CAPABILITIES;
-    sec_param.oob               = SEC_PARAM_OOB;
-    sec_param.min_key_size      = SEC_PARAM_MIN_KEY_SIZE;
-    sec_param.max_key_size      = SEC_PARAM_MAX_KEY_SIZE;
-    sec_param.kdist_own.enc     = 1;
-    sec_param.kdist_own.id      = 1;
-    sec_param.kdist_peer.enc    = 1;
-    sec_param.kdist_peer.id     = 1;
+    sec_param.bond           = SEC_PARAM_BOND;
+    sec_param.mitm           = SEC_PARAM_MITM;
+    sec_param.lesc           = SEC_PARAM_LESC;
+    sec_param.keypress       = SEC_PARAM_KEYPRESS;
+    sec_param.io_caps        = SEC_PARAM_IO_CAPABILITIES;
+    sec_param.oob            = SEC_PARAM_OOB;
+    sec_param.min_key_size   = SEC_PARAM_MIN_KEY_SIZE;
+    sec_param.max_key_size   = SEC_PARAM_MAX_KEY_SIZE;
+    sec_param.kdist_own.enc  = 1;
+    sec_param.kdist_own.id   = 1;
+    sec_param.kdist_peer.enc = 1;
+    sec_param.kdist_peer.id  = 1;
 
     err_code = pm_sec_params_set(&sec_param);
     APP_ERROR_CHECK(err_code);
@@ -1126,7 +1162,7 @@ static void bsp_event_handler(bsp_event_t event)
     {
         case BSP_EVENT_SLEEP:
             sleep_mode_enter();
-            break;//BSP_EVENT_SLEEP
+            break; // BSP_EVENT_SLEEP
 
         case BSP_EVENT_DISCONNECT:
             err_code = sd_ble_gap_disconnect(m_ias_c.conn_handle,
@@ -1135,7 +1171,7 @@ static void bsp_event_handler(bsp_event_t event)
             {
                 APP_ERROR_CHECK(err_code);
             }
-            break;//BSP_EVENT_DISCONNECT
+            break; // BSP_EVENT_DISCONNECT
 
         case BSP_EVENT_KEY_0:
         {
@@ -1166,12 +1202,13 @@ static void bsp_event_handler(bsp_event_t event)
                     APP_ERROR_HANDLER(err_code);
                 }
             }
-        }break;//BSP_EVENT_KEY_0
+        } break;              // BSP_EVENT_KEY_0
 
         case BSP_EVENT_KEY_1: // STOP_ALERTING_BUTTON_ID
+            NRF_LOG_INFO("Alert Off.\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_ALERT_OFF);
             APP_ERROR_CHECK(err_code);
-            break;//BSP_EVENT_KEY_1
+            break; // BSP_EVENT_KEY_1
 
         default:
             break;
@@ -1215,6 +1252,7 @@ static void power_manage(void)
 static void advertising_start(void)
 {
     uint32_t err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
+
     APP_ERROR_CHECK(err_code);
 }
 
@@ -1224,10 +1262,10 @@ static void advertising_start(void)
 int main(void)
 {
     uint32_t err_code;
-    bool erase_bonds;
+    bool     erase_bonds;
 
     // Initialize.
-    err_code = NRF_LOG_INIT();
+    err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
     timers_init();
@@ -1237,7 +1275,7 @@ int main(void)
     peer_manager_init(erase_bonds);
     if (erase_bonds == true)
     {
-        NRF_LOG_DEBUG("Bonds erased!\r\n");
+        NRF_LOG_INFO("Bonds erased!\r\n");
     }
     gap_params_init();
     advertising_init();
@@ -1246,14 +1284,19 @@ int main(void)
     conn_params_init();
 
     // Start execution.
+    NRF_LOG_INFO("Proximity Start!\r\n");
     advertising_start();
 
     // Enter main loop.
     for (;;)
     {
-        power_manage();
+        if (NRF_LOG_PROCESS() == false)
+        {
+            power_manage();
+        }
     }
 }
+
 
 /**
  * @}

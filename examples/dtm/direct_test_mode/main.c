@@ -15,7 +15,7 @@
   @{
   @ingroup ble_sdk_app_dtm_serial
   @brief Stand-alone DTM application for UART interface.
-  
+
  */
 
 #include <stdint.h>
@@ -24,16 +24,14 @@
 #include "ble_dtm.h"
 #include "bsp.h"
 
-// Configuration parameters.
-#define BITRATE  UART_BAUDRATE_BAUDRATE_Baud19200  /**< Serial bitrate on the UART */
 
 // @note: The BLE DTM 2-wire UART standard specifies 8 data bits, 1 stop bit, no flow control.
 //        These parameters are not configurable in the BLE standard.
 
 /**@details Maximum iterations needed in the main loop between stop bit 1st byte and start bit 2nd
- * byte. DTM standard allows 5000us delay between stop bit 1st byte and start bit 2nd byte. 
- * As the time is only known when a byte is received, then the time between between stop bit 1st 
- * byte and stop bit 2nd byte becomes: 
+ * byte. DTM standard allows 5000us delay between stop bit 1st byte and start bit 2nd byte.
+ * As the time is only known when a byte is received, then the time between between stop bit 1st
+ * byte and stop bit 2nd byte becomes:
  *      5000us + transmission time of 2nd byte.
  *
  * Byte transmission time is (Baud rate of 19200):
@@ -42,14 +40,14 @@
  * Loop time on polling UART register for received byte is defined in ble_dtm.c as:
  *   UART_POLL_CYCLE = 260 us
  *
- * The max time between two bytes thus becomes (loop time: 260us / iteration): 
- *      (5000us + 520us) / 260us / iteration = 21.2 iterations. 
+ * The max time between two bytes thus becomes (loop time: 260us / iteration):
+ *      (5000us + 520us) / 260us / iteration = 21.2 iterations.
  *
- * This is rounded down to 21. 
+ * This is rounded down to 21.
  *
  * @note If UART bit rate is changed, this value should be recalculated as well.
  */
-#define MAX_ITERATIONS_NEEDED_FOR_NEXT_BYTE 21
+#define MAX_ITERATIONS_NEEDED_FOR_NEXT_BYTE ((5000 + 2 * UART_POLL_CYCLE) / UART_POLL_CYCLE)
 
 /**@brief Function for UART initialization.
  */
@@ -61,7 +59,7 @@ static void uart_init(void)
 
     NRF_UART0->PSELTXD       = TX_PIN_NUMBER;
     NRF_UART0->PSELRXD       = RX_PIN_NUMBER;
-    NRF_UART0->BAUDRATE      = BITRATE;
+    NRF_UART0->BAUDRATE      = DTM_BITRATE;
 
     // Clean out possible events from earlier operations
     NRF_UART0->EVENTS_RXDRDY = 0;
@@ -87,14 +85,14 @@ static uint32_t dtm_cmd_put(uint16_t command)
     dtm_freq_t     freq         = (command >> 8) & 0x3F;
     uint32_t       length       = (command >> 2) & 0x3F;
     dtm_pkt_type_t payload      = command & 0x03;
-  
+
     // Check for Vendor Specific payload.
-    if (payload == 0x03) 
+    if (payload == 0x03)
     {
         /* Note that in a HCI adaption layer, as well as in the DTM PDU format,
            the value 0x03 is a distinct bit pattern (PRBS15). Even though BLE does not
            support PRBS15, this implementation re-maps 0x03 to DTM_PKT_VENDORSPECIFIC,
-           to avoid the risk of confusion, should the code be extended to greater coverage. 
+           to avoid the risk of confusion, should the code be extended to greater coverage.
         */
         payload = DTM_PKT_VENDORSPECIFIC;
     }
@@ -130,7 +128,7 @@ int main(void)
     for (;;)
     {
         // Will return every timeout, 625 us.
-        current_time = dtm_wait();  
+        current_time = dtm_wait();
 
         if (NRF_UART0->EVENTS_RXDRDY == 0)
         {
@@ -168,7 +166,7 @@ int main(void)
 
         if (dtm_cmd_put(dtm_cmd_from_uart) != DTM_SUCCESS)
         {
-            // Extended error handling may be put here. 
+            // Extended error handling may be put here.
             // Default behavior is to return the event on the UART (see below);
             // the event report will reflect any lack of success.
         }

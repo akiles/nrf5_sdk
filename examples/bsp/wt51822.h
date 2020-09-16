@@ -12,6 +12,10 @@
 #ifndef WT51822_H
 #define WT51822_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define LED_START      3
 #define LED_1          3
 #define LED_2          4
@@ -63,5 +67,10 @@
 #define SER_CON_TX_PIN              12
 #define SER_CON_CTS_PIN             14
 #define SER_CON_RTS_PIN             15
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

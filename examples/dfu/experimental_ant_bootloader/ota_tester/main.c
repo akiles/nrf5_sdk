@@ -65,7 +65,6 @@ All rights reserved.
 #define COMMAND_RESTART_BOOTLOADER      0x01u
 
 static const uint8_t m_version_string[] = VERSION_STRING; // Version string
-nrf_nvic_state_t     nrf_nvic_state;
 
 /**@brief Function for handling an error.
  *
@@ -145,7 +144,7 @@ static void ant_channel_tx_broadcast_setup(void)
                                           BROADCAST_DATA_BUFFER_SIZE,
                                           m_broadcast_data);
 
-    if(err_code != NRF_ANT_ERROR_CHANNEL_IN_WRONG_STATE)
+    if (err_code != NRF_ANT_ERROR_CHANNEL_IN_WRONG_STATE)
     {
         APP_ERROR_CHECK(err_code);
     }
@@ -169,13 +168,13 @@ static void channel_event_handle(uint32_t event, ANT_MESSAGE* p_ant_message)
     switch (event)
     {
         case EVENT_RX:
-            switch(p_ant_message->ANT_MESSAGE_ucMesgID)
+            switch (p_ant_message->ANT_MESSAGE_ucMesgID)
             {
                 case MESG_BROADCAST_DATA_ID:
                 case MESG_ACKNOWLEDGED_DATA_ID:
                     page_num = p_ant_message->ANT_MESSAGE_aucPayload[0];
                     command = p_ant_message->ANT_MESSAGE_aucPayload[7];
-                    if(page_num == COMMAND_ID && command == COMMAND_RESTART_BOOTLOADER)
+                    if (page_num == COMMAND_ID && command == COMMAND_RESTART_BOOTLOADER)
                     {
                         restart_in_bootloader();
                     }
@@ -214,16 +213,6 @@ void softdevice_assert_callback(uint32_t id, uint32_t pc, uint32_t info)
     }
 }
 
-/**@brief Function for handling HardFault.
- */
-void HardFault_Handler(void)
-{
-    for (;;)
-    {
-        // No implementation needed.
-    }
-}
-
 
 /**@brief Function for application main entry. Does not return.
  */
@@ -237,7 +226,7 @@ int main(void)
 
     nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
 
-    err_code = sd_softdevice_enable(&clock_lf_cfg, 
+    err_code = sd_softdevice_enable(&clock_lf_cfg,
                                     softdevice_assert_callback,
                                     ANT_LICENSE_KEY);
     APP_ERROR_CHECK(err_code);
@@ -253,7 +242,7 @@ int main(void)
     // Configure ant stack regards used channels.
     err_code = ant_stack_static_config();
     APP_ERROR_CHECK(err_code);
-    
+
     // Setup channel
     ant_channel_tx_broadcast_setup();
 

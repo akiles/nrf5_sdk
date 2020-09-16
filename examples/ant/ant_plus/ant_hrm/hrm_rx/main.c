@@ -28,15 +28,19 @@ All rights reserved.
 #include "nrf.h"
 #include "nrf_sdm.h"
 #include "bsp.h"
+#include "hardfault.h"
 #include "app_timer.h"
 #include "nordic_common.h"
 #include "ant_stack_config.h"
 #include "softdevice_handler.h"
 #include "ant_hrm.h"
-#include "app_trace.h"
 #include "ant_key_manager.h"
 #include "ant_state_indicator.h"
 #include "bsp_btn_ant.h"
+
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 #define APP_TIMER_PRESCALER         0x00 /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_OP_QUEUE_SIZE     0x04 /**< Size of timer operation queues. */
@@ -86,7 +90,7 @@ static void ant_hrm_evt_handler(ant_hrm_profile_t * p_profile, ant_hrm_evt_t eve
         case ANT_HRM_PAGE_3_UPDATED:
             /* fall through */
         case ANT_HRM_PAGE_4_UPDATED:
-            app_trace_log("Page was updated\n\r\n\r");
+            NRF_LOG_INFO("Page was updated\r\n");
             break;
 
         default:
@@ -105,7 +109,7 @@ void bsp_event_handler(bsp_event_t event)
         case BSP_EVENT_SLEEP:
             ant_state_indicator_sleep_mode_enter();
             break;
-        
+
         default:
             break;
     }
@@ -117,14 +121,16 @@ static void utils_setup(void)
 {
     uint32_t err_code;
 
-    app_trace_init();
+    err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
-    
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, 
-                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), 
+
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                         bsp_event_handler);
     APP_ERROR_CHECK(err_code);
-    
+
     err_code = bsp_btn_ant_init();
     APP_ERROR_CHECK(err_code);
 }
@@ -188,10 +194,13 @@ int main(void)
     ant_state_indicator_init(m_ant_hrm.channel_number, HRM_DISP_CHANNEL_TYPE);
     profile_setup();
 
-    for (;; )
+    for (;;)
     {
-        err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
+        if (NRF_LOG_PROCESS() == false)
+        {
+            err_code = sd_app_evt_wait();
+            APP_ERROR_CHECK(err_code);
+        }
     }
 }
 

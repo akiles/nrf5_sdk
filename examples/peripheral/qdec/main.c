@@ -41,32 +41,18 @@
 #include "bsp.h"
 #include "nrf_delay.h"
 #include "nrf_drv_qdec.h"
-#include "app_uart.h"
 #include "nrf_error.h"
 #include "app_error.h"
 #include "qenc_sim.h"
 #include "nordic_common.h"
-
-
-#define UART_TX_BUF_SIZE 256 /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 1   /**< UART RX buffer size. */
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 static volatile bool m_report_ready_flag = false;
 static volatile bool m_first_report_flag = true;
 static volatile uint32_t m_accdblread;
 static volatile int32_t m_accread;
-
-static void uart_error_handle(app_uart_evt_t * p_event)
-{
-    if (p_event->evt_type == APP_UART_COMMUNICATION_ERROR)
-    {
-        APP_ERROR_HANDLER(p_event->data.error_communication);
-    }
-    else if (p_event->evt_type == APP_UART_FIFO_ERROR)
-    {
-        APP_ERROR_HANDLER(p_event->data.error_code);
-    }
-}
 
 static void qdec_event_handler(nrf_drv_qdec_event_t event)
 {
@@ -79,39 +65,27 @@ static void qdec_event_handler(nrf_drv_qdec_event_t event)
     }
 }
 
-static void wait_for_uart_idle(void)
-{
-    /* There is no function in the UART library that provides functionality 
-     * to wait for a transfer to finish. Therefore, wait some time - not elegant.
-     * To be changed when the UART library gets the required functionality. */
-    nrf_delay_ms(500);
-}
-
 void check_report(int32_t expected)
 {
     // only first run is specific...
     if ((expected > 0) && m_first_report_flag)
     {
-       expected = expected-1;
+       expected --;
     }
     else if ((expected < 0) && m_first_report_flag)
     {
-       expected = expected+1;
+       expected ++;
     }
 
     // Error checking and printing
-    if( m_accdblread != 0 )
+    if ( m_accdblread != 0 )
     {
-        printf("\nERROR: m_accdblread was expected to have value 0 but is %u\n", (unsigned int)m_accdblread);
-        UNUSED_VARIABLE(fflush(stdout));
-        wait_for_uart_idle();
+        NRF_LOG_ERROR("m_accdblread was expected to have value 0 but is %u\r\n", (unsigned int)m_accdblread);
         APP_ERROR_HANDLER(0);
     }
-    if( m_accread != expected )
+    if ( m_accread != expected )
     {
-        printf("\nERROR: m_accread should be %d but is %d\n", (int)expected, (int)m_accread);
-        UNUSED_VARIABLE(fflush(stdout));
-        wait_for_uart_idle();
+        NRF_LOG_ERROR("m_accread should be %d but is %d\r\n", (int)expected, (int)m_accread);
         APP_ERROR_HANDLER(0);
     }
     m_first_report_flag = false;  // clear silently after first run
@@ -128,57 +102,39 @@ int main(void)
     int32_t   pulses;
     int32_t   sign = 1;
 
-    // Initialize UART
-    const app_uart_comm_params_t comm_params =
-    {
-        RX_PIN_NUMBER,
-        TX_PIN_NUMBER,
-        RTS_PIN_NUMBER,
-        CTS_PIN_NUMBER,
-        APP_UART_FLOW_CONTROL_ENABLED,
-        false,
-        UART_BAUDRATE_BAUDRATE_Baud115200
-    };
-
-    APP_UART_FIFO_INIT(&comm_params,
-                       UART_RX_BUF_SIZE,
-                       UART_TX_BUF_SIZE,
-                       uart_error_handle,
-                       APP_IRQ_PRIORITY_LOW,
-                       err_code);
-
+    err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
     // Initialize hardware
     err_code = nrf_drv_qdec_init(NULL, qdec_event_handler);
     APP_ERROR_CHECK(err_code);
-    
+
     max_number_of_pulses = nrf_qdec_reportper_to_value(QDEC_CONFIG_REPORTPER);
 
     // Initialize quadrature encoder simulator
     qenc_init((nrf_qdec_ledpol_t)nrf_qdec_ledpol_get());
 
-    printf("QDEC testing started\n");
+    NRF_LOG_INFO("QDEC testing started\r\n");
 
     while (forever)
     {
       // change a number and sign of pulses produced by simulator in a loop
       for (number_of_pulses=min_number_of_pulses; number_of_pulses<= max_number_of_pulses; number_of_pulses++ )
       {
-        pulses = sign*number_of_pulses;      // pulses have sign
+        pulses = sign * number_of_pulses;      // pulses have sign
         qenc_pulse_count_set(pulses);        // set pulses to be produced by encoder
         nrf_drv_qdec_enable();               // start burst sampling clock, clock will be stopped by REPORTRDY event
         while (! m_report_ready_flag)                         // wait for a report
         {
           __WFE();
         }
-        printf("*");
-        UNUSED_VARIABLE(fflush(stdout));
+        NRF_LOG_RAW_INFO("*");
         m_report_ready_flag = false;
         check_report(pulses);                 // check if pulse count is as expected, assert otherwise
       }
       min_number_of_pulses = 1;               // only first run is specific, for 1 there would be no call back...
       sign = -sign;                           // change sign of pulses in a loop
+      NRF_LOG_FLUSH();
     }
     return -1;                                // this should never happen
 }

@@ -143,7 +143,7 @@ then check that the known values do not get corrupted during the execution of
 the application.   These may catch the list data structures being overwritten in
 memory.  They will not catch data errors caused by incorrect configuration or
 use of FreeRTOS.*/
-#if( configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES == 0 )
+#if ( configUSE_LIST_DATA_INTEGRITY_CHECK_BYTES == 0 )
 	/* Define the macros to do nothing. */
 	#define listFIRST_LIST_ITEM_INTEGRITY_CHECK_VALUE
 	#define listSECOND_LIST_ITEM_INTEGRITY_CHECK_VALUE
@@ -321,7 +321,7 @@ List_t * const pxConstList = ( pxList );													\
 	/* Increment the index to the next item and return the item, ensuring */				\
 	/* we don't return the marker used at the end of the list.  */							\
 	( pxConstList )->pxIndex = ( pxConstList )->pxIndex->pxNext;							\
-	if( ( void * ) ( pxConstList )->pxIndex == ( void * ) &( ( pxConstList )->xListEnd ) )	\
+	if ( ( void * ) ( pxConstList )->pxIndex == ( void * ) &( ( pxConstList )->xListEnd ) )	\
 	{																						\
 		( pxConstList )->pxIndex = ( pxConstList )->pxIndex->pxNext;						\
 	}																						\

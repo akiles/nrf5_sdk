@@ -23,24 +23,11 @@
 #include <stdio.h>
 #include "nrf.h"
 #include "bsp.h"
-#include "app_uart.h"
 #include "app_error.h"
 #include "nordic_common.h"
-
-#define UART_TX_BUF_SIZE 256                                                        /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 1                                                          /**< UART RX buffer size. */
-
-void uart_error_handle(app_uart_evt_t * p_event)
-{
-    if (p_event->evt_type == APP_UART_COMMUNICATION_ERROR)
-    {
-        APP_ERROR_HANDLER(p_event->data.error_communication);
-    }
-    else if (p_event->evt_type == APP_UART_FIFO_ERROR)
-    {
-        APP_ERROR_HANDLER(p_event->data.error_code);
-    }
-}
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 /** @brief Function for erasing a page in flash.
  *
@@ -120,27 +107,11 @@ int main(void)
     uint32_t   pg_num;
 
     uint32_t err_code;
-    const app_uart_comm_params_t comm_params =
-      {
-          RX_PIN_NUMBER,
-          TX_PIN_NUMBER,
-          RTS_PIN_NUMBER,
-          CTS_PIN_NUMBER,
-          APP_UART_FLOW_CONTROL_ENABLED,
-          false,
-          UART_BAUDRATE_BAUDRATE_Baud115200
-      };
 
-    APP_UART_FIFO_INIT(&comm_params,
-                         UART_RX_BUF_SIZE,
-                         UART_TX_BUF_SIZE,
-                         uart_error_handle,
-                         APP_IRQ_PRIORITY_LOW,
-                         err_code);
-
+    err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 
-    printf("Flashwrite example\n\r");
+    NRF_LOG_INFO("Flashwrite example\r\n");
     patold  = 0;
     pg_size = NRF_FICR->CODEPAGESIZE;
     pg_num  = NRF_FICR->CODESIZE - 1;  // Use last page in flash
@@ -155,26 +126,23 @@ int main(void)
 
         do
         {
-            printf("Enter char to write to flash\n\r");
-
+            NRF_LOG_INFO("Enter char to write to flash\r\n");
+            NRF_LOG_FLUSH();
             // Read char from uart, and write it to flash:
-            do
-            {
-               err_code = app_uart_get(&patwr);
-            }
-            while(err_code == NRF_ERROR_NOT_FOUND);
+            patwr = NRF_LOG_GETCHAR();
 
             if (patold != patwr)
             {
                 patold = patwr;
                 flash_word_write(addr, (uint32_t)patwr);
                 ++addr;
-                i += 4;
-                printf("'%c' was write to flash\n\r", patwr);
+                i += sizeof(patwr);
+                NRF_LOG_INFO("'%c' was written to flash\r\n", patwr);
             }
             // Read from flash the last written data and send it back:
             patrd = (uint8_t)*(addr - 1);
-            printf("'%c' was read from flash\n\r\n\r", patrd);
+            NRF_LOG_INFO("'%c' was read from flash\r\n\r\n", patrd);
+            NRF_LOG_FLUSH();
         }
         while (i < pg_size);
     }

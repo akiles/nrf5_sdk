@@ -29,14 +29,18 @@ All rights reserved.
 #include "nrf_soc.h"
 #include "nrf_sdm.h"
 #include "bsp.h"
+#include "hardfault.h"
 #include "app_timer.h"
 #include "nordic_common.h"
 #include "softdevice_handler.h"
 #include "ant_sdm.h"
-#include "app_trace.h"
 #include "ant_key_manager.h"
 #include "ant_state_indicator.h"
 #include "bsp_btn_ant.h"
+
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 #define APP_TIMER_PRESCALER         0x00 /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_OP_QUEUE_SIZE     0x04 /**< Size of timer operation queues. */
@@ -84,7 +88,7 @@ void bsp_evt_handler(bsp_event_t evt)
             err_code = ant_sdm_page_request(&m_ant_sdm, &page70);
             APP_ERROR_CHECK(err_code);
             break;
-        
+
         case BSP_EVENT_SLEEP:
             ant_state_indicator_sleep_mode_enter();
             break;
@@ -116,13 +120,15 @@ static void utils_setup(void)
 {
     uint32_t err_code;
 
-    app_trace_init();
+    err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
                         APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                         bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
-    
+
     err_code = bsp_btn_ant_init();
     APP_ERROR_CHECK(err_code);
 }
@@ -168,15 +174,15 @@ void ant_sdm_evt_handler(ant_sdm_profile_t * p_profile, ant_sdm_evt_t event)
         case ANT_SDM_PAGE_80_UPDATED:
             /* fall through */
         case ANT_SDM_PAGE_81_UPDATED:
-            app_trace_log("Page was updated\n\r\n\r");
+            NRF_LOG_INFO("Page was updated\r\n\r\n");
             break;
 
         case ANT_SDM_PAGE_REQUEST_SUCCESS:
-            app_trace_log("ANT_SDM_PAGE_REQUEST_SUCCESS\n\r\n\r");
+            NRF_LOG_INFO("ANT_SDM_PAGE_REQUEST_SUCCESS\r\n\r\n");
             break;
 
         case ANT_SDM_PAGE_REQUEST_FAILED:
-            app_trace_log("ANT_SDM_PAGE_REQUEST_FAILED\n\r\n\r");
+            NRF_LOG_INFO("ANT_SDM_PAGE_REQUEST_FAILED\r\n\r\n");
             break;
 
         default:
@@ -219,10 +225,13 @@ int main(void)
     ant_state_indicator_init(m_ant_sdm.channel_number, SDM_DISP_CHANNEL_TYPE);
     profile_setup();
 
-    for (;; )
+    for (;;)
     {
-        err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
+        if (NRF_LOG_PROCESS() == false)
+        {
+            err_code = sd_app_evt_wait();
+            APP_ERROR_CHECK(err_code);
+        }
     }
 }
 

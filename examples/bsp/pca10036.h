@@ -12,6 +12,10 @@
 #ifndef PCA10036_H
 #define PCA10036_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // LEDs definitions for PCA10036
 #define LEDS_NUMBER    4
 
@@ -149,5 +153,10 @@
                                  .rc_ctiv       = 0,                                \
                                  .rc_temp_ctiv  = 0,                                \
                                  .xtal_accuracy = NRF_CLOCK_LF_XTAL_ACCURACY_20_PPM}
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // PCA10036_H

@@ -11,13 +11,13 @@
  */
 
 /** @file
-* 
+*
 * @defgroup gpiote_example_main main.c
 * @{
 * @ingroup nrf_gpiote_example
 * @brief GPIOTE Example Application main file.
 *
-* This file contains the source code for a sample application using GPIOTE. 
+* This file contains the source code for a sample application using GPIOTE.
 */
 
 #include <stdbool.h>
@@ -54,7 +54,7 @@ static void led_blinking_setup()
     APP_ERROR_CHECK(err_code);
 
 
-    nrf_drv_timer_extended_compare(&timer, (nrf_timer_cc_channel_t)0, 200*1000UL, NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK, false);
+    nrf_drv_timer_extended_compare(&timer, (nrf_timer_cc_channel_t)0, 200 * 1000UL, NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK, false);
 
     err_code = nrf_drv_ppi_channel_alloc(&ppi_channel);
     APP_ERROR_CHECK(err_code);
@@ -84,7 +84,8 @@ int main(void)
     err_code = nrf_drv_gpiote_init();
     APP_ERROR_CHECK(err_code);
 
-    err_code = nrf_drv_timer_init(&timer, NULL, timer_dummy_handler);
+    nrf_drv_timer_config_t timer_cfg = NRF_DRV_TIMER_DEFAULT_CONFIG;
+    err_code = nrf_drv_timer_init(&timer, &timer_cfg, timer_dummy_handler);
     APP_ERROR_CHECK(err_code);
 #ifdef NRF51
     //Workaround for PAN-73.

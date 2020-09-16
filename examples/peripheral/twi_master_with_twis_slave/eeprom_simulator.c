@@ -90,7 +90,7 @@
      */
     static void ees_write(uint8_t data)
     {
-        if(m_addr >= sizeof(m_memory))
+        if (m_addr >= sizeof(m_memory))
             m_addr = 0;
         m_memory[m_addr++] = data;
     }
@@ -116,11 +116,11 @@
      */
     static void ees_writeEnd(size_t cnt)
     {
-        if(cnt > 0)
+        if (cnt > 0)
         {
             size_t n;
             ees_setAddr(m_rxbuff[0]);
-            for(n=1; n<cnt; ++n)
+            for (n=1; n<cnt; ++n)
             {
                 ees_write(m_rxbuff[n]);
             }
@@ -135,11 +135,11 @@
      */
     static void ees_readBegin(void)
     {
-        if(m_addr >= sizeof(m_memory))
+        if (m_addr >= sizeof(m_memory))
         {
             m_addr = 0;
         }
-        (void)nrf_drv_twis_tx_prepare(&m_twis, m_memory+m_addr, sizeof(m_memory)-m_addr);
+        (void) nrf_drv_twis_tx_prepare(&m_twis, m_memory + m_addr, sizeof(m_memory) - m_addr);
     }
 
     /**
@@ -162,10 +162,10 @@
      */
     static void twis_event_handler(nrf_drv_twis_evt_t const * const p_event)
     {
-        switch(p_event->type)
+        switch (p_event->type)
         {
         case TWIS_EVT_READ_REQ:
-            if(p_event->data.buf_req)
+            if (p_event->data.buf_req)
             {
                 ees_readBegin();
             }
@@ -174,7 +174,7 @@
             ees_readEnd(p_event->data.tx_amount);
             break;
         case TWIS_EVT_WRITE_REQ:
-            if(p_event->data.buf_req)
+            if (p_event->data.buf_req)
             {
                 ees_writeBegin();
             }
@@ -204,14 +204,16 @@ ret_code_t eeprom_simulator_init(void)
     {
         .addr               = {EEPROM_SIM_ADDR, 0},
         .scl                = EEPROM_SIM_SCL_S,
+        .scl_pull           = NRF_GPIO_PIN_PULLUP,
         .sda                = EEPROM_SIM_SDA_S,
+        .sda_pull           = NRF_GPIO_PIN_PULLUP,
         .interrupt_priority = APP_IRQ_PRIORITY_HIGH
     };
 
     /* Initialize data with pattern */
     uint8_t pattern = (uint8_t)EEPROM_SIM_SIZE;
     size_t n;
-    for(n=0; n<EEPROM_SIM_SIZE; ++n)
+    for (n=0; n<EEPROM_SIM_SIZE; ++n)
     {
         m_memory[n] = --pattern;
     }
@@ -221,13 +223,13 @@ ret_code_t eeprom_simulator_init(void)
     do
     {
         ret = nrf_drv_twis_init(&m_twis, &config, twis_event_handler);
-        if(NRF_SUCCESS != ret)
+        if (NRF_SUCCESS != ret)
         {
             break;
         }
 
         nrf_drv_twis_enable(&m_twis);
-    }while(0);
+    }while (0);
     return ret;
 }
 

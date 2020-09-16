@@ -21,9 +21,10 @@
 #include "nrf_delay.h"
 #include "nrf_gpio.h"
 #include "nrf_error.h"
-#include "nrf_log.h"
 #include "boards.h"
+#define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 #define LED_ON          0
 #define LED_OFF         1
@@ -31,14 +32,14 @@
 void nrf_esb_error_handler(uint32_t err_code, uint32_t line)
 {
 #if DEBUG //lint -e553
-    while(true);
+    while (true);
 #else
     NVIC_SystemReset();
 #endif
 
 }
 
-#define APP_ERROR_CHECK(err_code) if(err_code) nrf_esb_error_handler(err_code, __LINE__);
+#define APP_ERROR_CHECK(err_code) if (err_code) nrf_esb_error_handler(err_code, __LINE__);
 
 //#define NRF_ESB_LEGACY
 
@@ -55,17 +56,15 @@ void nrf_esb_event_handler(nrf_esb_evt_t const * p_event)
     switch (p_event->evt_id)
     {
         case NRF_ESB_EVENT_TX_SUCCESS:
-            NRF_LOG("SUCCESS\r\n");
+            NRF_LOG_DEBUG("SUCCESS\r\n");
             break;
         case NRF_ESB_EVENT_TX_FAILED:
-            NRF_LOG("FAILED\r\n");
+            NRF_LOG_DEBUG("FAILED\r\n");
             (void) nrf_esb_flush_tx();
             break;
         case NRF_ESB_EVENT_RX_RECEIVED:
             while (nrf_esb_read_rx_payload(&rx_payload) == NRF_SUCCESS) ;
-            NRF_LOG("Receiving packet: ");
-            NRF_LOG_HEX_CHAR(rx_payload.data[0]);
-            NRF_LOG("\r\n");
+            NRF_LOG_DEBUG("Receiving packet: %x\r\n", rx_payload.data[0]);
 
             switch (rx_payload.data[0] & 0xFUL)
             {
@@ -102,14 +101,9 @@ void nrf_esb_event_handler(nrf_esb_evt_t const * p_event)
                                | m_state[3] << 3;
             (void) nrf_esb_write_payload(&tx_payload);
 
-            NRF_LOG("Queue transmitt packet: ");
-            NRF_LOG_HEX_CHAR(tx_payload.data[0]);
-            NRF_LOG("\r\n");
+            NRF_LOG_DEBUG("Queue transmitt packet: %02x\r\n", tx_payload.data[0]);
             break;
     }
-
-
-
 }
 
 
@@ -177,7 +171,7 @@ void gpio_init( void )
 uint32_t logging_init( void )
 {
     uint32_t err_code;
-    err_code = NRF_LOG_INIT();
+    err_code = NRF_LOG_INIT(NULL);
     return err_code;
 }
 
@@ -201,7 +195,7 @@ int main(void)
     APP_ERROR_CHECK(err_code);
     clocks_start();
 
-    NRF_LOG("Enhanced ShockBurst Receiver Example running.\r\n");
+    NRF_LOG_DEBUG("Enhanced ShockBurst Receiver Example running.\r\n");
 
     err_code = nrf_esb_start_rx();
     APP_ERROR_CHECK(err_code);
@@ -215,7 +209,10 @@ int main(void)
 
     while (true)
     {
-        power_manage();
+        if (NRF_LOG_PROCESS() == false)
+        {
+            power_manage();
+        }
     }
 }
 /*lint -restore */

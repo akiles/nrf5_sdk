@@ -97,7 +97,7 @@ bool antfs_ota_image_header_parsing(uint8_t ** pp_data, uint32_t * p_length)
             m_ota_image_header_size                     = *(*pp_data);
         }
 
-        if( m_ota_image_header_count < m_ota_image_header_size)
+        if ( m_ota_image_header_count < m_ota_image_header_size)
         {
             m_ota_image_header[m_ota_image_header_count]    = *(*pp_data);
             (*pp_data)++;                                       // advance the pointer,
@@ -109,7 +109,7 @@ bool antfs_ota_image_header_parsing(uint8_t ** pp_data, uint32_t * p_length)
                                                                 // no implementation
         }
 
-        if( m_ota_image_header_count == m_ota_image_header_size)
+        if ( m_ota_image_header_count == m_ota_image_header_size)
         {
             return  true;
         }
@@ -122,7 +122,7 @@ ota_image_header_t * antfs_ota_image_header_get (void)
     /*
      * Few sanity checks to make sure header is valid.
      */
-    if( m_ota_image_header_count != m_ota_image_header_size)                                                    // Check if we got all the header first.
+    if ( m_ota_image_header_count != m_ota_image_header_size)                                                    // Check if we got all the header first.
     {
         return  NULL;
     }

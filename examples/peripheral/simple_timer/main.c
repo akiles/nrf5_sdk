@@ -9,7 +9,7 @@
  * the file.
  *
  */
- 
+
 /**@file
  * @defgroup nrf_dev_simple_timer_example_main.c
  * @{
@@ -48,7 +48,7 @@ void timeout_handler(void * p_context);
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
     LEDS_OFF(BSP_LED_0 | BSP_LED_1);
-                
+
     for (;;)
     {
         nrf_delay_ms(GENERIC_DELAY_TIME);
@@ -61,19 +61,19 @@ void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 /**@brief Function for toggling a LED and starting a timer.
  *
  * @param[in] led_id     ID of the LED to toggle.
- * @param[in] timer_mode Timer mode @ref timer_mode_t. 
+ * @param[in] timer_mode Timer mode @ref timer_mode_t.
  */
 static void led_and_timer_control(uint32_t led_id, app_simple_timer_mode_t timer_mode)
 {
     uint32_t err_code;
 
-    LEDS_INVERT(led_id);                 
-            
-    m_state_transit_counter = STATE_TRANSIT_COUNTER_INIT_VALUE;    
-    m_toggle_led_counter    = TOGGLE_LED_COUNTER;                    
-            
-    err_code = app_simple_timer_start(timer_mode, timeout_handler, TIMEOUT_VALUE, NULL);            
-    APP_ERROR_CHECK(err_code);                                                                                                      
+    LEDS_INVERT(led_id);
+
+    m_state_transit_counter = STATE_TRANSIT_COUNTER_INIT_VALUE;
+    m_toggle_led_counter    = TOGGLE_LED_COUNTER;
+
+    err_code = app_simple_timer_start(timer_mode, timeout_handler, TIMEOUT_VALUE, NULL);
+    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -82,19 +82,19 @@ static void led_and_timer_control(uint32_t led_id, app_simple_timer_mode_t timer
 static __INLINE void state_entry_action_execute(void)
 {
     switch (m_state)
-    {        
+    {
         case APP_STATE_SINGLE_SHOT:
-            led_and_timer_control(BSP_LED_0_MASK, APP_SIMPLE_TIMER_MODE_SINGLE_SHOT); 
+            led_and_timer_control(BSP_LED_0_MASK, APP_SIMPLE_TIMER_MODE_SINGLE_SHOT);
             break;
-            
+
         case APP_STATE_REPEATED:
-            led_and_timer_control(BSP_LED_1_MASK, APP_SIMPLE_TIMER_MODE_REPEATED);             
+            led_and_timer_control(BSP_LED_1_MASK, APP_SIMPLE_TIMER_MODE_REPEATED);
             break;
 
         default:
             APP_ERROR_HANDLER(m_state);
             break;
-    }        
+    }
 }
 
 
@@ -114,54 +114,54 @@ void timeout_handler(void * p_context)
     switch (m_state)
     {
         uint32_t err_code;
-        
+
         case APP_STATE_SINGLE_SHOT:
             if (--m_state_transit_counter != 0)
-            {            
+            {
                 if (--m_toggle_led_counter == 0)
                 {
-                    m_toggle_led_counter = TOGGLE_LED_COUNTER;    
-                    LEDS_INVERT(BSP_LED_0_MASK);                 
+                    m_toggle_led_counter = TOGGLE_LED_COUNTER;
+                    LEDS_INVERT(BSP_LED_0_MASK);
                 }
-                
-                err_code = app_simple_timer_start(APP_SIMPLE_TIMER_MODE_SINGLE_SHOT, 
-                                       timeout_handler, 
-                                       TIMEOUT_VALUE, 
-                                       NULL);            
-                APP_ERROR_CHECK(err_code);                                                                                          
+
+                err_code = app_simple_timer_start(APP_SIMPLE_TIMER_MODE_SINGLE_SHOT,
+                                       timeout_handler,
+                                       TIMEOUT_VALUE,
+                                       NULL);
+                APP_ERROR_CHECK(err_code);
             }
             else
             {
                 state_machine_state_change(APP_STATE_REPEATED);
-            }        
+            }
             break;
-            
-        case APP_STATE_REPEATED:            
+
+        case APP_STATE_REPEATED:
             if (--m_state_transit_counter != 0)
-            {            
+            {
                 if (--m_toggle_led_counter == 0)
                 {
-                    m_toggle_led_counter = TOGGLE_LED_COUNTER;                    
+                    m_toggle_led_counter = TOGGLE_LED_COUNTER;
                     LEDS_INVERT(BSP_LED_1_MASK);
-                }                
+                }
             }
             else
             {
                 LEDS_ON(BSP_LED_0_MASK | BSP_LED_1_MASK);
-                
+
                 err_code = app_simple_timer_stop();
-                APP_ERROR_CHECK(err_code);     
-                
+                APP_ERROR_CHECK(err_code);
+
                 nrf_delay_ms(GENERIC_DELAY_TIME);
-                
+
                 state_machine_state_change(APP_STATE_SINGLE_SHOT);
-            }     
+            }
             break;
 
         default:
             APP_ERROR_HANDLER(m_state);
             break;
-    }    
+    }
 }
 
 
@@ -170,7 +170,7 @@ void timeout_handler(void * p_context)
 static void power_manage(void)
 {
     // Use directly __WFE and __SEV macros since the SoftDevice is not available.
-    
+
     // Wait for event.
     __WFE();
 
@@ -179,21 +179,21 @@ static void power_manage(void)
     __WFE();
 }
 
- 
+
 int main(void)
 {
     uint32_t err_code = app_simple_timer_init();
     APP_ERROR_CHECK(err_code);
 
     LEDS_CONFIGURE(BSP_LED_0_MASK | BSP_LED_1_MASK);
-    LEDS_ON(BSP_LED_0_MASK | BSP_LED_1_MASK);    
+    LEDS_ON(BSP_LED_0_MASK | BSP_LED_1_MASK);
 
     nrf_delay_ms(GENERIC_DELAY_TIME);
-    
+
     state_machine_state_change(APP_STATE_SINGLE_SHOT);
 
     for (;;)
     {
         power_manage();
-    }    
+    }
 }

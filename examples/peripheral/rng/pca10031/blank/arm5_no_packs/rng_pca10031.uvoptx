@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <ProjectOpt xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_opt.xsd">
-  
+
   <SchemaVersion>1.0</SchemaVersion>
-  
+
   <Header>### uVision Project, (C) Keil Software</Header>
-  
   <Target>
     <TargetName>nrf51422_xxac</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
@@ -111,6 +110,6 @@
       <LintExecutable></LintExecutable>
       <LintConfigFile></LintConfigFile>
     </TargetOption>
-  </Target>
-</ProjectOpt>
+  </Target></ProjectOpt>
+
 

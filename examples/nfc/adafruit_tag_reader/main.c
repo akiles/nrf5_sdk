@@ -28,13 +28,16 @@
 
 #include "nrf_delay.h"
 #include "app_error.h"
-#include "app_trace.h"
 #include "bsp.h"
+#include "hardfault.h"
 
 #include "adafruit_pn532.h"
 #include "nfc_t2t_parser.h"
 #include "nfc_ndef_msg_parser.h"
 
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 #define TAG_TYPE_2_UID_LENGTH               7                       /// Length of the Tag's UID.
 #define TAG_DATA_BUFFER_SIZE                1024                    /// Buffer size for data from a Tag.
@@ -53,7 +56,8 @@ void utils_setup(void)
 {
     LEDS_CONFIGURE(LEDS_MASK);
     LEDS_OFF(LEDS_MASK);
-    app_trace_init();
+
+    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
 }
 
 
@@ -99,10 +103,10 @@ ret_code_t tag_data_read(uint8_t * buffer, uint32_t buffer_size)
     // Read pages 0 - 3 to get the header information.
     for (i = 0; i < 4; i++)
     {
-        err_code = adafruit_pn532_ntag2xx_read_page(i, buffer + 4*i);
+        err_code = adafruit_pn532_ntag2xx_read_page(i, buffer + 4 * i);
         if (err_code)
         {
-            app_trace_log("Failed to read page %d\r\n", i);
+            NRF_LOG_INFO("Failed to read page %d\r\n", i);
             return NRF_ERROR_INTERNAL;
         }
     }
@@ -118,11 +122,11 @@ ret_code_t tag_data_read(uint8_t * buffer, uint32_t buffer_size)
     uint8_t pages_to_read = data_bytes_in_tag / T2T_BLOCK_SIZE;
     for (i = 0; i < pages_to_read; i++)
     {
-        uint16_t offset_for_page = T2T_FIRST_DATA_BLOCK_OFFSET + 4*i;
+        uint16_t offset_for_page = T2T_FIRST_DATA_BLOCK_OFFSET + 4 * i;
         err_code = adafruit_pn532_ntag2xx_read_page(i + 4, buffer + offset_for_page);
         if (err_code)
         {
-            app_trace_log("Failed to read page %d\r\n", i + 4);
+            NRF_LOG_INFO("Failed to read page %d\r\n", i + 4);
             return NRF_ERROR_INTERNAL;
         }
     }
@@ -141,9 +145,9 @@ void ndef_data_analyze(tlv_block_t * p_tlv_block)
     uint8_t desc_buf[NFC_NDEF_PARSER_REQIRED_MEMO_SIZE_CALC(10)];
     uint32_t nfc_data_len;
     uint32_t desc_buf_len = sizeof(desc_buf);
-    
+
     ret_code_t ret_code;
-    
+
     if (p_tlv_block->tag == TLV_NDEF_MESSAGE)
     {
         nfc_data_len = p_tlv_block->length;
@@ -152,10 +156,10 @@ void ndef_data_analyze(tlv_block_t * p_tlv_block)
                             &desc_buf_len,
                             p_tlv_block->p_value,
                             &nfc_data_len);
-    
+
         if (ret_code != NRF_SUCCESS)
         {
-            app_trace_log("Error during parsing a NDEF message.\r\n");
+            NRF_LOG_INFO("Error during parsing a NDEF message.\r\n");
         }
 
         ndef_msg_printout((nfc_ndef_msg_desc_t *) desc_buf);
@@ -178,20 +182,18 @@ void tag_data_analyze(uint8_t * buffer)
     err_code = type_2_tag_parse(test_type_2_tag, buffer);
     if (err_code == NRF_ERROR_NO_MEM)
     {
-        app_trace_log("Not enough memory to read whole tag. Printing what've been read.\r\n");
+        NRF_LOG_INFO("Not enough memory to read whole tag. Printing what've been read.\r\n\r\n");
     }
     else if (err_code != NRF_SUCCESS)
     {
-        app_trace_log("Error during parsing a tag. Printing what could've been read.\r\n");
+        NRF_LOG_INFO("Error during parsing a tag. Printing what could've been read.\r\n\r\n");
     }
 
-    app_trace_log("\r\n");
     type_2_tag_printout(test_type_2_tag);
-    app_trace_log("\r\n");
-    
+
     tlv_block_t * p_tlv_block = test_type_2_tag->p_tlv_block_array;
     uint32_t i;
-    
+
     for (i = 0; i < test_type_2_tag->tlv_count; i++)
     {
         ndef_data_analyze(p_tlv_block);
@@ -228,29 +230,30 @@ int main(void)
     for (;;)
     {
         err_code = tag_data_read(tag_data, TAG_DATA_BUFFER_SIZE);
-        switch(err_code)
+        switch (err_code)
         {
             case NRF_SUCCESS:
                 tag_data_analyze(tag_data);
                 after_read_delay();
                 break;
             case NRF_ERROR_NO_MEM:
-                app_trace_log("Declared buffer is to small to store tag data.\r\n");
+                NRF_LOG_INFO("Declared buffer is to small to store tag data.\r\n");
                 after_read_delay();
                 break;
             case NRF_ERROR_NOT_FOUND:
-                app_trace_log("No Tag found.\r\n");
+                NRF_LOG_INFO("No Tag found.\r\n");
                 // No delay here as we want to search for another tag immediately.
                 break;
             case NRF_ERROR_NOT_SUPPORTED:
-                app_trace_log("Tag not supported.\r\n");
+                NRF_LOG_INFO("Tag not supported.\r\n");
                 after_read_delay();
                 break;
             default:
-                app_trace_log("Error during tag read.\r\n");
+                NRF_LOG_INFO("Error during tag read.\r\n");
                 err_code = adafruit_pn532_field_off();
                 break;
         }
+        NRF_LOG_FLUSH();
     }
 }
 

@@ -28,6 +28,10 @@
 #include "sdk_errors.h"
 #include "ant_stack_handler_types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @name Advanced burst configuration for encryption modules
  * @{
  */
@@ -167,7 +171,7 @@ ret_code_t ant_channel_encrypt_config_perform(uint8_t                          c
  * for that channel. When called for a slave channel, it saves
  * the encryption configuration for future use.
  *
- * This function should be used by the @ref ant_sdk_channel_config module.
+ * This function should be used by the @ref ant_channel_config module.
  *
  * @param[in] channel_type     ANT channel type: CHANNEL_TYPE_SLAVE or CHANNEL_TYPE_MASTER.
  * @param[in] channel_num      ANT channel number.
@@ -216,4 +220,9 @@ void ant_enc_event_handler_register(ant_encryp_user_handler_t p_handler);
 /**
  * @}
  */
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif // ANT_ENCRYPT_CONFIG__

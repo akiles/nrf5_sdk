@@ -24,6 +24,10 @@
 #include "ble.h"
 #include "device_manager.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define MAX_CLIENTS  DEVICE_MANAGER_MAX_CONNECTIONS  /**< Max number of clients. */
 
 /**@brief Funtion for initializing the module.
@@ -71,6 +75,11 @@ void client_handling_ble_evt_handler(ble_evt_t * p_ble_evt);
 ret_code_t client_handling_dm_event_handler(const dm_handle_t    * p_handle,
                                               const dm_event_t     * p_event,
                                               const ret_code_t     event_result);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // CLIENT_HANDLING_H__
 

@@ -292,7 +292,7 @@ uint32_t dfu_data_pkt_handle(dfu_update_packet_t * p_packet)
     }
 
     // Check pointer alignment.
-    if(((uint32_t) (p_packet->params.data_packet.p_data_packet)) & (sizeof(uint32_t) - 1))
+    if (((uint32_t) (p_packet->params.data_packet.p_data_packet)) & (sizeof(uint32_t) - 1))
     {
         // The p_data_packet is not word aligned address.
         return NRF_ERROR_INVALID_ADDR;
@@ -442,7 +442,7 @@ uint32_t dfu_image_validate(uint16_t crc_seed)
                 err_code = dfu_timer_restart();
                 if (err_code == NRF_SUCCESS)
                 {
-                    if(crc_crc16_update(crc_seed, (uint32_t*)dfu_storage_start_address_get(), m_image_size) == 0)
+                    if (crc_crc16_update(crc_seed, (uint32_t*)dfu_storage_start_address_get(), m_image_size) == 0)
                     {
                         m_dfu_state = DFU_STATE_WAIT_4_ACTIVATE;
                         err_code = NRF_SUCCESS;

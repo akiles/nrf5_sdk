@@ -55,8 +55,16 @@
 #include "ble_conn_state.h"
 #include "hal_nfc_t2t.h"
 
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
+
 #if BUTTONS_NUMBER <2
 #error "Not enough resources on board"
+#endif
+
+#if (NRF_SD_BLE_API_VERSION == 3)
+#define NRF_BLE_MAX_MTU_SIZE            GATT_MTU_SIZE_DEFAULT                       /**< MTU size used in the softdevice enabling and to reply to a BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST event. */
 #endif
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT  0                                              /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
@@ -175,7 +183,7 @@ typedef struct hid_key_buffer
     uint8_t    data_len;      /**< Total length of data */
     uint8_t    * p_data;      /**< Scanned key pattern */
     ble_hids_t * p_instance;  /**< Identifies peer and service instance */
-}buffer_entry_t;
+} buffer_entry_t;
 
 STATIC_ASSERT(sizeof(buffer_entry_t) % 4 == 0);
 
@@ -186,7 +194,7 @@ typedef struct
     uint8_t        rp;                         /**< Index to the read location */
     uint8_t        wp;                         /**< Index to write location */
     uint8_t        count;                      /**< Number of elements in the list */
-}buffer_list_t;
+} buffer_list_t;
 
 STATIC_ASSERT(sizeof(buffer_list_t) % 4 == 0);
 
@@ -202,6 +210,10 @@ APP_TIMER_DEF(m_battery_timer_id);                                              
 
 static pm_peer_id_t                      m_peer_id;                                     /**< Device reference handle to the current bonded central. */
 static bool                              m_caps_on = false;                             /**< Variable to indicate if Caps Lock is turned on. */
+
+static pm_peer_id_t   m_whitelist_peers[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];  /**< List of peers currently in the whitelist. */
+static uint32_t       m_whitelist_peer_cnt;                                 /**< Number of peers currently in the whitelist. */
+static bool           m_is_wl_changed;                                      /**< Indicates if the whitelist has been changed since last time it has been updated in the Peer Manager. */
 
 static ble_uuid_t m_adv_uuids[] = {{BLE_UUID_HUMAN_INTERFACE_DEVICE_SERVICE, BLE_UUID_TYPE_BLE}};
 
@@ -280,7 +292,7 @@ static const uint8_t m_language[] = {'e', 'n'};
 
 static ble_advdata_t                     m_advdata;
 static volatile uint8_t                  m_advertising_flag = 0;
-uint8_t                                  ndef_msg_buf[256];
+uint8_t                                  m_ndef_msg_buf[256];
 
 static void advertising_disable(void);
 static void advertising_enable(void);
@@ -495,7 +507,7 @@ static void hids_init(void)
 
     memset((void *)input_report_array, 0, sizeof(ble_hids_inp_rep_init_t));
     memset((void *)output_report_array, 0, sizeof(ble_hids_outp_rep_init_t));
-    
+
     static uint8_t report_map_data[] =
     {
         0x05, 0x01,                 // Usage Page (Generic Desktop)
@@ -727,7 +739,7 @@ static uint32_t send_key_scan_press_release(ble_hids_t *   p_hids,
     uint16_t offset;
     uint16_t data_len;
     uint8_t  data[INPUT_REPORT_KEYS_MAX_LEN];
-    
+
     // HID Report Descriptor enumerates an array of size 6, the pattern hence shall not be any
     // longer than this.
     STATIC_ASSERT((INPUT_REPORT_KEYS_MAX_LEN - 2) == 6);
@@ -739,12 +751,12 @@ static uint32_t send_key_scan_press_release(ble_hids_t *   p_hids,
 
     do
     {
-        // Reset the data buffer. 
+        // Reset the data buffer.
         memset(data, 0, sizeof(data));
-        
+
         // Copy the scan code.
         memcpy(data + SCAN_CODE_POS + offset, p_key_pattern + offset, data_len - offset);
-        
+
         if (is_shift_key_pressed())
         {
             data[MODIFIER_KEY_POS] |= SHIFT_KEY_CODE;
@@ -752,7 +764,7 @@ static uint32_t send_key_scan_press_release(ble_hids_t *   p_hids,
 
         if (!m_in_boot_mode)
         {
-            err_code = ble_hids_inp_rep_send(p_hids, 
+            err_code = ble_hids_inp_rep_send(p_hids,
                                              INPUT_REPORT_KEYS_INDEX,
                                              INPUT_REPORT_KEYS_MAX_LEN,
                                              data);
@@ -763,12 +775,12 @@ static uint32_t send_key_scan_press_release(ble_hids_t *   p_hids,
                                                      INPUT_REPORT_KEYS_MAX_LEN,
                                                      data);
         }
-        
+
         if (err_code != NRF_SUCCESS)
         {
             break;
         }
-        
+
         offset++;
     } while (offset <= data_len);
 
@@ -867,7 +879,7 @@ static uint32_t buffer_dequeue(bool tx_flag)
     uint32_t         err_code = NRF_SUCCESS;
     uint16_t         actual_len;
 
-    if (BUFFER_LIST_EMPTY()) 
+    if (BUFFER_LIST_EMPTY())
     {
         err_code = NRF_ERROR_NOT_FOUND;
     }
@@ -1065,26 +1077,31 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
     switch (ble_adv_evt)
     {
         case BLE_ADV_EVT_DIRECTED:
+            NRF_LOG_INFO("BLE_ADV_EVT_DIRECTED\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_DIRECTED);
             APP_ERROR_CHECK(err_code);
             break;//BLE_ADV_EVT_DIRECTED
 
         case BLE_ADV_EVT_FAST:
+            NRF_LOG_INFO("BLE_ADV_EVT_FAST\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
             APP_ERROR_CHECK(err_code);
             break;//BLE_ADV_EVT_FAST
 
         case BLE_ADV_EVT_SLOW:
+            NRF_LOG_INFO("BLE_ADV_EVT_SLOW\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_SLOW);
             APP_ERROR_CHECK(err_code);
             break;//BLE_ADV_EVT_SLOW
 
         case BLE_ADV_EVT_FAST_WHITELIST:
+            NRF_LOG_INFO("BLE_ADV_EVT_FAST_WHITELIST\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_WHITELIST);
             APP_ERROR_CHECK(err_code);
             break;//BLE_ADV_EVT_FAST_WHITELIST
 
         case BLE_ADV_EVT_SLOW_WHITELIST:
+            NRF_LOG_INFO("BLE_ADV_EVT_SLOW_WHITELIST\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_WHITELIST);
             APP_ERROR_CHECK(err_code);
             break;//BLE_ADV_EVT_SLOW_WHITELIST
@@ -1095,38 +1112,31 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
 
         case BLE_ADV_EVT_WHITELIST_REQUEST:
         {
-            // Storage for the whitelist.
-            ble_gap_irk_t  * irks[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
-            ble_gap_addr_t * addrs[BLE_GAP_WHITELIST_IRK_MAX_COUNT];
-            ble_gap_whitelist_t whitelist = {.pp_irks = irks, .pp_addrs = addrs};
+            ble_gap_addr_t whitelist_addrs[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
+            ble_gap_irk_t  whitelist_irks[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
+            uint32_t       addr_cnt = BLE_GAP_WHITELIST_ADDR_MAX_COUNT;
+            uint32_t       irk_cnt  = BLE_GAP_WHITELIST_ADDR_MAX_COUNT;
 
-            // Construct a list of peer IDs
-            pm_peer_id_t peer_ids[BLE_GAP_WHITELIST_ADDR_MAX_COUNT];
-            pm_peer_id_t peer_id = pm_next_peer_id_get(PM_PEER_ID_INVALID);
-            uint32_t n_peer_ids = 0;
-
-            while((peer_id != PM_PEER_ID_INVALID) && (n_peer_ids < BLE_GAP_WHITELIST_ADDR_MAX_COUNT))
-            {
-                peer_ids[n_peer_ids++] = peer_id;
-                peer_id = pm_next_peer_id_get(peer_id);
-            }
-
-            // Create the whitelist.
-            err_code = pm_whitelist_create(peer_ids, n_peer_ids, &whitelist);
+            err_code = pm_whitelist_get(whitelist_addrs, &addr_cnt,
+                                        whitelist_irks,  &irk_cnt);
             APP_ERROR_CHECK(err_code);
+            NRF_LOG_DEBUG("pm_whitelist_get returns %d addr in whitelist and %d irk whitelist\r\n",
+                           addr_cnt,
+                           irk_cnt);
 
             // Apply the whitelist.
-            err_code = ble_advertising_whitelist_reply(&whitelist);
+            err_code = ble_advertising_whitelist_reply(whitelist_addrs, addr_cnt,
+                                                       whitelist_irks,  irk_cnt);
             APP_ERROR_CHECK(err_code);
-
-        }break;//BLE_ADV_EVT_WHITELIST_REQUEST
+        }
+        break;
 
         case BLE_ADV_EVT_PEER_ADDR_REQUEST:
         {
             pm_peer_data_bonding_t peer_bonding_data;
 
             // Only Give peer address if we have a handle to the bonded peer.
-            if(m_peer_id != PM_PEER_ID_INVALID)
+            if (m_peer_id != PM_PEER_ID_INVALID)
             {
                 err_code = pm_peer_data_bonding_load(m_peer_id, &peer_bonding_data);
                 if (err_code != NRF_ERROR_NOT_FOUND)
@@ -1153,12 +1163,12 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
  */
 static void on_ble_evt(ble_evt_t * p_ble_evt)
 {
-    uint32_t                              err_code;
-    NfcRetval                             ret_val;
+    uint32_t err_code;
 
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
+            NRF_LOG_INFO("Connected\r\n");
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
 
@@ -1166,51 +1176,100 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 
             /* Disable advertising, so when disconnected it does not restart. */
             advertising_disable();
-            break;//BLE_GAP_EVT_CONNECTED
+            break; // BLE_GAP_EVT_CONNECTED
 
         case BLE_EVT_TX_COMPLETE:
             // Send next key event
             (void) buffer_dequeue(true);
-            break;//BLE_EVT_TX_COMPLETE
+            break; // BLE_EVT_TX_COMPLETE
 
         case BLE_GAP_EVT_DISCONNECTED:
         {
+            NRF_LOG_INFO("Disonnected\r\n");
             // Dequeue all keys without transmission.
             (void) buffer_dequeue(false);
 
             m_conn_handle = BLE_CONN_HANDLE_INVALID;
 
-            // Reset m_caps_on variable. Upon reconnect, the HID host will re-send the Output 
+            // Reset m_caps_on variable. Upon reconnect, the HID host will re-send the Output
             // report containing the Caps lock state.
             m_caps_on = false;
             // disabling alert 3. signal - used for capslock ON
             err_code = bsp_indication_set(BSP_INDICATE_ALERT_OFF);
             APP_ERROR_CHECK(err_code);
-            
+
             m_advertising_flag = 0;
-        }break;//BLE_GAP_EVT_DISCONNECTED
+            if (m_is_wl_changed)
+            {
+                // The whitelist has been modified, update it in the Peer Manager.
+                err_code = pm_whitelist_set(m_whitelist_peers, m_whitelist_peer_cnt);
+                APP_ERROR_CHECK(err_code);
+
+                err_code = pm_device_identities_list_set(m_whitelist_peers, m_whitelist_peer_cnt);
+                if (err_code != NRF_ERROR_NOT_SUPPORTED)
+                {
+                    APP_ERROR_CHECK(err_code);
+                }
+
+                m_is_wl_changed = false;
+            }
+        }break; // BLE_GAP_EVT_DISCONNECTED
+
+        case BLE_GAP_EVT_AUTH_KEY_REQUEST:
+        {
+            err_code = sd_ble_gap_auth_key_reply(p_ble_evt->evt.gap_evt.conn_handle, BLE_GAP_AUTH_KEY_TYPE_OOB, m_oob_auth_key.tk);
+            APP_ERROR_CHECK(err_code);
+        }break; // BLE_GAP_EVT_AUTH_KEY_REQUEST
+
+        case BLE_GAP_EVT_AUTH_STATUS:
+            if (p_ble_evt->evt.gap_evt.params.auth_status.auth_status == BLE_GAP_SEC_STATUS_SUCCESS)
+            {
+                /* Configure NFC launchapp data (requires stopping NFC Tag emulation) */
+                err_code = nfc_t2t_emulation_stop();
+                APP_ERROR_CHECK(err_code);
+
+                nfc_text_data_set();
+
+                err_code = nfc_t2t_emulation_start();
+                APP_ERROR_CHECK(err_code);
+            }
+            break; //BLE_GAP_EVT_AUTH_STATUS
+
+        case BLE_GATTC_EVT_TIMEOUT:
+            // Disconnect on GATT Client timeout event.
+            NRF_LOG_DEBUG("GATT Client Timeout.\r\n");
+            err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gattc_evt.conn_handle,
+                                             BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+            APP_ERROR_CHECK(err_code);
+            break; // BLE_GATTC_EVT_TIMEOUT
+
+        case BLE_GATTS_EVT_TIMEOUT:
+            // Disconnect on GATT Server timeout event.
+            NRF_LOG_DEBUG("GATT Server Timeout.\r\n");
+            err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gatts_evt.conn_handle,
+                                             BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+            APP_ERROR_CHECK(err_code);
+            break; // BLE_GATTS_EVT_TIMEOUT
 
         case BLE_EVT_USER_MEM_REQUEST:
             err_code = sd_ble_user_mem_reply(m_conn_handle, NULL);
             APP_ERROR_CHECK(err_code);
-            break;//BLE_EVT_USER_MEM_REQUEST
+            break; // BLE_EVT_USER_MEM_REQUEST
 
         case BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST:
         {
+            ble_gatts_evt_rw_authorize_request_t  req;
             ble_gatts_rw_authorize_reply_params_t auth_reply;
 
-            if(p_ble_evt->evt.gatts_evt.params.authorize_request.type
-               != BLE_GATTS_AUTHORIZE_TYPE_INVALID)
+            req = p_ble_evt->evt.gatts_evt.params.authorize_request;
+
+            if (req.type != BLE_GATTS_AUTHORIZE_TYPE_INVALID)
             {
-                if ((p_ble_evt->evt.gatts_evt.params.authorize_request.request.write.op
-                     == BLE_GATTS_OP_PREP_WRITE_REQ)
-                    || (p_ble_evt->evt.gatts_evt.params.authorize_request.request.write.op
-                     == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW)
-                    || (p_ble_evt->evt.gatts_evt.params.authorize_request.request.write.op
-                     == BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL))
+                if ((req.request.write.op == BLE_GATTS_OP_PREP_WRITE_REQ)     ||
+                    (req.request.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_NOW) ||
+                    (req.request.write.op == BLE_GATTS_OP_EXEC_WRITE_REQ_CANCEL))
                 {
-                    if (p_ble_evt->evt.gatts_evt.params.authorize_request.type
-                        == BLE_GATTS_AUTHORIZE_TYPE_WRITE)
+                    if (req.type == BLE_GATTS_AUTHORIZE_TYPE_WRITE)
                     {
                         auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_WRITE;
                     }
@@ -1219,46 +1278,20 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                         auth_reply.type = BLE_GATTS_AUTHORIZE_TYPE_READ;
                     }
                     auth_reply.params.write.gatt_status = APP_FEATURE_NOT_SUPPORTED;
-                    err_code = sd_ble_gatts_rw_authorize_reply(m_conn_handle,&auth_reply);
+                    err_code = sd_ble_gatts_rw_authorize_reply(p_ble_evt->evt.gatts_evt.conn_handle,
+                                                               &auth_reply);
                     APP_ERROR_CHECK(err_code);
                 }
             }
-        }break;//BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST
+        } break; // BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST
 
-        case BLE_GAP_EVT_AUTH_KEY_REQUEST:
-        {
-            err_code = sd_ble_gap_auth_key_reply(p_ble_evt->evt.gap_evt.conn_handle, BLE_GAP_AUTH_KEY_TYPE_OOB, m_oob_auth_key.tk);
+#if (NRF_SD_BLE_API_VERSION == 3)
+        case BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST:
+            err_code = sd_ble_gatts_exchange_mtu_reply(p_ble_evt->evt.gatts_evt.conn_handle,
+                                                       NRF_BLE_MAX_MTU_SIZE);
             APP_ERROR_CHECK(err_code);
-        }break;//BLE_GAP_EVT_AUTH_KEY_REQUEST
-
-        case BLE_GAP_EVT_AUTH_STATUS:
-            if (p_ble_evt->evt.gap_evt.params.auth_status.auth_status == BLE_GAP_SEC_STATUS_SUCCESS)
-            {
-                /* Configure NFC launchapp data (requires stopping NFC Tag emulation) */
-                ret_val = nfcStopEmulation();
-                if (ret_val != NFC_RETVAL_OK)
-                {
-                    APP_ERROR_CHECK((uint32_t) ret_val);
-                }
-
-                nfc_text_data_set();
-
-                ret_val = nfcStartEmulation();
-                if (ret_val != NFC_RETVAL_OK)
-                {
-                    APP_ERROR_CHECK((uint32_t) ret_val);
-                }
-            }
-            break; //BLE_GAP_EVT_AUTH_STATUS
-
-        case BLE_GATTC_EVT_TIMEOUT:
-        /* fall through */
-        case BLE_GATTS_EVT_TIMEOUT:
-            // Disconnect on GATT Server and Client timeout events.
-            err_code = sd_ble_gap_disconnect(m_conn_handle,
-                                             BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
-            APP_ERROR_CHECK(err_code);
-            break;//BLE_GATTC_EVT_TIMEOUT and BLE_GATTS_EVT_TIMEOUT
+            break; // BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST
+#endif
 
         default:
             // No implementation needed.
@@ -1296,7 +1329,13 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
  */
 static void sys_evt_dispatch(uint32_t sys_evt)
 {
+    // Dispatch the system event to the fstorage module, where it will be
+    // dispatched to the Flash Data Storage (FDS) module.
     fs_sys_event_handler(sys_evt);
+
+    // Dispatch to the Advertising module last, since it will check if there are any
+    // pending flash operations in fstorage. Let fstorage process system events first,
+    // so that it can report correctly to the Advertising module.
     ble_advertising_on_sys_evt(sys_evt);
 }
 
@@ -1323,6 +1362,9 @@ static void ble_stack_init(void)
     CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
 
     // Enable BLE stack.
+#if (NRF_SD_BLE_API_VERSION == 3)
+    ble_enable_params.gatt_enable_params.att_mtu = NRF_BLE_MAX_MTU_SIZE;
+#endif
     err_code = softdevice_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
 
@@ -1369,10 +1411,13 @@ static void bsp_event_handler(bsp_event_t event)
             break;//BSP_EVENT_DISCONNECT
 
         case BSP_EVENT_WHITELIST_OFF:
-            err_code = ble_advertising_restart_without_whitelist();
-            if (err_code != NRF_ERROR_INVALID_STATE)
+            if (m_conn_handle == BLE_CONN_HANDLE_INVALID)
             {
-                APP_ERROR_CHECK(err_code);
+                err_code = ble_advertising_restart_without_whitelist();
+                if (err_code != NRF_ERROR_INVALID_STATE)
+                {
+                    APP_ERROR_CHECK(err_code);
+                }
             }
             break;//BSP_EVENT_WHITELIST_OFF
 
@@ -1405,11 +1450,11 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
 {
     ret_code_t err_code;
 
-    switch(p_evt->evt_id)
+    switch (p_evt->evt_id)
     {
         case PM_EVT_BONDED_PEER_CONNECTED:
         {
-            NRF_LOG_PRINTF_DEBUG("Connected to previously bonded device\r\n");
+            NRF_LOG_DEBUG("Connected to previously bonded device\r\n");
             m_peer_id = p_evt->peer_id;
             err_code = pm_peer_rank_highest(p_evt->peer_id);
             if (err_code != NRF_ERROR_BUSY)
@@ -1423,7 +1468,7 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
 
         case PM_EVT_CONN_SEC_SUCCEEDED:
         {
-            NRF_LOG_PRINTF_DEBUG("Link secured. Role: %d. conn_handle: %d, Procedure: %d\r\n",
+            NRF_LOG_DEBUG("Link secured. Role: %d. conn_handle: %d, Procedure: %d\r\n",
                            ble_conn_state_role(p_evt->conn_handle),
                            p_evt->conn_handle,
                            p_evt->params.conn_sec_succeeded.procedure);
@@ -1431,6 +1476,19 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
             if (err_code != NRF_ERROR_BUSY)
             {
                     APP_ERROR_CHECK(err_code);
+            }
+            if (p_evt->params.conn_sec_succeeded.procedure == PM_LINK_SECURED_PROCEDURE_BONDING)
+            {
+                NRF_LOG_DEBUG("New Bond, add the peer to the whitelist if possible\r\n");
+                NRF_LOG_DEBUG("\tm_whitelist_peer_cnt %d, MAX_PEERS_WLIST %d\r\n",
+                               m_whitelist_peer_cnt + 1,
+                               BLE_GAP_WHITELIST_ADDR_MAX_COUNT);
+                if (m_whitelist_peer_cnt < BLE_GAP_WHITELIST_ADDR_MAX_COUNT)
+                {
+                    //bonded to a new peer, add it to the whitelist.
+                    m_whitelist_peers[m_whitelist_peer_cnt++] = m_peer_id;
+                    m_is_wl_changed = true;
+                }
             }
         }break;//PM_EVT_CONN_SEC_SUCCEEDED
 
@@ -1587,16 +1645,68 @@ static void buttons_leds_init(bool * p_erase_bonds, bool * p_wake_on_button)
     *p_wake_on_button = (startup_event == BSP_EVENT_WAKEUP);
 }
 
+
+/**@brief Fetch the list of peer manager peer IDs.
+ *
+ * @param[inout] p_peers   The buffer where to store the list of peer IDs.
+ * @param[inout] p_size    In: The size of the @p p_peers buffer.
+ *                         Out: The number of peers copied in the buffer.
+ */
+static void peer_list_get(pm_peer_id_t * p_peers, uint32_t * p_size)
+{
+    pm_peer_id_t peer_id;
+    uint32_t     peers_to_copy;
+
+    peers_to_copy = (*p_size < BLE_GAP_WHITELIST_ADDR_MAX_COUNT) ?
+                     *p_size : BLE_GAP_WHITELIST_ADDR_MAX_COUNT;
+
+    peer_id = pm_next_peer_id_get(PM_PEER_ID_INVALID);
+    *p_size = 0;
+
+    while ((peer_id != PM_PEER_ID_INVALID) && (peers_to_copy--))
+    {
+        p_peers[(*p_size)++] = peer_id;
+        peer_id = pm_next_peer_id_get(peer_id);
+    }
+}
+
+
+static void whitelist_load(void)
+{
+    ret_code_t ret;
+
+    memset(m_whitelist_peers, PM_PEER_ID_INVALID, sizeof(m_whitelist_peers));
+    m_whitelist_peer_cnt = (sizeof(m_whitelist_peers) / sizeof(pm_peer_id_t));
+
+    peer_list_get(m_whitelist_peers, &m_whitelist_peer_cnt);
+
+    ret = pm_whitelist_set(m_whitelist_peers, m_whitelist_peer_cnt);
+    APP_ERROR_CHECK(ret);
+
+    // Setup the device identies list.
+    // Some SoftDevices do not support this feature.
+    ret = pm_device_identities_list_set(m_whitelist_peers, m_whitelist_peer_cnt);
+    if (ret != NRF_ERROR_NOT_SUPPORTED)
+    {
+        APP_ERROR_CHECK(ret);
+    }
+
+    m_is_wl_changed = false;
+}
+
+
 /***************************************************************************************************
  * Start of modifications needed for BLE pairing over NFC
  **************************************************************************************************/
- 
+
+
 /**@brief Function for initializing the Advertising functionality.
  */
 static void advertising_init(void)
 {
     // Build advertising data struct to pass into @ref ble_advertising_init.
     memset(&m_advdata, 0, sizeof(m_advdata));
+
     //Only set up adv_data. Options will be set depending on if advertising will be enabled or not.
     m_advdata.name_type               = BLE_ADVDATA_FULL_NAME;
     m_advdata.include_appearance      = true;
@@ -1610,16 +1720,21 @@ static void advertising_init(void)
  */
 static void advertising_enable(void)
 {
-    uint32_t      err_code;
+    ble_adv_modes_config_t options;
+    uint32_t               err_code;
 
-    ble_adv_modes_config_t options =
-    {
-        BLE_ADV_WHITELIST_ENABLED,
-        BLE_ADV_DIRECTED_ENABLED,
-        BLE_ADV_DIRECTED_SLOW_DISABLED, 0,0,
-        BLE_ADV_FAST_ENABLED, APP_ADV_FAST_INTERVAL, APP_ADV_FAST_TIMEOUT,
-        BLE_ADV_SLOW_ENABLED, APP_ADV_SLOW_INTERVAL, APP_ADV_SLOW_TIMEOUT
-    };
+    memset(&options, 0, sizeof(options));
+    options.ble_adv_whitelist_enabled      = true;
+    options.ble_adv_directed_enabled       = true;
+    options.ble_adv_directed_slow_enabled  = false;
+    options.ble_adv_directed_slow_interval = 0;
+    options.ble_adv_directed_slow_timeout  = 0;
+    options.ble_adv_fast_enabled           = true;
+    options.ble_adv_fast_interval          = APP_ADV_FAST_INTERVAL;
+    options.ble_adv_fast_timeout           = APP_ADV_FAST_TIMEOUT;
+    options.ble_adv_slow_enabled           = true;
+    options.ble_adv_slow_interval          = APP_ADV_SLOW_INTERVAL;
+    options.ble_adv_slow_timeout           = APP_ADV_SLOW_TIMEOUT;
 
     err_code = ble_advertising_init(&m_advdata, NULL, &options, on_adv_evt, ble_advertising_error_handler);
     APP_ERROR_CHECK(err_code);
@@ -1633,10 +1748,10 @@ static void advertising_disable(void)
     uint32_t      err_code;
 
     ble_adv_modes_config_t options    = {0};
-    options.ble_adv_directed_enabled  = BLE_ADV_DIRECTED_DISABLED;
-    options.ble_adv_fast_enabled      = BLE_ADV_FAST_DISABLED;
-    options.ble_adv_slow_enabled      = BLE_ADV_SLOW_DISABLED;
-    options.ble_adv_whitelist_enabled = BLE_ADV_WHITELIST_DISABLED;
+    options.ble_adv_directed_enabled  = false;
+    options.ble_adv_fast_enabled      = false;
+    options.ble_adv_slow_enabled      = false;
+    options.ble_adv_whitelist_enabled = false;
 
     err_code = ble_advertising_init(&m_advdata, NULL, &options, on_adv_evt, NULL);
     APP_ERROR_CHECK(err_code);
@@ -1644,34 +1759,29 @@ static void advertising_disable(void)
 
 static void nfc_pairing_data_set(void)
 {
-    NfcRetval ret_val;
-    uint32_t  err_code;
-   
+    uint32_t err_code;
+
     /** @snippet [NFC BLE pair usage_1] */
     /* Provide information about available buffer size to encoding function. */
-    uint32_t ndef_msg_len = sizeof(ndef_msg_buf);
+    uint32_t ndef_msg_len = sizeof(m_ndef_msg_buf);
 
     /* Encode BLE pairing message into the buffer. */
     err_code = nfc_ble_pair_default_msg_encode(NFC_BLE_PAIR_MSG_FULL,
                                                &m_oob_auth_key,
-                                               ndef_msg_buf,
+                                               m_ndef_msg_buf,
                                                &ndef_msg_len);
     APP_ERROR_CHECK(err_code);
     /** @snippet [NFC BLE pair usage_1] */
 
     /* Configure the NFC Tag data */
-    ret_val = nfcSetPayload((char *)ndef_msg_buf, ndef_msg_len);
-    if (ret_val != NFC_RETVAL_OK)
-    {
-        APP_ERROR_CHECK((uint32_t) ret_val);
-    }
+    err_code = nfc_t2t_payload_set(m_ndef_msg_buf, ndef_msg_len);
+    APP_ERROR_CHECK(err_code);
 }
 
 static void nfc_text_data_set(void)
 {
     nfc_ndef_msg_desc_t *    p_nfc_text_message;
     nfc_ndef_record_desc_t * p_text_rec;
-    NfcRetval                ret_val;
     uint32_t                 err_code = NRF_SUCCESS;
 
     /* Declare a text message to inform user that device is paired */
@@ -1688,27 +1798,24 @@ static void nfc_text_data_set(void)
     err_code           = nfc_ndef_msg_record_add(p_nfc_text_message, p_text_rec);
     APP_ERROR_CHECK(err_code);
 
-    uint32_t ndef_msg_len = sizeof(ndef_msg_buf);
-    err_code              = nfc_ndef_msg_encode(p_nfc_text_message, ndef_msg_buf, &ndef_msg_len);
+    uint32_t ndef_msg_len = sizeof(m_ndef_msg_buf);
+    err_code              = nfc_ndef_msg_encode(p_nfc_text_message, m_ndef_msg_buf, &ndef_msg_len);
     APP_ERROR_CHECK(err_code);
 
-    ret_val = nfcSetPayload((char *)ndef_msg_buf, ndef_msg_len);
-    if (ret_val != NFC_RETVAL_OK)
-    {
-        APP_ERROR_CHECK((uint32_t) ret_val);
-    }
+    err_code = nfc_t2t_payload_set(m_ndef_msg_buf, ndef_msg_len);
+    APP_ERROR_CHECK(err_code);
 }
 
-static void nfc_callback(void * context, NfcEvent event, const char *data, size_t dataLength)
+static void nfc_callback(void * p_context, nfc_t2t_event_t event, const uint8_t * p_data, size_t data_length)
 {
-    (void) context;
+    (void) p_context;
     uint32_t err_code;
 
     switch (event)
     {
-        case NFC_EVENT_FIELD_ON:
+        case NFC_T2T_EVENT_FIELD_ON:
         {
-            NRF_LOG_PRINTF_DEBUG("NFC_EVENT_FIELD_ON");
+            NRF_LOG_INFO("NFC_EVENT_FIELD_ON\r\n");
             if (m_caps_on)
             {
                 err_code = bsp_indication_set(BSP_INDICATE_ALERT_2);
@@ -1727,10 +1834,11 @@ static void nfc_callback(void * context, NfcEvent event, const char *data, size_
                 err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
                 APP_ERROR_CHECK(err_code);
             }
-        }break;//NFC_EVENT_FIELD_ON
+        }break;
 
-        case NFC_EVENT_FIELD_OFF:
+        case NFC_T2T_EVENT_FIELD_OFF:
         {
+            NRF_LOG_INFO("NFC_EVENT_FIELD_OFF\r\n");
             if (m_caps_on)
             {
                 err_code = bsp_indication_set(BSP_INDICATE_ALERT_3);
@@ -1741,7 +1849,7 @@ static void nfc_callback(void * context, NfcEvent event, const char *data, size_
             }
 
             APP_ERROR_CHECK(err_code);
-        }break;//NFC_EVENT_FIELD_OFF
+        }break;
 
         default:
             break;
@@ -1752,15 +1860,11 @@ static void nfc_callback(void * context, NfcEvent event, const char *data, size_
 
 static void nfc_init(bool erase_bonds, bool wake_on_button)
 {
-    NfcRetval     ret_val;
-    uint32_t      err_code;
+    uint32_t err_code;
 
     /* Start NFC */
-    ret_val = nfcSetup(nfc_callback, NULL);
-    if (ret_val != NFC_RETVAL_OK)
-    {
-        APP_ERROR_CHECK((uint32_t) ret_val);
-    }
+    err_code = nfc_t2t_setup(nfc_callback, NULL);
+    APP_ERROR_CHECK(err_code);
 
     /* Get the bonded peer number from peer_manager */
     if (!pm_peer_count() || erase_bonds)
@@ -1781,11 +1885,8 @@ static void nfc_init(bool erase_bonds, bool wake_on_button)
         }
     }
 
-    ret_val = nfcStartEmulation();
-    if (ret_val != NFC_RETVAL_OK)
-    {
-        APP_ERROR_CHECK((uint32_t) ret_val);
-    }
+    err_code = nfc_t2t_emulation_start();
+    APP_ERROR_CHECK(err_code);
 
     return;
 }
@@ -1795,15 +1896,8 @@ static void nfc_init(bool erase_bonds, bool wake_on_button)
  */
 static void power_manage(void)
 {
-    /* Begin: Bugfix for FTPAN-45 */
-    if (!NFC_NEED_MCU_RUN_STATE())
-    {
-    /* End:   Bugfix for FTPAN-45 */
-        uint32_t err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
-    /* Begin: Bugfix for FTPAN-45 */
-    }
-    /* End:   Bugfix for FTPAN-45 */
+    uint32_t err_code = sd_app_evt_wait();
+    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -1819,7 +1913,7 @@ int main(void)
     bool     erase_bonds, wake_on_button;
 
     // Initialize.
-    err_code = NRF_LOG_INIT();
+    err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
     timers_init();
     buttons_leds_init(&erase_bonds, &wake_on_button);
@@ -1827,23 +1921,32 @@ int main(void)
     scheduler_init();
     ble_conn_state_init();
     peer_manager_init(erase_bonds);
+    if (erase_bonds == true)
+    {
+        NRF_LOG_INFO("Bonds erased!\r\n");
+    }
     gap_params_init();
+    whitelist_load();
     advertising_init();
     services_init();
     sensor_simulator_init();
     conn_params_init();
     buffer_init();
     nfc_init(erase_bonds, wake_on_button);
-    
 
-    // Start execution.
+
+    // Start execution..
+    NRF_LOG_INFO("HID Keyboard NFC Start!\r\n");
     timers_start();
 
     // Enter main loop.
     for (;;)
     {
         app_sched_execute();
-        power_manage();
+        if (NRF_LOG_PROCESS() == false)
+        {
+            power_manage();
+        }
     }
 }
 

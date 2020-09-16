@@ -25,6 +25,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /**@brief DFU event callback for asynchronous calls.
  *
@@ -106,6 +110,11 @@ uint32_t dfu_sd_image_swap(void);
 uint32_t dfu_ap_image_swap(void);
 
 uint32_t dfu_storage_start_address_get(void);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // DFU_H__
 

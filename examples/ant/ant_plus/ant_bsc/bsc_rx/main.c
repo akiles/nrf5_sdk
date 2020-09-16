@@ -21,21 +21,24 @@ All rights reserved.
  * - Make sure that @ref ANT_LICENSE_KEY in @c nrf_sdm.h is uncommented.
  */
 
+#include <string.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include "app_error.h"
-#include "nrf.h"
-#include "nrf_sdm.h"
 #include "bsp.h"
+#include "hardfault.h"
 #include "app_timer.h"
-#include "nordic_common.h"
 #include "ant_stack_config.h"
 #include "softdevice_handler.h"
 #include "ant_bsc.h"
-#include "app_trace.h"
 #include "ant_key_manager.h"
 #include "ant_state_indicator.h"
+#include "bsp_btn_ant.h"
+
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 #define APP_TIMER_PRESCALER         0x00                                                            /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_OP_QUEUE_SIZE     0x04                                                            /**< Size of timer operation queues. */
@@ -53,17 +56,30 @@ All rights reserved.
 #define BSC_MS_TO_KPH_NUM           36                                                              /**< Numerator of [m/s] to [kph] ratio */
 #define BSC_MS_TO_KPH_DEN           10                                                              /**< Denominator of [m/s] to [kph] ratio */
 #define BSC_MM_TO_M_FACTOR          1000                                                            /**< Unit factor [m/s] to [mm/s] */
-#define BSC_SPEED_UNIT_FACTOR       (BSC_MS_TO_KPH_DEN * BSC_MM_TO_M_FACTOR)                        /**< Speed unit factor */
-#define SPEED_COEFFICIENT           (WHEEL_CIRCUMFERENCE * BSC_EVT_TIME_FACTOR * BSC_MS_TO_KPH_NUM) /**< Coefficient for speed value calculation */
+#define SPEED_COEFFICIENT           (WHEEL_CIRCUMFERENCE * BSC_EVT_TIME_FACTOR * BSC_MS_TO_KPH_NUM \
+                                     / BSC_MS_TO_KPH_DEN / BSC_MM_TO_M_FACTOR)                      /**< Coefficient for speed value calculation */
 #define CADENCE_COEFFICIENT         (BSC_EVT_TIME_FACTOR * BSC_RPM_TIME_FACTOR)                     /**< Coefficient for cadence value calculation */
 
-#ifdef ENABLE_DEBUG_LOG_SUPPORT
-static int32_t accumulated_s_rev_cnt, previous_s_evt_cnt, prev_s_accumulated_rev_cnt,
-               accumulated_s_evt_time, previous_s_evt_time, prev_s_accumulated_evt_time = 0;
+typedef struct
+{
+    int32_t acc_rev_cnt;
+    int32_t prev_rev_cnt;
+    int32_t prev_acc_rev_cnt;
+    int32_t acc_evt_time;
+    int32_t prev_evt_time;
+    int32_t prev_acc_evt_time;
+} bsc_disp_calc_data_t;
 
-static int32_t accumulated_c_rev_cnt, previous_c_evt_cnt, prev_c_accumulated_rev_cnt,
-               accumulated_c_evt_time, previous_c_evt_time, prev_c_accumulated_evt_time = 0;
-#endif // ENABLE_DEBUG_LOG_SUPPORT
+static bsc_disp_calc_data_t m_speed_calc_data   = {0};
+static bsc_disp_calc_data_t m_cadence_calc_data = {0};
+
+/**@brief Application ANT event handler.
+ *
+ * @details This function is used to detect disconnection from the sensor device.
+ *
+ * @param[in] p_ant_evt  Pointer to ANT stack event structure.
+ */
+static void on_ant_evt(ant_evt_t * p_ant_event);
 
 /** @snippet [ANT BSC RX Instance] */
 void ant_bsc_evt_handler(ant_bsc_profile_t * p_profile, ant_bsc_evt_t event);
@@ -91,38 +107,38 @@ void ant_evt_dispatch(ant_evt_t * p_ant_evt)
 {
     ant_bsc_disp_evt_handler(&m_ant_bsc, p_ant_evt);
     ant_state_indicator_evt_handler(p_ant_evt);
+    bsp_btn_ant_on_ant_evt(p_ant_evt);
+    on_ant_evt(p_ant_evt);
 }
 
-#ifdef ENABLE_DEBUG_LOG_SUPPORT
 __STATIC_INLINE uint32_t calculate_speed(int32_t rev_cnt, int32_t evt_time)
 {
     static uint32_t computed_speed   = 0;
 
-    if (rev_cnt != previous_s_evt_cnt)
+    if (rev_cnt != m_speed_calc_data.prev_rev_cnt)
     {
-        accumulated_s_rev_cnt  += rev_cnt - previous_s_evt_cnt;
-        accumulated_s_evt_time += evt_time - previous_s_evt_time;
+        m_speed_calc_data.acc_rev_cnt  += rev_cnt - m_speed_calc_data.prev_rev_cnt;
+        m_speed_calc_data.acc_evt_time += evt_time - m_speed_calc_data.prev_evt_time;
 
         /* Process rollover */
-        if (previous_s_evt_cnt > rev_cnt)
+        if (m_speed_calc_data.prev_rev_cnt > rev_cnt)
         {
-            accumulated_s_rev_cnt += UINT16_MAX + 1;
+            m_speed_calc_data.acc_rev_cnt += UINT16_MAX + 1;
         }
-        if (previous_s_evt_time > evt_time)
+        if (m_speed_calc_data.prev_evt_time > evt_time)
         {
-            accumulated_s_evt_time += UINT16_MAX + 1;
+            m_speed_calc_data.acc_evt_time += UINT16_MAX + 1;
         }
 
-        previous_s_evt_cnt  = rev_cnt;
-        previous_s_evt_time = evt_time;
+        m_speed_calc_data.prev_rev_cnt  = rev_cnt;
+        m_speed_calc_data.prev_evt_time = evt_time;
 
-        computed_speed   = SPEED_COEFFICIENT *
-                           (accumulated_s_rev_cnt  - prev_s_accumulated_rev_cnt) /
-                           (accumulated_s_evt_time - prev_s_accumulated_evt_time)/
-                           BSC_SPEED_UNIT_FACTOR;
+        computed_speed = SPEED_COEFFICIENT *
+                         (m_speed_calc_data.acc_rev_cnt  - m_speed_calc_data.prev_acc_rev_cnt) /
+                         (m_speed_calc_data.acc_evt_time - m_speed_calc_data.prev_acc_evt_time);
 
-        prev_s_accumulated_rev_cnt  = accumulated_s_rev_cnt;
-        prev_s_accumulated_evt_time = accumulated_s_evt_time;
+        m_speed_calc_data.prev_acc_rev_cnt  = m_speed_calc_data.acc_rev_cnt;
+        m_speed_calc_data.prev_acc_evt_time = m_speed_calc_data.acc_evt_time;
     }
 
     return (uint32_t) computed_speed;
@@ -132,35 +148,50 @@ static uint32_t calculate_cadence(int32_t rev_cnt, int32_t evt_time)
 {
     static uint32_t computed_cadence = 0;
 
-    if (rev_cnt != previous_c_evt_cnt)
+    if (rev_cnt != m_cadence_calc_data.prev_rev_cnt)
     {
-        accumulated_c_rev_cnt  += rev_cnt - previous_c_evt_cnt;
-        accumulated_c_evt_time += evt_time - previous_c_evt_time;
+        m_cadence_calc_data.acc_rev_cnt  += rev_cnt - m_cadence_calc_data.prev_rev_cnt;
+        m_cadence_calc_data.acc_evt_time += evt_time - m_cadence_calc_data.prev_evt_time;
 
         /* Process rollover */
-        if (previous_c_evt_cnt > rev_cnt)
+        if (m_cadence_calc_data.prev_rev_cnt > rev_cnt)
         {
-            accumulated_c_rev_cnt += UINT16_MAX + 1;
+            m_cadence_calc_data.acc_rev_cnt += UINT16_MAX + 1;
         }
-        if (previous_c_evt_time > evt_time)
+        if (m_cadence_calc_data.prev_evt_time > evt_time)
         {
-            accumulated_c_evt_time += UINT16_MAX + 1;
+            m_cadence_calc_data.acc_evt_time += UINT16_MAX + 1;
         }
 
-        previous_c_evt_cnt  = rev_cnt;
-        previous_c_evt_time = evt_time;
+        m_cadence_calc_data.prev_rev_cnt  = rev_cnt;
+        m_cadence_calc_data.prev_evt_time = evt_time;
 
         computed_cadence = CADENCE_COEFFICIENT *
-                           (accumulated_c_rev_cnt  - prev_c_accumulated_rev_cnt) /
-                           (accumulated_c_evt_time - prev_c_accumulated_evt_time);
+                        (m_cadence_calc_data.acc_rev_cnt  - m_cadence_calc_data.prev_acc_rev_cnt) /
+                        (m_cadence_calc_data.acc_evt_time - m_cadence_calc_data.prev_acc_evt_time);
 
-        prev_c_accumulated_rev_cnt  = accumulated_c_rev_cnt;
-        prev_c_accumulated_evt_time = accumulated_c_evt_time;
+        m_cadence_calc_data.prev_acc_rev_cnt  = m_cadence_calc_data.acc_rev_cnt;
+        m_cadence_calc_data.prev_acc_evt_time = m_cadence_calc_data.acc_evt_time;
     }
 
     return (uint32_t) computed_cadence;
 }
-#endif // ENABLE_DEBUG_LOG_SUPPORT
+
+static void on_ant_evt(ant_evt_t * p_ant_event)
+{
+    switch (p_ant_event->event)
+    {
+        case EVENT_RX_FAIL_GO_TO_SEARCH:
+            /* Reset speed and cadence values */
+            memset(&m_speed_calc_data, 0, sizeof(m_speed_calc_data));
+            memset(&m_cadence_calc_data, 0, sizeof(m_cadence_calc_data));
+            break;
+
+        default:
+            // No implementation needed
+            break;
+    }
+}
 
 void ant_bsc_evt_handler(ant_bsc_profile_t * p_profile, ant_bsc_evt_t event)
 {
@@ -179,37 +210,29 @@ void ant_bsc_evt_handler(ant_bsc_profile_t * p_profile, ant_bsc_evt_t event)
             /* fall through */
         case ANT_BSC_PAGE_5_UPDATED:
             /* Log computed value */
-            app_trace_log("Page was updated\n\r");
+            NRF_LOG_RAW_INFO("\r\n");
 
             if (DISPLAY_TYPE == BSC_SPEED_DEVICE_TYPE)
             {
-                app_trace_log("%-30s %u kph\n\r",
-                              "Computed speed value:",
+                NRF_LOG_INFO("Computed speed value:                 %u kph\r\n\n",
                               (unsigned int) calculate_speed(p_profile->BSC_PROFILE_rev_count,
                                                              p_profile->BSC_PROFILE_event_time));
             }
             else if (DISPLAY_TYPE == BSC_CADENCE_DEVICE_TYPE)
             {
-                app_trace_log("%-30s %u rpm\n\r",
-                              "Computed cadence value:",
+                NRF_LOG_INFO("Computed cadence value:               %u rpm\r\n\n",
                               (unsigned int) calculate_cadence(p_profile->BSC_PROFILE_rev_count,
                                                                p_profile->BSC_PROFILE_event_time));
             }
-
-            app_trace_log("\r\n\r\n");
             break;
 
         case ANT_BSC_COMB_PAGE_0_UPDATED:
-
-            app_trace_log("%-30s %u kph\n\r",
-                          "Computed speed value:",
+            NRF_LOG_INFO("Computed speed value:                         %u kph\r\n",
                           (unsigned int) calculate_speed(p_profile->BSC_PROFILE_speed_rev_count,
                                                          p_profile->BSC_PROFILE_speed_event_time));
-            app_trace_log("%-30s %u rpm\n\r",
-                          "Computed cadence value:",
+            NRF_LOG_INFO("Computed cadence value:                       %u rpm\r\n\n",
                           (unsigned int) calculate_cadence(p_profile->BSC_PROFILE_cadence_rev_count,
                                                            p_profile->BSC_PROFILE_cadence_event_time));
-            app_trace_log("\r\n\r\n");
             break;
 
         default:
@@ -217,6 +240,22 @@ void ant_bsc_evt_handler(ant_bsc_profile_t * p_profile, ant_bsc_evt_t event)
     }
 }
 
+/**@brief Function for handling events from the BSP module.
+ *
+ * @param[in]   event   Event generated by BSP.
+ */
+void bsp_event_handler(bsp_event_t event)
+{
+    switch (event)
+    {
+        case BSP_EVENT_SLEEP:
+            ant_state_indicator_sleep_mode_enter();
+            break;
+
+        default:
+            break;
+    }
+}
 
 /**@brief Function for the Timer, Tracer and BSP initialization.
  */
@@ -224,9 +263,16 @@ static void utils_setup(void)
 {
     uint32_t err_code;
 
-    app_trace_init();
+    err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
-    err_code = bsp_init(BSP_INIT_LED, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
+                        bsp_event_handler);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = bsp_btn_ant_init();
     APP_ERROR_CHECK(err_code);
 }
 
@@ -291,8 +337,11 @@ int main(void)
 
     for (;; )
     {
-        err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
+        if (NRF_LOG_PROCESS() == false)
+        {
+            err_code = sd_app_evt_wait();
+            APP_ERROR_CHECK(err_code);
+        }
     }
 }
 

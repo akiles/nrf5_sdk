@@ -39,7 +39,7 @@
 --------  END-OF-HEADER  ---------------------------------------------
 File    : SEGGER_RTT_Syscalls_IAR.c
 Purpose : Low-level functions for using printf() via RTT in IAR.
-          To use RTT for printf output, include this file in your 
+          To use RTT for printf output, include this file in your
           application and set the Library Configuration to Normal.
 ----------------------------------------------------------------------
 */

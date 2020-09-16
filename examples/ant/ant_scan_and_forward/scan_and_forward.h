@@ -15,11 +15,17 @@ All rights reserved.
  *
  */
 
+#ifndef SCAN_AND_FORWARD_H__
+#define SCAN_AND_FORWARD_H__
 
 #include <stdint.h>
 #include "ant_interface.h"
 #include "ant_stack_handler_types.h"
 #include "bsp.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define SF_ANT_BS_CHANNEL_NUMBER    ((uint8_t) 0) /**< Background scanning channel */
 #define SF_ANT_MS_CHANNEL_NUMBER    ((uint8_t) 1) /**< Master channel */
@@ -98,3 +104,9 @@ void sf_external_received_message_process(uint8_t page, uint8_t dst, uint8_t dat
 /**
  *@}
  **/
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // SCAN_AND_FORWARD_H__

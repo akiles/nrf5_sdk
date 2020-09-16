@@ -17,7 +17,7 @@
  * @brief UART Example Application main file.
  *
  * This file contains the source code for a sample application using UART.
- * 
+ *
  */
 
 #include <stdbool.h>
@@ -33,7 +33,7 @@
 
 #define MAX_TEST_DATA_BYTES     (15U)                /**< max number of test bytes to be used for tx and rx. */
 #define UART_TX_BUF_SIZE 256                         /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 1                           /**< UART RX buffer size. */
+#define UART_RX_BUF_SIZE 256                         /**< UART RX buffer size. */
 
 void uart_error_handle(app_uart_evt_t * p_event)
 {
@@ -54,29 +54,29 @@ void uart_error_handle(app_uart_evt_t * p_event)
  */
 static void show_error(void)
 {
-    
+
     LEDS_ON(LEDS_MASK);
-    while(true)
+    while (true)
     {
         // Do nothing.
     }
 }
 
 
-/** @brief Function for testing UART loop back. 
+/** @brief Function for testing UART loop back.
  *  @details Transmitts one character at a time to check if the data received from the loopback is same as the transmitted data.
  *  @note  @ref TX_PIN_NUMBER must be connected to @ref RX_PIN_NUMBER)
  */
 static void uart_loopback_test()
 {
-    uint8_t * tx_data = (uint8_t *)("\n\rLOOPBACK_TEST\n\r");
+    uint8_t * tx_data = (uint8_t *)("\r\nLOOPBACK_TEST\r\n");
     uint8_t   rx_data;
 
     // Start sending one byte and see if you get the same
     for (uint32_t i = 0; i < MAX_TEST_DATA_BYTES; i++)
     {
         uint32_t err_code;
-        while(app_uart_put(tx_data[i]) != NRF_SUCCESS);
+        while (app_uart_put(tx_data[i]) != NRF_SUCCESS);
 
         nrf_delay_ms(10);
         err_code = app_uart_get(&rx_data);
@@ -122,17 +122,17 @@ int main(void)
     APP_ERROR_CHECK(err_code);
 
 #ifndef ENABLE_LOOPBACK_TEST
-    printf("\n\rStart: \n\r");
+    printf("\r\nStart: \r\n");
 
     while (true)
     {
         uint8_t cr;
-        while(app_uart_get(&cr) != NRF_SUCCESS);
-        while(app_uart_put(cr) != NRF_SUCCESS);
+        while (app_uart_get(&cr) != NRF_SUCCESS);
+        while (app_uart_put(cr) != NRF_SUCCESS);
 
         if (cr == 'q' || cr == 'Q')
         {
-            printf(" \n\rExit!\n\r");
+            printf(" \r\nExit!\r\n");
 
             while (true)
             {

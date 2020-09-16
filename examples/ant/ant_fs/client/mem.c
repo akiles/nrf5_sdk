@@ -6,8 +6,18 @@ All rights reserved.
 */
 
 #include "mem.h"
-#include <stdio.h>
 #include <string.h>
+
+#define NRF_LOG_MODULE_NAME "MEM"
+
+#if MEM_WRITE_LOG_ENABLED
+#define NRF_LOG_LEVEL       MEM_WRITE_LOG_LEVEL
+#define NRF_LOG_INFO_COLOR  MEM_WRITE_INFO_COLOR
+#define NRF_LOG_DEBUG_COLOR MEM_WRITE_DEBUG_COLOR
+#else //MEM_WRITE_LOG_ENABLED
+#define NRF_LOG_LEVEL       0
+#endif //MEM_WRITE_LOG_ENABLED
+#include "nrf_log.h"
 
 #define MEM_DIR_SIZE          9u                     /**< Example directory size. */
 #define MEM_DIR_INVALID_INDEX 0xFFFFu                /**< Defined invalid index value. */
@@ -74,20 +84,7 @@ bool mem_file_write(uint16_t index, uint32_t offset, const void * p_data, uint32
         const uint32_t array_index = index_lookup(index);
         if (array_index != MEM_DIR_INVALID_INDEX)
         {
-            uint32_t loop_count = size / 8u;
-#ifndef TRACE_MEM_WRITE_OFF
-            uint8_t * p_trace = (uint8_t *)p_data;
-#endif // TRACE_MEM_WRITE_OFF
-            while (loop_count)
-            {
-#ifndef TRACE_MEM_WRITE_OFF // Do not define this if you want to trace out the upload buffer content.
-                printf("%#x-%#x-%#x-%#x-%#x-%#x-%#x-%#x\n",
-                    p_trace[0], p_trace[1], p_trace[2], p_trace[3],
-                    p_trace[4], p_trace[5], p_trace[6], p_trace[7]);
-#endif // TRACE_MEM_WRITE_OFF
-                --loop_count;
-            }
-
+            NRF_LOG_HEXDUMP_INFO(p_data, size);
             return true;
         }
         else

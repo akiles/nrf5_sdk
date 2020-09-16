@@ -28,7 +28,13 @@
 #include "app_util_platform.h"
 #include "boards.h"
 #include "bsp.h"
-
+#if 0
+#include "nrf_drv_timer.h"
+const nrf_drv_timer_t MYTIMER = NRF_DRV_TIMER_INSTANCE(0);
+void timer_event_handler(nrf_timer_event_t event_type, void* p_context)
+{
+}
+#endif
 /**
  * @brief Function for application main entry.
  */

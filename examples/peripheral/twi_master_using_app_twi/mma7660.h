@@ -16,6 +16,10 @@
 
 #include "app_twi.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 // 0x98 is the MMA7660's address in the mbed Application Shield, it contains
 // R/W bit and "nrf_drv_twi" (and consequently "app_twi") requires slave
@@ -72,5 +76,10 @@ extern uint8_t const mma7660_xout_reg_addr;
 extern app_twi_transfer_t const
     mma7660_init_transfers[MMA7660_INIT_TRANSFER_COUNT];
 
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // MMA7660_H__

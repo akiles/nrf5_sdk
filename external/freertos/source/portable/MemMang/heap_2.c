@@ -134,7 +134,7 @@ size_t xBlockSize;																	\
 																					\
 	/* Iterate through the list until a block is found that has a larger size */	\
 	/* than the block we are inserting. */											\
-	for( pxIterator = &xStart; pxIterator->pxNextFreeBlock->xBlockSize < xBlockSize; pxIterator = pxIterator->pxNextFreeBlock )	\
+	for ( pxIterator = &xStart; pxIterator->pxNextFreeBlock->xBlockSize < xBlockSize; pxIterator = pxIterator->pxNextFreeBlock )	\
 	{																				\
 		/* There is nothing to do here - just iterate to the correct position. */	\
 	}																				\
@@ -156,7 +156,7 @@ void *pvReturn = NULL;
 	{
 		/* If this is the first call to malloc then the heap will require
 		initialisation to setup the list of free blocks. */
-		if( xHeapHasBeenInitialised == pdFALSE )
+		if ( xHeapHasBeenInitialised == pdFALSE )
 		{
 			prvHeapInit();
 			xHeapHasBeenInitialised = pdTRUE;
@@ -164,32 +164,32 @@ void *pvReturn = NULL;
 
 		/* The wanted size is increased so it can contain a BlockLink_t
 		structure in addition to the requested amount of bytes. */
-		if( xWantedSize > 0 )
+		if ( xWantedSize > 0 )
 		{
 			xWantedSize += heapSTRUCT_SIZE;
 
 			/* Ensure that blocks are always aligned to the required number of bytes. */
-			if( ( xWantedSize & portBYTE_ALIGNMENT_MASK ) != 0 )
+			if ( ( xWantedSize & portBYTE_ALIGNMENT_MASK ) != 0 )
 			{
 				/* Byte alignment required. */
 				xWantedSize += ( portBYTE_ALIGNMENT - ( xWantedSize & portBYTE_ALIGNMENT_MASK ) );
 			}
 		}
 
-		if( ( xWantedSize > 0 ) && ( xWantedSize < configADJUSTED_HEAP_SIZE ) )
+		if ( ( xWantedSize > 0 ) && ( xWantedSize < configADJUSTED_HEAP_SIZE ) )
 		{
 			/* Blocks are stored in byte order - traverse the list from the start
 			(smallest) block until one of adequate size is found. */
 			pxPreviousBlock = &xStart;
 			pxBlock = xStart.pxNextFreeBlock;
-			while( ( pxBlock->xBlockSize < xWantedSize ) && ( pxBlock->pxNextFreeBlock != NULL ) )
+			while ( ( pxBlock->xBlockSize < xWantedSize ) && ( pxBlock->pxNextFreeBlock != NULL ) )
 			{
 				pxPreviousBlock = pxBlock;
 				pxBlock = pxBlock->pxNextFreeBlock;
 			}
 
 			/* If we found the end marker then a block of adequate size was not found. */
-			if( pxBlock != &xEnd )
+			if ( pxBlock != &xEnd )
 			{
 				/* Return the memory space - jumping over the BlockLink_t structure
 				at its start. */
@@ -200,7 +200,7 @@ void *pvReturn = NULL;
 				pxPreviousBlock->pxNextFreeBlock = pxBlock->pxNextFreeBlock;
 
 				/* If the block is larger than required it can be split into two. */
-				if( ( pxBlock->xBlockSize - xWantedSize ) > heapMINIMUM_BLOCK_SIZE )
+				if ( ( pxBlock->xBlockSize - xWantedSize ) > heapMINIMUM_BLOCK_SIZE )
 				{
 					/* This block is to be split into two.  Create a new block
 					following the number of bytes requested. The void cast is
@@ -224,9 +224,9 @@ void *pvReturn = NULL;
 	}
 	( void ) xTaskResumeAll();
 
-	#if( configUSE_MALLOC_FAILED_HOOK == 1 )
+	#if ( configUSE_MALLOC_FAILED_HOOK == 1 )
 	{
-		if( pvReturn == NULL )
+		if ( pvReturn == NULL )
 		{
 			extern void vApplicationMallocFailedHook( void );
 			vApplicationMallocFailedHook();
@@ -243,7 +243,7 @@ void vPortFree( void *pv )
 uint8_t *puc = ( uint8_t * ) pv;
 BlockLink_t *pxLink;
 
-	if( pv != NULL )
+	if ( pv != NULL )
 	{
 		/* The memory being freed will have an BlockLink_t structure immediately
 		before it. */

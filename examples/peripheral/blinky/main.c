@@ -17,25 +17,26 @@
  * @ingroup blinky_example
  * @brief Blinky Example Application main file.
  *
+ * This file contains the source code for a sample application to blink LEDs.
+ *
  */
 
 #include <stdbool.h>
 #include <stdint.h>
 #include "nrf_delay.h"
-#include "nrf_gpio.h"
-#include "boards.h"
+#include "bsp.h"
 
-const uint8_t leds_list[LEDS_NUMBER] = LEDS_LIST;
+static const uint8_t leds_list[LEDS_NUMBER] = LEDS_LIST;
 
 /**
  * @brief Function for application main entry.
  */
 int main(void)
 {
-    // Configure LED-pins as outputs.
+    /* Configure LED-pins as outputs. */
     LEDS_CONFIGURE(LEDS_MASK);
 
-    // Toggle LEDs.
+    /* Toggle LEDs. */
     while (true)
     {
         for (int i = 0; i < LEDS_NUMBER; i++)
@@ -46,5 +47,6 @@ int main(void)
     }
 }
 
-
-/** @} */
+/**
+ *@}
+ **/

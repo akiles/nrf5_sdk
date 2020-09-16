@@ -24,35 +24,28 @@ All rights reserved.
 #include <stdio.h>
 #include <string.h>
 #include "nrf.h"
-#include "app_uart.h"
 #include "nrf_soc.h"
 #include "bsp.h"
+#include "hardfault.h"
 #include "app_error.h"
 #include "nordic_common.h"
 #include "ant_stack_config.h"
 #include "softdevice_handler.h"
 #include "ant_bpwr.h"
-#include "app_trace.h"
 #include "ant_state_indicator.h"
 #include "ant_key_manager.h"
 #include "app_timer.h"
 #include "ant_bpwr_simulator.h"
 
-#ifndef MODIFICATION_TYPE // can be provided as preprocesor global symbol
-/**
- * @brief Depending of this define value Heart Rate value will be: @n
- *          - periodicaly rise and fall, use value  MODIFICATION_TYPE_AUTO
- *          - changing by button, use value         MODIFICATION_TYPE_BUTTON
- */
-    #define MODIFICATION_TYPE (MODIFICATION_TYPE_AUTO)
-#endif
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 #define MODIFICATION_TYPE_BUTTON 0 /* predefined value, MUST REMAIN UNCHANGED */
 #define MODIFICATION_TYPE_AUTO   1 /* predefined value, MUST REMAIN UNCHANGED */
 
 #if (MODIFICATION_TYPE != MODIFICATION_TYPE_BUTTON) \
     && (MODIFICATION_TYPE != MODIFICATION_TYPE_AUTO)
-
     #error Unsupported value of MODIFICATION_TYPE.
 #endif
 
@@ -62,20 +55,7 @@ All rights reserved.
 
 #define APP_TIMER_PRESCALER         0x00 /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_OP_QUEUE_SIZE     0x04 /**< Size of timer operation queues. */
-
 #define BPWR_CHANNEL_NUMBER         0x00 /**< Channel number assigned to Bicycle Power profile. */
-
-#define BPWR_DEVICE_NUMBER          1u /**< Denotes the used ANT device number. */
-#define BPWR_TRANSMISSION_TYPE      5u /**< Denotes the used ANT transmission type. */
-
-#define HW_REVISION                 0x7Fu   /**< Hardware revision for manufacturer's identification common page. */
-#define MANUFACTURER_ID             0xAAAAu /**< Manufacturer ID for manufacturer's identification common page. */
-#define MODEL_NUMBER                0x5555u /**< Model number for manufacturer's identification common page. */
-
-#define SW_REVISION_MAJOR           0xAAu       /**< Software revision major number for product information common page. */
-#define SW_REVISION_MINOR           0xFFu       /**< Software revision minor number for product information common page, unused value. */
-#define SERIAL_NUMBER               0xAA55AA55u /**< Serial number for product information common page. */
-
 #define ANTPLUS_NETWORK_NUMBER      0       /**< Network number. */
 #define CALIBRATION_DATA            0x55AAu /**< General calibration data value. */
 
@@ -85,8 +65,8 @@ void ant_bpwr_calib_handler(ant_bpwr_profile_t * p_profile, ant_bpwr_page1_data_
 
 BPWR_SENS_CHANNEL_CONFIG_DEF(m_ant_bpwr,
                              BPWR_CHANNEL_NUMBER,
-                             BPWR_TRANSMISSION_TYPE,
-                             BPWR_DEVICE_NUMBER,
+                             CHAN_ID_TRANS_TYPE,
+                             CHAN_ID_DEV_NUM,
                              ANTPLUS_NETWORK_NUMBER);
 BPWR_SENS_PROFILE_CONFIG_DEF(m_ant_bpwr,
                             (ant_bpwr_torque_t)(SENSOR_TYPE),
@@ -216,11 +196,12 @@ static void utils_setup(void)
 {
     uint32_t err_code;
 
-    app_trace_init();
-
     // Initialize and start a single continuous mode timer, which is used to update the event time
     // on the main data page.
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
+
+    err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
 
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
                         APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
@@ -295,13 +276,13 @@ static void profile_setup(void)
     APP_ERROR_CHECK(err_code);
 
     // fill manufacturer's common data page.
-    m_ant_bpwr.page_80 = ANT_COMMON_page80(HW_REVISION,
-                                           MANUFACTURER_ID,
-                                           MODEL_NUMBER);
+    m_ant_bpwr.page_80 = ANT_COMMON_page80(BPWR_HW_REVISION,
+                                           BPWR_MANUFACTURER_ID,
+                                           BPWR_MODEL_NUMBER);
     // fill product's common data page.
-    m_ant_bpwr.page_81 = ANT_COMMON_page81(SW_REVISION_MAJOR,
-                                           SW_REVISION_MINOR,
-                                           SERIAL_NUMBER);
+    m_ant_bpwr.page_81 = ANT_COMMON_page81(BPWR_SW_REVISION_MAJOR,
+                                           BPWR_SW_REVISION_MINOR,
+                                           BPWR_SERIAL_NUMBER);
 
     m_ant_bpwr.BPWR_PROFILE_auto_zero_status = ANT_BPWR_AUTO_ZERO_OFF;
 
@@ -328,8 +309,11 @@ int main(void)
 
     for (;; )
     {
-        err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
+        if (NRF_LOG_PROCESS() == false)
+        {
+            err_code = sd_app_evt_wait();
+            APP_ERROR_CHECK(err_code);
+        }
     }
 }
 

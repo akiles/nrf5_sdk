@@ -12,7 +12,11 @@
 #ifndef PCA20006_H
 #define PCA20006_H
 
-// LEDs and buttons definition for PCA20006 board (beacon) 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// LEDs and buttons definition for PCA20006 board (beacon)
 #define LEDS_NUMBER    3
 
 #define LED_RGB_RED    16
@@ -60,5 +64,10 @@
 #endif
 
 
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

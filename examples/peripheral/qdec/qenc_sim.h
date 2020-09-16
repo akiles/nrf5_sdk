@@ -9,22 +9,26 @@
  * the file.
  *
  */
+#ifndef QENC_SIM_H__
+#define QENC_SIM_H__
 
 #include <stdbool.h>
 #include <stdint.h>
-
+#include "boards.h"
 #include "nrf_qdec.h"
 
-// ToDo: Move #defines to bsp.h
-#ifdef NRF51
-#define QENC_CONFIG_PIO_LED         4
-#define QENC_CONFIG_PIO_A           6
-#define QENC_CONFIG_PIO_B           5
-#elif defined NRF52
-#define QENC_CONFIG_PIO_LED         29
-#define QENC_CONFIG_PIO_A           31
-#define QENC_CONFIG_PIO_B           30
+#ifdef __cplusplus
+extern "C" {
 #endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#define QENC_CONFIG_PIO_LED         ARDUINO_A3_PIN
+#define QENC_CONFIG_PIO_A           ARDUINO_A5_PIN
+#define QENC_CONFIG_PIO_B           ARDUINO_A4_PIN
+
 #define QENC_CONFIG_PIO_PULL_CFG    NRF_GPIO_PIN_NOPULL
 
 /**@brief quadrature encoder simulator initialization.
@@ -61,3 +65,8 @@ void qenc_pulse_count_set(int32_t pulse_count);
  */
 void qenc_pulse_dblpulse_count_set(int32_t pulse_count, uint32_t dble_pulse_count);
 
+#ifdef __cplusplus
+}
+#endif
+
+#endif // QENC_SIM_H__

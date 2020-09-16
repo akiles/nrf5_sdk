@@ -137,7 +137,7 @@ typedef struct corCoRoutineControlBlock
      // Must start every co-routine with a call to crSTART();
      crSTART( xHandle );
 
-     for( ;; )
+     for ( ;; )
      {
          // This co-routine just delays for a fixed period, then toggles
          // an LED.  Two co-routines are created using this function, so
@@ -161,7 +161,7 @@ typedef struct corCoRoutineControlBlock
      // Create two co-routines at priority 0.  The first is given index 0
      // so (from the code above) toggles LED 5 every 200 ticks.  The second
      // is given index 1 so toggles LED 6 every 400 ticks.
-     for( uxIndex = 0; uxIndex < 2; uxIndex++ )
+     for ( uxIndex = 0; uxIndex < 2; uxIndex++ )
      {
          xCoRoutineCreate( vFlashCoRoutine, 0, uxIndex );
      }
@@ -203,7 +203,7 @@ BaseType_t xCoRoutineCreate( crCOROUTINE_CODE pxCoRoutineCode, UBaseType_t uxPri
  // infinite loop.
  void vApplicationIdleHook( void )
  {
-    for( ;; )
+    for ( ;; )
     {
         vCoRoutineSchedule();
     }
@@ -232,7 +232,7 @@ void vCoRoutineSchedule( void );
      // Must start every co-routine with a call to crSTART();
      crSTART( xHandle );
 
-     for( ;; )
+     for ( ;; )
      {
           // Co-routine functionality goes here.
      }
@@ -243,7 +243,7 @@ void vCoRoutineSchedule( void );
  * \defgroup crSTART crSTART
  * \ingroup Tasks
  */
-#define crSTART( pxCRCB ) switch( ( ( CRCB_t * )( pxCRCB ) )->uxState ) { case 0:
+#define crSTART( pxCRCB ) switch ( ( ( CRCB_t * )( pxCRCB ) )->uxState ) { case 0:
 
 /**
  * croutine. h
@@ -263,7 +263,7 @@ void vCoRoutineSchedule( void );
      // Must start every co-routine with a call to crSTART();
      crSTART( xHandle );
 
-     for( ;; )
+     for ( ;; )
      {
           // Co-routine functionality goes here.
      }
@@ -315,7 +315,7 @@ void vCoRoutineSchedule( void );
      // Must start every co-routine with a call to crSTART();
      crSTART( xHandle );
 
-     for( ;; )
+     for ( ;; )
      {
         // Delay for 200ms.
         crDELAY( xHandle, xDelayTime );
@@ -330,7 +330,7 @@ void vCoRoutineSchedule( void );
  * \ingroup Tasks
  */
 #define crDELAY( xHandle, xTicksToDelay )												\
-	if( ( xTicksToDelay ) > 0 )															\
+	if ( ( xTicksToDelay ) > 0 )															\
 	{																					\
 		vCoRoutineAddToDelayedList( ( xTicksToDelay ), NULL );							\
 	}																					\
@@ -396,12 +396,12 @@ void vCoRoutineSchedule( void );
     // Co-routines must begin with a call to crSTART().
     crSTART( xHandle );
 
-    for( ;; )
+    for ( ;; )
     {
         // This assumes the queue has already been created.
         crQUEUE_SEND( xHandle, xCoRoutineQueue, &xNumberToPost, NO_DELAY, &xResult );
 
-        if( xResult != pdPASS )
+        if ( xResult != pdPASS )
         {
             // The message was not posted!
         }
@@ -422,12 +422,12 @@ void vCoRoutineSchedule( void );
 #define crQUEUE_SEND( xHandle, pxQueue, pvItemToQueue, xTicksToWait, pxResult )			\
 {																						\
 	*( pxResult ) = xQueueCRSend( ( pxQueue) , ( pvItemToQueue) , ( xTicksToWait ) );	\
-	if( *( pxResult ) == errQUEUE_BLOCKED )												\
+	if ( *( pxResult ) == errQUEUE_BLOCKED )												\
 	{																					\
 		crSET_STATE0( ( xHandle ) );													\
 		*pxResult = xQueueCRSend( ( pxQueue ), ( pvItemToQueue ), 0 );					\
 	}																					\
-	if( *pxResult == errQUEUE_YIELD )													\
+	if ( *pxResult == errQUEUE_YIELD )													\
 	{																					\
 		crSET_STATE1( ( xHandle ) );													\
 		*pxResult = pdPASS;																\
@@ -494,12 +494,12 @@ void vCoRoutineSchedule( void );
     // All co-routines must start with a call to crSTART().
     crSTART( xHandle );
 
-    for( ;; )
+    for ( ;; )
     {
         // Wait for data to become available on the queue.
         crQUEUE_RECEIVE( xHandle, xCoRoutineQueue, &uxLEDToFlash, portMAX_DELAY, &xResult );
 
-        if( xResult == pdPASS )
+        if ( xResult == pdPASS )
         {
             // We received the LED to flash - flash it!
             vParTestToggleLED( uxLEDToFlash );
@@ -514,12 +514,12 @@ void vCoRoutineSchedule( void );
 #define crQUEUE_RECEIVE( xHandle, pxQueue, pvBuffer, xTicksToWait, pxResult )			\
 {																						\
 	*( pxResult ) = xQueueCRReceive( ( pxQueue) , ( pvBuffer ), ( xTicksToWait ) );		\
-	if( *( pxResult ) == errQUEUE_BLOCKED ) 											\
+	if ( *( pxResult ) == errQUEUE_BLOCKED ) 											\
 	{																					\
 		crSET_STATE0( ( xHandle ) );													\
 		*( pxResult ) = xQueueCRReceive( ( pxQueue) , ( pvBuffer ), 0 );				\
 	}																					\
-	if( *( pxResult ) == errQUEUE_YIELD )												\
+	if ( *( pxResult ) == errQUEUE_YIELD )												\
 	{																					\
 		crSET_STATE1( ( xHandle ) );													\
 		*( pxResult ) = pdPASS;															\
@@ -578,14 +578,14 @@ void vCoRoutineSchedule( void );
      // All co-routines must start with a call to crSTART().
      crSTART( xHandle );
 
-     for( ;; )
+     for ( ;; )
      {
          // Wait for data to become available on the queue.  This assumes the
          // queue xCommsRxQueue has already been created!
          crQUEUE_RECEIVE( xHandle, xCommsRxQueue, &uxLEDToFlash, portMAX_DELAY, &xResult );
 
          // Was a character received?
-         if( xResult == pdPASS )
+         if ( xResult == pdPASS )
          {
              // Process the character here.
          }
@@ -603,7 +603,7 @@ void vCoRoutineSchedule( void );
  BaseType_t xCRWokenByPost = pdFALSE;
 
      // We loop around reading characters until there are none left in the UART.
-     while( UART_RX_REG_NOT_EMPTY() )
+     while ( UART_RX_REG_NOT_EMPTY() )
      {
          // Obtain the character from the UART.
          cRxedChar = UART_RX_REG;
@@ -678,12 +678,12 @@ void vCoRoutineSchedule( void );
      // All co-routines must start with a call to crSTART().
      crSTART( xHandle );
 
-     for( ;; )
+     for ( ;; )
      {
          // Send the next character to the queue.
          crQUEUE_SEND( xHandle, xCoRoutineQueue, &cCharToTx, NO_DELAY, &xResult );
 
-         if( xResult == pdPASS )
+         if ( xResult == pdPASS )
          {
              // The character was successfully posted to the queue.
          }
@@ -701,7 +701,7 @@ void vCoRoutineSchedule( void );
 		 // cCharToTx will maintain its value across the delay as it is
 		 // declared static.
 		 cCharToTx++;
-		 if( cCharToTx > 'x' )
+		 if ( cCharToTx > 'x' )
 		 {
 			cCharToTx = 'a';
 		 }
@@ -718,13 +718,13 @@ void vCoRoutineSchedule( void );
  char cCharToTx;
  BaseType_t xCRWokenByPost = pdFALSE;
 
-     while( UART_TX_REG_EMPTY() )
+     while ( UART_TX_REG_EMPTY() )
      {
          // Are there any characters in the queue waiting to be sent?
 		 // xCRWokenByPost will automatically be set to pdTRUE if a co-routine
 		 // is woken by the post - ensuring that only a single co-routine is
 		 // woken no matter how many times we go around this loop.
-         if( crQUEUE_RECEIVE_FROM_ISR( pxQueue, &cCharToTx, &xCRWokenByPost ) )
+         if ( crQUEUE_RECEIVE_FROM_ISR( pxQueue, &cCharToTx, &xCRWokenByPost ) )
 		 {
 			 SEND_CHARACTER( cCharToTx );
 		 }

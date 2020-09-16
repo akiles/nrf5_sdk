@@ -34,6 +34,10 @@
 #include "sensorsim.h"
 #include "ant_hrm_simulator_local.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /**@brief HRM simulator configuration structure. */
 typedef struct
@@ -90,6 +94,11 @@ void ant_hrm_simulator_increment(ant_hrm_simulator_t * p_simulator);
  * @param[in]  p_simulator      Pointer to the simulator instance.
  */
 void ant_hrm_simulator_decrement(ant_hrm_simulator_t * p_simulator);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANT_HRM_SIMULATOR_H__
 /** @} */

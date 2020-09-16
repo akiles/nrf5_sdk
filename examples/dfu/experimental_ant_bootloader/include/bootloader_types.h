@@ -25,6 +25,10 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define BOOTLOADER_SETTINGS_INVALID_APPLICATION                 0xDEADBEEF
 #define BOOTLOADER_SETTINGS_VALID_APPLICATION                   0x00000000
 
@@ -75,6 +79,11 @@ typedef struct
     uint32_t            reserved_2;
     uint32_t            valid_slot;         /**< Valid bootloader_settings slot. Must be written last*/
 } bootloader_settings_t;
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // BOOTLOADER_TYPES_H__
 

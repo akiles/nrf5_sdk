@@ -25,6 +25,10 @@
 #include "bootloader_types.h"
 #include <dfu_types.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**@brief Function for starting the application.
  *
  * @param[in]  start_addr             Start address.
@@ -36,6 +40,11 @@ void bootloader_util_app_start(uint32_t start_addr);
  * @param[out] pp_bootloader_settings Bootloader settings.
  */
 void bootloader_util_settings_get(const bootloader_settings_t ** pp_bootloader_settings);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // BOOTLOADER_UTIL_H__
 

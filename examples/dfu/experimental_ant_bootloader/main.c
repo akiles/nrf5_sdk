@@ -216,7 +216,7 @@ static void ant_stack_init(void)
 
     err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
     APP_ERROR_CHECK(err_code);
-    
+
     // Configure ant stack regards used channels.
     err_code = ant_stack_static_config();
     APP_ERROR_CHECK(err_code);
@@ -254,7 +254,7 @@ static void enter_boot_set (uint32_t value)
 
     ant_boot_param_flags &= ~PARAM_FLAGS_ENTER_BOOT_Msk;
     ant_boot_param_flags |= value << PARAM_FLAGS_ENTER_BOOT_Pos;
-  
+
     uint32_t err_code = blocking_flash_word_write(ANT_BOOT_PARAM_FLAGS, ant_boot_param_flags);
     APP_ERROR_CHECK(err_code);
 }
@@ -265,7 +265,7 @@ static void enter_boot_update (void)
 
     bootloader_util_settings_get(&p_bootloader_settings);
 
-   if(p_bootloader_settings->ap_image.st.bank == NEW_IMAGE_BANK_0 || p_bootloader_settings->ap_image.st.bank == NEW_IMAGE_BANK_1)
+   if (p_bootloader_settings->ap_image.st.bank == NEW_IMAGE_BANK_0 || p_bootloader_settings->ap_image.st.bank == NEW_IMAGE_BANK_1)
    {
        enter_boot_set(PARAM_FLAGS_ENTER_BOOT_BypassDone);
    }
@@ -283,7 +283,7 @@ static void enter_boot_update (void)
    // Lets clear it.
    if (p_bootloader_settings->valid_app == BOOTLOADER_SETTINGS_INVALID_APPLICATION)
    {
-       if(*ANT_BOOT_APP_SIZE != APP_SIZE_Empty)
+       if (*ANT_BOOT_APP_SIZE != APP_SIZE_Empty)
        {
             uint32_t err_code = blocking_flash_word_write(ANT_BOOT_APP_SIZE, APP_SIZE_Clear);
             APP_ERROR_CHECK(err_code);

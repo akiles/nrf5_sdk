@@ -12,6 +12,10 @@
 #ifndef PCA10000_H
 #define PCA10000_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Definitions for PCA10000 v2.0.0 or higher
 #if 1
 
@@ -66,5 +70,10 @@
                                  .rc_temp_ctiv  = 0,                                \
                                  .xtal_accuracy = NRF_CLOCK_LF_XTAL_ACCURACY_20_PPM}
 
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

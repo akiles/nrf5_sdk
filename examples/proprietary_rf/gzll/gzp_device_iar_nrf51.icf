@@ -29,7 +29,7 @@ place in ROM_region   { readonly };
 place in RAM_region   { readwrite,
                         block CSTACK,
                         block HEAP };
-						
+
 keep { section gzp_dev_data };
 place at address mem:0x1000 { readonly section gzp_dev_data };
 keep { section gzp_dev_data_sd };

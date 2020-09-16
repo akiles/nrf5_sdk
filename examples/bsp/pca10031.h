@@ -12,6 +12,10 @@
 #ifndef PCA10031_H
 #define PCA10031_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // LEDs definitions for PCA10031
 #define LEDS_NUMBER    3
 
@@ -59,6 +63,11 @@
                                  .rc_ctiv       = 0,                                \
                                  .rc_temp_ctiv  = 0,                                \
                                  .xtal_accuracy = NRF_CLOCK_LF_XTAL_ACCURACY_20_PPM}
+#endif
+
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif

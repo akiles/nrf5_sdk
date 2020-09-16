@@ -15,19 +15,19 @@
  *  - Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
- *  - Neither the name of ARM  nor the names of its contributors may be used 
- *    to endorse or promote products derived from this software without 
+ *  - Neither the name of ARM  nor the names of its contributors may be used
+ *    to endorse or promote products derived from this software without
  *    specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
  * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *---------------------------------------------------------------------------*/
@@ -138,9 +138,9 @@ static __inline   t __##f (t1 a1, t2 a2, t3 a3, t4 a4) {                       \
   return _##f(f,a1,a2,a3,a4);                                                  \
 }
 
-#define SVC_1_2 SVC_1_1 
-#define SVC_1_3 SVC_1_1 
-#define SVC_2_3 SVC_2_1 
+#define SVC_1_2 SVC_1_1
+#define SVC_1_3 SVC_1_1
+#define SVC_2_3 SVC_2_1
 
 #elif defined (__GNUC__)        /* GNU Compiler */
 
@@ -272,9 +272,9 @@ static inline  t __##f (t1 a1, t2 a2, t3 a3, t4 a4) {                          \
   return (t) rv;                                                               \
 }
 
-#define SVC_1_2 SVC_1_1 
-#define SVC_1_3 SVC_1_1 
-#define SVC_2_3 SVC_2_1 
+#define SVC_1_2 SVC_1_1
+#define SVC_1_3 SVC_1_1
+#define SVC_2_3 SVC_2_1
 
 #elif defined (__ICCARM__)      /* IAR Compiler */
 
@@ -432,7 +432,7 @@ static uint32_t rt_ms2tick (uint32_t millisec) {
 
   tick = ((1000 * millisec) + os_clockrate - 1)  / os_clockrate;
   if (tick > 0xFFFE) return 0xFFFE;
-  
+
   return tick;
 }
 
@@ -583,7 +583,7 @@ osStatus osKernelStart (void) {
   switch (__get_CONTROL() & 0x03) {
     case 0x00:                                  // Privileged Thread mode & MSP
       __set_PSP((uint32_t)(stack + 8));         // Initial PSP
-      if (os_flags & 1) {                       
+      if (os_flags & 1) {
         __set_CONTROL(0x02);                    // Set Privileged Thread mode & PSP
       } else {
         __set_CONTROL(0x03);                    // Set Unprivileged Thread mode & PSP
@@ -653,8 +653,8 @@ osThreadId svcThreadCreate (const osThreadDef_t *thread_def, void *argument) {
       (thread_def->pthread == NULL) ||
       (thread_def->tpriority < osPriorityIdle) ||
       (thread_def->tpriority > osPriorityRealtime)) {
-    sysThreadError(osErrorParameter); 
-    return NULL; 
+    sysThreadError(osErrorParameter);
+    return NULL;
   }
 
   if (thread_def->stacksize != 0) {             // Custom stack size
@@ -662,7 +662,7 @@ osThreadId svcThreadCreate (const osThreadDef_t *thread_def, void *argument) {
       os_stack_mem,
       thread_def->stacksize
     );
-    if (stk == NULL) { 
+    if (stk == NULL) {
       sysThreadError(osErrorNoMemory);          // Out of memory
       return NULL;
     }
@@ -717,7 +717,7 @@ osStatus svcThreadTerminate (osThreadId thread_id) {
 
   if (res == OS_R_NOK) return osErrorResource;  // Delete task failed
 
-  if (stk != NULL) {                            
+  if (stk != NULL) {
     rt_free_mem(os_stack_mem, stk);             // Free private stack
   }
 
@@ -759,7 +759,7 @@ osPriority svcThreadGetPriority (osThreadId thread_id) {
   ptcb = rt_tid2ptcb(thread_id);                // Get TCB pointer
   if (ptcb == NULL) return osPriorityError;
 
-  return (osPriority)(ptcb->prio - 1 + osPriorityIdle); 
+  return (osPriority)(ptcb->prio - 1 + osPriorityIdle);
 }
 
 
@@ -808,8 +808,8 @@ osPriority osThreadGetPriority (osThreadId thread_id) {
 
 /// INTERNAL - Not Public
 /// Auto Terminate Thread on exit (used implicitly when thread exists)
-__NO_RETURN void osThreadExit (void) { 
-  __svcThreadTerminate(__svcThreadGetId()); 
+__NO_RETURN void osThreadExit (void) {
+  __svcThreadTerminate(__svcThreadGetId());
   for (;;);                                     // Should never come here
 }
 
@@ -882,7 +882,7 @@ os_InRegs osEvent osWait (uint32_t millisec) {
 #define osTimerStopped  1
 #define osTimerRunning  2
 
-// Timer structures 
+// Timer structures
 
 typedef struct os_timer_cb_ {                   // Timer Control Block
   struct os_timer_cb_ *next;                    // Pointer to next active Timer
@@ -890,7 +890,7 @@ typedef struct os_timer_cb_ {                   // Timer Control Block
   uint8_t              type;                    // Timer Type (Periodic/One-shot)
   uint16_t         reserved;                    // Reserved
   uint16_t             tcnt;                    // Timer Delay Count
-  uint16_t             icnt;                    // Timer Initial Count 
+  uint16_t             icnt;                    // Timer Initial Count
   void                 *arg;                    // Timer Function Argument
   const osTimerDef_t *timer;                    // Pointer to Timer definition
 } os_timer_cb;
@@ -1022,7 +1022,7 @@ osStatus svcTimerStart (osTimerId timer_id, uint32_t millisec) {
     default:
       return osErrorResource;
   }
-  
+
   rt_timer_insert(pt, tcnt);
 
   return osOK;
@@ -1109,7 +1109,7 @@ void sysTimerTick (void) {
   }
 }
 
-/// Get user timers wake-up time 
+/// Get user timers wake-up time
 uint32_t sysUserTimerWakeupTime (void) {
 
   if (os_timer_head) {
@@ -1167,8 +1167,8 @@ osStatus osTimerDelete (osTimerId timer_id) {
 
 /// INTERNAL - Not Public
 /// Get timer callback parameters (used by OS Timer Thread)
-os_InRegs osCallback osTimerCall (osTimerId timer_id) { 
-  return __svcTimerCall(timer_id); 
+os_InRegs osCallback osTimerCall (osTimerId timer_id) {
+  return __svcTimerCall(timer_id);
 }
 
 
@@ -1285,7 +1285,7 @@ static __INLINE int32_t isrSignalSet (osThreadId thread_id, int32_t signals) {
 /// Set the specified Signal Flags of an active thread
 int32_t osSignalSet (osThreadId thread_id, int32_t signals) {
   if (__get_IPSR() != 0) {                      // in ISR
-    return   isrSignalSet(thread_id, signals); 
+    return   isrSignalSet(thread_id, signals);
   } else {                                      // in Thread
     return __svcSignalSet(thread_id, signals);
   }
@@ -1463,7 +1463,7 @@ osSemaphoreId svcSemaphoreCreate (const osSemaphoreDef_t *semaphore_def, int32_t
   }
 
   rt_sem_init(sem, count);                      // Initialize Semaphore
-  
+
   return sem;
 }
 
@@ -1494,7 +1494,7 @@ osStatus svcSemaphoreRelease (osSemaphoreId semaphore_id) {
   if (((P_SCB)sem)->cb_type != SCB) return osErrorParameter;
 
   if (((P_SCB)sem)->tokens == osFeature_Semaphore) return osErrorResource;
-  
+
   rt_sem_send(sem);                             // Release Semaphore
 
   return osOK;
@@ -1628,7 +1628,7 @@ void *sysPoolAlloc (osPoolId pool_id, uint32_t clr) {
 /// Return an allocated memory block back to a specific memory pool
 osStatus sysPoolFree (osPoolId pool_id, void *block) {
   int32_t res;
-    
+
   if (pool_id == NULL) return osErrorParameter;
 
   res = rt_free_box(pool_id, block);
@@ -1697,7 +1697,7 @@ osMessageQId svcMessageCreate (const osMessageQDef_t *queue_def, osThreadId thre
     sysThreadError(osErrorParameter);
     return NULL;
   }
-  
+
   if (((P_MCB)queue_def->pool)->cb_type != 0) {
     sysThreadError(osErrorParameter);
     return NULL;
@@ -1741,7 +1741,7 @@ os_InRegs osEvent_type svcMessageGet (osMessageQId queue_id, uint32_t millisec) 
   }
 
   res = rt_mbx_wait(queue_id, &ret.value.p, rt_ms2tick(millisec));
-  
+
   if (res == OS_R_TMO) {
     ret.status = millisec ? osEventTimeout : osOK;
     return osEvent_ret_value;
@@ -1789,13 +1789,13 @@ static __INLINE os_InRegs osEvent isrMessageGet (osMessageQId queue_id, uint32_t
   }
 
   res = isr_mbx_receive(queue_id, &ret.value.p);
-  
+
   if (res != OS_R_MBX) {
     ret.status = osOK;
     return ret;
   }
 
-  ret.status = osEventMessage; 
+  ret.status = osEventMessage;
 
   return ret;
 }
@@ -1907,7 +1907,7 @@ void *sysMailAlloc (osMailQId queue_id, uint32_t millisec, uint32_t isr, uint32_
     rt_block(rt_ms2tick(millisec), WAIT_MBX);
   }
 
-  return mem;  
+  return mem;
 }
 
 /// Free a memory block from a mail

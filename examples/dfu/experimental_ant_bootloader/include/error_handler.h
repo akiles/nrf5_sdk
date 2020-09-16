@@ -26,6 +26,10 @@
 #include <stdbool.h>
 #include "nrf_error.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**@brief Function for error handling, which is called when an error has occurred.
  *
  * @param[in] error_code  Error code supplied to the handler.
@@ -59,6 +63,11 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
             APP_ERROR_HANDLER(0);                           \
         }                                                   \
     } while (0)
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // APP_ERROR_H__
 

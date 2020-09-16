@@ -29,12 +29,19 @@
 #include "ser_conn_handlers.h"
 #include "boards.h"
 
+#define NRF_LOG_MODULE_NAME "CONN"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
+
 #include "ser_phy_debug_comm.h"
 
 /**@brief Main function of the connectivity application. */
 int main(void)
 {
     uint32_t err_code = NRF_SUCCESS;
+
+    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
+    NRF_LOG_INFO("BLE connectivity started\r\n");
 
 #if ( defined(SER_PHY_HCI_DEBUG_ENABLE) || defined(SER_PHY_DEBUG_APP_ENABLE))
     debug_init(NULL);
@@ -51,7 +58,7 @@ int main(void)
     nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
     SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
 
-    
+
     /* Subscribe for BLE events. */
     err_code = softdevice_ble_evt_handler_set(ser_conn_ble_event_handle);
     APP_ERROR_CHECK(err_code);
@@ -59,12 +66,20 @@ int main(void)
     /* Open serialization HAL Transport layer and subscribe for HAL Transport events. */
     err_code = ser_hal_transport_open(ser_conn_hal_transport_event_handle);
     APP_ERROR_CHECK(err_code);
-    
+
     /* Enter main loop. */
     for (;;)
-    {   
+    {
         /* Process SoftDevice events. */
         app_sched_execute();
+        if (softdevice_handler_is_suspended())
+        {
+            // Resume pulling new events if queue utilization drops below 50%.
+            if (app_sched_queue_space_get() > (SER_CONN_SCHED_QUEUE_SIZE >> 1))
+            {
+                softdevice_handler_resume();
+            }
+        }
 
         /* Process received packets.
          * We can NOT add received packets as events to the application scheduler queue because
@@ -72,6 +87,8 @@ int main(void)
          * does not have priorities. */
         err_code = ser_conn_rx_process();
         APP_ERROR_CHECK(err_code);
+
+        (void)NRF_LOG_PROCESS();
 
         /* Sleep waiting for an application event. */
         err_code = sd_app_evt_wait();

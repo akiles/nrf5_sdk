@@ -151,7 +151,7 @@ typedef void * QueueSetMemberHandle_t;
 
 	// Create a queue capable of containing 10 uint32_t values.
 	xQueue1 = xQueueCreate( 10, sizeof( uint32_t ) );
-	if( xQueue1 == 0 )
+	if ( xQueue1 == 0 )
 	{
 		// Queue was not created and must not be used.
 	}
@@ -159,7 +159,7 @@ typedef void * QueueSetMemberHandle_t;
 	// Create a queue capable of containing 10 pointers to AMessage structures.
 	// These should be passed by pointer as they contain a lot of data.
 	xQueue2 = xQueueCreate( 10, sizeof( struct AMessage * ) );
-	if( xQueue2 == 0 )
+	if ( xQueue2 == 0 )
 	{
 		// Queue was not created and must not be used.
 	}
@@ -228,17 +228,17 @@ typedef void * QueueSetMemberHandle_t;
 
 	// ...
 
-	if( xQueue1 != 0 )
+	if ( xQueue1 != 0 )
 	{
 		// Send an uint32_t.  Wait for 10 ticks for space to become
 		// available if necessary.
-		if( xQueueSendToFront( xQueue1, ( void * ) &ulVar, ( TickType_t ) 10 ) != pdPASS )
+		if ( xQueueSendToFront( xQueue1, ( void * ) &ulVar, ( TickType_t ) 10 ) != pdPASS )
 		{
 			// Failed to post the message, even after 10 ticks.
 		}
 	}
 
-	if( xQueue2 != 0 )
+	if ( xQueue2 != 0 )
 	{
 		// Send a pointer to a struct AMessage object.  Don't block if the
 		// queue is already full.
@@ -310,17 +310,17 @@ typedef void * QueueSetMemberHandle_t;
 
 	// ...
 
-	if( xQueue1 != 0 )
+	if ( xQueue1 != 0 )
 	{
 		// Send an uint32_t.  Wait for 10 ticks for space to become
 		// available if necessary.
-		if( xQueueSendToBack( xQueue1, ( void * ) &ulVar, ( TickType_t ) 10 ) != pdPASS )
+		if ( xQueueSendToBack( xQueue1, ( void * ) &ulVar, ( TickType_t ) 10 ) != pdPASS )
 		{
 			// Failed to post the message, even after 10 ticks.
 		}
 	}
 
-	if( xQueue2 != 0 )
+	if ( xQueue2 != 0 )
 	{
 		// Send a pointer to a struct AMessage object.  Don't block if the
 		// queue is already full.
@@ -394,17 +394,17 @@ typedef void * QueueSetMemberHandle_t;
 
 	// ...
 
-	if( xQueue1 != 0 )
+	if ( xQueue1 != 0 )
 	{
 		// Send an uint32_t.  Wait for 10 ticks for space to become
 		// available if necessary.
-		if( xQueueSend( xQueue1, ( void * ) &ulVar, ( TickType_t ) 10 ) != pdPASS )
+		if ( xQueueSend( xQueue1, ( void * ) &ulVar, ( TickType_t ) 10 ) != pdPASS )
 		{
 			// Failed to post the message, even after 10 ticks.
 		}
 	}
 
-	if( xQueue2 != 0 )
+	if ( xQueue2 != 0 )
 	{
 		// Send a pointer to a struct AMessage object.  Don't block if the
 		// queue is already full.
@@ -474,7 +474,7 @@ typedef void * QueueSetMemberHandle_t;
 	ulValReceived = 0;
 	xQueuePeek( xQueue, &ulValReceived, 0 );
 
-	if( ulValReceived != 10 )
+	if ( ulValReceived != 10 )
 	{
 		// Error unless the item was removed by a different task.
 	}
@@ -490,7 +490,7 @@ typedef void * QueueSetMemberHandle_t;
 
 	// The value read should be the last value written, even though the
 	// queue was already full when the value was written.
-	if( ulValReceived != 100 )
+	if ( ulValReceived != 100 )
 	{
 		// Error!
 	}
@@ -565,17 +565,17 @@ typedef void * QueueSetMemberHandle_t;
 
 	// ...
 
-	if( xQueue1 != 0 )
+	if ( xQueue1 != 0 )
 	{
 		// Send an uint32_t.  Wait for 10 ticks for space to become
 		// available if necessary.
-		if( xQueueGenericSend( xQueue1, ( void * ) &ulVar, ( TickType_t ) 10, queueSEND_TO_BACK ) != pdPASS )
+		if ( xQueueGenericSend( xQueue1, ( void * ) &ulVar, ( TickType_t ) 10, queueSEND_TO_BACK ) != pdPASS )
 		{
 			// Failed to post the message, even after 10 ticks.
 		}
 	}
 
-	if( xQueue2 != 0 )
+	if ( xQueue2 != 0 )
 	{
 		// Send a pointer to a struct AMessage object.  Don't block if the
 		// queue is already full.
@@ -648,7 +648,7 @@ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQ
 	// Create a queue capable of containing 10 pointers to AMessage structures.
 	// These should be passed by pointer as they contain a lot of data.
 	xQueue = xQueueCreate( 10, sizeof( struct AMessage * ) );
-	if( xQueue == 0 )
+	if ( xQueue == 0 )
 	{
 		// Failed to create the queue.
 	}
@@ -668,11 +668,11 @@ BaseType_t xQueueGenericSend( QueueHandle_t xQueue, const void * const pvItemToQ
  {
  struct AMessage *pxRxedMessage;
 
-	if( xQueue != 0 )
+	if ( xQueue != 0 )
 	{
 		// Peek a message on the created queue.  Block for 10 ticks if a
 		// message is not immediately available.
-		if( xQueuePeek( xQueue, &( pxRxedMessage ), ( TickType_t ) 10 ) )
+		if ( xQueuePeek( xQueue, &( pxRxedMessage ), ( TickType_t ) 10 ) )
 		{
 			// pcRxedMessage now points to the struct AMessage variable posted
 			// by vATask, but the item still remains on the queue.
@@ -774,7 +774,7 @@ BaseType_t xQueuePeekFromISR( QueueHandle_t xQueue, void * const pvBuffer ) PRIV
 	// Create a queue capable of containing 10 pointers to AMessage structures.
 	// These should be passed by pointer as they contain a lot of data.
 	xQueue = xQueueCreate( 10, sizeof( struct AMessage * ) );
-	if( xQueue == 0 )
+	if ( xQueue == 0 )
 	{
 		// Failed to create the queue.
 	}
@@ -794,11 +794,11 @@ BaseType_t xQueuePeekFromISR( QueueHandle_t xQueue, void * const pvBuffer ) PRIV
  {
  struct AMessage *pxRxedMessage;
 
-	if( xQueue != 0 )
+	if ( xQueue != 0 )
 	{
 		// Receive a message on the created queue.  Block for 10 ticks if a
 		// message is not immediately available.
-		if( xQueueReceive( xQueue, &( pxRxedMessage ), ( TickType_t ) 10 ) )
+		if ( xQueueReceive( xQueue, &( pxRxedMessage ), ( TickType_t ) 10 ) )
 		{
 			// pcRxedMessage now points to the struct AMessage variable posted
 			// by vATask.
@@ -873,7 +873,7 @@ BaseType_t xQueuePeekFromISR( QueueHandle_t xQueue, void * const pvBuffer ) PRIV
 	// Create a queue capable of containing 10 pointers to AMessage structures.
 	// These should be passed by pointer as they contain a lot of data.
 	xQueue = xQueueCreate( 10, sizeof( struct AMessage * ) );
-	if( xQueue == 0 )
+	if ( xQueue == 0 )
 	{
 		// Failed to create the queue.
 	}
@@ -893,11 +893,11 @@ BaseType_t xQueuePeekFromISR( QueueHandle_t xQueue, void * const pvBuffer ) PRIV
  {
  struct AMessage *pxRxedMessage;
 
-	if( xQueue != 0 )
+	if ( xQueue != 0 )
 	{
 		// Receive a message on the created queue.  Block for 10 ticks if a
 		// message is not immediately available.
-		if( xQueueGenericReceive( xQueue, &( pxRxedMessage ), ( TickType_t ) 10 ) )
+		if ( xQueueGenericReceive( xQueue, &( pxRxedMessage ), ( TickType_t ) 10 ) )
 		{
 			// pcRxedMessage now points to the struct AMessage variable posted
 			// by vATask.
@@ -1013,10 +1013,10 @@ void vQueueDelete( QueueHandle_t xQueue ) PRIVILEGED_FUNCTION;
 		// Post the byte.
 		xQueueSendToFrontFromISR( xRxQueue, &cIn, &xHigherPriorityTaskWoken );
 
-	} while( portINPUT_BYTE( BUFFER_COUNT ) );
+	} while ( portINPUT_BYTE( BUFFER_COUNT ) );
 
 	// Now the buffer is empty we can switch context if necessary.
-	if( xHigherPriorityTaskWoken )
+	if ( xHigherPriorityTaskWoken )
 	{
 		taskYIELD ();
 	}
@@ -1084,10 +1084,10 @@ void vQueueDelete( QueueHandle_t xQueue ) PRIVILEGED_FUNCTION;
 		// Post the byte.
 		xQueueSendToBackFromISR( xRxQueue, &cIn, &xHigherPriorityTaskWoken );
 
-	} while( portINPUT_BYTE( BUFFER_COUNT ) );
+	} while ( portINPUT_BYTE( BUFFER_COUNT ) );
 
 	// Now the buffer is empty we can switch context if necessary.
-	if( xHigherPriorityTaskWoken )
+	if ( xHigherPriorityTaskWoken )
 	{
 		taskYIELD ();
 	}
@@ -1171,7 +1171,7 @@ uint32_t ulVarToSend, ulValReceived;
 
 	// ...
 
-	if( xHigherPrioritytaskWoken == pdTRUE )
+	if ( xHigherPrioritytaskWoken == pdTRUE )
 	{
 		// Writing to the queue caused a task to unblock and the unblocked task
 		// has a priority higher than or equal to the priority of the currently
@@ -1244,10 +1244,10 @@ uint32_t ulVarToSend, ulValReceived;
 		// Post the byte.
 		xQueueSendFromISR( xRxQueue, &cIn, &xHigherPriorityTaskWoken );
 
-	} while( portINPUT_BYTE( BUFFER_COUNT ) );
+	} while ( portINPUT_BYTE( BUFFER_COUNT ) );
 
 	// Now the buffer is empty we can switch context if necessary.
-	if( xHigherPriorityTaskWoken )
+	if ( xHigherPriorityTaskWoken )
 	{
 		// Actual macro used here is port specific.
 		portYIELD_FROM_ISR ();
@@ -1323,11 +1323,11 @@ uint32_t ulVarToSend, ulValReceived;
 		// Post each byte.
 		xQueueGenericSendFromISR( xRxQueue, &cIn, &xHigherPriorityTaskWokenByPost, queueSEND_TO_BACK );
 
-	} while( portINPUT_BYTE( BUFFER_COUNT ) );
+	} while ( portINPUT_BYTE( BUFFER_COUNT ) );
 
 	// Now the buffer is empty we can switch context if necessary.  Note that the
 	// name of the yield function required is port specific.
-	if( xHigherPriorityTaskWokenByPost )
+	if ( xHigherPriorityTaskWokenByPost )
 	{
 		taskYIELD_YIELD_FROM_ISR();
 	}
@@ -1380,7 +1380,7 @@ BaseType_t xQueueGiveFromISR( QueueHandle_t xQueue, BaseType_t * const pxHigherP
 
 	// Create a queue capable of containing 10 characters.
 	xQueue = xQueueCreate( 10, sizeof( char ) );
-	if( xQueue == 0 )
+	if ( xQueue == 0 )
 	{
 		// Failed to create the queue.
 	}
@@ -1407,7 +1407,7 @@ BaseType_t xQueueGiveFromISR( QueueHandle_t xQueue, BaseType_t * const pxHigherP
  BaseType_t xTaskWokenByReceive = pdFALSE;
  char cRxedChar;
 
-	while( xQueueReceiveFromISR( xQueue, ( void * ) &cRxedChar, &xTaskWokenByReceive) )
+	while ( xQueueReceiveFromISR( xQueue, ( void * ) &cRxedChar, &xTaskWokenByReceive) )
 	{
 		// A character was received.  Output the character now.
 		vOutputCharacter( cRxedChar );
@@ -1418,7 +1418,7 @@ BaseType_t xQueueGiveFromISR( QueueHandle_t xQueue, BaseType_t * const pxHigherP
 		// task will be woken.
 	}
 
-	if( cTaskWokenByPost != ( char ) pdFALSE;
+	if ( cTaskWokenByPost != ( char ) pdFALSE;
 	{
 		taskYIELD ();
 	}

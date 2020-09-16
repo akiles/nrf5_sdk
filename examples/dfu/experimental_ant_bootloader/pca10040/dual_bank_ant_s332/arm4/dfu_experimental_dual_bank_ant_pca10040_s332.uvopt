@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <ProjectOpt xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="project_opt.xsd">
-  
+
   <SchemaVersion>1.0</SchemaVersion>
-  
+
   <Header>### uVision Project, (C) Keil Software</Header>
-  
   <Target>
     <TargetName>nrf52832_xxaa_s332</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
-    <TargetOption>
-      <OPTFL>
+    <TargetOption>      <OPTFL>
         <IsCurrentTarget>1</IsCurrentTarget>
-      </OPTFL>
-      <DebugOpt>
+      </OPTFL>      <DebugOpt>
         <pMon>Segger\JL2CM3.dll</pMon>
       </DebugOpt>
   <TargetDriverDllRegistry>
@@ -29,6 +26,6 @@
         </SetRegEntry>
       </TargetDriverDllRegistry>
     </TargetOption>
-  </Target>
-</ProjectOpt>
+  </Target></ProjectOpt>
+
 

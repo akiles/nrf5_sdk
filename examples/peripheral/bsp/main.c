@@ -27,6 +27,10 @@
 #include "nordic_common.h"
 #include "nrf_error.h"
 
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
+
 #define APP_TIMER_PRESCALER      0                           /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_OP_QUEUE_SIZE  2                           /**< Size of timer operation queues. */
 
@@ -102,38 +106,6 @@ void bsp_configuration()
                         APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                         bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
-
-    // err_code = bsp_buttons_enable( (1 << BUTTON_PREV_ID) | (1 << BUTTON_NEXT_ID) );
-    // APP_ERROR_CHECK(err_code);
-}
-
-
-/**@brief Function for initializing the UART.
- */
-static void uart_init(void)
-{
-    uint32_t err_code;
-
-    
-    const app_uart_comm_params_t comm_params =  
-    {
-        RX_PIN_NUMBER, 
-        TX_PIN_NUMBER, 
-        RTS_PIN_NUMBER, 
-        CTS_PIN_NUMBER, 
-        APP_UART_FLOW_CONTROL_ENABLED, 
-        false, 
-        UART_BAUDRATE_BAUDRATE_Baud115200
-    };
-
-    APP_UART_FIFO_INIT(&comm_params, 
-                       UART_RX_BUF_SIZE, 
-                       UART_TX_BUF_SIZE, 
-                       uart_error_handle, 
-                       APP_IRQ_PRIORITY_LOW,
-                       err_code);
-
-    APP_ERROR_CHECK(err_code);
 }
 
 
@@ -146,13 +118,17 @@ int main(void)
 
     clock_initialization();
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
-    uart_init();
+    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
     bsp_configuration();
 
     err_code = bsp_indication_text_set(actual_state,indications_list[actual_state]);
     APP_ERROR_CHECK(err_code);
     while (true)
     {
+        NRF_LOG_FLUSH();
+        __SEV();
+        __WFE();
+        __WFE();
         // no implementation needed
     }
 }

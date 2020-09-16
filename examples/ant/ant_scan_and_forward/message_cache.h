@@ -12,6 +12,10 @@ All rights reserved.
 #include <stdint.h>
 #include <stdbool.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct
 {
     uint8_t dst;
@@ -60,5 +64,10 @@ bool mc_is_in_cache(message_cache_t * p_mc, uint8_t * p_message);
  * @param max_ticks     Maximum number of ticks for messages to stay in cache
  */
 void mc_cleanup(message_cache_t * p_mc, uint8_t max_ticks);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

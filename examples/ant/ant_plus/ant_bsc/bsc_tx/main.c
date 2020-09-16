@@ -22,29 +22,23 @@ All rights reserved.
  */
 
 #include <stdio.h>
-#include "app_uart.h"
 #include "nrf.h"
 #include "nrf_soc.h"
 #include "bsp.h"
+#include "hardfault.h"
 #include "app_error.h"
 #include "nordic_common.h"
 #include "ant_stack_config.h"
 #include "softdevice_handler.h"
 #include "ant_bsc.h"
-#include "app_trace.h"
 #include "ant_state_indicator.h"
 #include "ant_key_manager.h"
 #include "app_timer.h"
 #include "ant_bsc_simulator.h"
 
-#ifndef MODIFICATION_TYPE // can be provided as preprocesor global symbol
-/**
- * @brief Depending of this define value speed and cadence values will be: @n
- *          - periodicaly rise and fall, use value  MODIFICATION_TYPE_AUTO
- *          - changing by button, use value         MODIFICATION_TYPE_BUTTON
- */
-    #define MODIFICATION_TYPE (MODIFICATION_TYPE_AUTO)
-#endif
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 #define MODIFICATION_TYPE_BUTTON 0 /* predefined value, MUST REMAIN UNCHANGED */
 #define MODIFICATION_TYPE_AUTO   1 /* predefined value, MUST REMAIN UNCHANGED */
@@ -57,20 +51,8 @@ All rights reserved.
 
 #define APP_TIMER_PRESCALER     0x00    /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_OP_QUEUE_SIZE 0x04    /**< Size of timer operation queues. */
-
 #define APP_TICK_EVENT_INTERVAL APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER) /**< 2 second's tick event interval in timer tick units. */
-
 #define BSC_CHANNEL_NUMBER      0x00    /**< Channel number assigned to BSC profile. */
-
-#define BSC_DEVICE_NUMBER       49u     /**< Denotes the used ANT device number. */
-#define BSC_TRANSMISSION_TYPE   1u      /**< Denotes the used ANT transmission type. */
-
-#define BSC_MF_ID               2u      /**< Manufacturer ID. */
-#define BSC_SERIAL_NUMBER       0xABCDu /**< Serial Number. */
-#define BSC_HW_VERSION          5u      /**< HW Version. */
-#define BSC_SW_VERSION          0       /**< SW Version. */
-#define BSC_MODEL_NUMBER        2u      /**< Model Number. */
-
 #define ANTPLUS_NETWORK_NUMBER  0       /**< Network number. */
 
 /** @snippet [ANT BSC TX Instance] */
@@ -78,9 +60,9 @@ void ant_bsc_evt_handler(ant_bsc_profile_t * p_profile, ant_bsc_evt_t event);
 
 BSC_SENS_CHANNEL_CONFIG_DEF(m_ant_bsc,
                             BSC_CHANNEL_NUMBER,
-                            BSC_TRANSMISSION_TYPE,
+                            CHAN_ID_TRANS_TYPE,
                             SENSOR_TYPE,
-                            BSC_DEVICE_NUMBER,
+                            CHAN_ID_DEV_NUM,
                             ANTPLUS_NETWORK_NUMBER);
 BSC_SENS_PROFILE_CONFIG_DEF(m_ant_bsc,
                             true,
@@ -146,7 +128,8 @@ static void utils_setup(void)
 {
     uint32_t err_code;
 
-    app_trace_init();
+    err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
 
     // Initialize and start a single continuous mode timer, which is used to update the event time
     // on the main data page.
@@ -171,7 +154,7 @@ static void utils_setup(void)
 static void simulator_setup(void)
 {
     /** @snippet [ANT BSC simulator init] */
-    const ant_bsc_simulator_cfg_t simulator_cfg = 
+    const ant_bsc_simulator_cfg_t simulator_cfg =
     {
         .p_profile      = &m_ant_bsc,
         .device_type    = SENSOR_TYPE,
@@ -290,8 +273,11 @@ int main(void)
 
     for (;; )
     {
-        err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
+        if (NRF_LOG_PROCESS() == false)
+        {
+            err_code = sd_app_evt_wait();
+            APP_ERROR_CHECK(err_code);
+        }
     }
 }
 

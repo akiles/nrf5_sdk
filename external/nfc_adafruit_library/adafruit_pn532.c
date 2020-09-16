@@ -28,11 +28,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#include "sdk_config.h"
+#if ADAFRUIT_PN532_ENABLED
 #include <stdio.h>
 #include <inttypes.h>
 #include <string.h>
 #include "adafruit_pn532.h"
-#include "adafruit_pn532_config.h"
 #include "nrf_gpio.h"
 #include "nrf_delay.h"
 #include "nrf_drv_twi.h"
@@ -117,7 +118,7 @@ static adafruit_pn532 pn532_object = {
     ._hardwareSPI = false
 };
 
-static const nrf_drv_twi_t m_twi_master = NRF_DRV_TWI_INSTANCE(MASTER_TWI_INST);
+static const nrf_drv_twi_t m_twi_master = NRF_DRV_TWI_INSTANCE(PN532_CONFIG_TWI_INSTANCE);
 
 static uint8_t pn532_packet_buf[PN532_PACKBUFFSIZ];
 
@@ -147,7 +148,7 @@ static void adafruit_pn532_pin_setup(void)
  *
  * @param  current_sum[in]  Sum of all bytes used to calculate checksum.
  *
- * @retval Value of the checksum byte. 
+ * @retval Value of the checksum byte.
  */
 static uint8_t adafruit_pn532_cs_complement_calc(uint8_t current_sum)
 {
@@ -167,18 +168,18 @@ static uint8_t adafruit_pn532_cs_complement_calc(uint8_t current_sum)
 static ret_code_t adafruit_pn532_header_check(uint8_t const * p_buffer, uint8_t * p_length)
 {
     // Preamble
-    if ( (p_buffer[PN532_PREAMBLE_OFFSET] != PN532_PREAMBLE) || 
-         (p_buffer[PN532_STARTCODE1_OFFSET] != PN532_STARTCODE1) || 
+    if ( (p_buffer[PN532_PREAMBLE_OFFSET] != PN532_PREAMBLE) ||
+         (p_buffer[PN532_STARTCODE1_OFFSET] != PN532_STARTCODE1) ||
          (p_buffer[PN532_STARTCODE2_OFFSET] != PN532_STARTCODE2) )
     {
         PN532_LOG("Preamble missing\r\n");
         return NRF_ERROR_INVALID_DATA;
     }
     // Data length
-    if (p_buffer[PN532_LENGTH_CS_OFFSET] != 
+    if (p_buffer[PN532_LENGTH_CS_OFFSET] !=
             adafruit_pn532_cs_complement_calc(p_buffer[PN532_LENGTH_OFFSET]))
     {
-        PN532_LOG("Length check invalid: len: 0x%02x, cs: 02%02x\r\n", 
+        PN532_LOG("Length check invalid: len: 0x%02x, cs: 02%02x\r\n",
             p_buffer[PN532_LENGTH_OFFSET], p_buffer[PN532_LENGTH_CS_OFFSET]);
         return NRF_ERROR_INVALID_DATA;
     }
@@ -189,9 +190,9 @@ static ret_code_t adafruit_pn532_header_check(uint8_t const * p_buffer, uint8_t 
         PN532_LOG("Invalid direction byte: %02x\r\n", p_buffer[PN532_TFI_OFFSET]);
         return NRF_ERROR_INVALID_DATA;
     }
-    
+
     *p_length = p_buffer[PN532_LENGTH_OFFSET];
-    
+
     return NRF_SUCCESS;
 }
 
@@ -199,7 +200,7 @@ static ret_code_t adafruit_pn532_header_check(uint8_t const * p_buffer, uint8_t 
 ret_code_t adafruit_pn532_init(bool force)
 {
     uint32_t ver_data;  // Variable to store firmware version read from PN532.
-    
+
     if (lib_initialized && !(force))
     {
         PN532_LOG("Library is already initialized\r\n");
@@ -239,7 +240,7 @@ ret_code_t adafruit_pn532_init(bool force)
     }
 
     PN532_LOG("Found chip PN5%02x\r\n", (ver_data >> 24) & 0xFF);
-    PN532_LOG("Firmware version %d.%d\r\n", (ver_data >> 16) & 0xFF, 
+    PN532_LOG("Firmware version %d.%d\r\n", (ver_data >> 16) & 0xFF,
                                             (ver_data >> 8)  & 0xFF);
 
     err_code = adafruit_pn532_sam_config(SAMCONFIGURATION_MODE_NORMAL);
@@ -269,8 +270,11 @@ ret_code_t adafruit_pn532_create_i2c()
     PN532_LOG("Creating I2C\r\n");
 
     nrf_drv_twi_uninit(&m_twi_master);
+    nrf_drv_twi_config_t twi_config = NRF_DRV_TWI_DEFAULT_CONFIG;
+    twi_config.scl = PN532_CONFIG_SCL;
+    twi_config.sda = PN532_CONFIG_SDA;
 
-    ret_code_t ret = nrf_drv_twi_init(&m_twi_master, NULL, NULL, NULL);
+    ret_code_t ret = nrf_drv_twi_init(&m_twi_master, &twi_config, NULL, NULL);
     if (ret != NRF_SUCCESS)
     {
         PN532_LOG("Failed to initialize TWI, err_code = %d\r\n", ret);
@@ -538,7 +542,7 @@ ret_code_t adafruit_pn532_read_passive_target_id(uint8_t   card_baudrate,
         PN532_LOG("NULL pointers passed as arguments to adafruit_pn532_read_passive_target_id.");
         return NRF_ERROR_INVALID_PARAM;
     }
-    
+
     if (card_baudrate != PN532_MIFARE_ISO14443A_BAUD)
     {
         PN532_LOG("Only ISO14443 type A cards are supported.\r\n");
@@ -658,11 +662,11 @@ ret_code_t adafruit_pn532_in_data_exchange(uint8_t * p_send,
         PN532_LOG("Invalid frame header\r\n");
         return err_code;
     }
-    
+
     if ( (pn532_packet_buf[PN532_TFI_OFFSET] != PN532_PN532TOHOST) ||
          (pn532_packet_buf[PN532_DATA_OFFSET] != PN532_COMMAND_INDATAEXCHANGE + 1) )
     {
-        PN532_LOG("Don't know how to handle this command: %02x\r\n", 
+        PN532_LOG("Don't know how to handle this command: %02x\r\n",
             pn532_packet_buf[PN532_DATA_OFFSET]);
         return NRF_ERROR_INTERNAL;
     }
@@ -670,7 +674,7 @@ ret_code_t adafruit_pn532_in_data_exchange(uint8_t * p_send,
     // Check InDataExchange Status byte.
     if ((pn532_packet_buf[PN532_DATA_OFFSET + 1] & PN532_STATUS_ERROR_MASK) != 0x00)
     {
-        PN532_LOG("Status code indicates an error, %02x\r\n", 
+        PN532_LOG("Status code indicates an error, %02x\r\n",
             pn532_packet_buf[PN532_DATA_OFFSET + 1]);
         return NRF_ERROR_INTERNAL;
     }
@@ -717,7 +721,7 @@ ret_code_t adafruit_pn532_ntag2xx_read_page(uint8_t page, uint8_t * p_buffer)
 
 ret_code_t adafruit_pn532_ntag2xx_write_page(uint8_t page, uint8_t * p_data)
 {
-    if ( (page < NTAG2XX_MIN_WRITE_PAGE_NUMBER) || 
+    if ( (page < NTAG2XX_MIN_WRITE_PAGE_NUMBER) ||
          (page > NTAG2XX_MAX_WRITE_PAGE_NUMBER) )
     {
         PN532_LOG("Page value out of range, page = %d\r\n", page);
@@ -949,7 +953,7 @@ ret_code_t adafruit_pn532_write_command(uint8_t * p_cmd, uint8_t cmd_len)
     pn532_rxtx_buffer[3] = cmd_len + 1;    // Data length + TFI byte.
     pn532_rxtx_buffer[4] = adafruit_pn532_cs_complement_calc(cmd_len + 1);
     pn532_rxtx_buffer[5] = PN532_HOSTTOPN532;
-    
+
     // Copy the payload data.
     memcpy(pn532_rxtx_buffer + HEADER_SEQUENCE_LENGTH, p_cmd, cmd_len);
 
@@ -964,10 +968,10 @@ ret_code_t adafruit_pn532_write_command(uint8_t * p_cmd, uint8_t cmd_len)
     // Compose checksum part of the command frame.
     pn532_rxtx_buffer[HEADER_SEQUENCE_LENGTH + cmd_len]     = checksum;
     pn532_rxtx_buffer[HEADER_SEQUENCE_LENGTH + cmd_len + 1] = PN532_POSTAMBLE;
-    
+
     PN532_LOG("Sending command\r\n");
     PN532_LOG_HEX(pn532_rxtx_buffer, cmd_len + PN532_FRAME_OVERHEAD);
-    
+
     err_code = nrf_drv_twi_tx(&m_twi_master, PN532_I2C_ADDRESS, pn532_rxtx_buffer,
                           cmd_len + PN532_FRAME_OVERHEAD, false);
     if (err_code != NRF_SUCCESS)
@@ -1033,3 +1037,4 @@ ret_code_t adafruit_pn532_field_off(void)
 {
     return adafruit_pn532_switch_field(RFCONFIGURATION_RFFIELD_OFF);
 }
+#endif //ADAFRUIT_PN532_ENABLED

@@ -19,10 +19,10 @@
 * This file contains the source code for a sample application using the temperature sensor.
 * This contains workaround for PAN_028 rev2.0A anomalies 28, 29,30 and 31. PAN 43 is not covered.
 *  - PAN_028 rev2.0A anomaly 28 - TEMP: Negative measured values are not represented correctly
-*  - PAN_028 rev2.0A anomaly 29 - TEMP: Stop task clears the TEMP register.   
+*  - PAN_028 rev2.0A anomaly 29 - TEMP: Stop task clears the TEMP register.
 *  - PAN_028 rev2.0A anomaly 30 - TEMP: Temp module analog front end does not power down when DATARDY event occurs.
 *  - PAN_028 rev2.0A anomaly 31 - TEMP: Temperature offset value has to be manually loaded to the TEMP module
-*  - PAN_028 rev2.0A anomaly 43 - TEMP: Using PPI between DATARDY event and START task is not functional. 
+*  - PAN_028 rev2.0A anomaly 43 - TEMP: Using PPI between DATARDY event and START task is not functional.
 *
 */
 
@@ -32,24 +32,11 @@
 #include "nrf.h"
 #include "nrf_delay.h"
 #include "nrf_temp.h"
-#include "app_uart.h"
 #include "app_error.h"
 #include "bsp.h"
-
-#define UART_TX_BUF_SIZE 256                                                          /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 1                                                            /**< UART RX buffer size. */
-
-void uart_error_handle(app_uart_evt_t * p_event)
-{
-    if (p_event->evt_type == APP_UART_COMMUNICATION_ERROR)
-    {
-        APP_ERROR_HANDLER(p_event->data.error_communication);
-    }
-    else if (p_event->evt_type == APP_UART_FIFO_ERROR)
-    {
-        APP_ERROR_HANDLER(p_event->data.error_code);
-    }
-}
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 /** @brief Function for main application entry.
  */
 int main(void)
@@ -58,26 +45,8 @@ int main(void)
     int32_t volatile temp;
 
     nrf_temp_init();
-    uint32_t err_code;
-    const app_uart_comm_params_t comm_params =
-     {
-         RX_PIN_NUMBER,
-         TX_PIN_NUMBER,
-         RTS_PIN_NUMBER,
-         CTS_PIN_NUMBER,
-         APP_UART_FLOW_CONTROL_ENABLED,
-         false,
-         UART_BAUDRATE_BAUDRATE_Baud115200
-     };
 
-    APP_UART_FIFO_INIT(&comm_params,
-                    UART_RX_BUF_SIZE,
-                    UART_TX_BUF_SIZE,
-                    uart_error_handle,
-                    APP_IRQ_PRIORITY_LOW,
-                    err_code);
-
-    APP_ERROR_CHECK(err_code);
+    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
 
     while (true)
     {
@@ -97,8 +66,10 @@ int main(void)
         /**@note Workaround for PAN_028 rev2.0A anomaly 30 - TEMP: Temp module analog front end does not power down when DATARDY event occurs. */
         NRF_TEMP->TASKS_STOP = 1; /** Stop the temperature measurement. */
 
-        printf("Actual temperature: %d\n\r", (int)temp);
+        NRF_LOG_INFO("Actual temperature: %d\r\n", (int)temp);
         nrf_delay_ms(500);
+
+        NRF_LOG_FLUSH();
     }
 }
 

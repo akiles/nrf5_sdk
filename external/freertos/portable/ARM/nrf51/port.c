@@ -98,16 +98,16 @@ __asm void vPortSVCHandler( void )
 
 __asm void vPortStartFirstTask( void )
 {
-	PRESERVE8
+    PRESERVE8
     EXTERN __Vectors
 
-	/* Use the NVIC offset register to locate the stack. */
-	ldr r0, =__Vectors
-	ldr r0, [r0]
-	/* Set the msp back to the start of the stack. */
-	msr msp, r0
+    /* Use the NVIC offset register to locate the stack. */
+    ldr r0, =__Vectors
+    ldr r0, [r0]
+    /* Set the msp back to the start of the stack. */
+    msr msp, r0
 
-	ldr r3, =pxCurrentTCB   /* Obtain location of pxCurrentTCB. */
+    ldr r3, =pxCurrentTCB   /* Obtain location of pxCurrentTCB. */
     ldr r1, [r3]
     ldr r0, [r1]            /* The first item in pxCurrentTCB is the task top of stack. */
     adds r0, #32            /* Discard everything up to r0. */

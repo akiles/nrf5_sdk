@@ -73,7 +73,7 @@ void uart_error_handle(app_uart_evt_t * p_event)
 static void init(void)
 {
     NRF_RNG->TASKS_START = 1;
-    
+
     // Start 16 MHz crystal oscillator
     NRF_CLOCK->EVENTS_HFCLKSTARTED  = 0;
     NRF_CLOCK->TASKS_HFCLKSTART     = 1;
@@ -82,7 +82,7 @@ static void init(void)
     while (NRF_CLOCK->EVENTS_HFCLKSTARTED == 0)
     {
         // Do nothing.
-    }  
+    }
 }
 
 
@@ -162,40 +162,40 @@ void get_power(void)
             UNUSED_VARIABLE(app_uart_put(BELL));
         }
     }
-    
-    switch(c)
+
+    switch (c)
     {
         case '0':
             txpower_ =  RADIO_TXPOWER_TXPOWER_Pos4dBm;
             break;
-        
+
         case '1':
             txpower_ =  RADIO_TXPOWER_TXPOWER_0dBm;
             break;
-        
+
         case '2':
             txpower_ = RADIO_TXPOWER_TXPOWER_Neg4dBm;
             break;
-        
+
         case '3':
             txpower_ = RADIO_TXPOWER_TXPOWER_Neg8dBm;
             break;
-        
+
         case '4':
             txpower_ = RADIO_TXPOWER_TXPOWER_Neg12dBm;
             break;
-        
+
         case '5':
             txpower_ = RADIO_TXPOWER_TXPOWER_Neg16dBm;
             break;
-        
+
         case '6':
             txpower_ = RADIO_TXPOWER_TXPOWER_Neg20dBm;
             break;
-        
+
         case '7':
-            // fall through 
-        
+            // fall through
+
         default:
             txpower_ = RADIO_TXPOWER_TXPOWER_Neg30dBm;
             break;
@@ -209,59 +209,59 @@ void get_power(void)
 void print_parameters(void)
 {
     printf("Parameters:\r\n");
-    switch(mode_)
+    switch (mode_)
     {
         case RADIO_MODE_MODE_Nrf_250Kbit:
             printf("Data rate...........: 250 Kbit/s\r\n");
             break;
-        
+
         case RADIO_MODE_MODE_Nrf_1Mbit:
             printf("Data rate...........: 1 Mbit/s\r\n");
             break;
-        
+
         case RADIO_MODE_MODE_Nrf_2Mbit:
             printf("Data rate...........: 2 Mbit/s\r\n");
             break;
     }
-    
-    switch(txpower_)
+
+    switch (txpower_)
     {
         case RADIO_TXPOWER_TXPOWER_Pos4dBm:
             printf("TX Power............: +4 dBm\r\n");
             break;
-        
+
         case RADIO_TXPOWER_TXPOWER_0dBm:
             printf("TX Power............: 0 dBm\r\n");
             break;
-        
+
         case RADIO_TXPOWER_TXPOWER_Neg4dBm:
             printf("TX Power............: -4 dBm\r\n");
             break;
-        
+
         case RADIO_TXPOWER_TXPOWER_Neg8dBm:
             printf("TX Power............: -8 dBm\r\n");
             break;
-        
+
         case RADIO_TXPOWER_TXPOWER_Neg12dBm:
             printf("TX Power............: -12 dBm\r\n");
             break;
-        
+
         case RADIO_TXPOWER_TXPOWER_Neg16dBm:
             printf("TX Power............: -16 dBm\r\n");
             break;
-        
+
         case RADIO_TXPOWER_TXPOWER_Neg20dBm:
             printf("TX Power............: -20 dBm\r\n");
             break;
-        
+
         case RADIO_TXPOWER_TXPOWER_Neg30dBm:
             printf("TX Power............: -30 dBm\r\n");
             break;
-        
+
         default:
             // No implementation needed.
             break;
-        
+
     }
     printf("(Start) Channel.....: %d\r\n",channel_start_);
     printf("End Channel.........: %d\r\n",channel_end_);
@@ -273,7 +273,7 @@ void print_parameters(void)
 /** @brief Function for main application entry.
  */
 int main(void)
-{ 
+{
     uint32_t err_code;
     radio_tests_t test     = RADIO_TEST_NOP;
     radio_tests_t cur_test = RADIO_TEST_NOP;
@@ -347,7 +347,7 @@ int main(void)
                 {
                     printf("Enter delay in ms (two decimal digits, 01 to 99):\r\n");
                     scanf("%d",&delayms_);
-                    if ((delayms_ > 0) && (delayms_ < 100))   
+                    if ((delayms_ > 0) && (delayms_ < 100))
                     {
                         printf("%d\r\n", delayms_);
                         break;
@@ -398,13 +398,13 @@ int main(void)
 
             case 'h':
                 help();
-				break;
-				
+                break;
+
             default:
                 // No implementation needed
-				break;
+                break;
         }
-    
+
         switch (test)
         {
             case RADIO_TEST_TXCC:
@@ -445,7 +445,7 @@ int main(void)
                 radio_rx_carrier(mode_, channel_start_);
                 cur_test = test;
                 test     = RADIO_TEST_NOP;
-                break;  
+                break;
 
             case RADIO_TEST_RXSWEEP:
                 radio_rx_sweep_start(mode_, channel_start_, channel_end_, delayms_);

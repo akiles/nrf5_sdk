@@ -24,6 +24,10 @@ All rights reserved.
 #include <stdio.h>
 #include <stdbool.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Public Definitions
 #define MAX_DEVICES                 ((uint8_t) 16)              /**< Maximum number of devices in that can be registered */
 #define NODE_ID_INVALID             ((uint8_t) 0xFF)            /**< Invalid node identifier */
@@ -113,6 +117,11 @@ bool dr_device_at_index_exists(uint8_t index);
  */
 uint8_t dr_index_of_node_get(uint8_t node_id);
 
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

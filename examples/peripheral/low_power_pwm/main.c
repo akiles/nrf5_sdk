@@ -19,7 +19,7 @@
  *
  *
  */
- 
+
 #include <stdbool.h>
 #include <stdint.h>
 #include "nrf_delay.h"
@@ -33,9 +33,9 @@
 #include "low_power_pwm.h"
 #include "nordic_common.h"
 
-/*Timer initialization parameters*/   
+/*Timer initialization parameters*/
 #define OP_QUEUES_SIZE          3
-#define APP_TIMER_PRESCALER     0 
+#define APP_TIMER_PRESCALER     0
 
 /*Ticks before change duty cycle of each LED*/
 #define TICKS_BEFORE_CHANGE_0   500
@@ -50,20 +50,20 @@ static low_power_pwm_t low_power_pwm_2;
  *
  * @param[in] p_context     General purpose pointer (unused).
  */
-void pwm_handler(void * p_context)
+static void pwm_handler(void * p_context)
 {
     uint8_t new_duty_cycle;
     static uint16_t led_0, led_1;
     uint32_t err_code;
     UNUSED_PARAMETER(p_context);
-    
+
     low_power_pwm_t * pwm_instance = (low_power_pwm_t*)p_context;
-    
-    if(pwm_instance->bit_mask == BSP_LED_0_MASK)
+
+    if (pwm_instance->bit_mask == BSP_LED_0_MASK)
     {
         led_0++;
-        
-        if(led_0 > TICKS_BEFORE_CHANGE_0)
+
+        if (led_0 > TICKS_BEFORE_CHANGE_0)
         {
             new_duty_cycle = pwm_instance->period - pwm_instance->duty_cycle;
             err_code = low_power_pwm_duty_set(pwm_instance, new_duty_cycle);
@@ -71,11 +71,11 @@ void pwm_handler(void * p_context)
             APP_ERROR_CHECK(err_code);
         }
     }
-    else if(pwm_instance->bit_mask == BSP_LED_1_MASK)
+    else if (pwm_instance->bit_mask == BSP_LED_1_MASK)
     {
         led_1++;
 
-        if(led_1 > TICKS_BEFORE_CHANGE_1)
+        if (led_1 > TICKS_BEFORE_CHANGE_1)
         {
             new_duty_cycle = pwm_instance->period - pwm_instance->duty_cycle;
             err_code = low_power_pwm_duty_set(pwm_instance, new_duty_cycle);
@@ -93,44 +93,44 @@ void pwm_handler(void * p_context)
  *
  */
 
-void low_power_init(void)
+static void pwm_init(void)
 {
     uint32_t err_code;
     low_power_pwm_config_t low_power_pwm_config;
-	
+
     APP_TIMER_DEF(lpp_timer_0);
     low_power_pwm_config.active_high = false;
     low_power_pwm_config.period = 220;
     low_power_pwm_config.bit_mask = BSP_LED_0_MASK;
     low_power_pwm_config.p_timer_id = &lpp_timer_0;
-    
+
     err_code = low_power_pwm_init((&low_power_pwm_0), &low_power_pwm_config, pwm_handler);
     APP_ERROR_CHECK(err_code);
     err_code = low_power_pwm_duty_set(&low_power_pwm_0, 20);
     APP_ERROR_CHECK(err_code);
-    
+
     APP_TIMER_DEF(lpp_timer_1);
     low_power_pwm_config.active_high = false;
     low_power_pwm_config.period = 200;
     low_power_pwm_config.bit_mask = BSP_LED_1_MASK;
     low_power_pwm_config.p_timer_id = &lpp_timer_1;
-    
+
     err_code = low_power_pwm_init((&low_power_pwm_1), &low_power_pwm_config, pwm_handler);
     APP_ERROR_CHECK(err_code);
     err_code = low_power_pwm_duty_set(&low_power_pwm_1, 150);
     APP_ERROR_CHECK(err_code);
-    
+
     APP_TIMER_DEF(lpp_timer_2);
     low_power_pwm_config.active_high = false;
     low_power_pwm_config.period = 100;
     low_power_pwm_config.bit_mask = BSP_LED_2_MASK;
     low_power_pwm_config.p_timer_id = &lpp_timer_2;
-    
+
     err_code = low_power_pwm_init((&low_power_pwm_2), &low_power_pwm_config, pwm_handler);
     APP_ERROR_CHECK(err_code);
     err_code = low_power_pwm_duty_set(&low_power_pwm_2, 20);
     APP_ERROR_CHECK(err_code);
-    
+
     err_code = low_power_pwm_start((&low_power_pwm_0), low_power_pwm_0.bit_mask);
     APP_ERROR_CHECK(err_code);
     err_code = low_power_pwm_start((&low_power_pwm_1), low_power_pwm_1.bit_mask);
@@ -162,8 +162,8 @@ int main(void)
     APP_TIMER_INIT(APP_TIMER_PRESCALER, OP_QUEUES_SIZE, NULL);
 
     /*Initialize low power PWM for all 3  channels of RGB or 3 channels of leds on pca10028*/
-    low_power_init();
-    
+    pwm_init();
+
     while (true)
     {
         /* Duty cycle can also be changed from main context. */
@@ -171,7 +171,7 @@ int main(void)
         err_code = low_power_pwm_duty_set(&low_power_pwm_2, new_duty_cycle);
         APP_ERROR_CHECK(err_code);
         nrf_delay_ms(500);
-        
+
         new_duty_cycle = low_power_pwm_2.period - low_power_pwm_2.duty_cycle;
         err_code = low_power_pwm_duty_set(&low_power_pwm_2, new_duty_cycle);
         APP_ERROR_CHECK(err_code);

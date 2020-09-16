@@ -27,6 +27,7 @@ All rights reserved.
 #include "nrf.h"
 #include "bsp.h"
 #include "boards.h"
+#include "hardfault.h"
 #include "nrf_gpio.h"
 #include "app_error.h"
 #include "app_timer.h"

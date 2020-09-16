@@ -23,45 +23,34 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "nrf_gpio.h"
 #include "bsp.h"
 #include "cmsis_os.h"
 #include "nordic_common.h"
 
-#define OUTPUT_0_INTERVAL 100                                       /**< BSP_LED_0 toggle interval (ms). */
-#define OUTPUT_1_INTERVAL 400                                       /**< BSP_LED_1 toggle interval (ms). */
-
-#ifdef BSP_LED_0
-    #define GPIO_OUTPUT_0 BSP_LED_0  /**< Pin number for output. */
-#endif
-#ifndef GPIO_OUTPUT_0
-    #error "Please indicate output pin"
+#if LEDS_NUMBER <= 0
+#error "Board is not equipped with LEDs"
 #endif
 
-#ifdef BSP_LED_1
-    #define GPIO_OUTPUT_1 BSP_LED_1  /**< Pin number for output. */
-#endif
-#ifndef GPIO_OUTPUT_1
-    #error "Please indicate output pin"
-#endif
+#define OUTPUT_0_INTERVAL      100                       /**< BSP_LED_0 toggle interval (ms). */
+#define OUTPUT_1_INTERVAL      400                       /**< BSP_LED_1 toggle interval (ms). */
 
-#define SIGNAL_OUTPUT_1_TOGGLE  0x01                                /**< ID of signal sended to blinky_thread. */
+#define SIGNAL_OUTPUT_1_TOGGLE 0x01                      /**< ID of signal sended to blinky_thread. */
 
-void blinky_thread(void const * arg);                            /**< Prototype of blinky_thread. */
-osThreadDef(blinky_thread, osPriorityAboveNormal, 1, 0);         /**< Definition of blinky_thread */
+static void blinky_thread(void const * arg);             /**< Prototype of blinky_thread. */
+osThreadDef(blinky_thread, osPriorityAboveNormal, 1, 0); /**< Definition of blinky_thread */
 
-void led_toggle_timer_handler(void const * arg);                 /**< Prototype of timer callback function. */
-osTimerDef(led_toggle_timer, led_toggle_timer_handler);          /**< Definition of timer callback function. */
+static void led_toggle_timer_handler(void const * arg);  /**< Prototype of timer callback function. */
+osTimerDef(led_toggle_timer, led_toggle_timer_handler);  /**< Definition of timer callback function. */
 
 
-/**@brief Thread for toggling GPIO_OUTPUT_1.
+/**@brief Thread for toggling LED_1.
  *
  * @details This thread is receiving signals from main loop and toggle BSP_LED_1.
  *
  * @param[in]   arg   Pointer used for passing some arbitrary information (context) from the
  *                    osThreadCreate() call to the thread.
  */
-void blinky_thread(void const * arg)
+static void blinky_thread(void const * arg)
 {
     UNUSED_PARAMETER(arg);
     osEvent evt;
@@ -72,25 +61,25 @@ void blinky_thread(void const * arg)
 
         if (evt.status == osEventSignal)
         {
-            nrf_gpio_pin_toggle(GPIO_OUTPUT_1);
+#ifdef BSP_LED_1_MASK
+            LEDS_INVERT(BSP_LED_1_MASK);
+#endif
         }
     }
 }
 
-
-/**@brief Function for handling the timer timeout.
+/**@brief Function for handling the timer timeout and blinking LED_0.
  *
  * @details This function will be called each time the timer expires.
  *
  * @param[in]   p_context   Pointer used for passing some arbitrary information (context) from the
  *                          osTimerCreate() call to the timeout handler.
  */
-void led_toggle_timer_handler(void const * arg)
+static void led_toggle_timer_handler(void const * arg)
 {
     UNUSED_PARAMETER(arg);
-    nrf_gpio_pin_toggle(GPIO_OUTPUT_0);
+    LEDS_INVERT(BSP_LED_0_MASK);
 }
-
 
 /**
  * @brief Function for application main entry.
@@ -101,19 +90,25 @@ int main(void)
     osTimerId  led_toggle_timer_id;
     osStatus   status;
 
-    // Configure LED-pins as outputs
-    nrf_gpio_cfg_output(GPIO_OUTPUT_0);
-    nrf_gpio_cfg_output(GPIO_OUTPUT_1);
+    /* Configure LED-pins as outputs */
+    LEDS_CONFIGURE(LEDS_MASK);
+    LEDS_OFF(LEDS_MASK);
 
-    blinky_thread_id    = osThreadCreate(osThread(blinky_thread), NULL);                   // create the blinky_thread
-    led_toggle_timer_id = osTimerCreate(osTimer(led_toggle_timer), osTimerPeriodic, NULL); // create the timer
+    /* Create the blinky_thread */
+    blinky_thread_id    = osThreadCreate(osThread(blinky_thread), NULL);
+
+    /* Create the timer */
+    led_toggle_timer_id = osTimerCreate(osTimer(led_toggle_timer), osTimerPeriodic, NULL);
+
+    /* Get timer status */
     status              = osTimerStart(led_toggle_timer_id, OUTPUT_0_INTERVAL);
 
-    if ((blinky_thread_id == NULL) || (status != osOK)) // handle thread creation and starting timer
+    /* Handle thread creation and starting timer errors */
+    if ((blinky_thread_id == NULL) || (status != osOK))
     {
         while (true)
         {
-            // do nothing, error
+            /* do nothing, error */
         }
     }
 
@@ -123,7 +118,6 @@ int main(void)
         UNUSED_VARIABLE(osDelay(OUTPUT_1_INTERVAL));
     }
 }
-
 
 /**
  *@}

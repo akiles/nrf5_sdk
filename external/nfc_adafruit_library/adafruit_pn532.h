@@ -50,15 +50,15 @@
 /** @file
  *  @brief Adafruit PN532 NFC Shield library for reading and writing tags.
  *
- *  @defgroup nrf_external_adafruit_pn532 Adafruit PN532 NFC Shield library
+ *  @defgroup adafruit_pn532 Adafruit PN532 NFC Shield library
  *  @{
  *  @ingroup app_common
  *  @brief Adafruit PN532 NFC Shield library for reading and writing tags.
  *
  *  This library is an nRF51 and nRF52 port of the Adafruit PN532 library,
  *  which is available on <a href="https://github.com/adafruit/Adafruit-PN532" target="_blank">GitHub</a>,
- *  with some improvements and bugfixes. The library is responsible for 
- *  communicating with the Adafruit PN532 NFC Shield and using its main 
+ *  with some improvements and bugfixes. The library is responsible for
+ *  communicating with the Adafruit PN532 NFC Shield and using its main
  *  functions.
  *
  *  This library can be used with an <a href="https://www.adafruit.com/products/789" target="_blank">Adafruit PN532 NFC/RFID Controller Shield</a>.
@@ -309,24 +309,24 @@ ret_code_t adafruit_pn532_field_off(void);
 /**  @brief Function for detecting an ISO14443A target presence in the RF field.
  *
  *   This function enables the RF field and scans for ISO14443A targets present
- *   in the field. The number of scan retries is set by the @ref adafruit_pn532_set_passive_activation_retries 
+ *   in the field. The number of scan retries is set by the @ref adafruit_pn532_set_passive_activation_retries
  *   function. By default, the maximum number of retries is set to unlimited, which means
- *   that the PN532 Shield scans for targets until it finds one or the scan is 
+ *   that the PN532 Shield scans for targets until it finds one or the scan is
  *   canceled. The @p timeout parameter specifies the time-out of the scan. If it is
  *   set to a value greater than 0, the function exits with a failure if either the maximum number
  *   of retries or the time-out has been reached. If the @p timeout parameter is set to 0,
- *   a single scan is performed. When the ISO14443A target is detected, the 
+ *   a single scan is performed. When the ISO14443A target is detected, the
  *   PN532 module initializes communication and reads the target's UID.
  *
  *   @param[in]     card_baudrate         Baud rate of the card.
  *   @param[out]    p_uid                 Pointer to the array that will be populated
  *                                        with the card's UID (up to 7 bytes).
- *   @param[in,out] p_uid_len             Pointer to the variable that stores 
+ *   @param[in,out] p_uid_len             Pointer to the variable that stores
  *                                        the length of the p_uid buffer (as input)
- *                                        and the length of the target's UID that 
+ *                                        and the length of the target's UID that
  *                                        was read (as output).
  *   @param[in]     timeout               Time-out (in ms). 0 means that only a single
- *                                        scan is performed. 
+ *                                        scan is performed.
  *                                        If no tag is presented before the time-out,
  *                                        the function returns NRF_ERROR_INTERNAL.
  *
@@ -344,7 +344,7 @@ ret_code_t adafruit_pn532_read_passive_target_id(uint8_t   card_baudrate,
  *   @param[in]     send_len               Length of the data to send.
  *   @param[out]    p_response             Pointer to the buffer for response data.
  *   @param[in,out] p_response_len         Pointer to the variable that stores
- *                                         the length of the p_response buffer (as 
+ *                                         the length of the p_response buffer (as
  *                                         input) and the length of the response data
  *                                         (as output).
  *

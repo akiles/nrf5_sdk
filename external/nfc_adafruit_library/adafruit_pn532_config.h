@@ -17,7 +17,7 @@
  /**
  * @defgroup nrf_external_adafruit_pn532_host_config Host configuration
  * @{
- * @ingroup nrf_external_adafruit_pn532
+ * @ingroup adafruit_pn532
  * @brief These defines should be specified to configure pins for the appropriate board type
  *        and choose a TWI instance.
  */

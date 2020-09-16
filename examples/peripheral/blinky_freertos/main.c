@@ -29,28 +29,35 @@
 #include "timers.h"
 #include "bsp.h"
 #include "nordic_common.h"
-#include "nrf_gpio.h"
 #include "nrf_drv_clock.h"
 #include "sdk_errors.h"
 #include "app_error.h"
 
+#if LEDS_NUMBER <= 0
+#error "Board is not equipped with LEDs"
+#endif
 
-#define TASK_DELAY        200    /**< Task delay. Delays a LED0 task for 200 ms */
-#define TIMER_PERIOD      1000   /**< Timer period. LED1 timer will expire after 1000 ms */
+#define TASK_DELAY        200           /**< Task delay. Delays a LED0 task for 200 ms */
+#define TIMER_PERIOD      1000          /**< Timer period. LED1 timer will expire after 1000 ms */
+
+TaskHandle_t  led_toggle_task_handle;   /**< Reference to LED0 toggling FreeRTOS task. */
+TimerHandle_t led_toggle_timer_handle;  /**< Reference to LED1 toggling FreeRTOS timer. */
 
 /**@brief LED0 task entry function.
  *
  * @param[in] pvParameter   Pointer that will be used as the parameter for the task.
  */
-static void vLed0Function (void *pvParameter)
+static void led_toggle_task_function (void * pvParameter)
 {
     UNUSED_PARAMETER(pvParameter);
-    for( ;; )
+    while (true)
     {
-        nrf_gpio_pin_toggle(BSP_LED_0);
-        vTaskDelay(TASK_DELAY); // Delay a task for a given number of ticks
+        LEDS_INVERT(BSP_LED_0_MASK);
 
-        // Tasks must be implemented to never return...
+        /* Delay a task for a given number of ticks */
+        vTaskDelay(TASK_DELAY);
+
+        /* Tasks must be implemented to never return... */
     }
 }
 
@@ -58,54 +65,44 @@ static void vLed0Function (void *pvParameter)
  *
  * @param[in] pvParameter   Pointer that will be used as the parameter for the timer.
  */
-static void vLed1Callback (void *pvParameter)
+static void led_toggle_timer_callback (void * pvParameter)
 {
     UNUSED_PARAMETER(pvParameter);
-    nrf_gpio_pin_toggle(BSP_LED_1);
+#ifdef BSP_LED_1_MASK
+    LEDS_INVERT(BSP_LED_1_MASK);
+#endif
 }
 
 int main(void)
 {
-    TaskHandle_t  xLed0Handle;       /**< Reference to LED0 toggling FreeRTOS task. */
-    TimerHandle_t xLed1Handle;       /**< Reference to LED1 toggling FreeRTOS timer. */
     ret_code_t err_code;
 
+    /* Initialize clock driver for better time accuracy in FREERTOS */
     err_code = nrf_drv_clock_init();
     APP_ERROR_CHECK(err_code);
 
-    // Configure LED-pins as outputs
-    nrf_gpio_cfg_output(BSP_LED_0);
-    nrf_gpio_cfg_output(BSP_LED_1);
-    nrf_gpio_cfg_output(BSP_LED_2);
-    nrf_gpio_cfg_output(BSP_LED_3);
-    nrf_gpio_pin_set(BSP_LED_0);
-    nrf_gpio_pin_set(BSP_LED_1);
-    nrf_gpio_pin_set(BSP_LED_2);
-    nrf_gpio_pin_set(BSP_LED_3);
+    /* Configure LED-pins as outputs */
+    LEDS_CONFIGURE(LEDS_MASK);
+    LEDS_OFF(LEDS_MASK);
 
-    UNUSED_VARIABLE(xTaskCreate( vLed0Function, "L0", configMINIMAL_STACK_SIZE + 200, NULL, 2, &xLed0Handle ));    // LED0 task creation
-    xLed1Handle = xTimerCreate( "L1", TIMER_PERIOD, pdTRUE, NULL, vLed1Callback );                                 // LED1 timer creation
-    UNUSED_VARIABLE(xTimerStart( xLed1Handle, 0 ));                                                                // LED1 timer start
+    /* Create task for LED0 blinking with priority set to 2 */
+    UNUSED_VARIABLE(xTaskCreate(led_toggle_task_function, "LED0", configMINIMAL_STACK_SIZE + 200, NULL, 2, &led_toggle_task_handle));
+
+    /* Start timer for LED1 blinking */
+    led_toggle_timer_handle = xTimerCreate( "LED1", TIMER_PERIOD, pdTRUE, NULL, led_toggle_timer_callback);
+    UNUSED_VARIABLE(xTimerStart(led_toggle_timer_handle, 0));
 
     /* Activate deep sleep mode */
     SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
 
-    // Start FreeRTOS scheduler.
+    /* Start FreeRTOS scheduler. */
     vTaskStartScheduler();
 
     while (true)
     {
-        // FreeRTOS should not be here...
+        /* FreeRTOS should not be here... FreeRTOS goes back to the start of stack
+         * in vTaskStartScheduler function. */
     }
-}
-
-/* Used in debug mode for assertions */
-void assert_nrf_callback(uint16_t line_num, const uint8_t *file_name)
-{
-  while(1)
-  {
-    /* Loop forever */
-  }
 }
 
 /**

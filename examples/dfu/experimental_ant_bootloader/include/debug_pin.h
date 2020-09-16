@@ -10,6 +10,10 @@ All rights reserved.
 #include "nrf.h"
 //#include "nrf51_bitfields.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**********************************************************************************/
 /* Comment this out to DISABLE all Debugging pins especially on official releases.*/
 //#define DEBUGGING_PINS_ENABLE
@@ -88,5 +92,10 @@ All rights reserved.
 
 void stack_debug_Manchester_Start(uint8_t ucPin, uint8_t ucCode);
 void stack_debug_Manchester_Stop(uint8_t ucPin);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* DEBUG_PIN_H_ */

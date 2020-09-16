@@ -31,7 +31,7 @@ do                                 \
         return err_code;           \
     }                              \
 }                                  \
-while(0)
+while (0)
 
 
 /**@brief This macro will return from the current function if err_code
@@ -45,7 +45,7 @@ do                                                                              
         return err_code;                                                        \
     }                                                                           \
 }                                                                               \
-while(0)
+while (0)
 
 
 /**@brief This macro will return from the current function if err_code
@@ -59,7 +59,7 @@ do                                                                              
         return err_code;                                                        \
     }                                                                           \
 }                                                                               \
-while(0)
+while (0)
 
 
 /**@brief This macro will call the registered error handler if err_code
@@ -73,7 +73,7 @@ do                                                                \
         m_error_handler(err_code);                                \
     }                                                             \
 }                                                                 \
-while(0)
+while (0)
 
 
 static bsp_btn_ble_error_handler_t m_error_handler = NULL; /**< Error handler registered by the user. */

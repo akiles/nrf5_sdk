@@ -25,18 +25,18 @@
 #include "nrf_drv_rtc.h"
 #include "nrf_drv_clock.h"
 #include "bsp.h"
-#include "app_uart.h"
 #include "app_error.h"
 #include "app_timer.h"
 #include "app_twi.h"
 #include "lm75b.h"
 #include "mma7660.h"
+#include "compiler_abstraction.h"
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 
 #define MAX_PENDING_TRANSACTIONS    5
-
-#define UART_TX_BUF_SIZE            256
-#define UART_RX_BUF_SIZE            1
 
 #define APP_TIMER_PRESCALER         0
 #define APP_TIMER_OP_QUEUE_SIZE     2
@@ -85,11 +85,11 @@ static uint8_t m_sample_idx = 0;
 // in orientation, shake signaling etc.
 static uint8_t m_prev_tilt = 0;
 
-#ifdef  __GNUC__
+#if defined( __GNUC__ ) && (__LINT__ == 0)
     // This is required if one wants to use floating-point values in 'printf'
     // (by default this feature is not linked together with newlib-nano).
     // Please note, however, that this adds about 13 kB code footprint...
-    asm (".global _printf_float");
+    __ASM(".global _printf_float");
 #endif
 
 
@@ -106,11 +106,12 @@ static uint8_t m_prev_tilt = 0;
             axis = MMA7660_GET_ACC(reg_data); \
         } \
     } while (0)
+
 void read_all_cb(ret_code_t result, void * p_user_data)
 {
     if (result != NRF_SUCCESS)
     {
-        printf("read_all_cb - error: %d\r\n", (int)result);
+        NRF_LOG_INFO("read_all_cb - error: %d\r\n", (int)result);
         return;
     }
 
@@ -161,14 +162,17 @@ void read_all_cb(ret_code_t result, void * p_user_data)
             case MMA7660_ORIENTATION_UP:    orientation = "UP";    break;
             default:                        orientation = "?";     break;
         }
-        printf("Temp: %5.1f | X: %3d, Y: %3d, Z: %3d | %s%s%s\r\n",
-            (m_sum.temp * 0.125) / NUMBER_OF_SAMPLES,
+
+        NRF_LOG_INFO("Temp: " NRF_LOG_FLOAT_MARKER " | X: %3d, Y: %3d, Z: %3d ",
+            NRF_LOG_FLOAT((float)((m_sum.temp * 0.125) / NUMBER_OF_SAMPLES)),
             m_sum.x / NUMBER_OF_SAMPLES,
             m_sum.y / NUMBER_OF_SAMPLES,
-            m_sum.z / NUMBER_OF_SAMPLES,
-            orientation,
-            MMA7660_TAP_DETECTED(tilt)   ? " TAP"   : "",
-            MMA7660_SHAKE_DETECTED(tilt) ? " SHAKE" : "");
+            m_sum.z / NUMBER_OF_SAMPLES);
+
+        NRF_LOG_RAW_INFO("| %s%s%s\r\n",
+            (uint32_t)orientation,
+            (uint32_t)(MMA7660_TAP_DETECTED(tilt)   ? " TAP"   : ""),
+            (uint32_t)(MMA7660_SHAKE_DETECTED(tilt) ? " SHAKE" : ""));
         m_prev_tilt = tilt;
     }
 }
@@ -197,20 +201,6 @@ static void read_all(void)
     APP_ERROR_CHECK(app_twi_schedule(&m_app_twi, &transaction));
 }
 
-
-static void print_data(char const * name,
-                       uint8_t const * p_buffer, uint8_t length)
-{
-    printf("\r\n%s", name);
-
-    do {
-        printf(" %02X", *p_buffer++);
-    } while (--length);
-
-    printf("\r\n\r\n");
-}
-
-
 #if (BUFFER_SIZE < 7)
     #error Buffer too small.
 #endif
@@ -218,11 +208,12 @@ static void read_lm75b_registers_cb(ret_code_t result, void * p_user_data)
 {
     if (result != NRF_SUCCESS)
     {
-        printf("read_lm75b_registers_cb - error: %d\r\n", (int)result);
+        NRF_LOG_INFO("read_lm75b_registers_cb - error: %d\r\n", (int)result);
         return;
     }
 
-    print_data("LM75B:", m_buffer, 7);
+    NRF_LOG_INFO("LM75B:\r\n");
+    NRF_LOG_HEXDUMP_INFO(m_buffer, 7);
 }
 static void read_lm75b_registers(void)
 {
@@ -241,7 +232,7 @@ static void read_lm75b_registers(void)
         .callback            = read_lm75b_registers_cb,
         .p_user_data         = NULL,
         .p_transfers         = transfers,
-        .number_of_transfers = sizeof(transfers)/sizeof(transfers[0])
+        .number_of_transfers = sizeof(transfers) / sizeof(transfers[0])
     };
 
     APP_ERROR_CHECK(app_twi_schedule(&m_app_twi, &transaction));
@@ -255,11 +246,12 @@ static void read_mma7660_registers_cb(ret_code_t result, void * p_user_data)
 {
     if (result != NRF_SUCCESS)
     {
-        printf("read_mma7660_registers_cb - error: %d\r\n", (int)result);
+        NRF_LOG_INFO("read_mma7660_registers_cb - error: %d\r\n", (int)result);
         return;
     }
 
-    print_data("MMA7660:", m_buffer, MMA7660_NUMBER_OF_REGISTERS);
+    NRF_LOG_INFO("MMA7660:\r\n");
+    NRF_LOG_HEXDUMP_INFO(m_buffer, MMA7660_NUMBER_OF_REGISTERS);
 }
 static void read_mma7660_registers(void)
 {
@@ -276,7 +268,7 @@ static void read_mma7660_registers(void)
         .callback            = read_mma7660_registers_cb,
         .p_user_data         = NULL,
         .p_transfers         = transfers,
-        .number_of_transfers = sizeof(transfers)/sizeof(transfers[0])
+        .number_of_transfers = sizeof(transfers) / sizeof(transfers[0])
     };
 
     APP_ERROR_CHECK(app_twi_schedule(&m_app_twi, &transaction));
@@ -316,54 +308,7 @@ static void bsp_config(void)
     APP_ERROR_CHECK(err_code);
 }
 
-
-////////////////////////////////////////////////////////////////////////////////
-// UART handling.
-//
-static void uart_event_handler(app_uart_evt_t * p_event)
-{
-    switch (p_event->evt_type)
-    {
-        case APP_UART_COMMUNICATION_ERROR:
-            APP_ERROR_HANDLER(p_event->data.error_communication);
-            break;
-
-        case APP_UART_FIFO_ERROR:
-            APP_ERROR_HANDLER(p_event->data.error_code);
-            break;
-
-        default:
-            break;
-    }
-}
-static void uart_config(void)
-{
-    uint32_t err_code;
-
-    app_uart_comm_params_t const comm_params =
-    {
-        RX_PIN_NUMBER,
-        TX_PIN_NUMBER,
-        RTS_PIN_NUMBER,
-        CTS_PIN_NUMBER,
-        APP_UART_FLOW_CONTROL_ENABLED,
-        false,
-        UART_BAUDRATE_BAUDRATE_Baud115200
-    };
-
-    APP_UART_FIFO_INIT(&comm_params,
-                       UART_RX_BUF_SIZE,
-                       UART_TX_BUF_SIZE,
-                       uart_event_handler,
-                       APP_IRQ_PRIORITY_LOW,
-                       err_code);
-    APP_ERROR_CHECK(err_code);
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
 // TWI (with transaction manager) initialization.
-//
 static void twi_config(void)
 {
     uint32_t err_code;
@@ -372,7 +317,8 @@ static void twi_config(void)
        .scl                = ARDUINO_SCL_PIN,
        .sda                = ARDUINO_SDA_PIN,
        .frequency          = NRF_TWI_FREQ_100K,
-       .interrupt_priority = APP_IRQ_PRIORITY_LOW
+       .interrupt_priority = APP_IRQ_PRIORITY_LOW,
+       .clear_bus_init     = false
     };
 
     APP_TWI_INIT(&m_app_twi, &config, MAX_PENDING_TRANSACTIONS, err_code);
@@ -380,9 +326,7 @@ static void twi_config(void)
 }
 
 
-////////////////////////////////////////////////////////////////////////////////
 // RTC tick events generation.
-//
 static void rtc_handler(nrf_drv_rtc_int_type_t int_type)
 {
     if (int_type == NRF_DRV_RTC_INT_TICK)
@@ -397,7 +341,9 @@ static void rtc_config(void)
     uint32_t err_code;
 
     // Initialize RTC instance with default configuration.
-    err_code = nrf_drv_rtc_init(&m_rtc, NULL, rtc_handler);
+    nrf_drv_rtc_config_t config = NRF_DRV_RTC_DEFAULT_CONFIG;
+    config.prescaler = RTC_FREQ_TO_PRESCALER(32); //Set RTC frequency to 32Hz
+    err_code = nrf_drv_rtc_init(&m_rtc, &config, rtc_handler);
     APP_ERROR_CHECK(err_code);
 
     // Enable tick event and interrupt.
@@ -430,10 +376,11 @@ int main(void)
     lfclk_config();
 
     bsp_config();
-    uart_config();
 
-    printf("\n\rTWI master example\r\n");
+    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
 
+    NRF_LOG_INFO("TWI master example\r\n");
+    NRF_LOG_FLUSH();
     twi_config();
 
     // Initialize sensors.
@@ -447,6 +394,7 @@ int main(void)
     while (true)
     {
         __WFI();
+        NRF_LOG_FLUSH();
     }
 }
 

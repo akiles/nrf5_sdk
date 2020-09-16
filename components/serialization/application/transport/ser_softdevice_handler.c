@@ -50,7 +50,7 @@ __WEAK void os_rsp_set_handler(void)
 
 static void connectivity_reset_low(void)
 {
-    //Signal a reset to the nRF51822 by setting the reset pin on the nRF51822 low.
+    //Signal a reset to the connectivity chip by setting the reset pin low.
     ser_app_hal_nrf_reset_pin_clear();
     ser_app_hal_delay(CONN_CHIP_RESET_TIME);
 
@@ -62,7 +62,7 @@ static void connectivity_reset_high(void)
     //Set the reset level to high again.
     ser_app_hal_nrf_reset_pin_set();
 
-    //Wait for nRF51822 to be ready.
+    //Wait for connectivity chip to be ready.
     ser_app_hal_delay(CONN_CHIP_WAKEUP_TIME);
 }
 
@@ -86,13 +86,13 @@ static void ser_softdevice_evt_handler(uint8_t * p_data, uint16_t length)
 
 void ser_softdevice_flash_operation_success_evt(bool success)
 {
-	uint32_t evt_type = success ? NRF_EVT_FLASH_OPERATION_SUCCESS :
-			NRF_EVT_FLASH_OPERATION_ERROR;
+    uint32_t evt_type = success ? NRF_EVT_FLASH_OPERATION_SUCCESS :
+            NRF_EVT_FLASH_OPERATION_ERROR;
 
-	uint32_t err_code = app_mailbox_put(&sd_soc_evt_mailbox, &evt_type);
-	APP_ERROR_CHECK(err_code);
+    uint32_t err_code = app_mailbox_put(&sd_soc_evt_mailbox, &evt_type);
+    APP_ERROR_CHECK(err_code);
 
-	ser_app_hal_nrf_evt_pending();
+    ser_app_hal_nrf_evt_pending();
 }
 
 /**
@@ -116,7 +116,7 @@ uint32_t sd_evt_get(uint32_t * p_evt_id)
     err_code = app_mailbox_get(&sd_soc_evt_mailbox, p_evt_id);
     if (err_code != NRF_SUCCESS) //if anything in the mailbox
     {
-    	err_code = NRF_ERROR_NOT_FOUND;
+        err_code = NRF_ERROR_NOT_FOUND;
     }
 
     return err_code;
@@ -150,9 +150,9 @@ uint32_t sd_ble_evt_get(uint8_t * p_data, uint16_t * p_len)
 uint32_t sd_ble_evt_mailbox_length_get(uint32_t * p_mailbox_length)
 {
     uint32_t err_code = NRF_SUCCESS;
-    
+
     *p_mailbox_length = app_mailbox_length_get(&sd_ble_evt_mailbox);
-    
+
     return err_code;
 }
 
@@ -170,7 +170,7 @@ uint32_t sd_softdevice_enable(nrf_clock_lf_cfg_t const * p_clock_lf_cfg,
         err_code = app_mailbox_create(&sd_soc_evt_mailbox);
         if (err_code != NRF_SUCCESS)
         {
-        	return err_code;
+            return err_code;
         }
 
         err_code = app_mailbox_create(&sd_ble_evt_mailbox);

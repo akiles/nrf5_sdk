@@ -9,7 +9,15 @@
  * the file.
  *
  */
+
+#ifndef EEPROM_SIMULATOR_H__
+#define EEPROM_SIMULATOR_H__
+
 #include "sdk_errors.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**
  * @ingroup twi_master_with_twis_slave_example
@@ -47,3 +55,9 @@ bool eeprom_simulator_error_check(void);
 uint32_t eeprom_simulator_error_get_and_clear(void);
 
 /** @} */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // EEPROM_SIMULATOR_H__

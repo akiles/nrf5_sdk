@@ -27,6 +27,8 @@
 #include "softdevice_handler.h"
 #include "bsp.h"
 #include "app_timer.h"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 #define CENTRAL_LINK_COUNT              0                                 /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
 #define PERIPHERAL_LINK_COUNT           0                                 /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
@@ -41,8 +43,8 @@
 #define APP_DEVICE_TYPE                 0x02                              /**< 0x02 refers to Beacon. */
 #define APP_MEASURED_RSSI               0xC3                              /**< The Beacon's measured RSSI at 1 meter distance in dBm. */
 #define APP_COMPANY_IDENTIFIER          0x0059                            /**< Company identifier for Nordic Semiconductor ASA. as per www.bluetooth.org. */
-#define APP_MAJOR_VALUE                 0x01, 0x02                        /**< Major value used to identify Beacons. */ 
-#define APP_MINOR_VALUE                 0x03, 0x04                        /**< Minor value used to identify Beacons. */ 
+#define APP_MAJOR_VALUE                 0x01, 0x02                        /**< Major value used to identify Beacons. */
+#define APP_MINOR_VALUE                 0x03, 0x04                        /**< Minor value used to identify Beacons. */
 #define APP_BEACON_UUID                 0x01, 0x12, 0x23, 0x34, \
                                         0x45, 0x56, 0x67, 0x78, \
                                         0x89, 0x9a, 0xab, 0xbc, \
@@ -61,15 +63,15 @@
 static ble_gap_adv_params_t m_adv_params;                                 /**< Parameters to be passed to the stack when starting advertising. */
 static uint8_t m_beacon_info[APP_BEACON_INFO_LENGTH] =                    /**< Information advertised by the Beacon. */
 {
-    APP_DEVICE_TYPE,     // Manufacturer specific information. Specifies the device type in this 
-                         // implementation. 
-    APP_ADV_DATA_LENGTH, // Manufacturer specific information. Specifies the length of the 
+    APP_DEVICE_TYPE,     // Manufacturer specific information. Specifies the device type in this
+                         // implementation.
+    APP_ADV_DATA_LENGTH, // Manufacturer specific information. Specifies the length of the
                          // manufacturer specific data in this implementation.
-    APP_BEACON_UUID,     // 128 bit UUID value. 
-    APP_MAJOR_VALUE,     // Major arbitrary value that can be used to distinguish between Beacons. 
-    APP_MINOR_VALUE,     // Minor arbitrary value that can be used to distinguish between Beacons. 
-    APP_MEASURED_RSSI    // Manufacturer specific information. The Beacon's measured TX power in 
-                         // this implementation. 
+    APP_BEACON_UUID,     // 128 bit UUID value.
+    APP_MAJOR_VALUE,     // Major arbitrary value that can be used to distinguish between Beacons.
+    APP_MINOR_VALUE,     // Minor arbitrary value that can be used to distinguish between Beacons.
+    APP_MEASURED_RSSI    // Manufacturer specific information. The Beacon's measured TX power in
+                         // this implementation.
 };
 
 /**@brief Callback function for asserts in the SoftDevice.
@@ -170,9 +172,9 @@ static void advertising_start(void)
 static void ble_stack_init(void)
 {
     uint32_t err_code;
-    
+
     nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-    
+
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
 
@@ -181,10 +183,10 @@ static void ble_stack_init(void)
                                                     PERIPHERAL_LINK_COUNT,
                                                     &ble_enable_params);
     APP_ERROR_CHECK(err_code);
-    
+
     //Check the ram settings against the used number of links
     CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
-    
+
     // Enable BLE stack.
     err_code = softdevice_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
@@ -207,6 +209,9 @@ int main(void)
 {
     uint32_t err_code;
     // Initialize.
+    err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
     err_code = bsp_init(BSP_INIT_LED, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
     APP_ERROR_CHECK(err_code);
@@ -214,12 +219,16 @@ int main(void)
     advertising_init();
 
     // Start execution.
+    NRF_LOG_INFO("BLE Beacon started\r\n");
     advertising_start();
 
     // Enter main loop.
     for (;; )
     {
-        power_manage();
+        if (NRF_LOG_PROCESS() == false)
+        {
+            power_manage();
+        }
     }
 }
 

@@ -31,9 +31,9 @@
 #include "nrf_drv_clock.h"
 #include "app_util_platform.h"
 
-/*Timer initalization parameters*/   
+/*Timer initalization parameters*/
 #define OP_QUEUES_SIZE          3
-#define APP_TIMER_PRESCALER     0 
+#define APP_TIMER_PRESCALER     0
 
 /**
  * @brief Function for starting lfclk needed by APP_TIMER.
@@ -60,12 +60,12 @@ int main(void)
     APP_TIMER_INIT(APP_TIMER_PRESCALER, OP_QUEUES_SIZE, NULL);
 
     led_sb_init_params_t led_sb_init_param = LED_SB_INIT_DEFAULT_PARAMS(LEDS_MASK);
-    
+
     err_code = led_softblink_init(&led_sb_init_param);
     APP_ERROR_CHECK(err_code);
-    
+
     err_code = led_softblink_start(LEDS_MASK);
-    APP_ERROR_CHECK(err_code);     
+    APP_ERROR_CHECK(err_code);
 
     while (true)
     {

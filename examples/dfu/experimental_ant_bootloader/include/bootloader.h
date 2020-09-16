@@ -26,6 +26,10 @@
 #include "bootloader_types.h"
 #include <dfu_types.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**@brief Function for initializing the Bootloader.
  *
  * @retval     NRF_SUCCESS If bootloader was succesfully initialized.
@@ -84,6 +88,11 @@ uint32_t bootloader_dfu_sd_update_finalize(void);
  */
 uint32_t blocking_flash_word_write(uint32_t * const p_dst, uint32_t data);
 
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // BOOTLOADER_H__
 

@@ -13,7 +13,6 @@
 #include "nrf.h"
 #include "app_error.h"
 #include "nrf_gpio.h"
-#include "app_trace.h"
 #include "ble_db_discovery.h"
 #include "ble_srv_common.h"
 #include "boards.h"
@@ -198,7 +197,7 @@ static void on_evt_hvx(ble_evt_t * p_ble_evt, client_t * p_client, uint32_t inde
                 (p_ble_evt->evt.gattc_evt.params.hvx.len == 1)
         )
         {
-            if(index < LEDS_NUMBER)
+            if (index < LEDS_NUMBER)
             {
                 uint8_t leds[] = LEDS_LIST;
 
@@ -367,13 +366,15 @@ uint32_t client_handling_destroy(const dm_handle_t * p_handle)
     uint32_t      err_code = NRF_SUCCESS;
     client_t    * p_client = &m_client[p_handle->connection_id];
     uint32_t      leds[] = LEDS_LIST;
-	
+
     if (p_client->state != IDLE)
     {
             m_client_count--;
             p_client->state = IDLE;
-					  if(p_handle->connection_id < LEDS_NUMBER)
-							 LEDS_OFF( 1 << leds[p_handle->connection_id] );
+            if (p_handle->connection_id < LEDS_NUMBER)
+            {
+                LEDS_OFF( 1 << leds[p_handle->connection_id] );
+            }
     }
     else
     {

@@ -31,13 +31,18 @@ All rights reserved.
 #include "nrf_sdm.h"
 #include "app_error.h"
 #include "app_util.h"
+#include "hardfault.h"
 #include "nordic_common.h"
 #include "ant_stack_config.h"
 #include "ant_channel_config.h"
 #include "ant_search_config.h"
-#include "app_trace.h"
 #include "app_timer.h"
 #include "softdevice_handler.h"
+#include "sdk_config.h"
+
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 #define APP_TIMER_PRESCALER         0x00                                /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_OP_QUEUE_SIZE     0x04                                /**< Size of timer operation queues. */
@@ -46,18 +51,6 @@ All rights reserved.
 #define ANT_BS_CHANNEL_NUMBER       ((uint8_t) 0)                       /**< Background scanning channel. */
 
 #define ANT_NETWORK_NUMBER          ((uint8_t) 0)                       /**< Default public network number. */
-
-#define ANT_MS_CHANNEL_TYPE         CHANNEL_TYPE_MASTER                 /**< Bi-directional master. */
-#define ANT_BS_CHANNEL_TYPE         CHANNEL_TYPE_SLAVE                  /**< Bi-directional slave. */
-
-#define ANT_BS_DEVICE_NUMBER        ((uint16_t) 0)                      /**< Wild-card. */
-
-#define ANT_DEVICE_TYPE             ((uint8_t) 1)                       /**< Device type. */
-#define ANT_TRANSMISSION_TYPE       ((uint8_t) 5)                       /**< Transmission type. */
-#define ANT_FREQUENCY               ((uint8_t) 77)                      /**< 2477 MHz. */
-
-#define ANT_CHANNEL_PERIOD          ((uint16_t) 2048)                   /**< 16 Hz. */
-#define ANT_CHANNEL_PERIOD_NONE     ((uint16_t) 0x00)                   /**< This is not taken into account. */
 
 #define ANT_BEACON_PAGE             ((uint8_t) 1)
 
@@ -115,26 +108,26 @@ static void application_initialize()
     const ant_channel_config_t ms_channel_config =
     {
         .channel_number    = ANT_MS_CHANNEL_NUMBER,
-        .channel_type      = ANT_MS_CHANNEL_TYPE,
+        .channel_type      = CHANNEL_TYPE_MASTER,
         .ext_assign        = 0x00,
-        .rf_freq           = ANT_FREQUENCY,
-        .transmission_type = ANT_TRANSMISSION_TYPE,
-        .device_type       = ANT_DEVICE_TYPE,
+        .rf_freq           = RF_FREQ,
+        .transmission_type = CHAN_ID_TRANS_TYPE,
+        .device_type       = CHAN_ID_DEV_TYPE,
         .device_number     = dev_num,
-        .channel_period    = ANT_CHANNEL_PERIOD,
+        .channel_period    = CHAN_PERIOD,
         .network_number    = ANT_NETWORK_NUMBER,
     };
 
     const ant_channel_config_t bs_channel_config =
     {
         .channel_number    = ANT_BS_CHANNEL_NUMBER,
-        .channel_type      = ANT_BS_CHANNEL_TYPE,
+        .channel_type      = CHANNEL_TYPE_SLAVE,
         .ext_assign        = EXT_PARAM_ALWAYS_SEARCH,
-        .rf_freq           = ANT_FREQUENCY,
-        .transmission_type = ANT_TRANSMISSION_TYPE,
-        .device_type       = ANT_DEVICE_TYPE,
-        .device_number     = ANT_BS_DEVICE_NUMBER,
-        .channel_period    = ANT_CHANNEL_PERIOD_NONE,
+        .rf_freq           = RF_FREQ,
+        .transmission_type = CHAN_ID_TRANS_TYPE,
+        .device_type       = CHAN_ID_DEV_TYPE,
+        .device_number     = 0x00,              // Wild card
+        .channel_period    = 0x00,              // This is not taken into account.
         .network_number    = ANT_NETWORK_NUMBER,
     };
 
@@ -174,12 +167,13 @@ static void utils_setup(void)
 {
     uint32_t err_code;
 
-    app_trace_init();
-
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
     err_code = bsp_init(BSP_INIT_LED,
                         APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                         NULL);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -214,26 +208,26 @@ void background_scanner_process(ant_evt_t * p_ant_evt)
     uint32_t      err_code;
     ANT_MESSAGE * p_ant_message = (ANT_MESSAGE*)p_ant_evt->msg.evt_buffer;
 
-    switch(p_ant_evt->event)
+    switch (p_ant_evt->event)
     {
         case EVENT_RX:
         {
             err_code = bsp_indication_set(BSP_INDICATE_RCV_OK);
             APP_ERROR_CHECK(err_code);
 
-            if(p_ant_message->ANT_MESSAGE_stExtMesgBF.bANTDeviceID)
+            if (p_ant_message->ANT_MESSAGE_stExtMesgBF.bANTDeviceID)
             {
                 m_last_device_id = uint16_decode(p_ant_message->ANT_MESSAGE_aucExtData);
             }
 
-            if(p_ant_message->ANT_MESSAGE_stExtMesgBF.bANTRssi)
+            if (p_ant_message->ANT_MESSAGE_stExtMesgBF.bANTRssi)
             {
                 m_last_rssi = p_ant_message->ANT_MESSAGE_aucExtData[5];
             }
 
-            app_trace_log("Message number %d\n\r", m_recieved);
-            app_trace_log("Device ID:     %d\n\r", m_last_device_id);
-            app_trace_log("RSSI:          %d\n\r\n\r", m_last_rssi);
+            NRF_LOG_INFO("Message number %d\r\n", m_recieved);
+            NRF_LOG_INFO("Device ID:     %d\r\n", m_last_device_id);
+            NRF_LOG_INFO("RSSI:          %d\r\n\r\n", m_last_rssi);
 
             m_recieved++;
             break;
@@ -246,7 +240,7 @@ void background_scanner_process(ant_evt_t * p_ant_evt)
 }
 
 
-/**@brief Function for setting payload for ANT message and sending it via 
+/**@brief Function for setting payload for ANT message and sending it via
  *        ANT master beacon channel.
  *
  *
@@ -287,7 +281,7 @@ void ant_message_send()
  */
 void master_beacon_process(ant_evt_t * p_ant_evt)
 {
-    switch(p_ant_evt->event)
+    switch (p_ant_evt->event)
     {
         case EVENT_TX:
             ant_message_send();
@@ -312,8 +306,11 @@ int main(void)
     // Enter main loop
     for (;;)
     {
-        err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
+        if (NRF_LOG_PROCESS() == false)
+        {
+            err_code = sd_app_evt_wait();
+            APP_ERROR_CHECK(err_code);
+        }
     }
 }
 /**

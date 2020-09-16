@@ -9,28 +9,22 @@
  * the file.
  *
  */
-
+#include "sdk_config.h"
 #include "nrf_drv_spis.h"
-#include "nrf_log.h"
 #include "nrf_gpio.h"
 #include "boards.h"
 #include "app_error.h"
 #include <string.h>
-
-#if defined(BOARD_PCA10036) || defined(BOARD_PCA10040)
-#define SPIS_CS_PIN  29 /**< SPIS CS Pin. Should be shortened with @ref SPI_CS_PIN */
-#elif defined(BOARD_PCA10028)
-#define SPIS_CS_PIN  4 /**< SPIS CS Pin. Should be shortened with @ref SPI_CS_PIN */
-#else
-#error "Example is not supported on that board."
-#endif
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 #define SPIS_INSTANCE 1 /**< SPIS instance index. */
 static const nrf_drv_spis_t spis = NRF_DRV_SPIS_INSTANCE(SPIS_INSTANCE);/**< SPIS instance. */
 
 #define TEST_STRING "Nordic"
 static uint8_t       m_tx_buf[] = TEST_STRING;           /**< TX buffer. */
-static uint8_t       m_rx_buf[sizeof(TEST_STRING)+1];    /**< RX buffer. */
+static uint8_t       m_rx_buf[sizeof(TEST_STRING) + 1];    /**< RX buffer. */
 static const uint8_t m_length = sizeof(m_tx_buf);        /**< Transfer length. */
 
 static volatile bool spis_xfer_done; /**< Flag used to indicate that SPIS instance completed the transfer. */
@@ -45,7 +39,7 @@ void spis_event_handler(nrf_drv_spis_event_t event)
     if (event.evt_type == NRF_DRV_SPIS_XFER_DONE)
     {
         spis_xfer_done = true;
-        NRF_LOG_PRINTF(" Transfer completed. Received: %s\n",m_rx_buf);
+        NRF_LOG_INFO(" Transfer completed. Received: %s\r\n",(uint32_t)m_rx_buf);
     }
 }
 
@@ -59,15 +53,18 @@ int main(void)
     LEDS_CONFIGURE(BSP_LED_0_MASK);
     LEDS_OFF(BSP_LED_0_MASK);
 
-    APP_ERROR_CHECK(NRF_LOG_INIT());
-    NRF_LOG_PRINTF("SPIS example\n");
+    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
+    NRF_LOG_INFO("SPIS example\r\n");
 
-    nrf_drv_spis_config_t spis_config = NRF_DRV_SPIS_DEFAULT_CONFIG(SPIS_INSTANCE);
-    spis_config.csn_pin               = SPIS_CS_PIN;
-    
+    nrf_drv_spis_config_t spis_config = NRF_DRV_SPIS_DEFAULT_CONFIG;
+    spis_config.csn_pin               = APP_SPIS_CS_PIN;
+    spis_config.miso_pin              = APP_SPIS_MISO_PIN;
+    spis_config.mosi_pin              = APP_SPIS_MOSI_PIN;
+    spis_config.sck_pin               = APP_SPIS_SCK_PIN;
+
     APP_ERROR_CHECK(nrf_drv_spis_init(&spis, &spis_config, spis_event_handler));
 
-    while(1)
+    while (1)
     {
         memset(m_rx_buf, 0, m_length);
         spis_xfer_done = false;
@@ -78,6 +75,8 @@ int main(void)
         {
             __WFE();
         }
+
+        NRF_LOG_FLUSH();
 
         LEDS_INVERT(BSP_LED_0_MASK);
     }

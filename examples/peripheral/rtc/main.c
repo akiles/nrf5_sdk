@@ -17,12 +17,11 @@
  * @brief Real Time Counter Example Application main file.
  *
  * This file contains the source code for a sample application using the Real Time Counter (RTC).
- * 
+ *
  */
 
 #include "nrf.h"
 #include "nrf_gpio.h"
-#include "nrf_drv_config.h"
 #include "nrf_drv_rtc.h"
 #include "nrf_drv_clock.h"
 #include "boards.h"
@@ -87,14 +86,16 @@ static void rtc_config(void)
     uint32_t err_code;
 
     //Initialize RTC instance
-    err_code = nrf_drv_rtc_init(&rtc, NULL, rtc_handler);
+    nrf_drv_rtc_config_t config = NRF_DRV_RTC_DEFAULT_CONFIG;
+    config.prescaler = 4095;
+    err_code = nrf_drv_rtc_init(&rtc, &config, rtc_handler);
     APP_ERROR_CHECK(err_code);
 
     //Enable tick event & interrupt
     nrf_drv_rtc_tick_enable(&rtc,true);
 
     //Set compare channel to trigger interrupt after COMPARE_COUNTERTIME seconds
-    err_code = nrf_drv_rtc_cc_set(&rtc,0,COMPARE_COUNTERTIME*RTC0_CONFIG_FREQUENCY,true);
+    err_code = nrf_drv_rtc_cc_set(&rtc,0,COMPARE_COUNTERTIME * 8,true);
     APP_ERROR_CHECK(err_code);
 
     //Power on RTC instance

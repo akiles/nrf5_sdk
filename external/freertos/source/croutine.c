@@ -72,7 +72,7 @@
 #include "croutine.h"
 
 /* Remove the whole file is co-routines are not being used. */
-#if( configUSE_CO_ROUTINES != 0 )
+#if ( configUSE_CO_ROUTINES != 0 )
 
 /*
  * Some kernel aware debuggers require data to be viewed to be global, rather
@@ -108,7 +108,7 @@ static TickType_t xCoRoutineTickCount = 0, xLastTickCount = 0, xPassedTicks = 0;
  */
 #define prvAddCoRoutineToReadyQueue( pxCRCB )																		\
 {																													\
-	if( pxCRCB->uxPriority > uxTopCoRoutineReadyPriority )															\
+	if ( pxCRCB->uxPriority > uxTopCoRoutineReadyPriority )															\
 	{																												\
 		uxTopCoRoutineReadyPriority = pxCRCB->uxPriority;															\
 	}																												\
@@ -148,18 +148,18 @@ CRCB_t *pxCoRoutine;
 
 	/* Allocate the memory that will store the co-routine control block. */
 	pxCoRoutine = ( CRCB_t * ) pvPortMalloc( sizeof( CRCB_t ) );
-	if( pxCoRoutine )
+	if ( pxCoRoutine )
 	{
 		/* If pxCurrentCoRoutine is NULL then this is the first co-routine to
 		be created and the co-routine data structures need initialising. */
-		if( pxCurrentCoRoutine == NULL )
+		if ( pxCurrentCoRoutine == NULL )
 		{
 			pxCurrentCoRoutine = pxCoRoutine;
 			prvInitialiseCoRoutineLists();
 		}
 
 		/* Check the priority is within limits. */
-		if( uxPriority >= configMAX_CO_ROUTINE_PRIORITIES )
+		if ( uxPriority >= configMAX_CO_ROUTINE_PRIORITIES )
 		{
 			uxPriority = configMAX_CO_ROUTINE_PRIORITIES - 1;
 		}
@@ -214,7 +214,7 @@ TickType_t xTimeToWake;
 	/* The list item will be inserted in wake time order. */
 	listSET_LIST_ITEM_VALUE( &( pxCurrentCoRoutine->xGenericListItem ), xTimeToWake );
 
-	if( xTimeToWake < xCoRoutineTickCount )
+	if ( xTimeToWake < xCoRoutineTickCount )
 	{
 		/* Wake time has overflowed.  Place this item in the
 		overflow list. */
@@ -227,7 +227,7 @@ TickType_t xTimeToWake;
 		vListInsert( ( List_t * ) pxDelayedCoRoutineList, ( ListItem_t * ) &( pxCurrentCoRoutine->xGenericListItem ) );
 	}
 
-	if( pxEventList )
+	if ( pxEventList )
 	{
 		/* Also add the co-routine to an event list.  If this is done then the
 		function must be called with interrupts disabled. */
@@ -241,7 +241,7 @@ static void prvCheckPendingReadyList( void )
 	/* Are there any co-routines waiting to get moved to the ready list?  These
 	are co-routines that have been readied by an ISR.  The ISR cannot access
 	the	ready lists itself. */
-	while( listLIST_IS_EMPTY( &xPendingReadyCoRoutineList ) == pdFALSE )
+	while ( listLIST_IS_EMPTY( &xPendingReadyCoRoutineList ) == pdFALSE )
 	{
 		CRCB_t *pxUnblockedCRCB;
 
@@ -264,13 +264,13 @@ static void prvCheckDelayedList( void )
 CRCB_t *pxCRCB;
 
 	xPassedTicks = xTaskGetTickCount() - xLastTickCount;
-	while( xPassedTicks )
+	while ( xPassedTicks )
 	{
 		xCoRoutineTickCount++;
 		xPassedTicks--;
 
 		/* If the tick count has overflowed we need to swap the ready lists. */
-		if( xCoRoutineTickCount == 0 )
+		if ( xCoRoutineTickCount == 0 )
 		{
 			List_t * pxTemp;
 
@@ -282,11 +282,11 @@ CRCB_t *pxCRCB;
 		}
 
 		/* See if this tick has made a timeout expire. */
-		while( listLIST_IS_EMPTY( pxDelayedCoRoutineList ) == pdFALSE )
+		while ( listLIST_IS_EMPTY( pxDelayedCoRoutineList ) == pdFALSE )
 		{
 			pxCRCB = ( CRCB_t * ) listGET_OWNER_OF_HEAD_ENTRY( pxDelayedCoRoutineList );
 
-			if( xCoRoutineTickCount < listGET_LIST_ITEM_VALUE( &( pxCRCB->xGenericListItem ) ) )
+			if ( xCoRoutineTickCount < listGET_LIST_ITEM_VALUE( &( pxCRCB->xGenericListItem ) ) )
 			{
 				/* Timeout not yet expired. */
 				break;
@@ -302,7 +302,7 @@ CRCB_t *pxCRCB;
 				( void ) uxListRemove( &( pxCRCB->xGenericListItem ) );
 
 				/* Is the co-routine waiting on an event also? */
-				if( pxCRCB->xEventListItem.pvContainer )
+				if ( pxCRCB->xEventListItem.pvContainer )
 				{
 					( void ) uxListRemove( &( pxCRCB->xEventListItem ) );
 				}
@@ -326,9 +326,9 @@ void vCoRoutineSchedule( void )
 	prvCheckDelayedList();
 
 	/* Find the highest priority queue that contains ready co-routines. */
-	while( listLIST_IS_EMPTY( &( pxReadyCoRoutineLists[ uxTopCoRoutineReadyPriority ] ) ) )
+	while ( listLIST_IS_EMPTY( &( pxReadyCoRoutineLists[ uxTopCoRoutineReadyPriority ] ) ) )
 	{
-		if( uxTopCoRoutineReadyPriority == 0 )
+		if ( uxTopCoRoutineReadyPriority == 0 )
 		{
 			/* No more co-routines to check. */
 			return;
@@ -351,7 +351,7 @@ static void prvInitialiseCoRoutineLists( void )
 {
 UBaseType_t uxPriority;
 
-	for( uxPriority = 0; uxPriority < configMAX_CO_ROUTINE_PRIORITIES; uxPriority++ )
+	for ( uxPriority = 0; uxPriority < configMAX_CO_ROUTINE_PRIORITIES; uxPriority++ )
 	{
 		vListInitialise( ( List_t * ) &( pxReadyCoRoutineLists[ uxPriority ] ) );
 	}
@@ -379,7 +379,7 @@ BaseType_t xReturn;
 	( void ) uxListRemove( &( pxUnblockedCRCB->xEventListItem ) );
 	vListInsertEnd( ( List_t * ) &( xPendingReadyCoRoutineList ), &( pxUnblockedCRCB->xEventListItem ) );
 
-	if( pxUnblockedCRCB->uxPriority >= pxCurrentCoRoutine->uxPriority )
+	if ( pxUnblockedCRCB->uxPriority >= pxCurrentCoRoutine->uxPriority )
 	{
 		xReturn = pdTRUE;
 	}

@@ -21,11 +21,11 @@
 #include "nordic_common.h"
 #include "softdevice_handler.h"
 #include "app_timer.h"
-#include "app_trace.h"
 #include "boards.h"
 #include "bsp.h"
 #include "bsp_btn_ble.h"
 #include "ble.h"
+#include "ble_hci.h"
 #include "app_uart.h"
 #include "ble_advdata.h"
 #include "ble_advertising.h"
@@ -33,26 +33,30 @@
 #include "ble_db_discovery.h"
 #include "ble_lbs_c.h"
 #include "ble_conn_state.h"
+
+#define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
+#include "nrf_log_ctrl.h"
+
+#if (NRF_SD_BLE_API_VERSION == 3)
+#define NRF_BLE_MAX_MTU_SIZE      GATT_MTU_SIZE_DEFAULT                      /**< MTU size used in the softdevice enabling and to reply to a BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST event. */
+#endif
 
 #define CENTRAL_LINK_COUNT        8                                          /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
 #define PERIPHERAL_LINK_COUNT     0                                          /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
 #define TOTAL_LINK_COUNT          CENTRAL_LINK_COUNT + PERIPHERAL_LINK_COUNT /**< Total number of links used by the application. */
-#define APPL_LOG                  app_trace_log                              /**< Macro used to log debug information over UART. */
 
 #define CENTRAL_SCANNING_LED      BSP_LED_0_MASK
 #define CENTRAL_CONNECTED_LED     BSP_LED_1_MASK
 
 #define APP_TIMER_PRESCALER       0                                          /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS      (2+BSP_APP_TIMERS_NUMBER)                  /**< Maximum number of timers used by the application. */
+#define APP_TIMER_MAX_TIMERS      (2 + BSP_APP_TIMERS_NUMBER)                  /**< Maximum number of timers used by the application. */
 #define APP_TIMER_OP_QUEUE_SIZE   2                                          /**< Size of timer operation queues. */
 
 #define SCAN_INTERVAL             0x00A0                                     /**< Determines scan interval in units of 0.625 millisecond. */
 #define SCAN_WINDOW               0x0050                                     /**< Determines scan window in units of 0.625 millisecond. */
 #define SCAN_TIMEOUT              0x0000                                     /**< Timout when scanning. 0x0000 disables timeout. */
-#define SCAN_REQUEST              0                                          /**< Active scannin is not set. */
-#define SCAN_WHITELIST_ONLY       0                                          /**< We will not ignore unknown devices. */
-                                                                             
+
 #define MIN_CONNECTION_INTERVAL   MSEC_TO_UNITS(7.5, UNIT_1_25_MS)           /**< Determines minimum connection interval in milliseconds. */
 #define MAX_CONNECTION_INTERVAL   MSEC_TO_UNITS(30, UNIT_1_25_MS)            /**< Determines maximum connection interval in milliseconds. */
 #define SLAVE_LATENCY             0                                          /**< Determines slave latency in terms of connection events. */
@@ -69,14 +73,22 @@ static const char m_target_periph_name[] = "Nordic_Blinky";                  /**
 
 
 /** @brief Scan parameters requested for scanning and connection. */
-static const ble_gap_scan_params_t m_scan_param =
+static const ble_gap_scan_params_t m_scan_params =
 {
-    SCAN_REQUEST,
-    SCAN_WHITELIST_ONLY,
-    NULL,
-    (uint16_t)SCAN_INTERVAL,
-    (uint16_t)SCAN_WINDOW,
-    SCAN_TIMEOUT
+    .active   = 0,
+    .interval = SCAN_INTERVAL,
+    .window   = SCAN_WINDOW,
+    .timeout  = SCAN_TIMEOUT,
+
+    #if (NRF_SD_BLE_API_VERSION == 2)
+        .selective   = 0,
+        .p_whitelist = NULL,
+    #endif
+
+    #if (NRF_SD_BLE_API_VERSION == 3)
+        .use_whitelist  = 0,
+        .adv_dir_report = 0,
+    #endif
 };
 
 /**@brief Connection parameters requested for connection. */
@@ -160,20 +172,18 @@ static uint32_t adv_report_parse(uint8_t type, uint8_array_t * p_advdata, uint8_
  */
 static void scan_start(void)
 {
-    ret_code_t err_code;
+    ret_code_t ret;
 
-    err_code = sd_ble_gap_scan_stop();
-    // It is okay to ignore this error since we are stopping the scan anyway.
-    if (err_code != NRF_ERROR_INVALID_STATE)
-    {
-        APP_ERROR_CHECK(err_code);
-    }
+    (void) sd_ble_gap_scan_stop();
 
-    NRF_LOG_PRINTF("[APP]: start scanning for device name %s\r\n", m_target_periph_name);
-    err_code = sd_ble_gap_scan_start(&m_scan_param);
-    APP_ERROR_CHECK(err_code);
+    NRF_LOG_INFO("start scanning for device name %s\r\n", (uint32_t)m_target_periph_name);
+    ret = sd_ble_gap_scan_start(&m_scan_params);
+    APP_ERROR_CHECK(ret);
 
+    ret = bsp_indication_set(BSP_INDICATE_SCANNING);
+    APP_ERROR_CHECK(ret);
 }
+
 
 
 /**@brief Handles events coming from the LED Button central module.
@@ -183,16 +193,15 @@ static void scan_start(void)
  */
 static void lbs_c_evt_handler(ble_lbs_c_t * p_lbs_c, ble_lbs_c_evt_t * p_lbs_c_evt)
 {
-    const uint16_t conn_handle = p_lbs_c_evt->conn_handle;
     switch (p_lbs_c_evt->evt_type)
     {
         case BLE_LBS_C_EVT_DISCOVERY_COMPLETE:
         {
             ret_code_t err_code;
 
-            NRF_LOG_PRINTF("[APP]: LED Button service discovered on conn_handle 0x%x\r\n", 
-                            conn_handle);
-            
+            NRF_LOG_INFO("LED Button service discovered on conn_handle 0x%x\r\n",
+                    p_lbs_c_evt->conn_handle);
+
             err_code = app_button_enable();
             APP_ERROR_CHECK(err_code);
 
@@ -203,8 +212,8 @@ static void lbs_c_evt_handler(ble_lbs_c_t * p_lbs_c, ble_lbs_c_evt_t * p_lbs_c_e
 
         case BLE_LBS_C_EVT_BUTTON_NOTIFICATION:
         {
-            NRF_LOG_PRINTF("[APP]: Link 0x%x, Button state changed on peer to 0x%x\r\n", 
-                           conn_handle,
+            NRF_LOG_INFO("Link 0x%x, Button state changed on peer to 0x%x\r\n",
+                           p_lbs_c_evt->conn_handle,
                            p_lbs_c_evt->params.button.button_state);
             if (p_lbs_c_evt->params.button.button_state)
             {
@@ -269,7 +278,7 @@ static void on_adv_report(const ble_evt_t * const p_ble_evt)
     {
         if (strlen(m_target_periph_name) != 0)
         {
-            if(memcmp(m_target_periph_name, dev_name.p_data, dev_name.size) == 0)
+            if (memcmp(m_target_periph_name, dev_name.p_data, dev_name.size) == 0)
             {
                 do_connect = true;
             }
@@ -279,10 +288,10 @@ static void on_adv_report(const ble_evt_t * const p_ble_evt)
     if (do_connect)
     {
         // Initiate connection.
-        err_code = sd_ble_gap_connect(peer_addr, &m_scan_param, &m_connection_param);
+        err_code = sd_ble_gap_connect(peer_addr, &m_scan_params, &m_connection_param);
         if (err_code != NRF_SUCCESS)
         {
-            APPL_LOG("[APPL]: Connection Request Failed, reason %d\r\n", err_code);
+            NRF_LOG_ERROR("Connection Request Failed, reason %d\r\n", err_code);
         }
     }
 }
@@ -301,6 +310,8 @@ static void on_adv_report(const ble_evt_t * const p_ble_evt)
  */
 static void on_ble_evt(const ble_evt_t * const p_ble_evt)
 {
+    ret_code_t err_code;
+
     // For readability.
     const ble_gap_evt_t * const p_gap_evt = &p_ble_evt->evt.gap_evt;
 
@@ -310,14 +321,12 @@ static void on_ble_evt(const ble_evt_t * const p_ble_evt)
         // discovery, update LEDs status and resume scanning if necessary.
         case BLE_GAP_EVT_CONNECTED:
         {
-            uint32_t err_code;
-
-            NRF_LOG_PRINTF("[APP]: link 0x%x established, start discovery on it\r\n", 
+            NRF_LOG_INFO("link 0x%x established, start discovery on it\r\n",
                            p_gap_evt->conn_handle);
             APP_ERROR_CHECK_BOOL(p_gap_evt->conn_handle < TOTAL_LINK_COUNT);
-           
-            err_code = ble_lbs_c_handles_assign(&m_ble_lbs_c[p_gap_evt->conn_handle], 
-                                                p_gap_evt->conn_handle, 
+
+            err_code = ble_lbs_c_handles_assign(&m_ble_lbs_c[p_gap_evt->conn_handle],
+                                                p_gap_evt->conn_handle,
                                                 NULL);
             APP_ERROR_CHECK(err_code);
 
@@ -349,11 +358,11 @@ static void on_ble_evt(const ble_evt_t * const p_ble_evt)
         {
             uint32_t central_link_cnt; // Number of central links.
 
-            NRF_LOG_PRINTF("LBS central link 0x%x disconnected (reason: %d)\r\n",
+            NRF_LOG_INFO("LBS central link 0x%x disconnected (reason: %d)\r\n",
                            p_gap_evt->conn_handle,
                            p_gap_evt->params.disconnected.reason);
 
-            uint32_t err_code = app_button_disable();
+            err_code = app_button_disable();
             APP_ERROR_CHECK(err_code);
 
             // Start scanning
@@ -377,18 +386,41 @@ static void on_ble_evt(const ble_evt_t * const p_ble_evt)
             // We have not specified a timeout for scanning, so only connection attemps can timeout.
             if (p_gap_evt->params.timeout.src == BLE_GAP_TIMEOUT_SRC_CONN)
             {
-                APPL_LOG("[APPL]: Connection Request timed out.\r\n");
+                NRF_LOG_DEBUG("Connection Request timed out.\r\n");
             }
         } break; // BLE_GAP_EVT_TIMEOUT
 
         case BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST:
         {
             // Accept parameters requested by peer.
-            ret_code_t err_code;
             err_code = sd_ble_gap_conn_param_update(p_gap_evt->conn_handle,
                                         &p_gap_evt->params.conn_param_update_request.conn_params);
             APP_ERROR_CHECK(err_code);
         } break; // BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST
+
+        case BLE_GATTC_EVT_TIMEOUT:
+            // Disconnect on GATT Client timeout event.
+            NRF_LOG_DEBUG("GATT Client Timeout.\r\n");
+            err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gattc_evt.conn_handle,
+                                             BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+            APP_ERROR_CHECK(err_code);
+            break; // BLE_GATTC_EVT_TIMEOUT
+
+        case BLE_GATTS_EVT_TIMEOUT:
+            // Disconnect on GATT Server timeout event.
+            NRF_LOG_DEBUG("GATT Server Timeout.\r\n");
+            err_code = sd_ble_gap_disconnect(p_ble_evt->evt.gatts_evt.conn_handle,
+                                             BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+            APP_ERROR_CHECK(err_code);
+            break; // BLE_GATTS_EVT_TIMEOUT
+
+#if (NRF_SD_BLE_API_VERSION == 3)
+        case BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST:
+            err_code = sd_ble_gatts_exchange_mtu_reply(p_ble_evt->evt.gatts_evt.conn_handle,
+                                                       NRF_BLE_MAX_MTU_SIZE);
+            APP_ERROR_CHECK(err_code);
+            break; // BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST
+#endif
 
         default:
             // No implementation needed.
@@ -431,7 +463,7 @@ static void lbs_c_init(void)
 
     lbs_c_init_obj.evt_handler = lbs_c_evt_handler;
 
-    for(m_ble_lbs_c_count = 0; m_ble_lbs_c_count < TOTAL_LINK_COUNT; m_ble_lbs_c_count++)
+    for (m_ble_lbs_c_count = 0; m_ble_lbs_c_count < TOTAL_LINK_COUNT; m_ble_lbs_c_count++)
     {
         err_code = ble_lbs_c_init(&m_ble_lbs_c[m_ble_lbs_c_count], &lbs_c_init_obj);
         APP_ERROR_CHECK(err_code);
@@ -447,27 +479,28 @@ static void lbs_c_init(void)
 static void ble_stack_init(void)
 {
     ret_code_t err_code;
-    
+
     nrf_clock_lf_cfg_t clock_lf_cfg = NRF_CLOCK_LFCLKSRC;
-    
+
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
-    
+
     ble_enable_params_t ble_enable_params;
     err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
                                                     PERIPHERAL_LINK_COUNT,
                                                     &ble_enable_params);
     APP_ERROR_CHECK(err_code);
-    
-    // Stack checks first if there are still entries in the table before checking if a vendor
-    // specific UUID is already in the table thus to be able to call sd_ble_uuid_vs_add several
-    // times with the same entry, vs_uuid_count has to be 1 bigger than what is actually needed.
-    ble_enable_params.common_enable_params.vs_uuid_count = 2;
-    
+
+    // Use the max config: 8 central, 0 periph, 10 VS UUID
+    ble_enable_params.common_enable_params.vs_uuid_count = 10;
+
     // Check the ram settings against the used number of links
     CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
-    
+
     // Enable BLE stack.
+#if (NRF_SD_BLE_API_VERSION == 3)
+    ble_enable_params.gatt_enable_params.att_mtu = NRF_BLE_MAX_MTU_SIZE;
+#endif
     err_code = softdevice_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
 
@@ -520,7 +553,7 @@ static void button_event_handler(uint8_t pin_no, uint8_t button_action)
             err_code = led_status_send_to_all(button_action);
             if (err_code == NRF_SUCCESS)
             {
-                NRF_LOG_PRINTF("LBS write LED state %d\r\n", button_action);
+                NRF_LOG_INFO("LBS write LED state %d\r\n", button_action);
             }
             break;
 
@@ -559,7 +592,7 @@ static void buttons_init(void)
  */
 static void db_disc_handler(ble_db_discovery_evt_t * p_evt)
 {
-    NRF_LOG_PRINTF("[APP]: call to ble_lbs_on_db_disc_evt for instance %d and link 0x%x!\r\n", 
+    NRF_LOG_INFO("call to ble_lbs_on_db_disc_evt for instance %d and link 0x%x!\r\n",
                     p_evt->conn_handle,
                     p_evt->conn_handle);
     ble_lbs_on_db_disc_evt(&m_ble_lbs_c[p_evt->conn_handle], p_evt);
@@ -589,9 +622,9 @@ int main(void)
 {
     ret_code_t err_code;
 
-    err_code = NRF_LOG_INIT();
+    err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
-    NRF_LOG_PRINTF("[APP]: Multilink Example\r\n");
+    NRF_LOG_INFO("Multilink Example\r\n");
     leds_init();
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
     buttons_init();
@@ -609,7 +642,10 @@ int main(void)
 
     for (;;)
     {
-        // Wait for BLE events.
-        power_manage();
+        if (NRF_LOG_PROCESS() == false)
+        {
+            // Wait for BLE events.
+            power_manage();
+        }
     }
 }

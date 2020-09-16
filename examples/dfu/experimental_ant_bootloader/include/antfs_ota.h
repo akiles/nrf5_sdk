@@ -10,6 +10,10 @@ All rights reserved.
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*
  * OTA Update Information File
  */
@@ -99,4 +103,9 @@ void antfs_ota_update_information_file_get (uint32_t * p_length, uint8_t ** pp_d
 bool antfs_ota_image_header_parsing (uint8_t ** pp_data, uint32_t * p_length);
 ota_image_header_t * antfs_ota_image_header_get (void);
 uint16_t antfs_ota_image_header_crc_get (void);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif // ANTFS_OTA_H__

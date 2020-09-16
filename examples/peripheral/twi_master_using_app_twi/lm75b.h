@@ -16,6 +16,10 @@
 
 #include "app_twi.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 // 0x90 is the LM75B's address in the mbed Application Shield, it contains
 // R/W bit and "nrf_drv_twi" (and consequently "app_twi") requires slave
@@ -49,5 +53,10 @@ extern uint8_t const lm75b_thyst_reg_addr;
 #define LM75B_INIT_TRANSFER_COUNT 1
 extern app_twi_transfer_t const lm75b_init_transfers[LM75B_INIT_TRANSFER_COUNT];
 
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // LM75B_H__

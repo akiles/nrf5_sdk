@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
 <project>
-  <fileVersion>2</fileVersion>
-  <configuration>
-    <name>nrf52832_xxaa_s132</name>
+  <fileVersion>2</fileVersion>  <configuration>
+    <name>nrf52832_xxaa</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -1346,6 +1345,6 @@
         <loadFlag>0</loadFlag>
       </plugin>
     </debuggerPlugins>
-  </configuration>
-</project>
+  </configuration></project>
+
 

@@ -38,11 +38,19 @@
   #include "wt51822.h"
 #elif defined(BOARD_N5DK1)
   #include "n5_starterkit.h"
+#elif defined (BOARD_D52DK1)
+  #include "d52_starterkit.h"
+#elif defined (BOARD_ARDUINO_PRIMO)
+  #include "arduino_primo.h"
 #elif defined(BOARD_CUSTOM)
   #include "custom_board.h"
 #else
 #error "Board is not defined"
 
+#endif
+
+#ifdef __cplusplus
+extern "C" {
 #endif
 
 #define LEDS_OFF(leds_mask) do {  NRF_GPIO->OUTSET = (leds_mask) & (LEDS_MASK & LEDS_INV_MASK); \
@@ -61,5 +69,10 @@
                                   for (pin = 0; pin < 32; pin++) \
                                       if ( (leds_mask) & (1 << pin) )   \
                                           nrf_gpio_cfg_output(pin); } while (0)
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

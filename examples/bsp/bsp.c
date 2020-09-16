@@ -19,6 +19,7 @@
 #include "nrf_error.h"
 
 #ifdef BSP_UART_SUPPORT
+#define NRF_LOG_MODULE_NAME "BSP"
 #include "nrf_log.h"
 #endif // BSP_UART_SUPPORT
 
@@ -139,7 +140,7 @@ uint32_t bsp_buttons_state_get(uint32_t * p_buttons_state)
 uint32_t bsp_button_is_pressed(uint32_t button, bool * p_state)
 {
 #if BUTTONS_NUMBER > 0
-    if(button < BUTTONS_NUMBER)
+    if (button < BUTTONS_NUMBER)
     {
         uint32_t buttons = ~NRF_GPIO->IN;
         *p_state = (buttons & (1 << m_buttons_list[button])) ? true : false;
@@ -176,7 +177,7 @@ static void bsp_button_event_handler(uint8_t pin_no, uint8_t button_action)
 
     if (button < BUTTONS_NUMBER)
     {
-        switch(button_action)
+        switch (button_action)
         {
             case APP_BUTTON_PUSH:
                 event = m_events_list[button].push_event;
@@ -501,9 +502,8 @@ uint32_t bsp_indication_text_set(bsp_indication_t indicate, char const * p_text)
     uint32_t err_code = bsp_indication_set(indicate);
 
 #ifdef BSP_UART_SUPPORT
-    NRF_LOG_PRINTF("%s", p_text);
+    NRF_LOG_INFO("%s",(uint32_t)p_text);
 #endif // BSP_UART_SUPPORT
-
     return err_code;
 }
 
@@ -665,6 +665,16 @@ uint32_t bsp_wakeup_buttons_set(uint32_t wakeup_buttons)
         new_cnf |= (new_sense << GPIO_PIN_CNF_SENSE_Pos);
         NRF_GPIO->PIN_CNF[m_buttons_list[i]] = new_cnf;
     }
+    return NRF_SUCCESS;
+#else
+    return NRF_ERROR_NOT_SUPPORTED;
+#endif
+}
+
+uint32_t bsp_wakeup_nfc_set(void)
+{
+#if defined(BOARD_PCA10040)
+    NRF_NFCT->TASKS_SENSE = 1;
     return NRF_SUCCESS;
 #else
     return NRF_ERROR_NOT_SUPPORTED;

@@ -45,7 +45,7 @@ void in_pin_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
     nrf_drv_gpiote_out_toggle(PIN_OUT);
 }
 /**
- * @brief Function for configuring: PIN_IN pin for input, PIN_OUT pin for output, 
+ * @brief Function for configuring: PIN_IN pin for input, PIN_OUT pin for output,
  * and configures GPIOTE to give an interrupt on pin change.
  */
 static void gpio_init(void)
@@ -54,7 +54,7 @@ static void gpio_init(void)
 
     err_code = nrf_drv_gpiote_init();
     APP_ERROR_CHECK(err_code);
-    
+
     nrf_drv_gpiote_out_config_t out_config = GPIOTE_CONFIG_OUT_SIMPLE(false);
 
     err_code = nrf_drv_gpiote_out_init(PIN_OUT, &out_config);

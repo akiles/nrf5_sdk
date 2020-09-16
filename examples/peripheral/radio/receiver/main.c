@@ -17,7 +17,7 @@
 * @ingroup nrf_dev_radio_rx_example
 * @brief Radio Receiver example Application main file.
 *
-* This file contains the source code for a sample application using the NRF_RADIO peripheral. 
+* This file contains the source code for a sample application using the NRF_RADIO peripheral.
 *
 */
 #include <stdint.h>
@@ -30,19 +30,14 @@
 #include "app_timer.h"
 #include "nordic_common.h"
 #include "nrf_error.h"
+ #define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 #define APP_TIMER_PRESCALER      0                     /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_OP_QUEUE_SIZE  2                     /**< Size of timer operation queues. */
 
-#define UART_TX_BUF_SIZE 256                           /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 1                             /**< UART RX buffer size. */
-
 static uint32_t                   packet;              /**< Packet to transmit. */
-
-void uart_error_handle(app_uart_evt_t * p_event)
-{
-   // No implementation needed.
-}
 
 /**@brief Function for initialization oscillators.
  */
@@ -121,22 +116,7 @@ int main(void)
     clock_initialization();
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
 
-    const app_uart_comm_params_t comm_params =  
-    {
-        RX_PIN_NUMBER, 
-        TX_PIN_NUMBER, 
-        RTS_PIN_NUMBER, 
-        CTS_PIN_NUMBER, 
-        APP_UART_FLOW_CONTROL_ENABLED, 
-        false, 
-        UART_BAUDRATE_BAUDRATE_Baud115200
-    };   
-    APP_UART_FIFO_INIT(&comm_params, 
-                       UART_RX_BUF_SIZE, 
-                       UART_TX_BUF_SIZE, 
-                       uart_error_handle, 
-                       APP_IRQ_PRIORITY_LOW,
-                       err_code);
+    err_code = NRF_LOG_INIT(NULL);
     APP_ERROR_CHECK(err_code);
     err_code = bsp_init(BSP_INIT_LED, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
     APP_ERROR_CHECK(err_code);
@@ -145,17 +125,19 @@ int main(void)
     radio_configure();
     NRF_RADIO->PACKETPTR = (uint32_t)&packet;
 
-    err_code = bsp_indication_text_set(BSP_INDICATE_USER_STATE_OFF, "Wait for first packet\n\r");
+    err_code = bsp_indication_text_set(BSP_INDICATE_USER_STATE_OFF, "Wait for first packet\r\n");
     APP_ERROR_CHECK(err_code);
+    NRF_LOG_FLUSH();    
 
     while (true)
     {
         uint32_t received = read_packet();
 
-        err_code = bsp_indication_text_set(BSP_INDICATE_RCV_OK, "Packet was received\n\r");
+        err_code = bsp_indication_text_set(BSP_INDICATE_RCV_OK, "Packet was received\r\n");
         APP_ERROR_CHECK(err_code);
-        
-        printf("The contents of the package is %u\n\r", (unsigned int)received);
+
+        NRF_LOG_INFO("The contents of the package is %u\r\n", (unsigned int)received);
+        NRF_LOG_FLUSH();
     }
 }
 

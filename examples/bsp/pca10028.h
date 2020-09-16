@@ -12,6 +12,10 @@
 #ifndef PCA10028_H
 #define PCA10028_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // LEDs definitions for PCA10028
 #define LEDS_NUMBER    4
 
@@ -68,10 +72,10 @@
 #define RTS_PIN_NUMBER 8
 #define HWFC           true
 
-#define SPIS_MISO_PIN  28    // SPI MISO signal. 
-#define SPIS_CSN_PIN   12    // SPI CSN signal. 
-#define SPIS_MOSI_PIN  25    // SPI MOSI signal. 
-#define SPIS_SCK_PIN   29    // SPI SCK signal. 
+#define SPIS_MISO_PIN  28    // SPI MISO signal.
+#define SPIS_CSN_PIN   12    // SPI CSN signal.
+#define SPIS_MOSI_PIN  25    // SPI MOSI signal.
+#define SPIS_SCK_PIN   29    // SPI SCK signal.
 
 #define SPIM0_SCK_PIN       4     /**< SPI clock GPIO pin number. */
 #define SPIM0_MOSI_PIN      1     /**< SPI Master Out Slave In GPIO pin number. */
@@ -147,6 +151,11 @@
                                  .rc_ctiv       = 0,                                \
                                  .rc_temp_ctiv  = 0,                                \
                                  .xtal_accuracy = NRF_CLOCK_LF_XTAL_ACCURACY_20_PPM}
+#endif
+
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif // PCA10028_H

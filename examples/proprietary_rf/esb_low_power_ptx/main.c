@@ -40,21 +40,21 @@ static uint32_t button_state_1;
 static uint32_t button_state_2;
 static uint32_t button_state_3;
 static uint32_t button_state_4;
-static bool esb_completed = false;
+static volatile bool esb_completed = false;
 
 const uint8_t leds_list[LEDS_NUMBER] = LEDS_LIST;
 
 void nrf_esb_error_handler(uint32_t err_code, uint32_t line)
 {
 #if DEBUG //lint -e553
-    while(true);
+    while (true);
 #else
     NVIC_SystemReset();
 #endif
 
 }
 
-#define APP_ERROR_CHECK(err_code) if(err_code) nrf_esb_error_handler(err_code, __LINE__);
+#define APP_ERROR_CHECK(err_code) if (err_code) nrf_esb_error_handler(err_code, __LINE__);
 
 void system_off( void )
 {
@@ -80,7 +80,7 @@ void system_off( void )
     // to guarantee System OFF in nRF52.
     NRF_POWER->SYSTEMOFF = 0x1;
     (void) NRF_POWER->SYSTEMOFF;
-    while(true);
+    while (true);
 }
 
 
@@ -95,7 +95,7 @@ void nrf_esb_event_handler(nrf_esb_evt_t const * p_event)
             break;
         case NRF_ESB_EVENT_RX_RECEIVED:
             // Get the most recent element from the RX FIFO.
-            while(nrf_esb_read_rx_payload(&rx_payload) == NRF_SUCCESS) ;
+            while (nrf_esb_read_rx_payload(&rx_payload) == NRF_SUCCESS) ;
 
             // For each LED, set it as indicated in the rx_payload, but invert it for the button
             // which is pressed. This is because the ack payload from the PRX is reflecting the

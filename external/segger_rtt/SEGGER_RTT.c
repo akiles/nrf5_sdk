@@ -580,7 +580,7 @@ unsigned SEGGER_RTT_WriteNoLock(unsigned BufferIndex, const void* pBuffer, unsig
   unsigned Avail;
   const char*  pData;
   SEGGER_RTT_RING_BUFFER *pRing;
-  
+
   pData = (const char *)pBuffer;
   //
   // Get "to-host" ring buffer.

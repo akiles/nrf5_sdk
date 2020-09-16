@@ -24,6 +24,8 @@
 #include "nrf_soc.h"
 #include "ser_config.h"
 #include "ser_phy_debug_comm.h"
+#define NRF_LOG_MODULE_NAME "SPHY_HCI"
+#include "nrf_log.h"
 // hide globals for release version, expose for debug version
 #if defined(SER_PHY_HCI_DEBUG_ENABLE)
 #define _static
@@ -230,7 +232,7 @@ static void hci_signal_timeout_event(void)
     hci_tx_event_handler(&event);
 #else
     hci_link_control_event_handler(&event);
-    if((m_hci_mode == HCI_MODE_ACTIVE) && m_hci_other_side_active)
+    if ((m_hci_mode == HCI_MODE_ACTIVE) && m_hci_other_side_active)
     {
         hci_tx_event_handler(&event);
     }
@@ -715,6 +717,8 @@ static void hci_slip_event_handler(ser_phy_hci_slip_evt_t * p_event)
 
     if ( p_event->evt_type == SER_PHY_HCI_SLIP_EVT_PKT_SENT )
     {
+        NRF_LOG_DEBUG("EVT_PKT_SENT\r\n");
+
         DEBUG_EVT_SLIP_PACKET_TXED(0);
         event.evt_source                    = HCI_SLIP_EVT;
         event.evt.ser_phy_slip_evt.evt_type = p_event->evt_type;
@@ -729,6 +733,8 @@ static void hci_slip_event_handler(ser_phy_hci_slip_evt_t * p_event)
     }
     else if ( p_event->evt_type == SER_PHY_HCI_SLIP_EVT_ACK_SENT )
     {
+        NRF_LOG_DEBUG("EVT_ACK_SENT\r\n");
+
         DEBUG_EVT_SLIP_ACK_TXED(0);
         event.evt_source                    = HCI_SLIP_EVT;
         event.evt.ser_phy_slip_evt.evt_type = p_event->evt_type;
@@ -755,6 +761,9 @@ static void hci_slip_event_handler(ser_phy_hci_slip_evt_t * p_event)
         packet_type = packet_type_decode(
             event.evt.ser_phy_slip_evt.evt_params.received_pkt.p_buffer,
             event.evt.ser_phy_slip_evt.evt_params.received_pkt.num_of_bytes);
+
+        NRF_LOG_DEBUG("EVT_PKT_RECEIVED 0x%X/%u\r\n", packet_type,
+            p_event->evt_params.received_pkt.num_of_bytes);
 
         if (packet_type == PKT_TYPE_ACK )
         {
@@ -817,7 +826,10 @@ static void hci_slip_event_handler(ser_phy_hci_slip_evt_t * p_event)
             DEBUG_EVT_SLIP_ERR_RXED(0);
         }
     }
-
+    else
+    {
+        NRF_LOG_DEBUG("EVT_HW_ERROR\r\n");
+    }
 }
 
 
@@ -1339,13 +1351,13 @@ static void hci_rx_event_handler(hci_evt_t * p_event)
 #ifdef HCI_LINK_CONTROL
 /* Link control event handler - used only for Link Control packets */
 /* This handler will be called only in 2 cases:
-   - when SER_PHY_HCI_SLIP_EVT_PKT_RECEIVED event is received 
+   - when SER_PHY_HCI_SLIP_EVT_PKT_RECEIVED event is received
    - when HCI_TIMER_EVT event is reveived */
 static void hci_link_control_event_handler(hci_evt_t * p_event)
 {
     uint16_t pkt_type = HCI_LINK_CONTROL_PKT_INVALID;
 
-    switch(p_event->evt_source)
+    switch (p_event->evt_source)
     {
         case HCI_SLIP_EVT:
             pkt_type = link_control_packet_decode(
@@ -1390,7 +1402,7 @@ static void hci_link_control_event_handler(hci_evt_t * p_event)
                     {
                         m_hci_mode          = HCI_MODE_ACTIVE;
                         m_hci_tx_fsm_state  = HCI_TX_STATE_SEND;
-                        m_hci_rx_fsm_state  = HCI_RX_STATE_RECEIVE;                        
+                        m_hci_rx_fsm_state  = HCI_RX_STATE_RECEIVE;
                     }
                     break;
             }

@@ -39,7 +39,7 @@ uint32_t ant_boot_settings_save(ant_boot_settings_t * boot_settings)
     uint32_t ulErrorCode = NRF_SUCCESS;
 
     mb_flash_busy = true;
-    ulErrorCode = sd_flash_write((uint32_t*)ANT_BOOT_SETTINGS_LOCATION , (uint32_t*)boot_settings, ANT_BOOT_SETTINGS_SIZE/4);
+    ulErrorCode = sd_flash_write((uint32_t*)ANT_BOOT_SETTINGS_LOCATION , (uint32_t*)boot_settings, ANT_BOOT_SETTINGS_SIZE / 4);
     if (ulErrorCode == NRF_SUCCESS)
     {
         while (mb_flash_busy); // wait until it is done

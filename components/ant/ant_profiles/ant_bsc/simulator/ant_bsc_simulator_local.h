@@ -19,6 +19,10 @@
 #include "ant_bsc.h"
 #include "sensorsim.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /**@brief BSC simulator control block structure. */
 typedef struct
@@ -40,5 +44,10 @@ typedef struct
     uint32_t            cumulative_time_frac;       ///< Cumulative time in 2 s ticks (fractional part), used for updating the cumulative time.
     uint8_t             stop_cnt;                   ///< Counter used for simulating bicycle stopped state.
 } ant_bsc_simulator_cb_t;
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // ANT_BSC_SIMULATOR_LOCAL_H__

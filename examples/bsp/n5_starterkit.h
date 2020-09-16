@@ -12,6 +12,10 @@ All rights reserved.
 
 #include "nrf_gpio.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // LEDs definitions for N5DK1
 #define LEDS_NUMBER    4
 
@@ -79,10 +83,10 @@ All rights reserved.
 #define SWITCHES_MASK 0x01000261
 
 // N5DK1 does not have UART peripheral. Dummy defines for compilation.
-#define RX_PIN_NUMBER  0xFF
-#define TX_PIN_NUMBER  0xFF
-#define CTS_PIN_NUMBER 0xFF
-#define RTS_PIN_NUMBER 0xFF
+#define RX_PIN_NUMBER  UART_PIN_DISCONNECTED
+#define TX_PIN_NUMBER  UART_PIN_DISCONNECTED
+#define CTS_PIN_NUMBER UART_PIN_DISCONNECTED
+#define RTS_PIN_NUMBER UART_PIN_DISCONNECTED
 
 // Low frequency clock source to be used by the SoftDevice
 #ifdef S210
@@ -92,6 +96,11 @@ All rights reserved.
                                  .rc_ctiv       = 0,                                \
                                  .rc_temp_ctiv  = 0,                                \
                                  .xtal_accuracy = NRF_CLOCK_LF_XTAL_ACCURACY_50_PPM}
+#endif
+
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif

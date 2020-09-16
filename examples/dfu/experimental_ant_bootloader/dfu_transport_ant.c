@@ -381,7 +381,7 @@ static void antfs_event_upload_request_handle(const antfs_event_return_t * p_eve
     {
         new_request = true;
     }
-    else if(p_event->offset != m_current_offset)
+    else if (p_event->offset != m_current_offset)
     {
         // Something is wrong.
         UNUSED_VARIABLE(antfs_upload_req_resp_transmit(RESPONSE_INVALID_OPERATION, &m_response_info));
@@ -1048,7 +1048,12 @@ static void services_init(void)
      * */
     uint32_t err_code;
     static uint8_t aucCoexConfig[8] = {0x09, 0x00, 0x00, 0x04, 0x00, 0x3A, 0x00, 0x3A};
-    err_code = sd_ant_coex_config_set(ANTFS_CHANNEL, aucCoexConfig, NULL);
+    ANT_BUFFER_PTR coexConfig =
+    {
+        .ucBufferSize = sizeof(aucCoexConfig),
+        .pucBuffer    = aucCoexConfig
+    };
+    err_code = sd_ant_coex_config_set(ANTFS_CONFIG_CHANNEL_NUMBER, &coexConfig, NULL);
     APP_ERROR_CHECK(err_code);
 
     m_current_offset                = 0;

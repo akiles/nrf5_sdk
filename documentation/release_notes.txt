@@ -1,3 +1,310 @@
+nRF5 SDK v12.1.0
+----------------
+Release Date: Week 40, 2016
+
+Highlights:
+- Added serialization of the S132 SoftDevice v3.0.0. Serialization of S130 is now deprecated.
+- Included the latest MDK v8.9.0 with a crucial workaround for nRF52832 Errata 108:
+http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.nrf52832.Rev1.errata/anomaly_832_108.html
+ 
+The following toolchains/devices have been used for testing and verification:
+- ARM: MDK-ARM version 5.18a
+- GCC: GCC ARM Embedded 4.9 2015q3
+- IAR: IAR Workbench 7.30.4
+ 
+Supported SoftDevices:
+- S130 v2.0.1
+- S132 v3.0.0
+- S212 v2.0.0
+- S332 v2.0.0
+ 
+Supported IC revisions:
+- nRF51422/nRF51822 IC revision 3
+- nRF52832 IC revision 1
+ 
+Supported boards:
+- PCA10028
+- PCA10031
+- PCA10040
+- PCA20006 (only for beacon examples)
+- Dynastream's D52 Starter Kit (only for ANT examples)
+- Arduino Primo v2.1 (board header only)
+For other devices and boards, see the SDK documentation, section "Using the SDK with other boards".
+ 
+*** New features
+****************
+** Overall **
+- Serialization of the S132 SoftDevice v3.0.
+  
+
+*** Changes
+***********
+ 
+** Overall **
+- Includes the latest Nordic MDK v8.9.0.
+- Small documentation updates.
+ 
+
+*** Known issues
+****************
+  
+** Overall **
+- Updating the MDK requires to manually copy the header and linker files
+  into the SDK folder (ARM Keil uVision 4, IAR Workbench, ARMGCC).
+- When uploading an application to an nRF52 IC using nrfjprog, you must
+  provide the "--reset/-r" argument or powercycle the board.
+ 
+** BLE **
+- When performing service discoveries after a reconnect,
+  ble_db_discovery might fail to initialize. Refer to this link for a fix:
+  https://devzone.nordicsemi.com/question/92452/nrf52-ble_db_discovery-failed-to-initialize-correctly-when-repeats-the-service-discovery/
+- The "UART/Serial Port Emulation over BLE" (ble_app_uart) example
+  does not compile with nrf_log enabled (missing nrf_log sources)  
+- Some examples might have excessively verbose logging.
+- Performing pairing without bonding will cause examples to assert. To
+  fix this, make sure the call to pm_peer_rank_highest() during
+  PM_EVT_CONN_SEC_SUCCEEDED happens only when the procedure is
+  PM_LINK_SECURED_PROCEDURE_BONDING.
+- When an Android device is used as a peripheral, it sends slave
+  security request with the MITM bit set. The central applications in
+  the SDK will reject the security request (Pairing Failed) because
+  they do not support MITM.
+  
+** Secure DFU **
+ - nRF Toolbox for iPhone:
+   - When an error occurs, nRF Toolbox does not automatically
+     disconnect. You must therefore reset the board manually to
+     disconnect before you can connect again.
+   - It is not possible to abort a transfer when the device connection
+     is lost.
+   - On resumption, nRF Toolbox does not call execute, which makes it
+     impossible to resume a transfer.
+   - When transferring a combined SoftDevice and bootloader image, the
+     bootloader might not be updated.
+   - On nRF52 devices, the DFU operation is sometimes reported as
+     completed, even though the device is not updated.
+ 
+** NFC **
+- NFC Type 2 Tag HAL requires using TIMER4 on nRF52832.
+
+------------------------------------------------------------------------
+
+nRF5 SDK v12.0.0
+----------------
+Release Date: Week 35, 2016
+
+Highlights:
+- Added a secure DFU bootloader example and bootloader libraries. 
+  This is an improved implementation that replaces the legacy DFU.
+- Added an implementation of the Continuous Glucose Monitoring 
+  Service (CGMS).
+- Added support for the S132 SoftDevice v3.0.0.
+- Added support for the S212 and S332 SoftDevices v2.0.0.
+- Added a capacitive sensor driver and library (csense).
+- Added Gazell support on nRF52 (experimental).
+- Added new SDK configuration header files to manage static 
+  configuration of an application.
+- Overhauled the log subsystem.
+- Removed support for the PCA10036 board and nRF52832 Engineering A 
+  and B MCUs.
+- Included a critical MDK update (v8.7.1).
+- Added support for the CMSIS DSP library.
+- Missing feature: Serialization of the latest S132 SoftDevice v3.0.0 
+  API (work in progress).
+ 
+The following toolchains/devices have been used for testing and 
+verification:
+- ARM: MDK-ARM version 5.18a
+- GCC: GCC ARM Embedded 4.9 2015q3
+- IAR: IAR Workbench 7.30.4
+
+Supported SoftDevices:
+- S130 v2.0.1
+- S132 v3.0.0
+- S212 v2.0.0
+- S332 v2.0.0
+ 
+Supported IC revisions:
+- nRF51422/nRF51822 IC revision 3 
+- nRF52832 IC revision 1
+- nRF52832 Engineering C 
+ 
+Supported boards:
+- PCA10028
+- PCA10031
+- PCA10040
+- PCA20006 (only for beacon examples)
+- Dynastream's D52 Starter Kit (only for ANT examples)
+- Arduino Primo v2.1 (board header only)
+For other devices and boards see the SDK documentation, section 
+"Using the SDK with other boards".
+
+
+*** New features
+****************
+
+** Overall **
+- Added a secure DFU bootloader example and bootloader libraries. This 
+  is an improved implementation that replaces the legacy DFU. The 
+  example includes support for cryptographically signed operations.
+
+** Drivers and libraries **
+- Added a capacitive sensor driver and library for nRF51 and nRF52 
+  based systems.
+- Added an app_timer profiler to get maximum operation queue usage.
+- Reduced RAM usage in app_timer and changed the app_timer_cnt_get 
+  function (see the migration note in the Timer library documentation).
+- Added pull-up configuration to the TWIS driver.
+- Added an FFT FPU example with the CMSIS DSP library.
+
+** BLE **
+- Added a Continuous Glucose Monitoring Service (CGMS) implementation, 
+  including an example application (experimental).
+- Added a Bond Management Service (BMS) implementation, including an 
+  example application (experimental).
+- Expanded APIs to support Privacy 1.2.
+- Updated Direct Test Mode (DTM), including support for nRF52.
+
+** ANT **
+- Added new examples: Continuous Waveform Mode, High Duty Search and 
+  Background Scanning, and Time Synchronization.
+
+** NFC **
+- Added an NFC BSP module (bsp_nfc) and an example showing the usage of 
+  NFC as a wakeup source.
+
+** Proprietary **
+- Gazell: Ported examples and library to nRF52 (experimental).
+
+ 
+*** Changes
+***********
+
+** Overall **
+- Added a new log system across all SDK sources. Replaced printf and 
+  the old log system.
+
+** Drivers and libraries **
+- Unified the configuration subsystem and moved configuration to one 
+  file (sdk_config.h).
+- Changed the NRF51 and NRF52 ifdefs in drivers to peripheral related 
+  ifdefs.
+- Improved the PWM library (app_pwm): SET/CLEAR tasks instead of TOGGLE 
+  in nRF52.
+- Updated the TWI driver to de-configure GPIO pins in the uninit 
+  function (power-saving change).
+- Unified field names in HAL.
+- FreeRTOS fixes:
+    - Fixed invalid assertion.
+    - Improved tickless mode.
+- Simplified the TWI sensor example.
+- Added PCA10031 support to the led_softblink and low_power_pwm 
+  examples.
+
+** Serialization **
+- No support.
+
+** BLE **
+- Removed the Device Manager modules. All example applications now use 
+  the Peer Manager.
+- Removed the pstorage module. All example applications now use the 
+  fstorage module.
+
+** ANT **
+- Moved the following examples from experimental to production level:
+    - Advanced Burst
+    - Asynchronous Transmitter
+    - Continuous Scanning Controller
+    - Debug
+    - Message Types
+    - Relay
+    - Search Sharing
+    - Search Uplink
+
+** NFC **
+- Moved BLE OOB Pairing Data encoding to a separate module 
+  (nfc_ble_oob_advdata).
+- Modified nfc_t2t_lib and hal_nfc_t2t to conform with Nordic's 
+  coding standard.
+
+
+*** Fixed issues
+****************
+
+** Drivers and libraries **
+- APP_FIFO: Fixed an issue with app_fifo_write writing one byte even 
+  though it was requested to write zero bytes.
+- APP_BUTTON: Memory improvements.
+- GPIOTE: Fixed handler pointer checking.
+- PDM: Fixed high power usage and unexpected restart after calling 
+  nrf_drv_pdm_stop().
+- QDEC: Fixed QDEC un-initialization sequence.
+- SAADC: Added missing channel calibration.
+- SAADC: Fixed high power consumption and burst mode (oversampling 
+  without external trigger).
+- SPI: Fixed STOPPED interrupt handling.
+- SPIS: Fixed registers in get function of the amount of TX and RX done.
+- TWI: Fixed misc sending bytes and misleading error codes.
+- TWI: Added pin toggling functionality configuration during init (pin 
+  toggling sequence during init may cause issues with some devices).
+- UART: Fixed data corruption at 1 Mbaud and race conditions.
+- DELAY: Fixed nrf_delay_us(0) case.
+
+** BLE **
+- Fixed an issue where BLE example applications could assert if Button 
+  2 was held to start advertising while in a connection.
+- Fixed several minor documentation mistakes that could make testing 
+  the BLE examples less clear.
+
+** ANT **
+- Fixed channel type setup in the following examples: Broadcast, Multi 
+  Channels, and Continuous Scanning Controller.
+
+** NFC **
+- NDEF Text record: Fixed UTF selection.
+- NDEF message size calculation.
+
+
+*** Known issues
+****************
+ 
+** Overall **
+- Updating the MDK requires to manually copy the header and linker files
+  into the SDK folder (ARM Keil uVision 4, IAR Workbench, ARMGCC).
+- When uploading an application to an nRF52 IC using nrfjprog, you must 
+  provide the "--reset/-r" argument or powercycle the board.
+
+** BLE **
+- Some examples might have excessively verbose logging.
+- Performing pairing without bonding will cause examples to assert. To 
+  fix this, make sure the call to pm_peer_rank_highest() during 
+  PM_EVT_CONN_SEC_SUCCEEDED happens only when the procedure is 
+  PM_LINK_SECURED_PROCEDURE_BONDING.
+- When an Android device is used as a peripheral, it sends slave 
+  security request with the MITM bit set. The central applications in 
+  the SDK will reject the security request (Pairing Failed) because 
+  they do not support MITM.
+ 
+** Secure DFU **
+ - nRF Toolbox for iPhone:
+   - When an error occurs, nRF Toolbox does not automatically 
+     disconnect. You must therefore reset the board manually to 
+     disconnect before you can connect again.
+   - It is not possible to abort a transfer when the device connection 
+     is lost.
+   - On resumption, nRF Toolbox does not call execute, which makes it 
+     impossible to resume a transfer. 
+   - When transferring a combined SoftDevice and bootloader image, the 
+     bootloader might not be updated. 
+   - On nRF52 devices, the DFU operation is sometimes reported as 
+     completed, even though the device is not updated.
+
+** NFC **
+- NFC Type 2 Tag HAL requires using TIMER4 on nRF52832.
+
+
+========================================================================
+
 nRF5 SDK v11.0.0
 ----------------
 Release date: Week 10, 2016
@@ -1498,7 +1805,7 @@ Known issues:
         - NRFFOSDK-755 - HRM TX buttons example may report wrong total elapsed time. 
 
     BLE
-        - NRFFOSDK-119 - Only the "....\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\Nordic\nrf51822\Board\pca10001\ble\ble_app_proximity\ ", and "....\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
+        - NRFFOSDK-119 - Only the "....\sdk\nrf5822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\sdk\nrf5822\Board\pca10001\ble\ble_app_proximity\ ", and "....\sdk\nrf5822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
         - S120 Examples: Flash clear operation may fail when connected. Impact of this in the S120 examples is that if peer loses the bond and a re-bonding occurs, flash clear fails, and DM_EVT_DEVICE_CONTEXT_STORED event is notified with a failure.
         - Device manager has a few APIs unimplemented. Also documentation providing examples of how API can be used is missing.
         - NRFFOSDK-2824: Device manager (pstorage) doesn't support update of bond split across two pages.
@@ -1639,7 +1946,7 @@ Known issues:
         - NRFFOSDK-755 - HRM TX buttons example may report wrong total elapsed time. 
 
     BLE
-        - NRFFOSDK-119 - Only the "....\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\Nordic\nrf51822\Board\pca10001\ble\ble_app_proximity\ ", and "....\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
+        - NRFFOSDK-119 - Only the "....\sdk\nrf5822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\sdk\nrf5822\Board\pca10001\ble\ble_app_proximity\ ", and "....\sdk\nrf5822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
         - S120 Examples: Flash clear operation may fail when connected. Impact of this in the S120 examples is that if peer loses the bond and a re-bonding occurs, flash clear fails, and DM_EVT_DEVICE_CONTEXT_STORED event is notified with a failure.
         - Device manager has a few APIs unimplemented. Also documentation providing examples of how API can be used is missing.
         - NRFFOSDK-2824: Device manager (pstorage) doesn't support update of bond split across two pages.
@@ -1793,7 +2100,7 @@ Known issues:
         - S310 Heart Rate Relay Example: Bonding does not always function as expected. If bonding is enabled using compiler flag it is recommended to perform service discovery before bonding to minimize chances of unexpected behavior.    
 
     BLE
-        - NRFFOSDK-119 - Only the "....\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\Nordic\nrf51822\Board\pca10001\ble\ble_app_proximity\ ", and "....\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
+        - NRFFOSDK-119 - Only the "....\sdk\nrf5822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\sdk\nrf5822\Board\pca10001\ble\ble_app_proximity\ ", and "....\sdk\nrf5822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
         - NRFFOSDK-472 - Bonding information in flash are not erased during programming of a new application.
             (If the bonding information is not erased manually - by pressing button 1 during start-up - the new application might assert. )
         - S120 Examples: Flash clear operation may fail when connected. Impact of this in the S120 examples is that if peer loses the bond and a re-bonding occurs, flash clear fails, and DM_EVT_DEVICE_CONTEXT_STORED event is notified with a failure.
@@ -1927,7 +2234,7 @@ Known issues:
         - NRFFOSDK-755 - HRM TX buttons example may report wrong total elapsed time. 
       
     BLE
-        - NRFFOSDK-119 - Only the "....\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\Nordic\nrf51822\Board\pca10001\ble\ble_app_proximity\ ", and "....\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
+        - NRFFOSDK-119 - Only the "....\sdk\nrf5822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\sdk\nrf5822\Board\pca10001\ble\ble_app_proximity\ ", and "....\sdk\nrf5822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
         - NRFFOSDK-472 - Bonding information in flash are not erased during programming of a new application.
             (If the bonding information is not erased manually - by pressing button 1 during start-up - the new application might assert. )
         - NRFFOSDK-2162 - Heart Rate application for PCA10001 possible inconsistent system attributes on power cycle. It is possible that the system attributes on power cycle are not consistent with the ones updated during previous connection.
@@ -2048,7 +2355,7 @@ Known issues:
         - NRFFOSDK-755 - HRM TX buttons example may report wrong total elapsed time. 
       
     BLE
-        - NRFFOSDK-119 - Only the "....\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\Nordic\nrf51822\Board\pca10001\ble\ble_app_proximity\ ", and "....\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
+        - NRFFOSDK-119 - Only the "....\sdk\nrf5822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\sdk\nrf5822\Board\pca10001\ble\ble_app_proximity\ ", and "....\sdk\nrf5822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
         - NRFFOSDK-472 - Bonding information in flash are not erased during programming of a new application.
             (If the bonding information is not erased manually - by pressing button 1 during start-up - the new application might assert. )
         - NRFFOSDK-2162 - Heart Rate application for PCA10001 possible inconsistent system attributes on power cycle. It is possible that the system attributes on power cycle are not consistent with the ones updated during previous connection.
@@ -2160,7 +2467,7 @@ Known issues:
         - NRFFOSDK-755 - HRM TX buttons example may report wrong total elapsed time. 
       
     BLE
-        - NRFFOSDK-119 - Only the "....\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\Nordic\nrf51822\Board\pca10001\ble\ble_app_proximity\ ", and "....\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
+        - NRFFOSDK-119 - Only the "....\sdk\nrf5822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\sdk\nrf5822\Board\pca10001\ble\ble_app_proximity\ ", and "....\sdk\nrf5822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
         - NRFFOSDK-472 - Bonding information in flash are not erased during programming of a new application.
             (If the bonding information is not erased manually - by pressing button 1 during start-up - the new application might assert. )
        
@@ -2261,7 +2568,7 @@ Known issues:
         - NRFFOSDK-755 - HRM TX buttons example may report wrong total elapsed time. 
       
     BLE
-        - NRFFOSDK-119 - Only the "....\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\Nordic\nrf51822\Board\pca10001\ble\ble_app_proximity\ ", and "....\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
+        - NRFFOSDK-119 - Only the "....\sdk\nrf5822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\sdk\nrf5822\Board\pca10001\ble\ble_app_proximity\ ", and "....\sdk\nrf5822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
         - NRFFOSDK-472 - Bonding information in flash are not erased during programming of a new application.
             (If the bonding information is not erased manually - by pressing button 1 during start-up - the new application might assert. )
        
@@ -2369,7 +2676,7 @@ Known issues:
       
     BLE
 	- NRFFOETT-399 - The bond manager will use distrubted IRK in its whitelist regardless of the type of central's address and should actually use the irk if distributed and if the central's address is not public, and not random_static and not random_private_non_resovable. 
-        - NRFFOSDK-119 - Only the "....\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\Nordic\nrf51822\Board\pca10001\ble\ble_app_proximity\ ", and "....\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
+        - NRFFOSDK-119 - Only the "....\sdk\nrf5822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\sdk\nrf5822\Board\pca10001\ble\ble_app_proximity\ ", and "....\sdk\nrf5822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
         - NRFFOSDK-472 - Bonding information in flash are not erased during programming of a new application.
             (If the bonding information is not erased manually - by pressing button 1 during start-up - the new application might assert. )
        
@@ -2495,7 +2802,7 @@ Known issues:
     BLE
 	    - NRFFOETT-399 - The bond manager will use distrubted IRK in its whitelist regardless of the type of central's address and should actually use the irk if distributed and if the central's address is not public, and not random_static and not random_private_non_resovable. 
 	    - NRFFOSDK-1432 - A buffer overflow has been discovered in the BLE bond manager upon system attributes store. Workaround, define BLE_BONDMNGR_MAX_BONDED_MASTERS in ble_bondmngr_cfg.h to be 1 higher than the number of bond required by the applicaiton. 
-        - NRFFOSDK-119 - Only the "....\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\Nordic\nrf51822\Board\pca10001\ble\ble_app_proximity\ ", and "....\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
+        - NRFFOSDK-119 - Only the "....\sdk\nrf5822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\sdk\nrf5822\Board\pca10001\ble\ble_app_proximity\ ", and "....\sdk\nrf5822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
         - NRFFOSDK-472 - Bonding information in flash are not erased during programming of a new application.
             (If the bonding information is not erased manually - by pressing button 1 during start-up - the new application might assert. )
        
@@ -2582,7 +2889,7 @@ Known issues:
         - NRFFOSDK-755 - HRM TX buttons example may report wrong total elapsed time. 
       
     BLE
-        - NRFFOSDK-119 - Only the "....\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\Nordic\nrf51822\Board\pca10001\ble\ble_app_proximity\ ", and "....\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
+        - NRFFOSDK-119 - Only the "....\sdk\nrf5822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\sdk\nrf5822\Board\pca10001\ble\ble_app_proximity\ ", and "....\sdk\nrf5822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
         - NRFFOSDK-472 - Bonding information in flash are not erased during programming of a new application.
             (If the bonding information is not erased manually - by pressing button 1 during start-up - the new application might assert. )
        
@@ -2666,7 +2973,7 @@ Known issues:
         - NRFFOSDK-755 - HRM TX buttons example may report wrong total elapsed time. 
       
     BLE
-        - NRFFOSDK-119 - Only the "....\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\Nordic\nrf51822\Board\pca10001\ble\ble_app_proximity\ ", and "....\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
+        - NRFFOSDK-119 - Only the "....\sdk\nrf5822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\sdk\nrf5822\Board\pca10001\ble\ble_app_proximity\ ", and "....\sdk\nrf5822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized.
         - NRFFOSDK-472 - Bonding information in flash are not erased during programming of a new application.
             (If the bonding information is not erased manually - by pressing button 1 during start-up - the new application might assert. )
         - NRFFOSDK-486 - All applications using the bond manager will assert when the maximum number of bonded masters is passed. See proximity application documentation. 
@@ -2738,7 +3045,7 @@ Known issues:
         - NRFFOSDK-755 - HRM TX buttons example may report wrong total elapsed time.
 
     BLE
-        - NRFFOSDK-119 - Only the "....\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\Nordic\nrf51822\Board\pca10001\ble\ble_app_proximity\ ", and "....\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized
+        - NRFFOSDK-119 - Only the "....\sdk\nrf5822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\sdk\nrf5822\Board\pca10001\ble\ble_app_proximity\ ", and "....\sdk\nrf5822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized
         - NRFFOSDK-472 - Bonding information in flash are not erased during programming of a new application
             If the bonding information are not erased manually - by pressing button 1 during start-up - the new application might assert. 
         - NRFFOSDK-486 - All applications using bond manager will assert when the maximum number of bonded masters is passed - See proximity application documentation. 
@@ -2812,7 +3119,7 @@ Known issues:
         - NRFFOSDK-755 - HRM TX buttons example may report wrong total elapsed time.
 
     BLE
-        - NRFFOSDK-119 - Only the "....\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\Nordic\nrf51822\Board\pca10001\ble\ble_app_proximity\ ", and "....\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized
+        - NRFFOSDK-119 - Only the "....\sdk\nrf5822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\sdk\nrf5822\Board\pca10001\ble\ble_app_proximity\ ", and "....\sdk\nrf5822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized
         - NRFFOSDK-472 - Bonding information in flash are not erased during programming of a new application
             If the bonding information are not erased manually - by pressing button 1 during start-up - the new application might assert. 
         - NRFFOSDK-486 - All applications using bond manager will assert when the maximum number of bonded masters is passed - See proximity application documentation. 
@@ -2909,7 +3216,7 @@ Known issues:
         - NRFFOSDK-484 - HRM TX background pages are not following 65th packet rule according to spec
  
     BLE
-        - NRFFOSDK-119 - Only the "....\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\Nordic\nrf51822\Board\pca10001\ble\ble_app_proximity\ ", and "....\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized
+        - NRFFOSDK-119 - Only the "....\sdk\nrf5822\Board\nrf6310\ble\ble_app_pwr_profiling\","....\sdk\nrf5822\Board\pca10001\ble\ble_app_proximity\ ", and "....\sdk\nrf5822\Board\pca10001\ble\ble_app_hrs\ " applications are power optimized
         
         - NRFFOSDK-361 - System attributes are stored in flash only after disconnect.
         
@@ -3037,7 +3344,7 @@ Known issues:
     - Flashing a software using SEGGER is possible only when NOT in SYSTEM_OFF mode (implies to wake-up the current application with a button press for example before flashing a new application).(DRGN-1925)
       
     Bluetooth:
-        - Only the ..\Nordic\nrf51822\Board\nrf6310\ble\ble_app_pwr_profiling\ and ..\Nordic\nrf51822\Board\pca10001\ble\ble_app_hrs\ applications are power optimized.(DRGN-1914)
+        - Only the ..\sdk\nrf5822\Board\nrf6310\ble\ble_app_pwr_profiling\ and ..\sdk\nrf5822\Board\pca10001\ble\ble_app_hrs\ applications are power optimized.(DRGN-1914)
         - ble_bondmngr_store_bonded_masters function from the bond manager cannot be used when advertising nor when in a connection (DRGN-1915)
          (flash erase/write prevents the CPU from running which means the stack will not be able to run properly.) 
           If ble_bondmngr_store_bonded_masters function is called while advertising or in a connection, the behavior is UNDEFINED.

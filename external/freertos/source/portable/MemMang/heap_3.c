@@ -104,9 +104,9 @@ void *pvReturn;
 	}
 	( void ) xTaskResumeAll();
 
-	#if( configUSE_MALLOC_FAILED_HOOK == 1 )
+	#if ( configUSE_MALLOC_FAILED_HOOK == 1 )
 	{
-		if( pvReturn == NULL )
+		if ( pvReturn == NULL )
 		{
 			extern void vApplicationMallocFailedHook( void );
 			vApplicationMallocFailedHook();
@@ -120,7 +120,7 @@ void *pvReturn;
 
 void vPortFree( void *pv )
 {
-	if( pv )
+	if ( pv )
 	{
 		vTaskSuspendAll();
 		{

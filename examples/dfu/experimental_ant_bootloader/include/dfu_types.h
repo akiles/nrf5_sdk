@@ -30,6 +30,10 @@
 #include "ant_dfu_constrains.h"
 #include "nrf_mbr.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define NRF_UICR_BOOT_START_ADDRESS     (NRF_UICR_BASE + 0x14)                                  /**< Register where the bootloader start address is stored in the UICR register. */
 #define NRF_UICR_NRFFW_1                (NRF_UICR_BASE + 0x18)                                  /**< Register where the MBR retaining address is stored in the UICR register. */
 
@@ -42,7 +46,7 @@
 #define DFU_APP_DATA_RESERVED           0x0000                                                  /**< Size of Application Data that must be preserved between application updates. This value must be a multiple of page size. Page size is 0x400 (1024d) bytes, thus this value must be 0x0000, 0x0400, 0x0800, 0x0C00, 0x1000, etc. */
 #define DFU_IMAGE_MAX_SIZE_FULL         (DFU_REGION_TOTAL_SIZE - DFU_APP_DATA_RESERVED)         /**< Maximum size of a application, excluding save data from the application. */
 
-#define DFU_IMAGE_MAX_SIZE_BANKED       (((((DFU_REGION_TOTAL_SIZE)/2) - DFU_APP_DATA_RESERVED) / CODE_PAGE_SIZE) * CODE_PAGE_SIZE)  /**< Maximum size of a application in dual bank mode, excluding save data from the application. */ 
+#define DFU_IMAGE_MAX_SIZE_BANKED       (((((DFU_REGION_TOTAL_SIZE)/2) - DFU_APP_DATA_RESERVED) / CODE_PAGE_SIZE) * CODE_PAGE_SIZE)  /**< Maximum size of a application in dual bank mode, excluding save data from the application. */
 
 #define DFU_BL_IMAGE_MAX_SIZE           (BOOTLOADER_SETTINGS_ADDRESS - BOOTLOADER_REGION_START) /**< Maximum size of a bootloader, excluding save data from the current bootloader. */
 
@@ -137,6 +141,11 @@ typedef struct
 
 /**@brief Update complete handler type. */
 typedef void (*dfu_complete_handler_t)(dfu_update_status_t dfu_update_status);
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // DFU_TYPES_H__
 

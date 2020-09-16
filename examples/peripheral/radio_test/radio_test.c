@@ -40,7 +40,7 @@ static void timer0_init(uint8_t delayms)
     NRF_TIMER0->BITMODE    = (TIMER_BITMODE_BITMODE_24Bit << TIMER_BITMODE_BITMODE_Pos);
     NRF_TIMER0->PRESCALER  = 4;  // 1us resolution
     NRF_TIMER0->INTENSET   = (TIMER_INTENSET_COMPARE0_Set << TIMER_INTENSET_COMPARE0_Pos);
-  
+
     // Sample update needs to happen as soon as possible. The earliest possible moment is MAX_SAMPLE_LEVELS
     // ticks before changing the output duty cycle.
     NRF_TIMER0->CC[0]       = (uint32_t)delayms * 1000;
@@ -98,7 +98,7 @@ static void generate_modulated_rf_packet(void)
     // Packet configuration:
     // Bit 25: 1 Whitening enabled
     // Bit 24: 1 Big endian,
-    // 4 byte base address length (5 byte full address length), 
+    // 4 byte base address length (5 byte full address length),
     // 0 byte static length, max 255 byte payload .
     NRF_RADIO->PCNF1  = (RADIO_PCNF1_WHITEEN_Enabled << RADIO_PCNF1_WHITEEN_Pos) |
                         (RADIO_PCNF1_ENDIAN_Big << RADIO_PCNF1_ENDIAN_Pos) |
@@ -107,11 +107,11 @@ static void generate_modulated_rf_packet(void)
                         (255UL << RADIO_PCNF1_MAXLEN_Pos);
     NRF_RADIO->CRCCNF = (RADIO_CRCCNF_LEN_Disabled << RADIO_CRCCNF_LEN_Pos);
     packet[0]         = 254;    // 254 byte payload.
-  
+
     // Fill payload with random data.
     for (i = 0; i < 254; i++)
     {
-        packet[i+1] = rnd8();
+        packet[i + 1] = rnd8();
     }
     NRF_RADIO->PACKETPTR = (uint32_t)packet;
 }
@@ -150,7 +150,7 @@ void radio_tx_carrier(uint8_t txpower, uint8_t mode, uint8_t channel)
 {
     radio_disable();
     NRF_RADIO->SHORTS     = RADIO_SHORTS_READY_START_Msk;
-    NRF_RADIO->TXPOWER    = (txpower << RADIO_TXPOWER_TXPOWER_Pos);    
+    NRF_RADIO->TXPOWER    = (txpower << RADIO_TXPOWER_TXPOWER_Pos);
     NRF_RADIO->MODE       = (mode << RADIO_MODE_MODE_Pos);
     NRF_RADIO->FREQUENCY  = channel;
 #ifdef NRF51
@@ -162,7 +162,7 @@ void radio_tx_carrier(uint8_t txpower, uint8_t mode, uint8_t channel)
 
 
 /**
- * @brief Function for starting modulated TX carrier by repeatedly sending a packet with random address and 
+ * @brief Function for starting modulated TX carrier by repeatedly sending a packet with random address and
  * random payload.
 */
 void radio_modulated_tx_carrier(uint8_t txpower, uint8_t mode, uint8_t channel)
@@ -223,7 +223,7 @@ void radio_rx_sweep_start(uint8_t mode, uint8_t channel_start, uint8_t channel_e
  * @brief Function for handling the Timer 0 interrupt used for TX/RX sweep. The carrier is started with the new channel,
  * and the channel is incremented for the next interrupt.
 */
-void TIMER0_IRQHandler(void) 
+void TIMER0_IRQHandler(void)
 {
     if (sweep_tx_)
     {

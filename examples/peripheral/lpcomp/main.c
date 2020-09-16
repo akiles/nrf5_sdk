@@ -41,61 +41,16 @@
 #include "nrf_drv_lpcomp.h"
 #include "nrf_error.h"
 #include "app_error.h"
-#include "app_uart.h"
 #include "boards.h"
 
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
+
 #define WAVE_ON_PIN_NUMBER 2
-#define UART_TX_BUF_SIZE   256 /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE   1   /**< UART RX buffer size. */
 
 static volatile uint32_t voltage_falls_detected = 0;
 static volatile uint32_t voltage_falls_total    = 0;
-
-/**
- * @brief UART events handler.
- */
-void uart_events_handler(app_uart_evt_t * p_event)
-{
-    switch (p_event->evt_type)
-    {
-        case APP_UART_COMMUNICATION_ERROR: APP_ERROR_HANDLER(p_event->data.error_communication);
-            break;
-
-        case APP_UART_FIFO_ERROR:          APP_ERROR_HANDLER(p_event->data.error_code);
-            break;
-
-        default: break;
-    }
-}
-
-
-/**
- * @brief UART initialization.
- */
-void uart_config(void)
-{
-    uint32_t                     err_code;
-    const app_uart_comm_params_t comm_params =
-    {
-        RX_PIN_NUMBER,
-        TX_PIN_NUMBER,
-        RTS_PIN_NUMBER,
-        CTS_PIN_NUMBER,
-        APP_UART_FLOW_CONTROL_DISABLED,
-        false,
-        UART_BAUDRATE_BAUDRATE_Baud115200
-    };
-
-    APP_UART_FIFO_INIT(&comm_params,
-                       UART_RX_BUF_SIZE,
-                       UART_TX_BUF_SIZE,
-                       uart_events_handler,
-                       APP_IRQ_PRIORITY_LOW,
-                       err_code);
-
-    APP_ERROR_CHECK(err_code);
-}
-
 
 /**
  * @brief LPCOMP event handler is called when LPCOMP detects voltage drop.
@@ -124,7 +79,7 @@ static void print_statistics(void)
     while (voltage_falls_detected)
     {
         voltage_falls_detected--;
-        printf("\n\r#%d fall detected", (int)voltage_falls_total);
+        NRF_LOG_INFO("#%d fall detected\r\n", (int)voltage_falls_total);
     }
 }
 
@@ -136,9 +91,11 @@ static void lpcomp_init(void)
 {
     uint32_t                err_code;
 
+    nrf_drv_lpcomp_config_t config = NRF_DRV_LPCONF_DEFAULT_CONFIG;
+    config.input = NRF_LPCOMP_INPUT_2;
     // initialize LPCOMP driver, from this point LPCOMP will be active and provided
     // event handler will be executed when defined action is detected
-    err_code = nrf_drv_lpcomp_init(NULL, lpcomp_event_handler);
+    err_code = nrf_drv_lpcomp_init(&config, lpcomp_event_handler);
     APP_ERROR_CHECK(err_code);
     nrf_drv_lpcomp_enable();
 }
@@ -156,11 +113,12 @@ int main(void)
     nrf_gpio_cfg_input(BSP_BUTTON_0, NRF_GPIO_PIN_PULLUP);
 #endif
 
-    uart_config();
+    uint32_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
 
     lpcomp_init();
 
-    printf("\n\rLPCOMP driver usage example\r\n");
+    NRF_LOG_INFO("LPCOMP driver usage example\r\n");
 
     while (true)
     {
@@ -172,6 +130,7 @@ int main(void)
         LEDS_OFF(BSP_LED_1_MASK);
         NRF_GPIO->OUTSET = (1 << WAVE_ON_PIN_NUMBER);
         nrf_delay_ms(400);
+        NRF_LOG_FLUSH();
     }
 }
 

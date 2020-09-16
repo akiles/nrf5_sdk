@@ -32,12 +32,12 @@
 #include "bsp.h"
 #include "nordic_common.h"
 #include "nrf_error.h"
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 #define APP_TIMER_PRESCALER      0                           /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_OP_QUEUE_SIZE  2                           /**< Size of timer operation queues. */
-
-#define UART_TX_BUF_SIZE 256                                 /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 1                                   /**< UART RX buffer size. */
 
 static uint32_t                   packet;                    /**< Packet to transmit. */
 
@@ -67,7 +67,7 @@ void send_packet()
         // wait
     }
 
-    uint32_t err_code = bsp_indication_text_set(BSP_INDICATE_SENT_OK, "The packet was sent\n\r");
+    uint32_t err_code = bsp_indication_text_set(BSP_INDICATE_SENT_OK, "The packet was sent\r\n");
     APP_ERROR_CHECK(err_code);
 
     NRF_RADIO->EVENTS_DISABLED = 0U;
@@ -147,28 +147,13 @@ void clock_initialization()
 int main(void)
 {
     uint32_t err_code = NRF_SUCCESS;
-    
+
     clock_initialization();
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
-        
-    const app_uart_comm_params_t comm_params =  
-    {
-        RX_PIN_NUMBER, 
-        TX_PIN_NUMBER, 
-        RTS_PIN_NUMBER, 
-        CTS_PIN_NUMBER, 
-        APP_UART_FLOW_CONTROL_ENABLED, 
-        false, 
-        UART_BAUDRATE_BAUDRATE_Baud115200
-    };   
-    
-    APP_UART_FIFO_INIT(&comm_params, 
-                       UART_RX_BUF_SIZE, 
-                       UART_TX_BUF_SIZE, 
-                       uart_error_handle, 
-                       APP_IRQ_PRIORITY_LOW,
-                       err_code);
-        
+
+    err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
                         APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                         bsp_evt_handler);
@@ -180,17 +165,18 @@ int main(void)
     // Set payload pointer
     NRF_RADIO->PACKETPTR = (uint32_t)&packet;
 
-    err_code = bsp_indication_text_set(BSP_INDICATE_USER_STATE_OFF, "Press Any Button\n\r");
+    err_code = bsp_indication_text_set(BSP_INDICATE_USER_STATE_OFF, "Press Any Button\r\n");
     APP_ERROR_CHECK(err_code);
 
     while (true)
     {
-        if(packet != 0)
+        if (packet != 0)
         {
             send_packet();
-            printf("The contents of the package was %u\n\r", (unsigned int)packet);
+            NRF_LOG_INFO("The contents of the package was %u\r\n", (unsigned int)packet);
             packet = 0;
         }
+        NRF_LOG_FLUSH();
         __WFE();
     }
 }

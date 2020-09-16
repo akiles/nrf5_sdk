@@ -313,7 +313,7 @@ is used in assert() statements. */
  // Task to be created.
  void vTaskCode( void * pvParameters )
  {
-	 for( ;; )
+	 for ( ;; )
 	 {
 		 // Task code goes here.
 	 }
@@ -333,7 +333,7 @@ is used in assert() statements. */
      configASSERT( xHandle );
 
 	 // Use the handle to delete the task.
-     if( xHandle != NULL )
+     if ( xHandle != NULL )
      {
 	     vTaskDelete( xHandle );
      }
@@ -405,7 +405,7 @@ TaskHandle_t xHandle;
 
 	// Will only get here if there was insufficient memory to create the idle
 	// and/or timer task.
-	for( ;; );
+	for ( ;; );
 }
    </pre>
  * \defgroup xTaskCreateRestricted xTaskCreateRestricted
@@ -541,7 +541,7 @@ void vTaskDelete( TaskHandle_t xTaskToDelete ) PRIVILEGED_FUNCTION;
  // Block for 500ms.
  const TickType_t xDelay = 500 / portTICK_PERIOD_MS;
 
-	 for( ;; )
+	 for ( ;; )
 	 {
 		 // Simply toggle the LED every 500ms, blocking between each toggle.
 		 vToggleLED();
@@ -599,7 +599,7 @@ void vTaskDelay( const TickType_t xTicksToDelay ) PRIVILEGED_FUNCTION;
 
 	 // Initialise the xLastWakeTime variable with the current time.
 	 xLastWakeTime = xTaskGetTickCount ();
-	 for( ;; )
+	 for ( ;; )
 	 {
 		 // Wait for the next cycle.
 		 vTaskDelayUntil( &xLastWakeTime, xFrequency );
@@ -641,7 +641,7 @@ void vTaskDelayUntil( TickType_t * const pxPreviousWakeTime, const TickType_t xT
 	 // Use the handle to obtain the priority of the created task.
 	 // It was created with tskIDLE_PRIORITY, but may have changed
 	 // it itself.
-	 if( uxTaskPriorityGet( xHandle ) != tskIDLE_PRIORITY )
+	 if ( uxTaskPriorityGet( xHandle ) != tskIDLE_PRIORITY )
 	 {
 		 // The task has changed it's priority.
 	 }
@@ -649,7 +649,7 @@ void vTaskDelayUntil( TickType_t * const pxPreviousWakeTime, const TickType_t xT
 	 // ...
 
 	 // Is our priority higher than the created task?
-	 if( uxTaskPriorityGet( xHandle ) < uxTaskPriorityGet( NULL ) )
+	 if ( uxTaskPriorityGet( xHandle ) < uxTaskPriorityGet( NULL ) )
 	 {
 		 // Our priority (obtained using NULL handle) is higher.
 	 }
@@ -917,7 +917,7 @@ void vTaskStartScheduler( void ) PRIVILEGED_FUNCTION;
    <pre>
  void vTaskCode( void * pvParameters )
  {
-	 for( ;; )
+	 for ( ;; )
 	 {
 		 // Task code goes here.
 
@@ -965,7 +965,7 @@ void vTaskEndScheduler( void ) PRIVILEGED_FUNCTION;
    <pre>
  void vTask1( void * pvParameters )
  {
-	 for( ;; )
+	 for ( ;; )
 	 {
 		 // Task code goes here.
 
@@ -1014,7 +1014,7 @@ void vTaskSuspendAll( void ) PRIVILEGED_FUNCTION;
    <pre>
  void vTask1( void * pvParameters )
  {
-	 for( ;; )
+	 for ( ;; )
 	 {
 		 // Task code goes here.
 
@@ -1039,7 +1039,7 @@ void vTaskSuspendAll( void ) PRIVILEGED_FUNCTION;
 		 // The operation is complete.  Restart the kernel.  We want to force
 		 // a context switch - but there is no point if resuming the scheduler
 		 // caused a context switch already.
-		 if( !xTaskResumeAll () )
+		 if ( !xTaskResumeAll () )
 		 {
 			  taskYIELD ();
 		 }
@@ -1159,7 +1159,7 @@ constant. */
 	#endif /* configUSE_APPLICATION_TASK_TAG ==1 */
 #endif /* ifdef configUSE_APPLICATION_TASK_TAG */
 
-#if( configNUM_THREAD_LOCAL_STORAGE_POINTERS > 0 )
+#if ( configNUM_THREAD_LOCAL_STORAGE_POINTERS > 0 )
 
 	/* Each task contains an array of pointers that is dimensioned by the
 	configNUM_THREAD_LOCAL_STORAGE_POINTERS setting in FreeRTOSConfig.h.  The
@@ -1249,7 +1249,7 @@ TaskHandle_t xTaskGetIdleTaskHandle( void );
 		// allocated statically at compile time.
 		pxTaskStatusArray = pvPortMalloc( uxArraySize * sizeof( TaskStatus_t ) );
 
-		if( pxTaskStatusArray != NULL )
+		if ( pxTaskStatusArray != NULL )
 		{
 			// Generate raw status information about each task.
 			uxArraySize = uxTaskGetSystemState( pxTaskStatusArray, uxArraySize, &ulTotalRunTime );
@@ -1258,18 +1258,18 @@ TaskHandle_t xTaskGetIdleTaskHandle( void );
 			ulTotalRunTime /= 100UL;
 
 			// Avoid divide by zero errors.
-			if( ulTotalRunTime > 0 )
+			if ( ulTotalRunTime > 0 )
 			{
 				// For each populated position in the pxTaskStatusArray array,
 				// format the raw data as human readable ASCII data
-				for( x = 0; x < uxArraySize; x++ )
+				for ( x = 0; x < uxArraySize; x++ )
 				{
 					// What percentage of the total run time has the task used?
 					// This will always be rounded down to the nearest integer.
 					// ulTotalRunTimeDiv100 has already been divided by 100.
 					ulStatsAsPercentage = pxTaskStatusArray[ x ].ulRunTimeCounter / ulTotalRunTime;
 
-					if( ulStatsAsPercentage > 0UL )
+					if ( ulStatsAsPercentage > 0UL )
 					{
 						sprintf( pcWriteBuffer, "%s\t\t%lu\t\t%lu%%\r\n", pxTaskStatusArray[ x ].pcTaskName, pxTaskStatusArray[ x ].ulRunTimeCounter, ulStatsAsPercentage );
 					}

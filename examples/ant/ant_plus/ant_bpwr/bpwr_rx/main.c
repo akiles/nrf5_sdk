@@ -23,19 +23,22 @@ All rights reserved.
 
 #include <stdio.h>
 #include "nrf.h"
-#include "app_uart.h"
 #include "nrf_soc.h"
 #include "bsp.h"
+#include "hardfault.h"
 #include "app_error.h"
 #include "nordic_common.h"
 #include "ant_stack_config.h"
 #include "softdevice_handler.h"
 #include "ant_bpwr.h"
-#include "app_trace.h"
 #include "ant_state_indicator.h"
 #include "ant_key_manager.h"
 #include "app_timer.h"
 #include "bsp_btn_ant.h"
+
+#define NRF_LOG_MODULE_NAME "APP"
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 #define APP_TIMER_PRESCALER         0x00 /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_OP_QUEUE_SIZE     0x04 /**< Size of timer operation queues. */
@@ -97,7 +100,7 @@ void bsp_evt_handler(bsp_event_t evt)
         case BSP_EVENT_SLEEP:
             ant_state_indicator_sleep_mode_enter();
             break;
-        
+
         default:
             break;
     }
@@ -113,7 +116,7 @@ void ant_bpwr_evt_handler(ant_bpwr_profile_t * p_profile, ant_bpwr_evt_t event)
     {
         case ANT_BPWR_PAGE_1_UPDATED:
             // calibration data received from sensor
-            app_trace_log("Received calibration data\n\r\n\r");
+            NRF_LOG_DEBUG("Received calibration data\r\n\r\n");
             break;
 
         case ANT_BPWR_PAGE_16_UPDATED:
@@ -126,17 +129,17 @@ void ant_bpwr_evt_handler(ant_bpwr_profile_t * p_profile, ant_bpwr_evt_t event)
             /* fall through */
         case ANT_BPWR_PAGE_81_UPDATED:
             // data actualization
-            app_trace_log("Page was updated\n\r\n\r");
+            NRF_LOG_DEBUG("Page was updated\r\n\r\n");
             break;
 
         case ANT_BPWR_CALIB_TIMEOUT:
             // calibration request time-out
-            app_trace_log("ANT_BPWR_CALIB_TIMEOUT\n\r\n\r");
+            NRF_LOG_DEBUG("ANT_BPWR_CALIB_TIMEOUT\r\n\r\n");
             break;
 
         case ANT_BPWR_CALIB_REQUEST_TX_FAILED:
             // Please consider retrying the request.
-            app_trace_log("ANT_BPWR_CALIB_REQUEST_TX_FAILED\n\r\n\r");
+            NRF_LOG_DEBUG("ANT_BPWR_CALIB_REQUEST_TX_FAILED\r\n\r\n");
             break;
 
         default:
@@ -157,13 +160,15 @@ static void utils_setup(void)
 {
     uint32_t err_code;
 
-    app_trace_init();
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
                         APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                         bsp_evt_handler);
     APP_ERROR_CHECK(err_code);
-    
+
+    err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
     err_code = bsp_btn_ant_init();
     APP_ERROR_CHECK(err_code);
 }
@@ -231,8 +236,11 @@ int main(void)
 
     for (;; )
     {
-        err_code = sd_app_evt_wait();
-        APP_ERROR_CHECK(err_code);
+        if (NRF_LOG_PROCESS() == false)
+        {
+            err_code = sd_app_evt_wait();
+            APP_ERROR_CHECK(err_code);
+        }
     }
 }
 

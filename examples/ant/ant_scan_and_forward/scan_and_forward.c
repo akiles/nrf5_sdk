@@ -29,27 +29,9 @@ All rights reserved.
 #include "nordic_common.h"
 
 #define ANT_NETWORK_NUMBER          ((uint8_t) 0)       /**< Default public network number. */
-
-#define ANT_BS_CHANNEL_TYPE         CHANNEL_TYPE_SLAVE  /**< Bi-directional slave */
-#define ANT_MS_CHANNEL_TYPE         CHANNEL_TYPE_MASTER /**< Bi-directional master */
-
 #define ANT_SF_NETWORK_ID           ((uint8_t) 1)       /**< Network Number for Scan and Forward Application */
-
-#define ANT_BS_DEVICE_NUMBER        ((uint16_t) 0)      /**< Wild card the device number on the background scanning channel */
-
-#define ANT_DEVICE_TYPE             ((uint8_t) 1)                                   /**< Device type of Scan and Forward beacon */
-#define ANT_TRANSMISSION_TYPE       ((uint8_t) ((ANT_SF_NETWORK_ID << 4) | 0x05)) /**< Transmission type is comprised of ANT_SF_NETWORK_ID and 0x05 */
-
-#define ANT_FREQUENCY               ((uint8_t) 25)      /**< 2425 MHz */
-#define ANT_CHANNEL_PERIOD          ((uint16_t) 1024)   /**< 32Hz */
-#define ANT_CHANNEL_PERIOD_NONE     ((uint16_t) 0x00)   /**< This is not taken into account. */
-
-#define ANT_MAX_NODES_IN_NETWORK    MAX_DEVICES         /**< Max number of nodes in network. Must be <= MAX_DEVICES in device registry */
-
-#define ANT_MAX_CACHE_SIZE              255             /**< Max size of the received message buffer */
-#define ANT_CACHE_TIMEOUT_IN_SEC        10              /**< Max duration cached messages will be saved */
-
-#define ANT_DEFAULT_CMD_PG_INTLV_PCT    30              /**< Default percentage internal command pages should be transmitted */
+#define CHAN_ID_TRANS_TYPE          ((uint8_t) ((ANT_SF_NETWORK_ID << 4) | 0x05))   /**< Transmission type is comprised of ANT_SF_NETWORK_ID and 0x05 */
+#define DEFAULT_CMD_PG_INTLV_PCT    30                  /**< Default percentage internal command pages should be transmitted */
 
 static uint8_t m_node_address;                                          /**< Unique address of node within the network */
 static uint8_t m_counter = 0;                                           /**< Index of next device */
@@ -57,17 +39,17 @@ static uint8_t m_tx_buffer[ANT_STANDARD_DATA_PAYLOAD_SIZE];             /**< Pri
 static uint8_t m_cmd_tx_buffer[ANT_STANDARD_DATA_PAYLOAD_SIZE];         /**< Command data transmit buffer. */
 static uint8_t m_tx_page_counter        = 0;                            /**< Transmitted page counter. */
 static uint8_t m_cache_tick_tx_counter  = 0;                            /**< Transmitted page counter for cache tick management. */
-static uint8_t m_cmd_pg_intlv_pct       = ANT_DEFAULT_CMD_PG_INTLV_PCT; /**< Percentage of the time internal command pages should be transmitted */
+static uint8_t m_cmd_pg_intlv_pct       = DEFAULT_CMD_PG_INTLV_PCT;     /**< Percentage of the time internal command pages should be transmitted */
 static bool    m_flag_hi_pri_cmd        = false;                        /**< Flag to indicate this is a new command. */
 
 static bool             enable_optimized_command_page_priority = true;  /**< Flag to enable/disable command page pattern optimizations */
-static sf_message_t     buffer[ANT_MAX_CACHE_SIZE];                     /**< Received message cache buffer. */
+static sf_message_t     buffer[MAX_CACHE_SIZE];                         /**< Received message cache buffer. */
 static message_cache_t  m_rcvd_messages =                               /**< Received message cache. */
 {
     0,
     0,
     0,
-    ANT_MAX_CACHE_SIZE,
+    MAX_CACHE_SIZE,
     buffer
 };
 
@@ -94,26 +76,26 @@ static void sf_ant_channels_setup(void)
     const ant_channel_config_t ms_channel_config =
     {
         .channel_number    = SF_ANT_MS_CHANNEL_NUMBER,
-        .channel_type      = ANT_MS_CHANNEL_TYPE,
+        .channel_type      = CHANNEL_TYPE_MASTER,
         .ext_assign        = 0x00,
-        .rf_freq           = ANT_FREQUENCY,
-        .transmission_type = ANT_TRANSMISSION_TYPE,
-        .device_type       = ANT_DEVICE_TYPE,
+        .rf_freq           = RF_FREQ,
+        .transmission_type = CHAN_ID_TRANS_TYPE,
+        .device_type       = CHAN_ID_DEV_TYPE,
         .device_number     = m_node_address,
-        .channel_period    = ANT_CHANNEL_PERIOD,
+        .channel_period    = CHAN_PERIOD,
         .network_number    = ANT_NETWORK_NUMBER,
     };
 
     const ant_channel_config_t bs_channel_config =
     {
         .channel_number    = SF_ANT_BS_CHANNEL_NUMBER,
-        .channel_type      = ANT_BS_CHANNEL_TYPE,
+        .channel_type      = CHANNEL_TYPE_SLAVE,
         .ext_assign        = EXT_PARAM_ALWAYS_SEARCH,
-        .rf_freq           = ANT_FREQUENCY,
-        .transmission_type = ANT_TRANSMISSION_TYPE,
-        .device_type       = ANT_DEVICE_TYPE,
-        .device_number     = ANT_BS_DEVICE_NUMBER,
-        .channel_period    = ANT_CHANNEL_PERIOD_NONE,
+        .rf_freq           = RF_FREQ,
+        .transmission_type = CHAN_ID_TRANS_TYPE,
+        .device_type       = CHAN_ID_DEV_TYPE,
+        .device_number     = 0x00,              // Wild card
+        .channel_period    = 0x00,              // This is not taken into account.
         .network_number    = ANT_NETWORK_NUMBER,
     };
 
@@ -275,7 +257,7 @@ void sf_background_scanner_process(ant_evt_t * p_ant_evt)
                 }
             }
             // Internal Network Command Page
-            else if(p_ant_message->ANT_MESSAGE_aucPayload[DATA_PAGE_IND] == INTERNAL_COMMAND_PAGE)
+            else if (p_ant_message->ANT_MESSAGE_aucPayload[DATA_PAGE_IND] == INTERNAL_COMMAND_PAGE)
             {
                 // Is this a new message?
                 if (!msg_already_received(p_ant_message->ANT_MESSAGE_aucPayload))
@@ -307,9 +289,9 @@ void sf_background_scanner_process(ant_evt_t * p_ant_evt)
                                 LEDS_ON(LEDS_MASK);
                                 break;
                             case COMMAND_CHG_CMD_PG_SET:
-                                if(cmd_page_interleave_pct != RESERVED)
+                                if (cmd_page_interleave_pct != RESERVED)
                                     m_cmd_pg_intlv_pct = cmd_page_interleave_pct;
-                                if(high_priority_cmd_enable != RESERVED)
+                                if (high_priority_cmd_enable != RESERVED)
                                     enable_optimized_command_page_priority = high_priority_cmd_enable;
                                 break;
                         }
@@ -331,20 +313,20 @@ static void sf_master_beacon_message_send(void)
     device_t    * p_device      = NULL;
 
     // Number of messages being transmitted per second
-    uint8_t msg_tx_freq = ANT_CLOCK_FREQUENCY/ANT_CHANNEL_PERIOD;
+    uint8_t msg_tx_freq = ANT_CLOCK_FREQUENCY / CHAN_PERIOD;
 
     // Number of command pages required to be transmitted per second
     uint16_t req_cmd_page_count = msg_tx_freq * m_cmd_pg_intlv_pct / 100;
 
     // If we are sending a new command, prioritize it. Or if we are unable to send command pages.
-    if(m_flag_hi_pri_cmd)
+    if (m_flag_hi_pri_cmd)
     {
     // Transmit new command for 1 second less 1 channel period
         req_cmd_page_count = msg_tx_freq - 1;
     }
 
     // Transmit status pages after send all of the required command pages for the channel period
-    if(m_tx_page_counter % msg_tx_freq >= req_cmd_page_count)
+    if (m_tx_page_counter % msg_tx_freq >= req_cmd_page_count)
     {
         // Unflag high priority command rotation once we have started sending status pages
         m_flag_hi_pri_cmd = false;
@@ -402,7 +384,7 @@ static void sf_master_beacon_message_send(void)
     // Piggy back off of the channel period to provide 1 second ticks for cache cleanup
     if (m_cache_tick_tx_counter % msg_tx_freq == 0)
     {
-        mc_cleanup(&m_rcvd_messages, ANT_CACHE_TIMEOUT_IN_SEC);
+        mc_cleanup(&m_rcvd_messages, CACHE_TIMEOUT_S);
     }
 }
 
@@ -456,7 +438,7 @@ void set_cmd_buffer_seq(uint8_t dst, uint8_t cmd, uint8_t data1, uint8_t data2, 
     m_cmd_tx_buffer[INTERNAL_CMD_SEQ_NUM_IND] = seq;
     m_cmd_tx_buffer[INTERNAL_CMD_CMD_IND] = cmd;
 
-    if(enable_optimized_command_page_priority || cmd == COMMAND_CHG_CMD_PG_SET)
+    if (enable_optimized_command_page_priority || cmd == COMMAND_CHG_CMD_PG_SET)
     {
         m_flag_hi_pri_cmd = true;   // Flag that command page should take priority over other pages
 
@@ -469,7 +451,7 @@ void set_cmd_buffer_seq(uint8_t dst, uint8_t cmd, uint8_t data1, uint8_t data2, 
 
 void set_cmd_buffer_new(uint8_t dst, uint8_t cmd, uint8_t payload0, uint8_t payload1)
 {
-    set_cmd_buffer_seq(dst, cmd, payload0, payload1, m_cmd_tx_buffer[6]+1);
+    set_cmd_buffer_seq(dst, cmd, payload0, payload1, m_cmd_tx_buffer[6] + 1);
 }
 
 
@@ -527,9 +509,9 @@ void sf_external_received_message_process(uint8_t page, uint8_t dst, uint8_t dat
 
                     if (dst == m_node_address || dst == ADDRESS_ALL_NODES)
                     {
-                        if(data1 != RESERVED)
+                        if (data1 != RESERVED)
                             m_cmd_pg_intlv_pct = data1;
-                        if(data2 != RESERVED)
+                        if (data2 != RESERVED)
                             enable_optimized_command_page_priority = data2;
                     }
                     break;

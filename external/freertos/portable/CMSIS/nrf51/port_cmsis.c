@@ -171,7 +171,7 @@ static void prvTaskExitError( void )
     defined, then stop here so application writers can catch the error. */
     configASSERT( uxCriticalNesting == ~0UL );
     portDISABLE_INTERRUPTS();
-    for( ;; );
+    for ( ;; );
 }
 
 
@@ -182,10 +182,8 @@ static void prvTaskExitError( void )
  */
 BaseType_t xPortStartScheduler( void )
 {
-    /* This port can be used on all revisions of the Cortex-M7 core other than
-    the r0p1 parts.  r0p1 parts should use the port from the
-    /source/portable/GCC/ARM_CM7/r0p1 directory. */
-    configASSERT( SCB->CPUID != portCORTEX_M0_r0p0_ID );
+    /* This port can be used only on Cortex-M0 processor */
+    configASSERT( SCB->CPUID == portCORTEX_M0_r0p0_ID );
 
     /* Make PendSV the lowest priority interrupts. */
     NVIC_SetPriority(PendSV_IRQn, configKERNEL_INTERRUPT_PRIORITY);
@@ -225,7 +223,7 @@ void vPortEndScheduler( void )
 void vPortTaskYield( void )
 {
 #ifdef SOFTDEVICE_PRESENT
-    if(uxCriticalNesting > 0)
+    if (uxCriticalNesting > 0)
     {
         uxYieldFlag = 1;
     }
@@ -249,7 +247,7 @@ void vPortEnterCritical( void )
     functions that end in "FromISR" can be used in an interrupt.  Only assert if
     the critical nesting count is 1 to protect against recursive calls if the
     assert function also uses a critical section. */
-    if( uxCriticalNesting == 1 )
+    if ( uxCriticalNesting == 1 )
     {
         configASSERT( ( SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk ) == 0 );
     }
@@ -260,11 +258,11 @@ void vPortExitCritical( void )
 {
     configASSERT( uxCriticalNesting );
     uxCriticalNesting--;
-    if( uxCriticalNesting == 0 )
+    if ( uxCriticalNesting == 0 )
     {
         portENABLE_INTERRUPTS();
 #ifdef SOFTDEVICE_PRESENT
-        if(uxYieldFlag)
+        if (uxYieldFlag)
         {
             uxYieldFlag = 0;
             portPendSVSchedule();

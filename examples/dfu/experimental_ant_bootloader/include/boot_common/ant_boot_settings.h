@@ -10,6 +10,10 @@ All rights reserved.
 #include <stdint.h>
 #include "ant_dfu_constrains.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 #define FLASH_LAST_PAGE                         (NRF5x_FLASH_END / CODE_PAGE_SIZE - 1)
 
@@ -76,5 +80,10 @@ typedef __packed struct
     uint32_t    param_return;
     uint32_t    param_flags;
 }ant_boot_settings_t;
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //ANT_BOOT_SETTINGS_H_

@@ -12,6 +12,10 @@
 #ifndef PCA10001_H
 #define PCA10001_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define LED_START      18
 #define LED_0          18
 #define LED_1          19
@@ -50,10 +54,10 @@
 #define RTS_PIN_NUMBER 8
 #define HWFC           true
 
-#define SPIS_MISO_PIN  20    // SPI MISO signal. 
-#define SPIS_CSN_PIN   21    // SPI CSN signal. 
-#define SPIS_MOSI_PIN  22    // SPI MOSI signal. 
-#define SPIS_SCK_PIN   23    // SPI SCK signal. 
+#define SPIS_MISO_PIN  20    // SPI MISO signal.
+#define SPIS_CSN_PIN   21    // SPI CSN signal.
+#define SPIS_MOSI_PIN  22    // SPI MOSI signal.
+#define SPIS_SCK_PIN   23    // SPI SCK signal.
 
 #define SPIM0_SCK_PIN       23u     /**< SPI clock GPIO pin number. */
 #define SPIM0_MOSI_PIN      20u     /**< SPI Master Out Slave In GPIO pin number. */
@@ -131,5 +135,10 @@
                                  .rc_ctiv       = 0,                                \
                                  .rc_temp_ctiv  = 0,                                \
                                  .xtal_accuracy = NRF_CLOCK_LF_XTAL_ACCURACY_20_PPM}
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

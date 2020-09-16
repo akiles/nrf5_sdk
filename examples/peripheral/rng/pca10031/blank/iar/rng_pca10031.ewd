@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
 <project>
-  <fileVersion>2</fileVersion>
-  <configuration>
+  <fileVersion>2</fileVersion>  <configuration>
     <name>nrf51422_xxac</name>
     <toolchain>
       <name>ARM</name>
@@ -1346,6 +1345,6 @@
         <loadFlag>0</loadFlag>
       </plugin>
     </debuggerPlugins>
-  </configuration>
-</project>
+  </configuration></project>
+
 

@@ -18,7 +18,7 @@
  *
  * This file contains the source code for a sample application using the ADC driver.
  */
- 
+
 #include "nrf.h"
 #include <stdbool.h>
 #include <stdint.h>
@@ -26,7 +26,9 @@
 #include "nrf_drv_adc.h"
 #include "nordic_common.h"
 #include "boards.h"
+#define NRF_LOG_MODULE_NAME "APP"
 #include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 #include "app_error.h"
 #include "nrf_delay.h"
 #include "app_util_platform.h"
@@ -46,7 +48,7 @@ static void adc_event_handler(nrf_drv_adc_evt_t const * p_event)
         uint32_t i;
         for (i = 0; i < p_event->data.done.size; i++)
         {
-            NRF_LOG_PRINTF("Current sample value: %d\r\n", p_event->data.done.p_buffer[i]);
+            NRF_LOG_INFO("Current sample value: %d\r\n", p_event->data.done.p_buffer[i]);
         }
     }
 }
@@ -74,9 +76,9 @@ int main(void)
     LEDS_OFF(BSP_LED_0_MASK);
 
     adc_config();
-    UNUSED_RETURN_VALUE(NRF_LOG_INIT());
+    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
 
-    NRF_LOG_PRINTF("ADC example\r\n");
+    NRF_LOG_INFO("ADC example\r\n");
 
     while (true)
     {
@@ -93,6 +95,7 @@ int main(void)
 
             nrf_delay_ms(100);
             LEDS_INVERT(BSP_LED_0_MASK);
+            NRF_LOG_FLUSH();
         }
     }
 }

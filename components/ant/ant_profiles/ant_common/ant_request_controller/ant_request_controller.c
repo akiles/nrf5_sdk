@@ -10,6 +10,8 @@
  *
  */
 
+#include "sdk_config.h"
+#if ANT_REQUEST_CONTROLLER_ENABLED
 #include "ant_request_controller.h"
 #include "ant_interface.h"
 #include "ant_parameters.h"
@@ -193,4 +195,4 @@ void ant_request_controller_sens_evt_handler(ant_request_controller_t * p_contro
     }
 }
 
-
+#endif // ANT_REQUEST_CONTROLLER_ENABLED
