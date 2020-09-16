@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gap_enc_info_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: app_pwm_config_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,73 +106,39 @@ $(document).ready(function(){initNavTree('a00108.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_enc_info_t Struct Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
+<div class="title">app_pwm_config_t Struct Reference<div class="ingroups"><a class="el" href="a00678.html">Pulse-width modulation (PWM)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GAP Encryption Information.  
+<p>PWM configuration structure used for initialization.  
  <a href="a00108.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gap.h&gt;</code></p>
+<p><code>#include &lt;app_pwm.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a545fe8321eef3b128572882aa3997f7f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html#a545fe8321eef3b128572882aa3997f7f">ltk</a> [16]</td></tr>
-<tr class="separator:a545fe8321eef3b128572882aa3997f7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f21ad24fa7cce2e56ae61beccdcb0b8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html#a5f21ad24fa7cce2e56ae61beccdcb0b8">auth</a>: 1</td></tr>
-<tr class="separator:a5f21ad24fa7cce2e56ae61beccdcb0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91966f65c4bb6988f847a19ce0b1541e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html#a91966f65c4bb6988f847a19ce0b1541e">ltk_len</a>: 7</td></tr>
-<tr class="separator:a91966f65c4bb6988f847a19ce0b1541e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06422abddaa496b9168f334df42f67d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a06422abddaa496b9168f334df42f67d0"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>pins</b> [2]</td></tr>
+<tr class="separator:a06422abddaa496b9168f334df42f67d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83466b8f4a8b52a58772c3d2e712fd02"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83466b8f4a8b52a58772c3d2e712fd02"></a>
+<a class="el" href="a00678.html#ga58cb721dc6ca8fdea7907bbd8cedbced">app_pwm_polarity_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pin_polarity</b> [2]</td></tr>
+<tr class="separator:a83466b8f4a8b52a58772c3d2e712fd02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15cb4361b2aa835dbf3860ba2d4b3603"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15cb4361b2aa835dbf3860ba2d4b3603"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>num_of_channels</b></td></tr>
+<tr class="separator:a15cb4361b2aa835dbf3860ba2d4b3603"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ee3248fdfda7ba386b94be56f4913d5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4ee3248fdfda7ba386b94be56f4913d5"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>period_us</b></td></tr>
+<tr class="separator:a4ee3248fdfda7ba386b94be56f4913d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GAP Encryption Information. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a5f21ad24fa7cce2e56ae61beccdcb0b8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_enc_info_t::auth</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Authenticated Key. </p>
-
-</div>
-</div>
-<a class="anchor" id="a545fe8321eef3b128572882aa3997f7f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_enc_info_t::ltk[16]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Long Term Key. </p>
-
-</div>
-</div>
-<a class="anchor" id="a91966f65c4bb6988f847a19ce0b1541e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_enc_info_t::ltk_len</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>LTK length in octets. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>PWM configuration structure used for initialization. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00108.html">ble_gap_enc_info_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00108.html">app_pwm_config_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Beacon Transmitter Sample Application</title>
+<title>nRF51 SDK - S110 SoftDevice: Direct Test Mode</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,55 +97,96 @@ $(document).ready(function(){initNavTree('a00061.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Beacon Transmitter Sample Application </div>  </div>
+<div class="title">Direct Test Mode </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Beacon Transmitter Sample Application is an example that implements a transmitter beacon using the hardware delivered in the nRF51 Development Kit.</p>
-<p>The beacon broadcasts information to all compatible devices in its range as Manufacturer Specific Data in the advertisement packets.</p>
-<p>This information includes:</p>
+<div class="textblock"><p>The DTM application enables the DTM test functions described in <em>Bluetooth</em> Specification Version 4.0, Vol. 6, Part F.</p>
+<p>The purpose of DTM is to test the operation of the radio at the physical level, such as:</p>
 <ul>
-<li>A 128-bit UUID to identify the beacon's provider.</li>
-<li>An arbitrary Major value for coarse differentiation between beacons.</li>
-<li>An arbitrary Minor value for fine differentiation between beacons.</li>
-<li>The RSSI value of the beacon measured at 1 meter distance, which can be used for estimating the distance from the beacon.</li>
+<li>transmission power and receiver sensitivity</li>
+<li>frequency offset and drift</li>
+<li>modulation characteristics</li>
+<li>packet error rate</li>
+<li>intermodulation performance</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>This application is not power optimized!</dd></dl>
-<p>The name of the example is <b>ble_app_beacon_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_beacon</code> </p>
-<h1><a class="anchor" id="project_beacon_maj_min_config"></a>
-Configuring Major and Minor values</h1>
-<p>This example implements an optional feature which allows the change of Major and Minor values used in the advertisement packets without the need to recompile the application each time. To use this feature, the compiler define USE_UICR_FOR_MAJ_MIN_VALUES should be defined during compilation. If this is done, the application uses the value of the UICR (User Information Configuration Register) located at address 0x10001080 to populate the major and minor values. Whenever the values need to be updated, the user must set the UICR to a desired value using the nrfjprog tool and restart the application to bring the changes into effect. The byte ordering used when decoding the UICR value is shown in the image below.</p>
+<p>Test procedures are defined the document "<em>Bluetooth</em> Low Energy RF PHY Test Specification", Document no RF-PHY.TS/4.0.0. Conformance tests are carried out by dedicated test equipment (such as the Anritsu MT8852 or similar), the nRF51 with the DTM application as the DUT.</p>
+<p>The nRF51 DTM application includes two parts:</p>
+<ul>
+<li><a class="el" href="a01237.html">DTM - Direct Test Mode</a> library, which manages the nRF radio and controls the standard DTM procedures</li>
+<li>an application providing an external interface to the library</li>
+</ul>
+<p>The DTM application contains a driver for a 2-wire UART interface, mapping two-octet commands and events as specified by the BLE DTM specification to the dtmlib.</p>
+<p>The name of the example is <b>direct_test_mode_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\dtm\direct_test_mode</code> </p>
+<p>Source code and project file for the ble_dtm module can be found in the following folder: <code>&lt;InstallFolder&gt;\components\ble\ble_dtm</code> </p>
 <div class="image">
-<img src="ble_app_beacon_maj_min_from_uicr.jpg" alt="ble_app_beacon_maj_min_from_uicr.jpg"/>
+<img src="DTM_DUT.png" alt="DTM_DUT.png"/>
 <div class="caption">
-Byte ordering used while reading UICR</div></div>
-<p> See <a class="el" href="a00061.html#project_beacon_test">Testing</a> for more information about how to use this feature.</p>
-<dl class="section note"><dt>Note</dt><dd>This application can be used as a starting point to write an iBeacon application. The procedure for creating an iBeacon application and the specification should be available at <a href="https://mfi.apple.com">https://mfi.apple.com</a>. Once the specification is obtained, this application can be modified to fit the requirements of iBeacon.</dd></dl>
-<h1><a class="anchor" id="project_beacon_test"></a>
-Testing</h1>
-<p>Test the Beacon Transmitter Sample Application with the Master Control Panel by performing the following steps:</p>
-<ol type="1">
-<li>Compile and program the application. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
-<li>After starting discovery in the Master Control Panel main window, observe that the beacon is advertising with its <em>Bluetooth</em> device address without a Device Name.</li>
-<li>Click the plus sign next to the beacon's address to view the full advertisement data.</li>
-<li><p class="startli">Observe that the <b>Advertising Type</b> is 'Non-connectable' and the <b>Manufacturer Specific Data</b> field of the Advertising Data is as follows:</p>
-<p class="startli">59-00-02-15-01-12-23-34-45-56-67-78-89-9A-AB-BC-CD-DE-EF-F0-01-02-03-04-C3</p>
-</li>
-</ol>
-<ol type="1">
-<li>Define the compiler define USE_UICR_FOR_MAJ_MIN_VALUES and recompile and flash.</li>
-<li>Use nrfjprog tool to write the value 0xabcd0102 to the UICR register as follows: <div class="fragment"><div class="line">nrfjprog --snr &lt;Segger-chip-Serial-Number&gt; --memwr 0x10001080 --val 0xabcd0102</div>
-</div><!-- fragment --></li>
-<li><p class="startli">Reset the board and observe the bytes in bold below are seen in the <b>Manufacturer Specific Data</b> field of the Advertising Data. This indicates that the Major and Minor values have been picked up from the UICR register written in the above step.</p>
-<p class="startli">xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-xx-<b>AB-CD-01-02</b>-xx </p>
-</li>
-</ol>
+nRF51 with DTM as a DUT</div></div>
+<p> The implementation is self-contained and requires no BLE protocol stack for its operation. The MPU is initialized in the standard way (files <code>startup_nRF51502.s</code> and <code>system_nRF51502.c</code>. The dtmlib function <a class="el" href="a01237.html#ga45f73017a4ba401da34571bcc741b564" title="Function for initializing or re-initializing DTM module.">dtm_init()</a> will do all configuration of interrupts, timers and radio. Initialization of the UART is done by the dtm_serial2w code.</p>
+<p><code>main.c</code> may be replaced with other interface implementations, such as an HCI interface, USB, or other interface required by the Upper Tester.</p>
+<p>The interface to the Lower Tester uses the antenna connector of the nRF51. While in principle an aerial may be used, conformance tests cover reading the transmission power delivered by the DUT; hence a coax connection between the DUT and the Lower Tester is employed for all conformance testing.</p>
+<h1><a class="anchor" id="ble_sdk_dtm_lib_interface"></a>
+BLE DTM module interface</h1>
+<p>ble_dtm.c function <a class="el" href="a01237.html#gacfd7e507740ae8f6d296e77306d89a3a" title="Function for calling when a complete command has been prepared by the Tester.">dtm_cmd()</a> implements the four commands defined by the BLE standard</p>
+<ul>
+<li>RESET</li>
+<li>RECEIVER_TEST</li>
+<li>TRANSMITTER_TEST</li>
+<li>TEST_END</li>
+</ul>
+<p>In the <a class="el" href="a01237.html#gacfd7e507740ae8f6d296e77306d89a3a" title="Function for calling when a complete command has been prepared by the Tester.">dtm_cmd()</a> interface, each of the parameters (cmd,freq, length, payload) is a word size value. Note that the currently supported parameter values are limited to those defined for BLE. (HCI allows a greater value range for use with BR/EDR.)</p>
+<p>The following DTM events are polled using the <a class="el" href="a01237.html#ga574ceb36cc9cee237a6e9f77e3c32b36" title="Function for reading the result of a DTM command.">dtm_event_get()</a> function:</p>
+<ul>
+<li>PACKET_REPORTING_EVENT</li>
+<li>TEST_STATUS_EVENT [SUCCESS|FAIL]</li>
+</ul>
+<div class="image">
+<img src="dtm_engine.jpg" alt="dtm_engine.jpg"/>
+<div class="caption">
+State machine overview of the dtm engine.</div></div>
+ <h1><a class="anchor" id="ble_sdk_dtm_proprietary"></a>
+Vendor Specific Packet Payload</h1>
+<p>The BLE 2-wire UART DTM interface standard reserves Packet Type (payload parameter) binary value '11' for a <em>Vendor Specific</em> Packet Payload. The dtm_serial2w adaptation layer maps this to value 0xFFF..FFF in the <a class="el" href="a01237.html#gacfd7e507740ae8f6d296e77306d89a3a" title="Function for calling when a complete command has been prepared by the Tester.">dtm_cmd()</a> interface. The rationale for this mapping is to allow later extensions to a 4-bit Packet Type field, as specified in the HCI interface and in the DTM PDU layout.</p>
+<p>The <em>Vendor Specific</em> payload (parameter 4) is interpreted as follows:</p>
+<p>If Command, parameter 1, is set to Transmitter Test (binary '10') and parameter 4, payload, to <em>Vendor Specific</em> (binary '11' in the 2wire physical interface, all bits set to 1 in the dtmlib interface):</p>
+<ul>
+<li>If parameter 3 (length) is set to 0 (symbol CARRIER_TEST), an unmodulated carrier is turned on at the channel indicated by parameter 2 (freq). It remains turned on until a TEST_END or RESET command is issued.</li>
+</ul>
+<ul>
+<li>Parameter 3 (length) equal to 1 (symbol CARRIER_TEST_STUDIO) is used by the nRFgo studio to indicate an unmodulated carrier is turned on at the channel. It remains turned on until a TEST_END or RESET command is issued.</li>
+</ul>
+<ul>
+<li>If parameter 3 (length) is set to 2 (symbol SET_TX_POWER), parameter 2 (length) sets the tx power in dBm, ranging from -40 to +4 in steps of 4, 0 dBm being the reset value. The tx power can only be modified while no Transmitter Test or Receiver Test is running.</li>
+</ul>
+<ul>
+<li>If parameter 3 (freq) is set to 3 (symbol SELECT_TIMER), parameter 2 (length) selects the timer to be used by dtmlib for Transmitter Test timing. Valid timer identifiers are 0, 1 and 2. Configuring the timer to be used allows dtmlib to be integrated in a larger test environment where other modules may be occupying the default timer (timer 0).</li>
+</ul>
+<ul>
+<li>All other values of parameter 2 (freq) and 4 (length) are reserved.</li>
+</ul>
+<h1><a class="anchor" id="ble_sdk_dtm_serial2w"></a>
+The DTM to Serial adaptation layer</h1>
+<p><code>main.c</code> is a sample adaptation layer, implementing the UART interface as specified in Volume 6, part F, chapter 3 of the <em>Bluetooth</em> specification.</p>
+<p>The default selection of GPIO pins are pin 11 for RX and pin 9 for TX. These defaults are defined in <code>&lt;InstallFolder&gt;\examples\bsp\pca10028.h</code> and can be changed by editing the values of the symbols RX_PIN_NUMBER and TX_PIN_NUMBER.</p>
+<h1><a class="anchor" id="ble_sdk_dtm_testing"></a>
+Running DTM tests</h1>
+<p>Conformance testing is done using a certified tester. The setup depends on the actual tester, and details about the test operation must be found from the tester documentation.</p>
+<p>The BLE DTM UART interface standard specifies:</p>
+<ul>
+<li>8 data bits</li>
+<li>No parity</li>
+<li>1 stop bit</li>
+<li>CTS/RTS Flow control</li>
+<li>A selection of bit rates from 1200 to 115200, one of which must be supported by the DUT</li>
+</ul>
+<p>The default bit rate of the DTM UART driver is 19200 bps, which is supported by most certified testers. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00058.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

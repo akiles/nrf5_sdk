@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: sd_mbr_command_vector_table_base_set_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: dm_init_param_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,47 +106,34 @@ $(document).ready(function(){initNavTree('a00239.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">sd_mbr_command_vector_table_base_set_t Struct Reference<div class="ingroups"><a class="el" href="a00723.html">Types</a></div></div>  </div>
+<div class="title">dm_init_param_t Struct Reference<div class="ingroups"><a class="el" href="a00906.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Sets the base address of the interrupt vector table for interrupts forwarded from the MBR.  
+<p>Initialization Parameters.  
  <a href="a00239.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_mbr.h&gt;</code></p>
+<p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:af6bd4c73c91f2c8999d6f7ebe5780325"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#af6bd4c73c91f2c8999d6f7ebe5780325">address</a></td></tr>
-<tr class="separator:af6bd4c73c91f2c8999d6f7ebe5780325"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5feebf730ecc50b0c78c0f4354d6fc3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html#ab5feebf730ecc50b0c78c0f4354d6fc3">clear_persistent_data</a></td></tr>
+<tr class="separator:ab5feebf730ecc50b0c78c0f4354d6fc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Sets the base address of the interrupt vector table for interrupts forwarded from the MBR. </p>
-<p>Once this function has been called, this address is where the MBR will start to forward interrupts to after a reset.</p>
-<p>To restore default forwarding thiss function should be called with</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">address</td><td>set to 0. The MBR will then start forwarding to interrupts to the adress in NFR_UICR-&gt;BOOTADDR or to the SoftDevice if the BOOTADDR is not set.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00562.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="textblock"><p>Initialization Parameters. </p>
+<p>Indicates the application parameters. Currently this only encompasses clearing all persistent data. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="af6bd4c73c91f2c8999d6f7ebe5780325"></a>
+<a class="anchor" id="ab5feebf730ecc50b0c78c0f4354d6fc3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_mbr_command_vector_table_base_set_t::address</td>
+          <td class="memname">bool dm_init_param_t::clear_persistent_data</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The base address of the interrupt vector table for forwarded interrupts. </p>
+<p>Set to true in case the module should clear all persistent data. </p>
 
 </div>
 </div>
@@ -155,8 +142,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00239.html">sd_mbr_command_vector_table_base_set_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00239.html">dm_init_param_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

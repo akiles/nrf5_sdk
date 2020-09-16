@@ -6675,21 +6675,6 @@
 /* Peripheral: UART */
 /* Description: Universal Asynchronous Receiver/Transmitter. */
 
-/* Register: UART_SHORTS */
-/* Description: Shortcuts for UART. */
-
-/* Bit 4 : Shortcut between NCTS event and the STOPRX task. */
-#define UART_SHORTS_NCTS_STOPRX_Pos (4UL) /*!< Position of NCTS_STOPRX field. */
-#define UART_SHORTS_NCTS_STOPRX_Msk (0x1UL << UART_SHORTS_NCTS_STOPRX_Pos) /*!< Bit mask of NCTS_STOPRX field. */
-#define UART_SHORTS_NCTS_STOPRX_Disabled (0UL) /*!< Shortcut disabled. */
-#define UART_SHORTS_NCTS_STOPRX_Enabled (1UL) /*!< Shortcut enabled. */
-
-/* Bit 3 : Shortcut between CTS event and the STARTRX task. */
-#define UART_SHORTS_CTS_STARTRX_Pos (3UL) /*!< Position of CTS_STARTRX field. */
-#define UART_SHORTS_CTS_STARTRX_Msk (0x1UL << UART_SHORTS_CTS_STARTRX_Pos) /*!< Bit mask of CTS_STARTRX field. */
-#define UART_SHORTS_CTS_STARTRX_Disabled (0UL) /*!< Shortcut disabled. */
-#define UART_SHORTS_CTS_STARTRX_Enabled (1UL) /*!< Shortcut enabled. */
-
 /* Register: UART_INTENSET */
 /* Description: Interrupt enable set register. */
 

@@ -1,6 +1,6 @@
 var a01039 =
 [
-    [ "User Memory Types", "a00816.html", "a00816" ],
-    [ "BLE_EVTS_PTR_ALIGNMENT", "a01039.html#ga60320cd534c9f7f0f16a1da17d5afacb", null ],
-    [ "BLE_UUID_VS_MAX_COUNT", "a01039.html#gaef66ffd47e836932207ee77faecacb8b", null ]
+    [ "BLE_GATTS_VLOC_INVALID", "a01039.html#ga0b0c153e71bddb01a4ba803a9110a6e4", null ],
+    [ "BLE_GATTS_VLOC_STACK", "a01039.html#gaf51ee5f68c7eea401ee79cd250c1fb16", null ],
+    [ "BLE_GATTS_VLOC_USER", "a01039.html#gaddb51f959e18123c5e215e22af0c31a9", null ]
 ];

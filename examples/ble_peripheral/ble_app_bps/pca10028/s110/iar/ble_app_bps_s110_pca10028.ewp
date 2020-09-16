@@ -168,7 +168,7 @@
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
-		      <name>CCGuardCalls</name>
+          <name>CCGuardCalls</name>
           <state>1</state>
         </option>
         <option>
@@ -182,6 +182,7 @@
           <state>BOARD_PCA10028</state>
           <state>SOFTDEVICE_PRESENT</state>
           <state>NRF51</state>
+          <state>SWI_DISABLE0</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -242,7 +243,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00000000</state>
+          <state>11111110</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -318,19 +319,22 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_bas</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_bps</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_dis</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_advertising</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\sensorsim</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\button</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\ble\device_manager</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\gpiote</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pstorage</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\trace</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pstorage</state>
           <state>$TOOLKIT_DIR$\CMSIS\Include</state>
         </option>
         <option>
@@ -356,11 +360,11 @@
         <option>
           <name>CCOptStrategy</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>3</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -431,7 +435,7 @@
         <option>
           <name>CCOptStrategySlave</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -488,12 +492,13 @@
           <state>0</state>
         </option>
         <option>
-		  <name>ADefines</name>
+      <name>ADefines</name>
           <state>BLE_STACK_SUPPORT_REQD</state>
           <state>S110</state>
           <state>BOARD_PCA10028</state>
           <state>SOFTDEVICE_PRESENT</state>
           <state>NRF51</state>
+          <state>SWI_DISABLE0</state>
         </option>
         <option>
           <name>AList</name>
@@ -713,7 +718,7 @@
         </option>
         <option>
           <name>IlinkMapFile</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkLogFile</name>
@@ -741,7 +746,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-		  <state>$PROJ_DIR$\ble_app_bps_iar_nrf51.icf</state>
+      <state>$PROJ_DIR$\ble_app_bps_iar_nrf51.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -985,9 +990,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo\app_fifo.c</name>
     </file>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\gpiote\app_gpiote.c</name>
-    </file>
-    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\timer\app_timer.c</name>
     </file>
     <file>
@@ -1021,6 +1023,12 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pstorage\pstorage.c</name>
     </file>
   </group>
@@ -1028,6 +1036,9 @@
   <name>Board Support</name>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\bsp\bsp.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\bsp\bsp_btn_ble.c</name>
     </file>
   </group>
   <group>
@@ -1040,6 +1051,9 @@
   <name>nRF_BLE</name>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common\ble_advdata.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_advertising\ble_advertising.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_services\ble_bas\ble_bas.c</name>

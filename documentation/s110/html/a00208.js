@@ -1,5 +1,6 @@
 var a00208 =
 [
-    [ "list_len", "a00208.html#a0fb27ab1e05a0b9ac07d6abf32012391", null ],
-    [ "p_list", "a00208.html#ac2fd43c554a7b7ddc54d007a40bb5a81", null ]
+    [ "battery_level", "a00208.html#aa06f57fc8285fed61a3c0dd89671f6d3", null ],
+    [ "evt_type", "a00208.html#a19f2646a4734d1fc7cb27fdd7055fa55", null ],
+    [ "params", "a00208.html#ade50b22e0cb2c59c1e302a95ce175f28", null ]
 ];

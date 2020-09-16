@@ -1,6 +1,5 @@
 var a00138 =
 [
-    [ "p_enc_key", "a00138.html#a6c48b42106b674368173ab786aec58aa", null ],
-    [ "p_id_key", "a00138.html#a9bfad815de8c3ac2d2c40de30efee5e3", null ],
-    [ "p_sign_key", "a00138.html#a750c704413d4c6e622e83741d7b83e98", null ]
+    [ "encr_key_size", "a00138.html#abca3beb1304d60fd03f5ae098495dd6f", null ],
+    [ "sec_mode", "a00138.html#ada618e26f99059e7ccbe5be9f5d1049d", null ]
 ];

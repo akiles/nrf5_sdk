@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Device Information Service</title>
+<title>nRF51 SDK - S110 SoftDevice: Persistent Memory Interface Data Types</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,71 +97,52 @@ $(document).ready(function(){initNavTree('a00958.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">Device Information Service<div class="ingroups"><a class="el" href="a01033.html">BLE Services</a></div></div>  </div>
+<div class="title">Persistent Memory Interface Data Types<div class="ingroups"><a class="el" href="a00956.html">Persistent Storage Interface</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Device Information Service module.  
+<p>Data Types needed for interfacing with persistent memory.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00959"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html">Vendor ID Source values</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00209.html">ble_dis_sys_id_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">System ID parameters.  <a href="a00209.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00208.html">ble_dis_reg_cert_data_list_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">IEEE 11073-20601 Regulatory Certification Data List Structure.  <a href="a00208.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00207.html">ble_dis_pnp_id_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">PnP ID parameters.  <a href="a00207.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00206.html">ble_dis_init_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Information Service init structure. This contains all possible characteristics needed for initialization of the service.  <a href="a00206.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00453.html">pstorage_module_param_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga472c83dfe2ad977d76b664095a4991cd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00958.html#ga472c83dfe2ad977d76b664095a4991cd">ble_dis_init</a> (const <a class="el" href="a00206.html">ble_dis_init_t</a> *p_dis_init)</td></tr>
-<tr class="memdesc:ga472c83dfe2ad977d76b664095a4991cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Device Information Service.  <a href="#ga472c83dfe2ad977d76b664095a4991cd">More...</a><br/></td></tr>
-<tr class="separator:ga472c83dfe2ad977d76b664095a4991cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaac1d429f24eb2850da6d8f8773a14c47"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00958.html#gaac1d429f24eb2850da6d8f8773a14c47">pstorage_ntf_cb_t</a> )(pstorage_handle_t *p_handle, uint8_t op_code, uint32_t result, uint8_t *p_data, uint32_t data_len)</td></tr>
+<tr class="memdesc:gaac1d429f24eb2850da6d8f8773a14c47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Persistent Storage Error Reporting Callback.  <a href="#gaac1d429f24eb2850da6d8f8773a14c47">More...</a><br/></td></tr>
+<tr class="separator:gaac1d429f24eb2850da6d8f8773a14c47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Device Information Service module. </p>
-<p>This module implements the Device Information Service. During initialization it adds the Device Information Service to the BLE stack database. It then encodes the supplied information, and adds the curresponding characteristics.</p>
-<dl class="section note"><dt>Note</dt><dd>Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profile qualification listings, this section of source code must not be modified. </dd></dl>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga472c83dfe2ad977d76b664095a4991cd"></a>
+<p>Data Types needed for interfacing with persistent memory. </p>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gaac1d429f24eb2850da6d8f8773a14c47"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_dis_init </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00206.html">ble_dis_init_t</a> *&#160;</td>
-          <td class="paramname"><em>p_dis_init</em></td><td>)</td>
-          <td></td>
+          <td class="memname">typedef void(* pstorage_ntf_cb_t)(pstorage_handle_t *p_handle, uint8_t op_code, uint32_t result, uint8_t *p_data, uint32_t data_len)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for initializing the Device Information Service. </p>
-<p>This call allows the application to initialize the device information service. It adds the DIS service and DIS characteristics to the database, using the initial values supplied through the p_dis_init parameter. Characteristics which are not to be added, shall be set to NULL in p_dis_init.</p>
+<p>Persistent Storage Error Reporting Callback. </p>
+<p>Persistent Storage Error Reporting Callback that is used by the interface to report success or failure of a flash operation. Therefore, for any operations, application can know when the procedure was complete. For store operation, since no data copy is made, receiving a success or failure notification, indicated by the reason parameter of callback is an indication that the resident memory could now be reused or freed, as the case may be.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_dis_init</td><td>The structure containing the values of characteristics needed by the service.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Identifies module and block for which callback is received. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">op_code</td><td>Identifies the operation for which the event is notified. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">result</td><td>Identifies the result of flash access operation. NRF_SUCCESS implies, operation succeeded. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Identifies the application data pointer. In case of store operation, this points to the resident source of application memory that application can now free or reuse. In case of clear, this is NULL as no application pointer is needed for this operation. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data_len</td><td>Length data application had provided for the operation. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization of service. </dd></dl>
 
 </div>
 </div>
@@ -170,7 +151,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

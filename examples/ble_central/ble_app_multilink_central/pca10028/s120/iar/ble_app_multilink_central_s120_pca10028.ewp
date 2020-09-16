@@ -168,7 +168,7 @@
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
-		      <name>CCGuardCalls</name>
+          <name>CCGuardCalls</name>
           <state>1</state>
         </option>
         <option>
@@ -244,7 +244,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00000000</state>
+          <state>11111110</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -323,9 +323,11 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\config</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\softdevice\common\softdevice_handler</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pstorage</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\trace</state>
           <state>$TOOLKIT_DIR$\CMSIS\Include</state>
@@ -353,11 +355,11 @@
         <option>
           <name>CCOptStrategy</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>3</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -428,7 +430,7 @@
         <option>
           <name>CCOptStrategySlave</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -485,7 +487,7 @@
           <state>0</state>
         </option>
         <option>
-		  <name>ADefines</name>
+      <name>ADefines</name>
           <state>__HEAP_SIZE=0</state>
           <state>BLE_STACK_SUPPORT_REQD</state>
           <state>S120</state>
@@ -712,7 +714,7 @@
         </option>
         <option>
           <name>IlinkMapFile</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkLogFile</name>
@@ -740,7 +742,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-		  <state>$PROJ_DIR$\ble_app_multilink_central_iar_nrf51.icf</state>
+      <state>$PROJ_DIR$\ble_app_multilink_central_iar_nrf51.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -981,9 +983,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo\app_fifo.c</name>
     </file>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\gpiote\app_gpiote.c</name>
-    </file>
-    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\trace\app_trace.c</name>
     </file>
     <file>
@@ -1008,6 +1007,12 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\uart\app_uart_fifo.c</name>
     </file>
     <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</name>
+    </file>
+    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\pstorage\pstorage.c</name>
     </file>
   </group>
@@ -1022,6 +1027,9 @@
   </group>
   <group>
   <name>nRF_BLE</name>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\common\ble_advdata.c</name>
+    </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\ble\ble_db_discovery\ble_db_discovery.c</name>
     </file>

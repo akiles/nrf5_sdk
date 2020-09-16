@@ -40,10 +40,12 @@ C_SOURCE_FILES += \
 ../../../../../../components/libraries/button/app_button.c \
 ../../../../../../components/libraries/util/app_error.c \
 ../../../../../../components/libraries/fifo/app_fifo.c \
-../../../../../../components/libraries/gpiote/app_gpiote.c \
 ../../../../../../components/libraries/timer/app_timer.c \
+../../../../../../components/libraries/util/nrf_assert.c \
 ../../../../../../components/drivers_nrf/uart/app_uart_fifo.c \
 ../../../../../../components/drivers_nrf/hal/nrf_delay.c \
+../../../../../../components/drivers_nrf/common/nrf_drv_common.c \
+../../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c \
 ../../../../../bsp/bsp.c \
 ../../hrm_tx.c \
 ../../main.c \
@@ -55,13 +57,16 @@ C_SOURCE_FILES += \
 ASM_SOURCE_FILES  = ../../../../../../components/toolchain/gcc/gcc_startup_nrf51.s
 
 #includes common to all targets
-INC_PATHS  = -I../../../../../../components/libraries/util
+INC_PATHS  = -I../../config
+INC_PATHS += -I../../../../../../components/libraries/util
 INC_PATHS += -I../../../../../../components/toolchain/gcc
 INC_PATHS += -I../../../../../../components/drivers_nrf/uart
 INC_PATHS += -I../../../../../../components/softdevice/s210/headers
-INC_PATHS += -I../../../../../../components/libraries/gpiote
+INC_PATHS += -I../../../../../../components/drivers_nrf/common
+INC_PATHS += -I../../../../../../components/drivers_nrf/config
 INC_PATHS += -I../../../../../bsp
 INC_PATHS += -I../../../../../../components/libraries/fifo
+INC_PATHS += -I../../../../../../components/drivers_nrf/gpiote
 INC_PATHS += -I../../include
 INC_PATHS += -I../../../../../../components/toolchain
 INC_PATHS += -I../../../../../../components/device
@@ -81,6 +86,7 @@ CFLAGS  = -DTX_PAGE2
 CFLAGS += -DTX_PAGE3
 CFLAGS += -DTX_PAGE1
 CFLAGS += -DS210
+CFLAGS += -DSWI_DISABLE0
 CFLAGS += -DBOARD_PCA10028
 CFLAGS += -DSOFTDEVICE_PRESENT
 CFLAGS += -DNRF51
@@ -91,7 +97,7 @@ CFLAGS += -Wall -Werror -O3
 CFLAGS += -mfloat-abi=soft
 # keep every function in separate section. This will allow linker to dump unused functions
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -flto -fno-builtin
+CFLAGS += -fno-builtin --short-enums
 
 # keep every function in separate section. This will allow linker to dump unused functions
 LDFLAGS += -Xlinker -Map=$(LISTING_DIRECTORY)/$(OUTPUT_FILENAME).map
@@ -108,6 +114,7 @@ ASMFLAGS += -DTX_PAGE2
 ASMFLAGS += -DTX_PAGE3
 ASMFLAGS += -DTX_PAGE1
 ASMFLAGS += -DS210
+ASMFLAGS += -DSWI_DISABLE0
 ASMFLAGS += -DBOARD_PCA10028
 ASMFLAGS += -DSOFTDEVICE_PRESENT
 ASMFLAGS += -DNRF51

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Dual-bank and single-bank updates</title>
+<title>nRF51 SDK - S110 SoftDevice: Adding DFU Service support to an application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,51 +97,21 @@ $(document).ready(function(){initNavTree('a00088.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Dual-bank and single-bank updates </div>  </div>
+<div class="title">Adding DFU Service support to an application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>To safely perform a Device Firmware Update, the new firmware image should not be copied to the final location in memory until it has been validated. This ensures that only complete and valid images are activated. If an error occurs during the transfer, the firmware should not be updated.</p>
-<p>This process of storing the received firmware in one memory location (bank 1) and then copying it to the intended memory location (bank 0) later is called a <em>dual-bank update</em>.</p>
-<p>Application images can alternatively be transferred in a <em>single-bank update</em>. In this process, the new application directly overwrites the existing application. If an error occurs during the transfer, both the old and the new application will be corrupt. However, a single-bank update makes it possible to transfer bigger applications that cannot be stored in addition to the original application.</p>
-<p>All updates of the bootloader, the SoftDevice, or a combination of bootloader and SoftDevice are performed as dual-bank updates. Application updates can be performed as dual-bank or single-bank updates.</p>
-<h1><a class="anchor" id="bledfu_dual_bank"></a>
-Dual-bank updates</h1>
-<p>During a dual-bank update, the existing bootloader, SoftDevice, or application is preserved until it is replaced by the new firmware image. The update process differs slightly depending on the type of image that is transferred.</p>
-<h2><a class="anchor" id="bledfu_dual_banks_sd"></a>
-SoftDevice (with or without bootloader)</h2>
-<p>When updating the SoftDevice or a combination of bootloader and SoftDevice, any application that is present on the device will be erased. The memory area between the end of the existing SoftDevice and the beginning of the existing bootloader is used to store the received image before it is copied to replace the existing SoftDevice and maybe bootloader.</p>
-<p>The following figure shows the DFU process for a combined image of bootloader and SoftDevice. If the transferred image contains only a SoftDevice, the general process is the same, but only the SoftDevice is replaced.</p>
-<div class="image">
-<img src="exp_dfu_bootloader_sd_update.svg" alt="exp_dfu_bootloader_sd_update.svg"/>
-<div class="caption">
-DFU flash operations for SoftDevice and bootloader update</div></div>
-<p>First, the existing application is erased to prepare for the DFU transfer. The transferred image is then stored between the current SoftDevice and bootloader. Existing application data can be retained; see <a class="el" href="a00090.html">Preserving application data</a> for more information. Finally, the new SoftDevice and, if applicable, the new bootloader are validated and copied to replace the existing firmware.</p>
-<h2><a class="anchor" id="bledfu_dual_banks_app"></a>
-Application or bootloader</h2>
-<p>When updating the application or the bootloader (without SoftDevice update), the existing application is retained during the update process.</p>
-<p>The memory area between the end of the SoftDevice and the beginning of the bootloader (or the beginning of the application data, see <a class="el" href="a00090.html">Preserving application data</a>) is divided into two banks. Bank 0 holds the existing application, and bank 1 is used to store the received image.</p>
-<p>The following figure shows the DFU process for an application. A bootloader update works in the same way, except that the existing bootloader is replaced instead of the existing application.</p>
-<div class="image">
-<img src="exp_dfu_app_update.svg" alt="exp_dfu_app_update.svg"/>
-<div class="caption">
-DFU flash operations for a dual-bank application update</div></div>
-<p>The original application is located in memory bank 0. First, the bootloader erases bank 1. Existing application data can be retained; see <a class="el" href="a00090.html">Preserving application data</a> for more information. The transferred image is then stored in bank 1. After all packets of the new application are received, both the old and the new application are present in the memory. This ensures that fallback to the old application is possible if the new application cannot be activated. If the new application can be activated, bank 0 is erased and the new application is copied from bank 1 to bank 0. Bank 1 is not erased until the bootloader initializes again.</p>
-<h1><a class="anchor" id="bledfu_single_bank"></a>
-Single-bank updates</h1>
-<p>In a single-bank update, the existing application is replaced with the new application during the transfer of the image. Single-bank updates are available only for application updates, because if an error occurs and the device is left without a valid application, you can recover it by uploading a valid application again. If the device is left without a valid bootloader or SoftDevice, you can recover it only by attaching a flash tool and updating the device with a flash programmer.</p>
-<p>The following figure shows the DFU process for an application in single-bank mode.</p>
-<div class="image">
-<img src="exp_dfu_singlebank_update.svg" alt="exp_dfu_singlebank_update.svg"/>
-<div class="caption">
-DFU flash operations for a single-bank application update</div></div>
-<p>First, the existing application is erased to prepare for the DFU transfer. The transferred image is then stored at the location of the old application, thus between the current SoftDevice and bootloader. Existing application data can be retained; see <a class="el" href="a00090.html">Preserving application data</a> for more information. When the transfer is completed, the bootloader will validate the new application. If it is valid, the bootloader will start it. If it is not valid, the bootloader will reset, start in DFU mode, and wait for a new image to be uploaded. </p>
+<div class="textblock"><p>Instead of entering bootloader mode by pressing a button, you can also integrate BLE DFU Service support into an application and enable the application to automatically enter bootloader mode. Writing to the DFU Service will then trigger the application to restart in bootloader mode.</p>
+<p>The general concept of the Device Firmware Update is the same no matter if you use a button to enter bootloader mode or add BLE DFU Service support to the application. In both cases, a DFU bootloader is required, and the DFU is performed when the device is in bootloader mode. The only difference is how the device is put into bootloader mode.</p>
+<p>Adding BLE DFU Service support to an application is required whenever you want to be able to start bootloader mode and update a device without physical interaction. Potential reasons for this are, for example, that the device does not have a button or is not in reach.</p>
+<p>To get started, program and test the provided <a class="el" href="a00086.html">Example application</a>. Then check <a class="el" href="a00087.html">Extending your application</a> for detailed information on how to include BLE DFU Service support in your own application. <a class="el" href="a00089.html">Switching to bootloader/DFU mode</a> describes how to trigger bootloader/DFU mode.</p>
+<p>The example application supports <a class="el" href="a00085.html">Sharing bonding information</a>, which enables the DFU target to do directed advertising after bootloader mode is started, so that only the DFU controller can reconnect and the link is immediately re-encrypted. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00078.html">BLE DFU Bootloader</a></li><li class="navelem"><a class="el" href="a00094.html">Memory layout</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00084.html">BLE DFU Bootloader</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

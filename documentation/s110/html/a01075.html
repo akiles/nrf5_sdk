@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: User memory layout for Queued Writes</title>
+<title>nRF51 SDK - S110 SoftDevice: GAP Peripheral Initiated Security Establishment</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,30 +97,19 @@ $(document).ready(function(){initNavTree('a01075.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">User memory layout for Queued Writes<div class="ingroups"><a class="el" href="a00910.html">Generic Attribute Profile (GATT) Server</a></div></div>  </div>
+<div class="title">GAP Peripheral Initiated Security Establishment<div class="ingroups"><a class="el" href="a01063.html">Message Sequence Charts</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>The following table shows the memory layout used by the SoftDevice to queue a Queued Write operation (Prepare Write ATT packet) in user memory:</p>
-<table  style="border:1px solid black;border-collapse:collapse;">
-<caption align="bottom">Queued Write</caption>
-<tr>
-<th style="border:1px solid black;padding:5px;">Parameter </th><th style="border:1px solid black;padding:5px;">Size (octets) </th><th style="border:1px solid black;padding:5px;">Description  </th></tr>
-<tr>
-<td style="border:1px solid black;padding:5px;">Handle </td><td style="border:1px solid black;padding:5px;">2 </td><td style="border:1px solid black;padding:5px;">Attribute Handle  </td></tr>
-<tr>
-<td style="border:1px solid black;padding:5px;">Offset </td><td style="border:1px solid black;padding:5px;">2 </td><td style="border:1px solid black;padding:5px;">Value Offset  </td></tr>
-<tr>
-<td style="border:1px solid black;padding:5px;">Length </td><td style="border:1px solid black;padding:5px;">2 </td><td style="border:1px solid black;padding:5px;">Value Length  </td></tr>
-<tr>
-<td style="border:1px solid black;padding:5px;">Value </td><td style="border:1px solid black;padding:5px;">Length </td><td style="border:1px solid black;padding:5px;">Attribute Value  </td></tr>
-</table>
-<p>The application can parse the array of Queued Write instances at any time, but it is recommended to do so whenever an Execute Write ATT packet has been received over the air. See the GATT Server Queued Writes MSCs for more details. The array will be terminated by an Queued Write instance with its handle set to <a class="el" href="a01047.html#ga755613d0f9d0979be50a3814c1436ab9">BLE_GATT_HANDLE_INVALID</a>. </p>
-</div><!-- contents -->
+<div align="center">
+<img src="msc_inline_mscgraph_15.png" alt="msc_inline_mscgraph_15" border="0" usemap="#msc_inline_mscgraph_15.map"/>
+<map name="msc_inline_mscgraph_15.map" id="msc_inline_mscgraph_15.map"></map>
+</div>
+ </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:31 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -22,7 +22,8 @@
 
 #include <stdbool.h>
 #include "nrf.h"
-#include "nrf_gpio.h"
+#include "nrf_drv_gpiote.h"
+#include "app_error.h"
 #include "boards.h"
 
 #ifdef BSP_BUTTON_0
@@ -38,37 +39,35 @@
 #ifndef PIN_OUT
     #error "Please indicate output pin"
 #endif
+
+void in_pin_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
+{
+    nrf_drv_gpiote_out_toggle(PIN_OUT);
+}
 /**
  * @brief Function for configuring: PIN_IN pin for input, PIN_OUT pin for output, 
  * and configures GPIOTE to give an interrupt on pin change.
  */
 static void gpio_init(void)
 {
-    nrf_gpio_cfg_output(PIN_OUT);
-    nrf_gpio_cfg_input(PIN_IN, NRF_GPIO_PIN_PULLUP);
-    nrf_gpio_pin_clear(PIN_OUT);
-    // Enable interrupt:
-    NVIC_EnableIRQ(GPIOTE_IRQn);
-    NRF_GPIOTE->CONFIG[0] = (GPIOTE_CONFIG_POLARITY_Toggle << GPIOTE_CONFIG_POLARITY_Pos)
-                            | (PIN_IN << GPIOTE_CONFIG_PSEL_Pos)
-                            | (GPIOTE_CONFIG_MODE_Event << GPIOTE_CONFIG_MODE_Pos);
-    NRF_GPIOTE->INTENSET = GPIOTE_INTENSET_IN0_Set << GPIOTE_INTENSET_IN0_Pos;
+    ret_code_t err_code;
+
+    err_code = nrf_drv_gpiote_init();
+    APP_ERROR_CHECK(err_code);
+    
+    nrf_drv_gpiote_out_config_t out_config = GPIOTE_CONFIG_OUT_SIMPLE(false);
+
+    err_code = nrf_drv_gpiote_out_init(PIN_OUT, &out_config);
+    APP_ERROR_CHECK(err_code);
+
+    nrf_drv_gpiote_in_config_t in_config = GPIOTE_CONFIG_IN_SENSE_TOGGLE(true);
+    in_config.pull = NRF_GPIO_PIN_PULLUP;
+
+    err_code = nrf_drv_gpiote_in_init(PIN_IN, &in_config, in_pin_handler);
+    APP_ERROR_CHECK(err_code);
+
+    nrf_drv_gpiote_in_event_enable(PIN_IN, true);
 }
-
-
-/** @brief Function for handling the GPIOTE interrupt which is triggered on PIN_IN change.
- */
-void GPIOTE_IRQHandler(void)
-{
-    // Event causing the interrupt must be cleared.
-    if ((NRF_GPIOTE->EVENTS_IN[0] == 1) &&
-        (NRF_GPIOTE->INTENSET & GPIOTE_INTENSET_IN0_Msk))
-    {
-        NRF_GPIOTE->EVENTS_IN[0] = 0;
-        nrf_gpio_pin_toggle(PIN_OUT);
-    }
-}
-
 
 /**
  * @brief Function for application main entry.

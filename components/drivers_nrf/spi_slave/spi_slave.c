@@ -19,11 +19,11 @@
 #include "app_util_platform.h"
 
 #define SPI1_TWI1_IRQ_PRI           APP_IRQ_PRIORITY_LOW      /**< Priority of the SPI slave device interrupt. */
-#define DEFAULT_CS_PULLUP_CONFIG    GPIO_PIN_CNF_PULL_Disabled
-#define DEFAULT_DRIVE_CONFIG        GPIO_PIN_CNF_DRIVE_S0S1
+#define DEFAULT_CS_PULLUP_CONFIG    GPIO_PIN_CNF_PULL_Disabled /**< Default Pull configuration of SPI CS. */
+#define DEFAULT_DRIVE_CONFIG        GPIO_PIN_CNF_DRIVE_S0S1    /**< Default drive configuration of SPI MISO. */
 
-static uint32_t m_cs_pullup_config = DEFAULT_CS_PULLUP_CONFIG;
-static uint32_t m_drive_config = GPIO_PIN_CNF_DRIVE_S0S1;
+static uint32_t m_cs_pullup_config = DEFAULT_CS_PULLUP_CONFIG; /**< SPI CS pin Pull configuration. */
+static uint32_t m_drive_config = GPIO_PIN_CNF_DRIVE_S0S1;      /**< SPI MISO pin output drive configuration. */
 
 /**@brief States of the SPI transaction state machine. */
 typedef enum

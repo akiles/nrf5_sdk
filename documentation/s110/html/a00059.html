@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Alert Notification Application</title>
+<title>nRF51 SDK - S110 SoftDevice: UART Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,70 +97,49 @@ $(document).ready(function(){initNavTree('a00059.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Alert Notification Application </div>  </div>
+<div class="title">UART Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Alert Notification Application is an example that implements the client role of the Alert Notification Profile using the hardware delivered in the nRF51 Development Kit.</p>
-<p>The application includes one mandatory client needed for the Alert Notification Profile:</p>
-<ul>
-<li><a class="el" href="a00952.html">Alert Notification Service Client</a></li>
-</ul>
-<dl class="section note"><dt>Note</dt><dd>This application is not power optimized! </dd>
+<div class="textblock"><p>The UART Example demonstrates basic UART usage for communicating with a PC terminal. It transmits and receives data through the configured pins as a serial device. The configured pins must be redirected to a COM port. Terminal programs (for example PUTTY) can listen to this COM port through a terminal session.</p>
+<p>When the application starts, it transmits "START: " through the serial device. This will be output on the terminal. If you type characters on the terminal, they are transmitted to the application through <a class="el" href="a00968.html#gacddb5b7b711ef104f9eb181a13bc4503">app_uart_get</a>. If you type an exit character 'q' or 'Q', the program transmits "EXIT!" on a new line and ends into an infinite loop.</p>
+<p>This example can be used for any UART connection, not only COM ports. COM port redirection is used for visual verification.</p>
+<dl class="section note"><dt>Note</dt><dd>If you set the define ENABLE_LOOPBACK_TEST, the application will assume that the TX_PIN_NUMBER is connected to RX_PIN_NUMBER and RTS_PIN_NUMBER is connected to CTS_PIN_NUMBER, used to test in loopback. In this case, no COM port can be used because the data flows from TX to RX. If data is lost, ERROR_PIN is set high.</dd>
 <dd>
-The application will stop advertising after 3 minutes and 30 seconds and go to system-off mode. Push the button 1 to wake it up and to make it restart advertising.</dd></dl>
-<h1><a class="anchor" id="project_alert_notification_setup"></a>
-Setup</h1>
-<p>The name of the example is <b>ble_app_alert_notification_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_alert_notification</code> </p>
-<p>Button assignments when in system-off:</p>
-<ul>
-<li>Button 1: Wake up from system-off and restart advertising.</li>
-<li>Button 2: Wake up from system-off, erase all bonds, and restart advertising.</li>
+Settings:<ul>
+<li>Baud: 38400</li>
+<li>Data bits: 8</li>
+<li>Stop bits: 1</li>
 </ul>
-<p>Button assignments when connected:</p>
-<ul>
-<li>Button 1: Check the current state of new alert and enable, disable, or clear the alert depending on the state.</li>
-<li>Button 2: Check the current state of unread alert and enable, disable, or clear the alert depending on the state.</li>
-<li>Button 3: Request peer to notify all current alert statuses.</li>
-</ul>
-<p>The Alert Notification Application does fast advertising for 30 seconds at power up and also after a disconnection. It will then switch to slow advertising mode for 180 seconds. After 180 seconds of slow advertising, the board will go to system-off.</p>
-<p>When a new alert notification is received, this is indicated by the state <a class="el" href="a00057.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a>. When an unread alert notification is received, this is indicated by the state <a class="el" href="a00057.html#BSP_INDICATE_ALERT_1">BSP_INDICATE_ALERT_1</a>. The alert state can be cleared by pressing the corresponding button.</p>
-<h1><a class="anchor" id="project_alert_notification_test"></a>
+</dd></dl>
+<p>The name of the example is <b>uart_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\peripheral\uart</code> </p>
+<h1><a class="anchor" id="uart_example_testing"></a>
 Testing</h1>
-<p>Test the Alert Notification Application with the Master Control Panel by performing the following steps:</p>
+<p>Test the UART Example application by performing the following steps:</p>
 <ol type="1">
-<li>Compile and program the application. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
-<li>In the Master Control Panel, create the Alert Notification Service (ANS) server by performing the following steps:<ol type="a">
-<li>Click File -&gt; Server Setup. In the window that opens up, click File -&gt; Load setup.</li>
-<li>In the resulting window, navigate to the <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_alert_notification</code> folder. If you are using Keil packs, this folder is located at <code>&lt;KeilFolder&gt;\ARM\Pack\NordicSemiconductor\nRF_Examples\&lt;version&gt;\ble_peripheral\ble_app_alert_notification</code>. Load the file <code>AlertNotifServer.bin</code>.</li>
-<li>Click 'Stop server' and then 'Start server'.</li>
-<li>Set the values of characteristics with UUID 0x2A47 and 0x2A48 to 0xFF.</li>
-<li>You must keep the 'Server Setup' window opened.</li>
-</ol>
+<li>Compile and program the application.</li>
+<li>Start a COM listener like PUTTY and connect to the used COM port with the following UART settings:<ul>
+<li>
+Baud rate: 38.400</li>
+<li>
+8 data bits</li>
+<li>
+1 stop bit</li>
+<li>
+No parity</li>
+<li>
+HW flow control: RTS/CTS</li>
+</ul>
 </li>
-<li>Select the device from Master Control Panel (the device will be advertising as 'Nordic_Alert_Notif'), then connect and perform service discovery. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
-<li>Upon connection, verify in the 'Server Setup' that the Client Characteristic Configuration descriptors (CCCD) for 0x2A45 and 0x2A46 are set to 0001.</li>
-<li>Upon connection, verify in the 'Server Setup' that the Alert Notification Control Point, 0x2A44, is written with the values 0x01 0x03.</li>
-<li>Set the value of characteristic 0x2A46 to '01-02' in the 'Server Setup' and press 'update'. Verify that the <a class="el" href="a00057.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> state is indicated.</li>
-<li>Press button 1 one time. Verify that the <a class="el" href="a00057.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> state is cleared.</li>
-<li>Press button 1 again. Verify in 'Server Setup' that the CCCD for 0x2A46 is set to 0000.</li>
-<li>Set the value of characteristic 0x2A46 to '01-03' in the 'Server Setup' and press 'update'. Verify that the <a class="el" href="a00057.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> state is cleared.</li>
-<li>Press button 1 again. Verify in 'Server Setup' that the CCCD for 0x2A46 is set to 0001. Verify that the <a class="el" href="a00057.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> state is cleared.</li>
-<li>Set the value of characteristic 0x2A46 to '01-03' in the 'Server Setup' and press 'update'. Verify that the <a class="el" href="a00057.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> state is indicated.</li>
-<li>Set the value of characteristic 0x2A45 to '01-02-41-42-43' in the 'Server Setup' and press 'update'. Verify that the <a class="el" href="a00057.html#BSP_INDICATE_ALERT_1">BSP_INDICATE_ALERT_1</a> state is indicated.</li>
-<li>Press button 2 one time. Verify that the <a class="el" href="a00057.html#BSP_INDICATE_ALERT_1">BSP_INDICATE_ALERT_1</a> state is cleared.</li>
-<li>Press button 2 again. Verify in 'Server Setup' that the CCCD for 0x2A45 is set to 0000.</li>
-<li>Disconnect from the Master Control Panel and observe that the <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
-<li>Wait until the application goes to system-off (<a class="el" href="a00057.html#BSP_INDICATE_IDLE">BSP_INDICATE_IDLE</a>).</li>
-<li>Press button 1 and connect to the Master Control Panel. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
-<li>Disconnect from the Master Control Panel. </li>
+<li>Observe that the text "Start:" appears at the top of the terminal.</li>
+<li>Type 'Q' or 'q' in the terminal. The response should be 'Exit!'. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00058.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00034.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

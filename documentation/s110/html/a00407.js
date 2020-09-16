@@ -1,7 +1,7 @@
 var a00407 =
 [
-    [ "hfclk", "a00407.html#a5d6e28106247179b7cde2e289f0f9c39", null ],
-    [ "length_us", "a00407.html#a0495f3c5f7e2fd20663af081ca7e4c0b", null ],
-    [ "priority", "a00407.html#ad45d8189eff4584a13d7069d3c877a55", null ],
-    [ "timeout_us", "a00407.html#af56601d1b7ef92d49dbd1567bd1d39e0", null ]
+    [ "data_packet", "a00407.html#acefd384a51f51514c417758c5d870a10", null ],
+    [ "packet_type", "a00407.html#ab181d68ce3f0f88e0f4020c1e07bb14d", null ],
+    [ "params", "a00407.html#a43ff043f6111e3f0ea38419613453270", null ],
+    [ "start_packet", "a00407.html#a3a677307c9b4796855cdc9d208cd8dee", null ]
 ];

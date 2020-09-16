@@ -351,9 +351,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define> __HEAP_SIZE=0 BLE_STACK_SUPPORT_REQD S120 BOARD_PCA10031 BSP_UART_SUPPORT NRF51 SOFTDEVICE_PRESENT</Define>
+              <Define> __HEAP_SIZE=0 BLE_STACK_SUPPORT_REQD S120 BOARD_PCA10031 BSP_UART_SUPPORT NRF51 SOFTDEVICE_PRESENT SWI_DISABLE0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\..\config;..\..\..\..\..\..\components\softdevice\s120\headers;..\..\..\..\..\bsp;..\..\..\..\..\..\components\ble\common;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\ble\ble_services\ble_hrs_c;..\..\..\..\..\..\components\ble\ble_services\ble_bas_c;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\ble\ble_db_discovery;..\..\..\..\..\..\components\ble\device_manager;..\..\..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\trace;..\..\..\..\..\..\components\drivers_nrf\pstorage</IncludePath>
+              <IncludePath>..\..\..\config;..\..\..\..\..\..\components\softdevice\s120\headers;..\..\..\..\..\bsp;..\..\..\..\..\..\components\ble\common;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\ble\device_manager;..\..\..\..\..\..\components\ble\ble_services\ble_hrs_c;..\..\..\..\..\..\components\ble\ble_services\ble_bas_c;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\config;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\ble\ble_db_discovery;..\..\..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\drivers_nrf\pstorage;..\..\..\..\..\..\components\libraries\trace</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -367,7 +367,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define> __HEAP_SIZE=0 BLE_STACK_SUPPORT_REQD S120 BOARD_PCA10031 BSP_UART_SUPPORT NRF51 SOFTDEVICE_PRESENT</Define>
+              <Define> __HEAP_SIZE=0 BLE_STACK_SUPPORT_REQD S120 BOARD_PCA10031 BSP_UART_SUPPORT NRF51 SOFTDEVICE_PRESENT SWI_DISABLE0</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -408,6 +408,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\bsp\bsp.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_btn_ble.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\bsp\bsp_btn_ble.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -443,6 +448,11 @@
         <Group>
           <GroupName>nRF_BLE</GroupName>
           <Files>
+            <File>
+              <FileName>ble_advdata.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\ble\common\ble_advdata.c</FilePath>
+            </File>
             <File>
               <FileName>ble_bas_c.c</FileName>
               <FileType>1</FileType>
@@ -484,6 +494,16 @@
               <FilePath>..\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</FilePath>
             </File>
             <File>
+              <FileName>nrf_drv_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrf_drv_gpiote.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</FilePath>
+            </File>
+            <File>
               <FileName>pstorage.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\drivers_nrf\pstorage\pstorage.c</FilePath>
@@ -507,11 +527,6 @@
               <FileName>app_fifo.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\fifo\app_fifo.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_gpiote.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\gpiote\app_gpiote.c</FilePath>
             </File>
             <File>
               <FileName>app_timer.c</FileName>

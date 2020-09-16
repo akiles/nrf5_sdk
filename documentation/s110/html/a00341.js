@@ -1,7 +1,7 @@
 var a00341 =
 [
-    [ "opcode", "a00341.html#ac9347eb17ef67e3f06df043008ffb2fc", null ],
-    [ "operand_len", "a00341.html#af49baa0004db22db129862b609928a62", null ],
-    [ "operator", "a00341.html#a3d079df679dec85ecc10fe70a2d349f1", null ],
-    [ "p_operand", "a00341.html#a2560ddd094bfd6960dd5cc3a6ee54c48", null ]
+    [ "max_len", "a00341.html#a021ad724a66d2f8e54c1bdff8def4b4c", null ],
+    [ "read_resp", "a00341.html#a9ed64286300a70a9d26f1839f2396221", null ],
+    [ "rep_ref", "a00341.html#af12bb312c4056f52bc2e83ff0ef66233", null ],
+    [ "security_mode", "a00341.html#a88082cfc1a5360f43e333ea838257ccb", null ]
 ];

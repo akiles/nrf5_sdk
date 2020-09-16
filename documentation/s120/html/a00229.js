@@ -1,7 +1,5 @@
 var a00229 =
 [
-    [ "hfclk", "a00229.html#a5d6e28106247179b7cde2e289f0f9c39", null ],
-    [ "length_us", "a00229.html#a0495f3c5f7e2fd20663af081ca7e4c0b", null ],
-    [ "priority", "a00229.html#ad45d8189eff4584a13d7069d3c877a55", null ],
-    [ "timeout_us", "a00229.html#af56601d1b7ef92d49dbd1567bd1d39e0", null ]
+    [ "type", "a00229.html#ae233c47cdd5f63de456f413a158bb16f", null ],
+    [ "uuid", "a00229.html#ac9ccd46e82b1b51d561f17d49282348c", null ]
 ];

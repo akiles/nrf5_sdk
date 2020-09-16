@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Blinky Example</title>
+<title>nRF51 SDK - S110 SoftDevice: Error module</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,31 +97,30 @@ $(document).ready(function(){initNavTree('a00030.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Blinky Example </div>  </div>
+<div class="title">Error module </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Blinky Example shows how to configure the GPIO pins as outputs. These outputs can then be used to drive LEDs, as in this example.</p>
-<div class="image">
-<img src="blinky.jpg" alt="blinky.jpg"/>
-<div class="caption">
-Illustration of the Blinky Example workflow</div></div>
-<p> When the application starts, some GPIO pins are configured as outputs to drive the LEDs. The application then loops while toggling the state of one of the LEDs every 500 milliseconds.</p>
-<p>You can use this example without a SoftDevice. The name of the example for PCA10028 is <b>blinky_blank_pca10028</b>, and for PCA10031 it is <b>blinky_blank_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\blinky</code> </p>
-<p>Alternatively, you can run it with SoftDevice S110. The name of the example for PCA10028 is <b>blinky_s110_pca10028</b>, and for PCA10031 it is <b>blinky_s110_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\blinky</code> </p>
-<h1><a class="anchor" id="gpio_example_app_blinky_testing"></a>
-Testing</h1>
-<p>Test the Blinky Example application by performing the following steps:</p>
-<ol type="1">
-<li>Compile and program the application.</li>
-<li>Observe that the LEDs are blinking. </li>
-</ol>
+<div class="textblock"><p>The error module provides the weak function <a class="el" href="a00989.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> for handling application errors. This function is used by most applications if it is not defined explicitly in the application code.</p>
+<p>The behavior of the error handler differs depending on whether the DEBUG flag is set:</p>
+<ul>
+<li><p class="startli"><b>If the DEBUG flag is not set:</b></p>
+<p class="startli">When <a class="el" href="a00989.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> is invoked, the MCU is reset.</p>
+</li>
+</ul>
+<ul>
+<li><p class="startli"><b>If the DEBUG flag is set:</b></p>
+<p class="startli">When <a class="el" href="a00989.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> is invoked, the function parameters (error code, line number, and file name) are copied to global memory, interrupts are disabled, and the application enters an infinite loop.</p>
+<p class="startli">If the BSP_DEFINES_ONLY flag is set, all LEDs available on the board are turned on.</p>
+<p class="startli">If the BSP_DEFINES_ONLY flag is not set, the <a class="el" href="a00062.html#BSP_INDICATE_FATAL_ERROR">BSP_INDICATE_FATAL_ERROR</a> state is indicated. </p>
+</li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00029.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

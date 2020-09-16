@@ -68,11 +68,11 @@ static simple_timer_states_t              m_simple_timer_state       = SIMPLE_TI
 /**
  * @brief Handler for timer events.
  */
-static void app_simple_timer_event_handler(nrf_timer_events_t event_type)
+static void app_simple_timer_event_handler(nrf_timer_event_t event_type, void * p_context)
 {
     switch(event_type)
     {
-        case NRF_TIMER_EVENTS_COMPARE0:
+        case NRF_TIMER_EVENT_COMPARE0:
             if (m_mode == APP_SIMPLE_TIMER_MODE_SINGLE_SHOT)
             {
                 m_simple_timer_state = SIMPLE_TIMER_STATE_STOPPED;
@@ -108,7 +108,7 @@ uint32_t app_simple_timer_start(app_simple_timer_mode_t            mode,
                                 void *                             p_context)
 {
     uint32_t err_code = NRF_SUCCESS;
-    nrf_timer_shorts_mask_t timer_short;
+    nrf_timer_short_mask_t timer_short;
 
     if (NULL == timeout_handler)
     {
@@ -117,11 +117,11 @@ uint32_t app_simple_timer_start(app_simple_timer_mode_t            mode,
 
     if (APP_SIMPLE_TIMER_MODE_REPEATED == mode)
     {
-        timer_short = NRF_TIMER_SHORTS_COMPARE0_CLEAR_MASK;
+        timer_short = NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK;
     }
     else if(APP_SIMPLE_TIMER_MODE_SINGLE_SHOT == mode)
     {
-        timer_short = NRF_TIMER_SHORTS_COMPARE0_STOP_MASK;
+        timer_short = NRF_TIMER_SHORT_COMPARE0_STOP_MASK;
     }
     else
     {

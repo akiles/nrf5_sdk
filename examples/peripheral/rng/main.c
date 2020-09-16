@@ -24,9 +24,9 @@
 #include "bsp.h"
 #include "nrf_delay.h"
 #include "app_uart.h"
-#include "app_gpiote.h"
 #include "app_error.h"
 #include "nrf_drv_rng.h"
+#include "nrf_assert.h"
 
 #ifdef SOFTDEVICE_PRESENT
 #include "softdevice_handler.h"
@@ -37,6 +37,11 @@
 #define RANDOM_BUFF_SIZE 16                                                           /**< Random numbers buffer size. */
 
 extern void softdevice_assertion_handler(uint32_t pc, uint16_t line_num, const uint8_t * file_name);
+
+void assert_nrf_callback(uint16_t line_num, const uint8_t *file_name)
+{
+    /* empty function - needed by softdevice handler */
+}
 
 void uart_error_handle(app_uart_evt_t * p_event)
 {

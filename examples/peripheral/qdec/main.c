@@ -49,7 +49,7 @@ static volatile int32_t m_accread;
 
 static void qdec_event_handler(nrf_drv_qdec_event_t event)
 {
-    if (event.type == NRF_QDEC_EVENTS_REPORTRDY)
+    if (event.type == NRF_QDEC_EVENT_REPORTRDY)
     {
         m_accdblread = event.data.report.accdbl;
         m_accread = event.data.report.acc;
@@ -91,7 +91,7 @@ int main(void)
     max_number_of_pulses = nrf_qdec_reportper_to_value(QDEC_CONFIG_REPORTPER);
 
     // initialize quadrature encoder simulator
-    qenc_init(QENC_CONFIG_GPIOTE_CHANNEL, (nrf_qdec_ledpol_t)nrf_qdec_ledpol_get());
+    qenc_init((nrf_qdec_ledpol_t)nrf_qdec_ledpol_get());
 
     while (forever)
     {

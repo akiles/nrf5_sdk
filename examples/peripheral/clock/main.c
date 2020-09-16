@@ -28,6 +28,7 @@
 #include "nrf_gpio.h"
 #include "boards.h"
 #include "nrf_drv_clock.h"
+#include "nrf_drv_gpiote.h"
 #include "nrf_drv_rtc.h"
 #include "nrf_drv_ppi.h"
 #include "nrf_gpiote.h"
@@ -51,7 +52,19 @@ void setup_example(void)
     nrf_drv_rtc_tick_enable(&rtc, false);
     event = nrf_drv_rtc_event_address_get(&rtc, NRF_RTC_EVENT_TICK);
 
-    nrf_gpiote_task_config(0, BSP_LED_0, NRF_GPIOTE_POLARITY_TOGGLE, NRF_GPIOTE_INITIAL_VALUE_LOW);
+    if (!nrf_drv_gpiote_is_init())
+    {
+        err_code = nrf_drv_gpiote_init();
+        APP_ERROR_CHECK(err_code);
+    }
+    
+    nrf_drv_gpiote_out_config_t pin_out_config = GPIOTE_CONFIG_OUT_TASK_TOGGLE(false);
+    err_code = nrf_drv_gpiote_out_init(BSP_LED_0,&pin_out_config);
+    APP_ERROR_CHECK(err_code);
+
+    nrf_drv_gpiote_out_task_enable(BSP_LED_0);
+
+    uint32_t gpiote_task_addr = nrf_drv_gpiote_out_task_addr_get(BSP_LED_0);
 
     err_code = nrf_drv_ppi_init();
     APP_ERROR_CHECK(err_code);
@@ -59,7 +72,7 @@ void setup_example(void)
     err_code = nrf_drv_ppi_channel_alloc(&ppi_channel);
     APP_ERROR_CHECK(err_code);
 
-    err_code = nrf_drv_ppi_channel_assign(ppi_channel,event,(uint32_t)&NRF_GPIOTE->TASKS_OUT[0]);
+    err_code = nrf_drv_ppi_channel_assign(ppi_channel,event,gpiote_task_addr);
     APP_ERROR_CHECK(err_code);
 
     err_code = nrf_drv_ppi_channel_enable(ppi_channel);

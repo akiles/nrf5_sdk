@@ -243,11 +243,7 @@ void bootloader_dfu_update_process(dfu_update_status_t update_status)
 uint32_t bootloader_init(void)
 {
     uint32_t                err_code;
-    pstorage_module_param_t storage_params;
-
-    storage_params.cb          = pstorage_callback_handler;
-    storage_params.block_size  = sizeof(bootloader_settings_t);
-    storage_params.block_count = 1;
+    pstorage_module_param_t storage_params = {.cb = pstorage_callback_handler};
 
     err_code = pstorage_init();
     if (err_code != NRF_SUCCESS)    
@@ -255,6 +251,7 @@ uint32_t bootloader_init(void)
         return err_code;
     }
 
+    m_bootsettings_handle.block_id = BOOTLOADER_SETTINGS_ADDRESS;
     err_code = pstorage_register(&storage_params, &m_bootsettings_handle);
 
     return err_code;
@@ -374,20 +371,17 @@ uint32_t bootloader_dfu_sd_update_finalize(void)
 
 void bootloader_settings_get(bootloader_settings_t * const p_settings)
 {
-    bootloader_settings_t bootloader_settings;
+    const bootloader_settings_t *  p_bootloader_settings;
 
-    (void) pstorage_load((uint8_t *)&bootloader_settings,
-                         &m_bootsettings_handle,
-                         sizeof(bootloader_settings_t),
-                         0);
+    bootloader_util_settings_get(&p_bootloader_settings);
 
-    p_settings->bank_0         = bootloader_settings.bank_0;
-    p_settings->bank_0_crc     = bootloader_settings.bank_0_crc;
-    p_settings->bank_0_size    = bootloader_settings.bank_0_size;
-    p_settings->bank_1         = bootloader_settings.bank_1;
-    p_settings->sd_image_size  = bootloader_settings.sd_image_size;
-    p_settings->bl_image_size  = bootloader_settings.bl_image_size;
-    p_settings->app_image_size = bootloader_settings.app_image_size;
-    p_settings->sd_image_start = bootloader_settings.sd_image_start;
+    p_settings->bank_0         = p_bootloader_settings->bank_0;
+    p_settings->bank_0_crc     = p_bootloader_settings->bank_0_crc;
+    p_settings->bank_0_size    = p_bootloader_settings->bank_0_size;
+    p_settings->bank_1         = p_bootloader_settings->bank_1;
+    p_settings->sd_image_size  = p_bootloader_settings->sd_image_size;
+    p_settings->bl_image_size  = p_bootloader_settings->bl_image_size;
+    p_settings->app_image_size = p_bootloader_settings->app_image_size;
+    p_settings->sd_image_start = p_bootloader_settings->sd_image_start;
 }
 

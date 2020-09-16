@@ -1,13 +1,10 @@
 var a00206 =
 [
-    [ "dis_attr_md", "a00206.html#aa2ce530bbd1e27c0714bf8bdeda214d7", null ],
-    [ "fw_rev_str", "a00206.html#ace17346ac188ea3168ce89650b051960", null ],
-    [ "hw_rev_str", "a00206.html#af3ae591191cef78f2f0142f50f896191", null ],
-    [ "manufact_name_str", "a00206.html#a6980c3b02e2eb6513ba564c17aea32af", null ],
-    [ "model_num_str", "a00206.html#a764354961cfdd26b3e400c6292354574", null ],
-    [ "p_pnp_id", "a00206.html#a2bf4b6d703f519f7f52f0f9c757f7e11", null ],
-    [ "p_reg_cert_data_list", "a00206.html#a8fc7c6e19578a044415f703f1a753034", null ],
-    [ "p_sys_id", "a00206.html#a27dd370a69462b8e535284eabba9b3e5", null ],
-    [ "serial_num_str", "a00206.html#a4acba0dc5f1b3c9ef39845594a1d1daa", null ],
-    [ "sw_rev_str", "a00206.html#a2b68d1ba95abca2b58f71a3d11907154", null ]
+    [ "central_handle", "a00206.html#a0522feee52899c6d746fb496458c8681", null ],
+    [ "conn_handle", "a00206.html#aafc23bf2964f2476098f8841b808829a", null ],
+    [ "error_handler", "a00206.html#ad18e423fbc97fa13b4f5f99097b5c3e6", null ],
+    [ "evt_handler", "a00206.html#a5125f0b98f069ac8c455b109212d3d33", null ],
+    [ "message_buffer_size", "a00206.html#af58f6202418c1aab68d7224dcec9ba95", null ],
+    [ "p_message_buffer", "a00206.html#a12d3fef2b50b34a7cf6e42fbbc55308e", null ],
+    [ "service_handle", "a00206.html#ae696c92497734c92e20a628893a621b3", null ]
 ];

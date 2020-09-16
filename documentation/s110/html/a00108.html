@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Device/Host example</title>
+<title>nRF51 SDK - S110 SoftDevice: Blinky RTX Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,24 +97,36 @@ $(document).ready(function(){initNavTree('a00108.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Device/Host example </div>  </div>
+<div class="title">Blinky RTX Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><b>Device</b> </p>
-<p>This project requires that a Host running this example example be used as a counterpart for receiving the data. This can be on either nRF51 device or a nRF24Lxx device running this example in the nRFgo SDK.</p>
-<p>This example sends a packet and adds a new packet to the TX queue every time it receives an ACK. Before adding a packet to the TX queue, the contents of the GPIO Port BUTTONS is copied to the first payload byte (byte 0). When an ACK is received, the contents of the first payload byte of the ACK are output on GPIO Port LEDS.</p>
-<p>The name of the example is <b>gzll_device_ack_payload_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\properitary_rf\gzll\gzll_ack_payload</code> </p>
-<p><b>Host</b> </p>
-<p>This project requires that a Device running this example be used as a counterpart for receiving the data. This can be on either nRF51 device or a nRF24Lxx device running this example in the nRFgo SDK.</p>
-<p>This example listens for a packet and sends an ACK when a packet is received. The contents of the first payload byte of the received packet is output on the GPIO Port BUTTONS. The contents of GPIO Port LEDS are sent in the first payload byte (byte 0) of the ACK packet.</p>
-<p>The name of the example is <b>gzll_host_ack_payload_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\properitary_rf\gzll\gzll_ack_payload</code> </p>
+<div class="textblock"><p>The Blinky RTX Example shows RTX features like osSignal, osDelay, and osTimer.</p>
+<div class="image">
+<img src="blinky_rtx.jpg" alt="blinky_rtx.jpg"/>
+</div>
+<p> When the application starts, two GPIO pins are configured as outputs to drive the LEDs, and then new thread and timer are created.</p>
+<h1><a class="anchor" id="rtx_example_app_blinky_setup"></a>
+Setup</h1>
+<p>The name of the example is <b>blinky_rtx_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\peripheral\blinky_rtx</code> </p>
+<p><b>LED assignments:</b></p>
+<ul>
+<li>LED 1 and LED 2: Blinking.</li>
+</ul>
+<h1><a class="anchor" id="rtx_example_app_blinky_testing"></a>
+Testing</h1>
+<p>Test the Blinky Example application by performing the following steps:</p>
+<ol type="1">
+<li>Compile and program the application.</li>
+<li>Observe that the LEDs are blinking.</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>See <a class="el" href="a00131.html">RTX Support</a> for more information about RTX. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00114.html">Nordic proprietary protocols</a></li><li class="navelem"><a class="el" href="a00106.html">Gazell</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00034.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

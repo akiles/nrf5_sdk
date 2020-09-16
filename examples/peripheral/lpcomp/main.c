@@ -41,7 +41,6 @@
 #include "nrf_drv_lpcomp.h"
 #include "nrf_error.h"
 #include "app_error.h"
-#include "app_gpiote.h"
 #include "app_uart.h"
 #include "boards.h"
 
@@ -110,9 +109,9 @@ void uart_config(void)
  * It is also not allowed to call soft device functions from it (if LPCOMP IRQ
  * priority is set to NRF_APP_PRIORITY_HIGH).
  */
-static void lpcomp_event_handler(nrf_lpcomp_events_t event)
+static void lpcomp_event_handler(nrf_lpcomp_event_t event)
 {
-    if (event == NRF_LPCOMP_EVENTS_DOWN)
+    if (event == NRF_LPCOMP_EVENT_DOWN)
     {
         LEDS_INVERT(BSP_LED_0_MASK); // just change state of first LED
         voltage_falls_detected++;
@@ -160,8 +159,6 @@ int main(void)
     // configure pull-up on first button
     nrf_gpio_cfg_input(BSP_BUTTON_0, NRF_GPIO_PIN_PULLUP);
 #endif
-
-    APP_GPIOTE_INIT(1);
 
     uart_config();
 

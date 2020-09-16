@@ -26,8 +26,8 @@
  * @brief Hardware abstraction layer for managing the low-frequency clock (LFCLK) and the high-frequency clock (HFCLK).
  */
 
-#define NRF_CLOCK_TASK_SET    (1UL)
-#define NRF_CLOCK_EVENT_CLEAR (0UL)
+#define NRF_CLOCK_TASK_TRIGGER (1UL)
+#define NRF_CLOCK_EVENT_CLEAR  (0UL)
 
 /**
  * @brief Low-frequency clock sources.
@@ -82,30 +82,30 @@ typedef enum
 /**
  * @brief Tasks.
  *
- * @details The NRF_CLOCK_TASKS_LFCLKSTOP task cannot be set when the low-frequency clock is not running.
- * The NRF_CLOCK_TASKS_HFCLKSTOP task cannot be set when the high-frequency clock is not running.
+ * @details The NRF_CLOCK_TASK_LFCLKSTOP task cannot be set when the low-frequency clock is not running.
+ * The NRF_CLOCK_TASK_HFCLKSTOP task cannot be set when the high-frequency clock is not running.
  */
 typedef enum /*lint -save -e30 -esym(628,__INTADDR__) */
 {
-    NRF_CLOCK_TASKS_HFCLKSTART = offsetof(NRF_CLOCK_Type, TASKS_HFCLKSTART), /**< Start HFCLK clock source.*/
-    NRF_CLOCK_TASKS_HFCLKSTOP  = offsetof(NRF_CLOCK_Type, TASKS_HFCLKSTOP),  /**< Stop HFCLK clock source.*/
-    NRF_CLOCK_TASKS_LFCLKSTART = offsetof(NRF_CLOCK_Type, TASKS_LFCLKSTART), /**< Start LFCLK clock source.*/
-    NRF_CLOCK_TASKS_LFCLKSTOP  = offsetof(NRF_CLOCK_Type, TASKS_LFCLKSTOP),  /**< Stop LFCLK clock source.*/
-    NRF_CLOCK_TASKS_CAL        = offsetof(NRF_CLOCK_Type, TASKS_CAL),        /**< Start calibration of LFCLK RC oscillator.*/
-    NRF_CLOCK_TASKS_CTSTART    = offsetof(NRF_CLOCK_Type, TASKS_CTSTART),    /**< Start calibration timer.*/
-    NRF_CLOCK_TASKS_CTSTOP     = offsetof(NRF_CLOCK_Type, TASKS_CTSTOP)      /**< Stop calibration timer.*/
-} nrf_clock_tasks_t;                                                          /*lint -restore */
+    NRF_CLOCK_TASK_HFCLKSTART = offsetof(NRF_CLOCK_Type, TASKS_HFCLKSTART), /**< Start HFCLK clock source.*/
+    NRF_CLOCK_TASK_HFCLKSTOP  = offsetof(NRF_CLOCK_Type, TASKS_HFCLKSTOP),  /**< Stop HFCLK clock source.*/
+    NRF_CLOCK_TASK_LFCLKSTART = offsetof(NRF_CLOCK_Type, TASKS_LFCLKSTART), /**< Start LFCLK clock source.*/
+    NRF_CLOCK_TASK_LFCLKSTOP  = offsetof(NRF_CLOCK_Type, TASKS_LFCLKSTOP),  /**< Stop LFCLK clock source.*/
+    NRF_CLOCK_TASK_CAL        = offsetof(NRF_CLOCK_Type, TASKS_CAL),        /**< Start calibration of LFCLK RC oscillator.*/
+    NRF_CLOCK_TASK_CTSTART    = offsetof(NRF_CLOCK_Type, TASKS_CTSTART),    /**< Start calibration timer.*/
+    NRF_CLOCK_TASK_CTSTOP     = offsetof(NRF_CLOCK_Type, TASKS_CTSTOP)      /**< Stop calibration timer.*/
+} nrf_clock_task_t;                                                         /*lint -restore */
 
 /**
  * @brief Events.
  */
 typedef enum /*lint -save -e30 -esym(628,__INTADDR__) */
 {
-    NRF_CLOCK_EVENTS_HFCLKSTARTED = offsetof(NRF_CLOCK_Type, EVENTS_HFCLKSTARTED), /**< HFCLK oscillator started.*/
-    NRF_CLOCK_EVENTS_LFCLKSTARTED = offsetof(NRF_CLOCK_Type, EVENTS_LFCLKSTARTED), /**< LFCLK oscillator started.*/
-    NRF_CLOCK_EVENTS_DONE         = offsetof(NRF_CLOCK_Type, EVENTS_DONE),         /**< Calibration of LFCLK RC oscillator completed.*/
-    NRF_CLOCK_EVENTS_CTTO         = offsetof(NRF_CLOCK_Type, EVENTS_CTTO)          /**< Calibration timer time-out.*/
-} nrf_clock_events_t;                                                               /*lint -restore */
+    NRF_CLOCK_EVENT_HFCLKSTARTED = offsetof(NRF_CLOCK_Type, EVENTS_HFCLKSTARTED), /**< HFCLK oscillator started.*/
+    NRF_CLOCK_EVENT_LFCLKSTARTED = offsetof(NRF_CLOCK_Type, EVENTS_LFCLKSTARTED), /**< LFCLK oscillator started.*/
+    NRF_CLOCK_EVENT_DONE         = offsetof(NRF_CLOCK_Type, EVENTS_DONE),         /**< Calibration of LFCLK RC oscillator completed.*/
+    NRF_CLOCK_EVENT_CTTO         = offsetof(NRF_CLOCK_Type, EVENTS_CTTO)          /**< Calibration timer time-out.*/
+} nrf_clock_event_t;                                                               /*lint -restore */
 
 /**
  * @brief Function for enabling a specific interrupt.
@@ -148,7 +148,7 @@ __STATIC_INLINE bool nrf_clock_int_enable_check(nrf_clock_int_mask_t int_mask)
  *
  * @retval     address of requested task register
  */
-__STATIC_INLINE uint32_t nrf_clock_task_address_get(nrf_clock_tasks_t task)
+__STATIC_INLINE uint32_t nrf_clock_task_address_get(nrf_clock_task_t task)
 {
     return ((uint32_t )NRF_CLOCK + task);
 }
@@ -158,9 +158,9 @@ __STATIC_INLINE uint32_t nrf_clock_task_address_get(nrf_clock_tasks_t task)
  *
  * @param[in]  task             Task.
  */
-__STATIC_INLINE void nrf_clock_task_set(nrf_clock_tasks_t task)
+__STATIC_INLINE void nrf_clock_task_trigger(nrf_clock_task_t task)
 {
-    *((volatile uint32_t *)((uint8_t *)NRF_CLOCK + task)) = NRF_CLOCK_TASK_SET;
+    *((volatile uint32_t *)((uint8_t *)NRF_CLOCK + task)) = NRF_CLOCK_TASK_TRIGGER;
 }
 
 /**
@@ -171,7 +171,7 @@ __STATIC_INLINE void nrf_clock_task_set(nrf_clock_tasks_t task)
  *
  * @retval     address of requested event register
  */
-__STATIC_INLINE uint32_t nrf_clock_event_address_get(nrf_clock_events_t event)
+__STATIC_INLINE uint32_t nrf_clock_event_address_get(nrf_clock_event_t event)
 {
     return ((uint32_t)NRF_CLOCK + event);
 }
@@ -181,7 +181,7 @@ __STATIC_INLINE uint32_t nrf_clock_event_address_get(nrf_clock_events_t event)
  *
  * @param[in]  event       Event.
  */
-__STATIC_INLINE void nrf_clock_event_clear(nrf_clock_events_t event)
+__STATIC_INLINE void nrf_clock_event_clear(nrf_clock_event_t event)
 {
     *((volatile uint32_t *)((uint8_t *)NRF_CLOCK + event)) = NRF_CLOCK_EVENT_CLEAR;
 }
@@ -194,7 +194,7 @@ __STATIC_INLINE void nrf_clock_event_clear(nrf_clock_events_t event)
  * @retval     true              If the event is set.
  * @retval     false             If the event is not set.
  */
-__STATIC_INLINE bool nrf_clock_event_check(nrf_clock_events_t event)
+__STATIC_INLINE bool nrf_clock_event_check(nrf_clock_event_t event)
 {
     return (bool)*((volatile uint32_t *)((uint8_t *)NRF_CLOCK + event));
 }

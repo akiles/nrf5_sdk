@@ -1,9 +1,10 @@
 var a00177 =
 [
-    [ "context", "a00177.html#a1728a17f5c77bff7285e29c1a8afe6e8", null ],
-    [ "data", "a00177.html#abe4bd839db7c40829ccdbff3d1f79a57", null ],
-    [ "handle", "a00177.html#ae0637f8a8c322380f80f113edc931751", null ],
-    [ "len", "a00177.html#a56b5ec3ad2054c52588721d6273eb109", null ],
-    [ "offset", "a00177.html#afc84657816fd23a1e7c5f4b0e848e69d", null ],
-    [ "op", "a00177.html#a4e27117bb9e805b03a2c198b0684c621", null ]
+    [ "auth_signed_wr", "a00177.html#ad021e4c1c66a2595cb430d1e0598bc0d", null ],
+    [ "broadcast", "a00177.html#a66788f87aed20bf98b81af57051e9795", null ],
+    [ "indicate", "a00177.html#a256d8d59b59f7f1a079e962196e026dd", null ],
+    [ "notify", "a00177.html#a9dd91c1e55995665ef09ec4c5bd5eaf7", null ],
+    [ "read", "a00177.html#a1da688e4cfacf724ee7636dbf534716f", null ],
+    [ "write", "a00177.html#ae0ef9c3f220f06e735b534d232cb9108", null ],
+    [ "write_wo_resp", "a00177.html#a61fdb334c11f2a62accb48f297fb46ef", null ]
 ];

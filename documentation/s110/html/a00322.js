@@ -1,8 +1,6 @@
 var a00322 =
 [
-    [ "evt_handler", "a00322.html#ac6fbae8371e9336d3acb46b8903a8947", null ],
-    [ "hts_meas_attr_md", "a00322.html#a5c4a4bc737442da34f2b9cfd367bb5e8", null ],
-    [ "hts_temp_type_attr_md", "a00322.html#a1f216c81224e94f40db0d5b4aaa1898b", null ],
-    [ "temp_type", "a00322.html#a7d233be4574d7bdd2f28c9afa8d0efc2", null ],
-    [ "temp_type_as_characteristic", "a00322.html#a6ac11fedc2f4a022e482c6342880e30f", null ]
+    [ "context", "a00322.html#a66d632e13cd7d371036af6a90be224f4", null ],
+    [ "handle", "a00322.html#a79c55f70b9d10f1e11b35bb2cc13fdbd", null ],
+    [ "offset", "a00322.html#ac3c5c0c840625a5f28e90e9021eb2403", null ]
 ];

@@ -1,4 +1,5 @@
 var a00297 =
 [
-    [ "gatt_status", "a00297.html#a1e360fe54c33885b6e23e57c483f6959", null ]
+    [ "handle", "a00297.html#ada1f0c9228867fd73fd596d6d7241c67", null ],
+    [ "uuid", "a00297.html#a039854704d107784b185fb11b00b1258", null ]
 ];

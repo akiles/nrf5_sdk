@@ -15,6 +15,7 @@ All rights reserved.
 #include "ant_interface.h"
 #include "crc.h"
 #include "app_util.h"
+
 #ifdef LEDDRIVER_ACTIVE
     #include "bsp.h"
 #endif // LEDDRIVER_ACTIVE
@@ -473,6 +474,7 @@ bool antfs_pairing_resp_transmit(bool accept)
 static void event_queue_write(antfs_event_t event_code)
 {
     antfs_event_return_t * p_event = NULL;
+    uint32_t err_code;
 
     // Check if there is room in the queue for a new event.
     if (((m_event_queue.head + 1u) & (ANTFS_EVENT_QUEUE_SIZE - 1u)) != m_event_queue.tail)
@@ -545,7 +547,8 @@ static void event_queue_write(antfs_event_t event_code)
 
             case ANTFS_EVENT_PAIRING_REQUEST:
 #ifdef LEDDRIVER_ACTIVE
-                bsp_indication_set(BSP_INDICATE_BONDING);
+                err_code = bsp_indication_set(BSP_INDICATE_BONDING);
+                APP_ERROR_CHECK(err_code);
 #endif // LEDDRIVER_ACTIVE
                 break;                
                 
@@ -1325,7 +1328,8 @@ static void link_layer_transit(void)
     if (m_current_state.state != ANTFS_STATE_OFF)
     {
 #ifdef LEDDRIVER_ACTIVE
-        bsp_indication_set(BSP_INDICATE_IDLE);
+        uint32_t err_code = bsp_indication_set(BSP_INDICATE_IDLE);
+        APP_ERROR_CHECK(err_code);
 #endif // LEDDRIVER_ACTIVE
 
         m_current_state.state                    = ANTFS_STATE_LINK;
@@ -1336,7 +1340,7 @@ static void link_layer_transit(void)
 
         timeout_disable();
 
-        uint32_t err_code = sd_ant_channel_radio_freq_set(ANTFS_CHANNEL, m_active_beacon_frequency);
+        err_code = sd_ant_channel_radio_freq_set(ANTFS_CHANNEL, m_active_beacon_frequency);
         APP_ERROR_CHECK(err_code);
 
         event_queue_write(ANTFS_EVENT_LINK);
@@ -1958,7 +1962,8 @@ static void transport_layer_transit(void)
     if (m_current_state.state != ANTFS_STATE_OFF)
     {
 #ifdef LEDDRIVER_ACTIVE
-    	bsp_indication_set(BSP_INDICATE_IDLE);
+    	uint32_t err_code = bsp_indication_set(BSP_INDICATE_IDLE);
+        APP_ERROR_CHECK(err_code);
 #endif // LEDDRIVER_ACTIVE
         m_current_state.state                     = ANTFS_STATE_TRANS;
         m_current_state.sub_state.trans_sub_state = ANTFS_TRANS_SUBSTATE_NONE;
@@ -1974,6 +1979,8 @@ static void transport_layer_transit(void)
 
 void antfs_message_process(uint8_t * p_message)
 {
+    uint32_t err_code;
+    
     if (p_message != NULL)
     {
         if ((p_message[BUFFER_INDEX_CHANNEL_NUM] & CHANNEL_NUMBER_MASK) != ANTFS_CHANNEL)
@@ -2172,7 +2179,8 @@ void antfs_message_process(uint8_t * p_message)
 
                     case EVENT_TX:
 #ifdef LEDDRIVER_ACTIVE
-                        bsp_indication_set(BSP_INDICATE_SENT_OK);
+                        err_code = bsp_indication_set(BSP_INDICATE_SENT_OK);
+                        APP_ERROR_CHECK(err_code);
 #endif // LEDDRIVER_ACTIVE
                         // Load beacon.
                         beacon_transmit(MESG_BROADCAST_DATA_ID);
@@ -2320,10 +2328,6 @@ void antfs_init(const antfs_params_t * const p_params,
     APP_ERROR_CHECK(err_code);
 
     state_machine_reset();
-
-#ifdef LEDDRIVER_ACTIVE
-    leddriver_init();
-#endif // LEDDRIVER_ACTIVE
 
     err_code = sd_ant_burst_handler_wait_flag_enable((uint8_t *)(&m_burst_wait));
     APP_ERROR_CHECK(err_code);

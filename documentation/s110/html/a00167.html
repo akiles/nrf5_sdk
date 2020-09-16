@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_ancs_c_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: Flash handling library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,136 +96,18 @@ $(document).ready(function(){initNavTree('a00167.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ancs_c_s Struct Reference<div class="ingroups"><a class="el" href="a01028.html">Apple Notification Service Client</a></div></div>  </div>
+<div class="title">Flash handling library </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Apple Notification structure. This contains various status information for the client.  
- <a href="a00167.html#details">More...</a></p>
-
-<p><code>#include &lt;ble_ancs_c.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a68f685f8924c3f6056c0e46d4c946e38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01028.html#gaaf1fd94fb2dc997e6b322b88cbae8b08">ble_ancs_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#a68f685f8924c3f6056c0e46d4c946e38">evt_handler</a></td></tr>
-<tr class="separator:a68f685f8924c3f6056c0e46d4c946e38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae32c087a775aecc36861a59ba2ce25eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00971.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#ae32c087a775aecc36861a59ba2ce25eb">error_handler</a></td></tr>
-<tr class="separator:ae32c087a775aecc36861a59ba2ce25eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a4d0aeb7ab536e11464b08c18b4f64f"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#a6a4d0aeb7ab536e11464b08c18b4f64f">conn_handle</a></td></tr>
-<tr class="separator:a6a4d0aeb7ab536e11464b08c18b4f64f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82b1444de6d0edf6d1ca540d9440ec2a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#a82b1444de6d0edf6d1ca540d9440ec2a">central_handle</a></td></tr>
-<tr class="separator:a82b1444de6d0edf6d1ca540d9440ec2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2140cd86844be95e6dd92e0828fe5e9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#ab2140cd86844be95e6dd92e0828fe5e9">service_handle</a></td></tr>
-<tr class="separator:ab2140cd86844be95e6dd92e0828fe5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b5d0bb894fcc16080d1a96beea0735f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#a5b5d0bb894fcc16080d1a96beea0735f">message_buffer_size</a></td></tr>
-<tr class="separator:a5b5d0bb894fcc16080d1a96beea0735f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebce7f47c991566b5675c2f7547c55a5"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00167.html#aebce7f47c991566b5675c2f7547c55a5">p_message_buffer</a></td></tr>
-<tr class="separator:aebce7f47c991566b5675c2f7547c55a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Apple Notification structure. This contains various status information for the client. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a82b1444de6d0edf6d1ca540d9440ec2a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_ancs_c_s::central_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle for the currently connected peer if we have a bond in the bond manager. </p>
-
-</div>
-</div>
-<a class="anchor" id="a6a4d0aeb7ab536e11464b08c18b4f64f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_ancs_c_s::conn_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
-
-</div>
-</div>
-<a class="anchor" id="ae32c087a775aecc36861a59ba2ce25eb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00971.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_ancs_c_s::error_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Function to be called in case of an error. </p>
-
-</div>
-</div>
-<a class="anchor" id="a68f685f8924c3f6056c0e46d4c946e38"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01028.html#gaaf1fd94fb2dc997e6b322b88cbae8b08">ble_ancs_c_evt_handler_t</a> ble_ancs_c_s::evt_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event handler to be called for handling events in the Apple Notification Client Application. </p>
-
-</div>
-</div>
-<a class="anchor" id="a5b5d0bb894fcc16080d1a96beea0735f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_ancs_c_s::message_buffer_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of message buffer to hold the additional text messages received on notifications. </p>
-
-</div>
-</div>
-<a class="anchor" id="aebce7f47c991566b5675c2f7547c55a5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t* ble_ancs_c_s::p_message_buffer</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to the buffer to be used for additional text message handling. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab2140cd86844be95e6dd92e0828fe5e9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_ancs_c_s::service_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle to the service in the database to use for this instance. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>This driver allows writing to the non-volatile memory (NVM) regions of the nRF51. In order to write to NVM the controller must be powered on and the relevant page must be erased. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00167.html">ble_ancs_c_s</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

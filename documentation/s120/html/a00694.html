@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: BLE Libraries</title>
+<title>nRF51 SDK - S120 SoftDevice: BLE SoftDevice Common</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,41 +99,46 @@ $(document).ready(function(){initNavTree('a00694.html','');});
   <div class="summary">
 <a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">BLE Libraries<div class="ingroups"><a class="el" href="a00691.html">nRF51 SDK</a></div></div>  </div>
+<div class="title">BLE SoftDevice Common<div class="ingroups"><a class="el" href="a00965.html">S120 (BLE Central)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Type definitions, macros, error codes, SVC and event number subranges etc. common to all S120 SoftDevice modules.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:a00640"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00640.html">Device Manager</a></td></tr>
-<tr class="memdesc:a00640"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Manager Application Interface Abstraction. <br/></td></tr>
+<tr class="memitem:a00695"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00695.html">Events, type definitions and API calls</a></td></tr>
+<tr class="memdesc:a00695"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module independent events, type definitions and API calls for the BLE SoftDevice. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00681"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00681.html">Assert Handler for debug purposes.</a></td></tr>
-<tr class="memdesc:a00681"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module for handling of assert during application development when debugging. <br/></td></tr>
+<tr class="memitem:a00697"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00697.html">General error codes</a></td></tr>
+<tr class="memdesc:a00697"><td class="mdescLeft">&#160;</td><td class="mdescRight">General error code definitions for the BLE API. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00682"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html">DTM - Direct Test Mode</a></td></tr>
-<tr class="memdesc:a00682"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module for testing RF/PHY using DTM commands. <br/></td></tr>
+<tr class="memitem:a00698"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00698.html">Module specific error code subranges</a></td></tr>
+<tr class="memdesc:a00698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment of subranges for module specific error codes. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00683"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00683.html">Error Log Module</a></td></tr>
-<tr class="memdesc:a00683"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module for writing error and stack to flash memory. <br/></td></tr>
+<tr class="memitem:a00737"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00737.html">Bluetooth status codes</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00684"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00684.html">Radio Notification Event Handler</a></td></tr>
-<tr class="memdesc:a00684"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module for propagating Radio Notification events to the application. <br/></td></tr>
+<tr class="memitem:a00739"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00739.html">Module specific SVC, event and option number subranges</a></td></tr>
+<tr class="memdesc:a00739"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of SVC, event and option number subranges for each API module. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00685"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00685.html">BLE Date Time characteristic type</a></td></tr>
-<tr class="memdesc:a00685"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of <a class="el" href="a00089.html" title="Date and Time structure.">ble_date_time_t</a> type. <br/></td></tr>
+<tr class="memitem:a00740"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00740.html">Common types and macro definitions</a></td></tr>
+<tr class="memdesc:a00740"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common types and macro definitions for the BLE SoftDevice. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00690"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00690.html">Flash Manager</a></td></tr>
-<tr class="memdesc:a00690"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module for accessing flash memory. <br/></td></tr>
+<tr class="memitem:a00752"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00752.html">Message Sequence Charts</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00745"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00745.html">SoftDevice Global Error Codes</a></td></tr>
+<tr class="memdesc:a00745"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global Error definitions. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>Type definitions, macros, error codes, SVC and event number subranges etc. common to all S120 SoftDevice modules. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:46 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -28,7 +28,6 @@
 #include "nrf_adc.h"
 #include "boards.h"
 #include "app_uart.h"
-#include "app_gpiote.h"
 #include "app_error.h"
 
 volatile int32_t adc_sample;
@@ -124,8 +123,6 @@ void adc_config(void)
  */
 int main(void)
 {
-    APP_GPIOTE_INIT(1);
-
     adc_config();
 
     uart_config();

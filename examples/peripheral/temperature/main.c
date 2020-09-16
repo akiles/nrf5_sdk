@@ -34,7 +34,6 @@
 #include "nrf_temp.h"
 #include "app_uart.h"
 #include "app_error.h"
-#include "app_gpiote.h"
 #include "bsp.h"
 
 #define UART_TX_BUF_SIZE 256                                                          /**< UART TX buffer size. */
@@ -60,7 +59,6 @@ int main(void)
 
     nrf_temp_init();
     uint32_t err_code;
-    APP_GPIOTE_INIT(1);
     const app_uart_comm_params_t comm_params =
      {
          RX_PIN_NUMBER,

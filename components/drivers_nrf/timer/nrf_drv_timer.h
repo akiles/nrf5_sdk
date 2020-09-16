@@ -29,7 +29,9 @@
 
 #include <stdbool.h>
 #include "nrf_drv_config.h"
+#include "nrf_timer.h"
 #include "sdk_errors.h"
+#include "nrf_timer.h"
 
 /**@brief Struct for TIMER instance. */
 typedef struct
@@ -53,6 +55,7 @@ typedef struct
     nrf_timer_mode_t       mode;               /**< Mode of operation. */
     nrf_timer_bit_width_t  bit_width;          /**< Bit width. */
     uint8_t                interrupt_priority; /**< TIMER interrupt priority */
+    void*                  p_context;          /**< Context passed to interrupt handler */
 } nrf_drv_timer_config_t;
 
 #define TIMER_CONFIG_FREQUENCY(id)    TIMER##id##_CONFIG_FREQUENCY
@@ -67,9 +70,17 @@ typedef struct
         .mode               = (nrf_timer_mode_t)TIMER_CONFIG_MODE(id),                \
         .bit_width          = (nrf_timer_bit_width_t)TIMER_CONFIG_BIT_WIDTH(id),      \
         .interrupt_priority = TIMER_CONFIG_IRQ_PRIORITY(id),                          \
+        .p_context          = NULL                                                    \
     }
 
-typedef void (*nrf_timer_event_handler_t)(nrf_timer_events_t event_type);
+/**
+ * @brief TIMER interrupt event handler.
+ *
+ * @param[in] event_type  Timer event.
+ * @param[in] p_context   General purpose parameter set during initialization of the timer.
+                          Can be used to pass additional information to handler function, e.g. timer ID.
+ */
+typedef void (*nrf_timer_event_handler_t)(nrf_timer_event_t event_type, void* p_context);
 
 /**
  * @brief Function for initializing the timer.
@@ -147,7 +158,18 @@ void nrf_drv_timer_increment(nrf_drv_timer_t const * const p_instance);
  * @retval     Task address.
  */
 uint32_t nrf_drv_timer_task_address_get(nrf_drv_timer_t const * const p_instance,
-                                        nrf_timer_tasks_t             timer_task);
+                                        nrf_timer_task_t              timer_task);
+
+/**
+ * @brief Function for returning the address of a specific timer capture task.
+ *
+ * @param[in]  p_instance Timer.
+ * @param[in]  channel    Capture channel number.
+ *
+ * @retval     Task address.
+ */
+uint32_t nrf_drv_timer_capture_task_address_get(nrf_drv_timer_t const * const p_instance,
+                                                uint32_t channel);
 
 /**
  * @brief Function for returning the address of a specific timer event.
@@ -158,7 +180,18 @@ uint32_t nrf_drv_timer_task_address_get(nrf_drv_timer_t const * const p_instance
  * @retval     Event address.
  */
 uint32_t nrf_drv_timer_event_address_get(nrf_drv_timer_t const * const p_instance,
-                                         nrf_timer_events_t            timer_event);
+                                         nrf_timer_event_t             timer_event);
+
+/**
+ * @brief Function for returning the address of a specific timer compare event.
+ *
+ * @param[in]  p_instance  Timer.
+ * @param[in]  channel     Compare channel number.
+ *
+ * @retval     Event address.
+ */
+uint32_t nrf_drv_timer_compare_event_address_get(nrf_drv_timer_t const * const p_instance,
+                                                 uint32_t channel);
 
 /**
  * @brief Function for capturing the timer value.
@@ -210,7 +243,7 @@ void nrf_drv_timer_compare(nrf_drv_timer_t const * const p_instance,
 void nrf_drv_timer_extended_compare(nrf_drv_timer_t const * const p_instance,
                                     nrf_timer_cc_channel_t        cc_channel,
                                     uint32_t                      cc_value,
-                                    nrf_timer_shorts_mask_t       timer_short_mask,
+                                    nrf_timer_short_mask_t        timer_short_mask,
                                     bool                          enable);
 
 /**
@@ -218,6 +251,8 @@ void nrf_drv_timer_extended_compare(nrf_drv_timer_t const * const p_instance,
  *
  * @param[in]  p_instance   Timer.
  * @param[in]  timer_us     Time in microseconds.
+ *
+ * @note Function asserts if there was a 32-bit integer overflow.
  *
  * @retval     Number of ticks.
  */
@@ -230,10 +265,32 @@ uint32_t nrf_drv_timer_us_to_ticks(nrf_drv_timer_t const * const p_instance,
  * @param[in]  p_instance   Timer.
  * @param[in]  timer_ms     Time in milliseconds.
  *
+ * @note Function asserts if there was a 32-bit integer overflow.
+ *
  * @retval     Number of ticks.
  */
 uint32_t nrf_drv_timer_ms_to_ticks(nrf_drv_timer_t const * const p_instance,
                                    uint32_t                      timer_ms);
+
+/**
+ * @brief Function for enabling timer compare interrupt.
+ *
+ * @param[in]  p_instance   Timer.
+ * @param[in]  channel      Compare channel
+ */
+void nrf_drv_timer_compare_int_enable(nrf_drv_timer_t const * const p_instance,
+                                      uint32_t channel);
+
+/**
+ * @brief Function for disabling timer compare interrupt.
+ *
+ * @param[in]  p_instance   Timer.
+ * @param[in]  channel      Compare channel
+ */
+void nrf_drv_timer_compare_int_disable(nrf_drv_timer_t const * const p_instance,
+                                       uint32_t channel);
+
+
 
 #endif
 

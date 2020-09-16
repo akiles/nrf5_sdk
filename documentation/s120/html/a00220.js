@@ -1,4 +1,6 @@
 var a00220 =
 [
-    [ "value", "a00220.html#a6abcc1a7af7712feb6998ec7cb7f3f86", null ]
+    [ "conn_handle", "a00220.html#ab843f6e96efbaf3d2bffee8c92c62f1a", null ],
+    [ "params", "a00220.html#ab63285db6028432fe959a66519f85139", null ],
+    [ "rx", "a00220.html#afc4cbc758b308e6698b16650310cc52b", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: WDT Example</title>
+<title>nRF51 SDK - S210 SoftDevice: GPIOTE Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,32 +97,47 @@ $(document).ready(function(){initNavTree('a00036.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">WDT Example </div>  </div>
+<div class="title">GPIOTE Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The WDT Example demonstrates the usage of the watchdog peripherals.</p>
-<p>When the application starts, all LEDs are turned on one after the other. When all LEDs are lit, user input ("feeding the watchdog") is required to avoid system reset.</p>
-<p>Pressing Button 1 triggers feeding the watchdog. The watchdog time-out is two seconds. Therefore, it should be fed at least once every two seconds.</p>
-<p>The name of the example is <b>wdt_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\wdt</code> </p>
-<h1><a class="anchor" id="nrf_dev_wdt_example_testing"></a>
+<div class="textblock"><p>The GPIOTE Example shows how to use the GPIOTE peripheral by toggling a LED.</p>
+<p>The application starts with configuring the GPIOTE output pin to toggle on a GPIOTE task. Timer 0 is then configured to generate events every 200 milliseconds. The events are passed through the PPI peripheral to generate tasks, which are then used by GPIOTE (in task mode) to toggle the GPIO pin. This means that every time there is an EVENT_COMPARE event, the GPIO pin toggles automatically, which can only be achieved using the GPIOTE peripheral.</p>
+<p>The task flow is as follows:</p>
+<p>[TIMER0]-&gt;EVENT_COMPARE-&gt;[PPI]-&gt;GPIOTE_TASK_OUT-&gt;[GPIOTE]-&gt;toggle_pin</p>
+<pre class="fragment">*          ----------------                       --------------------------
+*  -Start-|    Timer0      |                     |   EEP |    PPI    |  TEP |-------
+*  ------&gt;|  CC[0] = 200ms |-----Timer0_Event---&gt;|       | Channel 0 |      |       |
+* |        ----------------                       --------------------------        |
+* |                                                                                 |
+* |    -----------------------------------------------------------------------------
+* |   |
+* |   |                 -----------------                      ---------------
+* |    ---------TASK--&gt;|     GPIO_TE     |--&gt;Toggled_Output--&gt;|  LED toggling |--
+* |                     -----------------                     |  every 200ms  |  |
+* |                                                            ---------------   |
+*  ------------------------------------------------------------------------------
+*
+* </pre><h1><a class="anchor" id="nrf_gpiote_example_setup"></a>
+Setup</h1>
+<p>The name of the example is <b>gpiote_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\peripheral\gpiote</code> </p>
+<p><b>LED assignments:</b></p>
+<ul>
+<li>LED 1 shows the toggling done by the GPIOTE task.</li>
+</ul>
+<h1><a class="anchor" id="flashwrite_example_testing"></a>
 Testing</h1>
-<p>Test the WDT Example application by performing the following steps:</p>
+<p>Test the GPIOTE Example application by performing the following steps:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Observe that the system is starting up and the LEDs are turned on.</li>
-<li>Feed the watchdog by pressing Button 1.<ul>
-<li>If the watchdog is fed regularly, all LEDs remain turned on.</li>
-<li>If the watchdog is not fed within two seconds, the watchdog timer will expire and the system will be reset. </li>
-</ul>
-</li>
+<li>Observe that LED 1 toggles at the rate of 200 milliseconds. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00027.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00032.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

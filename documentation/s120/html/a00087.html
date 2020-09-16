@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_common_opt_radio_cpu_mutex_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: BLE S120 L2CAP Events</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,57 +96,54 @@ $(document).ready(function(){initNavTree('a00087.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_common_opt_radio_cpu_mutex_t Struct Reference<div class="ingroups"><a class="el" href="a00698.html">Structures</a></div></div>  </div>
+<div class="title">BLE S120 L2CAP Events </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Mutual exclusion of radio activity and CPU execution.  
- <a href="a00087.html#details">More...</a></p>
-
-<p><code>#include &lt;ble.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a750afb830aa9d1ea16fcddccce89dfa2"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a750afb830aa9d1ea16fcddccce89dfa2">enable</a>: 1</td></tr>
-<tr class="separator:a750afb830aa9d1ea16fcddccce89dfa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#nrf51_l2cap_evt_rx_encoding">0x70 - BLE_L2CAP_EVT_RX</a><ul><li class="level2"><a href="#nrf51_l2cap_evt_rx_encoding_sec">Event packet encoding</a></li>
+<li class="level2"><a href="#nrf51_l2cap_evt_rx_encoding_sub_a">Encoding of BLE L2CAP packet received event</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="textblock"><h1><a class="anchor" id="nrf51_l2cap_evt_rx_encoding"></a>
+0x70 - BLE_L2CAP_EVT_RX</h1>
+<h2><a class="anchor" id="nrf51_l2cap_evt_rx_encoding_sec"></a>
+Event packet encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a00948.html#gga200c8684032d8e5fe10d295b2f3a1555af6d68dde17c172258858ea9d9c4488e3">BLE_L2CAP_EVT_RX</a> packet.</p>
+<p>Event ID = 0x70 for BLE_L2CAP_EVT_RX.</p>
+<p>The BLE L2CAP event contains a connection handle. For the BLE L2CAP event RX, the <a class="el" href="a00219.html">ble_l2cap_evt_rx_t</a> is encoded after the connection handle, as seen in Figure 1.</p>
+<p>The order of the encoding is: </p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>See <a class="el" href="a00220.html#ab843f6e96efbaf3d2bffee8c92c62f1a">ble_l2cap_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Data Length </td><td>See <a class="el" href="a00221.html#a754900407e75298f4af89a59febed5b8">ble_l2cap_header_t::len</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>CID </td><td>See <a class="el" href="a00221.html#a6e40f192db4382919b6c1f3db8e70d46">ble_l2cap_header_t::cid</a> </td></tr>
+<tr>
+<td>0..'Data Length' bytes </td><td>Data </td><td>See <a class="el" href="a00219.html#ad3df37c1998b3d1d213a6e7b5cfbcd5e">ble_l2cap_evt_rx_t::data</a> </td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Mutual exclusion of radio activity and CPU execution. </p>
-<pre class="fragment">   This option configures the application's access to the CPU when the radio is active. The
-   application can configure itself to be blocked from using the CPU while the radio is
-   active. By default, the application will be able to share CPU time with the SoftDevice
-   during radio activity. This parameter structure is used together with @ref sd_ble_opt_set
-   to configure the @ref BLE_COMMON_OPT_RADIO_CPU_MUTEX option.
-</pre><dl class="section note"><dt>Note</dt><dd>Note that the application should use this option to configure the SoftDevice to block the CPU during radio activity (i.e enable mutual exclusion) when running the SoftDevice on hardware affected by PAN #44 "CCM may exceed real time requirements"and PAN #45 "AAR may
-       exceed real time requirements".</dd>
-<dd>
-Note that when acting as a scanner, the mutex is only enabled for radio TX activity.</dd>
-<dd>
-<a class="el" href="a00699.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> is not supported for this option. </dd></dl>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a750afb830aa9d1ea16fcddccce89dfa2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_common_opt_radio_cpu_mutex_t::enable</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Enable mutual exclusion of radio activity and the CPU execution. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_l2cap_evt_rx_encoding_sub_a"></a>
+Encoding of BLE L2CAP packet received event</h2>
+<div class="image">
+<img src="l2cap_evt_rx.png" alt="l2cap_evt_rx.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE L2CAP packet received event.</div></div>
+<p> <br/>
+ </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00087.html">ble_common_opt_radio_cpu_mutex_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00076.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00078.html">Serialization Codecs</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:45 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

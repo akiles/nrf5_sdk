@@ -16,8 +16,11 @@
 #include "nrf.h"
 #include "nrf_gpio.h"
 #include "nrf_error.h"
+#include "nrf_assert.h"
 #include "nrf_drv_common.h"
 #include "nrf_drv_qdec.h"
+#include "app_util_platform.h"
+#include "nrf_assert.h"
 
 static qdec_event_handler_t m_qdec_event_handler = NULL;
 static const nrf_drv_qdec_config_t m_default_config = NRF_DRV_QDEC_DEFAULT_CONFIG;
@@ -26,34 +29,34 @@ static nrf_drv_state_t m_state = NRF_DRV_STATE_UNINITIALIZED;
 void QDEC_IRQHandler(void)
 {
     nrf_drv_qdec_event_t event;
-    if ( nrf_qdec_event_check(NRF_QDEC_EVENTS_SAMPLERDY) &&
+    if ( nrf_qdec_event_check(NRF_QDEC_EVENT_SAMPLERDY) &&
          nrf_qdec_int_enable_check(NRF_QDEC_INT_SAMPLERDY_MASK) )
     {
-        nrf_qdec_event_clear(NRF_QDEC_EVENTS_SAMPLERDY);
+        nrf_qdec_event_clear(NRF_QDEC_EVENT_SAMPLERDY);
 
-        event.type = NRF_QDEC_EVENTS_SAMPLERDY;
+        event.type = NRF_QDEC_EVENT_SAMPLERDY;
         event.data.sample.value = (int8_t)nrf_qdec_sample_get();
         m_qdec_event_handler(event);
     }
 
-    if ( nrf_qdec_event_check(NRF_QDEC_EVENTS_REPORTRDY) &&
+    if ( nrf_qdec_event_check(NRF_QDEC_EVENT_REPORTRDY) &&
          nrf_qdec_int_enable_check(NRF_QDEC_INT_REPORTRDY_MASK) )
     {
-        nrf_qdec_event_clear(NRF_QDEC_EVENTS_REPORTRDY);
+        nrf_qdec_event_clear(NRF_QDEC_EVENT_REPORTRDY);
 
-        event.type = NRF_QDEC_EVENTS_REPORTRDY;
+        event.type = NRF_QDEC_EVENT_REPORTRDY;
 
         event.data.report.acc    = (int16_t)nrf_qdec_accread_get();
         event.data.report.accdbl = (uint16_t)nrf_qdec_accdblread_get();
         m_qdec_event_handler(event);
     }
 
-    if ( nrf_qdec_event_check(NRF_QDEC_EVENTS_ACCOF) &&
+    if ( nrf_qdec_event_check(NRF_QDEC_EVENT_ACCOF) &&
          nrf_qdec_int_enable_check(NRF_QDEC_INT_ACCOF_MASK) )
     {
-        nrf_qdec_event_clear(NRF_QDEC_EVENTS_ACCOF);
+        nrf_qdec_event_clear(NRF_QDEC_EVENT_ACCOF);
 
-        event.type = NRF_QDEC_EVENTS_ACCOF;
+        event.type = NRF_QDEC_EVENT_ACCOF;
         m_qdec_event_handler(event);
     }
 }
@@ -90,7 +93,7 @@ ret_code_t nrf_drv_qdec_init(const nrf_drv_qdec_config_t * p_config,
     (void)nrf_qdec_pio_assign(NRF_QDEC_PIO_PSELLED, p_config->pselled);
     nrf_qdec_ledpre_set(p_config->ledpre);
     nrf_qdec_ledpol_set(p_config->ledpol);
-    nrf_qdec_shorts_set(NRF_QDEC_SHORTS_REPORTRDY_READCLRACC_MASK);
+    nrf_qdec_shorts_enable(NRF_QDEC_SHORT_REPORTRDY_READCLRACC_MASK);
 
     if (p_config->dbfen)
     {
@@ -134,7 +137,7 @@ void nrf_drv_qdec_enable(void)
 {
     ASSERT(m_state == NRF_DRV_STATE_INITIALIZED);
     nrf_qdec_enable();
-    nrf_qdec_task_set(NRF_QDEC_TASKS_START);
+    nrf_qdec_task_trigger(NRF_QDEC_TASK_START);
     m_state = NRF_DRV_STATE_POWERED_ON;
 }
 
@@ -142,25 +145,25 @@ void nrf_drv_qdec_disable(void)
 {
     ASSERT(m_state == NRF_DRV_STATE_POWERED_ON);
     nrf_qdec_disable();
-    nrf_qdec_task_set(NRF_QDEC_TASKS_STOP);
+    nrf_qdec_task_trigger(NRF_QDEC_TASK_STOP);
     m_state = NRF_DRV_STATE_INITIALIZED;
 }
 
 void nrf_drv_qdec_accumulators_read(int16_t * p_acc, int16_t * p_accdbl)
 {
     ASSERT(m_state == NRF_DRV_STATE_POWERED_ON);
-    nrf_qdec_task_set(NRF_QDEC_TASKS_READCLRACC);
+    nrf_qdec_task_trigger(NRF_QDEC_TASK_READCLRACC);
 
     *p_acc    = (int16_t)nrf_qdec_accread_get();
     *p_accdbl = (int16_t)nrf_qdec_accdblread_get();
 }
 
-void nrf_drv_qdec_task_address_get(nrf_qdec_tasks_t task, uint32_t * p_task)
+void nrf_drv_qdec_task_address_get(nrf_qdec_task_t task, uint32_t * p_task)
 {
     *p_task = (uint32_t)nrf_qdec_task_address_get(task);
 }
 
-void nrf_drv_qdec_event_address_get(nrf_qdec_events_t event, uint32_t * p_event)
+void nrf_drv_qdec_event_address_get(nrf_qdec_event_t event, uint32_t * p_event)
 {
     *p_event = (uint32_t)nrf_qdec_event_address_get(event);
 }

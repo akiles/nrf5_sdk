@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_whitelist_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gap_enc_info_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,63 @@ $(document).ready(function(){initNavTree('a00258.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_whitelist_t Struct Reference<div class="ingroups"><a class="el" href="a01044.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_enc_info_t Struct Reference<div class="ingroups"><a class="el" href="a01287.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Whitelist structure.  
+<p>GAP Encryption Information.  
  <a href="a00258.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a9316d95519c47512389b4696376556d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html">ble_gap_addr_t</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00258.html#a9316d95519c47512389b4696376556d0">pp_addrs</a></td></tr>
-<tr class="separator:a9316d95519c47512389b4696376556d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f7d372587ed29005dbfd515103fa6fd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00258.html#a8f7d372587ed29005dbfd515103fa6fd">addr_count</a></td></tr>
-<tr class="separator:a8f7d372587ed29005dbfd515103fa6fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab78ecf15e25742a5ea56377cef1a8603"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00242.html">ble_gap_irk_t</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00258.html#ab78ecf15e25742a5ea56377cef1a8603">pp_irks</a></td></tr>
-<tr class="separator:ab78ecf15e25742a5ea56377cef1a8603"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21922578ee2df66befd41e968f8d5af1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00258.html#a21922578ee2df66befd41e968f8d5af1">irk_count</a></td></tr>
-<tr class="separator:a21922578ee2df66befd41e968f8d5af1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a545fe8321eef3b128572882aa3997f7f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00258.html#a545fe8321eef3b128572882aa3997f7f">ltk</a> [16]</td></tr>
+<tr class="separator:a545fe8321eef3b128572882aa3997f7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f21ad24fa7cce2e56ae61beccdcb0b8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00258.html#a5f21ad24fa7cce2e56ae61beccdcb0b8">auth</a>: 1</td></tr>
+<tr class="separator:a5f21ad24fa7cce2e56ae61beccdcb0b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91966f65c4bb6988f847a19ce0b1541e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00258.html#a91966f65c4bb6988f847a19ce0b1541e">ltk_len</a>: 7</td></tr>
+<tr class="separator:a91966f65c4bb6988f847a19ce0b1541e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Whitelist structure. </p>
+<div class="textblock"><p>GAP Encryption Information. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a8f7d372587ed29005dbfd515103fa6fd"></a>
+<a class="anchor" id="a5f21ad24fa7cce2e56ae61beccdcb0b8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_whitelist_t::addr_count</td>
+          <td class="memname">uint8_t ble_gap_enc_info_t::auth</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Count of device addresses in array, up to <a class="el" href="a01043.html#ga0e1bde4f7e3b124dc8aa2e7b032b8313">BLE_GAP_WHITELIST_ADDR_MAX_COUNT</a>. </p>
+<p>Authenticated Key. </p>
 
 </div>
 </div>
-<a class="anchor" id="a21922578ee2df66befd41e968f8d5af1"></a>
+<a class="anchor" id="a545fe8321eef3b128572882aa3997f7f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_whitelist_t::irk_count</td>
+          <td class="memname">uint8_t ble_gap_enc_info_t::ltk[16]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Count of IRKs in array, up to <a class="el" href="a01043.html#ga748b090dc565a8499e9088ecebe8672b">BLE_GAP_WHITELIST_IRK_MAX_COUNT</a>. </p>
+<p>Long Term Key. </p>
 
 </div>
 </div>
-<a class="anchor" id="a9316d95519c47512389b4696376556d0"></a>
+<a class="anchor" id="a91966f65c4bb6988f847a19ce0b1541e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00217.html">ble_gap_addr_t</a>** ble_gap_whitelist_t::pp_addrs</td>
+          <td class="memname">uint8_t ble_gap_enc_info_t::ltk_len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to an array of device address pointers, pointing to addresses to be used in whitelist. NULL if none are given. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab78ecf15e25742a5ea56377cef1a8603"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00242.html">ble_gap_irk_t</a>** ble_gap_whitelist_t::pp_irks</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to an array of Identity Resolving Key (IRK) pointers, each pointing to an IRK in the whitelist. NULL if none are given. </p>
+<p>LTK length in octets. </p>
 
 </div>
 </div>
@@ -186,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00258.html">ble_gap_whitelist_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00258.html">ble_gap_enc_info_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

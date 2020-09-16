@@ -1,6 +1,6 @@
 var a00350 =
 [
-    [ "cumulative_value", "a00350.html#a9dce1ef6b333542b081df12273229b2e", null ],
-    [ "location", "a00350.html#a27be823fda46c3deb2f3fd98a38bf29f", null ],
-    [ "opcode", "a00350.html#a000223ebda70c1ccce85e8746a7d8207", null ]
+    [ "evt_type", "a00350.html#ab349bf82213ea8f4ae3b547b2a3a4f5f", null ],
+    [ "hrm", "a00350.html#abbddddc557dc3729730e6ccd02041fa9", null ],
+    [ "params", "a00350.html#a8a067c7786d1ac5de867207b595da117", null ]
 ];

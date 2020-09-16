@@ -1,7 +1,6 @@
 var a00086 =
 [
-    [ "bit_width", "a00086.html#abb3f5d76f1cc9f033474a5c24d116025", null ],
-    [ "frequency", "a00086.html#acc77482beb52c3d8102c65ddc67c01c7", null ],
-    [ "interrupt_priority", "a00086.html#ad0b6c866ca3e572ba89747f507675375", null ],
-    [ "mode", "a00086.html#ac3211f3bb290d9bab58bf069bd477bc3", null ]
+    [ "action", "a00086.html#a6d163c5b2fa0f22b9f6a0b067a5b9fad", null ],
+    [ "init_state", "a00086.html#a98f1eccc9078534418ab05d974a6487e", null ],
+    [ "task_pin", "a00086.html#a3570a0a9ac0f57165163b442f0aca049", null ]
 ];

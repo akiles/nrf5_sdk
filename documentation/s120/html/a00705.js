@@ -1,13 +1,10 @@
 var a00705 =
 [
-    [ "GATT Timeout sources", "a00538.html", "a00538" ],
-    [ "GATT Write operations", "a00539.html", "a00539" ],
-    [ "GATT Execute Write flags", "a00540.html", null ],
-    [ "GATT Handle Value operations", "a00541.html", "a00541" ],
-    [ "GATT Status Codes", "a00542.html", "a00542" ],
-    [ "Characteristic Presentation Formats", "a00543.html", "a00543" ],
-    [ "GATT Bluetooth Namespaces", "a00544.html", "a00544" ],
-    [ "BLE_GATT_HANDLE_INVALID", "a00705.html#ga755613d0f9d0979be50a3814c1436ab9", null ],
-    [ "GATT_MTU_SIZE_DEFAULT", "a00705.html#gaf0a71c5d9dd3b12235312bd40fd2175e", null ],
-    [ "GATT_RX_MTU", "a00705.html#ga69b579663f889c0ce87a8931b51048b4", null ]
+    [ "BLE_GAP_ADV_FLAG_BR_EDR_NOT_SUPPORTED", "a00705.html#gacb3630594402e27c96515eb80080f2a3", null ],
+    [ "BLE_GAP_ADV_FLAG_LE_BR_EDR_CONTROLLER", "a00705.html#ga589a2a83eb353ad35fc9660c442514ce", null ],
+    [ "BLE_GAP_ADV_FLAG_LE_BR_EDR_HOST", "a00705.html#gaeb2468cf5bea6160d3b7fff9a1059116", null ],
+    [ "BLE_GAP_ADV_FLAG_LE_GENERAL_DISC_MODE", "a00705.html#ga3b7d4251306cd6644d9125da1994a931", null ],
+    [ "BLE_GAP_ADV_FLAG_LE_LIMITED_DISC_MODE", "a00705.html#ga7ed61557e00488daa5daf0b3d9f3d0fd", null ],
+    [ "BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE", "a00705.html#gaa57375a29c3f6acc5a22565528118cc6", null ],
+    [ "BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE", "a00705.html#gad19a5111127656b299dbdbe5d5e8d4e0", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gap_enc_key_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: app_pwm_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,58 +106,33 @@ $(document).ready(function(){initNavTree('a00109.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_enc_key_t Struct Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
+<div class="title">app_pwm_t Struct Reference<div class="ingroups"><a class="el" href="a00678.html">Pulse-width modulation (PWM)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Encryption Key.  
+<p>PWM instance structure.  
  <a href="a00109.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gap.h&gt;</code></p>
+<p><code>#include &lt;app_pwm.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a13ede8af725f86dfd2a221e48a61b313"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00108.html">ble_gap_enc_info_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00109.html#a13ede8af725f86dfd2a221e48a61b313">enc_info</a></td></tr>
-<tr class="separator:a13ede8af725f86dfd2a221e48a61b313"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a652b5f7ec55ac6f4693515bda2f35176"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00128.html">ble_gap_master_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00109.html#a652b5f7ec55ac6f4693515bda2f35176">master_id</a></td></tr>
-<tr class="separator:a652b5f7ec55ac6f4693515bda2f35176"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29e61fc8b924a0a77d5bdc9eecde3370"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a29e61fc8b924a0a77d5bdc9eecde3370"></a>
+uint32_t(*&#160;</td><td class="memItemRight" valign="bottom"><b>p_cb</b> )[9]</td></tr>
+<tr class="separator:a29e61fc8b924a0a77d5bdc9eecde3370"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21c8d1b13b4f89a65dc5d64d3cb52b8c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a21c8d1b13b4f89a65dc5d64d3cb52b8c"></a>
+<a class="el" href="a00260.html">nrf_drv_timer_t</a> const *const&#160;</td><td class="memItemRight" valign="bottom"><b>p_timer</b></td></tr>
+<tr class="separator:a21c8d1b13b4f89a65dc5d64d3cb52b8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Encryption Key. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a13ede8af725f86dfd2a221e48a61b313"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00108.html">ble_gap_enc_info_t</a> ble_gap_enc_key_t::enc_info</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Encryption Information. </p>
-
-</div>
-</div>
-<a class="anchor" id="a652b5f7ec55ac6f4693515bda2f35176"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00128.html">ble_gap_master_id_t</a> ble_gap_enc_key_t::master_id</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Master Identification. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>PWM instance structure. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00109.html">ble_gap_enc_key_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00109.html">app_pwm_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: sd_mbr_command_vector_table_base_set_t Struct Reference</title>
+<title>nRF51 SDK - S210 SoftDevice: nrf_ecb_hal_data_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,47 +106,63 @@ $(document).ready(function(){initNavTree('a00101.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">sd_mbr_command_vector_table_base_set_t Struct Reference<div class="ingroups"><a class="el" href="a00352.html">Types</a></div></div>  </div>
+<div class="title">nrf_ecb_hal_data_t Struct Reference<div class="ingroups"><a class="el" href="a00404.html">Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Sets the base address of the interrupt vector table for interrupts forwarded from the MBR.  
+<p>AES ECB data structure.  
  <a href="a00101.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_mbr.h&gt;</code></p>
+<p><code>#include &lt;nrf_soc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:af6bd4c73c91f2c8999d6f7ebe5780325"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#af6bd4c73c91f2c8999d6f7ebe5780325">address</a></td></tr>
-<tr class="separator:af6bd4c73c91f2c8999d6f7ebe5780325"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab4ea408dd38499ceff3935ecb5fa39f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#aab4ea408dd38499ceff3935ecb5fa39f">key</a> [(16)]</td></tr>
+<tr class="separator:aab4ea408dd38499ceff3935ecb5fa39f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4c798195f0d6d399a7f75d09ef89793"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#ad4c798195f0d6d399a7f75d09ef89793">cleartext</a> [(16)]</td></tr>
+<tr class="separator:ad4c798195f0d6d399a7f75d09ef89793"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a478942ae65d7433678164a95e4944115"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00101.html#a478942ae65d7433678164a95e4944115">ciphertext</a> [((16))]</td></tr>
+<tr class="separator:a478942ae65d7433678164a95e4944115"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Sets the base address of the interrupt vector table for interrupts forwarded from the MBR. </p>
-<p>Once this function has been called, this address is where the MBR will start to forward interrupts to after a reset.</p>
-<p>To restore default forwarding thiss function should be called with</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">address</td><td>set to 0. The MBR will then start forwarding to interrupts to the adress in NFR_UICR-&gt;BOOTADDR or to the SoftDevice if the BOOTADDR is not set.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00340.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="textblock"><p>AES ECB data structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="af6bd4c73c91f2c8999d6f7ebe5780325"></a>
+<a class="anchor" id="a478942ae65d7433678164a95e4944115"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_mbr_command_vector_table_base_set_t::address</td>
+          <td class="memname">uint8_t nrf_ecb_hal_data_t::ciphertext[((16))]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The base address of the interrupt vector table for forwarded interrupts. </p>
+<p>Cipher Text data. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad4c798195f0d6d399a7f75d09ef89793"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t nrf_ecb_hal_data_t::cleartext[(16)]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clear Text data. </p>
+
+</div>
+</div>
+<a class="anchor" id="aab4ea408dd38499ceff3935ecb5fa39f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t nrf_ecb_hal_data_t::key[(16)]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Encryption key. </p>
 
 </div>
 </div>
@@ -155,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00101.html">sd_mbr_command_vector_table_base_set_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:05 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00101.html">nrf_ecb_hal_data_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

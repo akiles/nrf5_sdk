@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_srv_report_ref_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gattc_handle_value_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,49 +106,49 @@ $(document).ready(function(){initNavTree('a00192.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_srv_report_ref_t Struct Reference<div class="ingroups"><a class="el" href="a00686.html">Common service definitions</a></div></div>  </div>
+<div class="title">ble_gattc_handle_value_t Struct Reference<div class="ingroups"><a class="el" href="a00942.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Value of a Report Reference descriptor.  
+<p>GATT read by UUID handle value pair.  
  <a href="a00192.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_srv_common.h&gt;</code></p>
+<p><code>#include &lt;ble_gattc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a4db26fdff00f44138f9f684ff1dfd149"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00192.html#a4db26fdff00f44138f9f684ff1dfd149">report_id</a></td></tr>
-<tr class="separator:a4db26fdff00f44138f9f684ff1dfd149"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a765872684206db6d91ad6de596599434"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00192.html#a765872684206db6d91ad6de596599434">report_type</a></td></tr>
-<tr class="separator:a765872684206db6d91ad6de596599434"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1b50c1fd1d5be05d0d0cf25e0925fd0"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00192.html#af1b50c1fd1d5be05d0d0cf25e0925fd0">handle</a></td></tr>
+<tr class="separator:af1b50c1fd1d5be05d0d0cf25e0925fd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e842e1c975c50acf7eec947baa405e8"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00192.html#a6e842e1c975c50acf7eec947baa405e8">p_value</a></td></tr>
+<tr class="separator:a6e842e1c975c50acf7eec947baa405e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Value of a Report Reference descriptor. </p>
-<p>This is mapping information which maps the parent characteristic to the Report ID(s) and Report Type(s) defined within a Report Map characteristic. </p>
+<div class="textblock"><p>GATT read by UUID handle value pair. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a4db26fdff00f44138f9f684ff1dfd149"></a>
+<a class="anchor" id="af1b50c1fd1d5be05d0d0cf25e0925fd0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_srv_report_ref_t::report_id</td>
+          <td class="memname">uint16_t ble_gattc_handle_value_t::handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Non-zero value if these is more than one instance of the same Report Type </p>
+<p>Attribute Handle. </p>
 
 </div>
 </div>
-<a class="anchor" id="a765872684206db6d91ad6de596599434"></a>
+<a class="anchor" id="a6e842e1c975c50acf7eec947baa405e8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_srv_report_ref_t::report_type</td>
+          <td class="memname">uint8_t* ble_gattc_handle_value_t::p_value</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of Report characteristic </p>
+<pre class="fragment">       Pointer to value, variable length (length available as value_len in ble_gattc_evt_read_by_uuid_rsp_t). 
+</pre><p> Please note that this pointer is absolute to the memory provided by the user when retrieving the event, so it will effectively point to a location inside the handle_value array. </p>
 
 </div>
 </div>
@@ -157,8 +157,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00192.html">ble_srv_report_ref_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00192.html">ble_gattc_handle_value_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_cs_ctrlpt_init_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_adv_modes_config_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,138 +106,154 @@ $(document).ready(function(){initNavTree('a00189.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_cs_ctrlpt_init_t Struct Reference<div class="ingroups"><a class="el" href="a00969.html">Speed and Cadence Control Point</a></div></div>  </div>
+<div class="title">ble_adv_modes_config_t Struct Reference<div class="ingroups"><a class="el" href="a01229.html">Advertising Module</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Speed and Cadence Control Point init structure. This contains all options and data needed for initialization of the Speed and Cadence Control Point module.  
+<p>Options for the different advertisement modes.  
  <a href="a00189.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_sc_ctrlpt.h&gt;</code></p>
+<p><code>#include &lt;ble_advertising.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ace531100dc9ba6f0ff3f62d27fd220f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00351.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#ace531100dc9ba6f0ff3f62d27fd220f8">sc_ctrlpt_attr_md</a></td></tr>
-<tr class="separator:ace531100dc9ba6f0ff3f62d27fd220f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64788d2708103f5bbc852e2e1835182c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a64788d2708103f5bbc852e2e1835182c">supported_functions</a></td></tr>
-<tr class="separator:a64788d2708103f5bbc852e2e1835182c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14e10c317dd498dc5ac6d17f162cb01e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a14e10c317dd498dc5ac6d17f162cb01e">service_handle</a></td></tr>
-<tr class="separator:a14e10c317dd498dc5ac6d17f162cb01e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96de686937df25c7bdc23206170ae50a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00969.html#gad91610b2c3b5ca4bc187387d6bf61528">ble_sc_ctrlpt_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a96de686937df25c7bdc23206170ae50a">evt_handler</a></td></tr>
-<tr class="separator:a96de686937df25c7bdc23206170ae50a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43e3dbaf04322020621f80634fb4ab11"><td class="memItemLeft" align="right" valign="top">ble_sensor_location_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a43e3dbaf04322020621f80634fb4ab11">list_supported_locations</a></td></tr>
-<tr class="separator:a43e3dbaf04322020621f80634fb4ab11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:accef6d6a6a4d4a5365c2a6043850c22a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#accef6d6a6a4d4a5365c2a6043850c22a">size_list_supported_locations</a></td></tr>
-<tr class="separator:accef6d6a6a4d4a5365c2a6043850c22a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff182ef403314ac9e5fb3d6964d4e862"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#aff182ef403314ac9e5fb3d6964d4e862">sensor_location_handle</a></td></tr>
-<tr class="separator:aff182ef403314ac9e5fb3d6964d4e862"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5840a1605a5459c4e82ef773ac9d2e24"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00971.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a5840a1605a5459c4e82ef773ac9d2e24">error_handler</a></td></tr>
-<tr class="separator:a5840a1605a5459c4e82ef773ac9d2e24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad34bab35df0220c5e7fb3a21e11f9623"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#ad34bab35df0220c5e7fb3a21e11f9623">ble_adv_whitelist_enabled</a></td></tr>
+<tr class="separator:ad34bab35df0220c5e7fb3a21e11f9623"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a022364c3a05eec09c1f477ae59eb6c8b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a022364c3a05eec09c1f477ae59eb6c8b">ble_adv_directed_enabled</a></td></tr>
+<tr class="separator:a022364c3a05eec09c1f477ae59eb6c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68a4f2038bb1b60cb81672a6b806db44"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a68a4f2038bb1b60cb81672a6b806db44">ble_adv_directed_timeout</a></td></tr>
+<tr class="separator:a68a4f2038bb1b60cb81672a6b806db44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75f559dde193549661ef9d69b78e057d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a75f559dde193549661ef9d69b78e057d">ble_adv_fast_enabled</a></td></tr>
+<tr class="separator:a75f559dde193549661ef9d69b78e057d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1113347e2fd0e86b7decd9485d14ba26"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a1113347e2fd0e86b7decd9485d14ba26">ble_adv_fast_interval</a></td></tr>
+<tr class="separator:a1113347e2fd0e86b7decd9485d14ba26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f7025bcb28e3622313487edb0a2e966"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a0f7025bcb28e3622313487edb0a2e966">ble_adv_fast_timeout</a></td></tr>
+<tr class="separator:a0f7025bcb28e3622313487edb0a2e966"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cc0a66107b75af49ffa817f251dd706"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a6cc0a66107b75af49ffa817f251dd706">ble_adv_slow_enabled</a></td></tr>
+<tr class="separator:a6cc0a66107b75af49ffa817f251dd706"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad95cae5d7c26b6a4690c307cafee99c2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#ad95cae5d7c26b6a4690c307cafee99c2">ble_adv_slow_interval</a></td></tr>
+<tr class="separator:ad95cae5d7c26b6a4690c307cafee99c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a106c33de5cbcd870019071e287366fa9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html#a106c33de5cbcd870019071e287366fa9">ble_adv_slow_timeout</a></td></tr>
+<tr class="separator:a106c33de5cbcd870019071e287366fa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Speed and Cadence Control Point init structure. This contains all options and data needed for initialization of the Speed and Cadence Control Point module. </p>
+<div class="textblock"><p>Options for the different advertisement modes. </p>
+<p>This structure is used to enable or disable advertising modes and to configure time-out periods and advertising intervals. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a5840a1605a5459c4e82ef773ac9d2e24"></a>
+<a class="anchor" id="a022364c3a05eec09c1f477ae59eb6c8b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00971.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_cs_ctrlpt_init_t::error_handler</td>
+          <td class="memname">bool ble_adv_modes_config_t::ble_adv_directed_enabled</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Function to be called in case of an error. </p>
+<p>Enable or disable direct advertising mode. </p>
 
 </div>
 </div>
-<a class="anchor" id="a96de686937df25c7bdc23206170ae50a"></a>
+<a class="anchor" id="a68a4f2038bb1b60cb81672a6b806db44"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00969.html#gad91610b2c3b5ca4bc187387d6bf61528">ble_sc_ctrlpt_evt_handler_t</a> ble_cs_ctrlpt_init_t::evt_handler</td>
+          <td class="memname">uint32_t ble_adv_modes_config_t::ble_adv_directed_timeout</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>event handler </p>
+<p>Time-out (number of tries) for direct advertising. </p>
 
 </div>
 </div>
-<a class="anchor" id="a43e3dbaf04322020621f80634fb4ab11"></a>
+<a class="anchor" id="a75f559dde193549661ef9d69b78e057d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ble_sensor_location_t* ble_cs_ctrlpt_init_t::list_supported_locations</td>
+          <td class="memname">bool ble_adv_modes_config_t::ble_adv_fast_enabled</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>list of supported sensor locations. </p>
+<p>Enable or disable fast advertising mode. </p>
 
 </div>
 </div>
-<a class="anchor" id="ace531100dc9ba6f0ff3f62d27fd220f8"></a>
+<a class="anchor" id="a1113347e2fd0e86b7decd9485d14ba26"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00351.html">ble_srv_cccd_security_mode_t</a> ble_cs_ctrlpt_init_t::sc_ctrlpt_attr_md</td>
+          <td class="memname">uint32_t ble_adv_modes_config_t::ble_adv_fast_interval</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initial security level for cycling speed and cadence control point attribute </p>
+<p>Advertising interval for fast advertising. </p>
 
 </div>
 </div>
-<a class="anchor" id="aff182ef403314ac9e5fb3d6964d4e862"></a>
+<a class="anchor" id="a0f7025bcb28e3622313487edb0a2e966"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_cs_ctrlpt_init_t::sensor_location_handle</td>
+          <td class="memname">uint32_t ble_adv_modes_config_t::ble_adv_fast_timeout</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>handle for the sensor location characteristic (if sensor_location related operation are supported). </p>
+<p>Time-out (in seconds) for fast advertising. </p>
 
 </div>
 </div>
-<a class="anchor" id="a14e10c317dd498dc5ac6d17f162cb01e"></a>
+<a class="anchor" id="a6cc0a66107b75af49ffa817f251dd706"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_cs_ctrlpt_init_t::service_handle</td>
+          <td class="memname">bool ble_adv_modes_config_t::ble_adv_slow_enabled</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of the parent service (as provided by the BLE stack). </p>
+<p>Enable or disable slow advertising mode. </p>
 
 </div>
 </div>
-<a class="anchor" id="accef6d6a6a4d4a5365c2a6043850c22a"></a>
+<a class="anchor" id="ad95cae5d7c26b6a4690c307cafee99c2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_cs_ctrlpt_init_t::size_list_supported_locations</td>
+          <td class="memname">uint32_t ble_adv_modes_config_t::ble_adv_slow_interval</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>number of supported sensor locations in the list. </p>
+<p>Advertising interval for slow advertising. </p>
 
 </div>
 </div>
-<a class="anchor" id="a64788d2708103f5bbc852e2e1835182c"></a>
+<a class="anchor" id="a106c33de5cbcd870019071e287366fa9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_cs_ctrlpt_init_t::supported_functions</td>
+          <td class="memname">uint32_t ble_adv_modes_config_t::ble_adv_slow_timeout</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>supported control point functionalities see <a class="el" href="a00970.html">Control point functionalities.</a>. </p>
+<p>Time-out (in seconds) for slow advertising. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad34bab35df0220c5e7fb3a21e11f9623"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ble_adv_modes_config_t::ble_adv_whitelist_enabled</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enable or disable use of the whitelist. </p>
 
 </div>
 </div>
@@ -246,8 +262,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00189.html">ble_cs_ctrlpt_init_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00189.html">ble_adv_modes_config_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

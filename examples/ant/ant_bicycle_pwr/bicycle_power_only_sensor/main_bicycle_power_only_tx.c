@@ -19,7 +19,6 @@
 #include "app_error.h"
 #include "app_timer.h"
 #include "app_button.h"
-#include "app_gpiote.h"
 #include "boards.h"
 #include "nordic_common.h"
 #include "app_util.h"
@@ -42,8 +41,6 @@
 #define APP_TIMER_PRESCALER           0                                         /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_MAX_TIMERS          1u                                        /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE       2u                                        /**< Size of timer operation queues. */
-
-#define APP_GPIOTE_MAX_USERS          1u                                        /**< Maximum number of users of the GPIOTE handler. */
 
 #define BUTTON_DETECTION_DELAY        APP_TIMER_TICKS(50u, APP_TIMER_PRESCALER) /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
 
@@ -158,9 +155,6 @@ void bp_only_tx_main_loop_run(void)
 
     // Initialize timer module.
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
-
-    // Initialize GPIOTE module.
-    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
 
     // Initialize and enable button handler module.
     static app_button_cfg_t buttons[] =

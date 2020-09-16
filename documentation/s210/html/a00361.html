@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: S210 (ANT)</title>
+<title>nRF51 SDK - S210 SoftDevice: Memory Pool Internal</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,41 +97,72 @@ $(document).ready(function(){initNavTree('a00361.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">S210 (ANT)</div>  </div>
+<div class="title">Memory Pool Internal<div class="ingroups"><a class="el" href="a00362.html">Memory pool</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Application Programming Interface for S210 SoftDevice.  
+<p>Memory pool internal definitions.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00337"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00337.html">ANT STACK</a></td></tr>
-<tr class="memdesc:a00337"><td class="mdescLeft">&#160;</td><td class="mdescRight">APIs for the ANT Stack. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00344"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00344.html">SoC Library API</a></td></tr>
-<tr class="memdesc:a00344"><td class="mdescLeft">&#160;</td><td class="mdescRight">APIs for the SoC library. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00342"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00342.html">SoftDevice Manager API</a></td></tr>
-<tr class="memdesc:a00342"><td class="mdescLeft">&#160;</td><td class="mdescRight">APIs for SoftDevice management. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00340"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html">SoftDevice Global Error Codes</a></td></tr>
-<tr class="memdesc:a00340"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global Error definitions. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00346"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00346.html">Master Boot Record API</a></td></tr>
-<tr class="memdesc:a00346"><td class="mdescLeft">&#160;</td><td class="mdescRight">APIs for updating SoftDevice and BootLoader. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga5d3fb1970e1e98050006978a14b3d95e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00361.html#ga5d3fb1970e1e98050006978a14b3d95e">TX_BUF_SIZE</a>&#160;&#160;&#160;600u</td></tr>
+<tr class="separator:ga5d3fb1970e1e98050006978a14b3d95e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga690f985c933da2ce6fe62b6c61dfa662"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00361.html#ga690f985c933da2ce6fe62b6c61dfa662">RX_BUF_SIZE</a>&#160;&#160;&#160;<a class="el" href="a00361.html#ga5d3fb1970e1e98050006978a14b3d95e">TX_BUF_SIZE</a></td></tr>
+<tr class="separator:ga690f985c933da2ce6fe62b6c61dfa662"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae8e478dba1ce71687ba038123e8da2f4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00361.html#gae8e478dba1ce71687ba038123e8da2f4">RX_BUF_QUEUE_SIZE</a>&#160;&#160;&#160;4u</td></tr>
+<tr class="separator:gae8e478dba1ce71687ba038123e8da2f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Application Programming Interface for S210 SoftDevice. </p>
+<p>Memory pool internal definitions. </p>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gae8e478dba1ce71687ba038123e8da2f4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RX_BUF_QUEUE_SIZE&#160;&#160;&#160;4u</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>RX buffer element size. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga690f985c933da2ce6fe62b6c61dfa662"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RX_BUF_SIZE&#160;&#160;&#160;<a class="el" href="a00361.html#ga5d3fb1970e1e98050006978a14b3d95e">TX_BUF_SIZE</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>RX buffer size in bytes. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga5d3fb1970e1e98050006978a14b3d95e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TX_BUF_SIZE&#160;&#160;&#160;600u</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TX buffer size in bytes. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:05 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

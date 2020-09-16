@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: dm_enc_key Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_pkt_rcpt_notif_req_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,34 @@ $(document).ready(function(){initNavTree('a00375.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dm_enc_key Struct Reference<div class="ingroups"><a class="el" href="a00982.html">Device Manager Data Types</a></div></div>  </div>
+<div class="title">ble_pkt_rcpt_notif_req_t Struct Reference<div class="ingroups"><a class="el" href="a01198.html">Device Firmware Update Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Device Manager Master identification and encryption information.  
+<p>Packet receipt notification request structure.  
  <a href="a00375.html#details">More...</a></p>
 
-<p><code>#include &lt;device_manager.h&gt;</code></p>
+<p><code>#include &lt;ble_dfu.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a86cd792e42804720a97e6f64884d0fd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00223.html">ble_gap_enc_info_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00375.html#a86cd792e42804720a97e6f64884d0fd4">enc_info</a></td></tr>
-<tr class="separator:a86cd792e42804720a97e6f64884d0fd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d0dc86cbbad08e963a13c3a4070454d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00243.html">ble_gap_master_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00375.html#a6d0dc86cbbad08e963a13c3a4070454d">master_id</a></td></tr>
-<tr class="separator:a6d0dc86cbbad08e963a13c3a4070454d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae358c37001ff578f12948a6e58642843"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00375.html#ae358c37001ff578f12948a6e58642843">num_of_pkts</a></td></tr>
+<tr class="separator:ae358c37001ff578f12948a6e58642843"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Device Manager Master identification and encryption information. </p>
+<div class="textblock"><p>Packet receipt notification request structure. </p>
+<p>This structure contains the contents of the packet receipt notification request sent by the DFU Controller. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a86cd792e42804720a97e6f64884d0fd4"></a>
+<a class="anchor" id="ae358c37001ff578f12948a6e58642843"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00223.html">ble_gap_enc_info_t</a> dm_enc_key::enc_info</td>
+          <td class="memname">uint16_t ble_pkt_rcpt_notif_req_t::num_of_pkts</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GAP encryption information. </p>
-
-</div>
-</div>
-<a class="anchor" id="a6d0dc86cbbad08e963a13c3a4070454d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00243.html">ble_gap_master_id_t</a> dm_enc_key::master_id</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Master identification. </p>
+<p>The number of packets of firmware data to be received by application before sending the next Packet Receipt Notification to the peer. </p>
 
 </div>
 </div>
@@ -156,8 +142,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00375.html">dm_enc_key</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00375.html">ble_pkt_rcpt_notif_req_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

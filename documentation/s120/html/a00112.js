@@ -1,10 +1,10 @@
 var a00112 =
 [
-    [ "auth_status", "a00112.html#a7abaaec9ee09953586fa7ab79c106a25", null ],
-    [ "bonded", "a00112.html#a54615bc38138687aef17d617c49c6f2a", null ],
-    [ "error_src", "a00112.html#aace68175dd43ad9be164097ef656e04e", null ],
-    [ "kdist_central", "a00112.html#a78ff491a0868d626e18245792325c4a3", null ],
-    [ "kdist_periph", "a00112.html#a8fc7c09f814b1d3d0537d0411b2b143e", null ],
-    [ "sm1_levels", "a00112.html#a6843023d29415f3ede4471a9fe359acf", null ],
-    [ "sm2_levels", "a00112.html#a29d62f41ca47daabc4098310ceffd4e1", null ]
+    [ "baud_rate", "a00112.html#aed401d2ee067394f8996bd5c0f4ff894", null ],
+    [ "cts_pin_no", "a00112.html#afd55bb9fe47cfd5eff8b468083b2dfed", null ],
+    [ "flow_control", "a00112.html#a0f003e30e3587f068bf45fad9f99bbc4", null ],
+    [ "rts_pin_no", "a00112.html#a836f131cb64d3cdf9831c0354483a65f", null ],
+    [ "rx_pin_no", "a00112.html#a30ae0cdf9181248fa08411af42a938a9", null ],
+    [ "tx_pin_no", "a00112.html#a7153a5ce2ab2d164224a7a17d5b1c56c", null ],
+    [ "use_parity", "a00112.html#a0851da050a073c86c13d0734e78f9d97", null ]
 ];

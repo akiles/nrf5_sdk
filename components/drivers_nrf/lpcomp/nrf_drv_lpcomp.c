@@ -16,6 +16,7 @@
 #include "nrf_error.h"
 #include "nrf_soc.h"
 #include "nrf_drv_common.h"
+#include "app_util_platform.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -25,7 +26,7 @@ static nrf_drv_state_t         m_state = NRF_DRV_STATE_UNINITIALIZED;
 
 static const nrf_drv_lpcomp_config_t m_default_config = NRF_DRV_LPCONF_DEFAULT_CONFIG;
 
-static void lpcomp_execute_handler(nrf_lpcomp_events_t event, uint32_t event_mask)
+static void lpcomp_execute_handler(nrf_lpcomp_event_t event, uint32_t event_mask)
 {
     if ( nrf_lpcomp_event_check(event) && nrf_lpcomp_int_enable_check(event_mask) )
     {
@@ -38,10 +39,10 @@ static void lpcomp_execute_handler(nrf_lpcomp_events_t event, uint32_t event_mas
 
 void LPCOMP_IRQHandler(void)
 {
-    lpcomp_execute_handler(NRF_LPCOMP_EVENTS_READY, LPCOMP_INTENSET_READY_Msk);
-    lpcomp_execute_handler(NRF_LPCOMP_EVENTS_DOWN, LPCOMP_INTENSET_DOWN_Msk);
-    lpcomp_execute_handler(NRF_LPCOMP_EVENTS_UP, LPCOMP_INTENSET_UP_Msk);
-    lpcomp_execute_handler(NRF_LPCOMP_EVENTS_CROSS, LPCOMP_INTENSET_CROSS_Msk);
+    lpcomp_execute_handler(NRF_LPCOMP_EVENT_READY, LPCOMP_INTENSET_READY_Msk);
+    lpcomp_execute_handler(NRF_LPCOMP_EVENT_DOWN, LPCOMP_INTENSET_DOWN_Msk);
+    lpcomp_execute_handler(NRF_LPCOMP_EVENT_UP, LPCOMP_INTENSET_UP_Msk);
+    lpcomp_execute_handler(NRF_LPCOMP_EVENT_CROSS, LPCOMP_INTENSET_CROSS_Msk);
 }
 
 
@@ -88,7 +89,7 @@ ret_code_t nrf_drv_lpcomp_init(const nrf_drv_lpcomp_config_t * p_config,
         default:
             break;
     }
-    nrf_lpcomp_shorts_set(NRF_LPCOMP_SHORTS_READY_SAMPLE_MASK);
+    nrf_lpcomp_shorts_enable(NRF_LPCOMP_SHORT_READY_SAMPLE_MASK);
 
     nrf_drv_common_irq_enable(LPCOMP_IRQn, p_config->interrupt_priority);
 
@@ -111,7 +112,7 @@ void nrf_drv_lpcomp_enable(void)
 {
     ASSERT(m_state == NRF_DRV_STATE_INITIALIZED);
     nrf_lpcomp_enable();
-    nrf_lpcomp_task_set(NRF_LPCOMP_TASKS_START);
+    nrf_lpcomp_task_trigger(NRF_LPCOMP_TASK_START);
     m_state = NRF_DRV_STATE_POWERED_ON;
 }
 
@@ -119,7 +120,7 @@ void nrf_drv_lpcomp_disable(void)
 {
     ASSERT(m_state == NRF_DRV_STATE_POWERED_ON);
     nrf_lpcomp_disable();
-    nrf_lpcomp_task_set(NRF_LPCOMP_TASKS_STOP);
+    nrf_lpcomp_task_trigger(NRF_LPCOMP_TASK_STOP);
     m_state = NRF_DRV_STATE_POWERED_ON;
 }
 

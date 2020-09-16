@@ -1,4 +1,4 @@
 var a00206 =
 [
-    [ "clear_persistent_data", "a00206.html#ab5feebf730ecc50b0c78c0f4354d6fc3", null ]
+    [ "hint", "a00206.html#a185bd248ff35543e4a827438c881d51d", null ]
 ];

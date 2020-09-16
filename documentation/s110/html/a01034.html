@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: BLE Libraries</title>
+<title>nRF51 SDK - S110 SoftDevice: SVC return values specific to GATTS</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,58 +97,53 @@ $(document).ready(function(){initNavTree('a01034.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">BLE Libraries<div class="ingroups"><a class="el" href="a01031.html">nRF51 SDK</a></div></div>  </div>
+<div class="title">SVC return values specific to GATTS<div class="ingroups"><a class="el" href="a01297.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00976"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00976.html">Device Manager</a></td></tr>
-<tr class="memdesc:a00976"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Manager Application Interface Abstraction. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00988"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00988.html">Advertising Module</a></td></tr>
-<tr class="memdesc:a00988"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module for handling connectable BLE advertising. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00995"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00995.html">Assert Handler for debug purposes.</a></td></tr>
-<tr class="memdesc:a00995"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module for handling of assert during application development when debugging. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00996"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00996.html">DTM - Direct Test Mode</a></td></tr>
-<tr class="memdesc:a00996"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module for testing RF/PHY using DTM commands. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00997"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00997.html">Error Log Module</a></td></tr>
-<tr class="memdesc:a00997"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module for writing error and stack to flash memory. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00998"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00998.html">Record Access Control Point</a></td></tr>
-<tr class="memdesc:a00998"><td class="mdescLeft">&#160;</td><td class="mdescRight">Record Access Control Point library. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00999"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00999.html">Radio Notification Event Handler</a></td></tr>
-<tr class="memdesc:a00999"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module for propagating Radio Notification events to the application. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01012"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01012.html">Advertising Data Encoder</a></td></tr>
-<tr class="memdesc:a01012"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for encoding the advertising data and/or scan response data, and passing them to the stack. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01013"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01013.html">Connection Parameters Negotiation</a></td></tr>
-<tr class="memdesc:a01013"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module for initiating and executing a connection parameters negotiation procedure. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01014"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01014.html">BLE Date Time characteristic type</a></td></tr>
-<tr class="memdesc:a01014"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of <a class="el" href="a00197.html" title="Date and Time structure.">ble_date_time_t</a> type. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01029"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01029.html">Sensor Data Simulator</a></td></tr>
-<tr class="memdesc:a01029"><td class="mdescLeft">&#160;</td><td class="mdescRight">Functions for simulating sensor data. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01030"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01030.html">Flash Manager</a></td></tr>
-<tr class="memdesc:a01030"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module for accessing flash memory. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga050988950fb5cfb9e64b1f91f8872b45"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01034.html#ga050988950fb5cfb9e64b1f91f8872b45">BLE_ERROR_GATTS_INVALID_ATTR_TYPE</a>&#160;&#160;&#160;(<a class="el" href="a01003.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x000)</td></tr>
+<tr class="separator:ga050988950fb5cfb9e64b1f91f8872b45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d0833ac31d0c319e5286623b6301d0a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01034.html#ga1d0833ac31d0c319e5286623b6301d0a">BLE_ERROR_GATTS_SYS_ATTR_MISSING</a>&#160;&#160;&#160;(<a class="el" href="a01003.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x001)</td></tr>
+<tr class="separator:ga1d0833ac31d0c319e5286623b6301d0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga050988950fb5cfb9e64b1f91f8872b45"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_ERROR_GATTS_INVALID_ATTR_TYPE&#160;&#160;&#160;(<a class="el" href="a01003.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x000)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Invalid attribute type. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga1d0833ac31d0c319e5286623b6301d0a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_ERROR_GATTS_SYS_ATTR_MISSING&#160;&#160;&#160;(<a class="el" href="a01003.html#ga7bc503f781e56a86cdd044d6043629b8">NRF_GATTS_ERR_BASE</a> + 0x001)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>System Attributes missing. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

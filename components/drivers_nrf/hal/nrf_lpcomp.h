@@ -78,28 +78,28 @@ typedef enum
 } nrf_lpcomp_detect_t;
 
 /**
- * @enum nrf_lpcomp_tasks_t
+ * @enum nrf_lpcomp_task_t
  * @brief LPCOMP tasks.
  */
 typedef enum /*lint -save -e30 -esym(628,__INTADDR__) */
 {
-    NRF_LPCOMP_TASKS_START  = offsetof(NRF_LPCOMP_Type, TASKS_START), /**< LPCOMP start sampling task. */
-    NRF_LPCOMP_TASKS_STOP   = offsetof(NRF_LPCOMP_Type, TASKS_STOP),  /**< LPCOMP stop sampling task. */
-    NRF_LPCOMP_TASKS_SAMPLE = offsetof(NRF_LPCOMP_Type, TASKS_SAMPLE) /**< Sample comparator value. */
-} nrf_lpcomp_tasks_t;                                                 /*lint -restore*/
+    NRF_LPCOMP_TASK_START  = offsetof(NRF_LPCOMP_Type, TASKS_START), /**< LPCOMP start sampling task. */
+    NRF_LPCOMP_TASK_STOP   = offsetof(NRF_LPCOMP_Type, TASKS_STOP),  /**< LPCOMP stop sampling task. */
+    NRF_LPCOMP_TASK_SAMPLE = offsetof(NRF_LPCOMP_Type, TASKS_SAMPLE) /**< Sample comparator value. */
+} nrf_lpcomp_task_t;                                                 /*lint -restore*/
 
 
 /**
- * @enum nrf_lpcomp_events_t
+ * @enum nrf_lpcomp_event_t
  * @brief LPCOMP events.
  */
 typedef enum /*lint -save -e30 -esym(628,__INTADDR__) */
 {
-    NRF_LPCOMP_EVENTS_READY = offsetof(NRF_LPCOMP_Type, EVENTS_READY), /**< LPCOMP is ready and output is valid. */
-    NRF_LPCOMP_EVENTS_DOWN  = offsetof(NRF_LPCOMP_Type, EVENTS_DOWN),  /**< Input voltage crossed the threshold going down. */
-    NRF_LPCOMP_EVENTS_UP    = offsetof(NRF_LPCOMP_Type, EVENTS_UP),    /**< Input voltage crossed the threshold going up. */
-    NRF_LPCOMP_EVENTS_CROSS = offsetof(NRF_LPCOMP_Type, EVENTS_CROSS)  /**< Input voltage crossed the threshold in any direction. */
-} nrf_lpcomp_events_t;                                                 /*lint -restore*/
+    NRF_LPCOMP_EVENT_READY = offsetof(NRF_LPCOMP_Type, EVENTS_READY), /**< LPCOMP is ready and output is valid. */
+    NRF_LPCOMP_EVENT_DOWN  = offsetof(NRF_LPCOMP_Type, EVENTS_DOWN),  /**< Input voltage crossed the threshold going down. */
+    NRF_LPCOMP_EVENT_UP    = offsetof(NRF_LPCOMP_Type, EVENTS_UP),    /**< Input voltage crossed the threshold going up. */
+    NRF_LPCOMP_EVENT_CROSS = offsetof(NRF_LPCOMP_Type, EVENTS_CROSS)  /**< Input voltage crossed the threshold in any direction. */
+} nrf_lpcomp_event_t;                                                 /*lint -restore*/
 
 /**
  * @enum nrf_lpcomp_short_mask_t
@@ -107,11 +107,11 @@ typedef enum /*lint -save -e30 -esym(628,__INTADDR__) */
  */
 typedef enum
 {
-    NRF_LPCOMP_SHORTS_CROSS_STOP_MASK   = LPCOMP_SHORTS_CROSS_STOP_Msk,  /*!< Short between CROSS event and STOP task. */
-    NRF_LPCOMP_SHORTS_UP_STOP_MASK      = LPCOMP_SHORTS_UP_STOP_Msk,     /*!< Short between UP event and STOP task. */
-    NRF_LPCOMP_SHORTS_DOWN_STOP_MASK    = LPCOMP_SHORTS_DOWN_STOP_Msk,   /*!< Short between DOWN event and STOP task. */
-    NRF_LPCOMP_SHORTS_READY_STOP_MASK   = LPCOMP_SHORTS_READY_STOP_Msk,  /*!< Short between READY event and STOP task. */
-    NRF_LPCOMP_SHORTS_READY_SAMPLE_MASK = LPCOMP_SHORTS_READY_SAMPLE_Msk /*!< Short between READY event and SAMPLE task. */
+    NRF_LPCOMP_SHORT_CROSS_STOP_MASK   = LPCOMP_SHORTS_CROSS_STOP_Msk,  /*!< Short between CROSS event and STOP task. */
+    NRF_LPCOMP_SHORT_UP_STOP_MASK      = LPCOMP_SHORTS_UP_STOP_Msk,     /*!< Short between UP event and STOP task. */
+    NRF_LPCOMP_SHORT_DOWN_STOP_MASK    = LPCOMP_SHORTS_DOWN_STOP_Msk,   /*!< Short between DOWN event and STOP task. */
+    NRF_LPCOMP_SHORT_READY_STOP_MASK   = LPCOMP_SHORTS_READY_STOP_Msk,  /*!< Short between READY event and STOP task. */
+    NRF_LPCOMP_SHORT_READY_SAMPLE_MASK = LPCOMP_SHORTS_READY_SAMPLE_Msk /*!< Short between READY event and SAMPLE task. */
 } nrf_lpcomp_short_mask_t;
 
 
@@ -255,7 +255,7 @@ __STATIC_INLINE bool nrf_lpcomp_int_enable_check(uint32_t lpcomp_int_mask)
  *
  * @return The address of the specified LPCOMP task.
  */
-__STATIC_INLINE uint32_t * nrf_lpcomp_task_address_get(nrf_lpcomp_tasks_t lpcomp_task)
+__STATIC_INLINE uint32_t * nrf_lpcomp_task_address_get(nrf_lpcomp_task_t lpcomp_task)
 {
     return (uint32_t *)((uint8_t *)NRF_LPCOMP + lpcomp_task);
 }
@@ -268,7 +268,7 @@ __STATIC_INLINE uint32_t * nrf_lpcomp_task_address_get(nrf_lpcomp_tasks_t lpcomp
  *
  * @return The address of the specified LPCOMP event.
  */
-__STATIC_INLINE uint32_t * nrf_lpcomp_event_address_get(nrf_lpcomp_events_t lpcomp_event)
+__STATIC_INLINE uint32_t * nrf_lpcomp_event_address_get(nrf_lpcomp_event_t lpcomp_event)
 {
     return (uint32_t *)((uint8_t *)NRF_LPCOMP + lpcomp_event);
 }
@@ -277,24 +277,24 @@ __STATIC_INLINE uint32_t * nrf_lpcomp_event_address_get(nrf_lpcomp_events_t lpco
 /**
  * @brief  Function for setting LPCOMP shorts.
  *
- * @param[in] lpcomp_shorts_mask LPCOMP shorts by mask.
+ * @param[in] lpcomp_short_mask LPCOMP shorts by mask.
  *
  */
-__STATIC_INLINE void nrf_lpcomp_shorts_set(uint32_t lpcomp_shorts_mask)
+__STATIC_INLINE void nrf_lpcomp_shorts_enable(uint32_t lpcomp_short_mask)
 {
-    NRF_LPCOMP->SHORTS |= lpcomp_shorts_mask;
+    NRF_LPCOMP->SHORTS |= lpcomp_short_mask;
 }
 
 
 /**
  * @brief Function for clearing LPCOMP shorts by mask.
  *
- * @param[in] lpcomp_shorts_mask LPCOMP shorts to be cleared.
+ * @param[in] lpcomp_short_mask LPCOMP shorts to be cleared.
  *
  */
-__STATIC_INLINE void nrf_lpcomp_shorts_clear(uint32_t lpcomp_shorts_mask)
+__STATIC_INLINE void nrf_lpcomp_shorts_disable(uint32_t lpcomp_short_mask)
 {
-    NRF_LPCOMP->SHORTS &= ~lpcomp_shorts_mask;
+    NRF_LPCOMP->SHORTS &= ~lpcomp_short_mask;
 }
 
 
@@ -304,7 +304,7 @@ __STATIC_INLINE void nrf_lpcomp_shorts_clear(uint32_t lpcomp_shorts_mask)
  * @param[in] lpcomp_task LPCOMP task to be set.
  *
  */
-__STATIC_INLINE void nrf_lpcomp_task_set(nrf_lpcomp_tasks_t lpcomp_task)
+__STATIC_INLINE void nrf_lpcomp_task_trigger(nrf_lpcomp_task_t lpcomp_task)
 {
     *( (volatile uint32_t *)( (uint8_t *)NRF_LPCOMP + lpcomp_task) ) = 1;
 }
@@ -316,7 +316,7 @@ __STATIC_INLINE void nrf_lpcomp_task_set(nrf_lpcomp_tasks_t lpcomp_task)
  * @param[in] lpcomp_event LPCOMP event to be cleared.
  *
  */
-__STATIC_INLINE void nrf_lpcomp_event_clear(nrf_lpcomp_events_t lpcomp_event)
+__STATIC_INLINE void nrf_lpcomp_event_clear(nrf_lpcomp_event_t lpcomp_event)
 {
     *( (volatile uint32_t *)( (uint8_t *)NRF_LPCOMP + lpcomp_event) ) = 0;
 }
@@ -328,7 +328,7 @@ __STATIC_INLINE void nrf_lpcomp_event_clear(nrf_lpcomp_events_t lpcomp_event)
  * @retval true If the specified LPCOMP event is active.
  *
  */
-__STATIC_INLINE bool nrf_lpcomp_event_check(nrf_lpcomp_events_t lpcomp_event)
+__STATIC_INLINE bool nrf_lpcomp_event_check(nrf_lpcomp_event_t lpcomp_event)
 {
     return (bool) (*(volatile uint32_t *)( (uint8_t *)NRF_LPCOMP + lpcomp_event));
 }

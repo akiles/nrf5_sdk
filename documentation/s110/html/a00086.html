@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Architecture</title>
+<title>nRF51 SDK - S110 SoftDevice: Example application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,31 +97,62 @@ $(document).ready(function(){initNavTree('a00086.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Architecture </div>  </div>
+<div class="title">Example application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Two devices are required to perform a Device Firmware Update: the <em>DFU target</em> and the <em>DFU controller</em>. The DFU target is the device that is updated with a new firmware image, which can contain a new application, SoftDevice, bootloader, or a combination of SoftDevice and bootloader. The DFU controller is the device that transfers the image. For example, the DFU controller can be an app on a mobile phone, or an nRF51 dongle in conjunction with Master Control Panel.</p>
-<p>The DFU target is the device that contains a bootloader with DFU capabilities. This bootloader's responsibility is to start either the application or the DFU mode, depending on different triggers. The DFU mode is part of the bootloader. If DFU mode is started, the bootloader expects a Device Firmware Update. The DFU controller can then initiate the transfer of a firmware image, which is received and validated by the bootloader. If the image is valid, it is copied to replace the existing firmware; depending on the type of image, it might replace the application, the SoftDevice, or even the current bootloader that is receiving the update.</p>
-<p>By default, the DFU bootloader will start the application on the device. DFU mode is started in the following cases:</p>
-<ul>
-<li>No application is installed on the device.</li>
-<li>Button 4 is pressed when starting the device.</li>
-<li>The application on the DFU target supports entering DFU mode. In this case, the DFU controller can trigger the application to reset the device and enter DFU mode, which is referred to as <em>buttonless</em> update.</li>
+<div class="textblock"><p>To show how to add BLE DFU Service support to an application, the SDK contains a version of the <a class="el" href="a00075.html">Heart Rate Application</a> that includes DFU support. This example illustrates how a standard application can be extended so that you can easily update the device firmware at any time, just by connecting to the application.</p>
+<p>The name of the example is <b>ble_app_hrs_s110_with_dfu_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\ble_peripheral\ble_app_hrs</code> </p>
+<p>When testing the example, you can choose to use bonding to share encryption keys between the application and the bootloader. If you use bonding, the link between the DFU target and the DFU controller will be re-established with encryption when the device restarts in bootloader mode. See <a class="el" href="a00085.html">Sharing bonding information</a> for more information.</p>
+<h1><a class="anchor" id="bledfu_appexample_bonding"></a>
+Testing the example with bonding</h1>
+<p>Test the Heart Rate Application with BLE DFU Service support using bonding with the Master Control Panel by performing the following steps:</p>
+<ol type="1">
+<li><a class="el" href="a00097.html#bledfu_example_running_program">Program the DFU bootloader</a>.</li>
+<li>Compile the application and <a class="el" href="a00097.html#bledfu_example_running_test">perform a Device Firmware Update</a> to program it. Observe that the <a class="el" href="a00062.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>Connect to the device from Master Control Panel, then bond to it.</li>
+<li>Perform service discovery. The device is advertising as "Nordic_HRM". Observe that the <a class="el" href="a00062.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Write the value "0200" to the Service Changed characteristic to enable the Service Changed indication when the GATT Server Attribute Table changes.</li>
+<li>Write the value "0100" to the CCCD for the DFU Control Point characteristic or click Enable services to enable DFU notifications.</li>
+<li>Write the command to start a DFU procedure to the DFU Control Point:<ul>
+<li>"01-01" if you want to update the SoftDevice</li>
+<li>"01-02" if you want to update the bootloader</li>
+<li>"01-03" if you want to update the SoftDevice and bootloader</li>
+<li>"01-04" if you want to update the application</li>
 </ul>
-<p>The following figure shows the workflow when performing a buttonless update of the application:</p>
-<div class="image">
-<img src="bledfu_architecture.svg" alt="bledfu_architecture.svg"/>
-<div class="caption">
-Example of a buttonless DFU to replace the application image</div></div>
-<p> For a more technical overview, see the <a class="el" href="a00084.html">Architecture of the DFU bootloader</a> and the <a class="el" href="a00085.html">Architecture of the DFU process</a>.</p>
-<p>The <a class="el" href="a00087.html">DFU state machine</a> models the states and transitions in a DFU process. </p>
+</li>
+<li>Observe that the connection to the device is lost. The message "SERVER: Received Link Loss" is displayed in the log window.</li>
+<li>The device is now performing directed advertising to the bonded peer. When the connection is established, a Service Changed indication is received and displayed in the Master Control Panel.</li>
+<li><a class="el" href="a00097.html#bledfu_example_running_test">Perform a Device Firmware Update</a>. You do not need to connect to the device again, because you are already connected.</li>
+</ol>
+<h1><a class="anchor" id="bledfu_appexample_nobonding"></a>
+Testing the example without bonding</h1>
+<p>Test the Heart Rate Application with BLE DFU Service support not using bonding with the Master Control Panel by performing the following steps:</p>
+<ol type="1">
+<li><a class="el" href="a00097.html#bledfu_example_running_program">Program the DFU bootloader</a>.</li>
+<li>Compile the application and <a class="el" href="a00097.html#bledfu_example_running_test">perform a Device Firmware Update</a> to program it. Observe that the <a class="el" href="a00062.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>Connect to the device from Master Control Panel.</li>
+<li>Perform service discovery. The device is advertising as "Nordic_HRM". Observe that the <a class="el" href="a00062.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Write the value "0100" to the CCCD for the DFU Control Point characteristic or click Enable services to enable DFU notifications.</li>
+<li>Write the command to start a DFU procedure to the DFU Control Point:<ul>
+<li>"01-01" if you want to update the SoftDevice</li>
+<li>"01-02" if you want to update the bootloader</li>
+<li>"01-03" if you want to update the SoftDevice and bootloader</li>
+<li>"01-04" if you want to update the application</li>
+</ul>
+</li>
+<li>Observe that the connection to the device is lost. The message "SERVER: Received Link Loss" is displayed in the log window.</li>
+<li>Click "Back" in the Master Control Panel to see an overview of the discovered devices.</li>
+<li>Clear the discovered devices and click "Start discovery".</li>
+<li>Verify that the device is now advertising as "DfuTarg".</li>
+<li><a class="el" href="a00097.html#bledfu_example_running_test">Perform a Device Firmware Update</a>. </li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00078.html">BLE DFU Bootloader</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00084.html">BLE DFU Bootloader</a></li><li class="navelem"><a class="el" href="a00088.html">Adding DFU Service support to an application</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -351,9 +351,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define> BOARD_PCA10028 BSP_UART_SUPPORT NRF51</Define>
+              <Define> BOARD_PCA10028 BSP_UART_SUPPORT NRF51 SWI_DISABLE0</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..;..\..\..\..\..\bsp;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\radio_config;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\..\components\libraries\timer</IncludePath>
+              <IncludePath>..\..\config;..\..;..\..\..\..\..\bsp;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\drivers_nrf\radio_config;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\config;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd;..\..\..\..\..\..\components\libraries\timer</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -367,7 +367,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define> BOARD_PCA10028 BSP_UART_SUPPORT NRF51</Define>
+              <Define> BOARD_PCA10028 BSP_UART_SUPPORT NRF51 SWI_DISABLE0</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -454,6 +454,16 @@
               <FilePath>..\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</FilePath>
             </File>
             <File>
+              <FileName>nrf_drv_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrf_drv_gpiote.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</FilePath>
+            </File>
+            <File>
               <FileName>radio_config.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\drivers_nrf\radio_config\radio_config.c</FilePath>
@@ -479,11 +489,6 @@
               <FilePath>..\..\..\..\..\..\components\libraries\fifo\app_fifo.c</FilePath>
             </File>
             <File>
-              <FileName>app_gpiote.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\gpiote\app_gpiote.c</FilePath>
-            </File>
-            <File>
               <FileName>app_timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\timer\app_timer.c</FilePath>
@@ -492,6 +497,11 @@
               <FileName>app_util_platform.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\util\app_util_platform.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrf_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\util\nrf_assert.c</FilePath>
             </File>
             <File>
               <FileName>retarget.c</FileName>

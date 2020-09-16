@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Running a first example</title>
+<title>nRF51 SDK - S110 SoftDevice: WDT</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,34 +97,20 @@ $(document).ready(function(){initNavTree('a00018.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Running a first example </div>  </div>
+<div class="title">WDT </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>You should start by running a very simple example that does not use a SoftDevice, for example the <a class="el" href="a00030.html">Blinky Example</a>.</p>
-<p>Perform the following steps to run this example:</p>
-<ol type="1">
-<li>In Keil, open the Pack Installer.</li>
-<li>In the left pane, select the Examples tab.</li>
-<li>In the right pane, select Nordic Semiconductor to filter the examples that are displayed in the left pane and display only Nordic Semiconductor examples. You can also filter by boards by selecting the desired board on the Boards tab.</li>
-<li>In the left pane, locate the example that you want to run, for example <b>blinky_blank_pca10028</b>.</li>
-<li>Click the Copy button next to the example.</li>
-<li>In the window that is displayed, enter the folder where you want to store the example code and select both options.</li>
-<li>Click OK. The project is copied to the directory that you specified and opened in Keil.</li>
-<li>Build the project to compile all files.</li>
-<li>Download the code to flash memory to flash the project to the board. If Keil prompts you to update to the latest firmware version, select Yes.</li>
-<li>Test the example as described in the Testing section of the example documentation (<a class="el" href="a00030.html#gpio_example_app_blinky_testing">Testing Blinky</a>).</li>
-</ol>
-<div class="image">
-<img src="pack_installer.png" alt="pack_installer.png"/>
-<div class="caption">
-Examples in the Keil Pack Installer</div></div>
+<div class="textblock"><p>The watchdog timer (WDT) driver includes two layers: the hardware abstraction layer (HAL) and the driver layer (DRV).</p>
+<p>The hardware abstraction layer provides basic APIs for accessing the registers of the WDT. All functions in this layer are implemented as inline functions. See the API documentation for the <a class="el" href="a00943.html">WDT HAL</a> for details.</p>
+<p>The driver layer provides APIs on a higher level than the HAL. See the API documentation for the <a class="el" href="a00955.html">WDT driver</a> for details.</p>
+<p>The <a class="el" href="a00043.html">WDT Example</a> provides sample code that you can use to quickly get started. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00001.html">Getting Started</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00002.html">Hardware Drivers</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:27 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

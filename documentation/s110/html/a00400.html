@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: nrf_drv_timer_config_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: device_handle Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,79 @@ $(document).ready(function(){initNavTree('a00400.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_drv_timer_config_t Struct Reference<div class="ingroups"><a class="el" href="a00769.html">Timer driver</a></div></div>  </div>
+<div class="title">device_handle Struct Reference<div class="ingroups"><a class="el" href="a01223.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Struct for TIMER instance configuration.  
+<p>Device Handle used for unique identification of each peer.  
  <a href="a00400.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_drv_timer.h&gt;</code></p>
+<p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:acc77482beb52c3d8102c65ddc67c01c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00766.html#ga28862835cd77a9c8481ed04c7b1918eb">nrf_timer_frequency_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00400.html#acc77482beb52c3d8102c65ddc67c01c7">frequency</a></td></tr>
-<tr class="separator:acc77482beb52c3d8102c65ddc67c01c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3211f3bb290d9bab58bf069bd477bc3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00766.html#ga61044c286dc20ccb08df3988bc57a6f2">nrf_timer_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00400.html#ac3211f3bb290d9bab58bf069bd477bc3">mode</a></td></tr>
-<tr class="separator:ac3211f3bb290d9bab58bf069bd477bc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb3f5d76f1cc9f033474a5c24d116025"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00766.html#ga567f81d672267a218a5b2f0155be3043">nrf_timer_bit_width_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00400.html#abb3f5d76f1cc9f033474a5c24d116025">bit_width</a></td></tr>
-<tr class="separator:abb3f5d76f1cc9f033474a5c24d116025"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0b6c866ca3e572ba89747f507675375"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00400.html#ad0b6c866ca3e572ba89747f507675375">interrupt_priority</a></td></tr>
-<tr class="separator:ad0b6c866ca3e572ba89747f507675375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a381fcabb6c06cd4b56c37f2f074debc7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01223.html#ga3c013385ac2ef5502370f598308d0339">dm_application_instance_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00400.html#a381fcabb6c06cd4b56c37f2f074debc7">appl_id</a></td></tr>
+<tr class="separator:a381fcabb6c06cd4b56c37f2f074debc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aada12513e0b4856726d23729171c4c0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01223.html#gae005241eac710952713e896d52646858">dm_connection_instance_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00400.html#aada12513e0b4856726d23729171c4c0f">connection_id</a></td></tr>
+<tr class="separator:aada12513e0b4856726d23729171c4c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac60c519ad6b47720e22b172283fbf2d3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01223.html#gaf1a000e90688eea8d02bd3854440ec6b">dm_device_instance_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00400.html#ac60c519ad6b47720e22b172283fbf2d3">device_id</a></td></tr>
+<tr class="separator:ac60c519ad6b47720e22b172283fbf2d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61539581cba803dbeb074913ba5d0988"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01223.html#ga7b2fb32d39e173997c5baa1e0383ace0">dm_service_instance_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00400.html#a61539581cba803dbeb074913ba5d0988">service_id</a></td></tr>
+<tr class="separator:a61539581cba803dbeb074913ba5d0988"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Struct for TIMER instance configuration. </p>
+<div class="textblock"><p>Device Handle used for unique identification of each peer. </p>
+<p>This data type is used to uniquely identify each peer device. A peer device could be active and/or bonded. Therefore an instance for active and bonded is provided. However, the application is expected to treat this is an opaque structure and use this for all API interactions once stored on appropriate events. See <a class="el" href="a01219.html">Device Manager Events</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="abb3f5d76f1cc9f033474a5c24d116025"></a>
+<a class="anchor" id="a381fcabb6c06cd4b56c37f2f074debc7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00766.html#ga567f81d672267a218a5b2f0155be3043">nrf_timer_bit_width_t</a> nrf_drv_timer_config_t::bit_width</td>
+          <td class="memname"><a class="el" href="a01223.html#ga3c013385ac2ef5502370f598308d0339">dm_application_instance_t</a> device_handle::appl_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Bit width. </p>
+<p>Identifies the application instances for the device that is being managed. </p>
 
 </div>
 </div>
-<a class="anchor" id="acc77482beb52c3d8102c65ddc67c01c7"></a>
+<a class="anchor" id="aada12513e0b4856726d23729171c4c0f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00766.html#ga28862835cd77a9c8481ed04c7b1918eb">nrf_timer_frequency_t</a> nrf_drv_timer_config_t::frequency</td>
+          <td class="memname"><a class="el" href="a01223.html#gae005241eac710952713e896d52646858">dm_connection_instance_t</a> device_handle::connection_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Frequency. </p>
+<p>Identifies the active connection instance. </p>
 
 </div>
 </div>
-<a class="anchor" id="ad0b6c866ca3e572ba89747f507675375"></a>
+<a class="anchor" id="ac60c519ad6b47720e22b172283fbf2d3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_drv_timer_config_t::interrupt_priority</td>
+          <td class="memname"><a class="el" href="a01223.html#gaf1a000e90688eea8d02bd3854440ec6b">dm_device_instance_t</a> device_handle::device_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>TIMER interrupt priority </p>
+<p>Identifies peer instance in the data base. </p>
 
 </div>
 </div>
-<a class="anchor" id="ac3211f3bb290d9bab58bf069bd477bc3"></a>
+<a class="anchor" id="a61539581cba803dbeb074913ba5d0988"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00766.html#ga61044c286dc20ccb08df3988bc57a6f2">nrf_timer_mode_t</a> nrf_drv_timer_config_t::mode</td>
+          <td class="memname"><a class="el" href="a01223.html#ga7b2fb32d39e173997c5baa1e0383ace0">dm_service_instance_t</a> device_handle::service_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Mode of operation. </p>
+<p>Service instance identifier. </p>
 
 </div>
 </div>
@@ -186,8 +187,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00400.html">nrf_drv_timer_config_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00400.html">device_handle</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: dfu_data_packet_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_l2cap_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,64 @@ $(document).ready(function(){initNavTree('a00367.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dfu_data_packet_t Struct Reference<div class="ingroups"><a class="el" href="a00944.html">Types and definitions.</a></div></div>  </div>
+<div class="title">ble_l2cap_evt_t Struct Reference<div class="ingroups"><a class="el" href="a01302.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure holding a bootloader init/data packet received.  
+<p>L2CAP event callback event structure.  
  <a href="a00367.html#details">More...</a></p>
 
-<p><code>#include &lt;dfu_types.h&gt;</code></p>
+<p><code>#include &lt;ble_l2cap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a5ad00469248e979253ea6df7e43e09f3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#a5ad00469248e979253ea6df7e43e09f3">packet_length</a></td></tr>
-<tr class="separator:a5ad00469248e979253ea6df7e43e09f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af89346860abb77469214502848213a43"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#af89346860abb77469214502848213a43">p_data_packet</a></td></tr>
-<tr class="separator:af89346860abb77469214502848213a43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab843f6e96efbaf3d2bffee8c92c62f1a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#ab843f6e96efbaf3d2bffee8c92c62f1a">conn_handle</a></td></tr>
+<tr class="separator:ab843f6e96efbaf3d2bffee8c92c62f1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab63285db6028432fe959a66519f85139"><td class="memItemLeft" >union {</td></tr>
+<tr class="memitem:a68b046d6bb64bf2f31179a1329e3f1cc"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00366.html">ble_l2cap_evt_rx_t</a>&#160;&#160;&#160;<a class="el" href="a00367.html#afc4cbc758b308e6698b16650310cc52b">rx</a></td></tr>
+<tr class="separator:a68b046d6bb64bf2f31179a1329e3f1cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab63285db6028432fe959a66519f85139"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#ab63285db6028432fe959a66519f85139">params</a></td></tr>
+<tr class="separator:ab63285db6028432fe959a66519f85139"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure holding a bootloader init/data packet received. </p>
+<div class="textblock"><p>L2CAP event callback event structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="af89346860abb77469214502848213a43"></a>
+<a class="anchor" id="ab843f6e96efbaf3d2bffee8c92c62f1a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t* dfu_data_packet_t::p_data_packet</td>
+          <td class="memname">uint16_t ble_l2cap_evt_t::conn_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Data Packet received. Each data is a word size entry. </p>
+<p>Connection Handle on which event occured. </p>
 
 </div>
 </div>
-<a class="anchor" id="a5ad00469248e979253ea6df7e43e09f3"></a>
+<a class="anchor" id="ab63285db6028432fe959a66519f85139"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t dfu_data_packet_t::packet_length</td>
+          <td class="memname">union { ... }   ble_l2cap_evt_t::params</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Packet length of the data packet. Each data is word size, meaning length of 4 is 4 words, not bytes. </p>
+<p>Event Parameters. </p>
+
+</div>
+</div>
+<a class="anchor" id="afc4cbc758b308e6698b16650310cc52b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00366.html">ble_l2cap_evt_rx_t</a> ble_l2cap_evt_t::rx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>RX Event parameters. </p>
 
 </div>
 </div>
@@ -156,8 +172,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00367.html">dfu_data_packet_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00367.html">ble_l2cap_evt_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

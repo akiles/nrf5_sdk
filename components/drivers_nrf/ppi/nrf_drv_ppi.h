@@ -14,7 +14,7 @@
 #define NRF_DRV_PPI_H
 
 /*lint ++flb "Enter library region" */
-#include "nrf_error.h"
+#include "sdk_errors.h"
 #include "nrf_ppi.h"
 #include <stdbool.h>
 #include <stdint.h>
@@ -35,23 +35,18 @@
  * @brief Programmable Peripheral Interconnect (PPI) driver.
  */
 
-#ifdef SOFTDEVICE_PRESENT
+#include "sdk_resources.h"
 
-#include "nrf_sd_def.h"
+#define NRF_PPI_ALL_APP_CHANNELS_MASK   ((uint32_t)0xFFF0FFFFuL & ~(NRF_PPI_CHANNELS_USED))  /**< All PPI channels available to the application. */
+#define NRF_PPI_PROG_APP_CHANNELS_MASK  ((uint32_t)0x0000FFFFuL & ~(NRF_PPI_CHANNELS_USED))  /**< Programmable PPI channels available to the application. */
+#define NRF_PPI_ALL_APP_GROUPS_MASK     ((uint32_t)0x0000000FuL & ~(NRF_PPI_GROUPS_USED))    /**< All PPI groups available to the application. */
 
-#else
 
-#define NRF_PPI_RESTRICTED              0                         /**< 1 if PPI peripheral is restricted, 0 otherwise. */
-#define NRF_PPI_ALL_APP_CHANNELS_MASK   ((uint32_t)0xFFF0FFFFuL)  /**< All PPI channels available to the application. */
-#define NRF_PPI_PROG_APP_CHANNELS_MASK  ((uint32_t)0x0000FFFFuL)  /**< Programmable PPI channels available to the application. */
-#define NRF_PPI_ALL_APP_GROUPS_MASK     ((uint32_t)0x0000000FuL)  /**< All PPI groups available to the application. */
-
-#endif // SOFTDEVICE_PRESENT
 
 /**@brief Function for initializing PPI module.
  *
- * @retval     NRF_SUCCESS             If the module was successfully initialized.
- * @retval     NRF_ERROR_INVALID_STATE If the module has already been initialized.
+ * @retval     NRF_SUCCESS                If the module was successfully initialized.
+ * @retval     MODULE_ALREADY_INITIALIZED If the module has already been initialized.
  */
 uint32_t nrf_drv_ppi_init(void);
 
@@ -139,27 +134,73 @@ uint32_t nrf_drv_ppi_group_alloc(nrf_ppi_channel_group_t * p_group);
  */
 uint32_t nrf_drv_ppi_group_free(nrf_ppi_channel_group_t group);
 
+/**@brief  Compute a channel mask for NRF_PPI registers.
+ *
+ * @param[in]  channel  Channel number to transform to a mask.
+ *
+ * @retval     Channel mask.
+ */
+__STATIC_INLINE uint32_t nrf_drv_ppi_channel_to_mask(nrf_ppi_channel_t channel)
+{
+    return (1uL << (uint32_t) channel);
+}
+
+/**@brief Function for including multiple PPI channels in a channel group.
+ *
+ * @param[in]  channel_mask            PPI channels to be added.
+ * @param[in]  group                   Channel group in which to include the channels.
+ *
+ * @retval     NRF_SUCCESS             If the channels was successfully included.
+ */
+uint32_t nrf_drv_ppi_channels_include_in_group(uint32_t channel_mask,
+                                               nrf_ppi_channel_group_t group);
+
 /**@brief Function for including a PPI channel in a channel group.
  *
  * @param[in]  channel                 PPI channel to be added.
- *
  * @param[in]  group                   Channel group in which to include the channel.
  *
  * @retval     NRF_SUCCESS             If the channel was successfully included.
  */
-uint32_t nrf_drv_ppi_channel_include_in_group(nrf_ppi_channel_t       channel,
-                                              nrf_ppi_channel_group_t group);
+__STATIC_INLINE uint32_t nrf_drv_ppi_channel_include_in_group(nrf_ppi_channel_t       channel,
+                                                              nrf_ppi_channel_group_t group)
+{
+    return nrf_drv_ppi_channels_include_in_group(nrf_drv_ppi_channel_to_mask(channel), group);
+}
+
+/**@brief Function for removing multiple PPI channels from a channel group.
+ *
+ * @param[in]  channel_mask            PPI channels to be removed.
+ * @param[in]  group                   Channel group from which to remove the channels.
+ *
+ * @retval     NRF_SUCCESS             If the channel was successfully removed.
+ */
+uint32_t nrf_drv_ppi_channels_remove_from_group(uint32_t channel_mask,
+                                                nrf_ppi_channel_group_t group);
 
 /**@brief Function for removing a PPI channel from a channel group.
  *
  * @param[in]  channel                 PPI channel to be removed.
- *
  * @param[in]  group                   Channel group from which to remove the channel.
  *
  * @retval     NRF_SUCCESS             If the channel was successfully removed.
  */
-uint32_t nrf_drv_ppi_channel_remove_from_group(nrf_ppi_channel_t       channel,
-                                               nrf_ppi_channel_group_t group);
+__STATIC_INLINE uint32_t nrf_drv_ppi_channel_remove_from_group(nrf_ppi_channel_t       channel,
+                                                               nrf_ppi_channel_group_t group)
+{
+    return nrf_drv_ppi_channels_remove_from_group(nrf_drv_ppi_channel_to_mask(channel), group);
+}
+
+/**@brief Function for clearing a PPI channel group.
+ *
+ * @param[in]  group                   Channel group to be cleared.
+ *
+ * @retval     NRF_SUCCESS             If the group was successfully cleared.
+ */
+__STATIC_INLINE uint32_t nrf_drv_ppi_group_clear(nrf_ppi_channel_group_t group)
+{
+    return nrf_drv_ppi_channels_remove_from_group(NRF_PPI_ALL_APP_CHANNELS_MASK, group);
+}
 
 /**@brief Function for enabling a PPI channel group.
  *
@@ -181,11 +222,37 @@ uint32_t nrf_drv_ppi_group_disable(nrf_ppi_channel_group_t group);
  * @brief Function for getting the address of a PPI task.
  *
  * @param[in]  task                      Task.
- * @param[out] p_task                    Pointer to the task address.
  *
- * @retval     NRF_SUCCESS               If the address was successfully copied.
+ * @retval     Task address.
  */
-uint32_t nrf_drv_ppi_task_addr_get(nrf_ppi_tasks_t task, uint32_t * p_task);
+__STATIC_INLINE uint32_t nrf_drv_ppi_task_addr_get(nrf_ppi_task_t task)
+{
+    return (uint32_t) nrf_ppi_task_address_get(task);
+}
+
+/**
+ * @brief Function for getting the address of a PPI group enable task.
+ *
+ * @param[in]  group                     PPI channel group
+ *
+ * @retval     Task address.
+ */
+__STATIC_INLINE uint32_t nrf_drv_ppi_task_addr_group_enable_get(nrf_ppi_channel_group_t group)
+{
+    return (uint32_t) nrf_ppi_task_group_enable_address_get(group);
+}
+
+/**
+ * @brief Function for getting the address of a PPI group enable task.
+ *
+ * @param[in]  group                     PPI channel group
+ *
+ * @retval     Task address.
+ */
+__STATIC_INLINE uint32_t nrf_drv_ppi_task_addr_group_disable_get(nrf_ppi_channel_group_t group)
+{
+    return (uint32_t) nrf_ppi_task_group_disable_address_get(group);
+}
 
 /**
  *@}

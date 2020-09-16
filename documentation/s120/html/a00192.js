@@ -1,5 +1,5 @@
 var a00192 =
 [
-    [ "report_id", "a00192.html#a4db26fdff00f44138f9f684ff1dfd149", null ],
-    [ "report_type", "a00192.html#a765872684206db6d91ad6de596599434", null ]
+    [ "handle", "a00192.html#af1b50c1fd1d5be05d0d0cf25e0925fd0", null ],
+    [ "p_value", "a00192.html#a6e842e1c975c50acf7eec947baa405e8", null ]
 ];

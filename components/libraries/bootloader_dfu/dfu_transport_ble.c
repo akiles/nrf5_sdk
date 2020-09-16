@@ -12,7 +12,7 @@
 
 #include "dfu_transport.h"
 #include "dfu.h"
-#include "dfu_types.h"
+#include <dfu_types.h>
 #include <stddef.h>
 #include <string.h>
 #include "boards.h"
@@ -137,6 +137,15 @@ static uint32_t service_change_indicate()
                                              m_ble_peer_data.sys_serv_attr,
                                              sizeof(m_ble_peer_data.sys_serv_attr),
                                              BLE_GATTS_SYS_ATTR_FLAG_SYS_SRVCS);
+        if (err_code != NRF_SUCCESS)
+        {
+            return err_code;
+        }
+
+        err_code = sd_ble_gatts_sys_attr_set(m_conn_handle,
+                                             NULL,
+                                             0,
+                                             BLE_GATTS_SYS_ATTR_FLAG_USR_SRVCS);
         if (err_code != NRF_SUCCESS)
         {
             return err_code;
@@ -683,7 +692,7 @@ static void advertising_start(void)
 
         if (m_ble_peer_data_valid)
         {
-            ble_gap_irk_t empty_irk = {0};
+            ble_gap_irk_t empty_irk = {{0}};
 
             if (memcmp(m_ble_peer_data.irk.irk, empty_irk.irk, sizeof(empty_irk.irk)) == 0)
             {
@@ -1045,7 +1054,7 @@ uint32_t dfu_transport_update_start(void)
         return err_code;
     }
 
-    err_code = dfu_ble_get_peer_data(&m_ble_peer_data);
+    err_code = dfu_ble_peer_data_get(&m_ble_peer_data);
     if (err_code == NRF_SUCCESS)
     {
         m_ble_peer_data_valid = true;

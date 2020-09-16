@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: app_timer_event_t Struct Reference</title>
+<title>nRF51 SDK - S210 SoftDevice: Speed and Cadence</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,29 +96,92 @@ $(document).ready(function(){initNavTree('a00069.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">app_timer_event_t Struct Reference</div>  </div>
+<div class="title">Speed and Cadence </div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:abf8c1a8cb8c48f1d9cce9b5177c8dc63"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf8c1a8cb8c48f1d9cce9b5177c8dc63"></a>
-<a class="el" href="a00325.html#ga6d96125cb0c1cd1dbc753acff3036ea3">app_timer_timeout_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>timeout_handler</b></td></tr>
-<tr class="separator:abf8c1a8cb8c48f1d9cce9b5177c8dc63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab85e4b9c8dc933327cda642356826ccf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab85e4b9c8dc933327cda642356826ccf"></a>
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>p_context</b></td></tr>
-<tr class="separator:ab85e4b9c8dc933327cda642356826ccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-</div><!-- contents -->
+<div class="textblock"><h1><a class="anchor" id="ant_sdm_rx"></a>
+Receiver</h1>
+<p>The Stride and Distance Monitor (SDM) slave implements all of the features, which are required for the receiver to be compliant with the ANT+ SDM profile, as defined by the ANT+ SDM specification:</p>
+<ul>
+<li>Must be able to receive and decode the minimum dataset sent from the master.<ul>
+<li>Receive and decode data page 1 and 2</li>
+<li>Receive and decode common page 80 and 81</li>
+</ul>
+</li>
+<li>Do not support requesting pages (page 70)</li>
+<li>Receive and decode cadence field in page 1</li>
+<li>Calculate the accumulated stride count</li>
+</ul>
+<p>The process flow of the SDM RX example is illustrated below: </p>
+<div class="image">
+<img src="sdm_rx_flowchart.png" alt="sdm_rx_flowchart.png"/>
+<div class="caption">
+SDM RX flowchart</div></div>
+ <dl class="section user"><dt>Logging </dt><dd></dd></dl>
+<p>For logging UART will be the primary display. Data will be printed after broadcast data is received. Depending on the page received, the following data will be logged:</p>
+<ul>
+<li>Current stride count.</li>
+<li>Accumulated stride count.</li>
+<li>Cadence.</li>
+<li>Device status byte.</li>
+<li>Manufacturer identification.</li>
+<li>Product information.</li>
+<li>Protocol RX failure.</li>
+</ul>
+<p>The logging with UART will be enabled by default in the project file. This can be deactivated by removing TRACE_UART from the compiler flags. When deactivated the data processing function will not be included in the compilation, as there are no need to interpret the data received, when we can not display the information.</p>
+<p>As UART will use some extra current, a low power alternative is also available, using GPIO. By default the GPIO pins are connected to LEDs. Also GPIO logging is enabled by default by the project file. This can be deactivated by removing TRACE_GPIO from the compiler flags. The GPIO pins to be used can be changed by editing the GPIO defines.</p>
+<p>When GPIO logging is enabled the following GPIO will toggle:</p>
+<ul>
+<li>SDM_GPIO_0 will toggle for every data page received.</li>
+<li>SDM_GPIO_1 will toggle for every common page received.</li>
+<li>SDM_GPIO_2 will toggle when we have a protocol RX failure.</li>
+</ul>
+<p>The name of the example is <b>ant_sdm_rx_s210_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\ant\ant_sdm\sdm_rx</code> </p>
+<dl class="section note"><dt>Note</dt><dd>The ANT+ Network Key is available for ANT+ Adopters. Please refer to <a href="http://thisisant.com">http://thisisant.com</a> to become an ANT+ Adopter and access the key.</dd></dl>
+<h1><a class="anchor" id="ant_sdm_tx"></a>
+Transmitter</h1>
+<p>The Stride and Distance Monitor (SDM) master implements all of the features, which are required for the transmitter to be compliant with the ANT+ SDM profile, as defined by the ANT+ SDM specification:</p>
+<ul>
+<li>Must transmit the minimum dataset:<ul>
+<li>Transmit byte 6 of page 1 (stride count).</li>
+<li>Transmit common page 80 and 81.</li>
+</ul>
+</li>
+<li>Common page will be transmitted every 65th message.</li>
+<li>All pages will be transmitted two times in sequence in order to support 2.xx Hz ANT products.</li>
+<li>Silently discard page request 70.</li>
+<li>Update stride data every 1 second.</li>
+</ul>
+<p>The process flow of the SDM TX example is illustrated below:</p>
+<div class="image">
+<img src="sdm_tx_flowchart.png" alt="sdm_tx_flowchart.png"/>
+<div class="caption">
+SDM TX flowchart</div></div>
+ <dl class="section user"><dt>Logging </dt><dd></dd></dl>
+<p>For logging UART will be the primary display. Data will be printed after broadcast data is set. Depending on the page transmitted, the following data will be logged:</p>
+<ul>
+<li>Current stride count.</li>
+<li>Device status byte.</li>
+<li>Manufacturer identification.</li>
+<li>Product information.</li>
+</ul>
+<p>The logging with UART will be enabled by default in the project file. This can be deactivated by removing TRACE_UART from the compiler flags.</p>
+<p>As UART will use some extra current, a low power alternative is also available, using GPIO. By default the GPIO pins are connected to LEDs. Also GPIO logging is enabled by default by the project file. This can be deactivated by removing TRACE_GPIO from the compiler flags. The GPIO pins to be used can be changed by editing the GPIO defines.</p>
+<p>When GPIO logging is enabled the following GPIO will toggle:</p>
+<ul>
+<li>SDM_GPIO_0 will toggle for every data page sent.</li>
+<li>SDM_GPIO_1 will toggle for every common page sent.</li>
+</ul>
+<p>The name of the example is <b>ant_sdm_tx_s210_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\ant\ant_sdm\sdm_tx</code> </p>
+<dl class="section note"><dt>Note</dt><dd>The ANT+ Network Key is available for ANT+ Adopters. Please refer to <a href="http://thisisant.com">http://thisisant.com</a> to become an ANT+ Adopter and access the key. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00069.html">app_timer_event_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:05 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00061.html">ANT</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gatts_hvx_params_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gattc_char_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,93 +106,93 @@ $(document).ready(function(){initNavTree('a00178.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gatts_hvx_params_t Struct Reference<div class="ingroups"><a class="el" href="a00713.html">Structures</a></div></div>  </div>
+<div class="title">ble_gattc_char_t Struct Reference<div class="ingroups"><a class="el" href="a00942.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GATT HVx parameters.  
+<p>GATT characteristic.  
  <a href="a00178.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gatts.h&gt;</code></p>
+<p><code>#include &lt;ble_gattc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a1a0552b266c588f67d3a6abc712bbfd6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00178.html#a1a0552b266c588f67d3a6abc712bbfd6">handle</a></td></tr>
-<tr class="separator:a1a0552b266c588f67d3a6abc712bbfd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2971c791821bea067f3bc2bbc35b9193"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00178.html#a2971c791821bea067f3bc2bbc35b9193">type</a></td></tr>
-<tr class="separator:a2971c791821bea067f3bc2bbc35b9193"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07033f6e0e63974b67627ae84bc12fc9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00178.html#a07033f6e0e63974b67627ae84bc12fc9">offset</a></td></tr>
-<tr class="separator:a07033f6e0e63974b67627ae84bc12fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b0b2dadb3128b0838c71235661f8174"><td class="memItemLeft" align="right" valign="top">uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00178.html#a8b0b2dadb3128b0838c71235661f8174">p_len</a></td></tr>
-<tr class="separator:a8b0b2dadb3128b0838c71235661f8174"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68325153be760c7742d1bec69da625cf"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00178.html#a68325153be760c7742d1bec69da625cf">p_data</a></td></tr>
-<tr class="separator:a68325153be760c7742d1bec69da625cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69ac665a39feea71fafac8a54ecf0a5e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00229.html">ble_uuid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00178.html#a69ac665a39feea71fafac8a54ecf0a5e">uuid</a></td></tr>
+<tr class="separator:a69ac665a39feea71fafac8a54ecf0a5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae68a35f9169191539d6910f11be6eced"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00177.html">ble_gatt_char_props_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00178.html#ae68a35f9169191539d6910f11be6eced">char_props</a></td></tr>
+<tr class="separator:ae68a35f9169191539d6910f11be6eced"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0399fb7726aec8438c535400f5f1f4b1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00178.html#a0399fb7726aec8438c535400f5f1f4b1">char_ext_props</a>: 1</td></tr>
+<tr class="separator:a0399fb7726aec8438c535400f5f1f4b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ba0a3bc741d666e765ca29285946de8"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00178.html#a2ba0a3bc741d666e765ca29285946de8">handle_decl</a></td></tr>
+<tr class="separator:a2ba0a3bc741d666e765ca29285946de8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af595827dab88a0b110f49e47a64b45dd"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00178.html#af595827dab88a0b110f49e47a64b45dd">handle_value</a></td></tr>
+<tr class="separator:af595827dab88a0b110f49e47a64b45dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GATT HVx parameters. </p>
+<div class="textblock"><p>GATT characteristic. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a1a0552b266c588f67d3a6abc712bbfd6"></a>
+<a class="anchor" id="a0399fb7726aec8438c535400f5f1f4b1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gatts_hvx_params_t::handle</td>
+          <td class="memname">uint8_t ble_gattc_char_t::char_ext_props</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Characteristic Value Handle. </p>
+<p>Extended properties present. </p>
 
 </div>
 </div>
-<a class="anchor" id="a07033f6e0e63974b67627ae84bc12fc9"></a>
+<a class="anchor" id="ae68a35f9169191539d6910f11be6eced"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gatts_hvx_params_t::offset</td>
+          <td class="memname"><a class="el" href="a00177.html">ble_gatt_char_props_t</a> ble_gattc_char_t::char_props</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Offset within the attribute value. </p>
+<p>Characteristic Properties. </p>
 
 </div>
 </div>
-<a class="anchor" id="a68325153be760c7742d1bec69da625cf"></a>
+<a class="anchor" id="a2ba0a3bc741d666e765ca29285946de8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* ble_gatts_hvx_params_t::p_data</td>
+          <td class="memname">uint16_t ble_gattc_char_t::handle_decl</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Actual data content, use NULL to use the current attribute value. </p>
+<p>Handle of the Characteristic Declaration. </p>
 
 </div>
 </div>
-<a class="anchor" id="a8b0b2dadb3128b0838c71235661f8174"></a>
+<a class="anchor" id="af595827dab88a0b110f49e47a64b45dd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t* ble_gatts_hvx_params_t::p_len</td>
+          <td class="memname">uint16_t ble_gattc_char_t::handle_value</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Length in bytes to be written, length in bytes written after successful return. </p>
+<p>Handle of the Characteristic Value. </p>
 
 </div>
 </div>
-<a class="anchor" id="a2971c791821bea067f3bc2bbc35b9193"></a>
+<a class="anchor" id="a69ac665a39feea71fafac8a54ecf0a5e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gatts_hvx_params_t::type</td>
+          <td class="memname"><a class="el" href="a00229.html">ble_uuid_t</a> ble_gattc_char_t::uuid</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Indication or Notification, see <a class="el" href="a00541.html">GATT Handle Value operations</a>. </p>
+<p>Characteristic UUID. </p>
 
 </div>
 </div>
@@ -201,8 +201,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00178.html">ble_gatts_hvx_params_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00178.html">ble_gattc_char_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

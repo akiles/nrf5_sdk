@@ -1,6 +1,5 @@
 var a00235 =
 [
-    [ "len", "a00235.html#ae7fb48410ecb00dec1dca60d45cbc606", null ],
-    [ "ptr1", "a00235.html#a03e88994f8127e877c2fd08800e64768", null ],
-    [ "ptr2", "a00235.html#a3f670b76c31a7b6badf0bfadd1dc08b0", null ]
+    [ "enc_info", "a00235.html#a86cd792e42804720a97e6f64884d0fd4", null ],
+    [ "master_id", "a00235.html#a6d0dc86cbbad08e963a13c3a4070454d", null ]
 ];

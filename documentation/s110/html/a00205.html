@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_dfu_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_ans_c_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,113 +106,35 @@ $(document).ready(function(){initNavTree('a00205.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_dfu_s Struct Reference<div class="ingroups"><a class="el" href="a00957.html">Device Firmware Update Service</a></div></div>  </div>
+<div class="title">ble_ans_c_init_t Struct Reference<div class="ingroups"><a class="el" href="a01193.html">Alert Notification Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>DFU service structure.  
+<p>Alert Notification init structure. This contains all options and data needed for initialization of the client.  
  <a href="a00205.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_dfu.h&gt;</code></p>
+<p><code>#include &lt;ble_ans_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a48a44e4e8cd1e67fbb32989de8a99b36"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#a48a44e4e8cd1e67fbb32989de8a99b36">conn_handle</a></td></tr>
-<tr class="separator:a48a44e4e8cd1e67fbb32989de8a99b36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbf5763274c4a206786ad93ff22a05c4"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#afbf5763274c4a206786ad93ff22a05c4">revision</a></td></tr>
-<tr class="separator:afbf5763274c4a206786ad93ff22a05c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abac31261d78df5dfec65e37ba3d456fb"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#abac31261d78df5dfec65e37ba3d456fb">service_handle</a></td></tr>
-<tr class="separator:abac31261d78df5dfec65e37ba3d456fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e4c2d2d6901dc489294370ecff5632b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#a8e4c2d2d6901dc489294370ecff5632b">uuid_type</a></td></tr>
-<tr class="separator:a8e4c2d2d6901dc489294370ecff5632b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a759fe67aab5aa380ef2fb004b162fd7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00282.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#a759fe67aab5aa380ef2fb004b162fd7d">dfu_pkt_handles</a></td></tr>
-<tr class="separator:a759fe67aab5aa380ef2fb004b162fd7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b5f5316143335f6f2b8a41058097d17"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00282.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#a2b5f5316143335f6f2b8a41058097d17">dfu_ctrl_pt_handles</a></td></tr>
-<tr class="separator:a2b5f5316143335f6f2b8a41058097d17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a458dbd2ff5429f61da7adb60e0905ba8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00282.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#a458dbd2ff5429f61da7adb60e0905ba8">dfu_status_rep_handles</a></td></tr>
-<tr class="separator:a458dbd2ff5429f61da7adb60e0905ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8b39480165e6ca20294d3f1e3fbedcc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00282.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#af8b39480165e6ca20294d3f1e3fbedcc">dfu_rev_handles</a></td></tr>
-<tr class="separator:af8b39480165e6ca20294d3f1e3fbedcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a306430130c5f0868b715478449009be0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00957.html#ga4c1ddf1bdd414c49f408f4ffd965fa00">ble_dfu_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#a306430130c5f0868b715478449009be0">evt_handler</a></td></tr>
-<tr class="separator:a306430130c5f0868b715478449009be0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49fa8cfd9bce660ff46708670a6b0eef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00971.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#a49fa8cfd9bce660ff46708670a6b0eef">error_handler</a></td></tr>
-<tr class="separator:a49fa8cfd9bce660ff46708670a6b0eef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad8ea29f7f384965a82424a4ca3c8e50"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01193.html#gaf4d6c41652f6accd6829112a74334c4e">ble_ans_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#aad8ea29f7f384965a82424a4ca3c8e50">evt_handler</a></td></tr>
+<tr class="separator:aad8ea29f7f384965a82424a4ca3c8e50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a595f52194b0dbb3300a9e7dc0f0f360f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01212.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#a595f52194b0dbb3300a9e7dc0f0f360f">error_handler</a></td></tr>
+<tr class="separator:a595f52194b0dbb3300a9e7dc0f0f360f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ac3fed59a0cbf329cc6611ab584ef69"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#a0ac3fed59a0cbf329cc6611ab584ef69">message_buffer_size</a></td></tr>
+<tr class="separator:a0ac3fed59a0cbf329cc6611ab584ef69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a146d527b7a4824fb4e4f585e455b14f0"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00205.html#a146d527b7a4824fb4e4f585e455b14f0">p_message_buffer</a></td></tr>
+<tr class="separator:a146d527b7a4824fb4e4f585e455b14f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>DFU service structure. </p>
-<p>This structure contains status information related to the service. </p>
+<div class="textblock"><p>Alert Notification init structure. This contains all options and data needed for initialization of the client. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a48a44e4e8cd1e67fbb32989de8a99b36"></a>
+<a class="anchor" id="a595f52194b0dbb3300a9e7dc0f0f360f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_dfu_s::conn_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle of the current connection (as provided by the S110 SoftDevice). This will be BLE_CONN_HANDLE_INVALID when not in a connection. </p>
-
-</div>
-</div>
-<a class="anchor" id="a2b5f5316143335f6f2b8a41058097d17"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00282.html">ble_gatts_char_handles_t</a> ble_dfu_s::dfu_ctrl_pt_handles</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handles related to the DFU Control Point characteristic. </p>
-
-</div>
-</div>
-<a class="anchor" id="a759fe67aab5aa380ef2fb004b162fd7d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00282.html">ble_gatts_char_handles_t</a> ble_dfu_s::dfu_pkt_handles</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handles related to the DFU Packet characteristic. </p>
-
-</div>
-</div>
-<a class="anchor" id="af8b39480165e6ca20294d3f1e3fbedcc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00282.html">ble_gatts_char_handles_t</a> ble_dfu_s::dfu_rev_handles</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handles related to the DFU Revision characteristic. </p>
-
-</div>
-</div>
-<a class="anchor" id="a458dbd2ff5429f61da7adb60e0905ba8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00282.html">ble_gatts_char_handles_t</a> ble_dfu_s::dfu_status_rep_handles</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handles related to the DFU Status Report characteristic. </p>
-
-</div>
-</div>
-<a class="anchor" id="a49fa8cfd9bce660ff46708670a6b0eef"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00971.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_dfu_s::error_handler</td>
+          <td class="memname"><a class="el" href="a01212.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_ans_c_init_t::error_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -220,55 +142,42 @@ Data Fields</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a306430130c5f0868b715478449009be0"></a>
+<a class="anchor" id="aad8ea29f7f384965a82424a4ca3c8e50"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00957.html#ga4c1ddf1bdd414c49f408f4ffd965fa00">ble_dfu_evt_handler_t</a> ble_dfu_s::evt_handler</td>
+          <td class="memname"><a class="el" href="a01193.html#gaf4d6c41652f6accd6829112a74334c4e">ble_ans_c_evt_handler_t</a> ble_ans_c_init_t::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The event handler to be called when an event is to be sent to the application. </p>
+<p>Event handler to be called for handling events in the Battery Service. </p>
 
 </div>
 </div>
-<a class="anchor" id="afbf5763274c4a206786ad93ff22a05c4"></a>
+<a class="anchor" id="a0ac3fed59a0cbf329cc6611ab584ef69"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_dfu_s::revision</td>
+          <td class="memname">uint32_t ble_ans_c_init_t::message_buffer_size</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of DFU Service (as provided by the S110 SoftDevice). </p>
+<p>Size of buffer to handle messages. </p>
 
 </div>
 </div>
-<a class="anchor" id="abac31261d78df5dfec65e37ba3d456fb"></a>
+<a class="anchor" id="a146d527b7a4824fb4e4f585e455b14f0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_dfu_s::service_handle</td>
+          <td class="memname">uint8_t* ble_ans_c_init_t::p_message_buffer</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of DFU Service (as provided by the S110 SoftDevice). </p>
-
-</div>
-</div>
-<a class="anchor" id="a8e4c2d2d6901dc489294370ecff5632b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_dfu_s::uuid_type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>UUID type assigned for DFU Service by the S110 SoftDevice. </p>
+<p>Pointer to buffer for passing messages. </p>
 
 </div>
 </div>
@@ -277,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00205.html">ble_dfu_s</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00205.html">ble_ans_c_init_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

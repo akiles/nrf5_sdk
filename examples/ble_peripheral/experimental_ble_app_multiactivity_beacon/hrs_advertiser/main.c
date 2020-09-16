@@ -29,12 +29,14 @@
 #include "ble_hci.h"
 #include "ble_srv_common.h"
 #include "ble_advdata.h"
+#include "ble_advertising.h"
 #include "ble_bas.h"
 #include "ble_hrs.h"
 #include "ble_dis.h"
 #include "ble_conn_params.h"
 #include "bsp.h"
 #include "sensorsim.h"
+#include "bsp_btn_ble.h"
 #include "softdevice_handler.h"
 #include "app_timer.h"
 #include "device_manager.h"
@@ -50,7 +52,7 @@
 #define APP_COMPANY_IDENTIFIER               0x0059                                     /**< Company identifier for Nordic Semiconductor ASA. as per www.bluetooth.org. */
 
 #define BEACON_UUID 0xff, 0xfe, 0x2d, 0x12, 0x1e, 0x4b, 0x0f, 0xa4,\
-                     0x99, 0x4e, 0xce, 0xb5, 0x31, 0xf4, 0x05, 0x45 
+                    0x99, 0x4e, 0xce, 0xb5, 0x31, 0xf4, 0x05, 0x45 
 #define BEACON_ADV_INTERVAL                  400                                        /**< The Beacon's advertising interval, in milliseconds*/
 #define BEACON_MAJOR                         0x1234                                     /**< The Beacon's Major*/
 #define BEACON_MINOR                         0x5678                                     /**< The Beacon's Minor*/
@@ -62,16 +64,13 @@ static ble_beacon_init_t beacon_init;
 
 /*end addition for beacon*/
 
-#define WAKEUP_BUTTON_ID                     0                                          /**< Button used to wake up the application. */
-#define BOND_DELETE_ALL_BUTTON_ID            1                                          /**< Button used for deleting all bonded centrals during startup. */
-
 #define DEVICE_NAME                          "Nordic_HRM"                               /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME                    "NordicSemiconductor"                      /**< Manufacturer. Will be passed to Device Information Service. */
 #define APP_ADV_INTERVAL                     480                                         /**< The advertising interval (in units of 0.625 ms. This value corresponds to 300 ms). */
 #define APP_ADV_TIMEOUT_IN_SECONDS           180                                        /**< The advertising timeout in units of seconds. */
 
 #define APP_TIMER_PRESCALER                  0                                          /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS                 (5 + BSP_APP_TIMERS_NUMBER)                /**< Maximum number of simultaneously created timers. */
+#define APP_TIMER_MAX_TIMERS                 (6 + BSP_APP_TIMERS_NUMBER)                /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE              4                                          /**< Size of timer operation queues. */
 
 #define BATTERY_LEVEL_MEAS_INTERVAL          APP_TIMER_TICKS(2000, APP_TIMER_PRESCALER) /**< Battery level measurement interval (ticks). */
@@ -109,20 +108,7 @@ static ble_beacon_init_t beacon_init;
 
 #define DEAD_BEEF                            0xDEADBEEF                                 /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
-typedef enum
-{
-    BLE_NO_ADV,                                                                         /**< No advertising running. */
-    BLE_DIRECTED_ADV,                                                                   /**< Direct advertising to the latest central. */
-    BLE_FAST_ADV_WHITELIST,                                                             /**< Advertising with whitelist. */
-    BLE_FAST_ADV,                                                                       /**< Fast advertising running. */
-    BLE_SLOW_ADV,                                                                       /**< Slow advertising running. */
-    BLE_SLEEP,                                                                          /**< Go to system-off. */
-    PS_MEMORY_ACCESS_IN_PROGRESS = 0x80                                                 /**< Indicates persistent memory access is in progress. */
-} ble_advertising_mode_t;
-
 static uint16_t                              m_conn_handle = BLE_CONN_HANDLE_INVALID;   /**< Handle of the current connection. */
-static ble_gap_adv_params_t                  m_adv_params;                              /**< Parameters to be passed to the stack when starting advertising. */
-static uint8_t                               m_advertising_mode;                        /**< Variable to keep track of when we are advertising. */
 static ble_bas_t                             m_bas;                                     /**< Structure used to identify the battery service. */
 static ble_hrs_t                             m_hrs;                                     /**< Structure used to identify the heart rate service. */
 static bool                                  m_rr_interval_enabled = true;              /**< Flag for enabling and disabling the registration of new RR interval measurements (the purpose of disabling this is just to test sending HRM without RR interval data. */
@@ -139,7 +125,14 @@ static app_timer_id_t                        m_heart_rate_timer_id;             
 static app_timer_id_t                        m_rr_interval_timer_id;                    /**< RR interval timer. */
 static app_timer_id_t                        m_sensor_contact_timer_id;                 /**< Sensor contact detected timer. */
 
-static dm_application_instance_t             m_app_handle;                              /**< Application identifier allocated by device manager */
+static dm_application_instance_t             m_app_handle;                              /**< Application identifier allocated by device manager. */
+
+static ble_uuid_t m_adv_uuids[] =                                                       /**< Universally unique service identifiers. */
+{
+    {BLE_UUID_HEART_RATE_SERVICE,         BLE_UUID_TYPE_BLE},
+    {BLE_UUID_BATTERY_SERVICE,            BLE_UUID_TYPE_BLE},
+    {BLE_UUID_DEVICE_INFORMATION_SERVICE, BLE_UUID_TYPE_BLE}
+};
 
 
 /**@brief Callback function for asserts in the SoftDevice.
@@ -337,47 +330,6 @@ static void gap_params_init(void)
 }
 
 
-/**@brief Function for initializing the Advertising functionality.
- *
- * @details Encodes the required advertising data and passes it to the stack.
- *          Also builds a structure to be passed to the stack when starting advertising.
- */
-static void advertising_init(void)
-{
-    uint32_t      err_code;
-    ble_advdata_t advdata;
-    uint8_t       flags = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
-
-    ble_uuid_t adv_uuids[] =
-    {
-        {BLE_UUID_HEART_RATE_SERVICE,         BLE_UUID_TYPE_BLE},
-        {BLE_UUID_BATTERY_SERVICE,            BLE_UUID_TYPE_BLE},
-        {BLE_UUID_DEVICE_INFORMATION_SERVICE, BLE_UUID_TYPE_BLE}
-    };
-
-    // Build and set advertising data.
-    memset(&advdata, 0, sizeof(advdata));
-
-    advdata.name_type               = BLE_ADVDATA_FULL_NAME;
-    advdata.include_appearance      = true;
-    advdata.flags                   = flags;
-    advdata.uuids_complete.uuid_cnt = sizeof(adv_uuids) / sizeof(adv_uuids[0]);
-    advdata.uuids_complete.p_uuids  = adv_uuids;
-
-    err_code = ble_advdata_set(&advdata, NULL);
-    APP_ERROR_CHECK(err_code);
-
-    // Initialize advertising parameters (used when starting advertising).
-    memset(&m_adv_params, 0, sizeof(m_adv_params));
-
-    m_adv_params.type        = BLE_GAP_ADV_TYPE_ADV_IND;
-    m_adv_params.p_peer_addr = NULL;                           // Undirected advertisement.
-    m_adv_params.fp          = BLE_GAP_ADV_FP_ANY;
-    m_adv_params.interval    = APP_ADV_INTERVAL;
-    m_adv_params.timeout     = APP_ADV_TIMEOUT_IN_SECONDS;
-}
-
-
 /**@brief Function for initializing services that will be used by the application.
  *
  * @details Initialize the Heart Rate, Battery and Device Information services.
@@ -489,32 +441,6 @@ static void application_timers_start(void)
 }
 
 
-/**@brief Function for starting advertising.
- */
-static void advertising_start(void)
-{
-    uint32_t err_code;
-    uint32_t count;
-
-    // Verify if there is any flash access pending, if yes delay starting advertising until 
-    // its complete.
-    err_code = pstorage_access_status_get(&count);
-    APP_ERROR_CHECK(err_code);
-    
-    if (count != 0)
-    {
-        m_advertising_mode |= PS_MEMORY_ACCESS_IN_PROGRESS;
-        return;
-    }
-    
-    err_code = sd_ble_gap_adv_start(&m_adv_params);
-    APP_ERROR_CHECK(err_code);
-
-    err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
-    APP_ERROR_CHECK(err_code);
-}
-
-
 /**@brief Function for handling the Connection Parameters Module.
  *
  * @details This function will be called for all events in the Connection Parameters Module which
@@ -570,6 +496,50 @@ static void conn_params_init(void)
 }
 
 
+/**@brief Function for putting the chip into sleep mode.
+ *
+ * @note This function will not return.
+ */
+static void sleep_mode_enter(void)
+{
+    uint32_t err_code = bsp_indication_set(BSP_INDICATE_IDLE);
+    APP_ERROR_CHECK(err_code);
+
+    // Prepare wakeup buttons.
+    err_code = bsp_btn_ble_sleep_mode_prepare();
+    APP_ERROR_CHECK(err_code);
+
+    // Go to system-off mode (this function will not return; wakeup will cause a reset).
+    err_code = sd_power_system_off();
+    APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for handling advertising events.
+ *
+ * @details This function will be called for advertising events which are passed to the application.
+ *
+ * @param[in] ble_adv_evt  Advertising event.
+ */
+static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
+{
+    uint32_t err_code;
+
+    switch (ble_adv_evt)
+    {
+        case BLE_ADV_EVT_FAST:
+            err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
+            APP_ERROR_CHECK(err_code);
+            break;
+        case BLE_ADV_EVT_IDLE:
+            sleep_mode_enter();
+            break;
+        default:
+            break;
+    }
+}
+
+
 /**@brief Function for handling the Application's BLE Stack events.
  *
  * @param[in]   p_ble_evt   Bluetooth stack event.
@@ -594,23 +564,6 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             APP_ERROR_CHECK(err_code);
 
             app_beacon_stop();
-
-            advertising_start();
-            break;
-
-        case BLE_GAP_EVT_TIMEOUT:
-            if (p_ble_evt->evt.gap_evt.params.timeout.src == BLE_GAP_TIMEOUT_SRC_ADVERTISING)
-            {
-                err_code = bsp_indication_set(BSP_INDICATE_IDLE);
-                APP_ERROR_CHECK(err_code);
-
-                err_code = bsp_buttons_enable((1<<WAKEUP_BUTTON_ID));
-                APP_ERROR_CHECK(err_code);
-                
-                // Go to system-off mode (this function will not return; wakeup will cause a reset).
-                err_code = sd_power_system_off();
-                APP_ERROR_CHECK(err_code);
-            }
             break;
 
         default:
@@ -633,7 +586,9 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
     ble_hrs_on_ble_evt(&m_hrs, p_ble_evt);
     ble_bas_on_ble_evt(&m_bas, p_ble_evt);
     ble_conn_params_on_ble_evt(p_ble_evt);
+    bsp_btn_ble_on_ble_evt(p_ble_evt);
     on_ble_evt(p_ble_evt);
+    ble_advertising_on_ble_evt(p_ble_evt);
 }
 
 
@@ -647,14 +602,8 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 static void sys_evt_dispatch(uint32_t sys_evt)
 {
     pstorage_sys_event_handler(sys_evt);
-
-    // If advertising was postponed due to flash access, attempt starting advertising now.
-    if (m_advertising_mode &= PS_MEMORY_ACCESS_IN_PROGRESS)
-    {
-        m_advertising_mode &= (~PS_MEMORY_ACCESS_IN_PROGRESS);
-        advertising_start();
-    }
     app_beacon_sd_evt_signal_handler(sys_evt);
+    ble_advertising_on_sys_evt(sys_evt);
 }
 
 
@@ -672,6 +621,9 @@ static void ble_stack_init(void)
     // Enable BLE stack 
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
+#ifdef S130
+    ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
+#endif
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
     err_code = sd_ble_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
@@ -684,6 +636,42 @@ static void ble_stack_init(void)
     err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
     APP_ERROR_CHECK(err_code);
 }
+
+
+/**@brief Function for handling events from the BSP module.
+ *
+ * @param[in]   event   Event generated by button press.
+ */
+static void bsp_event_handler(bsp_event_t event)
+{
+    uint32_t err_code;
+    switch (event)
+    {
+        case BSP_EVENT_SLEEP:
+            sleep_mode_enter();
+            break;
+
+        case BSP_EVENT_DISCONNECT:
+            err_code = sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+            if (err_code != NRF_ERROR_INVALID_STATE)
+            {
+                APP_ERROR_CHECK(err_code);
+            }
+            break;
+
+        case BSP_EVENT_WHITELIST_OFF:
+            err_code = ble_advertising_restart_without_whitelist();
+            if (err_code != NRF_ERROR_INVALID_STATE)
+            {
+                APP_ERROR_CHECK(err_code);
+            }
+            break;
+
+        default:
+            break;
+    }
+}
+
 
 /**@brief Function for handling the Device Manager events.
  *
@@ -699,22 +687,21 @@ static uint32_t device_manager_evt_handler(dm_handle_t const    * p_handle,
 
 
 /**@brief Function for the Device Manager initialization.
+ *
+ * @param[in] erase_bonds  Indicates whether bonding information should be cleared from
+ *                         persistent storage during initialization of the Device Manager.
  */
-static void device_manager_init(void)
+static void device_manager_init(bool erase_bonds)
 {
-    uint32_t                err_code;
-    dm_init_param_t         init_data;
+    uint32_t               err_code;
+    dm_init_param_t        init_param = {.clear_persistent_data = erase_bonds};
     dm_application_param_t  register_param;
     
     // Initialize persistent storage module.
     err_code = pstorage_init();
     APP_ERROR_CHECK(err_code);
 
-    // Clear all bonded centrals if the Bonds Delete button is pushed.
-    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID,&(init_data.clear_persistent_data));
-    APP_ERROR_CHECK(err_code);
-
-    err_code = dm_init(&init_data);
+    err_code = dm_init(&init_param);
     APP_ERROR_CHECK(err_code);
 
     memset(&register_param.sec_param, 0, sizeof(ble_gap_sec_params_t));
@@ -733,14 +720,30 @@ static void device_manager_init(void)
 }
 
 
-/**@brief Function for the Power manager.
+/**@brief Function for initializing the Advertising functionality.
  */
-static void power_manage(void)
+static void advertising_init(void)
 {
-    uint32_t err_code = sd_app_evt_wait();
+    uint32_t      err_code;
+    ble_advdata_t advdata;
+
+    // Build advertising data struct to pass into @ref ble_advertising_init.
+    memset(&advdata, 0, sizeof(advdata));
+
+    advdata.name_type               = BLE_ADVDATA_FULL_NAME;
+    advdata.include_appearance      = true;
+    advdata.flags                   = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
+    advdata.uuids_complete.uuid_cnt = sizeof(m_adv_uuids) / sizeof(m_adv_uuids[0]);
+    advdata.uuids_complete.p_uuids  = m_adv_uuids;
+
+    ble_adv_modes_config_t options = {0};
+    options.ble_adv_fast_enabled  = BLE_ADV_FAST_ENABLED;
+    options.ble_adv_fast_interval = APP_ADV_INTERVAL;
+    options.ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;
+
+    err_code = ble_advertising_init(&advdata, NULL, &options, on_adv_evt, NULL);
     APP_ERROR_CHECK(err_code);
 }
-
 
 
 /**@brief Function for handling a BeaconAdvertiser error.
@@ -773,19 +776,49 @@ static void beacon_adv_init(void)
     app_beacon_init(&beacon_init);
 }
 
+/**@brief Function for initializing buttons and leds.
+ *
+ * @param[out] p_erase_bonds  Will be true if the clear bonding button was pressed to wake the application up.
+ */
+static void buttons_leds_init(bool * p_erase_bonds)
+{
+    bsp_event_t startup_event;
+
+    uint32_t err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+                                 APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
+                                 bsp_event_handler);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = bsp_btn_ble_init(NULL, &startup_event);
+    APP_ERROR_CHECK(err_code);
+
+    *p_erase_bonds = (startup_event == BSP_EVENT_CLEAR_BONDING_DATA);
+}
+
+
+/**@brief Function for the Power manager.
+ */
+static void power_manage(void)
+{
+    uint32_t err_code = sd_app_evt_wait();
+    APP_ERROR_CHECK(err_code);
+}
+
+
 /**@brief Function for application main entry.
  */
 int main(void)
 {
+    uint32_t err_code;
+    bool erase_bonds;
+
     // Initialize.
-    ble_stack_init();
     timers_init();
-
-    uint32_t err_code = bsp_init(BSP_INIT_LED, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
-    APP_ERROR_CHECK(err_code);
-
+    buttons_leds_init(&erase_bonds);
+    ble_stack_init();
     beacon_adv_init();
-    device_manager_init();
+    device_manager_init(erase_bonds);
+    beacon_adv_init();
     gap_params_init();
     advertising_init();
     services_init();
@@ -794,7 +827,8 @@ int main(void)
 
     // Start execution.
     application_timers_start();
-    advertising_start();
+    err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
+    APP_ERROR_CHECK(err_code);
 
     // Enter main loop.
     for (;;)

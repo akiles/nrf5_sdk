@@ -1,9 +1,6 @@
 var a00281 =
 [
-    [ "init_len", "a00281.html#a7722e94b0c079f7571a0607a13d46bde", null ],
-    [ "init_offs", "a00281.html#aa24ec5661c2ba830f906201285ca941c", null ],
-    [ "max_len", "a00281.html#a5cc60017697406f2f2624e0b15dad294", null ],
-    [ "p_attr_md", "a00281.html#afc04d5311dcd31df52f7d9aac7c05ab1", null ],
-    [ "p_uuid", "a00281.html#a87b18c161a362b54bd349aebd2a45c85", null ],
-    [ "p_value", "a00281.html#abf26555ce0ad9b481c3f638f89dc329a", null ]
+    [ "conn_handle", "a00281.html#a2c0b8fc1f46e4360b34a1806061e828a", null ],
+    [ "p_actual_latency", "a00281.html#a769493b896a8e6709956d5248aaa94d6", null ],
+    [ "requested_latency", "a00281.html#ac06a0a4e53f12763e0966c9bff3e0545", null ]
 ];

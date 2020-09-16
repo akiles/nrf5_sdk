@@ -46,15 +46,17 @@
 #define SVCALL(number, return_type, signature) return_type __svc(number) signature
 #elif defined (__GNUC__)
 #define SVCALL(number, return_type, signature) \
-  _Pragma("GCC diagnostic ignored \"-Wreturn-type\"") \
   _Pragma("GCC diagnostic ignored \"-Wunused-function\"") \
+  _Pragma("GCC diagnostic push") \
+  _Pragma("GCC diagnostic ignored \"-Wreturn-type\"") \
   __attribute__((naked)) static return_type signature \
   { \
     __asm( \
         "svc %0\n" \
         "bx r14" : : "I" (number) : "r0" \
     ); \
-  }
+  }    \
+  _Pragma("GCC diagnostic pop")
 #elif defined (__ICCARM__)
 #define PRAGMA(x) _Pragma(#x)
 #define SVCALL(number, return_type, signature) \

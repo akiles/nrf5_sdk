@@ -1,4 +1,5 @@
 var a00353 =
 [
-    [ "sd_mbr_command", "a00353.html#ga9608e4e80050ea53ed314652ce71fa7b", null ]
+    [ "PPI HAL", "a00318.html", "a00318" ],
+    [ "PPI driver", "a00354.html", "a00354" ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gap_sec_params_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_enc_key_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,138 +106,48 @@ $(document).ready(function(){initNavTree('a00141.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_sec_params_t Struct Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_enc_key_t Struct Reference<div class="ingroups"><a class="el" href="a00935.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GAP security parameters.  
+<p>Encryption Key.  
  <a href="a00141.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:af2d04383bf2e1c7a4447e024528b7db9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html#af2d04383bf2e1c7a4447e024528b7db9">bond</a>: 1</td></tr>
-<tr class="separator:af2d04383bf2e1c7a4447e024528b7db9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab717b7758f6bc0d7ea50682a4d4e149b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html#ab717b7758f6bc0d7ea50682a4d4e149b">mitm</a>: 1</td></tr>
-<tr class="separator:ab717b7758f6bc0d7ea50682a4d4e149b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13fd33e5f5b50a596e255123f8d21036"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html#a13fd33e5f5b50a596e255123f8d21036">io_caps</a>: 3</td></tr>
-<tr class="separator:a13fd33e5f5b50a596e255123f8d21036"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72cc5af2f69e1b15a7c0b281acd1059e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html#a72cc5af2f69e1b15a7c0b281acd1059e">oob</a>: 1</td></tr>
-<tr class="separator:a72cc5af2f69e1b15a7c0b281acd1059e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70632c0a1d795c5b651d910826803cad"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html#a70632c0a1d795c5b651d910826803cad">min_key_size</a></td></tr>
-<tr class="separator:a70632c0a1d795c5b651d910826803cad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f9134a72c72763bc041086eea13aced"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html#a6f9134a72c72763bc041086eea13aced">max_key_size</a></td></tr>
-<tr class="separator:a6f9134a72c72763bc041086eea13aced"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab87edb24814869990c89391036c4f842"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00137.html">ble_gap_sec_kdist_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html#ab87edb24814869990c89391036c4f842">kdist_periph</a></td></tr>
-<tr class="separator:ab87edb24814869990c89391036c4f842"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad648e7de58fa4157388375a9c86b3bc4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00137.html">ble_gap_sec_kdist_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html#ad648e7de58fa4157388375a9c86b3bc4">kdist_central</a></td></tr>
-<tr class="separator:ad648e7de58fa4157388375a9c86b3bc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13ede8af725f86dfd2a221e48a61b313"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00140.html">ble_gap_enc_info_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html#a13ede8af725f86dfd2a221e48a61b313">enc_info</a></td></tr>
+<tr class="separator:a13ede8af725f86dfd2a221e48a61b313"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a652b5f7ec55ac6f4693515bda2f35176"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00160.html">ble_gap_master_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00141.html#a652b5f7ec55ac6f4693515bda2f35176">master_id</a></td></tr>
+<tr class="separator:a652b5f7ec55ac6f4693515bda2f35176"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GAP security parameters. </p>
+<div class="textblock"><p>Encryption Key. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="af2d04383bf2e1c7a4447e024528b7db9"></a>
+<a class="anchor" id="a13ede8af725f86dfd2a221e48a61b313"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_sec_params_t::bond</td>
+          <td class="memname"><a class="el" href="a00140.html">ble_gap_enc_info_t</a> ble_gap_enc_key_t::enc_info</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Perform bonding. </p>
+<p>Encryption Information. </p>
 
 </div>
 </div>
-<a class="anchor" id="a13fd33e5f5b50a596e255123f8d21036"></a>
+<a class="anchor" id="a652b5f7ec55ac6f4693515bda2f35176"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_sec_params_t::io_caps</td>
+          <td class="memname"><a class="el" href="a00160.html">ble_gap_master_id_t</a> ble_gap_enc_key_t::master_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>IO capabilities, see <a class="el" href="a00531.html">GAP IO Capabilities</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="ad648e7de58fa4157388375a9c86b3bc4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00137.html">ble_gap_sec_kdist_t</a> ble_gap_sec_params_t::kdist_central</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Key distribution bitmap: keys that the central device will distribute. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab87edb24814869990c89391036c4f842"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00137.html">ble_gap_sec_kdist_t</a> ble_gap_sec_params_t::kdist_periph</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Key distribution bitmap: keys that the peripheral device will distribute. </p>
-
-</div>
-</div>
-<a class="anchor" id="a6f9134a72c72763bc041086eea13aced"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_sec_params_t::max_key_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Maximum encryption key size in octets between min_key_size and 16. </p>
-
-</div>
-</div>
-<a class="anchor" id="a70632c0a1d795c5b651d910826803cad"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_sec_params_t::min_key_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Minimum encryption key size in octets between 7 and 16. If 0 then not applicable in this instance. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab717b7758f6bc0d7ea50682a4d4e149b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_sec_params_t::mitm</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Man In The Middle protection required. </p>
-
-</div>
-</div>
-<a class="anchor" id="a72cc5af2f69e1b15a7c0b281acd1059e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_sec_params_t::oob</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Out Of Band data available. </p>
+<p>Master Identification. </p>
 
 </div>
 </div>
@@ -246,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00141.html">ble_gap_sec_params_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00141.html">ble_gap_enc_key_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -39,9 +39,11 @@ remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-ou
 C_SOURCE_FILES += \
 ../../../../../../components/libraries/button/app_button.c \
 ../../../../../../components/libraries/util/app_error.c \
-../../../../../../components/libraries/gpiote/app_gpiote.c \
 ../../../../../../components/libraries/timer/app_timer.c \
+../../../../../../components/libraries/util/nrf_assert.c \
 ../../../../../../components/drivers_nrf/hal/nrf_delay.c \
+../../../../../../components/drivers_nrf/common/nrf_drv_common.c \
+../../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c \
 ../../../../../bsp/bsp.c \
 ../../main.c \
 ../../../../../../components/toolchain/system_nrf51.c \
@@ -50,12 +52,15 @@ C_SOURCE_FILES += \
 ASM_SOURCE_FILES  = ../../../../../../components/toolchain/gcc/gcc_startup_nrf51.s
 
 #includes common to all targets
-INC_PATHS  = -I../../../../../../components/libraries/util
+INC_PATHS  = -I../../config
+INC_PATHS += -I../../../../../../components/libraries/util
 INC_PATHS += -I../../../../../../components/toolchain/gcc
 INC_PATHS += -I../../../../../../components/toolchain
 INC_PATHS += -I../../../../../../components/softdevice/s210/headers
-INC_PATHS += -I../../../../../../components/libraries/gpiote
+INC_PATHS += -I../../../../../../components/drivers_nrf/common
+INC_PATHS += -I../../../../../../components/drivers_nrf/config
 INC_PATHS += -I../../../../../bsp
+INC_PATHS += -I../../../../../../components/drivers_nrf/gpiote
 INC_PATHS += -I../../../../../../components/device
 INC_PATHS += -I../../../../../../components/libraries/timer
 INC_PATHS += -I../../../../../../components/drivers_nrf/hal
@@ -69,10 +74,11 @@ OUTPUT_BINARY_DIRECTORY = $(OBJECT_DIRECTORY)
 BUILD_DIRECTORIES := $(sort $(OBJECT_DIRECTORY) $(OUTPUT_BINARY_DIRECTORY) $(LISTING_DIRECTORY) )
 
 #flags common to all targets
-CFLAGS  = -DSOFTDEVICE_PRESENT
-CFLAGS += -DNRF51
-CFLAGS += -DS210
+CFLAGS  = -DS210
 CFLAGS += -DBOARD_PCA10028
+CFLAGS += -DSWI_DISABLE0
+CFLAGS += -DSOFTDEVICE_PRESENT
+CFLAGS += -DNRF51
 CFLAGS += -DANT_STACK_SUPPORT_REQD
 CFLAGS += -mcpu=cortex-m0
 CFLAGS += -mthumb -mabi=aapcs --std=gnu99
@@ -80,7 +86,7 @@ CFLAGS += -Wall -Werror -O3
 CFLAGS += -mfloat-abi=soft
 # keep every function in separate section. This will allow linker to dump unused functions
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -flto -fno-builtin
+CFLAGS += -fno-builtin --short-enums
 
 # keep every function in separate section. This will allow linker to dump unused functions
 LDFLAGS += -Xlinker -Map=$(LISTING_DIRECTORY)/$(OUTPUT_FILENAME).map
@@ -93,10 +99,11 @@ LDFLAGS += --specs=nano.specs -lc -lnosys
 
 # Assembler flags
 ASMFLAGS += -x assembler-with-cpp
-ASMFLAGS += -DSOFTDEVICE_PRESENT
-ASMFLAGS += -DNRF51
 ASMFLAGS += -DS210
 ASMFLAGS += -DBOARD_PCA10028
+ASMFLAGS += -DSWI_DISABLE0
+ASMFLAGS += -DSOFTDEVICE_PRESENT
+ASMFLAGS += -DNRF51
 ASMFLAGS += -DANT_STACK_SUPPORT_REQD
 #default target - first one defined
 default: clean nrf51422_xxac

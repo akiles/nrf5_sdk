@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: sd_mbr_command_compare_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: dm_enc_key Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,70 +106,48 @@ $(document).ready(function(){initNavTree('a00235.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">sd_mbr_command_compare_t Struct Reference<div class="ingroups"><a class="el" href="a00723.html">Types</a></div></div>  </div>
+<div class="title">dm_enc_key Struct Reference<div class="ingroups"><a class="el" href="a00906.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This command works like memcmp, but takes the length in words.  
+<p>Device Manager Master identification and encryption information.  
  <a href="a00235.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_mbr.h&gt;</code></p>
+<p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a03e88994f8127e877c2fd08800e64768"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#a03e88994f8127e877c2fd08800e64768">ptr1</a></td></tr>
-<tr class="separator:a03e88994f8127e877c2fd08800e64768"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f670b76c31a7b6badf0bfadd1dc08b0"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#a3f670b76c31a7b6badf0bfadd1dc08b0">ptr2</a></td></tr>
-<tr class="separator:a3f670b76c31a7b6badf0bfadd1dc08b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae7fb48410ecb00dec1dca60d45cbc606"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#ae7fb48410ecb00dec1dca60d45cbc606">len</a></td></tr>
-<tr class="separator:ae7fb48410ecb00dec1dca60d45cbc606"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86cd792e42804720a97e6f64884d0fd4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00140.html">ble_gap_enc_info_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#a86cd792e42804720a97e6f64884d0fd4">enc_info</a></td></tr>
+<tr class="separator:a86cd792e42804720a97e6f64884d0fd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d0dc86cbbad08e963a13c3a4070454d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00160.html">ble_gap_master_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html#a6d0dc86cbbad08e963a13c3a4070454d">master_id</a></td></tr>
+<tr class="separator:a6d0dc86cbbad08e963a13c3a4070454d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This command works like memcmp, but takes the length in words. </p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00562.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>indicates that the contents of both memory blocks are equal. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00562.html#gaf6e08e45224ec612e6c95660eb1bcfa0" title="Null Pointer.">NRF_ERROR_NULL</a></td><td>indicates that the contents of the memory blocks are not equal. </td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="textblock"><p>Device Manager Master identification and encryption information. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ae7fb48410ecb00dec1dca60d45cbc606"></a>
+<a class="anchor" id="a86cd792e42804720a97e6f64884d0fd4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_mbr_command_compare_t::len</td>
+          <td class="memname"><a class="el" href="a00140.html">ble_gap_enc_info_t</a> dm_enc_key::enc_info</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of 32 bit words to compare. </p>
+<p>GAP encryption information. </p>
 
 </div>
 </div>
-<a class="anchor" id="a03e88994f8127e877c2fd08800e64768"></a>
+<a class="anchor" id="a6d0dc86cbbad08e963a13c3a4070454d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t* sd_mbr_command_compare_t::ptr1</td>
+          <td class="memname"><a class="el" href="a00160.html">ble_gap_master_id_t</a> dm_enc_key::master_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to block of memory. </p>
-
-</div>
-</div>
-<a class="anchor" id="a3f670b76c31a7b6badf0bfadd1dc08b0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t* sd_mbr_command_compare_t::ptr2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to block of memory. </p>
+<p>Master identification. </p>
 
 </div>
 </div>
@@ -178,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00235.html">sd_mbr_command_compare_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00235.html">dm_enc_key</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

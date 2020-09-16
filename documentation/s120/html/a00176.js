@@ -1,4 +1,5 @@
 var a00176 =
 [
-    [ "src", "a00176.html#a400157c31004116309fd4c33afeedb72", null ]
+    [ "reliable_wr", "a00176.html#a8b4bb4c79bed8c8a6d75ca0dd08b7591", null ],
+    [ "wr_aux", "a00176.html#a0f36b2c312c08c22853231a3bc8b950c", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: app_uart_buffers_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: Porting serialization libraries</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,91 +96,58 @@ $(document).ready(function(){initNavTree('a00080.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">app_uart_buffers_t Struct Reference<div class="ingroups"><a class="el" href="a00485.html">UART module</a></div></div>  </div>
+<div class="title">Porting serialization libraries </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>UART buffer for transmitting/receiving data.  
- <a href="a00080.html#details">More...</a></p>
-
-<p><code>#include &lt;app_uart.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:ab5c77995614a78b4a7baf6f5ab59bb5c"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#ab5c77995614a78b4a7baf6f5ab59bb5c">rx_buf</a></td></tr>
-<tr class="separator:ab5c77995614a78b4a7baf6f5ab59bb5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42c5f8c78ee123d84c7de5da43f703e0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#a42c5f8c78ee123d84c7de5da43f703e0">rx_buf_size</a></td></tr>
-<tr class="separator:a42c5f8c78ee123d84c7de5da43f703e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1073bbd41b6d0ddc55e7ec432cf517dd"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#a1073bbd41b6d0ddc55e7ec432cf517dd">tx_buf</a></td></tr>
-<tr class="separator:a1073bbd41b6d0ddc55e7ec432cf517dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a0ff8a830eadfc972a4d44e1340e392"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00080.html#a8a0ff8a830eadfc972a4d44e1340e392">tx_buf_size</a></td></tr>
-<tr class="separator:a8a0ff8a830eadfc972a4d44e1340e392"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><p>BLE serialization is designed in a way that allows the same BLE application code (the <code>main.c</code> file) to be used either on a single chip with a SoftDevice or as application in a serialized system.</p>
+<p>If you want to run the application in a serialized system, the application chip must contain serialization libraries in addition to the application itself. These serialization libraries access device-specific resources. Therefore, you must provide device-specific drivers to run a serialized application on the target system. To get started, use one of the serialized BLE example projects for the nRF51 chip that are provided by this SDK. See the following information for details about which resources and corresponding drivers you must provide.</p>
+<p>Some common serialization modules that use MCU hardware do not depend on the chosen physical transport layer. The following table below lists these modules and states which corresponding API must be implemented.</p>
+<table class="doxtable">
+<tr>
+<th>Module </th><th>Hardware </th><th>IRQ </th><th>API </th><th>Description</th></tr>
+<tr>
+<td><code>ser_app_hal_nrf51.c</code> </td><td>- </td><td>SW_IRQ2 </td><td><a class="el" href="a00843.html">Serialization Application Hardware Abstraction Layer</a> </td><td>This module uses SW_IRQ2 to notify the BLE application of events generated by the SoftDevice. You must port this module using the available software interrupt. </td></tr>
+<tr>
+<td><code>app_timer.c</code> </td><td>RTC </td><td>SW_IRQ0, RTC_IRQ </td><td><a class="el" href="a00682.html">Application Timer</a> </td><td>The <a class="el" href="a00682.html">Application Timer</a> is used in some BLE examples. You must port this module using the available timer. </td></tr>
+<tr>
+<td><code>pstorage_nosd.c</code> </td><td>NVMC </td><td>- </td><td><a class="el" href="a00921.html">Flash Manager</a> </td><td>The <a class="el" href="a00651.html">Persistent Storage Interface</a> requires access to a non-volatile memory. You must provide a driver for such memory. </td></tr>
+<tr>
+<td><code>app_mailbox.c</code>, <code>app_scheduler.c</code> </td><td>NVIC </td><td>- </td><td><a class="el" href="a00686.html">Utility Functions and Definitions (Platform)</a> </td><td>You must provide an implementation of the critical_region_enter() and critical_region_exit() functions. </td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>UART buffer for transmitting/receiving data. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ab5c77995614a78b4a7baf6f5ab59bb5c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t* app_uart_buffers_t::rx_buf</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to the RX buffer. </p>
-
-</div>
-</div>
-<a class="anchor" id="a42c5f8c78ee123d84c7de5da43f703e0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t app_uart_buffers_t::rx_buf_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of the RX buffer. </p>
-
-</div>
-</div>
-<a class="anchor" id="a1073bbd41b6d0ddc55e7ec432cf517dd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t* app_uart_buffers_t::tx_buf</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to the TX buffer. </p>
-
-</div>
-</div>
-<a class="anchor" id="a8a0ff8a830eadfc972a4d44e1340e392"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t app_uart_buffers_t::tx_buf_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of the TX buffer. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<p>In addition, you must port the modules that depend on the physical transport layer (PHY) that you use.</p>
+<h1><a class="anchor" id="uart_transport"></a>
+UART PHY</h1>
+<p>For serialization using UART PHY, you must provide a UART hardware driver to substitute the <code>app_uart.c</code> driver (shown in Figure 1). This driver must implement part of the <a class="el" href="a00663.html">UART module</a> API. Additionally, you must port the <code>ser_phy_nrf51_uart.c</code> upper-layer driver, because this driver contains module interrupt enabling and disabling.</p>
+<div class="image">
+<img src="serialization_porting_guide_uart.png" alt="serialization_porting_guide_uart.png"/>
+<div class="caption">
+Figure 1: Resources and drivers required for serialization using UART PHY</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="hci_transport"></a>
+UART_HCI PHY (reliable UART)</h1>
+<p>Similarly as for UART PHY, you must provide a UART hardware driver for UART_HCI PHY to substitute the <code>app_uart.c</code> driver (shown in Figure 2). This driver must implement part of the <a class="el" href="a00663.html">UART module</a> API. UART_HCI has two upper-layer drivers that must be ported: <code>ser_phy_hci_slip.c</code> and <code>ser_phy_hci.c</code>. The latter uses the hardware TIMER and its interrupts TIMER_IRQ.</p>
+<div class="image">
+<img src="serialization_porting_guide_hci.png" alt="serialization_porting_guide_hci.png"/>
+<div class="caption">
+Figure 1: Resources and drivers required for serialization using UART_HCI PHY</div></div>
+<p><br/>
+</p>
+<h1><a class="anchor" id="spi_transport"></a>
+SPI PHY</h1>
+<p>For SPI PHY, you must provide two hardware drivers: an SPI Master driver and a GPIOTE driver (as shown in Figure 3). These drivers must implement parts of the <a class="el" href="a00658.html">SPI Master driver</a> and <a class="el" href="a00673.html">GPIOTE Handler</a> APIs. The <a class="el" href="a00673.html">GPIOTE Handler</a> drive r<code>app_gpio_fast_detect.c</code> is responsible for edge detection on REQ and RDY input lines, which are used for flow control. This driver uses two interrupts: GPIOTE_IRQ and SW_IRQ1. The <a class="el" href="a00658.html">SPI Master driver</a> <code>spi_master.c</code> uses SPI_IRQ. Additionally, <code>ser_phy_nrf51_spi_master.c</code> uses another software interrupt (SW_IRQ3) for scheduling of lower-priority events.</p>
+<div class="image">
+<img src="serialization_porting_guide_spi.png" alt="serialization_porting_guide_spi.png"/>
+<div class="caption">
+Figure 1: Resources and drivers required for serialization using SPI PHY</div></div>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00080.html">app_uart_buffers_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00076.html">BLE Serialization</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:45 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

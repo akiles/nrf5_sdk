@@ -28,7 +28,6 @@
 #include "spi_master.h"
 #include "bsp.h"
 #include "app_timer.h"
-#include "app_gpiote.h"
 #include "nordic_common.h"
 
 

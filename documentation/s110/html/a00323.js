@@ -1,10 +1,7 @@
 var a00323 =
 [
-    [ "temp_in_celcius", "a00323.html#a4065a89fde57ebf2effce6a1401e38c4", null ],
-    [ "temp_in_fahr", "a00323.html#a0120700a8a6185ce21e1a05391fbc706", null ],
-    [ "temp_in_fahr_units", "a00323.html#a16e05739a1ac3b03a2b4dc683bc1eacd", null ],
-    [ "temp_type", "a00323.html#a12b9d8fddee8e461bfcedb3489bd5f92", null ],
-    [ "temp_type_present", "a00323.html#a10dadb1129dd55a6d597e4e08764d7ff", null ],
-    [ "time_stamp", "a00323.html#aab4240703a233a4bd2cd1a7b3a5997c0", null ],
-    [ "time_stamp_present", "a00323.html#a21a7a430b8f85908438c9bd1fc2e0dce", null ]
+    [ "read", "a00323.html#aa2fe207fe3fe3b8d5ff5e8fbbf65f495", null ],
+    [ "request", "a00323.html#affd49e24a3ab2be6b75aba5383eb63da", null ],
+    [ "type", "a00323.html#a8de6fad49332e37d86887303f2bc28a8", null ],
+    [ "write", "a00323.html#ae846e97ba3f096abf3f54e92fcb30049", null ]
 ];

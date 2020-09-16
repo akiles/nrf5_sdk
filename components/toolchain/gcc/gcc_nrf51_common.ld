@@ -72,18 +72,21 @@ SECTIONS
 		*(.rodata*)
 
 		*(.eh_frame*)
+		. = ALIGN(4);
 	} > FLASH
     
 
 	.ARM.extab : 
 	{
 		*(.ARM.extab* .gnu.linkonce.armextab.*)
+		. = ALIGN(4);
 	} > FLASH
 
 	__exidx_start = .;
 	.ARM.exidx :
 	{
 		*(.ARM.exidx* .gnu.linkonce.armexidx.*)
+		. = ALIGN(4);
 	} > FLASH
 	__exidx_end = .;
 

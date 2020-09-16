@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_ans_c_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: Transport Services</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,111 +96,20 @@ $(document).ready(function(){initNavTree('a00170.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ans_c_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00952.html">Alert Notification Service Client</a></div></div>  </div>
+<div class="title">Transport Services </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Alert Notification Event structure.  
- <a href="a00170.html#details">More...</a></p>
-
-<p><code>#include &lt;ble_ans_c.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a933154cfde918e82cccf331250f23251"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00952.html#gaa03e4ae40d8528eecbed2552d64468d6">ble_ans_c_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00170.html#a933154cfde918e82cccf331250f23251">evt_type</a></td></tr>
-<tr class="separator:a933154cfde918e82cccf331250f23251"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5291a39d334459d01eb8c359ce40eaf6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00359.html">ble_uuid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00170.html#a5291a39d334459d01eb8c359ce40eaf6">uuid</a></td></tr>
-<tr class="separator:a5291a39d334459d01eb8c359ce40eaf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae65b712fd7b67b119ceefc28857f69c8"><td class="memItemLeft" ><a class="anchor" id="ae65b712fd7b67b119ceefc28857f69c8"></a>
-union {</td></tr>
-<tr class="memitem:a069fac90e1392f41882aa6a174bd9d69"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00169.html">ble_ans_alert_settings_t</a>&#160;&#160;&#160;<a class="el" href="a00170.html#af0183eb636b54d11dedd0b44471ecf68">settings</a></td></tr>
-<tr class="separator:a069fac90e1392f41882aa6a174bd9d69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb05fed4966871f7a542a1c3a5b501c7"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00168.html">ble_ans_alert_notification_t</a>&#160;&#160;&#160;<a class="el" href="a00170.html#a1516abb33b9dfe3d7ea721f893f3cc7e">alert</a></td></tr>
-<tr class="separator:aeb05fed4966871f7a542a1c3a5b501c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67e9bb2eeaa2f82168d6eab1f6de8a6c"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="a00170.html#ab6e81a948852e8f1c27d25166815c9eb">error_code</a></td></tr>
-<tr class="separator:a67e9bb2eeaa2f82168d6eab1f6de8a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae65b712fd7b67b119ceefc28857f69c8"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
-<tr class="separator:ae65b712fd7b67b119ceefc28857f69c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Alert Notification Event structure. </p>
-<p>The structure contains the event that should be handled, as well as additional information. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a1516abb33b9dfe3d7ea721f893f3cc7e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00168.html">ble_ans_alert_notification_t</a> ble_ans_c_evt_t::alert</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Alert Notification data sent by the server. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab6e81a948852e8f1c27d25166815c9eb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_ans_c_evt_t::error_code</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Additional status/error code if the event was caused by a stack error or gatt status, e.g. during service discovery. </p>
-
-</div>
-</div>
-<a class="anchor" id="a933154cfde918e82cccf331250f23251"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00952.html#gaa03e4ae40d8528eecbed2552d64468d6">ble_ans_c_evt_type_t</a> ble_ans_c_evt_t::evt_type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Type of event. </p>
-
-</div>
-</div>
-<a class="anchor" id="af0183eb636b54d11dedd0b44471ecf68"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00169.html">ble_ans_alert_settings_t</a> ble_ans_c_evt_t::settings</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Setting returned from server on read request. </p>
-
-</div>
-</div>
-<a class="anchor" id="a5291a39d334459d01eb8c359ce40eaf6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00359.html">ble_uuid_t</a> ble_ans_c_evt_t::uuid</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>UUID of the event in case of an alert or notification. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p><a class="el" href="a00171.html">HCI transport library</a></p>
+<p><a class="el" href="a00172.html">Memory pool library</a></p>
+<p><a class="el" href="a00173.html">SLIP handling library</a> </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00170.html">ble_ans_c_evt_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

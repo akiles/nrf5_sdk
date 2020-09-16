@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_cts_c_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_ancs_c_evt_notif_attr_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,93 +106,63 @@ $(document).ready(function(){initNavTree('a00196.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_cts_c_s Struct Reference<div class="ingroups"><a class="el" href="a01005.html">Current Time Service client</a></div></div>  </div>
+<div class="title">ble_ancs_c_evt_notif_attr_t Struct Reference<div class="ingroups"><a class="el" href="a01241.html">Apple Notification Service client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Current Time Service client structure. This structure contains status information for the client.  
+<p>iOS notification attribute structure for incomming attributes.  
  <a href="a00196.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_cts_c.h&gt;</code></p>
+<p><code>#include &lt;ble_ancs_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a046c1b0b4fe1c7e83680b9654963b156"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01005.html#ga5f5e1a6e6316965ea9301ede5b1f3c04">ble_cts_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#a046c1b0b4fe1c7e83680b9654963b156">evt_handler</a></td></tr>
-<tr class="separator:a046c1b0b4fe1c7e83680b9654963b156"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4032c144fac9fbf1ae0d84ef377caf5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00971.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#aa4032c144fac9fbf1ae0d84ef377caf5">error_handler</a></td></tr>
-<tr class="separator:aa4032c144fac9fbf1ae0d84ef377caf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0866b1353b97df6deece0172c0cc3dd"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#aa0866b1353b97df6deece0172c0cc3dd">current_time_handle</a></td></tr>
-<tr class="separator:aa0866b1353b97df6deece0172c0cc3dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14d458eaa378edf691dec5bbb5c6e453"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#a14d458eaa378edf691dec5bbb5c6e453">cts_cccd_handle</a></td></tr>
-<tr class="separator:a14d458eaa378edf691dec5bbb5c6e453"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeef0bb9260018febc5b92af0d5359e9b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#aeef0bb9260018febc5b92af0d5359e9b">conn_handle</a></td></tr>
-<tr class="separator:aeef0bb9260018febc5b92af0d5359e9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2bea3b9c015643b56804750b894d72d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#ad2bea3b9c015643b56804750b894d72d">notif_uid</a></td></tr>
+<tr class="separator:ad2bea3b9c015643b56804750b894d72d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a428b12b123e9af77601c2a1d35315a22"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#a428b12b123e9af77601c2a1d35315a22">attr_len</a></td></tr>
+<tr class="separator:a428b12b123e9af77601c2a1d35315a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4eb3557171856c2bcf80b86fc1dba336"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01241.html#ga56fddbcfe81b37a09e5034e3405894dc">ble_ancs_c_notif_attr_id_values_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00196.html#a4eb3557171856c2bcf80b86fc1dba336">attr_id</a></td></tr>
+<tr class="separator:a4eb3557171856c2bcf80b86fc1dba336"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Current Time Service client structure. This structure contains status information for the client. </p>
+<div class="textblock"><p>iOS notification attribute structure for incomming attributes. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aeef0bb9260018febc5b92af0d5359e9b"></a>
+<a class="anchor" id="a4eb3557171856c2bcf80b86fc1dba336"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_cts_c_s::conn_handle</td>
+          <td class="memname"><a class="el" href="a01241.html#ga56fddbcfe81b37a09e5034e3405894dc">ble_ancs_c_notif_attr_id_values_t</a> ble_ancs_c_evt_notif_attr_t::attr_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of the current connection. BLE_CONN_HANDLE_INVALID if not in a connection. </p>
+<p>Classification of the attribute type, for example, title or date. </p>
 
 </div>
 </div>
-<a class="anchor" id="a14d458eaa378edf691dec5bbb5c6e453"></a>
+<a class="anchor" id="a428b12b123e9af77601c2a1d35315a22"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_cts_c_s::cts_cccd_handle</td>
+          <td class="memname">uint16_t ble_ancs_c_evt_notif_attr_t::attr_len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of the CCCD of the Current Time Characteristic at the peer. </p>
+<p>Length of the received attribute data. </p>
 
 </div>
 </div>
-<a class="anchor" id="aa0866b1353b97df6deece0172c0cc3dd"></a>
+<a class="anchor" id="ad2bea3b9c015643b56804750b894d72d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_cts_c_s::current_time_handle</td>
+          <td class="memname">uint32_t ble_ancs_c_evt_notif_attr_t::notif_uid</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of Current Time Characteristic at the peer (handles are provided by the BLE stack through the DB Discovery module). </p>
-
-</div>
-</div>
-<a class="anchor" id="aa4032c144fac9fbf1ae0d84ef377caf5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00971.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_cts_c_s::error_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Function to be called if an error occurs. </p>
-
-</div>
-</div>
-<a class="anchor" id="a046c1b0b4fe1c7e83680b9654963b156"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01005.html#ga5f5e1a6e6316965ea9301ede5b1f3c04">ble_cts_c_evt_handler_t</a> ble_cts_c_s::evt_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event handler to be called for handling events from the Current Time Service client. </p>
+<p>UID of the notification that the attribute belongs to. </p>
 
 </div>
 </div>
@@ -201,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00196.html">ble_cts_c_s</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00196.html">ble_ancs_c_evt_notif_attr_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

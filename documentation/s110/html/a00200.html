@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_db_discovery_srv_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_ancs_c_notif_flags_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,93 @@ $(document).ready(function(){initNavTree('a00200.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_db_discovery_srv_t Struct Reference<div class="ingroups"><a class="el" href="a00992.html">Structures</a></div></div>  </div>
+<div class="title">ble_ancs_c_notif_flags_t Struct Reference<div class="ingroups"><a class="el" href="a01241.html">Apple Notification Service client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure for holding information about the service and the characteristics found during the discovery process.  
+<p>Flags for iOS notifications.  
  <a href="a00200.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_db_discovery.h&gt;</code></p>
+<p><code>#include &lt;ble_ancs_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a97887d3332bca8ac17806b8d328e4a2c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00359.html">ble_uuid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00200.html#a97887d3332bca8ac17806b8d328e4a2c">srv_uuid</a></td></tr>
-<tr class="separator:a97887d3332bca8ac17806b8d328e4a2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a199d43a17b0e41d7904da316db6b98ae"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00200.html#a199d43a17b0e41d7904da316db6b98ae">char_count</a></td></tr>
-<tr class="separator:a199d43a17b0e41d7904da316db6b98ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeeb1c850a101a81108ca109c2f117166"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00198.html">ble_db_discovery_char_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00200.html#aeeb1c850a101a81108ca109c2f117166">charateristics</a> [3]</td></tr>
-<tr class="separator:aeeb1c850a101a81108ca109c2f117166"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2300f7ac7bc453bc13fb060d3ff05efc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00274.html">ble_gattc_handle_range_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00200.html#a2300f7ac7bc453bc13fb060d3ff05efc">handle_range</a></td></tr>
-<tr class="separator:a2300f7ac7bc453bc13fb060d3ff05efc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac21218ce8fd4f970ecf15844f9ee86c1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00200.html#ac21218ce8fd4f970ecf15844f9ee86c1">silent</a>: 1</td></tr>
+<tr class="separator:ac21218ce8fd4f970ecf15844f9ee86c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91a158eb53238a27c1d498e03e1a1bbd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00200.html#a91a158eb53238a27c1d498e03e1a1bbd">important</a>: 1</td></tr>
+<tr class="separator:a91a158eb53238a27c1d498e03e1a1bbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a562f7ca58dfd2f40c81c74adc430f015"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00200.html#a562f7ca58dfd2f40c81c74adc430f015">pre_existing</a>: 1</td></tr>
+<tr class="separator:a562f7ca58dfd2f40c81c74adc430f015"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41e7754a0a60cdb8bd5c9a9dc4d164a9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00200.html#a41e7754a0a60cdb8bd5c9a9dc4d164a9">positive_action</a>: 1</td></tr>
+<tr class="separator:a41e7754a0a60cdb8bd5c9a9dc4d164a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9118c949abdbc3a9c1aa6d499041642"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00200.html#ad9118c949abdbc3a9c1aa6d499041642">negative_action</a>: 1</td></tr>
+<tr class="separator:ad9118c949abdbc3a9c1aa6d499041642"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure for holding information about the service and the characteristics found during the discovery process. </p>
+<div class="textblock"><p>Flags for iOS notifications. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a199d43a17b0e41d7904da316db6b98ae"></a>
+<a class="anchor" id="a91a158eb53238a27c1d498e03e1a1bbd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_db_discovery_srv_t::char_count</td>
+          <td class="memname">uint8_t ble_ancs_c_notif_flags_t::important</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of characteristics present in the service. </p>
+<p>If this flag is set, the notification has a high priority. </p>
 
 </div>
 </div>
-<a class="anchor" id="aeeb1c850a101a81108ca109c2f117166"></a>
+<a class="anchor" id="ad9118c949abdbc3a9c1aa6d499041642"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00198.html">ble_db_discovery_char_t</a> ble_db_discovery_srv_t::charateristics[3]</td>
+          <td class="memname">uint8_t ble_ancs_c_notif_flags_t::negative_action</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Array of information related to the characteristics present in the service. </p>
+<p>If this flag is set, the notification has a negative action that can be taken. </p>
 
 </div>
 </div>
-<a class="anchor" id="a2300f7ac7bc453bc13fb060d3ff05efc"></a>
+<a class="anchor" id="a41e7754a0a60cdb8bd5c9a9dc4d164a9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00274.html">ble_gattc_handle_range_t</a> ble_db_discovery_srv_t::handle_range</td>
+          <td class="memname">uint8_t ble_ancs_c_notif_flags_t::positive_action</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Service Handle Range. </p>
+<p>If this flag is set, the notification has a positive action that can be taken. </p>
 
 </div>
 </div>
-<a class="anchor" id="a97887d3332bca8ac17806b8d328e4a2c"></a>
+<a class="anchor" id="a562f7ca58dfd2f40c81c74adc430f015"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00359.html">ble_uuid_t</a> ble_db_discovery_srv_t::srv_uuid</td>
+          <td class="memname">uint8_t ble_ancs_c_notif_flags_t::pre_existing</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>UUID of the service. </p>
+<p>If this flag is set, the notification is pre-existing. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac21218ce8fd4f970ecf15844f9ee86c1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_ancs_c_notif_flags_t::silent</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If this flag is set, the notification has a low priority. </p>
 
 </div>
 </div>
@@ -186,8 +201,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00200.html">ble_db_discovery_srv_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00200.html">ble_ancs_c_notif_flags_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

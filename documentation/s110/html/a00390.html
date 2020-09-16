@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: nrf_adc_config_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_tps_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,48 @@ $(document).ready(function(){initNavTree('a00390.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_adc_config_t Struct Reference<div class="ingroups"><a class="el" href="a00754.html">ADC HAL</a></div></div>  </div>
+<div class="title">ble_tps_init_t Struct Reference<div class="ingroups"><a class="el" href="a01216.html">TX Power Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Analog-to-digital converter configuration.  
+<p>TX Power Service init structure. This contains all options and data needed for initialization of the service.  
  <a href="a00390.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_adc.h&gt;</code></p>
+<p><code>#include &lt;ble_tps.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aeabcce3f7814da03f223ad2a992865d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00754.html#ga0e2d579c008431f61b5edff7fe7221a1">nrf_adc_config_resolution_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00390.html#aeabcce3f7814da03f223ad2a992865d1">resolution</a></td></tr>
-<tr class="separator:aeabcce3f7814da03f223ad2a992865d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a280529b228ebb915939ab2b9720d73da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00754.html#gad7b74a0d0016edbf83a72bb0b0aa038a">nrf_adc_config_scaling_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00390.html#a280529b228ebb915939ab2b9720d73da">scaling</a></td></tr>
-<tr class="separator:a280529b228ebb915939ab2b9720d73da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52dc01c53528ebb080237d4f94d5ef09"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00754.html#gadfd4f9444fc622b4c9222cb41e9e10ac">nrf_adc_config_reference_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00390.html#a52dc01c53528ebb080237d4f94d5ef09">reference</a></td></tr>
-<tr class="separator:a52dc01c53528ebb080237d4f94d5ef09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5be1f2c1c00932c36837e70c02679072"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00390.html#a5be1f2c1c00932c36837e70c02679072">initial_tx_power_level</a></td></tr>
+<tr class="separator:a5be1f2c1c00932c36837e70c02679072"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc4915bf42eeee72f61614aa1161aa80"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00388.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00390.html#afc4915bf42eeee72f61614aa1161aa80">tps_attr_md</a></td></tr>
+<tr class="separator:afc4915bf42eeee72f61614aa1161aa80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Analog-to-digital converter configuration. </p>
+<div class="textblock"><p>TX Power Service init structure. This contains all options and data needed for initialization of the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a52dc01c53528ebb080237d4f94d5ef09"></a>
+<a class="anchor" id="a5be1f2c1c00932c36837e70c02679072"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00754.html#gadfd4f9444fc622b4c9222cb41e9e10ac">nrf_adc_config_reference_t</a> nrf_adc_config_t::reference</td>
+          <td class="memname">int8_t ble_tps_init_t::initial_tx_power_level</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>ADC reference. </p>
+<p>Initial value of the TX Power Level characteristic (in dBm). </p>
 
 </div>
 </div>
-<a class="anchor" id="aeabcce3f7814da03f223ad2a992865d1"></a>
+<a class="anchor" id="afc4915bf42eeee72f61614aa1161aa80"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00754.html#ga0e2d579c008431f61b5edff7fe7221a1">nrf_adc_config_resolution_t</a> nrf_adc_config_t::resolution</td>
+          <td class="memname"><a class="el" href="a00388.html">ble_srv_security_mode_t</a> ble_tps_init_t::tps_attr_md</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>ADC resolution. </p>
-
-</div>
-</div>
-<a class="anchor" id="a280529b228ebb915939ab2b9720d73da"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00754.html#gad7b74a0d0016edbf83a72bb0b0aa038a">nrf_adc_config_scaling_t</a> nrf_adc_config_t::scaling</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>ADC scaling factor. </p>
+<p>Initial Security Setting for TX Power Service Characteristics. </p>
 
 </div>
 </div>
@@ -171,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00390.html">nrf_adc_config_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00390.html">ble_tps_init_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

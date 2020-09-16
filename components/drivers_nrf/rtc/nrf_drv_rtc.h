@@ -303,7 +303,7 @@ __STATIC_INLINE uint32_t nrf_drv_rtc_counter_get(nrf_drv_rtc_t const * const p_i
 
 __STATIC_INLINE void nrf_drv_rtc_counter_clear(nrf_drv_rtc_t const * const p_instance)
 {
-    nrf_rtc_task_set(p_instance->p_reg,NRF_RTC_TASK_CLEAR);
+    nrf_rtc_task_trigger(p_instance->p_reg,NRF_RTC_TASK_CLEAR);
 }
 
 __STATIC_INLINE uint32_t nrf_drv_rtc_task_address_get(nrf_drv_rtc_t const * const p_instance,

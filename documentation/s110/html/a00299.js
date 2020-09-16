@@ -1,7 +1,6 @@
 var a00299 =
 [
-    [ "error_handler", "a00299.html#a60dd2e384291225af96e549356836e96", null ],
-    [ "evt_handler", "a00299.html#a30ba6c48423cf07609a21bc2de05ece9", null ],
-    [ "feature", "a00299.html#aa6db8884060986d835bd1e6aadffc770", null ],
-    [ "is_context_supported", "a00299.html#a10d72eae94458d3d33788faf4099893c", null ]
+    [ "count", "a00299.html#a50e19076a010925f0ec9c71d40c33eff", null ],
+    [ "handle_value", "a00299.html#a0e8890391646f5df02ede436e3f1d987", null ],
+    [ "value_len", "a00299.html#a91e554093e8f445960abff9c0015193c", null ]
 ];

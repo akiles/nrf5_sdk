@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_adv_init_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: Blood Pressure Service</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,77 +96,21 @@ $(document).ready(function(){initNavTree('a00155.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_adv_init_t Struct Reference<div class="ingroups"><a class="el" href="a00988.html">Advertising Module</a></div></div>  </div>
+<div class="title">Blood Pressure Service </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Initialization parameters for the Advertising Module.  
- <a href="a00155.html#details">More...</a></p>
-
-<p><code>#include &lt;ble_advertising.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:ad4e914728e99bf1cba3e21d2d4753f77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00156.html">ble_adv_modes_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00155.html#ad4e914728e99bf1cba3e21d2d4753f77">options</a></td></tr>
-<tr class="separator:ad4e914728e99bf1cba3e21d2d4753f77"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3baf6ced3f920c012bb905b970760e01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00160.html">ble_advdata_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00155.html#a3baf6ced3f920c012bb905b970760e01">advdata</a></td></tr>
-<tr class="separator:a3baf6ced3f920c012bb905b970760e01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26c9ccc41ab7de87f2b2be6b241848f3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00988.html#gae5ac649acd48e432e1135e2989385680">ble_advertising_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00155.html#a26c9ccc41ab7de87f2b2be6b241848f3">evt_handler</a></td></tr>
-<tr class="separator:a26c9ccc41ab7de87f2b2be6b241848f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Initialization parameters for the Advertising Module. </p>
-<p>This structure is used to pass advertising options, advertising data, and an event handler to the Advertising Module during initialization. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a3baf6ced3f920c012bb905b970760e01"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00160.html">ble_advdata_t</a> ble_adv_init_t::advdata</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Advertising data. </p>
-
-</div>
-</div>
-<a class="anchor" id="a26c9ccc41ab7de87f2b2be6b241848f3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00988.html#gae5ac649acd48e432e1135e2989385680">ble_advertising_evt_handler_t</a> ble_adv_init_t::evt_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event handler. </p>
-
-</div>
-</div>
-<a class="anchor" id="ad4e914728e99bf1cba3e21d2d4753f77"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00156.html">ble_adv_modes_config_t</a> ble_adv_init_t::options</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Parameters for advertising modes. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>This module implements the Blood Pressure Service. </p>
+<pre class="fragment">     If an event handler is supplied by the application, the Blood Pressure 
+     Service will generate Blood Pressure Service events to the application.
+</pre><dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Blood Pressure Service module by calling <a class="el" href="a01195.html#gaa5b69f0e2e6a3063254e198ca426c39a" title="Function for handling the Application&#39;s BLE Stack events.">ble_bps_on_ble_evt()</a> from the <a class="el" href="a01189.html">SoftDevice Event Handler</a> function. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00155.html">ble_adv_init_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00144.html">BLE Services</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

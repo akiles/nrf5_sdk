@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: General Events</title>
+<title>nRF51 SDK - S110 SoftDevice: Memory Pool Internal</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,47 +99,151 @@ $(document).ready(function(){initNavTree('a00979.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">General Events<div class="ingroups"><a class="el" href="a00978.html">Device Manager Events</a></div></div>  </div>
+<div class="title">Memory Pool Internal<div class="ingroups"><a class="el" href="a00980.html">Memory pool</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>General or miscellaneous events.  
+<p>Memory pool internal definitions.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gad038033184e5745ddd4fef4d52bfcea4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00979.html#gad038033184e5745ddd4fef4d52bfcea4">DM_EVT_RFU</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:gad038033184e5745ddd4fef4d52bfcea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga14b9e8a4e4dd9d6223d414bf25762f7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00979.html#ga14b9e8a4e4dd9d6223d414bf25762f7b">DM_EVT_ERROR</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:ga14b9e8a4e4dd9d6223d414bf25762f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d3fb1970e1e98050006978a14b3d95e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00979.html#ga5d3fb1970e1e98050006978a14b3d95e">TX_BUF_SIZE</a>&#160;&#160;&#160;600u</td></tr>
+<tr class="separator:ga5d3fb1970e1e98050006978a14b3d95e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga690f985c933da2ce6fe62b6c61dfa662"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00979.html#ga690f985c933da2ce6fe62b6c61dfa662">RX_BUF_SIZE</a>&#160;&#160;&#160;<a class="el" href="a00979.html#ga5d3fb1970e1e98050006978a14b3d95e">TX_BUF_SIZE</a></td></tr>
+<tr class="separator:ga690f985c933da2ce6fe62b6c61dfa662"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae8e478dba1ce71687ba038123e8da2f4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00979.html#gae8e478dba1ce71687ba038123e8da2f4">RX_BUF_QUEUE_SIZE</a>&#160;&#160;&#160;4u</td></tr>
+<tr class="separator:gae8e478dba1ce71687ba038123e8da2f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d3fb1970e1e98050006978a14b3d95e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00979.html#ga5d3fb1970e1e98050006978a14b3d95e">TX_BUF_SIZE</a>&#160;&#160;&#160;4u</td></tr>
+<tr class="separator:ga5d3fb1970e1e98050006978a14b3d95e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga690f985c933da2ce6fe62b6c61dfa662"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00979.html#ga690f985c933da2ce6fe62b6c61dfa662">RX_BUF_SIZE</a>&#160;&#160;&#160;32u</td></tr>
+<tr class="separator:ga690f985c933da2ce6fe62b6c61dfa662"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae8e478dba1ce71687ba038123e8da2f4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00979.html#gae8e478dba1ce71687ba038123e8da2f4">RX_BUF_QUEUE_SIZE</a>&#160;&#160;&#160;8u</td></tr>
+<tr class="separator:gae8e478dba1ce71687ba038123e8da2f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d3fb1970e1e98050006978a14b3d95e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00979.html#ga5d3fb1970e1e98050006978a14b3d95e">TX_BUF_SIZE</a>&#160;&#160;&#160;32u</td></tr>
+<tr class="separator:ga5d3fb1970e1e98050006978a14b3d95e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga690f985c933da2ce6fe62b6c61dfa662"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00979.html#ga690f985c933da2ce6fe62b6c61dfa662">RX_BUF_SIZE</a>&#160;&#160;&#160;600u</td></tr>
+<tr class="separator:ga690f985c933da2ce6fe62b6c61dfa662"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae8e478dba1ce71687ba038123e8da2f4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00979.html#gae8e478dba1ce71687ba038123e8da2f4">RX_BUF_QUEUE_SIZE</a>&#160;&#160;&#160;2u</td></tr>
+<tr class="separator:gae8e478dba1ce71687ba038123e8da2f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>General or miscellaneous events. </p>
-<p>This category of events are general events not pertaining to a peer or context. </p>
+<p>Memory pool internal definitions. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga14b9e8a4e4dd9d6223d414bf25762f7b"></a>
+<a class="anchor" id="gae8e478dba1ce71687ba038123e8da2f4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_ERROR&#160;&#160;&#160;0x01</td>
+          <td class="memname">#define RX_BUF_QUEUE_SIZE&#160;&#160;&#160;4u</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Device Manager Event Error. </p>
+<p>RX buffer element size. </p>
 
 </div>
 </div>
-<a class="anchor" id="gad038033184e5745ddd4fef4d52bfcea4"></a>
+<a class="anchor" id="gae8e478dba1ce71687ba038123e8da2f4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_RFU&#160;&#160;&#160;0x00</td>
+          <td class="memname">#define RX_BUF_QUEUE_SIZE&#160;&#160;&#160;2u</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Reserved for future use, is never notified. </p>
+<p>RX buffer element size. </p>
+
+</div>
+</div>
+<a class="anchor" id="gae8e478dba1ce71687ba038123e8da2f4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RX_BUF_QUEUE_SIZE&#160;&#160;&#160;8u</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>RX buffer element size. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga690f985c933da2ce6fe62b6c61dfa662"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RX_BUF_SIZE&#160;&#160;&#160;600u</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>RX buffer size in bytes. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga690f985c933da2ce6fe62b6c61dfa662"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RX_BUF_SIZE&#160;&#160;&#160;32u</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>RX buffer size in bytes. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga690f985c933da2ce6fe62b6c61dfa662"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RX_BUF_SIZE&#160;&#160;&#160;<a class="el" href="a00979.html#ga5d3fb1970e1e98050006978a14b3d95e">TX_BUF_SIZE</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>RX buffer size in bytes. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga5d3fb1970e1e98050006978a14b3d95e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TX_BUF_SIZE&#160;&#160;&#160;32u</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TX buffer size in bytes. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga5d3fb1970e1e98050006978a14b3d95e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TX_BUF_SIZE&#160;&#160;&#160;600u</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TX buffer size in bytes. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga5d3fb1970e1e98050006978a14b3d95e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TX_BUF_SIZE&#160;&#160;&#160;4u</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TX buffer size in bytes. </p>
 
 </div>
 </div>
@@ -148,7 +252,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

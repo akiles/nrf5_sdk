@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: nrf_radio_signal_callback_return_param_t Struct Reference</title>
+<title>nRF51 SDK - S210 SoftDevice: nrf_drv_rtc_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,99 +106,63 @@ $(document).ready(function(){initNavTree('a00094.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_radio_signal_callback_return_param_t Struct Reference<div class="ingroups"><a class="el" href="a00359.html">Types</a></div></div>  </div>
+<div class="title">nrf_drv_rtc_t Struct Reference<div class="ingroups"><a class="el" href="a00343.html">RTC driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Return parameters of the radio timeslot signal callback.  
+<p>RTC driver instance structure.  
  <a href="a00094.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_soc.h&gt;</code></p>
+<p><code>#include &lt;nrf_drv_rtc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac938534ea4bdd342a3cb36c94071e073"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00094.html#ac938534ea4bdd342a3cb36c94071e073">callback_action</a></td></tr>
-<tr class="separator:ac938534ea4bdd342a3cb36c94071e073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70575a7be48f7d0fc52d292096ab0b0c"><td class="memItemLeft" ><a class="anchor" id="a70575a7be48f7d0fc52d292096ab0b0c"></a>
-union {</td></tr>
-<tr class="memitem:ac1c515408bc0ddb6c4c0b0cf7cf13fbe"><td class="memItemLeft" >&#160;&#160;&#160;struct {</td></tr>
-<tr class="memitem:ac16ae57a162d837a8db6726f91d26a90"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;<a class="el" href="a00093.html">nrf_radio_request_t</a> *&#160;&#160;&#160;<a class="el" href="a00094.html#a3f55c9628d7b2e8dbecb594a49eb4a34">p_next</a></td></tr>
-<tr class="separator:ac16ae57a162d837a8db6726f91d26a90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1c515408bc0ddb6c4c0b0cf7cf13fbe"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;&#160;&#160;<a class="el" href="a00094.html#a9acf5f5933ba7e373717c35d601231e1">request</a></td></tr>
-<tr class="separator:ac1c515408bc0ddb6c4c0b0cf7cf13fbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91537d291bec1f8494d2b5c3b28588fd"><td class="memItemLeft" >&#160;&#160;&#160;struct {</td></tr>
-<tr class="memitem:a4ef44de18c78e54bc23f56f5a52bd244"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="a00094.html#ae6f6fa462f50a24ee278512c394beb46">length_us</a></td></tr>
-<tr class="separator:a4ef44de18c78e54bc23f56f5a52bd244"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91537d291bec1f8494d2b5c3b28588fd"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;&#160;&#160;<a class="el" href="a00094.html#add448cb1d003337f2a57fcf32b4cf75d">extend</a></td></tr>
-<tr class="separator:a91537d291bec1f8494d2b5c3b28588fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70575a7be48f7d0fc52d292096ab0b0c"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:a70575a7be48f7d0fc52d292096ab0b0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab45287af2512c2277a6bb35c4e37c3c0"><td class="memItemLeft" align="right" valign="top">NRF_RTC_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00094.html#ab45287af2512c2277a6bb35c4e37c3c0">p_reg</a></td></tr>
+<tr class="separator:ab45287af2512c2277a6bb35c4e37c3c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d46eefc5f87c6e7e469f5a87ff554ba"><td class="memItemLeft" align="right" valign="top">IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00094.html#a4d46eefc5f87c6e7e469f5a87ff554ba">irq</a></td></tr>
+<tr class="separator:a4d46eefc5f87c6e7e469f5a87ff554ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adddb0bddab148beb1b7ebbd61287aa7c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00094.html#adddb0bddab148beb1b7ebbd61287aa7c">instance_id</a></td></tr>
+<tr class="separator:adddb0bddab148beb1b7ebbd61287aa7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Return parameters of the radio timeslot signal callback. </p>
+<div class="textblock"><p>RTC driver instance structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ac938534ea4bdd342a3cb36c94071e073"></a>
+<a class="anchor" id="adddb0bddab148beb1b7ebbd61287aa7c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_radio_signal_callback_return_param_t::callback_action</td>
+          <td class="memname">uint8_t nrf_drv_rtc_t::instance_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The action requested by the application when returning from the signal callback, see <a class="el" href="a00359.html#ga21172c0e9efda8656ee3954b822a61f9">NRF_RADIO_SIGNAL_CALLBACK_ACTION</a>. </p>
+<p>Instance index. </p>
 
 </div>
 </div>
-<a class="anchor" id="add448cb1d003337f2a57fcf32b4cf75d"></a>
+<a class="anchor" id="a4d46eefc5f87c6e7e469f5a87ff554ba"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct { ... }   nrf_radio_signal_callback_return_param_t::extend</td>
+          <td class="memname">IRQn_Type nrf_drv_rtc_t::irq</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Additional parameters for return_code <a class="el" href="a00359.html#gga21172c0e9efda8656ee3954b822a61f9af8b1e7127849acd108c79c0a7ea8fefd">NRF_RADIO_SIGNAL_CALLBACK_ACTION_EXTEND</a>. </p>
+<p>Instance IRQ ID. </p>
 
 </div>
 </div>
-<a class="anchor" id="ae6f6fa462f50a24ee278512c394beb46"></a>
+<a class="anchor" id="ab45287af2512c2277a6bb35c4e37c3c0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t nrf_radio_signal_callback_return_param_t::length_us</td>
+          <td class="memname">NRF_RTC_Type* nrf_drv_rtc_t::p_reg</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Requested extension of the timeslot duration (microseconds) (for minimum time see <a class="el" href="a00358.html#ga09f23a55e7c1e507dbbf6f134c789497">NRF_RADIO_MINIMUM_TIMESLOT_LENGTH_EXTENSION_TIME_US</a>). </p>
-
-</div>
-</div>
-<a class="anchor" id="a3f55c9628d7b2e8dbecb594a49eb4a34"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00093.html">nrf_radio_request_t</a>* nrf_radio_signal_callback_return_param_t::p_next</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The request parameters for the next radio timeslot. </p>
-
-</div>
-</div>
-<a class="anchor" id="a9acf5f5933ba7e373717c35d601231e1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct { ... }   nrf_radio_signal_callback_return_param_t::request</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Additional parameters for return_code <a class="el" href="a00359.html#gga21172c0e9efda8656ee3954b822a61f9a4f2f3f6df9a22f2f8d56e33326f1682e">NRF_RADIO_SIGNAL_CALLBACK_ACTION_REQUEST_AND_END</a>. </p>
+<p>Pointer to instance register set. </p>
 
 </div>
 </div>
@@ -207,8 +171,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00094.html">nrf_radio_signal_callback_return_param_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:05 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00094.html">nrf_drv_rtc_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

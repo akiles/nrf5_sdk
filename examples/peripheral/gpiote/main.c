@@ -26,6 +26,10 @@
 #include "nrf_gpiote.h"
 #include "nrf_gpio.h"
 #include "boards.h"
+#include "nrf_drv_ppi.h"
+#include "nrf_drv_timer.h"
+#include "nrf_drv_gpiote.h"
+#include "app_error.h"
 
 #ifdef BSP_LED_0
     #define GPIO_OUTPUT_PIN_NUMBER BSP_LED_0  /**< Pin number for output. */
@@ -34,77 +38,61 @@
     #error "Please indicate output pin"
 #endif
 
-#define GPIOTE_CHANNEL_NUMBER  0          /**< GPIOTE channel number. */
+static nrf_drv_timer_t timer = NRF_DRV_TIMER_INSTANCE(0);
 
+void timer_dummy_handler(nrf_timer_event_t event_type, void * p_context){}
 
-/** @brief Function for initializing the GPIO Tasks and Events peripheral.
-*/
-static void gpiote_init(void)
+static void led_blinking_setup()
 {
-    // Configure GPIO_OUTPUT_PIN_NUMBER as an output.
-    nrf_gpio_cfg_output(GPIO_OUTPUT_PIN_NUMBER);
+    uint32_t compare_evt_addr;
+    uint32_t gpiote_task_addr;
+    nrf_ppi_channel_t ppi_channel;
+    ret_code_t err_code;
+    nrf_drv_gpiote_out_config_t config = GPIOTE_CONFIG_OUT_TASK_TOGGLE(false);
 
-    // Configure GPIOTE_CHANNEL_NUMBER to toggle the GPIO pin state with input.
-    // @note Only one GPIOTE task can be coupled to an output pin.
-    nrf_gpiote_task_config(GPIOTE_CHANNEL_NUMBER, GPIO_OUTPUT_PIN_NUMBER, \
-                           NRF_GPIOTE_POLARITY_TOGGLE, NRF_GPIOTE_INITIAL_VALUE_LOW);
+    err_code = nrf_drv_gpiote_out_init(GPIO_OUTPUT_PIN_NUMBER, &config);
+    APP_ERROR_CHECK(err_code);
+
+
+    nrf_drv_timer_extended_compare(&timer, (nrf_timer_cc_channel_t)0, 200*1000UL, NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK, false);
+
+    err_code = nrf_drv_ppi_channel_alloc(&ppi_channel);
+    APP_ERROR_CHECK(err_code);
+
+    compare_evt_addr = nrf_drv_timer_event_address_get(&timer, NRF_TIMER_EVENT_COMPARE0);
+    gpiote_task_addr = nrf_drv_gpiote_out_task_addr_get(GPIO_OUTPUT_PIN_NUMBER);
+
+    err_code = nrf_drv_ppi_channel_assign(ppi_channel, compare_evt_addr, gpiote_task_addr);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_drv_ppi_channel_enable(ppi_channel);
+    APP_ERROR_CHECK(err_code);
+
+    nrf_drv_gpiote_out_task_enable(GPIO_OUTPUT_PIN_NUMBER);
 }
-
-
-/** @brief Function for initializing Programmable Peripheral Interconnect (PPI) peripheral.
- *   The PPI is needed to convert the timer event into a task.
- */
-static void ppi_init(void)
-{
-    // Configure PPI channel 0 to toggle GPIO_OUTPUT_PIN on every TIMER0 COMPARE[0] match (200 ms)
-    NRF_PPI->CH[0].EEP = (uint32_t)&NRF_TIMER0->EVENTS_COMPARE[0];
-    NRF_PPI->CH[0].TEP = (uint32_t)&NRF_GPIOTE->TASKS_OUT[GPIOTE_CHANNEL_NUMBER];
-
-    // Enable PPI channel 0
-    NRF_PPI->CHEN = (PPI_CHEN_CH0_Enabled << PPI_CHEN_CH0_Pos);
-}
-
-
-/** @brief Function for initializing the Timer 0 peripheral.
- */
-static void timer0_init(void)
-{
-    // Start 16 MHz crystal oscillator.
-    NRF_CLOCK->EVENTS_HFCLKSTARTED = 0;
-    NRF_CLOCK->TASKS_HFCLKSTART    = 1;
-
-    // Wait for the external oscillator to start.
-    while (NRF_CLOCK->EVENTS_HFCLKSTARTED == 0)
-    {
-        // Do nothing.
-    }
-
-    // Clear TIMER0
-    NRF_TIMER0->TASKS_CLEAR = 1;
-
-    // Configure TIMER0 for compare[0] event every 200 ms.
-    NRF_TIMER0->PRESCALER = 4;            // Prescaler 4 results in 1 tick equals 1 microsecond.
-    NRF_TIMER0->CC[0]     = 200 * 1000UL; // 1 tick equals 1µ , multiply by 1000 for ms value.
-    NRF_TIMER0->MODE      = TIMER_MODE_MODE_Timer;
-    NRF_TIMER0->BITMODE   = TIMER_BITMODE_BITMODE_24Bit;
-    NRF_TIMER0->SHORTS    =
-        (TIMER_SHORTS_COMPARE0_CLEAR_Enabled << TIMER_SHORTS_COMPARE0_CLEAR_Pos);
-}
-
 
 /**
  * @brief Function for application main entry.
  */
 int main(void)
 {
-    gpiote_init(); // Configure a GPIO to toggle on a GPIOTE task.
-    timer0_init(); // Use TIMER0 to generate events every 200 ms.
-    ppi_init();    // Use a PPI channel to connect the event to the task automatically.
+    ret_code_t err_code;
 
-    // Workaround for PAN-73: Use of an EVENT from any TIMER module to trigger a TASK in GPIOTE or 
-    // RTC using the PPI could fail under certain conditions.
+    err_code = nrf_drv_ppi_init();
+    APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_drv_gpiote_init();
+    APP_ERROR_CHECK(err_code);
+
+    err_code = nrf_drv_timer_init(&timer, NULL, timer_dummy_handler);
+    APP_ERROR_CHECK(err_code);
     *(uint32_t *)0x40008C0C = 1;
-    NRF_TIMER0->TASKS_START = 1;  // Start event generation.
+
+    // Setup PPI channel with event from TIMER compare and task GPIOTE pin toggle.
+    led_blinking_setup();
+
+    // Enable timer
+    nrf_drv_timer_enable(&timer);
 
     while (true)
     {

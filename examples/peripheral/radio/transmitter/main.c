@@ -28,7 +28,6 @@
 #include "radio_config.h"
 #include "nrf_gpio.h"
 #include "app_timer.h"
-#include "app_gpiote.h"
 #include "boards.h"
 #include "bsp.h"
 #include "nordic_common.h"
@@ -154,9 +153,7 @@ int main(void)
     
     clock_initialization();
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
-    
-    APP_GPIOTE_INIT(1);
-    
+        
     const app_uart_comm_params_t comm_params =  
     {
         RX_PIN_NUMBER, 

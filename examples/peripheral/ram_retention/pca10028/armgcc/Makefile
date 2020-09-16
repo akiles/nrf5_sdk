@@ -39,6 +39,7 @@ remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-ou
 C_SOURCE_FILES += \
 ../../../../../components/toolchain/system_nrf51.c \
 ../../main.c \
+../../../../../components/libraries/util/app_error.c \
 ../../../../../components/drivers_nrf/hal/nrf_delay.c \
 
 #assembly files common to all targets
@@ -46,9 +47,11 @@ ASM_SOURCE_FILES  = ../../../../../components/toolchain/gcc/gcc_startup_nrf51.s
 
 #includes common to all targets
 INC_PATHS  = -I../../../../bsp
+INC_PATHS += -I../../../../../components/drivers_nrf/nrf_soc_nosd
 INC_PATHS += -I../../../../../components/device
 INC_PATHS += -I../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../..
+INC_PATHS += -I../../../../../components/libraries/util
 INC_PATHS += -I../../../../../components/toolchain
 INC_PATHS += -I../../../../../components/toolchain/gcc
 
@@ -69,7 +72,7 @@ CFLAGS += -Wall -Werror -O3
 CFLAGS += -mfloat-abi=soft
 # keep every function in separate section. This will allow linker to dump unused functions
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -flto -fno-builtin
+CFLAGS += -fno-builtin --short-enums
 
 # keep every function in separate section. This will allow linker to dump unused functions
 LDFLAGS += -Xlinker -Map=$(LISTING_DIRECTORY)/$(OUTPUT_FILENAME).map

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Switching to bootloader/DFU mode</title>
+<title>nRF51 SDK - S110 SoftDevice: Experimental: Multi Activity Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,24 +97,27 @@ $(document).ready(function(){initNavTree('a00083.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Switching to bootloader/DFU mode </div>  </div>
+<div class="title">Experimental: Multi Activity Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>After programming both DFU bootloader and application on the device and starting the application, you can switch to bootloader/DFU mode at any time by writing to the control point of the DFU Service.</p>
-<p>The following flow chart shows the process of switching from a BLE application to bootloader/DFU mode:</p>
-<div class="image">
-<img src="ota_dfu_buttonless.png" alt="ota_dfu_buttonless.png"/>
-<div class="caption">
-Switching from running an application to bootloader/DFU mode</div></div>
-<p> First, you must write the value 0100 to the CCCD for the DFU Control Point characteristic to enable DFU notifications. Next, you must write the value 01-<em>XX</em> (where <em>XX</em> is the code for the type of image, see <a class="el" href="a00103.html#ota_spec_control_state">DFU Control Point</a>) to the DFU Control Point to start a DFU procedure. The application will then disconnect and reset into bootloader/DFU mode. Note that no acknowledgement will be sent when writing to the Control Point, but the application sends a GAP disconnect on the link to tell the peer that the link is closed. You can then transfer the firmware image.</p>
-<p>For more information about the message format and available commands, see <a class="el" href="a00103.html#ota_spec_control_state">DFU Control Point</a>. </p>
+<div class="textblock"><p>The two examples included here (<a class="el" href="a00083.html#ble_sdk_adv_beacon">Advertisement Beacon</a> and <a class="el" href="a00083.html#ble_sdk_scan_beacon">Scanner Beacon</a>) illustrate how to use the Radio Timeslot API of the S110.</p>
+<p>This folder contains an advertiser module that is shown in a heart rate sensor example and that advertises beacon data while in a connection. </p>
+<dl class="section note"><dt>Note</dt><dd>This application is not power optimized!</dd></dl>
+<h1><a class="anchor" id="ble_sdk_adv_beacon"></a>
+Advertisement Beacon</h1>
+<p>The advertiser beacon module illustrates using periodic timeslots on the radio when the SoftDevice is running. The example using the advertiser beacon is based on Heart Rate service example and starts advertising as a beacon when in a connection.</p>
+<p>The name of the example is <b>experimental_ble_app_hrs_advertiser_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\ble_peripheral\experimental_ble_app_multiactivity_beacon\hrs_advertiser</code> </p>
+<h1><a class="anchor" id="ble_sdk_scan_beacon"></a>
+Scanner Beacon</h1>
+<p>The scanner beacon module illustrates using as much as possible of available radio time when the SoftDevice is running. The example using the advertiser beacon is based on Heart Rate service example and scans for advertising beacon at all times. If a beacon is found, indicated by the call to beacon_evt_handler, and if the major, minor and rssi values matches the expected one, the <a class="el" href="a00062.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a> is indicated (the alert indication is cleared when the device enters sleep mode, or leaves a connection).</p>
+<p>The name of the example is <b>experimental_ble_app_hrs_scanner_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\ble_peripheral\experimental_ble_app_multiactivity_beacon\hrs_scanner</code> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00078.html">BLE DFU Bootloader</a></li><li class="navelem"><a class="el" href="a00082.html">Adding DFU Service support to an application</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00064.html">BLE Peripheral</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

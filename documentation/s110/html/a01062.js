@@ -1,10 +1,8 @@
 var a01062 =
 [
-    [ "ble_uuid128_t", "a00358.html", [
-      [ "uuid128", "a00358.html#a13339a8ee220b2ad2f4b8e130e730407", null ]
-    ] ],
-    [ "ble_uuid_t", "a00359.html", [
-      [ "type", "a00359.html#ae233c47cdd5f63de456f413a158bb16f", null ],
-      [ "uuid", "a00359.html#ac9ccd46e82b1b51d561f17d49282348c", null ]
-    ] ]
+    [ "Message Sequence Charts", "a01063.html", "a01063" ],
+    [ "Enumerations", "a01285.html", "a01285" ],
+    [ "Defines", "a01286.html", "a01286" ],
+    [ "Structures", "a01287.html", "a01287" ],
+    [ "Functions", "a01288.html", "a01288" ]
 ];

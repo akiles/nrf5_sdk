@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: BLE Heart Rate Collector Example</title>
+<title>nRF51 SDK - S120 SoftDevice: UART Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,49 +97,49 @@ $(document).ready(function(){initNavTree('a00057.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BLE Heart Rate Collector Example </div>  </div>
+<div class="title">UART Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The BLE Heart Rate Collector application implements the Heart Rate Collector Role using the S120 SoftDevice.</p>
-<p>GAP role implemented is the Central role. GATT role implemented is the Client role.</p>
-<p>The Heart Rate Collector application implements the Collector role for the Heart Rate Profile. It scans peripheral devices, connects to the device advertising with Heart Rate Service UUID in its advertisement report, and discovers and configures the <b>Heart Rate Service</b> to start sending Notifications of Heart Rate Measurement. The Heart Rate Measurement received is displayed on the Display unit as well as logged on UART interface. This application will also discover and configure <b>Battery Service</b> at the peer.</p>
-<p>The application includes the two services in the Heart Rate profile:</p>
-<ul>
-<li><a class="el" href="a00654.html">Heart Rate Service Client</a></li>
-<li><a class="el" href="a00659.html">Battery Service Client</a></li>
+<div class="textblock"><p>The UART Example demonstrates basic UART usage for communicating with a PC terminal. It transmits and receives data through the configured pins as a serial device. The configured pins must be redirected to a COM port. Terminal programs (for example PUTTY) can listen to this COM port through a terminal session.</p>
+<p>When the application starts, it transmits "START: " through the serial device. This will be output on the terminal. If you type characters on the terminal, they are transmitted to the application through <a class="el" href="a00663.html#gacddb5b7b711ef104f9eb181a13bc4503">app_uart_get</a>. If you type an exit character 'q' or 'Q', the program transmits "EXIT!" on a new line and ends into an infinite loop.</p>
+<p>This example can be used for any UART connection, not only COM ports. COM port redirection is used for visual verification.</p>
+<dl class="section note"><dt>Note</dt><dd>If you set the define ENABLE_LOOPBACK_TEST, the application will assume that the TX_PIN_NUMBER is connected to RX_PIN_NUMBER and RTS_PIN_NUMBER is connected to CTS_PIN_NUMBER, used to test in loopback. In this case, no COM port can be used because the data flows from TX to RX. If data is lost, ERROR_PIN is set high.</dd>
+<dd>
+Settings:<ul>
+<li>Baud: 38400</li>
+<li>Data bits: 8</li>
+<li>Stop bits: 1</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>The application currently does not support connecting to multiple peripherals. Handling Connection Parameters Update and Pairing/Bonding are not implemented. Once connected, the application does not initiate disconnection but is capable of handling disconnection event initiated by peer or triggered unexpectedly.</dd></dl>
-<h1><a class="anchor" id="project_hrc_setup"></a>
-Setup</h1>
-<p>The name of the example for PCA10028 is <b>ble_app_hrs_c_s120_pca10028</b>, and for PCA10031 it is <b>ble_app_hrs_c_s120_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_central\ble_app_hrs_c</code> </p>
-<dl class="section note"><dt>Note</dt><dd>Display Unit is used to display the Heart Rate values and Battery Level values received from peer (heart rate sensor).</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>If you do not have the display unit, the definition of the macro APPL_LCD_PRINT_ENABLE in main.c of this application must be commented out. If this is not done, the application will not run as expected.</dd></dl>
-<h1><a class="anchor" id="ble_hrc_test"></a>
+</dd></dl>
+<p>The name of the example is <b>uart_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\peripheral\uart</code> </p>
+<h1><a class="anchor" id="uart_example_testing"></a>
 Testing</h1>
-<p>Two boards are needed to perform this test:</p>
-<ul>
-<li><b>Collector Board</b>: nRF51 Development board mounted with nRF51822 containing S120 SoftDevice.</li>
-<li><b>Sensor Board</b>: nRF51 Development board mounted with nRF51822 chip Board containing S110 SoftDevice and the Heart Rate Application provided with the nRF51 SDK.</li>
-</ul>
-<p>The application running on the Sensor Board is intended to serve as a peer (i.e. Heart Rate Sensor role) to this Heart Rate Collector application.</p>
-<p>Test the BLE Heart Rate Collector Example application by performing the following steps:</p>
+<p>Test the UART Example application by performing the following steps:</p>
 <ol type="1">
-<li>Compile and program the BLE Heart Rate Collector Example application on the Collector Board. Ensure that the S120 SoftDevice is used for this application.</li>
-<li>On the Collector board, observe that the <a class="el" href="a00055.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated. This shows that the application is scanning for Heart Rate Sensors. The Display Unit will display 'Scanning'. <dl class="section note"><dt>Note</dt><dd>If there are bonded devices in the bonded device list, whitelist scanning is used for the first 30 seconds. If no heart rate device is found during this time, non-whitelisted (general) scanning is used.</dd></dl>
+<li>Compile and program the application.</li>
+<li>Start a COM listener like PUTTY and connect to the used COM port with the following UART settings:<ul>
+<li>
+Baud rate: 38.400</li>
+<li>
+8 data bits</li>
+<li>
+1 stop bit</li>
+<li>
+No parity</li>
+<li>
+HW flow control: RTS/CTS</li>
+</ul>
 </li>
-<li>Compile and program the Heart Rate Sensor application on the Sensor Board. Ensure the S110 SoftDevice is used for this application.</li>
-<li>Observe that the Heart Rate Sensor is advertising.</li>
-<li>Once the connection is established, the <a class="el" href="a00055.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated on the Collector Board. The Display Unit will display 'Connected'. <dl class="section note"><dt>Note</dt><dd>The sensor application may just have advertised for a very short while before the Collector application had connected. So it is possible that the tester has missed to note that the Sensor application was advertising.</dd></dl>
-</li>
-<li>After a few seconds, observe Heart Rate measurements displayed on the Display Unit. The Display Unit will display Heart Rate on the upper line and the Battery Level of the peer value on the lower line. </li>
+<li>Observe that the text "Start:" appears at the top of the terminal.</li>
+<li>Type 'Q' or 'q' in the terminal. The response should be 'Exit!'. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00056.html">BLE Central</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:52 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00032.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:45 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

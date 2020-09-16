@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_advdata_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: Heart Rate Service</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,211 +96,22 @@ $(document).ready(function(){initNavTree('a00160.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_advdata_t Struct Reference<div class="ingroups"><a class="el" href="a01012.html">Advertising Data Encoder</a></div></div>  </div>
+<div class="title">Heart Rate Service </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Advertising data structure. This contains all options and data needed for encoding and setting the advertising data.  
- <a href="a00160.html#details">More...</a></p>
-
-<p><code>#include &lt;ble_advdata.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:afe9ec603b1d9f3e868f936464016a3a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01012.html#ga03c5ccf232779001be9786021b1a563b">ble_advdata_name_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00160.html#afe9ec603b1d9f3e868f936464016a3a2">name_type</a></td></tr>
-<tr class="separator:afe9ec603b1d9f3e868f936464016a3a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a859a4a07ab279923f05b711a540d69ea"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00160.html#a859a4a07ab279923f05b711a540d69ea">short_name_len</a></td></tr>
-<tr class="separator:a859a4a07ab279923f05b711a540d69ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a668cb6a3e5c6432618ee2d3a32a167d1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00160.html#a668cb6a3e5c6432618ee2d3a32a167d1">include_appearance</a></td></tr>
-<tr class="separator:a668cb6a3e5c6432618ee2d3a32a167d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad05db9cd3fe0425b48d8beb01913b70c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00160.html#ad05db9cd3fe0425b48d8beb01913b70c">flags</a></td></tr>
-<tr class="separator:ad05db9cd3fe0425b48d8beb01913b70c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ed830e9c89c1056b955e077656f8b63"><td class="memItemLeft" align="right" valign="top">int8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00160.html#a3ed830e9c89c1056b955e077656f8b63">p_tx_power_level</a></td></tr>
-<tr class="separator:a3ed830e9c89c1056b955e077656f8b63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca35c2d593094e792ddbe97578456720"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00161.html">ble_advdata_uuid_list_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00160.html#aca35c2d593094e792ddbe97578456720">uuids_more_available</a></td></tr>
-<tr class="separator:aca35c2d593094e792ddbe97578456720"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4f046bd8319fa2d1f4473f1ac2de28a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00161.html">ble_advdata_uuid_list_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00160.html#ab4f046bd8319fa2d1f4473f1ac2de28a">uuids_complete</a></td></tr>
-<tr class="separator:ab4f046bd8319fa2d1f4473f1ac2de28a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff5ba733a44118e90a105eee05ed60f7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00161.html">ble_advdata_uuid_list_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00160.html#aff5ba733a44118e90a105eee05ed60f7">uuids_solicited</a></td></tr>
-<tr class="separator:aff5ba733a44118e90a105eee05ed60f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9c24c6b54c058265c49b30ae6bcb56a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00157.html">ble_advdata_conn_int_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00160.html#ac9c24c6b54c058265c49b30ae6bcb56a">p_slave_conn_int</a></td></tr>
-<tr class="separator:ac9c24c6b54c058265c49b30ae6bcb56a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a717bae6e0ed091bc095ac081d85c83ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00158.html">ble_advdata_manuf_data_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00160.html#a717bae6e0ed091bc095ac081d85c83ed">p_manuf_specific_data</a></td></tr>
-<tr class="separator:a717bae6e0ed091bc095ac081d85c83ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6adc467deea02eb86a1a723487fa4ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00159.html">ble_advdata_service_data_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00160.html#ac6adc467deea02eb86a1a723487fa4ac">p_service_data_array</a></td></tr>
-<tr class="separator:ac6adc467deea02eb86a1a723487fa4ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a302f506a87a6b735e88b73b8949311cd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00160.html#a302f506a87a6b735e88b73b8949311cd">service_data_count</a></td></tr>
-<tr class="separator:a302f506a87a6b735e88b73b8949311cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Advertising data structure. This contains all options and data needed for encoding and setting the advertising data. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ad05db9cd3fe0425b48d8beb01913b70c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_advdata_t::flags</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Advertising data Flags field. </p>
-
-</div>
-</div>
-<a class="anchor" id="a668cb6a3e5c6432618ee2d3a32a167d1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_advdata_t::include_appearance</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Determines if Appearance shall be included. </p>
-
-</div>
-</div>
-<a class="anchor" id="afe9ec603b1d9f3e868f936464016a3a2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01012.html#ga03c5ccf232779001be9786021b1a563b">ble_advdata_name_type_t</a> ble_advdata_t::name_type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Type of device name. </p>
-
-</div>
-</div>
-<a class="anchor" id="a717bae6e0ed091bc095ac081d85c83ed"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00158.html">ble_advdata_manuf_data_t</a>* ble_advdata_t::p_manuf_specific_data</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Manufacturer specific data. </p>
-
-</div>
-</div>
-<a class="anchor" id="ac6adc467deea02eb86a1a723487fa4ac"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00159.html">ble_advdata_service_data_t</a>* ble_advdata_t::p_service_data_array</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Array of Service data structures. </p>
-
-</div>
-</div>
-<a class="anchor" id="ac9c24c6b54c058265c49b30ae6bcb56a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00157.html">ble_advdata_conn_int_t</a>* ble_advdata_t::p_slave_conn_int</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Slave Connection Interval Range. </p>
-
-</div>
-</div>
-<a class="anchor" id="a3ed830e9c89c1056b955e077656f8b63"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int8_t* ble_advdata_t::p_tx_power_level</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>TX Power Level field. </p>
-
-</div>
-</div>
-<a class="anchor" id="a302f506a87a6b735e88b73b8949311cd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_advdata_t::service_data_count</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Number of Service data structures. </p>
-
-</div>
-</div>
-<a class="anchor" id="a859a4a07ab279923f05b711a540d69ea"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_advdata_t::short_name_len</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Length of short device name (if short type is specified). </p>
-
-</div>
-</div>
-<a class="anchor" id="ab4f046bd8319fa2d1f4473f1ac2de28a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00161.html">ble_advdata_uuid_list_t</a> ble_advdata_t::uuids_complete</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>List of UUIDs in the 'Complete' list. </p>
-
-</div>
-</div>
-<a class="anchor" id="aca35c2d593094e792ddbe97578456720"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00161.html">ble_advdata_uuid_list_t</a> ble_advdata_t::uuids_more_available</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>List of UUIDs in the 'More Available' list. </p>
-
-</div>
-</div>
-<a class="anchor" id="aff5ba733a44118e90a105eee05ed60f7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00161.html">ble_advdata_uuid_list_t</a> ble_advdata_t::uuids_solicited</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>List of solcited UUIDs. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>This module implements the Heart Rate Service with the Heart Rate Measurement, Body Sensor Location and Heart Rate Control Point characteristics. During initialization it adds the Heart Rate Service and Heart Rate Measurement characteristic to the BLE stack database. Optionally it also adds the Body Sensor Location and Heart Rate Control Point characteristics.</p>
+<p>If enabled, notification of the Heart Rate Measurement characteristic is performed when the application calls <a class="el" href="a01204.html#gabe5fed48baeb4a518a51bd7e2e5f010e" title="Function for sending heart rate measurement if notification has been enabled.">ble_hrs_heart_rate_measurement_send()</a>.</p>
+<p>The Heart Rate Service also provides a set of functions for manipulating the various fields in the Heart Rate Measurement characteristic, as well as setting the Body Sensor Location characteristic value.</p>
+<p>If an event handler is supplied by the application, the Heart Rate Service will generate Heart Rate Service events to the application.</p>
+<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Heart Rate Service module by calling <a class="el" href="a01204.html#gac50e029608199cc8d52463acb3e8a02e" title="Function for handling the Application&#39;s BLE Stack events.">ble_hrs_on_ble_evt()</a> from the <a class="el" href="a01189.html">SoftDevice Event Handler</a> callback. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00160.html">ble_advdata_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00144.html">BLE Services</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

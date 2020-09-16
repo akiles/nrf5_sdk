@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: DTM - Direct Test Mode</title>
+<title>nRF51 SDK - S120 SoftDevice: Application Timer</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,527 +99,367 @@ $(document).ready(function(){initNavTree('a00682.html','');});
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">DTM - Direct Test Mode<div class="ingroups"><a class="el" href="a00694.html">BLE Libraries</a></div></div>  </div>
+<div class="title">Application Timer<div class="ingroups"><a class="el" href="a00928.html">SDK Common Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Module for testing RF/PHY using DTM commands.  
+<p>Application timer functionality.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gafe4068300543aca796a35c939959caa3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gafe4068300543aca796a35c939959caa3">DEFAULT_TX_POWER</a>&#160;&#160;&#160;RADIO_TXPOWER_TXPOWER_Pos4dBm</td></tr>
-<tr class="memdesc:gafe4068300543aca796a35c939959caa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration parameters.  <a href="#gafe4068300543aca796a35c939959caa3">More...</a><br/></td></tr>
-<tr class="separator:gafe4068300543aca796a35c939959caa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac91bd56eef3f2b82894a058b7f136a21"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gac91bd56eef3f2b82894a058b7f136a21">DEFAULT_TIMER</a>&#160;&#160;&#160;NRF_TIMER0</td></tr>
-<tr class="separator:gac91bd56eef3f2b82894a058b7f136a21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1efafa03b7e7bc3274e1bfdba549cd09"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga1efafa03b7e7bc3274e1bfdba549cd09">DEFAULT_TIMER_IRQn</a>&#160;&#160;&#160;TIMER0_IRQn</td></tr>
-<tr class="separator:ga1efafa03b7e7bc3274e1bfdba549cd09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a0690bbc7f0d3e74f67c239c4247291"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga7a0690bbc7f0d3e74f67c239c4247291">LE_RESET</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:ga7a0690bbc7f0d3e74f67c239c4247291"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad748a96ebeca311ebaf9e657c99eaafb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gad748a96ebeca311ebaf9e657c99eaafb">LE_RECEIVER_TEST</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:gad748a96ebeca311ebaf9e657c99eaafb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae8d2c3303667273a59d407df6445c54b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gae8d2c3303667273a59d407df6445c54b">LE_TRANSMITTER_TEST</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:gae8d2c3303667273a59d407df6445c54b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3c5397c73c1109a60268513b67df0a2a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga3c5397c73c1109a60268513b67df0a2a">LE_TEST_END</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:ga3c5397c73c1109a60268513b67df0a2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac54ae7bd6c0326b4bda06f72061b2b00"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gac54ae7bd6c0326b4bda06f72061b2b00">CARRIER_TEST</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:gac54ae7bd6c0326b4bda06f72061b2b00"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaacd01d21c085dc48af3ddb844c68cc54"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gaacd01d21c085dc48af3ddb844c68cc54">CARRIER_TEST_STUDIO</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:gaacd01d21c085dc48af3ddb844c68cc54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf10191ab4d2caac1d49091d0b252b445"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gaf10191ab4d2caac1d49091d0b252b445">SET_TX_POWER</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:gaf10191ab4d2caac1d49091d0b252b445"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5674684bcc78025bc3e8974f2f83d31a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga5674684bcc78025bc3e8974f2f83d31a">SELECT_TIMER</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:ga5674684bcc78025bc3e8974f2f83d31a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0d787a4016fcf3f7393591acfe2f6e99"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga0d787a4016fcf3f7393591acfe2f6e99">LE_PACKET_REPORTING_EVENT</a>&#160;&#160;&#160;0x8000</td></tr>
-<tr class="separator:ga0d787a4016fcf3f7393591acfe2f6e99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga23033ef9a49e11e6045c0fa5203a5e62"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga23033ef9a49e11e6045c0fa5203a5e62">LE_TEST_STATUS_EVENT_SUCCESS</a>&#160;&#160;&#160;0x0000</td></tr>
-<tr class="separator:ga23033ef9a49e11e6045c0fa5203a5e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8560ef1ea2aef1a1e8405c90dd7a3d62"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga8560ef1ea2aef1a1e8405c90dd7a3d62">LE_TEST_STATUS_EVENT_ERROR</a>&#160;&#160;&#160;0x0001</td></tr>
-<tr class="separator:ga8560ef1ea2aef1a1e8405c90dd7a3d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf0668d4430e7040f88ac175d0f0fe18a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gaf0668d4430e7040f88ac175d0f0fe18a">DTM_PKT_PRBS9</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:gaf0668d4430e7040f88ac175d0f0fe18a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga80629f04fe92e9d1a6a6cc7518bb3443"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga80629f04fe92e9d1a6a6cc7518bb3443">DTM_PKT_0X0F</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:ga80629f04fe92e9d1a6a6cc7518bb3443"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac8342f5fb0460a2c17837f460d478f05"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gac8342f5fb0460a2c17837f460d478f05">DTM_PKT_0X55</a>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:gac8342f5fb0460a2c17837f460d478f05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga42c6ddb4a7cfcca162859a8744492ffc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga42c6ddb4a7cfcca162859a8744492ffc">DTM_PKT_VENDORSPECIFIC</a>&#160;&#160;&#160;0xFFFFFFFF</td></tr>
-<tr class="separator:ga42c6ddb4a7cfcca162859a8744492ffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad1926e67b0af038cd28f294d2c6ada4a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gad1926e67b0af038cd28f294d2c6ada4a">DTM_SUCCESS</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="memdesc:gad1926e67b0af038cd28f294d2c6ada4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return codes from <a class="el" href="a00682.html#gacfd7e507740ae8f6d296e77306d89a3a" title="Function for calling when a complete command has been prepared by the Tester.">dtm_cmd()</a>.  <a href="#gad1926e67b0af038cd28f294d2c6ada4a">More...</a><br/></td></tr>
-<tr class="separator:gad1926e67b0af038cd28f294d2c6ada4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0d15718064583f1c5ff0c9ffd69e7b47"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga0d15718064583f1c5ff0c9ffd69e7b47">DTM_ERROR_ILLEGAL_CHANNEL</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:ga0d15718064583f1c5ff0c9ffd69e7b47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa81f7b94447a07b8e017fce4690eaf21"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gaa81f7b94447a07b8e017fce4690eaf21">DTM_ERROR_INVALID_STATE</a>&#160;&#160;&#160;0x02</td></tr>
-<tr class="separator:gaa81f7b94447a07b8e017fce4690eaf21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad8ccc81041426a013921e6d1433048f2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gad8ccc81041426a013921e6d1433048f2">DTM_ERROR_ILLEGAL_LENGTH</a>&#160;&#160;&#160;0x03</td></tr>
-<tr class="separator:gad8ccc81041426a013921e6d1433048f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6fc53bfea239368acef19f07ea256aec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga6fc53bfea239368acef19f07ea256aec">DTM_ERROR_ILLEGAL_CONFIGURATION</a>&#160;&#160;&#160;0x04</td></tr>
-<tr class="separator:ga6fc53bfea239368acef19f07ea256aec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf009cf6c05fcc0ccf37c3132e9c6c384"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gaf009cf6c05fcc0ccf37c3132e9c6c384">DTM_ERROR_UNINITIALIZED</a>&#160;&#160;&#160;0x05</td></tr>
-<tr class="separator:gaf009cf6c05fcc0ccf37c3132e9c6c384"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabc5d077c996e79bb46808ca484f0a163"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gabc5d077c996e79bb46808ca484f0a163">PACKET_TYPE_MAX</a>&#160;&#160;&#160;<a class="el" href="a00682.html#gac8342f5fb0460a2c17837f460d478f05">DTM_PKT_0X55</a></td></tr>
-<tr class="separator:gabc5d077c996e79bb46808ca484f0a163"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga12adbc81bda12c46605edc8fcd9e5d19"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga12adbc81bda12c46605edc8fcd9e5d19">APP_TIMER_CLOCK_FREQ</a>&#160;&#160;&#160;32768</td></tr>
+<tr class="separator:ga12adbc81bda12c46605edc8fcd9e5d19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga30c7af1b67835f8031ccc934af7d1af7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga30c7af1b67835f8031ccc934af7d1af7">APP_TIMER_MIN_TIMEOUT_TICKS</a>&#160;&#160;&#160;5</td></tr>
+<tr class="separator:ga30c7af1b67835f8031ccc934af7d1af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafb37507319ac388ad5e89be2525c7c1f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gafb37507319ac388ad5e89be2525c7c1f">APP_TIMER_NODE_SIZE</a>&#160;&#160;&#160;40</td></tr>
+<tr class="separator:gafb37507319ac388ad5e89be2525c7c1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58bd0b3796949136aca4e18865df281a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga58bd0b3796949136aca4e18865df281a">APP_TIMER_USER_OP_SIZE</a>&#160;&#160;&#160;24</td></tr>
+<tr class="separator:ga58bd0b3796949136aca4e18865df281a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9c4c5113918b3e6e33dc05ba51823ece"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga9c4c5113918b3e6e33dc05ba51823ece">APP_TIMER_USER_SIZE</a>&#160;&#160;&#160;8</td></tr>
+<tr class="separator:ga9c4c5113918b3e6e33dc05ba51823ece"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga191e41b150c033b065b213998814e71e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga191e41b150c033b065b213998814e71e">APP_TIMER_INT_LEVELS</a>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:ga191e41b150c033b065b213998814e71e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabacf4cc12b8ec08002818cd3a038550c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gabacf4cc12b8ec08002818cd3a038550c">APP_TIMER_BUF_SIZE</a>(MAX_TIMERS, OP_QUEUE_SIZE)</td></tr>
+<tr class="memdesc:gabacf4cc12b8ec08002818cd3a038550c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute number of bytes required to hold the application timer data structures.  <a href="#gabacf4cc12b8ec08002818cd3a038550c">More...</a><br/></td></tr>
+<tr class="separator:gabacf4cc12b8ec08002818cd3a038550c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafdaf90781af071b0c295cd5b2b08da3d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gafdaf90781af071b0c295cd5b2b08da3d">APP_TIMER_TICKS</a>(MS, PRESCALER)&#160;&#160;&#160;((uint32_t)<a class="el" href="a00685.html#ga25e8110559dbc9665dfb9485be8ac60f">ROUNDED_DIV</a>((MS) * (uint64_t)<a class="el" href="a00682.html#ga12adbc81bda12c46605edc8fcd9e5d19">APP_TIMER_CLOCK_FREQ</a>, ((PRESCALER) + 1) * 1000))</td></tr>
+<tr class="memdesc:gafdaf90781af071b0c295cd5b2b08da3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert milliseconds to timer ticks.  <a href="#gafdaf90781af071b0c295cd5b2b08da3d">More...</a><br/></td></tr>
+<tr class="separator:gafdaf90781af071b0c295cd5b2b08da3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5aaf67f18b79941f9a160d287aa5f245"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga5aaf67f18b79941f9a160d287aa5f245">APP_TIMER_INIT</a>(PRESCALER, MAX_TIMERS, OP_QUEUES_SIZE, SCHEDULER_FUNC)</td></tr>
+<tr class="memdesc:ga5aaf67f18b79941f9a160d287aa5f245"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro for initializing the application timer module.  <a href="#ga5aaf67f18b79941f9a160d287aa5f245">More...</a><br/></td></tr>
+<tr class="separator:ga5aaf67f18b79941f9a160d287aa5f245"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga1913c46b27822e5ba366c6feb7dd8a71"><td class="memItemLeft" align="right" valign="top">typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga1913c46b27822e5ba366c6feb7dd8a71">dtm_cmd_t</a></td></tr>
-<tr class="memdesc:ga1913c46b27822e5ba366c6feb7dd8a71"><td class="mdescLeft">&#160;</td><td class="mdescRight">BLE DTM command codes.  <a href="#ga1913c46b27822e5ba366c6feb7dd8a71">More...</a><br/></td></tr>
-<tr class="separator:ga1913c46b27822e5ba366c6feb7dd8a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeddc8e448d5f03e66af18dae76476518"><td class="memItemLeft" align="right" valign="top">typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gaeddc8e448d5f03e66af18dae76476518">dtm_event_t</a></td></tr>
-<tr class="memdesc:gaeddc8e448d5f03e66af18dae76476518"><td class="mdescLeft">&#160;</td><td class="mdescRight">BLE DTM event type.  <a href="#gaeddc8e448d5f03e66af18dae76476518">More...</a><br/></td></tr>
-<tr class="separator:gaeddc8e448d5f03e66af18dae76476518"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga678d75ffdbe6263fd2395ec5550de11a"><td class="memItemLeft" align="right" valign="top">typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga678d75ffdbe6263fd2395ec5550de11a">dtm_freq_t</a></td></tr>
-<tr class="memdesc:ga678d75ffdbe6263fd2395ec5550de11a"><td class="mdescLeft">&#160;</td><td class="mdescRight">BLE DTM frequency type.  <a href="#ga678d75ffdbe6263fd2395ec5550de11a">More...</a><br/></td></tr>
-<tr class="separator:ga678d75ffdbe6263fd2395ec5550de11a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga22c1d34e8bc119600a2986ddd1e2d972"><td class="memItemLeft" align="right" valign="top">typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga22c1d34e8bc119600a2986ddd1e2d972">dtm_pkt_type_t</a></td></tr>
-<tr class="memdesc:ga22c1d34e8bc119600a2986ddd1e2d972"><td class="mdescLeft">&#160;</td><td class="mdescRight">BLE DTM packet types.  <a href="#ga22c1d34e8bc119600a2986ddd1e2d972">More...</a><br/></td></tr>
-<tr class="separator:ga22c1d34e8bc119600a2986ddd1e2d972"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad024aa9066b1ca640dd171d83ee39290"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad024aa9066b1ca640dd171d83ee39290"></a>
+typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gad024aa9066b1ca640dd171d83ee39290">app_timer_id_t</a></td></tr>
+<tr class="memdesc:gad024aa9066b1ca640dd171d83ee39290"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer id type. <br/></td></tr>
+<tr class="separator:gad024aa9066b1ca640dd171d83ee39290"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6d96125cb0c1cd1dbc753acff3036ea3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6d96125cb0c1cd1dbc753acff3036ea3"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga6d96125cb0c1cd1dbc753acff3036ea3">app_timer_timeout_handler_t</a> )(void *p_context)</td></tr>
+<tr class="memdesc:ga6d96125cb0c1cd1dbc753acff3036ea3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application timeout handler type. <br/></td></tr>
+<tr class="separator:ga6d96125cb0c1cd1dbc753acff3036ea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga647843379c9e94deff5c30435a79736b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga647843379c9e94deff5c30435a79736b"></a>
+typedef uint32_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga647843379c9e94deff5c30435a79736b">app_timer_evt_schedule_func_t</a> )(<a class="el" href="a00682.html#ga6d96125cb0c1cd1dbc753acff3036ea3">app_timer_timeout_handler_t</a> timeout_handler, void *p_context)</td></tr>
+<tr class="memdesc:ga647843379c9e94deff5c30435a79736b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of function for passing events from the timer module to the scheduler. <br/></td></tr>
+<tr class="separator:ga647843379c9e94deff5c30435a79736b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaae9566b4f8c39bd6e7b364940ca1b73b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gaae9566b4f8c39bd6e7b364940ca1b73b">app_timer_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00682.html#ggaae9566b4f8c39bd6e7b364940ca1b73ba795e93cf3bcc214a35478b80f8e0186d">APP_TIMER_MODE_SINGLE_SHOT</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00682.html#ggaae9566b4f8c39bd6e7b364940ca1b73bafe8186388a11806af86157f592b5a9ad">APP_TIMER_MODE_REPEATED</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaae9566b4f8c39bd6e7b364940ca1b73b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer modes.  <a href="a00682.html#gaae9566b4f8c39bd6e7b364940ca1b73b">More...</a><br/></td></tr>
+<tr class="separator:gaae9566b4f8c39bd6e7b364940ca1b73b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga45f73017a4ba401da34571bcc741b564"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga45f73017a4ba401da34571bcc741b564">dtm_init</a> (void)</td></tr>
-<tr class="memdesc:ga45f73017a4ba401da34571bcc741b564"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing or re-initializing DTM module.  <a href="#ga45f73017a4ba401da34571bcc741b564">More...</a><br/></td></tr>
-<tr class="separator:ga45f73017a4ba401da34571bcc741b564"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab8114a0b0dd2db821a479ad848a67121"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gab8114a0b0dd2db821a479ad848a67121">dtm_wait</a> (void)</td></tr>
-<tr class="memdesc:gab8114a0b0dd2db821a479ad848a67121"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for giving control to dtmlib for handling timer and radio events. Will return to caller at 625us intervals or whenever another event than radio occurs (such as UART input). Function will put MCU to sleep between events.  <a href="#gab8114a0b0dd2db821a479ad848a67121">More...</a><br/></td></tr>
-<tr class="separator:gab8114a0b0dd2db821a479ad848a67121"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacfd7e507740ae8f6d296e77306d89a3a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gacfd7e507740ae8f6d296e77306d89a3a">dtm_cmd</a> (<a class="el" href="a00682.html#ga1913c46b27822e5ba366c6feb7dd8a71">dtm_cmd_t</a> cmd, <a class="el" href="a00682.html#ga678d75ffdbe6263fd2395ec5550de11a">dtm_freq_t</a> freq, uint32_t length, <a class="el" href="a00682.html#ga22c1d34e8bc119600a2986ddd1e2d972">dtm_pkt_type_t</a> payload)</td></tr>
-<tr class="memdesc:gacfd7e507740ae8f6d296e77306d89a3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for calling when a complete command has been prepared by the Tester.  <a href="#gacfd7e507740ae8f6d296e77306d89a3a">More...</a><br/></td></tr>
-<tr class="separator:gacfd7e507740ae8f6d296e77306d89a3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga574ceb36cc9cee237a6e9f77e3c32b36"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga574ceb36cc9cee237a6e9f77e3c32b36">dtm_event_get</a> (<a class="el" href="a00682.html#gaeddc8e448d5f03e66af18dae76476518">dtm_event_t</a> *p_dtm_event)</td></tr>
-<tr class="memdesc:ga574ceb36cc9cee237a6e9f77e3c32b36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for reading the result of a DTM command.  <a href="#ga574ceb36cc9cee237a6e9f77e3c32b36">More...</a><br/></td></tr>
-<tr class="separator:ga574ceb36cc9cee237a6e9f77e3c32b36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga283b15cf4583b6282d078dd7752efb5b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga283b15cf4583b6282d078dd7752efb5b">dtm_set_timer</a> (uint32_t new_timer)</td></tr>
-<tr class="memdesc:ga283b15cf4583b6282d078dd7752efb5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for configuring the timer to use.  <a href="#ga283b15cf4583b6282d078dd7752efb5b">More...</a><br/></td></tr>
-<tr class="separator:ga283b15cf4583b6282d078dd7752efb5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8fc47d8b727b01821d4287e3c8a6068d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga8fc47d8b727b01821d4287e3c8a6068d">dtm_set_txpower</a> (uint32_t new_tx_power)</td></tr>
-<tr class="memdesc:ga8fc47d8b727b01821d4287e3c8a6068d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for configuring the transmit power.  <a href="#ga8fc47d8b727b01821d4287e3c8a6068d">More...</a><br/></td></tr>
-<tr class="separator:ga8fc47d8b727b01821d4287e3c8a6068d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga96087520ca79dfa28fb6ba6bb562a88f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga96087520ca79dfa28fb6ba6bb562a88f">app_timer_init</a> (uint32_t prescaler, uint8_t max_timers, uint8_t op_queues_size, void *p_buffer, <a class="el" href="a00682.html#ga647843379c9e94deff5c30435a79736b">app_timer_evt_schedule_func_t</a> evt_schedule_func)</td></tr>
+<tr class="memdesc:ga96087520ca79dfa28fb6ba6bb562a88f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the timer module.  <a href="#ga96087520ca79dfa28fb6ba6bb562a88f">More...</a><br/></td></tr>
+<tr class="separator:ga96087520ca79dfa28fb6ba6bb562a88f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8aa81f9e8bde352865be0502c7037592"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga8aa81f9e8bde352865be0502c7037592">app_timer_create</a> (<a class="el" href="a00682.html#gad024aa9066b1ca640dd171d83ee39290">app_timer_id_t</a> *p_timer_id, <a class="el" href="a00682.html#gaae9566b4f8c39bd6e7b364940ca1b73b">app_timer_mode_t</a> mode, <a class="el" href="a00682.html#ga6d96125cb0c1cd1dbc753acff3036ea3">app_timer_timeout_handler_t</a> timeout_handler)</td></tr>
+<tr class="memdesc:ga8aa81f9e8bde352865be0502c7037592"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for creating a timer instance.  <a href="#ga8aa81f9e8bde352865be0502c7037592">More...</a><br/></td></tr>
+<tr class="separator:ga8aa81f9e8bde352865be0502c7037592"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga03fb5f5fa85d16289db0d3c15bb0f24d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga03fb5f5fa85d16289db0d3c15bb0f24d">app_timer_start</a> (<a class="el" href="a00682.html#gad024aa9066b1ca640dd171d83ee39290">app_timer_id_t</a> timer_id, uint32_t timeout_ticks, void *p_context)</td></tr>
+<tr class="memdesc:ga03fb5f5fa85d16289db0d3c15bb0f24d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for starting a timer.  <a href="#ga03fb5f5fa85d16289db0d3c15bb0f24d">More...</a><br/></td></tr>
+<tr class="separator:ga03fb5f5fa85d16289db0d3c15bb0f24d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad40fbb2a6a9e5bf7d00f838763f5514c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gad40fbb2a6a9e5bf7d00f838763f5514c">app_timer_stop</a> (<a class="el" href="a00682.html#gad024aa9066b1ca640dd171d83ee39290">app_timer_id_t</a> timer_id)</td></tr>
+<tr class="memdesc:gad40fbb2a6a9e5bf7d00f838763f5514c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for stopping the specified timer.  <a href="#gad40fbb2a6a9e5bf7d00f838763f5514c">More...</a><br/></td></tr>
+<tr class="separator:gad40fbb2a6a9e5bf7d00f838763f5514c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac3c9d0975a786efe561a7be1eb37f247"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gac3c9d0975a786efe561a7be1eb37f247">app_timer_stop_all</a> (void)</td></tr>
+<tr class="memdesc:gac3c9d0975a786efe561a7be1eb37f247"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for stopping all running timers.  <a href="#gac3c9d0975a786efe561a7be1eb37f247">More...</a><br/></td></tr>
+<tr class="separator:gac3c9d0975a786efe561a7be1eb37f247"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga497a82797a160ef7f13f8aa26c637018"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#ga497a82797a160ef7f13f8aa26c637018">app_timer_cnt_get</a> (uint32_t *p_ticks)</td></tr>
+<tr class="memdesc:ga497a82797a160ef7f13f8aa26c637018"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for returning the current value of the RTC1 counter.  <a href="#ga497a82797a160ef7f13f8aa26c637018">More...</a><br/></td></tr>
+<tr class="separator:ga497a82797a160ef7f13f8aa26c637018"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad9b5fc66ed908c54281370f690d0c4e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00682.html#gaad9b5fc66ed908c54281370f690d0c4e">app_timer_cnt_diff_compute</a> (uint32_t ticks_to, uint32_t ticks_from, uint32_t *p_ticks_diff)</td></tr>
+<tr class="memdesc:gaad9b5fc66ed908c54281370f690d0c4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for computing the difference between two RTC1 counter values.  <a href="#gaad9b5fc66ed908c54281370f690d0c4e">More...</a><br/></td></tr>
+<tr class="separator:gaad9b5fc66ed908c54281370f690d0c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Module for testing RF/PHY using DTM commands. </p>
+<p>Application timer functionality. </p>
+<p>It enables the application to create multiple timer instances based on the RTC1 peripheral. Checking for timeouts and invokation of user timeout handlers is performed in the RTC1 interrupt handler. List handling is done using a software interrupt (SWI0). Both interrupt handlers are running in APP_LOW priority level.</p>
+<dl class="section note"><dt>Note</dt><dd>When calling <a class="el" href="a00682.html#ga03fb5f5fa85d16289db0d3c15bb0f24d" title="Function for starting a timer.">app_timer_start()</a> or <a class="el" href="a00682.html#gad40fbb2a6a9e5bf7d00f838763f5514c" title="Function for stopping the specified timer.">app_timer_stop()</a>, the timer operation is just queued, and the software interrupt is triggered. The actual timer start/stop operation is executed by the SWI0 interrupt handler. Since the SWI0 interrupt is running in APP_LOW, if the application code calling the timer function is running in APP_LOW or APP_HIGH, the timer operation will not be performed until the application handler has returned. This will be the case e.g. when stopping a timer from a timeout handler when not using the scheduler.</dd></dl>
+<p>Use the USE_SCHEDULER parameter of the <a class="el" href="a00682.html#ga5aaf67f18b79941f9a160d287aa5f245" title="Macro for initializing the application timer module.">APP_TIMER_INIT()</a> macro to select if the <a class="el" href="a00679.html">Scheduler</a> is to be used or not.</p>
+<dl class="section note"><dt>Note</dt><dd>Even if the scheduler is not used, app_timer.h will include app_scheduler.h, so when compiling, app_scheduler.h must be available in one of the compiler include paths. </dd></dl>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gac54ae7bd6c0326b4bda06f72061b2b00"></a>
+<a class="anchor" id="gabacf4cc12b8ec08002818cd3a038550c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CARRIER_TEST&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Length=0 indicates a constant, unmodulated carrier until LE_TEST_END or LE_RESET </p>
-
-</div>
-</div>
-<a class="anchor" id="gaacd01d21c085dc48af3ddb844c68cc54"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define CARRIER_TEST_STUDIO&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>nRFgo Studio uses value 1 in length field, to indicate a constant, unmodulated carrier until LE_TEST_END or LE_RESET </p>
-
-</div>
-</div>
-<a class="anchor" id="gac91bd56eef3f2b82894a058b7f136a21"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEFAULT_TIMER&#160;&#160;&#160;NRF_TIMER0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Default timer used for timing. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga1efafa03b7e7bc3274e1bfdba549cd09"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEFAULT_TIMER_IRQn&#160;&#160;&#160;TIMER0_IRQn</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>IRQ used for timer. NOTE: MUST correspond to DEFAULT_TIMER. </p>
-
-</div>
-</div>
-<a class="anchor" id="gafe4068300543aca796a35c939959caa3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEFAULT_TX_POWER&#160;&#160;&#160;RADIO_TXPOWER_TXPOWER_Pos4dBm</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Configuration parameters. </p>
-<p>Default Transmission power using in the DTM module. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga0d15718064583f1c5ff0c9ffd69e7b47"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DTM_ERROR_ILLEGAL_CHANNEL&#160;&#160;&#160;0x01</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Physical channel number must be in the range 0..39. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga6fc53bfea239368acef19f07ea256aec"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DTM_ERROR_ILLEGAL_CONFIGURATION&#160;&#160;&#160;0x04</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Parameter out of range (legal range is function dependent). </p>
-
-</div>
-</div>
-<a class="anchor" id="gad8ccc81041426a013921e6d1433048f2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DTM_ERROR_ILLEGAL_LENGTH&#160;&#160;&#160;0x03</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Payload size must be in the range 0..37. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaa81f7b94447a07b8e017fce4690eaf21"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DTM_ERROR_INVALID_STATE&#160;&#160;&#160;0x02</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Sequencing error: Command is not valid now. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaf009cf6c05fcc0ccf37c3132e9c6c384"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DTM_ERROR_UNINITIALIZED&#160;&#160;&#160;0x05</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>DTM module has not been initialized by the application. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga80629f04fe92e9d1a6a6cc7518bb3443"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DTM_PKT_0X0F&#160;&#160;&#160;0x01</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Bit pattern 11110000 (LSB is the leftmost bit). </p>
-
-</div>
-</div>
-<a class="anchor" id="gac8342f5fb0460a2c17837f460d478f05"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DTM_PKT_0X55&#160;&#160;&#160;0x02</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Bit pattern 10101010 (LSB is the leftmost bit). </p>
-
-</div>
-</div>
-<a class="anchor" id="gaf0668d4430e7040f88ac175d0f0fe18a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DTM_PKT_PRBS9&#160;&#160;&#160;0x00</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Bit pattern PRBS9. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga42c6ddb4a7cfcca162859a8744492ffc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DTM_PKT_VENDORSPECIFIC&#160;&#160;&#160;0xFFFFFFFF</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Vendor specific. Nordic: Continuous carrier test, or configuration. </p>
-
-</div>
-</div>
-<a class="anchor" id="gad1926e67b0af038cd28f294d2c6ada4a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DTM_SUCCESS&#160;&#160;&#160;0x00</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return codes from <a class="el" href="a00682.html#gacfd7e507740ae8f6d296e77306d89a3a" title="Function for calling when a complete command has been prepared by the Tester.">dtm_cmd()</a>. </p>
-<p>Indicate that the DTM function completed with success. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga0d787a4016fcf3f7393591acfe2f6e99"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define LE_PACKET_REPORTING_EVENT&#160;&#160;&#160;0x8000</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>DTM Packet reporting event, returned by the device to the tester. </p>
-
-</div>
-</div>
-<a class="anchor" id="gad748a96ebeca311ebaf9e657c99eaafb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define LE_RECEIVER_TEST&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>DTM command: Start receive test. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga7a0690bbc7f0d3e74f67c239c4247291"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define LE_RESET&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>DTM command: Reset device. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga3c5397c73c1109a60268513b67df0a2a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define LE_TEST_END&#160;&#160;&#160;3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>DTM command: End test and send packet report. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga8560ef1ea2aef1a1e8405c90dd7a3d62"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define LE_TEST_STATUS_EVENT_ERROR&#160;&#160;&#160;0x0001</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>DTM Status event, indicating an error. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga23033ef9a49e11e6045c0fa5203a5e62"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define LE_TEST_STATUS_EVENT_SUCCESS&#160;&#160;&#160;0x0000</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>DTM Status event, indicating success. </p>
-
-</div>
-</div>
-<a class="anchor" id="gae8d2c3303667273a59d407df6445c54b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define LE_TRANSMITTER_TEST&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>DTM command: Start transmission test. </p>
-
-</div>
-</div>
-<a class="anchor" id="gabc5d077c996e79bb46808ca484f0a163"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define PACKET_TYPE_MAX&#160;&#160;&#160;<a class="el" href="a00682.html#gac8342f5fb0460a2c17837f460d478f05">DTM_PKT_0X55</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Highest value allowed as DTM Packet type. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga5674684bcc78025bc3e8974f2f83d31a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SELECT_TIMER&#160;&#160;&#160;3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Select on of the 16 MHz timers 0, 1 or 2 </p>
-
-</div>
-</div>
-<a class="anchor" id="gaf10191ab4d2caac1d49091d0b252b445"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SET_TX_POWER&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Set transmission power, value -40..+4 dBm in steps of 4 </p>
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga1913c46b27822e5ba366c6feb7dd8a71"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef uint32_t <a class="el" href="a00682.html#ga1913c46b27822e5ba366c6feb7dd8a71">dtm_cmd_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>BLE DTM command codes. </p>
-<p>DTM command type. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaeddc8e448d5f03e66af18dae76476518"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef uint32_t <a class="el" href="a00682.html#gaeddc8e448d5f03e66af18dae76476518">dtm_event_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>BLE DTM event type. </p>
-<p>Type for handling DTM event. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga678d75ffdbe6263fd2395ec5550de11a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef uint32_t <a class="el" href="a00682.html#ga678d75ffdbe6263fd2395ec5550de11a">dtm_freq_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>BLE DTM frequency type. </p>
-<p>Physical channel, valid range: 0..39. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga22c1d34e8bc119600a2986ddd1e2d972"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef uint32_t <a class="el" href="a00682.html#ga22c1d34e8bc119600a2986ddd1e2d972">dtm_pkt_type_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>BLE DTM packet types. </p>
-<p>Type for holding the requested DTM payload type. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gacfd7e507740ae8f6d296e77306d89a3a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t dtm_cmd </td>
+          <td class="memname">#define APP_TIMER_BUF_SIZE</td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00682.html#ga1913c46b27822e5ba366c6feb7dd8a71">dtm_cmd_t</a>&#160;</td>
-          <td class="paramname"><em>cmd</em>, </td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">MAX_TIMERS, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00682.html#ga678d75ffdbe6263fd2395ec5550de11a">dtm_freq_t</a>&#160;</td>
-          <td class="paramname"><em>freq</em>, </td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">OP_QUEUE_SIZE&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">(                                                                                              \</div>
+<div class="line">        ((MAX_TIMERS) * <a class="code" href="a00682.html#gafb37507319ac388ad5e89be2525c7c1f">APP_TIMER_NODE_SIZE</a>)                                                       \</div>
+<div class="line">        +                                                                                          \</div>
+<div class="line">        (                                                                                          \</div>
+<div class="line">            APP_TIMER_INT_LEVELS                                                                   \</div>
+<div class="line">            *                                                                                      \</div>
+<div class="line">            (<a class="code" href="a00682.html#ga9c4c5113918b3e6e33dc05ba51823ece">APP_TIMER_USER_SIZE</a> + ((OP_QUEUE_SIZE) + 1) * <a class="code" href="a00682.html#ga58bd0b3796949136aca4e18865df281a">APP_TIMER_USER_OP_SIZE</a>)                 \</div>
+<div class="line">        )                                                                                          \</div>
+<div class="line">    )</div>
+</div><!-- fragment -->
+<p>Compute number of bytes required to hold the application timer data structures. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">MAX_TIMERS</td><td>Maximum number of timers that can be created at any given time. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">OP_QUEUE_SIZE</td><td>Size of queues holding timer operations that are pending execution. NOTE: Due to the queue implementation, this size must be one more than the size that is actually needed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Required application timer buffer size (in bytes). </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga12adbc81bda12c46605edc8fcd9e5d19"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_TIMER_CLOCK_FREQ&#160;&#160;&#160;32768</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clock frequency of the RTC timer used to implement the app timer module. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga5aaf67f18b79941f9a160d287aa5f245"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_TIMER_INIT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">PRESCALER, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">MAX_TIMERS, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">OP_QUEUES_SIZE, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">SCHEDULER_FUNC&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">do</span>                                                                                             \</div>
+<div class="line">    {                                                                                              \</div>
+<div class="line">        static uint32_t APP_TIMER_BUF[<a class="code" href="a00685.html#ga7aaa817cfd7ed354f09db5675ffe1427" title="Perform integer division, making sure the result is rounded up.">CEIL_DIV</a>(<a class="code" href="a00682.html#gabacf4cc12b8ec08002818cd3a038550c" title="Compute number of bytes required to hold the application timer data structures.">APP_TIMER_BUF_SIZE</a>((MAX_TIMERS),                    \</div>
+<div class="line">                                                                  (OP_QUEUES_SIZE) + 1),           \</div>
+<div class="line">                                               <span class="keyword">sizeof</span>(uint32_t))];                                 \</div>
+<div class="line">        uint32_t ERR_CODE = <a class="code" href="a00682.html#ga96087520ca79dfa28fb6ba6bb562a88f" title="Function for initializing the timer module.">app_timer_init</a>((PRESCALER),                                            \</div>
+<div class="line">                                           (MAX_TIMERS),                                           \</div>
+<div class="line">                                           (OP_QUEUES_SIZE) + 1,                                   \</div>
+<div class="line">                                           APP_TIMER_BUF,                                          \</div>
+<div class="line">                                           SCHEDULER_FUNC);                                        \</div>
+<div class="line">        APP_ERROR_CHECK(ERR_CODE);                                                                 \</div>
+<div class="line">    } <span class="keywordflow">while</span> (0)</div>
+</div><!-- fragment -->
+<p>Macro for initializing the application timer module. </p>
+<p>It will handle dimensioning and allocation of the memory buffer required by the timer, making sure that the buffer is correctly aligned. It will also connect the timer module to the scheduler (if specified).</p>
+<dl class="section note"><dt>Note</dt><dd>This module assumes that the LFCLK is already running. If it isn't, the module will be non-functional, since the RTC will not run. If you don't use a softdevice, you'll have to start the LFCLK manually. See the rtc_example's lfclk_config() function for an example of how to do this. If you use a softdevice, the LFCLK is started on softdevice init.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">PRESCALER</td><td>Value of the RTC1 PRESCALER register. This will decide the timer tick rate. Set to 0 for no prescaling. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">MAX_TIMERS</td><td>Maximum number of timers that can be created at any given time. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">OP_QUEUES_SIZE</td><td>Size of queues holding timer operations that are pending execution. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">SCHEDULER_FUNC</td><td>Pointer to scheduler event handler</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Since this macro allocates a buffer, it must only be called once (it is OK to call it several times as long as it is from the same location, e.g. to do a reinitialization). </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga191e41b150c033b065b213998814e71e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_TIMER_INT_LEVELS&#160;&#160;&#160;3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Number of interrupt levels from where timer operations may be initiated (only for use inside <a class="el" href="a00682.html#gabacf4cc12b8ec08002818cd3a038550c" title="Compute number of bytes required to hold the application timer data structures.">APP_TIMER_BUF_SIZE()</a>). </p>
+
+</div>
+</div>
+<a class="anchor" id="ga30c7af1b67835f8031ccc934af7d1af7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_TIMER_MIN_TIMEOUT_TICKS&#160;&#160;&#160;5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Minimum value of the timeout_ticks parameter of <a class="el" href="a00682.html#ga03fb5f5fa85d16289db0d3c15bb0f24d" title="Function for starting a timer.">app_timer_start()</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="gafb37507319ac388ad5e89be2525c7c1f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_TIMER_NODE_SIZE&#160;&#160;&#160;40</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size of app_timer.timer_node_t (only for use inside <a class="el" href="a00682.html#gabacf4cc12b8ec08002818cd3a038550c" title="Compute number of bytes required to hold the application timer data structures.">APP_TIMER_BUF_SIZE()</a>). </p>
+
+</div>
+</div>
+<a class="anchor" id="gafdaf90781af071b0c295cd5b2b08da3d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_TIMER_TICKS</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">MS, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">PRESCALER&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;((uint32_t)<a class="el" href="a00685.html#ga25e8110559dbc9665dfb9485be8ac60f">ROUNDED_DIV</a>((MS) * (uint64_t)<a class="el" href="a00682.html#ga12adbc81bda12c46605edc8fcd9e5d19">APP_TIMER_CLOCK_FREQ</a>, ((PRESCALER) + 1) * 1000))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convert milliseconds to timer ticks. </p>
+<dl class="section note"><dt>Note</dt><dd>This macro uses 64 bit integer arithmetic, but as long as the macro parameters are constants (i.e. defines), the computation will be done by the preprocessor.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">MS</td><td>Milliseconds. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">PRESCALER</td><td>Value of the RTC1 PRESCALER register (must be the same value that was passed to <a class="el" href="a00682.html#ga5aaf67f18b79941f9a160d287aa5f245" title="Macro for initializing the application timer module.">APP_TIMER_INIT()</a>).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>When using this macro, it is the responsibility of the developer to ensure that the values provided as input result in an output value that is supported by the <a class="el" href="a00682.html#ga03fb5f5fa85d16289db0d3c15bb0f24d">app_timer_start</a> function. For example, when the ticks for 1 ms is needed, the maximum possible value of PRESCALER must be 6, when <a class="el" href="a00682.html#ga12adbc81bda12c46605edc8fcd9e5d19">APP_TIMER_CLOCK_FREQ</a> is 32768. This will result in a ticks value as 5. Any higher value for PRESCALER will result in a ticks value that is not supported by this module.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of timer ticks. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga58bd0b3796949136aca4e18865df281a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_TIMER_USER_OP_SIZE&#160;&#160;&#160;24</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size of app_timer.timer_user_op_t (only for use inside <a class="el" href="a00682.html#gabacf4cc12b8ec08002818cd3a038550c" title="Compute number of bytes required to hold the application timer data structures.">APP_TIMER_BUF_SIZE()</a>). </p>
+
+</div>
+</div>
+<a class="anchor" id="ga9c4c5113918b3e6e33dc05ba51823ece"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define APP_TIMER_USER_SIZE&#160;&#160;&#160;8</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size of app_timer.timer_user_t (only for use inside <a class="el" href="a00682.html#gabacf4cc12b8ec08002818cd3a038550c" title="Compute number of bytes required to hold the application timer data structures.">APP_TIMER_BUF_SIZE()</a>). </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gaae9566b4f8c39bd6e7b364940ca1b73b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00682.html#gaae9566b4f8c39bd6e7b364940ca1b73b">app_timer_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Timer modes. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaae9566b4f8c39bd6e7b364940ca1b73ba795e93cf3bcc214a35478b80f8e0186d"></a>APP_TIMER_MODE_SINGLE_SHOT</em>&nbsp;</td><td class="fielddoc">
+<p>The timer will expire only once. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaae9566b4f8c39bd6e7b364940ca1b73bafe8186388a11806af86157f592b5a9ad"></a>APP_TIMER_MODE_REPEATED</em>&nbsp;</td><td class="fielddoc">
+<p>The timer will restart each time it expires. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gaad9b5fc66ed908c54281370f690d0c4e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t app_timer_cnt_diff_compute </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>ticks_to</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>length</em>, </td>
+          <td class="paramname"><em>ticks_from</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00682.html#ga22c1d34e8bc119600a2986ddd1e2d972">dtm_pkt_type_t</a>&#160;</td>
-          <td class="paramname"><em>payload</em>&#160;</td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>p_ticks_diff</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -629,51 +469,265 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for calling when a complete command has been prepared by the Tester. </p>
+<p>Function for computing the difference between two RTC1 counter values. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">cmd</td><td>One of the DTM_CMD values (bits 14:15 in the 16-bit UART format). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">freq</td><td>Phys. channel no - actual frequency = (2402 + freq * 2) MHz (bits 8:13 in the 16-bit UART format). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Payload length, 0..37 (bits 2:7 in the 16-bit UART format). </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">payload</td><td>One of the DTM_PKT values (bits 0:1 in the 16-bit UART format).</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ticks_to</td><td>Value returned by <a class="el" href="a00682.html#ga497a82797a160ef7f13f8aa26c637018" title="Function for returning the current value of the RTC1 counter.">app_timer_cnt_get()</a>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ticks_from</td><td>Value returned by <a class="el" href="a00682.html#ga497a82797a160ef7f13f8aa26c637018" title="Function for returning the current value of the RTC1 counter.">app_timer_cnt_get()</a>. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_ticks_diff</td><td>Number of ticks from ticks_from to ticks_to.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>DTM_SUCCESS or one of the DTM_ERROR_ values </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Counter difference was successfully computed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga574ceb36cc9cee237a6e9f77e3c32b36"></a>
+<a class="anchor" id="ga497a82797a160ef7f13f8aa26c637018"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool dtm_event_get </td>
+          <td class="memname">uint32_t app_timer_cnt_get </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00682.html#gaeddc8e448d5f03e66af18dae76476518">dtm_event_t</a> *&#160;</td>
-          <td class="paramname"><em>p_dtm_event</em></td><td>)</td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>p_ticks</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for reading the result of a DTM command. </p>
+<p>Function for returning the current value of the RTC1 counter. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_dtm_event</td><td>Pointer to buffer for 16 bit event code according to DTM standard.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_ticks</td><td>Current value of the RTC1 counter.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true: new event, false: no event since last call, this event has been read earlier </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Counter was successfully read. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga45f73017a4ba401da34571bcc741b564"></a>
+<a class="anchor" id="ga8aa81f9e8bde352865be0502c7037592"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t dtm_init </td>
+          <td class="memname">uint32_t app_timer_create </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00682.html#gad024aa9066b1ca640dd171d83ee39290">app_timer_id_t</a> *&#160;</td>
+          <td class="paramname"><em>p_timer_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00682.html#gaae9566b4f8c39bd6e7b364940ca1b73b">app_timer_mode_t</a>&#160;</td>
+          <td class="paramname"><em>mode</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00682.html#ga6d96125cb0c1cd1dbc753acff3036ea3">app_timer_timeout_handler_t</a>&#160;</td>
+          <td class="paramname"><em>timeout_handler</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for creating a timer instance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_timer_id</td><td>Id of the newly created timer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>Timer mode. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeout_handler</td><td>Function to be executed when the timer expires.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Timer was successfully created. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Invalid parameter. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Application timer module has not been initialized. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>Maximum number of timers has already been reached.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This function does the timer allocation in the caller's context. It is also not protected by a critical region. Therefore care must be taken not to call it from several interrupt levels simultaneously. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga96087520ca79dfa28fb6ba6bb562a88f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t app_timer_init </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>prescaler</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>max_timers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>op_queues_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00682.html#ga647843379c9e94deff5c30435a79736b">app_timer_evt_schedule_func_t</a>&#160;</td>
+          <td class="paramname"><em>evt_schedule_func</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for initializing the timer module. </p>
+<dl class="section note"><dt>Note</dt><dd>Normally initialization should be done using the <a class="el" href="a00682.html#ga5aaf67f18b79941f9a160d287aa5f245" title="Macro for initializing the application timer module.">APP_TIMER_INIT()</a> macro, as that will both allocate the buffers needed by the timer module (including aligning the buffers correctly, and also take care of connecting the timer module to the scheduler (if specified).</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">prescaler</td><td>Value of the RTC1 PRESCALER register. Set to 0 for no prescaling. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">max_timers</td><td>Maximum number of timers that can be created at any given time. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">op_queues_size</td><td>Size of queues holding timer operations that are pending execution. NOTE: Due to the queue implementation, this size must be one more than the size that is actually needed. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to memory buffer for internal use in the app_timer module. The size of the buffer can be computed using the <a class="el" href="a00682.html#gabacf4cc12b8ec08002818cd3a038550c" title="Compute number of bytes required to hold the application timer data structures.">APP_TIMER_BUF_SIZE()</a> macro. The buffer must be aligned to a 4 byte boundary. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">evt_schedule_func</td><td>Function for passing timeout events to the scheduler. Point to app_timer_evt_schedule() to connect to the scheduler. Set to NULL to make the timer module call the timeout handler directly from the timer interrupt handler.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Successful initialization. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Invalid parameter (buffer not aligned to a 4 byte boundary or NULL). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga03fb5f5fa85d16289db0d3c15bb0f24d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t app_timer_start </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00682.html#gad024aa9066b1ca640dd171d83ee39290">app_timer_id_t</a>&#160;</td>
+          <td class="paramname"><em>timer_id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout_ticks</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>p_context</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for starting a timer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>Id of timer to start. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeout_ticks</td><td>Number of ticks (of RTC1, including prescaling) to timeout event (minimum 5 ticks). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_context</td><td>General purpose pointer. Will be passed to the timeout handler when the timer expires.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Timer was successfully started. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Invalid parameter. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Application timer module has not been initialized, or timer has not been created. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>Timer operations queue was full.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The minimum timeout_ticks value is 5. </dd>
+<dd>
+For multiple active timers, timeouts occurring in close proximity to each other (in the range of 1 to 3 ticks) will have a positive jitter of maximum 3 ticks. </dd>
+<dd>
+When calling this method on a timer which is already running, the second start operation will be ignored. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gad40fbb2a6a9e5bf7d00f838763f5514c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t app_timer_stop </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00682.html#gad024aa9066b1ca640dd171d83ee39290">app_timer_id_t</a>&#160;</td>
+          <td class="paramname"><em>timer_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for stopping the specified timer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">timer_id</td><td>Id of timer to stop.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Timer was successfully stopped. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_PARAM</td><td>Invalid parameter. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Application timer module has not been initialized, or timer has not been created. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>Timer operations queue was full. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac3c9d0975a786efe561a7be1eb37f247"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t app_timer_stop_all </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -682,79 +736,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for initializing or re-initializing DTM module. </p>
-<dl class="section return"><dt>Returns</dt><dd>DTM_SUCCESS on successful initialization of the DTM module. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga283b15cf4583b6282d078dd7752efb5b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool dtm_set_timer </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>new_timer</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for configuring the timer to use. </p>
-<dl class="section note"><dt>Note</dt><dd>Must be called when no DTM test is running.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">new_timer</td><td>Index (0..2) of timer to be used by the DTM library</td></tr>
+<p>Function for stopping all running timers. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>All timers were successfully stopped. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Application timer module has not been initialized. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>Timer operations queue was full. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true: success, new timer was selected, false: parameter error </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8fc47d8b727b01821d4287e3c8a6068d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool dtm_set_txpower </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>new_tx_power</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for configuring the transmit power. </p>
-<dl class="section note"><dt>Note</dt><dd>Must be called when no DTM test is running.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">new_tx_power</td><td>New output level, +4..-40, in steps of 4.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>true: tx power setting changed, false: parameter error </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gab8114a0b0dd2db821a479ad848a67121"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t dtm_wait </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for giving control to dtmlib for handling timer and radio events. Will return to caller at 625us intervals or whenever another event than radio occurs (such as UART input). Function will put MCU to sleep between events. </p>
-<dl class="section return"><dt>Returns</dt><dd>Time counter, incremented every 625 us. </dd></dl>
 
 </div>
 </div>
@@ -763,7 +753,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:46 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

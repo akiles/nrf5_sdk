@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Device Firmware Update internal header for bank handling in DFU.</title>
+<title>nRF51 SDK - S110 SoftDevice: RTC HAL</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,265 +97,769 @@ $(document).ready(function(){initNavTree('a00939.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Device Firmware Update internal header for bank handling in DFU.<div class="ingroups"><a class="el" href="a01036.html">Bootloader/DFU API</a></div></div>  </div>
+<div class="title">RTC HAL<div class="ingroups"><a class="el" href="a00960.html">RTC HAL and driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Device Firmware Update Bank handling module interface.  
+<p>Hardware abstraction layer for managing the real time counter (RTC).  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00365.html">dfu_bank_func_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure for holding of function pointers for needed prepare and activate procedure for the requested update procedure.  <a href="a00365.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga7bbff5bb0ca047b109e70a831f08e217"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga7bbff5bb0ca047b109e70a831f08e217">APP_TIMER_PRESCALER</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:ga7bbff5bb0ca047b109e70a831f08e217"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac852b26871e27db5896374b80d173ed7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#gac852b26871e27db5896374b80d173ed7">DFU_TIMEOUT_INTERVAL</a>&#160;&#160;&#160;<a class="el" href="a00803.html#gafdaf90781af071b0c295cd5b2b08da3d">APP_TIMER_TICKS</a>(120000, <a class="el" href="a00939.html#ga7bbff5bb0ca047b109e70a831f08e217">APP_TIMER_PRESCALER</a>)</td></tr>
-<tr class="separator:gac852b26871e27db5896374b80d173ed7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac9f752070cc5f86753dbf9345b795392"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#gac9f752070cc5f86753dbf9345b795392">IS_UPDATING_SD</a>(START_PKT)&#160;&#160;&#160;((START_PKT).dfu_update_mode &amp; <a class="el" href="a00944.html#gade73fb50e744973809bc684c9e905e2b">DFU_UPDATE_SD</a>)</td></tr>
-<tr class="separator:gac9f752070cc5f86753dbf9345b795392"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7f75359550e5d1c48c845c3a64beeff9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga7f75359550e5d1c48c845c3a64beeff9">IS_UPDATING_BL</a>(START_PKT)&#160;&#160;&#160;((START_PKT).dfu_update_mode &amp; <a class="el" href="a00944.html#gaaa08307e5a2685ab04f0c050ec07eecc">DFU_UPDATE_BL</a>)</td></tr>
-<tr class="separator:ga7f75359550e5d1c48c845c3a64beeff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3c3aedab2c56af1d09a7f08fef4209e1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga3c3aedab2c56af1d09a7f08fef4209e1">IS_UPDATING_APP</a>(START_PKT)&#160;&#160;&#160;((START_PKT).dfu_update_mode &amp; <a class="el" href="a00944.html#gab3b062de629de930998df9fd2b4db211">DFU_UPDATE_APP</a>)</td></tr>
-<tr class="separator:ga3c3aedab2c56af1d09a7f08fef4209e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga11fffdc6dd415319a5a8154b66a8b2ce"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga11fffdc6dd415319a5a8154b66a8b2ce">IMAGE_WRITE_IN_PROGRESS</a>()&#160;&#160;&#160;(m_data_received &gt; 0)</td></tr>
-<tr class="separator:ga11fffdc6dd415319a5a8154b66a8b2ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa829238741c8e27c7c8a8b6d5c36a103"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#gaa829238741c8e27c7c8a8b6d5c36a103">IS_WORD_SIZED</a>(SIZE)&#160;&#160;&#160;((SIZE &amp; (sizeof(uint32_t) - 1)) == 0)</td></tr>
-<tr class="separator:gaa829238741c8e27c7c8a8b6d5c36a103"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gaf68c07fc7834b9c16aae9a748f43bdc8"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#gaf68c07fc7834b9c16aae9a748f43bdc8">dfu_bank_prepare_t</a> )(uint32_t image_size)</td></tr>
-<tr class="memdesc:gaf68c07fc7834b9c16aae9a748f43bdc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type definition of function used for preparing of the bank before receiving of a software image.  <a href="#gaf68c07fc7834b9c16aae9a748f43bdc8">More...</a><br/></td></tr>
-<tr class="separator:gaf68c07fc7834b9c16aae9a748f43bdc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7c3f98f2a92d87008ba13e9dae8484d8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7c3f98f2a92d87008ba13e9dae8484d8"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga7c3f98f2a92d87008ba13e9dae8484d8">dfu_bank_cleared_t</a> )(void)</td></tr>
-<tr class="memdesc:ga7c3f98f2a92d87008ba13e9dae8484d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type definition of function used for handling clear complete of the bank before receiving of a software image. <br/></td></tr>
-<tr class="separator:ga7c3f98f2a92d87008ba13e9dae8484d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad9ce0b70db1ec648acc0bd50629e22ff"><td class="memItemLeft" align="right" valign="top">typedef uint32_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#gad9ce0b70db1ec648acc0bd50629e22ff">dfu_bank_activate_t</a> )(void)</td></tr>
-<tr class="memdesc:gad9ce0b70db1ec648acc0bd50629e22ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type definition of function used for activating of the software image received.  <a href="#gad9ce0b70db1ec648acc0bd50629e22ff">More...</a><br/></td></tr>
-<tr class="separator:gad9ce0b70db1ec648acc0bd50629e22ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaab20bab2129073fed812c452d0d58cd9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#gaab20bab2129073fed812c452d0d58cd9">RTC_CHANNEL_NUM</a>&#160;&#160;&#160;4</td></tr>
+<tr class="separator:gaab20bab2129073fed812c452d0d58cd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05d33b1e64fc3150998c82b42c9339be"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga05d33b1e64fc3150998c82b42c9339be">RTC_INPUT_FREQ</a>&#160;&#160;&#160;32768</td></tr>
+<tr class="separator:ga05d33b1e64fc3150998c82b42c9339be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc16b8d4470e8d3ca416cd844501d045"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabc16b8d4470e8d3ca416cd844501d045"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RTC_WRAP</b>(val)&#160;&#160;&#160;(val &amp; RTC_COUNTER_COUNTER_Msk)</td></tr>
+<tr class="separator:gabc16b8d4470e8d3ca416cd844501d045"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga77626779c0b172803f201ae0e2aa66a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga77626779c0b172803f201ae0e2aa66a0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RTC_CHANNEL_INT_MASK</b>(ch)&#160;&#160;&#160;((uint32_t)<a class="el" href="a00939.html#gga22211dc20a5c2f6cf1b43039d2bae4a3acb0d6d71f2dcb78604936e1ba924ab9b">NRF_RTC_INT_COMPARE0_MASK</a> &lt;&lt; ch)</td></tr>
+<tr class="separator:ga77626779c0b172803f201ae0e2aa66a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf427bf8e3d74f2222b50ab1ec142d4f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf427bf8e3d74f2222b50ab1ec142d4f3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RTC_CHANNEL_EVENT_ADDR</b>(ch)&#160;&#160;&#160;(<a class="el" href="a00939.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a>)(<a class="el" href="a00939.html#ggaeefe46b9280fd5e11516b4148b9c5950aed2f00b3d07e65411e4b63982efd2e07">NRF_RTC_EVENT_COMPARE_0</a> + ch*sizeof(uint32_t))</td></tr>
+<tr class="separator:gaf427bf8e3d74f2222b50ab1ec142d4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga187dfde3b0fa8047e6c97b2317bce21f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga187dfde3b0fa8047e6c97b2317bce21f">dfu_state_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00939.html#gga187dfde3b0fa8047e6c97b2317bce21fa668c685914fdc7aad5c00ac9ad119d85">DFU_STATE_INIT_ERROR</a>, 
+<tr class="memitem:gab1bbbc39c6dac153baf61aeae33c4274"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#gab1bbbc39c6dac153baf61aeae33c4274">nrf_rtc_task_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00939.html#ggab1bbbc39c6dac153baf61aeae33c4274a2a8ffc1fb20f19a5b14826564e5d03e5">NRF_RTC_TASK_START</a> = offsetof(NRF_RTC_Type,TASKS_START), 
 <br/>
-&#160;&#160;<a class="el" href="a00939.html#gga187dfde3b0fa8047e6c97b2317bce21fad19963a8788de50aaf05a439c9448e7a">DFU_STATE_IDLE</a>, 
+&#160;&#160;<a class="el" href="a00939.html#ggab1bbbc39c6dac153baf61aeae33c4274a6dbaa4bbd6d58e079767f0309239eec1">NRF_RTC_TASK_STOP</a> = offsetof(NRF_RTC_Type,TASKS_STOP), 
 <br/>
-&#160;&#160;<a class="el" href="a00939.html#gga187dfde3b0fa8047e6c97b2317bce21fa539947bf7a53147eff081ef153818b8d">DFU_STATE_PREPARING</a>, 
+&#160;&#160;<a class="el" href="a00939.html#ggab1bbbc39c6dac153baf61aeae33c4274a0b5cbfbb54397b0ec8ea8fb73f4a7bc0">NRF_RTC_TASK_CLEAR</a> = offsetof(NRF_RTC_Type,TASKS_CLEAR), 
 <br/>
-&#160;&#160;<a class="el" href="a00939.html#gga187dfde3b0fa8047e6c97b2317bce21fa43c819e2e2d6cb79f0cc3e9703df3b04">DFU_STATE_RDY</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00939.html#gga187dfde3b0fa8047e6c97b2317bce21fa8d1d50d8d5174b1cead26cf34ad1daf5">DFU_STATE_RX_INIT_PKT</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00939.html#gga187dfde3b0fa8047e6c97b2317bce21fa475955163ace358b9373c0b3a87ce4ec">DFU_STATE_RX_DATA_PKT</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00939.html#gga187dfde3b0fa8047e6c97b2317bce21fae274655cddb628140c568df6bc5f70bf">DFU_STATE_VALIDATE</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00939.html#gga187dfde3b0fa8047e6c97b2317bce21fa2a335037693bd40cff8c8787d3a11598">DFU_STATE_WAIT_4_ACTIVATE</a>
+&#160;&#160;<a class="el" href="a00939.html#ggab1bbbc39c6dac153baf61aeae33c4274a4cda1feac46eb1092cad53e9abe1a3d2">NRF_RTC_TASK_TRIGGER_OVERFLOW</a> = offsetof(NRF_RTC_Type,TASKS_TRIGOVRFLW)
 <br/>
  }</td></tr>
-<tr class="memdesc:ga187dfde3b0fa8047e6c97b2317bce21f"><td class="mdescLeft">&#160;</td><td class="mdescRight">States of the DFU state machine.  <a href="a00939.html#ga187dfde3b0fa8047e6c97b2317bce21f">More...</a><br/></td></tr>
-<tr class="separator:ga187dfde3b0fa8047e6c97b2317bce21f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gab1bbbc39c6dac153baf61aeae33c4274"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTC tasks.  <a href="a00939.html#gab1bbbc39c6dac153baf61aeae33c4274">More...</a><br/></td></tr>
+<tr class="separator:gab1bbbc39c6dac153baf61aeae33c4274"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeefe46b9280fd5e11516b4148b9c5950"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00939.html#ggaeefe46b9280fd5e11516b4148b9c5950a1c477c236900018c2dec4265129739c7">NRF_RTC_EVENT_TICK</a> = offsetof(NRF_RTC_Type,EVENTS_TICK), 
+<br/>
+&#160;&#160;<a class="el" href="a00939.html#ggaeefe46b9280fd5e11516b4148b9c5950acca3da90aab0fc0950facce3d9c60b9c">NRF_RTC_EVENT_OVERFLOW</a> = offsetof(NRF_RTC_Type,EVENTS_OVRFLW), 
+<br/>
+&#160;&#160;<a class="el" href="a00939.html#ggaeefe46b9280fd5e11516b4148b9c5950aed2f00b3d07e65411e4b63982efd2e07">NRF_RTC_EVENT_COMPARE_0</a> = offsetof(NRF_RTC_Type,EVENTS_COMPARE[0]), 
+<br/>
+&#160;&#160;<a class="el" href="a00939.html#ggaeefe46b9280fd5e11516b4148b9c5950a4910d903ba14a05187dedfcc842ef26a">NRF_RTC_EVENT_COMPARE_1</a> = offsetof(NRF_RTC_Type,EVENTS_COMPARE[1]), 
+<br/>
+&#160;&#160;<a class="el" href="a00939.html#ggaeefe46b9280fd5e11516b4148b9c5950a913f4348d8da28f6253ffcca803ed937">NRF_RTC_EVENT_COMPARE_2</a> = offsetof(NRF_RTC_Type,EVENTS_COMPARE[2]), 
+<br/>
+&#160;&#160;<a class="el" href="a00939.html#ggaeefe46b9280fd5e11516b4148b9c5950af7b99708af83d76a4d4b59116f328bbc">NRF_RTC_EVENT_COMPARE_3</a> = offsetof(NRF_RTC_Type,EVENTS_COMPARE[3])
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaeefe46b9280fd5e11516b4148b9c5950"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTC events.  <a href="a00939.html#gaeefe46b9280fd5e11516b4148b9c5950">More...</a><br/></td></tr>
+<tr class="separator:gaeefe46b9280fd5e11516b4148b9c5950"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22211dc20a5c2f6cf1b43039d2bae4a3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga22211dc20a5c2f6cf1b43039d2bae4a3">nrf_rtc_int_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00939.html#gga22211dc20a5c2f6cf1b43039d2bae4a3ab01e1e883741734b5cac05c92efc952e">NRF_RTC_INT_TICK_MASK</a> = RTC_INTENSET_TICK_Msk, 
+<br/>
+&#160;&#160;<a class="el" href="a00939.html#gga22211dc20a5c2f6cf1b43039d2bae4a3a18c66e1dcbc43cd4c82a6f5d0fb8d922">NRF_RTC_INT_OVERFLOW_MASK</a> = RTC_INTENSET_OVRFLW_Msk, 
+<br/>
+&#160;&#160;<a class="el" href="a00939.html#gga22211dc20a5c2f6cf1b43039d2bae4a3acb0d6d71f2dcb78604936e1ba924ab9b">NRF_RTC_INT_COMPARE0_MASK</a> = RTC_INTENSET_COMPARE0_Msk, 
+<br/>
+&#160;&#160;<a class="el" href="a00939.html#gga22211dc20a5c2f6cf1b43039d2bae4a3af842e26d22b97607c1b778c4119b82a6">NRF_RTC_INT_COMPARE1_MASK</a> = RTC_INTENSET_COMPARE1_Msk, 
+<br/>
+&#160;&#160;<a class="el" href="a00939.html#gga22211dc20a5c2f6cf1b43039d2bae4a3adf3bfc6e4f76ed0ecb3b1784d3dad2e0">NRF_RTC_INT_COMPARE2_MASK</a> = RTC_INTENSET_COMPARE2_Msk, 
+<br/>
+&#160;&#160;<a class="el" href="a00939.html#gga22211dc20a5c2f6cf1b43039d2bae4a3a04d8a6817769b5b2b231b7ebfcde893c">NRF_RTC_INT_COMPARE3_MASK</a> = RTC_INTENSET_COMPARE3_Msk
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga22211dc20a5c2f6cf1b43039d2bae4a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTC interrupts.  <a href="a00939.html#ga22211dc20a5c2f6cf1b43039d2bae4a3">More...</a><br/></td></tr>
+<tr class="separator:ga22211dc20a5c2f6cf1b43039d2bae4a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga64787233b50e4c8d9d937536a449e8e4"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga64787233b50e4c8d9d937536a449e8e4">nrf_rtc_cc_set</a> (NRF_RTC_Type *p_rtc, uint32_t ch, uint32_t cc_val)</td></tr>
+<tr class="memdesc:ga64787233b50e4c8d9d937536a449e8e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting a compare value for a channel.  <a href="#ga64787233b50e4c8d9d937536a449e8e4">More...</a><br/></td></tr>
+<tr class="separator:ga64787233b50e4c8d9d937536a449e8e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05f9b1daf63f4638929d910cc3eec753"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga05f9b1daf63f4638929d910cc3eec753">nrf_rtc_cc_get</a> (NRF_RTC_Type *p_rtc, uint32_t ch)</td></tr>
+<tr class="memdesc:ga05f9b1daf63f4638929d910cc3eec753"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for returning the compare value for a channel.  <a href="#ga05f9b1daf63f4638929d910cc3eec753">More...</a><br/></td></tr>
+<tr class="separator:ga05f9b1daf63f4638929d910cc3eec753"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9bf27c728a3f08434ae56c2e3e4b49d8"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga9bf27c728a3f08434ae56c2e3e4b49d8">nrf_rtc_int_enable</a> (NRF_RTC_Type *p_rtc, uint32_t mask)</td></tr>
+<tr class="memdesc:ga9bf27c728a3f08434ae56c2e3e4b49d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for enabling interrupts.  <a href="#ga9bf27c728a3f08434ae56c2e3e4b49d8">More...</a><br/></td></tr>
+<tr class="separator:ga9bf27c728a3f08434ae56c2e3e4b49d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b60105662ed3b084621a44fd5a3ef20"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga0b60105662ed3b084621a44fd5a3ef20">nrf_rtc_int_disable</a> (NRF_RTC_Type *p_rtc, uint32_t mask)</td></tr>
+<tr class="memdesc:ga0b60105662ed3b084621a44fd5a3ef20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for disabling interrupts.  <a href="#ga0b60105662ed3b084621a44fd5a3ef20">More...</a><br/></td></tr>
+<tr class="separator:ga0b60105662ed3b084621a44fd5a3ef20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga853a0f021abc9b2f62a77810880b035f"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga853a0f021abc9b2f62a77810880b035f">nrf_rtc_int_is_enabled</a> (NRF_RTC_Type *p_rtc, uint32_t mask)</td></tr>
+<tr class="memdesc:ga853a0f021abc9b2f62a77810880b035f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for checking if interrupts are enabled.  <a href="#ga853a0f021abc9b2f62a77810880b035f">More...</a><br/></td></tr>
+<tr class="separator:ga853a0f021abc9b2f62a77810880b035f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d40ce8e93725c6b447cc9356303406c"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga7d40ce8e93725c6b447cc9356303406c">nrf_rtc_int_get</a> (NRF_RTC_Type *p_rtc)</td></tr>
+<tr class="memdesc:ga7d40ce8e93725c6b447cc9356303406c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for returning the status of currently enabled interrupts.  <a href="#ga7d40ce8e93725c6b447cc9356303406c">More...</a><br/></td></tr>
+<tr class="separator:ga7d40ce8e93725c6b447cc9356303406c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab7b7c9f171ca92e0a6e022deeb6b2c59"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#gab7b7c9f171ca92e0a6e022deeb6b2c59">nrf_rtc_event_pending</a> (NRF_RTC_Type *p_rtc, <a class="el" href="a00939.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a> event)</td></tr>
+<tr class="memdesc:gab7b7c9f171ca92e0a6e022deeb6b2c59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for checking if an event is pending.  <a href="#gab7b7c9f171ca92e0a6e022deeb6b2c59">More...</a><br/></td></tr>
+<tr class="separator:gab7b7c9f171ca92e0a6e022deeb6b2c59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48f44b45200368ed146abb9e489e8231"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga48f44b45200368ed146abb9e489e8231">nrf_rtc_event_clear</a> (NRF_RTC_Type *p_rtc, <a class="el" href="a00939.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a> event)</td></tr>
+<tr class="memdesc:ga48f44b45200368ed146abb9e489e8231"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for clearing an event.  <a href="#ga48f44b45200368ed146abb9e489e8231">More...</a><br/></td></tr>
+<tr class="separator:ga48f44b45200368ed146abb9e489e8231"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac530a192ba3559478b8c653ba924abfc"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#gac530a192ba3559478b8c653ba924abfc">nrf_rtc_counter_get</a> (NRF_RTC_Type *p_rtc)</td></tr>
+<tr class="memdesc:gac530a192ba3559478b8c653ba924abfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for returning a counter value.  <a href="#gac530a192ba3559478b8c653ba924abfc">More...</a><br/></td></tr>
+<tr class="separator:gac530a192ba3559478b8c653ba924abfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84628657e0fd0d31777fbdbbc95ed4e1"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga84628657e0fd0d31777fbdbbc95ed4e1">nrf_rtc_prescaler_set</a> (NRF_RTC_Type *p_rtc, uint32_t val)</td></tr>
+<tr class="memdesc:ga84628657e0fd0d31777fbdbbc95ed4e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting a prescaler value.  <a href="#ga84628657e0fd0d31777fbdbbc95ed4e1">More...</a><br/></td></tr>
+<tr class="separator:ga84628657e0fd0d31777fbdbbc95ed4e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9a9b117a910e07ec21c9a4c9b10b19db"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga9a9b117a910e07ec21c9a4c9b10b19db">nrf_rtc_event_address_get</a> (NRF_RTC_Type *p_rtc, <a class="el" href="a00939.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a> event)</td></tr>
+<tr class="memdesc:ga9a9b117a910e07ec21c9a4c9b10b19db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for returning the address of an event.  <a href="#ga9a9b117a910e07ec21c9a4c9b10b19db">More...</a><br/></td></tr>
+<tr class="separator:ga9a9b117a910e07ec21c9a4c9b10b19db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1aad5ee25dbb338e9d902c85dac761f"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#gab1aad5ee25dbb338e9d902c85dac761f">nrf_rtc_task_address_get</a> (NRF_RTC_Type *p_rtc, <a class="el" href="a00939.html#gab1bbbc39c6dac153baf61aeae33c4274">nrf_rtc_task_t</a> task)</td></tr>
+<tr class="memdesc:gab1aad5ee25dbb338e9d902c85dac761f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for returning the address of a task.  <a href="#gab1aad5ee25dbb338e9d902c85dac761f">More...</a><br/></td></tr>
+<tr class="separator:gab1aad5ee25dbb338e9d902c85dac761f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2aae0db622731be438c4aebed18025d4"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga2aae0db622731be438c4aebed18025d4">nrf_rtc_task_trigger</a> (NRF_RTC_Type *p_rtc, <a class="el" href="a00939.html#gab1bbbc39c6dac153baf61aeae33c4274">nrf_rtc_task_t</a> task)</td></tr>
+<tr class="memdesc:ga2aae0db622731be438c4aebed18025d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for starting a task.  <a href="#ga2aae0db622731be438c4aebed18025d4">More...</a><br/></td></tr>
+<tr class="separator:ga2aae0db622731be438c4aebed18025d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga022195e61bf8c1b7db06049e8b9c2190"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga022195e61bf8c1b7db06049e8b9c2190">nrf_rtc_event_enable</a> (NRF_RTC_Type *p_rtc, uint32_t mask)</td></tr>
+<tr class="memdesc:ga022195e61bf8c1b7db06049e8b9c2190"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for enabling events.  <a href="#ga022195e61bf8c1b7db06049e8b9c2190">More...</a><br/></td></tr>
+<tr class="separator:ga022195e61bf8c1b7db06049e8b9c2190"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga994b40bb8f40bf17f44d6acff487cf60"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00939.html#ga994b40bb8f40bf17f44d6acff487cf60">nrf_rtc_event_disable</a> (NRF_RTC_Type *p_rtc, uint32_t event)</td></tr>
+<tr class="memdesc:ga994b40bb8f40bf17f44d6acff487cf60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for disabling an event.  <a href="#ga994b40bb8f40bf17f44d6acff487cf60">More...</a><br/></td></tr>
+<tr class="separator:ga994b40bb8f40bf17f44d6acff487cf60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Device Firmware Update Bank handling module interface. </p>
-<p>This header is intended for shared definition and functions between single and dual bank implementations used for DFU support. It is not supposed to be used for external access to the DFU module. </p>
+<p>Hardware abstraction layer for managing the real time counter (RTC). </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga7bbff5bb0ca047b109e70a831f08e217"></a>
+<a class="anchor" id="gaab20bab2129073fed812c452d0d58cd9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define APP_TIMER_PRESCALER&#160;&#160;&#160;0</td>
+          <td class="memname">#define RTC_CHANNEL_NUM&#160;&#160;&#160;4</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Value of the RTC1 PRESCALER register. </p>
+<p>Number of compare channels in the RTC instance. </p>
 
 </div>
 </div>
-<a class="anchor" id="gac852b26871e27db5896374b80d173ed7"></a>
+<a class="anchor" id="ga05d33b1e64fc3150998c82b42c9339be"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DFU_TIMEOUT_INTERVAL&#160;&#160;&#160;<a class="el" href="a00803.html#gafdaf90781af071b0c295cd5b2b08da3d">APP_TIMER_TICKS</a>(120000, <a class="el" href="a00939.html#ga7bbff5bb0ca047b109e70a831f08e217">APP_TIMER_PRESCALER</a>)</td>
+          <td class="memname">#define RTC_INPUT_FREQ&#160;&#160;&#160;32768</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>DFU timeout interval in units of timer ticks. </p>
+<p>Input frequency of the RTC instance. Macro for wrapping values to RTC capacity. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga11fffdc6dd415319a5a8154b66a8b2ce"></a>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gaeefe46b9280fd5e11516b4148b9c5950"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define IMAGE_WRITE_IN_PROGRESS</td>
+          <td class="memname">enum <a class="el" href="a00939.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>RTC events. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaeefe46b9280fd5e11516b4148b9c5950a1c477c236900018c2dec4265129739c7"></a>NRF_RTC_EVENT_TICK</em>&nbsp;</td><td class="fielddoc">
+<p>Tick event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaeefe46b9280fd5e11516b4148b9c5950acca3da90aab0fc0950facce3d9c60b9c"></a>NRF_RTC_EVENT_OVERFLOW</em>&nbsp;</td><td class="fielddoc">
+<p>Overflow event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaeefe46b9280fd5e11516b4148b9c5950aed2f00b3d07e65411e4b63982efd2e07"></a>NRF_RTC_EVENT_COMPARE_0</em>&nbsp;</td><td class="fielddoc">
+<p>Compare 0 event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaeefe46b9280fd5e11516b4148b9c5950a4910d903ba14a05187dedfcc842ef26a"></a>NRF_RTC_EVENT_COMPARE_1</em>&nbsp;</td><td class="fielddoc">
+<p>Compare 1 event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaeefe46b9280fd5e11516b4148b9c5950a913f4348d8da28f6253ffcca803ed937"></a>NRF_RTC_EVENT_COMPARE_2</em>&nbsp;</td><td class="fielddoc">
+<p>Compare 2 event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaeefe46b9280fd5e11516b4148b9c5950af7b99708af83d76a4d4b59116f328bbc"></a>NRF_RTC_EVENT_COMPARE_3</em>&nbsp;</td><td class="fielddoc">
+<p>Compare 3 event. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga22211dc20a5c2f6cf1b43039d2bae4a3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00939.html#ga22211dc20a5c2f6cf1b43039d2bae4a3">nrf_rtc_int_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>RTC interrupts. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga22211dc20a5c2f6cf1b43039d2bae4a3ab01e1e883741734b5cac05c92efc952e"></a>NRF_RTC_INT_TICK_MASK</em>&nbsp;</td><td class="fielddoc">
+<p>RTC interrupt from tick event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga22211dc20a5c2f6cf1b43039d2bae4a3a18c66e1dcbc43cd4c82a6f5d0fb8d922"></a>NRF_RTC_INT_OVERFLOW_MASK</em>&nbsp;</td><td class="fielddoc">
+<p>RTC interrupt from overflow event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga22211dc20a5c2f6cf1b43039d2bae4a3acb0d6d71f2dcb78604936e1ba924ab9b"></a>NRF_RTC_INT_COMPARE0_MASK</em>&nbsp;</td><td class="fielddoc">
+<p>RTC interrupt from compare event on channel 0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga22211dc20a5c2f6cf1b43039d2bae4a3af842e26d22b97607c1b778c4119b82a6"></a>NRF_RTC_INT_COMPARE1_MASK</em>&nbsp;</td><td class="fielddoc">
+<p>RTC interrupt from compare event on channel 1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga22211dc20a5c2f6cf1b43039d2bae4a3adf3bfc6e4f76ed0ecb3b1784d3dad2e0"></a>NRF_RTC_INT_COMPARE2_MASK</em>&nbsp;</td><td class="fielddoc">
+<p>RTC interrupt from compare event on channel 2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga22211dc20a5c2f6cf1b43039d2bae4a3a04d8a6817769b5b2b231b7ebfcde893c"></a>NRF_RTC_INT_COMPARE3_MASK</em>&nbsp;</td><td class="fielddoc">
+<p>RTC interrupt from compare event on channel 3. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gab1bbbc39c6dac153baf61aeae33c4274"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00939.html#gab1bbbc39c6dac153baf61aeae33c4274">nrf_rtc_task_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>RTC tasks. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab1bbbc39c6dac153baf61aeae33c4274a2a8ffc1fb20f19a5b14826564e5d03e5"></a>NRF_RTC_TASK_START</em>&nbsp;</td><td class="fielddoc">
+<p>Start. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab1bbbc39c6dac153baf61aeae33c4274a6dbaa4bbd6d58e079767f0309239eec1"></a>NRF_RTC_TASK_STOP</em>&nbsp;</td><td class="fielddoc">
+<p>Stop. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab1bbbc39c6dac153baf61aeae33c4274a0b5cbfbb54397b0ec8ea8fb73f4a7bc0"></a>NRF_RTC_TASK_CLEAR</em>&nbsp;</td><td class="fielddoc">
+<p>Clear. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab1bbbc39c6dac153baf61aeae33c4274a4cda1feac46eb1092cad53e9abe1a3d2"></a>NRF_RTC_TASK_TRIGGER_OVERFLOW</em>&nbsp;</td><td class="fielddoc">
+<p>Trigger overflow. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga05f9b1daf63f4638929d910cc3eec753"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint32_t nrf_rtc_cc_get </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td>&#160;&#160;&#160;(m_data_received &gt; 0)</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<p>Macro for determining if an image write is in progress. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga3c3aedab2c56af1d09a7f08fef4209e1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">#define IS_UPDATING_APP</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">START_PKT</td><td>)</td>
-          <td>&#160;&#160;&#160;((START_PKT).dfu_update_mode &amp; <a class="el" href="a00944.html#gab3b062de629de930998df9fd2b4db211">DFU_UPDATE_APP</a>)</td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>ch</em>&#160;</td>
         </tr>
-      </table>
-</div><div class="memdoc">
-<p>Macro for determining if a Application update is ongoing. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga7f75359550e5d1c48c845c3a64beeff9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">#define IS_UPDATING_BL</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">START_PKT</td><td>)</td>
-          <td>&#160;&#160;&#160;((START_PKT).dfu_update_mode &amp; <a class="el" href="a00944.html#gaaa08307e5a2685ab04f0c050ec07eecc">DFU_UPDATE_BL</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Macro for determining if a Bootloader update is ongoing. </p>
-
-</div>
-</div>
-<a class="anchor" id="gac9f752070cc5f86753dbf9345b795392"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IS_UPDATING_SD</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">START_PKT</td><td>)</td>
-          <td>&#160;&#160;&#160;((START_PKT).dfu_update_mode &amp; <a class="el" href="a00944.html#gade73fb50e744973809bc684c9e905e2b">DFU_UPDATE_SD</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Macro for determining if a SoftDevice update is ongoing. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaa829238741c8e27c7c8a8b6d5c36a103"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IS_WORD_SIZED</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">SIZE</td><td>)</td>
-          <td>&#160;&#160;&#160;((SIZE &amp; (sizeof(uint32_t) - 1)) == 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Macro for checking that the provided is word sized. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gad9ce0b70db1ec648acc0bd50629e22ff"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef uint32_t(* dfu_bank_activate_t)(void)</td>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Type definition of function used for activating of the software image received. </p>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS If the image has been successfully activated any other NRF_ERROR code in case of a failure. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf68c07fc7834b9c16aae9a748f43bdc8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef void(* dfu_bank_prepare_t)(uint32_t image_size)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Type definition of function used for preparing of the bank before receiving of a software image. </p>
+<p>Function for returning the compare value for a channel. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">image_size</td><td>Size of software image being received. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ch</td><td>Channel.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>COMPARE[ch] value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga64787233b50e4c8d9d937536a449e8e4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void nrf_rtc_cc_set </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>cc_val</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for setting a compare value for a channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ch</td><td>Channel. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cc_val</td><td>Compare value to set. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga187dfde3b0fa8047e6c97b2317bce21f"></a>
+<a class="anchor" id="gac530a192ba3559478b8c653ba924abfc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00939.html#ga187dfde3b0fa8047e6c97b2317bce21f">dfu_state_t</a></td>
+          <td class="memname">__STATIC_INLINE uint32_t nrf_rtc_counter_get </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>States of the DFU state machine. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga187dfde3b0fa8047e6c97b2317bce21fa668c685914fdc7aad5c00ac9ad119d85"></a>DFU_STATE_INIT_ERROR</em>&nbsp;</td><td class="fielddoc">
-<p>State for: dfu_init(...) error. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga187dfde3b0fa8047e6c97b2317bce21fad19963a8788de50aaf05a439c9448e7a"></a>DFU_STATE_IDLE</em>&nbsp;</td><td class="fielddoc">
-<p>State for: idle. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga187dfde3b0fa8047e6c97b2317bce21fa539947bf7a53147eff081ef153818b8d"></a>DFU_STATE_PREPARING</em>&nbsp;</td><td class="fielddoc">
-<p>State for: preparing, indicates that the flash is being erased and no data packets can be processed. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga187dfde3b0fa8047e6c97b2317bce21fa43c819e2e2d6cb79f0cc3e9703df3b04"></a>DFU_STATE_RDY</em>&nbsp;</td><td class="fielddoc">
-<p>State for: ready. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga187dfde3b0fa8047e6c97b2317bce21fa8d1d50d8d5174b1cead26cf34ad1daf5"></a>DFU_STATE_RX_INIT_PKT</em>&nbsp;</td><td class="fielddoc">
-<p>State for: receiving initialization packet. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga187dfde3b0fa8047e6c97b2317bce21fa475955163ace358b9373c0b3a87ce4ec"></a>DFU_STATE_RX_DATA_PKT</em>&nbsp;</td><td class="fielddoc">
-<p>State for: receiving data packet. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga187dfde3b0fa8047e6c97b2317bce21fae274655cddb628140c568df6bc5f70bf"></a>DFU_STATE_VALIDATE</em>&nbsp;</td><td class="fielddoc">
-<p>State for: validate. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga187dfde3b0fa8047e6c97b2317bce21fa2a335037693bd40cff8c8787d3a11598"></a>DFU_STATE_WAIT_4_ACTIVATE</em>&nbsp;</td><td class="fielddoc">
-<p>State for: waiting for <a class="el" href="a00937.html#gaaa8227795cc1e3d231d2114f79a9017c" title="Function for activating the transfered image after validation has successfully completed.">dfu_image_activate()</a>. </p>
-</td></tr>
-</table>
+<p>Function for returning a counter value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Counter value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9a9b117a910e07ec21c9a4c9b10b19db"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint32_t nrf_rtc_event_address_get </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00939.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a>&#160;</td>
+          <td class="paramname"><em>event</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for returning the address of an event. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>Requested event.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Address of the requested event register. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga48f44b45200368ed146abb9e489e8231"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void nrf_rtc_event_clear </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00939.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a>&#160;</td>
+          <td class="paramname"><em>event</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for clearing an event. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>Event to clear. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga994b40bb8f40bf17f44d6acff487cf60"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void nrf_rtc_event_disable </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>event</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for disabling an event. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>Requested event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga022195e61bf8c1b7db06049e8b9c2190"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void nrf_rtc_event_enable </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for enabling events. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Mask of event flags to enable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab7b7c9f171ca92e0a6e022deeb6b2c59"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint32_t nrf_rtc_event_pending </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00939.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a>&#160;</td>
+          <td class="paramname"><em>event</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for checking if an event is pending. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>Address of the event.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Mask of pending events. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga0b60105662ed3b084621a44fd5a3ef20"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void nrf_rtc_int_disable </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for disabling interrupts. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Interrupt mask to be disabled. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9bf27c728a3f08434ae56c2e3e4b49d8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void nrf_rtc_int_enable </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for enabling interrupts. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Interrupt mask to be enabled. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7d40ce8e93725c6b447cc9356303406c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint32_t nrf_rtc_int_get </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for returning the status of currently enabled interrupts. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Value in INTEN register. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga853a0f021abc9b2f62a77810880b035f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint32_t nrf_rtc_int_is_enabled </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for checking if interrupts are enabled. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Mask of interrupt flags to check.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Mask with enabled interrupts. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga84628657e0fd0d31777fbdbbc95ed4e1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void nrf_rtc_prescaler_set </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>val</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for setting a prescaler value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">val</td><td>Value to set the prescaler to. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab1aad5ee25dbb338e9d902c85dac761f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint32_t nrf_rtc_task_address_get </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00939.html#gab1bbbc39c6dac153baf61aeae33c4274">nrf_rtc_task_t</a>&#160;</td>
+          <td class="paramname"><em>task</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for returning the address of a task. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">task</td><td>Requested task.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Address of the requested task register. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2aae0db622731be438c4aebed18025d4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void nrf_rtc_task_trigger </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00939.html#gab1bbbc39c6dac153baf61aeae33c4274">nrf_rtc_task_t</a>&#160;</td>
+          <td class="paramname"><em>task</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for starting a task. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">task</td><td>Requested task. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -364,7 +868,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

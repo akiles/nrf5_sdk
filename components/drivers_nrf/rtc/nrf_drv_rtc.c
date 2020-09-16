@@ -13,7 +13,7 @@
 #include "nrf_drv_rtc.h"
 #include "nrf_rtc.h"
 #include "nrf_assert.h"
-
+#include "app_util_platform.h"
 
 /**@brief RTC driver instance control block structure. */
 typedef struct
@@ -80,7 +80,7 @@ void nrf_drv_rtc_uninit(nrf_drv_rtc_t const * const p_instance)
 
     nrf_drv_common_irq_disable(p_instance->irq);
 
-    nrf_rtc_task_set(p_instance->p_reg, NRF_RTC_TASK_STOP);
+    nrf_rtc_task_trigger(p_instance->p_reg, NRF_RTC_TASK_STOP);
     nrf_rtc_event_disable(p_instance->p_reg, mask);
     nrf_rtc_int_disable(p_instance->p_reg, mask);
 
@@ -91,7 +91,7 @@ void nrf_drv_rtc_enable(nrf_drv_rtc_t const * const p_instance)
 {
     ASSERT(m_cb[p_instance->instance_id].state == NRF_DRV_STATE_INITIALIZED);
 
-    nrf_rtc_task_set(p_instance->p_reg, NRF_RTC_TASK_START);
+    nrf_rtc_task_trigger(p_instance->p_reg, NRF_RTC_TASK_START);
     m_cb[p_instance->instance_id].state = NRF_DRV_STATE_POWERED_ON;
 }
 
@@ -99,7 +99,7 @@ void nrf_drv_rtc_disable(nrf_drv_rtc_t const * const p_instance)
 {
     ASSERT(m_cb[p_instance->instance_id].state == NRF_DRV_STATE_POWERED_ON);
 
-    nrf_rtc_task_set(p_instance->p_reg, NRF_RTC_TASK_STOP);
+    nrf_rtc_task_trigger(p_instance->p_reg, NRF_RTC_TASK_STOP);
     m_cb[p_instance->instance_id].state = NRF_DRV_STATE_INITIALIZED;
 }
 

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_evt_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: BLE libraries</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,125 +96,23 @@ $(document).ready(function(){initNavTree('a00097.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00698.html">Structures</a></div></div>  </div>
+<div class="title">BLE libraries </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Common BLE Event type, wrapping the module specific event reports.  
- <a href="a00097.html#details">More...</a></p>
-
-<p><code>#include &lt;ble.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a31f5fb5f33b8020c1b91639d048a6efa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00096.html">ble_evt_hdr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00097.html#a31f5fb5f33b8020c1b91639d048a6efa">header</a></td></tr>
-<tr class="separator:a31f5fb5f33b8020c1b91639d048a6efa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef8699c52739460f3052387e62eeacc8"><td class="memItemLeft" ><a class="anchor" id="aef8699c52739460f3052387e62eeacc8"></a>
-union {</td></tr>
-<tr class="memitem:a43f000c576e11d2d073dd8ec4a664f17"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00086.html">ble_common_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00097.html#a65014fa31bf6c86c113ef47dc929a755">common_evt</a></td></tr>
-<tr class="separator:a43f000c576e11d2d073dd8ec4a664f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0921d9b115f6e3a1087eb76fd9970761"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00124.html">ble_gap_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00097.html#a67ca1f9db570d1c2f196c0a316151af5">gap_evt</a></td></tr>
-<tr class="separator:a0921d9b115f6e3a1087eb76fd9970761"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae51e0f476f92f690b5a2eed7e5c2b607"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00188.html">ble_l2cap_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00097.html#a615ab3df54ef7363a90f915d6440ce1a">l2cap_evt</a></td></tr>
-<tr class="separator:ae51e0f476f92f690b5a2eed7e5c2b607"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee61690c0630fb6a024512e7049a0f84"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00156.html">ble_gattc_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00097.html#a2bdcb3c197239b4e5957d89bb0f26161">gattc_evt</a></td></tr>
-<tr class="separator:aee61690c0630fb6a024512e7049a0f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3873ad6b17158dd15c611a38fa9a0da3"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00175.html">ble_gatts_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00097.html#aea997556a147ad5541998f13699e27c1">gatts_evt</a></td></tr>
-<tr class="separator:a3873ad6b17158dd15c611a38fa9a0da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef8699c52739460f3052387e62eeacc8"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>evt</b></td></tr>
-<tr class="separator:aef8699c52739460f3052387e62eeacc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Common BLE Event type, wrapping the module specific event reports. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a65014fa31bf6c86c113ef47dc929a755"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00086.html">ble_common_evt_t</a> ble_evt_t::common_evt</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Common Event, evt_id in BLE_EVT_* series. </p>
-
-</div>
-</div>
-<a class="anchor" id="a67ca1f9db570d1c2f196c0a316151af5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00124.html">ble_gap_evt_t</a> ble_evt_t::gap_evt</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>GAP originated event, evt_id in BLE_GAP_EVT_* series. </p>
-
-</div>
-</div>
-<a class="anchor" id="a2bdcb3c197239b4e5957d89bb0f26161"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00156.html">ble_gattc_evt_t</a> ble_evt_t::gattc_evt</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>GATT client originated event, evt_id in BLE_GATTC_EVT* series. </p>
-
-</div>
-</div>
-<a class="anchor" id="aea997556a147ad5541998f13699e27c1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00175.html">ble_gatts_evt_t</a> ble_evt_t::gatts_evt</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>GATT server originated event, evt_id in BLE_GATTS_EVT* series. </p>
-
-</div>
-</div>
-<a class="anchor" id="a31f5fb5f33b8020c1b91639d048a6efa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00096.html">ble_evt_hdr_t</a> ble_evt_t::header</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event header. </p>
-
-</div>
-</div>
-<a class="anchor" id="a615ab3df54ef7363a90f915d6440ce1a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00188.html">ble_l2cap_evt_t</a> ble_evt_t::l2cap_evt</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>L2CAP originated event, evt_id in BLE_L2CAP_EVT* series. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p><a class="el" href="a00098.html">Debug Assert Handler</a></p>
+<p><a class="el" href="a00102.html">BLE Device Manager</a></p>
+<p><a class="el" href="a00099.html">DTM - Direct Test Mode</a></p>
+<p><a class="el" href="a00100.html">Error Log</a></p>
+<p><a class="el" href="a00101.html">Radio Notification Event Handler</a></p>
+<p><a class="el" href="a00103.html">BSP BLE Button Module</a> </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00097.html">ble_evt_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:45 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

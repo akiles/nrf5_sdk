@@ -1,6 +1,7 @@
 var a00334 =
 [
-    [ "alert_level", "a00334.html#adaf4d087319007c776df8baf3673fe8a", null ],
-    [ "evt_type", "a00334.html#a971a9cd94583dae76dcf5f94eb412686", null ],
-    [ "params", "a00334.html#a7d33bf54b424654f7a0e77492bffb476", null ]
+    [ "error_handler", "a00334.html#a60dd2e384291225af96e549356836e96", null ],
+    [ "evt_handler", "a00334.html#a30ba6c48423cf07609a21bc2de05ece9", null ],
+    [ "feature", "a00334.html#aa6db8884060986d835bd1e6aadffc770", null ],
+    [ "is_context_supported", "a00334.html#a10d72eae94458d3d33788faf4099893c", null ]
 ];

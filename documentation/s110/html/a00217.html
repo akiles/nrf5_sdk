@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_addr_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_bps_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,108 @@ $(document).ready(function(){initNavTree('a00217.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_addr_t Struct Reference<div class="ingroups"><a class="el" href="a01044.html">Structures</a></div></div>  </div>
+<div class="title">ble_bps_s Struct Reference<div class="ingroups"><a class="el" href="a01195.html">Blood Pressure Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Bluetooth Low Energy address.  
+<p>Blood Pressure Service structure. This contains various status information for the service.  
  <a href="a00217.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gap.h&gt;</code></p>
+<p><code>#include &lt;ble_bps.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ad056845594972dd031a09700194d660c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html#ad056845594972dd031a09700194d660c">addr_type</a></td></tr>
-<tr class="separator:ad056845594972dd031a09700194d660c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e756ddbde7ebf78f17a043d7ebe602c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html#a7e756ddbde7ebf78f17a043d7ebe602c">addr</a> [6]</td></tr>
-<tr class="separator:a7e756ddbde7ebf78f17a043d7ebe602c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad503c598af64ae0973fcbd69c2564f6c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01195.html#ga4c7199796f540fc4ea76d6eb9cd98809">ble_bps_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html#ad503c598af64ae0973fcbd69c2564f6c">evt_handler</a></td></tr>
+<tr class="separator:ad503c598af64ae0973fcbd69c2564f6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08ca745c921f74e622b3226b74a5453a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html#a08ca745c921f74e622b3226b74a5453a">service_handle</a></td></tr>
+<tr class="separator:a08ca745c921f74e622b3226b74a5453a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab61b1c5af5765ac4f24f617a24a81cd0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00317.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html#ab61b1c5af5765ac4f24f617a24a81cd0">meas_handles</a></td></tr>
+<tr class="separator:ab61b1c5af5765ac4f24f617a24a81cd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7b6cace6c499b77b40be59b7d9ed843"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00317.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html#ad7b6cace6c499b77b40be59b7d9ed843">feature_handles</a></td></tr>
+<tr class="separator:ad7b6cace6c499b77b40be59b7d9ed843"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb6ea6f96806c80017f6d80a65fa1c40"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html#acb6ea6f96806c80017f6d80a65fa1c40">conn_handle</a></td></tr>
+<tr class="separator:acb6ea6f96806c80017f6d80a65fa1c40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6a6c9882bfb4ca35a22b2b46e6cc342"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html#ab6a6c9882bfb4ca35a22b2b46e6cc342">feature</a></td></tr>
+<tr class="separator:ab6a6c9882bfb4ca35a22b2b46e6cc342"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Bluetooth Low Energy address. </p>
+<div class="textblock"><p>Blood Pressure Service structure. This contains various status information for the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a7e756ddbde7ebf78f17a043d7ebe602c"></a>
+<a class="anchor" id="acb6ea6f96806c80017f6d80a65fa1c40"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_addr_t::addr[6]</td>
+          <td class="memname">uint16_t ble_bps_s::conn_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>48-bit address, LSB format. </p>
+<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
 
 </div>
 </div>
-<a class="anchor" id="ad056845594972dd031a09700194d660c"></a>
+<a class="anchor" id="ad503c598af64ae0973fcbd69c2564f6c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_addr_t::addr_type</td>
+          <td class="memname"><a class="el" href="a01195.html#ga4c7199796f540fc4ea76d6eb9cd98809">ble_bps_evt_handler_t</a> ble_bps_s::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>See <a class="el" href="a00822.html">GAP Address types</a>. </p>
+<p>Event handler to be called for handling events in the Blood Pressure Service. </p>
+
+</div>
+</div>
+<a class="anchor" id="ab6a6c9882bfb4ca35a22b2b46e6cc342"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_bps_s::feature</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Value of Blood Pressure feature. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad7b6cace6c499b77b40be59b7d9ed843"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00317.html">ble_gatts_char_handles_t</a> ble_bps_s::feature_handles</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handles related to the Blood Pressure Feature characteristic. </p>
+
+</div>
+</div>
+<a class="anchor" id="ab61b1c5af5765ac4f24f617a24a81cd0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00317.html">ble_gatts_char_handles_t</a> ble_bps_s::meas_handles</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handles related to the Blood Pressure Measurement characteristic. </p>
+
+</div>
+</div>
+<a class="anchor" id="a08ca745c921f74e622b3226b74a5453a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_bps_s::service_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle of Blood Pressure Service (as provided by the BLE stack). </p>
 
 </div>
 </div>
@@ -156,8 +216,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00217.html">ble_gap_addr_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00217.html">ble_bps_s</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

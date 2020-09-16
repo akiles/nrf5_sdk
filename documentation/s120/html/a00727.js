@@ -1,5 +1,5 @@
 var a00727 =
 [
-    [ "nrf_clock_lfclksrc_t", "a00727.html#gabfecdd0b916a4022bd5688d4f842c473", null ],
-    [ "softdevice_assertion_handler_t", "a00727.html#gaddfb569a9b86648e642ed0d7e3a83034", null ]
+    [ "BLE_GATT_CPF_NAMESPACE_BTSIG", "a00727.html#ga2b4621b5720da826d9b41331af2c6232", null ],
+    [ "BLE_GATT_CPF_NAMESPACE_DESCRIPTION_UNKNOWN", "a00727.html#ga2639ceb9f7ea5333b153a5751558f6af", null ]
 ];

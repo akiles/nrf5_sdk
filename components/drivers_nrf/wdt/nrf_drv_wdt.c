@@ -14,6 +14,8 @@
 #include "nrf_drv_common.h"
 #include "nrf_error.h"
 #include "nrf_assert.h"
+#include "nrf_wdt.h"
+#include "app_util_platform.h"
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -33,7 +35,7 @@ void WDT_IRQHandler(void)
 {
     if (nrf_wdt_int_enable_check(NRF_WDT_INT_TIMEOUT_MASK) == true)
     {
-        nrf_wdt_event_clear(NRF_WDT_EVENTS_TIMEOUT);
+        nrf_wdt_event_clear(NRF_WDT_EVENT_TIMEOUT);
         m_wdt_event_handler();
     }
 }
@@ -73,7 +75,7 @@ void nrf_drv_wdt_enable(void)
     ASSERT(m_alloc_index != 0);
     ASSERT(m_state == NRF_DRV_STATE_INITIALIZED);
     nrf_wdt_int_enable(NRF_WDT_INT_TIMEOUT_MASK);
-    nrf_wdt_task_set(NRF_WDT_TASKS_START);
+    nrf_wdt_task_trigger(NRF_WDT_TASK_START);
     m_state = NRF_DRV_STATE_POWERED_ON;
 }
 

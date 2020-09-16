@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: SPI Master Loopback Example</title>
+<title>nRF51 SDK - S210 SoftDevice: Radio Test Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,36 +97,57 @@ $(document).ready(function(){initNavTree('a00044.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">SPI Master Loopback Example </div>  </div>
+<div class="title">Radio Test Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The SPI Master Loopback Example demonstrates how to use a loopback for verifying the SPI master. To complete the loopback, the MOSI and MISO pins of the SPI master must be wired together.</p>
-<p>TX_RX_MSG_LENGTH number of bytes are transmitted through the master. The received bytes are verified to be the same as the bytes transmitted. If there is an error, <a class="el" href="a00055.html#BSP_INDICATE_FATAL_ERROR">BSP_INDICATE_FATAL_ERROR</a> is indicated.</p>
-<p>The application starts with configuring the <a class="el" href="a00335.html">Board Support Package</a>. Both SPI_MASTER_0 and SPI_MASTER_1 are tested, first with shifting LSB first, then by shifting MSB first.</p>
-<h1><a class="anchor" id="spi_master_loopback_setup"></a>
-Setup</h1>
-<p>The name of the example is <b>spi_master_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\spi_master</code> </p>
-<p>Configuration:<br/>
+<div class="textblock"><p>The Radio Test Example shows how to configure the radio as a constant RX/TX carrier, modulated TX carrier, and RX/TX sweep. The tests are controlled with simple one-letter commands via the serial port at 38400 baud. At any time during the tests, you can set the radio parameters output power, bit rate, and channel. You can also set the time on each channel in sweep mode, in steps of 1 millisecond from 1 millisecond to 99 milliseconds.</p>
+<p>The application starts with enabling the 16 MHz crystal oscillator and configuring the UART and interrupts. The main loop waits until it receives a command through the UART. Then it initiates the requested command.</p>
+<p>The following one-letter commands are available:<br/>
 </p>
 <ul>
-<li>MOSI0 should be connected to MISO0.</li>
-<li>MOSI1 should be connected to MISO1.</li>
+<li>a: Enter start channel for sweep/channel for constant carrier.</li>
+<li>b: Enter end channel for sweep.</li>
+<li>c: Start TX carrier.</li>
+<li>d: Enter time on each channel (1 ms - 99 ms).</li>
+<li>e: Cancel sweep/carrier.</li>
+<li>m: Enter data rate.</li>
+<li>o: Start modulated TX carrier.</li>
+<li>p: Enter output power.</li>
+<li>s: Print current delay, channels and so on.</li>
+<li>r: Start RX sweep.</li>
+<li>t: Start TX sweep.</li>
+<li>x: Start RX carrier.</li>
 </ul>
-<h1><a class="anchor" id="spi_master_example_testing"></a>
+<p>The name of the example is <b>radio_test_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\peripheral\radio_test</code> </p>
+<h1><a class="anchor" id="nrf_radio_test_example_testing"></a>
 Testing</h1>
-<p>Test the SPI Master Loopback Example application by performing the following steps:</p>
+<p>Test the Radio Test Example application by performing the following steps:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Observe that <a class="el" href="a00055.html#BSP_INDICATE_RCV_OK">BSP_INDICATE_RCV_OK</a> is indicated every second.</li>
-<li><a class="el" href="a00055.html#BSP_INDICATE_FATAL_ERROR">BSP_INDICATE_FATAL_ERROR</a> is indicated if an error occurred. </li>
+<li>Start a COM listener like PUTTY and connect to the used COM port with the following UART settings:<ul>
+<li>
+Baud rate: 38.400</li>
+<li>
+8 data bits</li>
+<li>
+1 stop bit</li>
+<li>
+No parity</li>
+<li>
+HW flow control: RTS/CTS</li>
+</ul>
+</li>
+<li>The text "RF Test" should appear at the top of the terminal.</li>
+<li>Type any of the letters described above. An output text should be displayed in the PUTTY window, or a sweep or signal should be started.</li>
+<li>Use a spectrum analyzer to confirm the behavior of the radio module. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00027.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00032.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -8,10 +8,22 @@
   <WorkspaceName>WorkSpace</WorkspaceName>
  
    <project>
+    <PathAndName>pca10031\s130\arm4\ble_app_hrs_c_s130_pca10031.uvproj</PathAndName>
+  </project>
+   <project>
+    <PathAndName>pca10028\s130\arm4\ble_app_hrs_c_s130_pca10028.uvproj</PathAndName>
+  </project>
+   <project>
     <PathAndName>pca10028\s120\arm4\ble_app_hrs_c_s120_pca10028.uvproj</PathAndName>
   </project>
    <project>
     <PathAndName>pca10031\s120\arm4\ble_app_hrs_c_s120_pca10031.uvproj</PathAndName>
+  </project>
+   <project>
+    <PathAndName>pca10028\ser_s130_spi\arm4\ble_app_hrs_c_s130_spi_pca10028.uvproj</PathAndName>
+  </project>
+   <project>
+    <PathAndName>pca10028\ser_s120_spi\arm4\ble_app_hrs_c_s120_spi_pca10028.uvproj</PathAndName>
   </project>
 
 </ProjectWorkspace>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gap_conn_sec_mode_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: app_button_cfg_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,56 +106,78 @@ $(document).ready(function(){initNavTree('a00105.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_conn_sec_mode_t Struct Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
+<div class="title">app_button_cfg_t Struct Reference<div class="ingroups"><a class="el" href="a00669.html">Button Handler</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GAP link requirements.  
+<p>Button configuration structure.  
  <a href="a00105.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gap.h&gt;</code></p>
+<p><code>#include &lt;app_button.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ab1014e45933756f4e790ef8181730f7f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00105.html#ab1014e45933756f4e790ef8181730f7f">sm</a>: 4</td></tr>
-<tr class="separator:ab1014e45933756f4e790ef8181730f7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c0b55f3c9f8c589ca46e85d2c8f235c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00105.html#a3c0b55f3c9f8c589ca46e85d2c8f235c">lv</a>: 4</td></tr>
-<tr class="separator:a3c0b55f3c9f8c589ca46e85d2c8f235c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6a18934c420213be9eee710854e1ab9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00105.html#af6a18934c420213be9eee710854e1ab9">pin_no</a></td></tr>
+<tr class="separator:af6a18934c420213be9eee710854e1ab9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af55e02af042a4d038dac26a7658536f6"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00105.html#af55e02af042a4d038dac26a7658536f6">active_state</a></td></tr>
+<tr class="separator:af55e02af042a4d038dac26a7658536f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf23ae362a2ecdfbc73c9f6736ce0ba8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00627.html#ga07e0c8c0b30499cf0a7b79dbe62d3fcc">nrf_gpio_pin_pull_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00105.html#abf23ae362a2ecdfbc73c9f6736ce0ba8">pull_cfg</a></td></tr>
+<tr class="separator:abf23ae362a2ecdfbc73c9f6736ce0ba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad06ea1e496c4b37802492b289b54a875"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00669.html#ga5c09451dc7c257a9d3846268e110cf8d">app_button_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00105.html#ad06ea1e496c4b37802492b289b54a875">button_handler</a></td></tr>
+<tr class="separator:ad06ea1e496c4b37802492b289b54a875"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GAP link requirements. </p>
-<p>See Bluetooth Core specification, Volume 3 Part C 10.2 for details.</p>
-<p>Security Mode 0 Level 0: No access permissions at all (this level is not defined by the Bluetooth Core specification).<br/>
- Security Mode 1 Level 1: No security is needed (aka open link).<br/>
- Security Mode 1 Level 2: Encrypted link required, MITM protection not necessary.<br/>
- Security Mode 1 Level 3: MITM protected encrypted link required.<br/>
- Security Mode 2 Level 1: Signing or encryption required, MITM protection not necessary.<br/>
- Security Mode 2 Level 2: MITM protected signing required, unless link is MITM protected encrypted.<br/>
- </p>
+<div class="textblock"><p>Button configuration structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a3c0b55f3c9f8c589ca46e85d2c8f235c"></a>
+<a class="anchor" id="af55e02af042a4d038dac26a7658536f6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_conn_sec_mode_t::lv</td>
+          <td class="memname">uint8_t app_button_cfg_t::active_state</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Level (1, 2 or 3), 0 for no permissions at all. </p>
+<p>APP_BUTTON_ACTIVE_HIGH or APP_BUTTON_ACTIVE_LOW. </p>
 
 </div>
 </div>
-<a class="anchor" id="ab1014e45933756f4e790ef8181730f7f"></a>
+<a class="anchor" id="ad06ea1e496c4b37802492b289b54a875"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_conn_sec_mode_t::sm</td>
+          <td class="memname"><a class="el" href="a00669.html#ga5c09451dc7c257a9d3846268e110cf8d">app_button_handler_t</a> app_button_cfg_t::button_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Security Mode (1 or 2), 0 for no permissions at all. </p>
+<p>Handler to be called when button is pushed. </p>
+
+</div>
+</div>
+<a class="anchor" id="af6a18934c420213be9eee710854e1ab9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t app_button_cfg_t::pin_no</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pin to be used as a button. </p>
+
+</div>
+</div>
+<a class="anchor" id="abf23ae362a2ecdfbc73c9f6736ce0ba8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00627.html#ga07e0c8c0b30499cf0a7b79dbe62d3fcc">nrf_gpio_pin_pull_t</a> app_button_cfg_t::pull_cfg</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pull-up or -down configuration. </p>
 
 </div>
 </div>
@@ -164,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00105.html">ble_gap_conn_sec_mode_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00105.html">app_button_cfg_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

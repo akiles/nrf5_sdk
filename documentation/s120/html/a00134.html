@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gap_opt_scan_req_report_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_adv_ch_mask_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,45 +106,63 @@ $(document).ready(function(){initNavTree('a00134.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_opt_scan_req_report_t Struct Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_adv_ch_mask_t Struct Reference<div class="ingroups"><a class="el" href="a00935.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Scan request report option.  
+<p>Channel mask for RF channels used in advertising and scanning.  
  <a href="a00134.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a26b299c2b740414aab7ac8f6cd96f5c8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00134.html#a26b299c2b740414aab7ac8f6cd96f5c8">enable</a>: 1</td></tr>
-<tr class="separator:a26b299c2b740414aab7ac8f6cd96f5c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a276e0c5ca59f82040b5b165c0f5600d1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00134.html#a276e0c5ca59f82040b5b165c0f5600d1">ch_37_off</a>: 1</td></tr>
+<tr class="separator:a276e0c5ca59f82040b5b165c0f5600d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6db0baee9116bd59a91cc015b94d3190"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00134.html#a6db0baee9116bd59a91cc015b94d3190">ch_38_off</a>: 1</td></tr>
+<tr class="separator:a6db0baee9116bd59a91cc015b94d3190"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abba6b57ff2812fa36ec3da0b4949f492"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00134.html#abba6b57ff2812fa36ec3da0b4949f492">ch_39_off</a>: 1</td></tr>
+<tr class="separator:abba6b57ff2812fa36ec3da0b4949f492"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Scan request report option. </p>
-<pre class="fragment">   This can be used with @ref sd_ble_opt_set to make the SoftDevice send
-   @ref BLE_GAP_EVT_SCAN_REQ_REPORT events.
-</pre><dl class="section note"><dt>Note</dt><dd>Due to the limited space reserved for scan request report events, not all received scan requests will be reported.</dd>
-<dd>
-If whitelisting is used, only whitelisted requests are reported.</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00562.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Set successfully. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00562.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>When advertising is ongoing while the option is set. </td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="textblock"><p>Channel mask for RF channels used in advertising and scanning. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a26b299c2b740414aab7ac8f6cd96f5c8"></a>
+<a class="anchor" id="a276e0c5ca59f82040b5b165c0f5600d1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_opt_scan_req_report_t::enable</td>
+          <td class="memname">uint8_t ble_gap_adv_ch_mask_t::ch_37_off</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enable scan request reports. </p>
+<p>Setting this bit to 1 will turn off advertising on channel 37 </p>
+
+</div>
+</div>
+<a class="anchor" id="a6db0baee9116bd59a91cc015b94d3190"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_gap_adv_ch_mask_t::ch_38_off</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Setting this bit to 1 will turn off advertising on channel 38 </p>
+
+</div>
+</div>
+<a class="anchor" id="abba6b57ff2812fa36ec3da0b4949f492"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_gap_adv_ch_mask_t::ch_39_off</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Setting this bit to 1 will turn off advertising on channel 39 </p>
 
 </div>
 </div>
@@ -153,8 +171,8 @@ If whitelisting is used, only whitelisted requests are reported.</dd></dl>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00134.html">ble_gap_opt_scan_req_report_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00134.html">ble_gap_adv_ch_mask_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

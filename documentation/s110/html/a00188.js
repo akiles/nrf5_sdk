@@ -1,11 +1,6 @@
 var a00188 =
 [
-    [ "disconnect_on_fail", "a00188.html#abf5ac3620c0afeef3c3a04608094119a", null ],
-    [ "error_handler", "a00188.html#a03b0ebe516b8abda6ae38a1d8bd94cf8", null ],
-    [ "evt_handler", "a00188.html#aceb664463e99eb25dd703bca4e670038", null ],
-    [ "first_conn_params_update_delay", "a00188.html#af2c34d78dad374ee7e2e443212b3912d", null ],
-    [ "max_conn_params_update_count", "a00188.html#acc761ab28614393d35e59d0a11fdff76", null ],
-    [ "next_conn_params_update_delay", "a00188.html#a406caf4a6f77cf13f9c4a4116bcdcad3", null ],
-    [ "p_conn_params", "a00188.html#a4182d653bc49593db1dc32c47a3a2af0", null ],
-    [ "start_on_notify_cccd_handle", "a00188.html#a6dcaa575801ddea65376594e964c3837", null ]
+    [ "advdata", "a00188.html#a3baf6ced3f920c012bb905b970760e01", null ],
+    [ "evt_handler", "a00188.html#a26c9ccc41ab7de87f2b2be6b241848f3", null ],
+    [ "options", "a00188.html#ad4e914728e99bf1cba3e21d2d4753f77", null ]
 ];

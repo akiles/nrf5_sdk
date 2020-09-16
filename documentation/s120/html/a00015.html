@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: WDT</title>
+<title>nRF51 SDK - S120 SoftDevice: TWI</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,20 +97,66 @@ $(document).ready(function(){initNavTree('a00015.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">WDT </div>  </div>
+<div class="title">TWI </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The watchdog timer (WDT) driver includes two layers: the hardware abstraction layer (HAL) and the driver layer (DRV).</p>
-<p>The hardware abstraction layer provides basic APIs for accessing the registers of the WDT. All functions in this layer are implemented as inline functions. See the API documentation for the <a class="el" href="a00464.html">WDT HAL</a> for details.</p>
-<p>The driver layer provides APIs on a higher level than the HAL. See the API documentation for the <a class="el" href="a00474.html">WDT driver</a> for details.</p>
-<p>The <a class="el" href="a00036.html">WDT Example</a> provides sample code that you can use to quickly get started. </p>
-</div></div><!-- contents -->
+<div class="textblock"><p>The two-wire interface (TWI) driver includes two layers: the hardware abstraction layer (HAL) and the driver layer (DRV).</p>
+<p>The hardware abstraction layer provides basic APIs for accessing the registers of the TWI. See the API documentation for the <a class="el" href="a00637.html">TWI HAL</a> for details.</p>
+<p>The driver layer provides APIs on a higher level than the HAL. See the API documentation for the <a class="el" href="a00662.html">TWI driver</a> for details.</p>
+<p>Key features include:</p>
+<ul>
+<li>Repeated start.</li>
+<li>No multi-master.</li>
+<li>Only 7-bit addressing.</li>
+<li>Supports clock stretching.</li>
+<li>Tries to handle slaves stuck in the middle of transfer.</li>
+<li>Both blocking and non-blocking mode.</li>
+</ul>
+<p>Blocking mode is enabled if no event handler is provided during initialization. If an event handler is provided, calls like <a class="el" href="a00662.html#ga3e733713f6fa09a0a490620c5ab94544">nrf_drv_twi_tx</a> or <a class="el" href="a00662.html#gaba51042a371d5e288ca44345e5144bd7">nrf_drv_twi_rx</a> will return instantly with NRF_SUCCESS. Notifications of end of transmission or error will be passed to the application using the <a class="el" href="a00262.html" title="Structure for a TWI event.">nrf_drv_twi_evt_t</a> structure.</p>
+<p>The following code shows a simple write sequence without pending transfer:</p>
+<div class="fragment"><div class="line">uint32_t err_code;</div>
+<div class="line">uint8_t tx_data[] = {<span class="charliteral">&#39;a&#39;</span>, <span class="charliteral">&#39;b&#39;</span>, <span class="charliteral">&#39;c&#39;</span>, <span class="charliteral">&#39;d&#39;</span>, <span class="charliteral">&#39;e&#39;</span>};</div>
+<div class="line"><span class="keyword">const</span> <a class="code" href="a00263.html" title="TWI driver instance structure.">nrf_drv_twi_t</a> twi = <a class="code" href="a00662.html#gaa56cf439cf7781944f1409c9eb2c0b20" title="Macro for creating a TWI driver instance.">NRF_DRV_TWI_INSTANCE</a>(0);</div>
+<div class="line"></div>
+<div class="line">err_code = <a class="code" href="a00662.html#ga4743fbfd24c4b35f8f2bf2d4734ee35f" title="Function for initializing the TWI instance.">nrf_drv_twi_init</a>(&amp;twi, NULL, NULL);</div>
+<div class="line"><a class="code" href="a00684.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00662.html#gaca4f3ae7a751316a2af00d605bc757e8" title="Function for enabling the TWI instance.">nrf_drv_twi_enable</a>(&amp;twi);</div>
+<div class="line"></div>
+<div class="line">err_code = <a class="code" href="a00662.html#ga3e733713f6fa09a0a490620c5ab94544" title="Function for sending data to a TWI slave.">nrf_drv_twi_tx</a>(&amp;twi, SLAVE_ADDRESS, tx_data, <span class="keyword">sizeof</span>(tx_data), <span class="keyword">false</span>);</div>
+<div class="line"><a class="code" href="a00684.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
+</div><!-- fragment --><div class="image">
+<img src="twi_simple_tx.jpg" alt="twi_simple_tx.jpg"/>
+<div class="caption">
+Write sequence without pending transfer</div></div>
+<p>The following code shows a write sequence with pending transfer:</p>
+<div class="fragment"><div class="line">uint32_t err_code;</div>
+<div class="line">uint8_t tx_data[] = {<span class="charliteral">&#39;a&#39;</span>, <span class="charliteral">&#39;b&#39;</span>, <span class="charliteral">&#39;c&#39;</span>, <span class="charliteral">&#39;d&#39;</span>, <span class="charliteral">&#39;e&#39;</span>};</div>
+<div class="line"><span class="keyword">const</span> <a class="code" href="a00263.html" title="TWI driver instance structure.">nrf_drv_twi_t</a> twi = <a class="code" href="a00662.html#gaa56cf439cf7781944f1409c9eb2c0b20" title="Macro for creating a TWI driver instance.">NRF_DRV_TWI_INSTANCE</a>(0);</div>
+<div class="line"></div>
+<div class="line">err_code = <a class="code" href="a00662.html#ga4743fbfd24c4b35f8f2bf2d4734ee35f" title="Function for initializing the TWI instance.">nrf_drv_twi_init</a>(&amp;twi, NULL, NULL);</div>
+<div class="line"><a class="code" href="a00684.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
+<div class="line"></div>
+<div class="line"><a class="code" href="a00662.html#gaca4f3ae7a751316a2af00d605bc757e8" title="Function for enabling the TWI instance.">nrf_drv_twi_enable</a>(&amp;twi);</div>
+<div class="line"></div>
+<div class="line">err_code = <a class="code" href="a00662.html#ga3e733713f6fa09a0a490620c5ab94544" title="Function for sending data to a TWI slave.">nrf_drv_twi_tx</a>(&amp;twi, SLAVE_ADDRESS, tx_data, <span class="keyword">sizeof</span>(tx_data), <span class="keyword">true</span>);</div>
+<div class="line"><a class="code" href="a00684.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
+</div><!-- fragment --><div class="image">
+<img src="twi_pend_tx.jpg" alt="twi_pend_tx.jpg"/>
+<div class="caption">
+Write sequence with pending transfer</div></div>
+<p>Errors (like time-out or NACK) will stop the transmission:</p>
+<div class="image">
+<img src="twi_error.jpg" alt="twi_error.jpg"/>
+<div class="caption">
+Sequence on NACK error</div></div>
+ </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00002.html">Hardware Drivers</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:52 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:45 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -179,7 +179,6 @@ static void m_handle_start(void)
     NRF_PPI->CH[8].TEP    = (uint32_t)(&NRF_RADIO->TASKS_DISABLE);
     NRF_PPI->CH[8].EEP    = (uint32_t)(&NRF_TIMER0->EVENTS_COMPARE[0]);
     NRF_PPI->CHENSET      = (1 << 8);
-
     
     // Configure and initiate radio
     m_configure_radio();
@@ -274,7 +273,7 @@ static nrf_radio_signal_callback_return_param_t * m_timeslot_callback(uint8_t si
 
         break;
     case NRF_RADIO_CALLBACK_SIGNAL_TYPE_EXTEND_FAILED:
-        NRF_GPIO->OUT ^= (1UL << 19);
+        NRF_PPI->CHENCLR  = (1UL << 8);
         if (m_beacon_scanner.keep_running)
         {
             signal_callback_return_param.params.request.p_next   = m_request_earliest(NRF_RADIO_PRIORITY_NORMAL);
@@ -342,8 +341,6 @@ void app_beacon_scanner_init(ble_beacon_scanner_init_t * p_init)
 void app_beacon_scanner_start(void)
 {
     uint32_t err_code;
-
-    NRF_GPIO->DIRSET = (1UL << 18) | (1UL << 19);
 
     m_beacon_scanner.keep_running = true;
     m_beacon_scanner.is_running   = true;

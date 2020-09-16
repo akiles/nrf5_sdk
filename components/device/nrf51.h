@@ -6,7 +6,7 @@
  *           nrf51 from Nordic Semiconductor.
  *
  * @version  V522
- * @date     26. January 2015
+ * @date     29. April 2015
  *
  * @note     Generated with SVDConv V2.81d 
  *           from CMSIS SVD File 'nrf51.xml' Version 522,
@@ -435,16 +435,14 @@ typedef struct {                                    /*!< UART Structure         
   __IO uint32_t  EVENTS_ERROR;                      /*!< Error detected.                                                       */
   __I  uint32_t  RESERVED4[7];
   __IO uint32_t  EVENTS_RXTO;                       /*!< Receiver timeout.                                                     */
-  __I  uint32_t  RESERVED5[46];
-  __IO uint32_t  SHORTS;                            /*!< Shortcuts for UART.                                                   */
-  __I  uint32_t  RESERVED6[64];
+  __I  uint32_t  RESERVED5[111];
   __IO uint32_t  INTENSET;                          /*!< Interrupt enable set register.                                        */
   __IO uint32_t  INTENCLR;                          /*!< Interrupt enable clear register.                                      */
-  __I  uint32_t  RESERVED7[93];
+  __I  uint32_t  RESERVED6[93];
   __IO uint32_t  ERRORSRC;                          /*!< Error source. Write error field to 1 to clear error.                  */
-  __I  uint32_t  RESERVED8[31];
+  __I  uint32_t  RESERVED7[31];
   __IO uint32_t  ENABLE;                            /*!< Enable UART and acquire IOs.                                          */
-  __I  uint32_t  RESERVED9;
+  __I  uint32_t  RESERVED8;
   __IO uint32_t  PSELRTS;                           /*!< Pin select for RTS.                                                   */
   __IO uint32_t  PSELTXD;                           /*!< Pin select for TXD.                                                   */
   __IO uint32_t  PSELCTS;                           /*!< Pin select for CTS.                                                   */
@@ -453,11 +451,11 @@ typedef struct {                                    /*!< UART Structure         
                                                          Once read the character is consumed. If read when no character
                                                           available, the UART will stop working.                               */
   __O  uint32_t  TXD;                               /*!< TXD register.                                                         */
-  __I  uint32_t  RESERVED10;
+  __I  uint32_t  RESERVED9;
   __IO uint32_t  BAUDRATE;                          /*!< UART Baudrate.                                                        */
-  __I  uint32_t  RESERVED11[17];
+  __I  uint32_t  RESERVED10[17];
   __IO uint32_t  CONFIG;                            /*!< Configuration of parity and hardware flow control register.           */
-  __I  uint32_t  RESERVED12[675];
+  __I  uint32_t  RESERVED11[675];
   __IO uint32_t  POWER;                             /*!< Peripheral power control.                                             */
 } NRF_UART_Type;
 
@@ -1082,11 +1080,7 @@ typedef struct {                                    /*!< NVMC Structure         
     __IO uint32_t  ERASEPAGE;                       /*!< Register for erasing a non-protected non-volatile memory page.        */
   };
   __IO uint32_t  ERASEALL;                          /*!< Register for erasing all non-volatile user memory.                    */
-  
-  union {
-    __IO uint32_t  ERASEPCR0;                       /*!< Register for erasing a protected non-volatile memory page.            */
-    __IO uint32_t  ERASEPROTECTEDPAGE;              /*!< Register for erasing a protected non-volatile memory page.            */
-  };
+  __IO uint32_t  ERASEPCR0;                         /*!< Register for erasing a protected non-volatile memory page.            */
   __IO uint32_t  ERASEUICR;                         /*!< Register for start erasing User Information Congfiguration Registers. */
 } NRF_NVMC_Type;
 

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Architecture of the DFU process</title>
+<title>nRF51 SDK - S110 SoftDevice: Sharing bonding information</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,30 +97,71 @@ $(document).ready(function(){initNavTree('a00085.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Architecture of the DFU process </div>  </div>
+<div class="title">Sharing bonding information </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>New firmware images can be transferred over two different transport protocols: BLE or using serial wire (HCI/UART). In both cases, the DFU bank handling is responsible for writing received data packets to flash memory.</p>
-<p>The BLE transport uses a BLE service for data transfer (see <a class="el" href="a00103.html#ota_spec_sec">Device Firmware Update BLE Service</a>) and relies on the S110 or S310 SoftDevice.</p>
-<p>The following figure shows a schematic overview of the DFU process using BLE:</p>
+<div class="textblock"><p>When BLE DFU Service support is added to an application that uses the Device Manager, it is possible to transfer bonding information from the application to the bootloader. If the encryption keys are shared, both the application and the bootloader can reconnect to bonded devices. If no bonding information is available, the connection is re-established using directed advertising.</p>
+<p>Bonding information consists of the peer address, the Identity Resolving Key (IRK), and the Long Term Key (LTK) of the connected peer.</p>
+<p>If you include the file <code>dfu_app_handler.c</code> in your application, bonding information is automatically shared, and either directed advertising or whitelist advertising is used to re-establish the secure connection between the devices. Whitelist advertising is used if an Identity Resolving Key (IRK) has been distributed. In this case, the IRK of only this device is added to the whitelist, so that the device will allow connections only from the device that triggered the DFU mode. If the peer does not reconnect to the device, the system resets and loads the installed application again.</p>
+<p>The following figure shows the process of reconnecting to a bonded device:</p>
 <div class="image">
-<img src="dfu_transfer_ble_overview.svg" alt="dfu_transfer_ble_overview.svg"/>
+<img src="bledfu_bonding.svg" alt="bledfu_bonding.svg"/>
 <div class="caption">
-Architectural overview of the DFU process using the BLE transport protocol</div></div>
-<p>Alternatively, new images can be transferred using HCI over UART (serial transport). The HCI transport layer increases robustness of the transfer. See <a class="el" href="a00800.html">HCI Transport</a> for more information about UART_HCI, and <a class="el" href="a00102.html">Serial (HCI) packet format</a> for more information about the packet format.</p>
-<p>Serial transport does not use a SoftDevice. However, you must install a SoftDevice on your device to correctly create the Master Boot Record.</p>
-<p>The following figure shows a schematic overview of the DFU process using with UART.</p>
-<div class="image">
-<img src="dfu_transfer_serial_overview.svg" alt="dfu_transfer_serial_overview.svg"/>
-<div class="caption">
-Architectural overview of the DFU process using serial transfer</div></div>
- </div></div><!-- contents -->
+DFU on a bonded device</div></div>
+<p> In bootloader mode, the device is advertising with the same address as in application mode if the application supports Service Changed indications. Otherwise, changes to the application cannot be indicated, and therefore the device must advertise as a new device. This is accomplished by the device advertising with the address increased by 1.</p>
+<h1><a class="anchor" id="bledfu_appbonding_impl"></a>
+Implementation</h1>
+<p>The example bootloader uses a particular region of memory to pass the bonding information from the application to the bootloader. This memory region is designated at compile time not to be zero-initialized during a soft reset. To preserve the bonding information, the application performs a supervisor call (SVC) to the bootloader. The bootloader's SVC handler then copies the bonding information into the preserved memory region, so that the bootloader can read it back after the reset. A CRC is used to verify the integrity of the information.</p>
+<h2><a class="anchor" id="bledfu_appbonding_impl_app"></a>
+Implementation in the application</h2>
+<p>In the example application, the keys that are needed to re-establish the secure connection are retrieved from the Device Manager using the function <a class="el" href="a01228.html#ga5c6619805bf83fc6ddc2b33a81695bb7">dm_distributed_keys_get</a>. They are then passed from the application to the bootloader. The following code from <code>dfu_app_handler.c</code> shows how to implement bond sharing:</p>
+<div class="fragment"><div class="line">    err_code = <a class="code" href="a01228.html#ga248327374b34372f7515fddd49e08c47" title="Function for getting the corresponding dm_handle_t based on the connection handle.">dm_handle_get</a>(conn_handle, &amp;m_dm_handle);</div>
+<div class="line">    <span class="keywordflow">if</span> (err_code == <a class="code" href="a01051.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line">    {</div>
+<div class="line">        err_code = <a class="code" href="a01228.html#ga5c6619805bf83fc6ddc2b33a81695bb7" title="Function for getting distributed keys for a device.">dm_distributed_keys_get</a>(&amp;m_dm_handle, &amp;key_set);</div>
+<div class="line">        <span class="keywordflow">if</span> (err_code == <a class="code" href="a01051.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a>)</div>
+<div class="line">        {</div>
+<div class="line">            <a class="code" href="a00989.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
+<div class="line"></div>
+<div class="line">            m_peer_data.addr              = key_set.keys_central.p_id_key-&gt;id_addr_info;</div>
+<div class="line">            m_peer_data.irk               = key_set.keys_central.p_id_key-&gt;id_info;</div>
+<div class="line">            m_peer_data.enc_key.enc_info  = key_set.keys_periph.enc_key.p_enc_key-&gt;enc_info;</div>
+<div class="line">            m_peer_data.enc_key.master_id = key_set.keys_periph.enc_key.p_enc_key-&gt;master_id;</div>
+<div class="line"></div>
+<div class="line">            err_code = <a class="code" href="a01181.html#ga4a55b44e1a5c25ba2f88ec1d6071a0ec" title="SVC Function for setting peer data containing address, IRK, and LTK to establish bonded connection in...">dfu_ble_svc_peer_data_set</a>(&amp;m_peer_data);</div>
+<div class="line">            <a class="code" href="a00989.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
+<div class="line"></div>
+<div class="line">            app_context_data   = (<a class="code" href="a01179.html#ga9ba0681cf552c3b8f3ef9c1c35d49b29">DFU_APP_ATT_TABLE_CHANGED</a> &lt;&lt; <a class="code" href="a01179.html#gae4d83224a562ad15ffced4e677a950c2">DFU_APP_ATT_TABLE_POS</a>);</div>
+<div class="line">            app_context.len    = <span class="keyword">sizeof</span>(app_context_data);</div>
+<div class="line">            app_context.p_data = (uint8_t *)&amp;app_context_data;</div>
+<div class="line">            app_context.flags  = 0;</div>
+<div class="line"></div>
+<div class="line">            err_code = <a class="code" href="a01227.html#ga8e5dc36911e6ea1588eec9a3dc320943" title="Function for setting Application Context for a peer device identified by the &#39;p_handle&#39; parameter...">dm_application_context_set</a>(&amp;m_dm_handle, &amp;app_context);</div>
+<div class="line">            <a class="code" href="a00989.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">else</span></div>
+<div class="line">        {</div>
+<div class="line">            <span class="comment">// Keys were not available, thus we have a non-encrypted connection.</span></div>
+<div class="line">            err_code = <a class="code" href="a01228.html#gae6081bb278eb73552df98684c73c8e7a" title="Function for getting a peer&#39;s device address.">dm_peer_addr_get</a>(&amp;m_dm_handle, &amp;m_peer_data.addr);</div>
+<div class="line">            <a class="code" href="a00989.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
+<div class="line"></div>
+<div class="line">            err_code = <a class="code" href="a01181.html#ga4a55b44e1a5c25ba2f88ec1d6071a0ec" title="SVC Function for setting peer data containing address, IRK, and LTK to establish bonded connection in...">dfu_ble_svc_peer_data_set</a>(&amp;m_peer_data);</div>
+<div class="line">            <a class="code" href="a00989.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+</div><!-- fragment --><p> The <a class="el" href="a01181.html#ga4a55b44e1a5c25ba2f88ec1d6071a0ec">dfu_ble_svc_peer_data_set</a> function that is called in this example is a supervisor call to the bootloader. This means that the function is implemented in the bootloader code, but called from the application. For this SVC to be handled correctly, the application must know where to find the bootloader's SVC handler. To define its location, the application must call <a class="el" href="a01313.html#ga46d2ce943076d65947ea8919198be106">sd_softdevice_vector_table_base_set</a> with NRF_UICR-&gt;BOOTLOADERADDR as argument. See <code>dfu_app_handler.c</code> for the implementation in the example application.</p>
+<dl class="section note"><dt>Note</dt><dd>If <a class="el" href="a01313.html#ga46d2ce943076d65947ea8919198be106">sd_softdevice_vector_table_base_set</a> is not called with NRF_UICR-&gt;BOOTLOADERADDR as argument, the application will deadlock or behave erratically when <a class="el" href="a01181.html#ga4a55b44e1a5c25ba2f88ec1d6071a0ec">dfu_ble_svc_peer_data_set</a> is called.</dd></dl>
+<h2><a class="anchor" id="bledfu_appbonding_impl_bl"></a>
+Implementation in the bootloader</h2>
+<p>To ensure that the supervisor call is correctly handled by the bootloader's SVC handler and not the application's SVC handler, the bootloader must implement an SVC handler. In the example bootloader, the SVC handler (and also the <a class="el" href="a01181.html#ga4a55b44e1a5c25ba2f88ec1d6071a0ec">dfu_ble_svc_peer_data_set</a> function) is implemented in the file <code>dfu_ble_svc.c</code>.</p>
+<dl class="section note"><dt>Note</dt><dd>Make sure to implement an SVC handler in the bootloader. If no SVC handler is defined in the bootloader, the application will deadlock when <a class="el" href="a01181.html#ga4a55b44e1a5c25ba2f88ec1d6071a0ec">dfu_ble_svc_peer_data_set</a> is called. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00078.html">BLE DFU Bootloader</a></li><li class="navelem"><a class="el" href="a00086.html">Architecture</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00084.html">BLE DFU Bootloader</a></li><li class="navelem"><a class="el" href="a00088.html">Adding DFU Service support to an application</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -547,7 +547,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                 if (err_code == NRF_SUCCESS)
                 {
                     // Configure buttons with sense level low as wakeup source.
-                    err_code = bsp_buttons_enable((1 << BLE_BUTTON_ID) | (1 << GZLL_BUTTON_ID));
+                    // err_code = bsp_buttons_enable((1 << BLE_BUTTON_ID) | (1 << GZLL_BUTTON_ID));
 
 //                    nrf_gpio_cfg_sense_input(BLE_BUTTON_PIN_NO,
 //                                             BUTTON_PULL,
@@ -597,6 +597,9 @@ void ble_stack_start(void)
     // Enable BLE stack 
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
+#ifdef S130
+    ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
+#endif
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
     err_code = sd_ble_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);

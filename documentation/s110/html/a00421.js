@@ -1,9 +1,6 @@
 var a00421 =
 [
-    [ "firmware_id", "a00421.html#a71d3fb8b5eb37e1b988cf4d24e83ff05", null ],
-    [ "info_size", "a00421.html#a0dfa8dc981701b47ad619d778bb646bf", null ],
-    [ "magic_number", "a00421.html#a8e3c0ed915d2c32a3a486ce625155466", null ],
-    [ "reserved1", "a00421.html#aa17f21260d985fdbf5eeabd8ff4ab0ca", null ],
-    [ "reserved2", "a00421.html#ac3ab6d531e4101f61f2b86443d9abb06", null ],
-    [ "softdevice_size", "a00421.html#ab12be31117d5f9746bd9ea8920863540", null ]
+    [ "evt_type", "a00421.html#ac7e76a07c099aed4eb9d8180a15368d8", null ],
+    [ "packet", "a00421.html#a005a67172eb3d6a4645d536db7fbb98f", null ],
+    [ "packet_length", "a00421.html#ac31d16ccc1a5fc4bd8852c58d710f821", null ]
 ];

@@ -14,7 +14,7 @@ All rights reserved.
 #include "antfs_ota.h"
 #include "app_error.h"
 
-#include "dfu_types.h"                          //
+#include <dfu_types.h>                          //
 
 #include "version.c"
 

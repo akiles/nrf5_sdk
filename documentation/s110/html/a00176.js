@@ -1,7 +1,7 @@
 var a00176 =
 [
-    [ "bl_cccd_handle", "a00176.html#a2ea89dfa950963404b32410a8e42a04f", null ],
-    [ "bl_handle", "a00176.html#a58c7f1553ce38426e3656bd61bd21748", null ],
-    [ "conn_handle", "a00176.html#a97ef9e28546757bc5c42fc566e331380", null ],
-    [ "evt_handler", "a00176.html#a13ed1988cc9320c7eaad37ec21272201", null ]
+    [ "change_of_daylight_savings_time", "a00176.html#ac47badd1b38a18f2e81d38f7896b7b74", null ],
+    [ "change_of_time_zone", "a00176.html#ac0531a23749e261fb772fdb02e709604", null ],
+    [ "external_reference_time_update", "a00176.html#a126f627c419e90a8411f6ac226a61754", null ],
+    [ "manual_time_update", "a00176.html#a4c21a75f93fd632eab48571ae73207df", null ]
 ];

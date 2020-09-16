@@ -1,9 +1,6 @@
 var a00163 =
 [
-    [ "flags", "a00163.html#ae9bf42dc0e530824c93ec423e6539220", null ],
-    [ "handle", "a00163.html#a4b5cec7a8b33f482114d99026b2ee92d", null ],
-    [ "len", "a00163.html#a068c40f218ed3932901529ac05b69c21", null ],
-    [ "offset", "a00163.html#a85d01254a43068218061ab21acabe980", null ],
-    [ "p_value", "a00163.html#a361b91f9ee1961598bc9c94520f8004b", null ],
-    [ "write_op", "a00163.html#a2c42a23118699b0fab8f49f1d9b4b386", null ]
+    [ "conn_handle", "a00163.html#a2c0b8fc1f46e4360b34a1806061e828a", null ],
+    [ "p_actual_latency", "a00163.html#a769493b896a8e6709956d5248aaa94d6", null ],
+    [ "requested_latency", "a00163.html#ac06a0a4e53f12763e0966c9bff3e0545", null ]
 ];

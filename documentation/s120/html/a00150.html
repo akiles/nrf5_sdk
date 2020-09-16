@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gattc_evt_char_vals_read_rsp_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_evt_passkey_display_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,33 @@ $(document).ready(function(){initNavTree('a00150.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gattc_evt_char_vals_read_rsp_t Struct Reference<div class="ingroups"><a class="el" href="a00709.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_evt_passkey_display_t Struct Reference<div class="ingroups"><a class="el" href="a00935.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event structure for <a class="el" href="a00707.html#ggafd9b8b42eeb832d688e33f4561f97efcaab8322d0d775f2726cfc0215ef63f298">BLE_GATTC_EVT_CHAR_VALS_READ_RSP</a>.  
+<p>Event data for passkey display event.  
  <a href="a00150.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gattc.h&gt;</code></p>
+<p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a6ece59636f724d7a7759d4bc11cec8d9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00150.html#a6ece59636f724d7a7759d4bc11cec8d9">len</a></td></tr>
-<tr class="separator:a6ece59636f724d7a7759d4bc11cec8d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac586dcb02b8f378127157ee8c45abea9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00150.html#ac586dcb02b8f378127157ee8c45abea9">values</a> [1]</td></tr>
-<tr class="separator:ac586dcb02b8f378127157ee8c45abea9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1966df5e1f2fc8e4c30f0af7b16b71c2"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00150.html#a1966df5e1f2fc8e4c30f0af7b16b71c2">passkey</a> [6]</td></tr>
+<tr class="separator:a1966df5e1f2fc8e4c30f0af7b16b71c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event structure for <a class="el" href="a00707.html#ggafd9b8b42eeb832d688e33f4561f97efcaab8322d0d775f2726cfc0215ef63f298">BLE_GATTC_EVT_CHAR_VALS_READ_RSP</a>. </p>
+<div class="textblock"><p>Event data for passkey display event. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a6ece59636f724d7a7759d4bc11cec8d9"></a>
+<a class="anchor" id="a1966df5e1f2fc8e4c30f0af7b16b71c2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gattc_evt_char_vals_read_rsp_t::len</td>
+          <td class="memname">uint8_t ble_gap_evt_passkey_display_t::passkey[6]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Concatenated Attribute values length. </p>
-
-</div>
-</div>
-<a class="anchor" id="ac586dcb02b8f378127157ee8c45abea9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gattc_evt_char_vals_read_rsp_t::values[1]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Attribute values, variable length. </p>
+<p>6-digit passkey in ASCII ('0'-'9' digits only). </p>
 
 </div>
 </div>
@@ -156,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00150.html">ble_gattc_evt_char_vals_read_rsp_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00150.html">ble_gap_evt_passkey_display_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

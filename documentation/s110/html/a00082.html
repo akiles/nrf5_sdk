@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Adding DFU Service support to an application</title>
+<title>nRF51 SDK - S110 SoftDevice: Template Application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,21 +97,34 @@ $(document).ready(function(){initNavTree('a00082.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Adding DFU Service support to an application </div>  </div>
+<div class="title">Template Application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Instead of entering bootloader mode by pressing a button, you can also integrate BLE DFU Service support into an application and enable the application to automatically enter bootloader mode. Writing to the DFU Service will then trigger the application to restart in bootloader mode.</p>
-<p>The general concept of the Device Firmware Update is the same no matter if you use a button to enter bootloader mode or add BLE DFU Service support to the application. In both cases, a DFU bootloader is required, and the DFU is performed when the device is in bootloader mode. The only difference is how the device is put into bootloader mode.</p>
-<p>Adding BLE DFU Service support to an application is required whenever you want to be able to start bootloader mode and update a device without physical interaction. Potential reasons for this are, for example, that the device does not have a button or is not in reach.</p>
-<p>To get started, program and test the provided <a class="el" href="a00080.html">Example application</a>. Then check <a class="el" href="a00081.html">Extending your application</a> for detailed information on how to include BLE DFU Service support in your own application. <a class="el" href="a00083.html">Switching to bootloader/DFU mode</a> describes how to trigger bootloader/DFU mode.</p>
-<p>The example application supports <a class="el" href="a00079.html">Sharing bonding information</a>, which enables the DFU target to do directed advertising after bootloader mode is started, so that only the DFU controller can reconnect and the link is immediately re-encrypted. </p>
+<div class="textblock"><p>The Template Application is an application that you can use as a starting point for developing your own application, using the hardware delivered in the nRF51 Development Kit.</p>
+<dl class="section note"><dt>Note</dt><dd>The application will stop advertising after 3 minutes, and then go to system-off mode. To wake it up, press the button 1, and it will start advertising again.</dd></dl>
+<h1><a class="anchor" id="app_template_setup"></a>
+Setup</h1>
+<p>The name of the example is <b>ble_app_template_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\ble_peripheral\ble_app_template</code> </p>
+<p><b>Buttons assignments:</b></p>
+<ul>
+<li>Button 1: Wake up and start advertising.</li>
+</ul>
+<h1><a class="anchor" id="app_template_test"></a>
+Testing</h1>
+<p>Test the Template Application with the Master Control Panel by performing the following steps:</p>
+<ol type="1">
+<li>Compile and program the application. Observe that the <a class="el" href="a00062.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>Connect to the device from Master Control Panel (the device will be advertising as 'Nordic_Template'), then connect and perform service discovery. Observe that the <a class="el" href="a00062.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Disconnect, observe that the <a class="el" href="a00062.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated. You can wait for 3 minutes and observe that the <a class="el" href="a00062.html#BSP_INDICATE_IDLE">BSP_INDICATE_IDLE</a> is indicated.</li>
+<li>In system-off, press button 1, the application starts advertising again. </li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00078.html">BLE DFU Bootloader</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00064.html">BLE Peripheral</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

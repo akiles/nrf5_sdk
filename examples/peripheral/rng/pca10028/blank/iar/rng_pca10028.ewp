@@ -168,7 +168,7 @@
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
-		      <name>CCGuardCalls</name>
+          <name>CCGuardCalls</name>
           <state>1</state>
         </option>
         <option>
@@ -240,7 +240,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00000000</state>
+          <state>11111110</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -318,10 +318,10 @@
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\toolchain</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common</state>
           <state>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\gpiote</state>
           <state>$TOOLKIT_DIR$\CMSIS\Include</state>
         </option>
         <option>
@@ -347,11 +347,11 @@
         <option>
           <name>CCOptStrategy</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>3</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -422,7 +422,7 @@
         <option>
           <name>CCOptStrategySlave</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -479,7 +479,7 @@
           <state>0</state>
         </option>
         <option>
-		  <name>ADefines</name>
+      <name>ADefines</name>
           <state>BOARD_PCA10028</state>
           <state>BSP_DEFINES_ONLY</state>
           <state>NRF51</state>
@@ -702,7 +702,7 @@
         </option>
         <option>
           <name>IlinkMapFile</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkLogFile</name>
@@ -730,7 +730,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-		  <state>$PROJ_DIR$\rng_iar_nrf51.icf</state>
+      <state>$PROJ_DIR$\rng_iar_nrf51.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -986,9 +986,6 @@
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\fifo\app_fifo.c</name>
     </file>
     <file>
-    <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\gpiote\app_gpiote.c</name>
-    </file>
-    <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\libraries\util\app_util_platform.c</name>
     </file>
     <file>
@@ -1008,6 +1005,9 @@
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</name>
+    </file>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</name>
     </file>
     <file>
     <name>$PROJ_DIR$\..\..\..\..\..\..\components\drivers_nrf\rng\nrf_drv_rng.c</name>

@@ -1,10 +1,11 @@
 var a00694 =
 [
-    [ "Device Manager", "a00640.html", "a00640" ],
-    [ "Assert Handler for debug purposes.", "a00681.html", "a00681" ],
-    [ "DTM - Direct Test Mode", "a00682.html", "a00682" ],
-    [ "Error Log Module", "a00683.html", "a00683" ],
-    [ "Radio Notification Event Handler", "a00684.html", "a00684" ],
-    [ "BLE Date Time characteristic type", "a00685.html", "a00685" ],
-    [ "Flash Manager", "a00690.html", "a00690" ]
+    [ "Events, type definitions and API calls", "a00695.html", "a00695" ],
+    [ "General error codes", "a00697.html", "a00697" ],
+    [ "Module specific error code subranges", "a00698.html", "a00698" ],
+    [ "Bluetooth status codes", "a00737.html", "a00737" ],
+    [ "Module specific SVC, event and option number subranges", "a00739.html", "a00739" ],
+    [ "Common types and macro definitions", "a00740.html", "a00740" ],
+    [ "Message Sequence Charts", "a00752.html", "a00752" ],
+    [ "SoftDevice Global Error Codes", "a00745.html", "a00745" ]
 ];

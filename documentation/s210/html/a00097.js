@@ -1,6 +1,7 @@
 var a00097 =
 [
-    [ "len", "a00097.html#ae7fb48410ecb00dec1dca60d45cbc606", null ],
-    [ "ptr1", "a00097.html#a03e88994f8127e877c2fd08800e64768", null ],
-    [ "ptr2", "a00097.html#a3f670b76c31a7b6badf0bfadd1dc08b0", null ]
+    [ "frequency", "a00097.html#a457d72ae0c1ed0c8562820bf87e53f23", null ],
+    [ "interrupt_priority", "a00097.html#a1787fc9d0846f00fb4e62cd843e4a589", null ],
+    [ "scl", "a00097.html#add3d7a404b8d303f3d0acdf17950adb5", null ],
+    [ "sda", "a00097.html#a8bf729ba64bea480b0beb5193b23af67", null ]
 ];

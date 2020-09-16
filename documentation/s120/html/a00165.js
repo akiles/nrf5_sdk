@@ -1,9 +1,5 @@
 var a00165 =
 [
-    [ "rd_auth", "a00165.html#a0d2f2743a556d382513a43607a08c057", null ],
-    [ "read_perm", "a00165.html#a61a4ef92eba3a3b2b3f616557f6b74aa", null ],
-    [ "vlen", "a00165.html#a921e414734cd784e0c3b7309d3a14f39", null ],
-    [ "vloc", "a00165.html#abbd6b9b2d75565fc6fd66074a47308c7", null ],
-    [ "wr_auth", "a00165.html#affcd971025cbaa9525c2ed9ff95d913c", null ],
-    [ "write_perm", "a00165.html#af04a8d72352f3c02dbef021b360f477f", null ]
+    [ "interval_s", "a00165.html#aac6428abddc0bf75fc092a553312661a", null ],
+    [ "p_irk", "a00165.html#a03cc47081b7b470ad239d1bf9055ea34", null ]
 ];

@@ -353,7 +353,7 @@
               <MiscControls>--c99</MiscControls>
               <Define> BSP_DEFINES_ONLY BOARD_PCA10028 NRF51</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\config;..\..;..\..\..\..\bsp;..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\components\drivers_nrf\qdec;..\..\..\..\..\components\drivers_nrf\config;..\..\..\..\..\components\device;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\libraries\util;..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</IncludePath>
+              <IncludePath>..\..\config;..\..;..\..\..\..\bsp;..\..\..\..\..\components\libraries\util;..\..\..\..\..\components\drivers_nrf\qdec;..\..\..\..\..\components\drivers_nrf\config;..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\components\device;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -444,6 +444,11 @@
               <FilePath>..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</FilePath>
             </File>
             <File>
+              <FileName>nrf_drv_gpiote.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</FilePath>
+            </File>
+            <File>
               <FileName>nrf_drv_qdec.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\components\drivers_nrf\qdec\nrf_drv_qdec.c</FilePath>
@@ -457,16 +462,6 @@
               <FileName>app_error.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\components\libraries\util\app_error.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_gpiote_fast_detect.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\gpiote\app_gpiote_fast_detect.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_util_platform.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\util\app_util_platform.c</FilePath>
             </File>
             <File>
               <FileName>nrf_assert.c</FileName>

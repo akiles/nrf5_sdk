@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_bas_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,112 +106,123 @@ $(document).ready(function(){initNavTree('a00213.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_evt_t Struct Reference<div class="ingroups"><a class="el" href="a01040.html">Structures</a></div></div>  </div>
+<div class="title">ble_bas_s Struct Reference<div class="ingroups"><a class="el" href="a01194.html">Battery Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Common BLE Event type, wrapping the module specific event reports.  
+<p>Battery Service structure. This contains various status information for the service.  
  <a href="a00213.html#details">More...</a></p>
 
-<p><code>#include &lt;ble.h&gt;</code></p>
+<p><code>#include &lt;ble_bas.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a31f5fb5f33b8020c1b91639d048a6efa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00212.html">ble_evt_hdr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00213.html#a31f5fb5f33b8020c1b91639d048a6efa">header</a></td></tr>
-<tr class="separator:a31f5fb5f33b8020c1b91639d048a6efa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef8699c52739460f3052387e62eeacc8"><td class="memItemLeft" ><a class="anchor" id="aef8699c52739460f3052387e62eeacc8"></a>
-union {</td></tr>
-<tr class="memitem:a43f000c576e11d2d073dd8ec4a664f17"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00184.html">ble_common_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00213.html#a65014fa31bf6c86c113ef47dc929a755">common_evt</a></td></tr>
-<tr class="separator:a43f000c576e11d2d073dd8ec4a664f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0921d9b115f6e3a1087eb76fd9970761"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00239.html">ble_gap_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00213.html#a67ca1f9db570d1c2f196c0a316151af5">gap_evt</a></td></tr>
-<tr class="separator:a0921d9b115f6e3a1087eb76fd9970761"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae51e0f476f92f690b5a2eed7e5c2b607"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00332.html">ble_l2cap_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00213.html#a615ab3df54ef7363a90f915d6440ce1a">l2cap_evt</a></td></tr>
-<tr class="separator:ae51e0f476f92f690b5a2eed7e5c2b607"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee61690c0630fb6a024512e7049a0f84"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00271.html">ble_gattc_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00213.html#a2bdcb3c197239b4e5957d89bb0f26161">gattc_evt</a></td></tr>
-<tr class="separator:aee61690c0630fb6a024512e7049a0f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3873ad6b17158dd15c611a38fa9a0da3"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00290.html">ble_gatts_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00213.html#aea997556a147ad5541998f13699e27c1">gatts_evt</a></td></tr>
-<tr class="separator:a3873ad6b17158dd15c611a38fa9a0da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef8699c52739460f3052387e62eeacc8"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>evt</b></td></tr>
-<tr class="separator:aef8699c52739460f3052387e62eeacc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84827e57e33bae7cf628c4c5826b1ac4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01194.html#ga07fd95f8afa679110161bb8391496abd">ble_bas_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00213.html#a84827e57e33bae7cf628c4c5826b1ac4">evt_handler</a></td></tr>
+<tr class="separator:a84827e57e33bae7cf628c4c5826b1ac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8c61a4fe0b938cc1b47989d67a20c4c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00213.html#af8c61a4fe0b938cc1b47989d67a20c4c">service_handle</a></td></tr>
+<tr class="separator:af8c61a4fe0b938cc1b47989d67a20c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade3d3767c6bec8d2c8fc37ed8303d4fb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00317.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00213.html#ade3d3767c6bec8d2c8fc37ed8303d4fb">battery_level_handles</a></td></tr>
+<tr class="separator:ade3d3767c6bec8d2c8fc37ed8303d4fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70d124cbed946045d133aa76acd9581a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00213.html#a70d124cbed946045d133aa76acd9581a">report_ref_handle</a></td></tr>
+<tr class="separator:a70d124cbed946045d133aa76acd9581a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90db9b31ace864a1952fd520957cb831"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00213.html#a90db9b31ace864a1952fd520957cb831">battery_level_last</a></td></tr>
+<tr class="separator:a90db9b31ace864a1952fd520957cb831"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4906d1aa3c702704f4392d90cd8102f0"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00213.html#a4906d1aa3c702704f4392d90cd8102f0">conn_handle</a></td></tr>
+<tr class="separator:a4906d1aa3c702704f4392d90cd8102f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a877690be6248d047f102fc238ab0c527"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00213.html#a877690be6248d047f102fc238ab0c527">is_notification_supported</a></td></tr>
+<tr class="separator:a877690be6248d047f102fc238ab0c527"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Common BLE Event type, wrapping the module specific event reports. </p>
+<div class="textblock"><p>Battery Service structure. This contains various status information for the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a65014fa31bf6c86c113ef47dc929a755"></a>
+<a class="anchor" id="ade3d3767c6bec8d2c8fc37ed8303d4fb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00184.html">ble_common_evt_t</a> ble_evt_t::common_evt</td>
+          <td class="memname"><a class="el" href="a00317.html">ble_gatts_char_handles_t</a> ble_bas_s::battery_level_handles</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Common Event, evt_id in BLE_EVT_* series. </p>
+<p>Handles related to the Battery Level characteristic. </p>
 
 </div>
 </div>
-<a class="anchor" id="a67ca1f9db570d1c2f196c0a316151af5"></a>
+<a class="anchor" id="a90db9b31ace864a1952fd520957cb831"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00239.html">ble_gap_evt_t</a> ble_evt_t::gap_evt</td>
+          <td class="memname">uint8_t ble_bas_s::battery_level_last</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GAP originated event, evt_id in BLE_GAP_EVT_* series. </p>
+<p>Last Battery Level measurement passed to the Battery Service. </p>
 
 </div>
 </div>
-<a class="anchor" id="a2bdcb3c197239b4e5957d89bb0f26161"></a>
+<a class="anchor" id="a4906d1aa3c702704f4392d90cd8102f0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00271.html">ble_gattc_evt_t</a> ble_evt_t::gattc_evt</td>
+          <td class="memname">uint16_t ble_bas_s::conn_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GATT client originated event, evt_id in BLE_GATTC_EVT* series. </p>
+<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
 
 </div>
 </div>
-<a class="anchor" id="aea997556a147ad5541998f13699e27c1"></a>
+<a class="anchor" id="a84827e57e33bae7cf628c4c5826b1ac4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00290.html">ble_gatts_evt_t</a> ble_evt_t::gatts_evt</td>
+          <td class="memname"><a class="el" href="a01194.html#ga07fd95f8afa679110161bb8391496abd">ble_bas_evt_handler_t</a> ble_bas_s::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GATT server originated event, evt_id in BLE_GATTS_EVT* series. </p>
+<p>Event handler to be called for handling events in the Battery Service. </p>
 
 </div>
 </div>
-<a class="anchor" id="a31f5fb5f33b8020c1b91639d048a6efa"></a>
+<a class="anchor" id="a877690be6248d047f102fc238ab0c527"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00212.html">ble_evt_hdr_t</a> ble_evt_t::header</td>
+          <td class="memname">bool ble_bas_s::is_notification_supported</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Event header. </p>
+<p>TRUE if notification of Battery Level is supported. </p>
 
 </div>
 </div>
-<a class="anchor" id="a615ab3df54ef7363a90f915d6440ce1a"></a>
+<a class="anchor" id="a70d124cbed946045d133aa76acd9581a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00332.html">ble_l2cap_evt_t</a> ble_evt_t::l2cap_evt</td>
+          <td class="memname">uint16_t ble_bas_s::report_ref_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>L2CAP originated event, evt_id in BLE_L2CAP_EVT* series. </p>
+<p>Handle of the Report Reference descriptor. </p>
+
+</div>
+</div>
+<a class="anchor" id="af8c61a4fe0b938cc1b47989d67a20c4c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_bas_s::service_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle of Battery Service (as provided by the BLE stack). </p>
 
 </div>
 </div>
@@ -220,8 +231,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00213.html">ble_evt_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00213.html">ble_bas_s</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

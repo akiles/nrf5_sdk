@@ -1,5 +1,6 @@
 var a00397 =
 [
-    [ "error_correction", "a00397.html#af58a8aa9061b77b4f2cd95080a438352", null ],
-    [ "interrupt_priority", "a00397.html#afbf813c769e9c5f2929fe116ed6b882b", null ]
+    [ "long_push_event", "a00397.html#a84f09881275b5407455ec261aab66667", null ],
+    [ "push_event", "a00397.html#abff83314b5d5f68fb1f670c97ef52fc5", null ],
+    [ "release_event", "a00397.html#a2bc0087aeda2cd59f3ebfdb92df12b44", null ]
 ];

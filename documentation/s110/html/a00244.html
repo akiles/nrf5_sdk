@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_opt_ch_map_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_dis_sys_id_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,61 +106,48 @@ $(document).ready(function(){initNavTree('a00244.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_opt_ch_map_t Struct Reference<div class="ingroups"><a class="el" href="a01044.html">Structures</a></div></div>  </div>
+<div class="title">ble_dis_sys_id_t Struct Reference<div class="ingroups"><a class="el" href="a01199.html">Device Information Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Channel Map option. Used with <a class="el" href="a01041.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> to get the current channel map or <a class="el" href="a01041.html#ga511d431bc3d9ccf9bef09ad20cbf855a">sd_ble_opt_set</a> to set a new channel map. When setting the channel map, it applies to all current and future connections. When getting the current channel map, it applies to a single connection and the connection handle must be supplied.  
+<p>System ID parameters.  
  <a href="a00244.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gap.h&gt;</code></p>
+<p><code>#include &lt;ble_dis.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:adbf93719ab5531a19758504bdeb6c469"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00244.html#adbf93719ab5531a19758504bdeb6c469">conn_handle</a></td></tr>
-<tr class="separator:adbf93719ab5531a19758504bdeb6c469"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71bb5ea1d8eecc86f819a1f5a3807818"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00244.html#a71bb5ea1d8eecc86f819a1f5a3807818">ch_map</a> [5]</td></tr>
-<tr class="separator:a71bb5ea1d8eecc86f819a1f5a3807818"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1f58152dab08532bc52edd976c2f51c"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00244.html#ae1f58152dab08532bc52edd976c2f51c">manufacturer_id</a></td></tr>
+<tr class="separator:ae1f58152dab08532bc52edd976c2f51c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a452099e99c407f16e24299e57e53af46"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00244.html#a452099e99c407f16e24299e57e53af46">organizationally_unique_id</a></td></tr>
+<tr class="separator:a452099e99c407f16e24299e57e53af46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Channel Map option. Used with <a class="el" href="a01041.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> to get the current channel map or <a class="el" href="a01041.html#ga511d431bc3d9ccf9bef09ad20cbf855a">sd_ble_opt_set</a> to set a new channel map. When setting the channel map, it applies to all current and future connections. When getting the current channel map, it applies to a single connection and the connection handle must be supplied. </p>
-<dl class="section note"><dt>Note</dt><dd>Setting the channel map may take some time, depending on connection parameters. The time taken may be different for each connection and the get operation will return the previous channel map until the new one has taken effect.</dd>
-<dd>
-After setting the channel map, by spec it can not be set again until at least 1 s has passed. See Bluetooth Specification Version 4.1 Volume 2, Part E, Section 7.3.46.</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Get or set successful. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00866.html#ga5d2d8608f6d6a0329f58961a969e946e" title="Busy.">NRF_ERROR_BUSY</a></td><td>Channel map was set again before enough time had passed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>Invalid state to perform operation. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00817.html#gabdc27cbc2ffac4a50640a0ce992c03af">BLE_ERROR_INVALID_CONN_HANDLE</a></td><td>Invalid connection handle supplied for get. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00866.html#gaacf52836cc3860c5ffd4e129f725f138" title="Not supported.">NRF_ERROR_NOT_SUPPORTED</a></td><td>Returned by sd_ble_opt_set in peripheral-only SoftDevices. </td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="textblock"><p>System ID parameters. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a71bb5ea1d8eecc86f819a1f5a3807818"></a>
+<a class="anchor" id="ae1f58152dab08532bc52edd976c2f51c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_opt_ch_map_t::ch_map[5]</td>
+          <td class="memname">uint64_t ble_dis_sys_id_t::manufacturer_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Channel Map (37-bit). </p>
+<p>Manufacturer ID. Only 5 LSOs shall be used. </p>
 
 </div>
 </div>
-<a class="anchor" id="adbf93719ab5531a19758504bdeb6c469"></a>
+<a class="anchor" id="a452099e99c407f16e24299e57e53af46"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gap_opt_ch_map_t::conn_handle</td>
+          <td class="memname">uint32_t ble_dis_sys_id_t::organizationally_unique_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Connection Handle (only applicable for get) </p>
+<p>Organizationally unique ID. Only 3 LSOs shall be used. </p>
 
 </div>
 </div>
@@ -169,8 +156,8 @@ After setting the channel map, by spec it can not be set again until at least 1 
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00244.html">ble_gap_opt_ch_map_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00244.html">ble_dis_sys_id_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

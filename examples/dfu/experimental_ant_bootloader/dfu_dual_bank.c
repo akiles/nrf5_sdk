@@ -13,7 +13,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "dfu.h"
-#include "dfu_types.h"
+#include <dfu_types.h>
 #include "nrf.h"
 #include "nrf51.h"
 #include "nrf51_bitfields.h"

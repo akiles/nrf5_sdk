@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: dm_application_param_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_nus_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,64 +106,124 @@ $(document).ready(function(){initNavTree('a00373.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dm_application_param_t Struct Reference<div class="ingroups"><a class="el" href="a00982.html">Device Manager Data Types</a></div></div>  </div>
+<div class="title">ble_nus_s Struct Reference<div class="ingroups"><a class="el" href="a01253.html">Nordic UART Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Application Registration Parameters.  
+<p>Nordic UART Service structure.  
  <a href="a00373.html#details">More...</a></p>
 
-<p><code>#include &lt;device_manager.h&gt;</code></p>
+<p><code>#include &lt;ble_nus.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a46b0eb7fa4e86eaa2c5f793b2750da38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00982.html#ga3126c8f560fd793097a8ee19dc9bf2f0">dm_event_cb_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00373.html#a46b0eb7fa4e86eaa2c5f793b2750da38">evt_handler</a></td></tr>
-<tr class="separator:a46b0eb7fa4e86eaa2c5f793b2750da38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01e7f59d291d6e3962ab36b22a7d1683"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00373.html#a01e7f59d291d6e3962ab36b22a7d1683">service_type</a></td></tr>
-<tr class="separator:a01e7f59d291d6e3962ab36b22a7d1683"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a763895cc4380ab52a871637ad5156d94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00256.html">ble_gap_sec_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00373.html#a763895cc4380ab52a871637ad5156d94">sec_param</a></td></tr>
-<tr class="separator:a763895cc4380ab52a871637ad5156d94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8f53c69b9fe61ec89594c1cd0ba7832"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00373.html#aa8f53c69b9fe61ec89594c1cd0ba7832">uuid_type</a></td></tr>
+<tr class="separator:aa8f53c69b9fe61ec89594c1cd0ba7832"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d129d53a387dcfb5ba89d5470134142"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00373.html#a4d129d53a387dcfb5ba89d5470134142">service_handle</a></td></tr>
+<tr class="separator:a4d129d53a387dcfb5ba89d5470134142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bac23a03714af564607eb0e07ffc964"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00317.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00373.html#a1bac23a03714af564607eb0e07ffc964">tx_handles</a></td></tr>
+<tr class="separator:a1bac23a03714af564607eb0e07ffc964"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5324863bc68492bd5e642a4919766e8b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00317.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00373.html#a5324863bc68492bd5e642a4919766e8b">rx_handles</a></td></tr>
+<tr class="separator:a5324863bc68492bd5e642a4919766e8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5589730c5497c481f0f99ca6227c391e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00373.html#a5589730c5497c481f0f99ca6227c391e">conn_handle</a></td></tr>
+<tr class="separator:a5589730c5497c481f0f99ca6227c391e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a726d493a3aac2e394939ea4337168d02"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00373.html#a726d493a3aac2e394939ea4337168d02">is_notification_enabled</a></td></tr>
+<tr class="separator:a726d493a3aac2e394939ea4337168d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3498c57b658b1b9f56f378fa6bb045de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01253.html#ga7d7f1e71e9a1916d993023871b08b4b6">ble_nus_data_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00373.html#a3498c57b658b1b9f56f378fa6bb045de">data_handler</a></td></tr>
+<tr class="separator:a3498c57b658b1b9f56f378fa6bb045de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Application Registration Parameters. </p>
-<p>Parameters needed by the module when registering with it. </p>
+<div class="textblock"><p>Nordic UART Service structure. </p>
+<p>This structure contains status information related to the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a46b0eb7fa4e86eaa2c5f793b2750da38"></a>
+<a class="anchor" id="a5589730c5497c481f0f99ca6227c391e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00982.html#ga3126c8f560fd793097a8ee19dc9bf2f0">dm_event_cb_t</a> dm_application_param_t::evt_handler</td>
+          <td class="memname">uint16_t ble_nus_s::conn_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Event Handler to be registered. It will receive asynchronous notification from the module, see <a class="el" href="a00978.html">Device Manager Events</a> for asynchronous events. </p>
+<p>Handle of the current connection (as provided by the S110 SoftDevice). BLE_CONN_HANDLE_INVALID if not in a connection. </p>
 
 </div>
 </div>
-<a class="anchor" id="a763895cc4380ab52a871637ad5156d94"></a>
+<a class="anchor" id="a3498c57b658b1b9f56f378fa6bb045de"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00256.html">ble_gap_sec_params_t</a> dm_application_param_t::sec_param</td>
+          <td class="memname"><a class="el" href="a01253.html#ga7d7f1e71e9a1916d993023871b08b4b6">ble_nus_data_handler_t</a> ble_nus_s::data_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Security parameters to be used for the application. </p>
+<p>Event handler to be called for handling received data. </p>
 
 </div>
 </div>
-<a class="anchor" id="a01e7f59d291d6e3962ab36b22a7d1683"></a>
+<a class="anchor" id="a726d493a3aac2e394939ea4337168d02"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t dm_application_param_t::service_type</td>
+          <td class="memname">bool ble_nus_s::is_notification_enabled</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Bit mask identifying services that the application intends to support for all peers. </p>
+<p>Variable to indicate if the peer has enabled notification of the RX characteristic. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5324863bc68492bd5e642a4919766e8b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00317.html">ble_gatts_char_handles_t</a> ble_nus_s::rx_handles</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handles related to the RX characteristic (as provided by the S110 SoftDevice). </p>
+
+</div>
+</div>
+<a class="anchor" id="a4d129d53a387dcfb5ba89d5470134142"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_nus_s::service_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle of Nordic UART Service (as provided by the S110 SoftDevice). </p>
+
+</div>
+</div>
+<a class="anchor" id="a1bac23a03714af564607eb0e07ffc964"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00317.html">ble_gatts_char_handles_t</a> ble_nus_s::tx_handles</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handles related to the TX characteristic (as provided by the S110 SoftDevice). </p>
+
+</div>
+</div>
+<a class="anchor" id="aa8f53c69b9fe61ec89594c1cd0ba7832"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_nus_s::uuid_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UUID type for Nordic UART Service Base UUID. </p>
 
 </div>
 </div>
@@ -172,8 +232,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00373.html">dm_application_param_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00373.html">ble_nus_s</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: nrf_gzll_device_tx_info_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dfu_device_info_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,48 @@ $(document).ready(function(){initNavTree('a00404.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_gzll_device_tx_info_t Struct Reference<div class="ingroups"><a class="el" href="a00950.html">Gazell Link Layer</a></div></div>  </div>
+<div class="title">dfu_device_info_t Struct Reference<div class="ingroups"><a class="el" href="a01183.html">Init packet handling in DFU.</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Data structure containing information about the last packet transmission.  
+<p>Structure holding basic device information settings.  
  <a href="a00404.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_gzll.h&gt;</code></p>
+<p><code>#include &lt;dfu_init.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aba51c6772b538a69a1582bacb6c5c940"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aba51c6772b538a69a1582bacb6c5c940"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00404.html#aba51c6772b538a69a1582bacb6c5c940">payload_received_in_ack</a></td></tr>
-<tr class="memdesc:aba51c6772b538a69a1582bacb6c5c940"><td class="mdescLeft">&#160;</td><td class="mdescRight">A payload was received in the ACK. <br/></td></tr>
-<tr class="separator:aba51c6772b538a69a1582bacb6c5c940"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9627a112584a28e5c3935e801eebbe6f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9627a112584a28e5c3935e801eebbe6f"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00404.html#a9627a112584a28e5c3935e801eebbe6f">num_tx_attempts</a></td></tr>
-<tr class="memdesc:a9627a112584a28e5c3935e801eebbe6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of attempts used on previous Device packet transmission. <br/></td></tr>
-<tr class="separator:a9627a112584a28e5c3935e801eebbe6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7de898270a84874aa41f00361e6d801c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7de898270a84874aa41f00361e6d801c"></a>
-uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00404.html#a7de898270a84874aa41f00361e6d801c">num_channel_switches</a></td></tr>
-<tr class="memdesc:a7de898270a84874aa41f00361e6d801c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of channel switches needed during previous packet transmission. <br/></td></tr>
-<tr class="separator:a7de898270a84874aa41f00361e6d801c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac337221c62fa79c2ed581793d1c758b2"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00404.html#ac337221c62fa79c2ed581793d1c758b2">rssi</a></td></tr>
-<tr class="memdesc:ac337221c62fa79c2ed581793d1c758b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Received signal strength indicator in dBm.  <a href="#ac337221c62fa79c2ed581793d1c758b2">More...</a><br/></td></tr>
-<tr class="separator:ac337221c62fa79c2ed581793d1c758b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a77c3ef129c3527681c089fce4b95a5"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00404.html#a1a77c3ef129c3527681c089fce4b95a5">device_type</a></td></tr>
+<tr class="separator:a1a77c3ef129c3527681c089fce4b95a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35291383c3fc311def52bf828fc99386"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00404.html#a35291383c3fc311def52bf828fc99386">device_rev</a></td></tr>
+<tr class="separator:a35291383c3fc311def52bf828fc99386"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Data structure containing information about the last packet transmission. </p>
+<div class="textblock"><p>Structure holding basic device information settings. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ac337221c62fa79c2ed581793d1c758b2"></a>
+<a class="anchor" id="a35291383c3fc311def52bf828fc99386"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int16_t nrf_gzll_device_tx_info_t::rssi</td>
+          <td class="memname">uint16_t dfu_device_info_t::device_rev</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Device revision (2 bytes), for example major revision 1, minor revision 0. This number must be defined by the customer before production. It can be located in UICR or FICR. </p>
 
-<p>Received signal strength indicator in dBm. </p>
-<dl class="section see"><dt>See Also</dt><dd>nrf_gzll_enable_rssi(). </dd></dl>
+</div>
+</div>
+<a class="anchor" id="a1a77c3ef129c3527681c089fce4b95a5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t dfu_device_info_t::device_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Device type (2 bytes), for example Heart Rate. This number must be defined by the customer before production. It can be located in UICR or FICR. </p>
 
 </div>
 </div>
@@ -156,8 +156,8 @@ uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00404.html">nrf_gzll_device_tx_info_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00404.html">dfu_device_info_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

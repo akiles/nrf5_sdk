@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: dfu_update_status_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_nus_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,108 +106,34 @@ $(document).ready(function(){initNavTree('a00372.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dfu_update_status_t Struct Reference<div class="ingroups"><a class="el" href="a00944.html">Types and definitions.</a></div></div>  </div>
+<div class="title">ble_nus_init_t Struct Reference<div class="ingroups"><a class="el" href="a01253.html">Nordic UART Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure holding DFU complete event.  
+<p>Nordic UART Service initialization structure.  
  <a href="a00372.html#details">More...</a></p>
 
-<p><code>#include &lt;dfu_types.h&gt;</code></p>
+<p><code>#include &lt;ble_nus.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac8f74ba3fe25a5db401c156ad55360b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00944.html#ga53842ec56bb0c14aa506551bfdc0c652">dfu_update_status_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00372.html#ac8f74ba3fe25a5db401c156ad55360b1">status_code</a></td></tr>
-<tr class="separator:ac8f74ba3fe25a5db401c156ad55360b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad23c5de3d64733cea90d62aece2cf641"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00372.html#ad23c5de3d64733cea90d62aece2cf641">app_crc</a></td></tr>
-<tr class="separator:ad23c5de3d64733cea90d62aece2cf641"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92316af9b2c88f35230d266ee6f632d5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00372.html#a92316af9b2c88f35230d266ee6f632d5">sd_size</a></td></tr>
-<tr class="separator:a92316af9b2c88f35230d266ee6f632d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af34c4a8d41f65c0d8c1c431809417254"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00372.html#af34c4a8d41f65c0d8c1c431809417254">bl_size</a></td></tr>
-<tr class="separator:af34c4a8d41f65c0d8c1c431809417254"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a3071d6e7b79e59aae9aa9022b462c1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00372.html#a5a3071d6e7b79e59aae9aa9022b462c1">app_size</a></td></tr>
-<tr class="separator:a5a3071d6e7b79e59aae9aa9022b462c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa68f84c4e5bd2283886d3dce05001262"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00372.html#aa68f84c4e5bd2283886d3dce05001262">sd_image_start</a></td></tr>
-<tr class="separator:aa68f84c4e5bd2283886d3dce05001262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90887a591bd183b070e63b95223886e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01253.html#ga7d7f1e71e9a1916d993023871b08b4b6">ble_nus_data_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00372.html#a90887a591bd183b070e63b95223886e1">data_handler</a></td></tr>
+<tr class="separator:a90887a591bd183b070e63b95223886e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure holding DFU complete event. </p>
+<div class="textblock"><p>Nordic UART Service initialization structure. </p>
+<p>This structure contains the initialization information for the service. The application must fill this structure and pass it to the service using the <a class="el" href="a01253.html#ga2df986dbfb31c18cd0ceb0cb732b2fa3">ble_nus_init</a> function. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ad23c5de3d64733cea90d62aece2cf641"></a>
+<a class="anchor" id="a90887a591bd183b070e63b95223886e1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t dfu_update_status_t::app_crc</td>
+          <td class="memname"><a class="el" href="a01253.html#ga7d7f1e71e9a1916d993023871b08b4b6">ble_nus_data_handler_t</a> ble_nus_init_t::data_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>CRC of the recieved application. </p>
-
-</div>
-</div>
-<a class="anchor" id="a5a3071d6e7b79e59aae9aa9022b462c1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t dfu_update_status_t::app_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of the recieved Application. </p>
-
-</div>
-</div>
-<a class="anchor" id="af34c4a8d41f65c0d8c1c431809417254"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t dfu_update_status_t::bl_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of the recieved BootLoader. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa68f84c4e5bd2283886d3dce05001262"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t dfu_update_status_t::sd_image_start</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Location in flash where the received SoftDevice image is stored. </p>
-
-</div>
-</div>
-<a class="anchor" id="a92316af9b2c88f35230d266ee6f632d5"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t dfu_update_status_t::sd_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of the recieved SoftDevice. </p>
-
-</div>
-</div>
-<a class="anchor" id="ac8f74ba3fe25a5db401c156ad55360b1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00944.html#ga53842ec56bb0c14aa506551bfdc0c652">dfu_update_status_code_t</a> dfu_update_status_t::status_code</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Device Firmware Update status. </p>
+<p>Event handler to be called for handling received data. </p>
 
 </div>
 </div>
@@ -216,8 +142,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00372.html">dfu_update_status_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00372.html">ble_nus_init_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

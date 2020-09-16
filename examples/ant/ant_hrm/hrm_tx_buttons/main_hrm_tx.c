@@ -25,7 +25,6 @@ All rights reserved.
 #include "app_error.h"
 #include "app_timer.h"
 #include "app_button.h"
-#include "app_gpiote.h"
 #include "bsp.h"
 #include "nordic_common.h"
 #include "app_util.h"
@@ -39,8 +38,6 @@ All rights reserved.
 #define APP_TIMER_PRESCALER           0                                         /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_MAX_TIMERS          (BSP_APP_TIMERS_NUMBER + 1)               /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE       2u                                        /**< Size of timer operation queues. */
-
-#define APP_GPIOTE_MAX_USERS          1u                                        /**< Maximum number of users of the GPIOTE handler. */
 
 static const uint8_t  m_network_key[] = HRMTX_NETWORK_KEY;                      /**< ANT PLUS network key. */
 static volatile bool  m_is_ant_event_received;                                  /**< Flag value to determine is ANT stack interrupt received. */
@@ -146,9 +143,6 @@ void main_hrm_tx_run(void)
   
     // Initialize timer module.
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
-  
-    // Initialize GPIOTE module.  
-    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
   
     err_code = bsp_init(BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), button_event_handler);
     APP_ERROR_CHECK(err_code); 

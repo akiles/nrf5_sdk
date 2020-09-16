@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_enable_params_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: SPI_5W RAW protocol</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,61 +96,91 @@ $(document).ready(function(){initNavTree('a00094.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_enable_params_t Struct Reference<div class="ingroups"><a class="el" href="a00698.html">Structures</a></div></div>  </div>
+<div class="title">SPI_5W RAW protocol </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>BLE GATTS init options.  
- <a href="a00094.html#details">More...</a></p>
-
-<p><code>#include &lt;ble.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:ac14566b7abd979db7845a24bf6b11ee4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00107.html">ble_gap_enable_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00094.html#ac14566b7abd979db7845a24bf6b11ee4">gap_enable_params</a></td></tr>
-<tr class="separator:ac14566b7abd979db7845a24bf6b11ee4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2de18bc975930cadc754c5e3468c870"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00170.html">ble_gatts_enable_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00094.html#ad2de18bc975930cadc754c5e3468c870">gatts_enable_params</a></td></tr>
-<tr class="separator:ad2de18bc975930cadc754c5e3468c870"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>BLE GATTS init options. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ac14566b7abd979db7845a24bf6b11ee4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00107.html">ble_gap_enable_params_t</a> ble_enable_params_t::gap_enable_params</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>GAP init options <a class="el" href="a00107.html">ble_gap_enable_params_t</a> </p>
-
-</div>
-</div>
-<a class="anchor" id="ad2de18bc975930cadc754c5e3468c870"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00170.html">ble_gatts_enable_params_t</a> ble_enable_params_t::gatts_enable_params</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>GATTS init options <a class="el" href="a00170.html">ble_gatts_enable_params_t</a>. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><h1><a class="anchor" id="SPI_5W_RAW_PROTOCOL"></a>
+SPI_5W RAW Protocol</h1>
+<p><b>SPI_5W RAW</b> protocol implements <a class="el" href="a00079.html">Serialization PHY</a> <b>API</b> for <b>SPI</b> interface. <br/>
+ In 5W implementation <b>SPI</b> interface uses 5 lines: four standard (<b>CLK</b>,<b>MOSI</b>,<b>MISO</b>,<b>/CS</b>) and one additional - <b>/REQ</b>. <br/>
+ Application processor is a <b>SPI</b> bus master, <b>nRF51</b> chip acts as a slave device. <br/>
+</p>
+<p>In principle, the operation of <b>SPI_5W</b> is similar to standard 6 wire implementation ( <a class="el" href="a00093.html">SPI RAW protocol</a> ). <br/>
+ The major difference is lack of <b>/RDY</b> line, which in 6 wire implementation is used to indicate readiness of slave device for a data transaction. <br/>
+ Without <b>/RDY</b> line master device has to speculate by initiating transfer without prior knowledge if slave device is ready to accept data. <br/>
+ To distinguish a transactions with slave device, which is ready for data, from transactions with slave device, which is not ready for data, a signalling on MISO line is used. <br/>
+</p>
+<p><b>nRF51 SPI</b> slave device hardware clocks out <b>DEFAULT</b> byte (programmed as <b>[0xFF]</b>) , when device is not ready for data transaction. <br/>
+ Since, only <b>MISO</b> line is used for signalling of <b>READY</b> state, it works slightly differently for writing and reading operation. <br/>
+</p>
+<p>For packet writing, signalling is straightforward, when slave device is ready for data, it clocks out zero <b>[0x00] </b>for all data bytes. <br/>
+ The same rule applies when packet is read, but only for the first byte in each transaction. <br/>
+ Physical layer driver precedes each reading transaction with <b><em>'guard byte'</em></b> <b>[0x00]</b>. <br/>
+</p>
+<p>If during read/write operation master detect invalid (nonzero) <b><em>'guard byte'</em></b>, transaction is aborted (<b>/CS</b> is deasserted) and master device initiates a new transaction. <br/>
+ Backoff is determined by time needed for processing interrupts and resetting internal state machines. <br/>
+</p>
+<p>The size of <b>MTU</b> defines size of physical frames. Due to the <b><em>'guard byte'</em></b> overhead, the effective frame size is smaller by 1 byte in reading transactions. <br/>
+ The <b>SPI_5W</b> driver is controlled by <b>'<b>SPI_5W</b>'</b> flag. <br/>
+ If <b>__SPI_5W__</b> flag is not defined, line <b>/RDY</b> is used as in standard 6 wire implementation, yet with frames including <b><em>'guard byte'</em></b>. <br/>
+</p>
+<h1><a class="anchor" id="SPI_5W_RAW_BUS_TX"></a>
+SPI_5W RAW - packet writing</h1>
+<p>Packets are transmitted in a following format :<br/>
+</p>
+<p><b>TX_RAW_PACKET = [TX_HEADER][TX_FRAME][TX_FRAME][TX_FRAME]... </b><br/>
+</p>
+<div class="image">
+<img src="spi_5W_tx_medium.png" alt="spi_5W_tx_medium.png"/>
+<div class="caption">
+Figure 1: Transmission of single packet </div></div>
+<p>Packet length is send as a <b>[TX_HEADER]=[0x0004]</b> in the first transaction. <br/>
+ Since, first byte of data clocked in <b>[0x0000]</b> is a valid <b><em>'guard byte'</em></b>, transaction is considered to be successful.<br/>
+ Second transaction attempts to transfer payload <b>[TX_FRAME]=[0x00, 0x78, 0x41, 0x03]</b>, but due to invalid <b><em>'guard byte'</em></b>, is aborted. <br/>
+ During third transaction valid <b><em>'guard byte'</em></b> is clocked in and transaction is completed. <br/>
+ Note, that <b>/RDY</b> line is deasserted during transaction, because it is not driven by slave device.</p>
+<h1><a class="anchor" id="SPI_5W_RAW_BUS_RX"></a>
+SPI_5W RAW packet reading</h1>
+<p>Packets are received in a following format: <br/>
+</p>
+<p><b>SPI_RAW_PACKET = [ZERO_HEADER][RX_HEADER][RX_FRAME][RX_FRAME][RX_FRAME]... </b> <br/>
+</p>
+<div class="image">
+<img src="spi_5W_rx_medium.png" alt="spi_5W_rx_medium.png"/>
+<div class="caption">
+Figure 2: Reception of the packet </div></div>
+<p>Slave request for reading of a packet is signalled by assertion of <b>/REQ</b> line. <br/>
+ When master device is ready to read a packet, it sends a <b>[ZERO_HEADER] =[0x0000]</b>. <br/>
+ <b>[ZERO_HEADER]</b> is used as indication, that master device initiates a packet read operation. <br/>
+ When <b>[ZERO_HEADER]</b> is detected by slave, <b>/REQ</b> line is deasserted.<br/>
+ In the next transaction <b>[RX_HEADER] =[0x00][0x0006]</b> is read. <br/>
+ First byte in <b>[RX_HEADER]</b> is a valid <em><b>'guard byte'</b></em>, which indicates that remainder of payload has meaningful data. <br/>
+ In third transaction <em><b>'guard byte'</b></em> together with a payload of 6 bytes <b>[0x00][0x01, 0x78, 0x00, 0x00, 0x00, 0x00]</b> is clocked in.</p>
+<h1><a class="anchor" id="SPI_5W_RAW_DRIVER_MASTER"></a>
+master device driver</h1>
+<p><b>SPI_5W RAW</b> protocol for master device is implemented in ser_phy_nrf51_spi_5W_master file. <br/>
+ The operation of ser_phy_switch_state() is almost identical as for standard driver <a class="el" href="a00093.html#SPI_RAW_DRIVER_MASTER">Master device driver</a>, except for the fact, that slave device is assumed to be always <b>READY</b>. Therefore, when interpreting a graph, one should assume that, <b>RDY</b> flag is always <b>TRUE</b> and there will be no <b>RDY_EVT</b> event. Once transaction is scheduled by <b>PHY</b> driver, its execution is controlled by adaptation state machine, which captures events from hardware driver. Operation of adaptation state machine is illustrated by <a href="http://en.wikipedia.org/wiki/State_diagram_(UML)">UML state diagram .</a> <br/>
+ </p>
+<div class="image">
+<img src="adapt_5W_uml1_medium.png" alt="adapt_5W_uml1_medium.png"/>
+<div class="caption">
+Figure 3: UML state machine for adaptation layer</div></div>
+<p> If <b>__SPI_5W__</b> flag is not defined, adaptation layer is disabled and line <b>/RDY</b> is used as in standard 6 wire implementation<br/>
+</p>
+<h1><a class="anchor" id="SPI_5W_RAW_DRIVER_SLAVE"></a>
+slave device driver</h1>
+<p><b>SPI RAW </b> protocol for slave device is implemented in ser_phy_nrf51_spi_5W_slave file. <br/>
+ The operation spi_slave_event_handle() is almost identical as in standard driver <a class="el" href="a00093.html#SPI_RAW_DRIVER_SLAVE">Slave device driver</a>, except for the line <b>/RDY</b> is not driven. <br/>
+ If <b>__SPI_5W__</b> flag is not defined, line <b>/RDY</b> is used as in standard 6 wire implementation<br/>
+ </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00094.html">ble_enable_params_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00076.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00079.html">Serialization PHY</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:45 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,5 +1,6 @@
 var a00083 =
 [
-    [ "error_correction", "a00083.html#af58a8aa9061b77b4f2cd95080a438352", null ],
-    [ "interrupt_priority", "a00083.html#afbf813c769e9c5f2929fe116ed6b882b", null ]
+    [ "reference", "a00083.html#a52dc01c53528ebb080237d4f94d5ef09", null ],
+    [ "resolution", "a00083.html#aeabcce3f7814da03f223ad2a992865d1", null ],
+    [ "scaling", "a00083.html#a280529b228ebb915939ab2b9720d73da", null ]
 ];

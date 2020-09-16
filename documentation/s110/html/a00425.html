@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: spi_slave_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ieee_float32_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,48 @@ $(document).ready(function(){initNavTree('a00425.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">spi_slave_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00786.html">Software controlled SPI Slave driver.</a></div></div>  </div>
+<div class="title">ieee_float32_t Struct Reference<div class="ingroups"><a class="el" href="a01205.html">Health Thermometer Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Struct containing event context from the SPI slave driver.  
+<p>FLOAT format (IEEE-11073 32-bit FLOAT, defined as a 32-bit value with a 24-bit mantissa and an 8-bit exponent.  
  <a href="a00425.html#details">More...</a></p>
 
-<p><code>#include &lt;spi_slave.h&gt;</code></p>
+<p><code>#include &lt;ble_hts.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:acbc2e2d26c15219ff593c40aabab3815"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00786.html#ga8c080d3b9fbe05708273eadef309094e">spi_slave_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00425.html#acbc2e2d26c15219ff593c40aabab3815">evt_type</a></td></tr>
-<tr class="separator:acbc2e2d26c15219ff593c40aabab3815"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7b54206d997d599a2c3ee5751c208c58"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00425.html#a7b54206d997d599a2c3ee5751c208c58">rx_amount</a></td></tr>
-<tr class="separator:a7b54206d997d599a2c3ee5751c208c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a080b88a554c371f8220691fc28117ebd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00425.html#a080b88a554c371f8220691fc28117ebd">tx_amount</a></td></tr>
-<tr class="separator:a080b88a554c371f8220691fc28117ebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2b0d21fa7152a4afd8d98ec81bbe15a"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00425.html#ad2b0d21fa7152a4afd8d98ec81bbe15a">exponent</a></td></tr>
+<tr class="separator:ad2b0d21fa7152a4afd8d98ec81bbe15a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af54051e1c850e7ca43fc5e7b49c91261"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00425.html#af54051e1c850e7ca43fc5e7b49c91261">mantissa</a></td></tr>
+<tr class="separator:af54051e1c850e7ca43fc5e7b49c91261"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Struct containing event context from the SPI slave driver. </p>
+<div class="textblock"><p>FLOAT format (IEEE-11073 32-bit FLOAT, defined as a 32-bit value with a 24-bit mantissa and an 8-bit exponent. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="acbc2e2d26c15219ff593c40aabab3815"></a>
+<a class="anchor" id="ad2b0d21fa7152a4afd8d98ec81bbe15a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00786.html#ga8c080d3b9fbe05708273eadef309094e">spi_slave_evt_type_t</a> spi_slave_evt_t::evt_type</td>
+          <td class="memname">int8_t ieee_float32_t::exponent</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of event. </p>
+<p>Base 10 exponent </p>
 
 </div>
 </div>
-<a class="anchor" id="a7b54206d997d599a2c3ee5751c208c58"></a>
+<a class="anchor" id="af54051e1c850e7ca43fc5e7b49c91261"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t spi_slave_evt_t::rx_amount</td>
+          <td class="memname">int32_t ieee_float32_t::mantissa</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of bytes received in last transaction (parameter is only valid upon <a class="el" href="a00786.html#gga8c080d3b9fbe05708273eadef309094eabe9f17960cda631b4c223f50e09eff9c">SPI_SLAVE_XFER_DONE</a> event). </p>
-
-</div>
-</div>
-<a class="anchor" id="a080b88a554c371f8220691fc28117ebd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t spi_slave_evt_t::tx_amount</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Number of bytes transmitted in last transaction (parameter is only valid upon <a class="el" href="a00786.html#gga8c080d3b9fbe05708273eadef309094eabe9f17960cda631b4c223f50e09eff9c">SPI_SLAVE_XFER_DONE</a> event). </p>
+<p>Mantissa, should be using only 24 bits </p>
 
 </div>
 </div>
@@ -171,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00425.html">spi_slave_evt_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00425.html">ieee_float32_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

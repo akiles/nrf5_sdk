@@ -13,22 +13,20 @@
 #ifndef NRF_DRV_CONFIG_H
 #define NRF_DRV_CONFIG_H
 
-#include "app_util_platform.h"
-#include "nrf_clock.h"
-#include "nrf_gpio.h"
-#include "nrf_timer.h"
-#include "nrf_rtc.h"
-#include "nrf_rng.h"
-#include "nrf_qdec.h"
-#include "nrf_lpcomp.h"
-#include "nrf_wdt.h"
-#include <stdbool.h>
-
 /* CLOCK */
 #define CLOCK_CONFIG_XTAL_FREQ          NRF_CLOCK_XTALFREQ_16MHz
 #define CLOCK_CONFIG_LF_SRC             NRF_CLOCK_LF_SRC_Xtal
 #define CLOCK_CONFIG_LF_RC_CAL_INTERVAL RC_2000MS_CALIBRATION_INTERVAL
 #define CLOCK_CONFIG_IRQ_PRIORITY       APP_IRQ_PRIORITY_LOW
+
+/* GPIOTE */
+#define GPIOTE_ENABLED 1
+
+#if (GPIOTE_ENABLED == 1)
+#define GPIOTE_CONFIG_USE_SWI_EGU false
+#define GPIOTE_CONFIG_IRQ_PRIORITY APP_IRQ_PRIORITY_HIGH
+#define GPIOTE_CONFIG_NUM_OF_LOW_POWER_EVENTS 2
+#endif
 
 /* TIMER */
 #define TIMER0_ENABLED 1

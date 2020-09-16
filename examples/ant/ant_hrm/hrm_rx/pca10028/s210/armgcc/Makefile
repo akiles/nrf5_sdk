@@ -39,10 +39,12 @@ remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-ou
 C_SOURCE_FILES += \
 ../../../../../../../components/libraries/util/app_error.c \
 ../../../../../../../components/libraries/fifo/app_fifo.c \
-../../../../../../../components/libraries/gpiote/app_gpiote.c \
 ../../../../../../../components/libraries/timer/app_timer.c \
+../../../../../../../components/libraries/util/nrf_assert.c \
 ../../../../../../../components/drivers_nrf/uart/app_uart_fifo.c \
 ../../../../../../../components/drivers_nrf/hal/nrf_delay.c \
+../../../../../../../components/drivers_nrf/common/nrf_drv_common.c \
+../../../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c \
 ../../../hrm_rx.c \
 ../../../main.c \
 ../../../retarget.c \
@@ -52,8 +54,11 @@ C_SOURCE_FILES += \
 ASM_SOURCE_FILES  = ../../../../../../../components/toolchain/gcc/gcc_startup_nrf51.s
 
 #includes common to all targets
-INC_PATHS  = -I../../../../../../../components/device
-INC_PATHS += -I../../../../../../../components/libraries/gpiote
+INC_PATHS  = -I../../../config
+INC_PATHS += -I../../../../../../../components/device
+INC_PATHS += -I../../../../../../../components/drivers_nrf/gpiote
+INC_PATHS += -I../../../../../../../components/drivers_nrf/common
+INC_PATHS += -I../../../../../../../components/drivers_nrf/config
 INC_PATHS += -I../../../../../../../components/toolchain
 INC_PATHS += -I../../../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../../../components/drivers_nrf/uart
@@ -74,6 +79,7 @@ BUILD_DIRECTORIES := $(sort $(OBJECT_DIRECTORY) $(OUTPUT_BINARY_DIRECTORY) $(LIS
 
 #flags common to all targets
 CFLAGS  = -DTRACE_UART
+CFLAGS += -DSWI_DISABLE0
 CFLAGS += -DBOARD_PCA10028
 CFLAGS += -DSOFTDEVICE_PRESENT
 CFLAGS += -DTRACE_HRM_PAGE_1
@@ -91,7 +97,7 @@ CFLAGS += -Wall -Werror -O3
 CFLAGS += -mfloat-abi=soft
 # keep every function in separate section. This will allow linker to dump unused functions
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -flto -fno-builtin
+CFLAGS += -fno-builtin --short-enums
 
 # keep every function in separate section. This will allow linker to dump unused functions
 LDFLAGS += -Xlinker -Map=$(LISTING_DIRECTORY)/$(OUTPUT_FILENAME).map
@@ -105,6 +111,7 @@ LDFLAGS += --specs=nano.specs -lc -lnosys
 # Assembler flags
 ASMFLAGS += -x assembler-with-cpp
 ASMFLAGS += -DTRACE_UART
+ASMFLAGS += -DSWI_DISABLE0
 ASMFLAGS += -DBOARD_PCA10028
 ASMFLAGS += -DSOFTDEVICE_PRESENT
 ASMFLAGS += -DTRACE_HRM_PAGE_1

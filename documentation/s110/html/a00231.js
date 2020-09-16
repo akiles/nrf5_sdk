@@ -1,8 +1,8 @@
 var a00231 =
 [
-    [ "conn_params", "a00231.html#a0b48983984c9a6eca0b81380f8af8a05", null ],
-    [ "irk_match", "a00231.html#ade7ff1956c46e2832bf82c95711a408f", null ],
-    [ "irk_match_idx", "a00231.html#a40ac77b4be795c7085f8eece5adc9d73", null ],
-    [ "own_addr", "a00231.html#abe43eb1ef406537f10a3173f851852bf", null ],
-    [ "peer_addr", "a00231.html#a2107b9536488cbcb75ca3f059e5ab72e", null ]
+    [ "conn_handle", "a00231.html#aeef0bb9260018febc5b92af0d5359e9b", null ],
+    [ "cts_cccd_handle", "a00231.html#a14d458eaa378edf691dec5bbb5c6e453", null ],
+    [ "current_time_handle", "a00231.html#aa0866b1353b97df6deece0172c0cc3dd", null ],
+    [ "error_handler", "a00231.html#aa4032c144fac9fbf1ae0d84ef377caf5", null ],
+    [ "evt_handler", "a00231.html#a046c1b0b4fe1c7e83680b9654963b156", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Link Loss Service</title>
+<title>nRF51 SDK - S110 SoftDevice: Device/Host example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,20 +97,24 @@ $(document).ready(function(){initNavTree('a00136.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Link Loss Service </div>  </div>
+<div class="title">Device/Host example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This module implements the Link Loss Service with the Alert Level characteristic. During initialization it adds the Link Loss Service and Alert Level characteristic to the BLE stack database.</p>
-<p>The application must supply an event handler for receiving Link Loss Service events. Using this handler, the service will notify the application when the link has been lost, and which Alert Level has been set.</p>
-<p>The service also provides a function for letting the application poll the current value of the Alert Level characteristic.</p>
-<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Link Loss Service module by calling <a class="el" href="a00967.html#ga8016405e451656f510b244e4cbe09653" title="Function for handling the Application&#39;s BLE Stack events.">ble_lls_on_ble_evt()</a> from the <a class="el" href="a00948.html">SoftDevice Event Handler</a> callback. </dd></dl>
+<div class="textblock"><p><b>Device</b> </p>
+<p>This project requires that a Host running this example example be used as a counterpart for receiving the data. This can be on either nRF51 device or a nRF24Lxx device running this example in the nRFgo SDK.</p>
+<p>This example sends a packet and adds a new packet to the TX queue every time it receives an ACK. Before adding a packet to the TX queue, the contents of the GPIO Port BUTTONS is copied to the first payload byte (byte 0). When an ACK is received, the contents of the first payload byte of the ACK are output on GPIO Port LEDS.</p>
+<p>The name of the example is <b>gzll_device_ack_payload_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\properitary_rf\gzll\gzll_ack_payload</code> </p>
+<p><b>Host</b> </p>
+<p>This project requires that a Device running this example be used as a counterpart for receiving the data. This can be on either nRF51 device or a nRF24Lxx device running this example in the nRFgo SDK.</p>
+<p>This example listens for a packet and sends an ACK when a packet is received. The contents of the first payload byte of the received packet is output on the GPIO Port BUTTONS. The contents of GPIO Port LEDS are sent in the first payload byte (byte 0) of the ACK packet.</p>
+<p>The name of the example is <b>gzll_host_ack_payload_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\properitary_rf\gzll\gzll_ack_payload</code> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00116.html">BLE Services</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00142.html">Nordic proprietary protocols</a></li><li class="navelem"><a class="el" href="a00134.html">Gazell</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

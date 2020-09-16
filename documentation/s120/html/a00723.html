@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Types</title>
+<title>nRF51 SDK - S120 SoftDevice: GATT Execute Write flags</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,28 +97,20 @@ $(document).ready(function(){initNavTree('a00723.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Types<div class="ingroups"><a class="el" href="a00568.html">Master Boot Record API</a></div></div>  </div>
+<div class="title">GATT Execute Write flags<div class="ingroups"><a class="el" href="a00938.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html">sd_mbr_command_copy_sd_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This command copies part of a new SoftDevice The destination area is erased before copying. If dst is in the middle of a flash page, that whole flash page will be erased. If (dst+len) is in the middle of a flash page, that whole flash page will be erased.  <a href="a00237.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00235.html">sd_mbr_command_compare_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This command works like memcmp, but takes the length in words.  <a href="a00235.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00236.html">sd_mbr_command_copy_bl_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This command copies a new BootLoader. With this command, destination of BootLoader is always the address written in NRF_UICR-&gt;BOOTADDR.  <a href="a00236.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00239.html">sd_mbr_command_vector_table_base_set_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the base address of the interrupt vector table for interrupts forwarded from the MBR.  <a href="a00239.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00238.html">sd_mbr_command_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gafad654e82156e3953a749394c4989a1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafad654e82156e3953a749394c4989a1b"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_GATT_EXEC_WRITE_FLAG_PREPARED_CANCEL</b>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:gafad654e82156e3953a749394c4989a1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga40747f153640ff0bdaab2d69eef8647e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga40747f153640ff0bdaab2d69eef8647e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BLE_GATT_EXEC_WRITE_FLAG_PREPARED_WRITE</b>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga40747f153640ff0bdaab2d69eef8647e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 </div><!-- contents -->
@@ -126,7 +118,7 @@ Data Structures</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:46 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

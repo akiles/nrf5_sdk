@@ -34,10 +34,10 @@
 #include "ble_app_gzll_ui.h"
 #include "boards.h"
 #include "app_timer.h"
-#include "app_gpiote.h"
 #include "app_util.h"
 #include "ble_app_gzll_common.h"
 #include "bsp.h"
+#include "nrf_drv_gpiote.h"
 
 #define DEAD_BEEF  0xDEADBEEF   /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
@@ -68,15 +68,6 @@ static void timers_init(void)
     // Initialize timer module, making it use the scheduler
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
 }
-
-
-/**@brief Function for initializing GPIOTE module.
- */
-static void gpiote_init(void)
-{
-    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
-}
-
 
 /**@brief Function for the Power Management.
  */
@@ -114,7 +105,6 @@ int main(void)
     
     ble_stack_start();
     timers_init();
-    gpiote_init();
     bsp_init_app();
     ble_hrs_app_start();
     
@@ -130,6 +120,7 @@ int main(void)
                 // Stop all heart rate functionality before disabling the SoftDevice.
                 ble_hrs_app_stop();
                 
+                nrf_drv_gpiote_uninit();
                 // Disable the S110 stack.
                 ble_stack_stop();
                 err_code = bsp_indication_set(BSP_INDICATE_IDLE);
@@ -137,7 +128,6 @@ int main(void)
                 // Enable Gazell.
                 gzll_app_start();
                 timers_init();
-                gpiote_init();
                 bsp_init_app();
             }
             else if (running_mode == BLE)
@@ -149,7 +139,6 @@ int main(void)
                 // Re-enable the S110 stack.
                 ble_stack_start();
                 timers_init();
-                gpiote_init();
                 bsp_init_app();
                 ble_hrs_app_start();
             }

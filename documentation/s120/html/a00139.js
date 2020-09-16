@@ -1,5 +1,4 @@
 var a00139 =
 [
-    [ "keys_central", "a00139.html#a823705c8aecd73949bb7d7b0f2639c0f", null ],
-    [ "keys_periph", "a00139.html#a129763caaa3dc397a06a4e4757f1aac9", null ]
+    [ "role", "a00139.html#acc6caaca1efb0836d6c9a0258a28e8ad", null ]
 ];

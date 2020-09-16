@@ -1,40 +1,73 @@
 var a00963 =
 [
-    [ "ble_hrs_evt_t", "a00318.html", [
-      [ "evt_type", "a00318.html#aa66cdb9dcfb0d14b84933eed8ef6d369", null ]
+    [ "spi_master_config_t", "a00477.html", [
+      [ "SPI_CONFIG_CPHA", "a00477.html#a8d9ec5e520efd6528eac731dc6ec1d09", null ],
+      [ "SPI_CONFIG_CPOL", "a00477.html#afcfa3b91400e01c58ed4bcb01579957b", null ],
+      [ "SPI_CONFIG_ORDER", "a00477.html#a9ae7b60e2bf798c6c3c2a31e05d71436", null ],
+      [ "SPI_CPHA", "a00477.html#a19f2a3a33b059fe627b89a04bdcd69b6", null ],
+      [ "SPI_CPOL", "a00477.html#af4d3bd41e35948de16b495e1fe29d867", null ],
+      [ "SPI_DisableAllIRQ", "a00477.html#a8eb5716e03de5b39ef991a7fe237b77d", null ],
+      [ "SPI_Freq", "a00477.html#afd21a8a469598aaa408f4e13a9a3040f", null ],
+      [ "SPI_ORDER", "a00477.html#a38633561e69f0d3e8dbb8a14c34fa61f", null ],
+      [ "SPI_Pin_MISO", "a00477.html#aee3ebe39323764d06cef34ab601ed870", null ],
+      [ "SPI_Pin_MOSI", "a00477.html#a104ebda3a0069d2dc638022dd4e4d385", null ],
+      [ "SPI_Pin_SCK", "a00477.html#a0beff1248c5fd9d9f257fc2c3ea12a84", null ],
+      [ "SPI_Pin_SS", "a00477.html#a0203f17b181806c009086cce9c5c044c", null ],
+      [ "SPI_PriorityIRQ", "a00477.html#ae73b65ac984bdc5b1855cb026009ff0e", null ]
     ] ],
-    [ "ble_hrs_init_t", "a00319.html", [
-      [ "evt_handler", "a00319.html#aa86b9c7d2205607e9e77fa9c3affabbe", null ],
-      [ "hrs_bsl_attr_md", "a00319.html#a12b40292268a248ca7341f0298d16b1a", null ],
-      [ "hrs_hrm_attr_md", "a00319.html#a8023c653b5f45b8fd6de1fc61761275a", null ],
-      [ "is_sensor_contact_supported", "a00319.html#af531586afe7aa4c124e96e04d42e70d1", null ],
-      [ "p_body_sensor_location", "a00319.html#a6950ba718a00b8236331be362d3a9beb", null ]
+    [ "spi_master_evt_t", "a00478.html", [
+      [ "data", "a00478.html#a800d239d1224cc1226201c6b9a635713", null ],
+      [ "data_count", "a00478.html#a370358835ed2aa53bcc515894b13eb87", null ],
+      [ "evt_type", "a00478.html#a622197dded7bfa292535944e6870c5f7", null ],
+      [ "type", "a00478.html#a6d7cb2ed26034e0c1cb5dcb0022a612a", null ]
     ] ],
-    [ "ble_hrs_s", "a00320.html", [
-      [ "bsl_handles", "a00320.html#a0a32b7e1cf6a5f95cdeeb6eaa8f6f6ba", null ],
-      [ "conn_handle", "a00320.html#a3d918e6a8f1da592ea67134cb9c9fec9", null ],
-      [ "evt_handler", "a00320.html#abd7c3e92fc72df788563a53bd0f4ce2d", null ],
-      [ "hrcp_handles", "a00320.html#a1c58eabf826182923b1f2ed209f8dc0e", null ],
-      [ "hrm_handles", "a00320.html#a77fcb24345f20bd721cf5a2820749875", null ],
-      [ "is_expended_energy_supported", "a00320.html#ac2328b5880df56c0afca889faaac0cab", null ],
-      [ "is_sensor_contact_detected", "a00320.html#a63f11f789786cf4e44bae53c8f63c55e", null ],
-      [ "is_sensor_contact_supported", "a00320.html#aa373c36f6b186c6d6a2846535cf431e3", null ],
-      [ "rr_interval", "a00320.html#aaae77371d110359230bee5c06d9f1e4f", null ],
-      [ "rr_interval_count", "a00320.html#a9cf8168d7866d6530c9763a0953bb8d2", null ],
-      [ "service_handle", "a00320.html#adaa286c0fe8805c891b2b4160ca4ac0b", null ]
+    [ "SPI_DEFAULT_TX_BYTE", "a00963.html#ga6ab8549e69d7db67767780b4a437e871", null ],
+    [ "SPI_MASTER_INIT_DEFAULT", "a00963.html#gac60ab1614b729be681ca7268fee84350", null ],
+    [ "SPI_PIN_DISCONNECTED", "a00963.html#ga8e14bea8a6a4f612ee61ad0e6b1c42a4", null ],
+    [ "spi_master_event_handler_t", "a00963.html#ga2df76693a9ed10e7d44b0e1663b50738", null ],
+    [ "spi_master_evt_type_t", "a00963.html#ga8e658ee16bfb5beb4d00e27c93f68f96", null ],
+    [ "spi_master_evt_type_t", "a00963.html#ga31240c0ee79ef65d920c9d3fa8899789", [
+      [ "SPI_MASTER_EVT_TRANSFER_STARTED", "a00963.html#ga31240c0ee79ef65d920c9d3fa8899789a24504bd3bcb0bb7778ee2b99dfb1f4d4", null ],
+      [ "SPI_MASTER_EVT_TRANSFER_COMPLETED", "a00963.html#ga31240c0ee79ef65d920c9d3fa8899789ac7b903657b890c123f4b51fd2a26e53e", null ],
+      [ "SPI_MASTER_EVT_TRANSFER_ABORTED", "a00963.html#ga31240c0ee79ef65d920c9d3fa8899789ad0cc67e8670c97871ca89da95f024d03", null ],
+      [ "SPI_MASTER_EVT_TRANSFER_RESTARTED", "a00963.html#ga31240c0ee79ef65d920c9d3fa8899789a400353916204f619a2576b167f65d084", null ],
+      [ "SPI_MASTER_EVT_FIRST_BYTE_RECEIVED", "a00963.html#ga31240c0ee79ef65d920c9d3fa8899789a451dd18e393c493a8311f670af245ca4", null ],
+      [ "SPI_MASTER_EVT_TYPE_MAX", "a00963.html#ga31240c0ee79ef65d920c9d3fa8899789aa4eba2079274bf69027092844ac7d161", null ],
+      [ "SPI_MASTER_EVT_TRANSFER_STARTED", "a00963.html#ga31240c0ee79ef65d920c9d3fa8899789a24504bd3bcb0bb7778ee2b99dfb1f4d4", null ],
+      [ "SPI_MASTER_EVT_TRANSFER_COMPLETED", "a00963.html#ga31240c0ee79ef65d920c9d3fa8899789ac7b903657b890c123f4b51fd2a26e53e", null ],
+      [ "SPI_MASTER_EVT_TYPE_MAX", "a00963.html#ga31240c0ee79ef65d920c9d3fa8899789aa4eba2079274bf69027092844ac7d161", null ],
+      [ "SPI_MASTER_EVT_TRANSFER_STARTED", "a00963.html#ga31240c0ee79ef65d920c9d3fa8899789a24504bd3bcb0bb7778ee2b99dfb1f4d4", null ],
+      [ "SPI_MASTER_EVT_TRANSFER_COMPLETED", "a00963.html#ga31240c0ee79ef65d920c9d3fa8899789ac7b903657b890c123f4b51fd2a26e53e", null ],
+      [ "SPI_MASTER_EVT_TRANSFER_ABORTED", "a00963.html#ga31240c0ee79ef65d920c9d3fa8899789ad0cc67e8670c97871ca89da95f024d03", null ],
+      [ "SPI_MASTER_EVT_TRANSFER_RESTARTED", "a00963.html#ga31240c0ee79ef65d920c9d3fa8899789a400353916204f619a2576b167f65d084", null ],
+      [ "SPI_MASTER_EVT_FIRST_BYTE_RECEIVED", "a00963.html#ga31240c0ee79ef65d920c9d3fa8899789a451dd18e393c493a8311f670af245ca4", null ],
+      [ "SPI_MASTER_EVT_TYPE_MAX", "a00963.html#ga31240c0ee79ef65d920c9d3fa8899789aa4eba2079274bf69027092844ac7d161", null ]
     ] ],
-    [ "BLE_HRS_MAX_BUFFERED_RR_INTERVALS", "a00963.html#ga2e829f32fd9d57d18d1e8daa7956dee5", null ],
-    [ "ble_hrs_evt_handler_t", "a00963.html#ga85836949ab0f55e7ffcaec72dd0ee6e1", null ],
-    [ "ble_hrs_evt_type_t", "a00963.html#gaee495052c855cd5345f7301b594763c9", [
-      [ "BLE_HRS_EVT_NOTIFICATION_ENABLED", "a00963.html#ggaee495052c855cd5345f7301b594763c9a0f13cf6877038b174544d95ee3a40894", null ],
-      [ "BLE_HRS_EVT_NOTIFICATION_DISABLED", "a00963.html#ggaee495052c855cd5345f7301b594763c9a1ed0b327eecae450aa039af15ddae345", null ]
+    [ "spi_master_hw_instance_t", "a00963.html#ga84f5e5074c1cb0163acc71cd9b4d1107", [
+      [ "SPI_MASTER_0", "a00963.html#ga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d", null ],
+      [ "SPI_MASTER_1", "a00963.html#ga84f5e5074c1cb0163acc71cd9b4d1107a83453ab7546115900d25a83c533fb0fc", null ],
+      [ "SPI_MASTER_HW_ENABLED_COUNT", "a00963.html#ga84f5e5074c1cb0163acc71cd9b4d1107ad189c52211b6de22a7e6aed4d078406a", null ],
+      [ "SPI_MASTER_0", "a00963.html#ga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d", null ],
+      [ "SPI_MASTER_1", "a00963.html#ga84f5e5074c1cb0163acc71cd9b4d1107a83453ab7546115900d25a83c533fb0fc", null ],
+      [ "SPI_MASTER_HW_ENABLED_COUNT", "a00963.html#ga84f5e5074c1cb0163acc71cd9b4d1107ad189c52211b6de22a7e6aed4d078406a", null ],
+      [ "SPI_MASTER_0", "a00963.html#ga84f5e5074c1cb0163acc71cd9b4d1107a1a637e7960b8f43e412847d118af139d", null ],
+      [ "SPI_MASTER_1", "a00963.html#ga84f5e5074c1cb0163acc71cd9b4d1107a83453ab7546115900d25a83c533fb0fc", null ],
+      [ "SPI_MASTER_HW_ENABLED_COUNT", "a00963.html#ga84f5e5074c1cb0163acc71cd9b4d1107ad189c52211b6de22a7e6aed4d078406a", null ]
     ] ],
-    [ "ble_hrs_body_sensor_location_set", "a00963.html#gab3ec66c7419f5c79ad54f849353e8aea", null ],
-    [ "ble_hrs_heart_rate_measurement_send", "a00963.html#gabe5fed48baeb4a518a51bd7e2e5f010e", null ],
-    [ "ble_hrs_init", "a00963.html#ga94256c7eb29129ff352ca53adf1ad5b8", null ],
-    [ "ble_hrs_on_ble_evt", "a00963.html#gac50e029608199cc8d52463acb3e8a02e", null ],
-    [ "ble_hrs_rr_interval_add", "a00963.html#gaea316a9c9503571b143d93086295f61a", null ],
-    [ "ble_hrs_rr_interval_buffer_is_full", "a00963.html#gaf207a34d16fbee25b5555fd4192b5b15", null ],
-    [ "ble_hrs_sensor_contact_detected_update", "a00963.html#ga4eccea2cb1d248ccdc75bebb84c1dff2", null ],
-    [ "ble_hrs_sensor_contact_supported_set", "a00963.html#gad8b66aa54ddf79459271df6ec9b65644", null ]
+    [ "spi_master_state_t", "a00963.html#gac3471b7aba2dd998dd08263d80a46d44", [
+      [ "SPI_MASTER_STATE_DISABLED", "a00963.html#gac3471b7aba2dd998dd08263d80a46d44a06bb576779307e515a0f9f1f1711f2d1", null ],
+      [ "SPI_MASTER_STATE_BUSY", "a00963.html#gac3471b7aba2dd998dd08263d80a46d44a4a4ae82272756db931981e38786c2b3d", null ],
+      [ "SPI_MASTER_STATE_IDLE", "a00963.html#gac3471b7aba2dd998dd08263d80a46d44a2f2ddd197a11b1c3eac344d93accae07", null ],
+      [ "SPI_MASTER_STATE_DISABLED", "a00963.html#gac3471b7aba2dd998dd08263d80a46d44a06bb576779307e515a0f9f1f1711f2d1", null ],
+      [ "SPI_MASTER_STATE_BUSY", "a00963.html#gac3471b7aba2dd998dd08263d80a46d44a4a4ae82272756db931981e38786c2b3d", null ],
+      [ "SPI_MASTER_STATE_IDLE", "a00963.html#gac3471b7aba2dd998dd08263d80a46d44a2f2ddd197a11b1c3eac344d93accae07", null ],
+      [ "SPI_MASTER_STATE_DISABLED", "a00963.html#gac3471b7aba2dd998dd08263d80a46d44a06bb576779307e515a0f9f1f1711f2d1", null ],
+      [ "SPI_MASTER_STATE_BUSY", "a00963.html#gac3471b7aba2dd998dd08263d80a46d44a4a4ae82272756db931981e38786c2b3d", null ],
+      [ "SPI_MASTER_STATE_IDLE", "a00963.html#gac3471b7aba2dd998dd08263d80a46d44a2f2ddd197a11b1c3eac344d93accae07", null ]
+    ] ],
+    [ "spi_master_close", "a00963.html#ga50bc5bf9e8334ef1387826e0a2af4256", null ],
+    [ "spi_master_evt_handler_reg", "a00963.html#ga76af017b1ce006baeed02f2668c00e7d", null ],
+    [ "spi_master_get_state", "a00963.html#gaa052cc71238a379eaeb7d227bd060d46", null ],
+    [ "spi_master_open", "a00963.html#ga3cf5563d474f5b41080b6ae53be0ee51", null ],
+    [ "spi_master_send_recv", "a00963.html#ga4e03ec39c566925e98fe0ec79c6d7623", null ]
 ];

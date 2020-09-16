@@ -351,7 +351,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define> BOARD_PCA10028 BSP_DEFINES_ONLY NRF51</Define>
+              <Define> BOARD_PCA10028 GAZELL_PRESENT BSP_DEFINES_ONLY NRF51</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\..\config;..\..\..;..\..\..\..\..\..\..\components\properitary_rf\gzll;..\..\..\..\..\..\bsp;..\..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\..\components\device;..\..\..\..\..\..\..\components\toolchain</IncludePath>
             </VariousControls>
@@ -367,7 +367,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define> BOARD_PCA10028 BSP_DEFINES_ONLY NRF51</Define>
+              <Define> BOARD_PCA10028 GAZELL_PRESENT BSP_DEFINES_ONLY NRF51</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>

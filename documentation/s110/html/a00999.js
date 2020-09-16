@@ -1,5 +1,11 @@
 var a00999 =
 [
-    [ "ble_radio_notification_evt_handler_t", "a00999.html#ga7d22caf17609042ff0c07873c1ad2a13", null ],
-    [ "ble_radio_notification_init", "a00999.html#ga0e02811c4ce9dff7bd190daa42b7a58b", null ]
+    [ "Events, type definitions and API calls", "a01000.html", "a01000" ],
+    [ "General error codes", "a01002.html", "a01002" ],
+    [ "Module specific error code subranges", "a01003.html", "a01003" ],
+    [ "Bluetooth status codes", "a01043.html", "a01043" ],
+    [ "Module specific SVC, event and option number subranges", "a01045.html", "a01045" ],
+    [ "Common types and macro definitions", "a01046.html", "a01046" ],
+    [ "Message Sequence Charts", "a01058.html", "a01058" ],
+    [ "SoftDevice Global Error Codes", "a01051.html", "a01051" ]
 ];

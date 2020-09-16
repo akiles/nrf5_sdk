@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Creating an image file</title>
+<title>nRF51 SDK - S110 SoftDevice: Architecture</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,44 +97,31 @@ $(document).ready(function(){initNavTree('a00092.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Creating an image file </div>  </div>
+<div class="title">Architecture </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The format of the firmware image that you use to update the device firmware depends on the tool that you use to perform the DFU. The DFU bootloader expects the image in binary format; however, some tools automatically convert the image from HEX format to binary format.</p>
-<h1><a class="anchor" id="bledfu_createzip"></a>
-Creating a zip with image and init packet</h1>
-<p>If you use Master Control Panel or other tools by Nordic Semiconductor to update the device firmware, you must provide a zip that contains the image file and a corresponding init packet. To create this zip file, use the <code>nrf.exe</code> tool that is installed with the Master Control Panel. By default, the tool is located in the <code>C:\Program Files (x86)\Nordic Semiconductor\Master Control Panel\&lt;version&gt;\nrf\</code> folder. Run <code>nrf.exe dfu genpkg --help</code> to display usage instructions.</p>
-<p>You can add the following firmware images in binary format to the zip file:</p>
+<div class="textblock"><p>Two devices are required to perform a Device Firmware Update: the <em>DFU target</em> and the <em>DFU controller</em>. The DFU target is the device that is updated with a new firmware image, which can contain a new application, SoftDevice, bootloader, or a combination of SoftDevice and bootloader. The DFU controller is the device that transfers the image. For example, the DFU controller can be an app on a mobile phone, or an nRF51 dongle in conjunction with Master Control Panel.</p>
+<p>The DFU target is the device that contains a bootloader with DFU capabilities. This bootloader's responsibility is to start either the application or the DFU mode, depending on different triggers. The DFU mode is part of the bootloader. If DFU mode is started, the bootloader expects a Device Firmware Update. The DFU controller can then initiate the transfer of a firmware image, which is received and validated by the bootloader. If the image is valid, it is copied to replace the existing firmware; depending on the type of image, it might replace the application, the SoftDevice, or even the current bootloader that is receiving the update.</p>
+<p>By default, the DFU bootloader will start the application on the device. DFU mode is started in the following cases:</p>
 <ul>
-<li><code>--application</code> <em>image.bin:</em> a binary image of an application</li>
-<li><code>--bootloader</code> <em>image.bin:</em> a binary image of a bootloader</li>
-<li><code>--softdevice</code> <em>image.bin:</em> a binary image of a SoftDevice</li>
+<li>No application is installed on the device.</li>
+<li>Button 4 is pressed when starting the device.</li>
+<li>The application on the DFU target supports entering DFU mode. In this case, the DFU controller can trigger the application to reset the device and enter DFU mode, which is referred to as <em>buttonless</em> update.</li>
 </ul>
-<p>You can also combine several images in one zip file.</p>
-<p>In addition to the images, you must specify the information that will be added to the init packet:</p>
-<ul>
-<li><code>--application-version</code> <em>version:</em> the version of the application image, for example, <code>0xff</code> </li>
-<li><code>--dev-revision</code> <em>version:</em> the revision of the device that should accept the image, for example, <code>1</code> </li>
-<li><code>--dev-type</code> <em>type:</em> the type of the device that should accept the image, for example, <code>1</code> </li>
-<li><code>--sd-req</code> <em>sd_list:</em> a comma-separated list of FWID values of SoftDevices that are valid to be used with the new image, for example, <code>0x4f,0x5a</code></li>
-</ul>
-<h1><a class="anchor" id="bledfu_binary"></a>
-Creating a binary image</h1>
-<p>When you compile an application in Keil, two images are created:</p>
-<ul>
-<li>A HEX file</li>
-<li>An AXF (ELF) file</li>
-</ul>
-<p>In most cases, you can use the image in HEX format to perform the DFU. If you need a binary image, use the command line tool <code>fromelf.exe</code> to convert the AXF file into a binary image. The tool is located in the <code>&lt;KeilFolder&gt;\ARM\ARMCC\bin</code> folder.</p>
-<p>Call <code>fromelf.exe</code> as follows to convert an AXF image into a binary file: </p>
-<pre class="fragment">&lt;Keil-folder&gt;\ARM\ARMCC\bin\fromelf.exe --bin --output &lt;outfile.bin&gt; &lt;infile.axf&gt;
-</pre> </div></div><!-- contents -->
+<p>The following figure shows the workflow when performing a buttonless update of the application:</p>
+<div class="image">
+<img src="bledfu_architecture.svg" alt="bledfu_architecture.svg"/>
+<div class="caption">
+Example of a buttonless DFU to replace the application image</div></div>
+<p> For a more technical overview, see the <a class="el" href="a00090.html">Architecture of the DFU bootloader</a> and the <a class="el" href="a00091.html">Architecture of the DFU process</a>.</p>
+<p>The <a class="el" href="a00093.html">DFU state machine</a> models the states and transitions in a DFU process. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00078.html">BLE DFU Bootloader</a></li><li class="navelem"><a class="el" href="a00089.html">Creating a DFU bootloader</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00084.html">BLE DFU Bootloader</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

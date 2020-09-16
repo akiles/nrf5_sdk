@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_sc_ctrlpt_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_hids_rep_char_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,41 +106,48 @@ $(document).ready(function(){initNavTree('a00346.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_sc_ctrlpt_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00969.html">Speed and Cadence Control Point</a></div></div>  </div>
+<div class="title">ble_hids_rep_char_t Struct Reference<div class="ingroups"><a class="el" href="a01203.html">Human Interface Device Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Speed and Cadence Control point event.  
+<p>HID Report characteristic structure.  
  <a href="a00346.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_sc_ctrlpt.h&gt;</code></p>
+<p><code>#include &lt;ble_hids.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a4ae317b0ff9170a27f7315dfb3c12bb6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00969.html#gab3b9b97d8227deb568c21630514be078">ble_sc_ctrlpt_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00346.html#a4ae317b0ff9170a27f7315dfb3c12bb6">evt_type</a></td></tr>
-<tr class="separator:a4ae317b0ff9170a27f7315dfb3c12bb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f86ce4a30b366bbfac480d9f0559ae9"><td class="memItemLeft" ><a class="anchor" id="a9f86ce4a30b366bbfac480d9f0559ae9"></a>
-union {</td></tr>
-<tr class="memitem:ac81369b1fb18e22bc6f1b833de84dc04"><td class="memItemLeft" >&#160;&#160;&#160;ble_sensor_location_t&#160;&#160;&#160;<b>update_location</b></td></tr>
-<tr class="separator:ac81369b1fb18e22bc6f1b833de84dc04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0beca55f92d82b4e902103fb62827b6"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<b>cumulative_value</b></td></tr>
-<tr class="separator:ab0beca55f92d82b4e902103fb62827b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f86ce4a30b366bbfac480d9f0559ae9"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:a9f86ce4a30b366bbfac480d9f0559ae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f137cc3f92bf439d93a8491e4314d5a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00317.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00346.html#a3f137cc3f92bf439d93a8491e4314d5a">char_handles</a></td></tr>
+<tr class="separator:a3f137cc3f92bf439d93a8491e4314d5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0209468bba2c298192f4500a652dd6d1"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00346.html#a0209468bba2c298192f4500a652dd6d1">ref_handle</a></td></tr>
+<tr class="separator:a0209468bba2c298192f4500a652dd6d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Speed and Cadence Control point event. </p>
+<div class="textblock"><p>HID Report characteristic structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a4ae317b0ff9170a27f7315dfb3c12bb6"></a>
+<a class="anchor" id="a3f137cc3f92bf439d93a8491e4314d5a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00969.html#gab3b9b97d8227deb568c21630514be078">ble_sc_ctrlpt_evt_type_t</a> ble_sc_ctrlpt_evt_t::evt_type</td>
+          <td class="memname"><a class="el" href="a00317.html">ble_gatts_char_handles_t</a> ble_hids_rep_char_t::char_handles</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of event. </p>
+<p>Handles related to the Report characteristic. </p>
+
+</div>
+</div>
+<a class="anchor" id="a0209468bba2c298192f4500a652dd6d1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_hids_rep_char_t::ref_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle of the Report Reference descriptor. </p>
 
 </div>
 </div>
@@ -149,8 +156,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00346.html">ble_sc_ctrlpt_evt_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00346.html">ble_hids_rep_char_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

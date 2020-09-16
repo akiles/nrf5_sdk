@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: device_handle Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_ias_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,79 +106,33 @@ $(document).ready(function(){initNavTree('a00364.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">device_handle Struct Reference<div class="ingroups"><a class="el" href="a00982.html">Device Manager Data Types</a></div></div>  </div>
+<div class="title">ble_ias_init_t Struct Reference<div class="ingroups"><a class="el" href="a01206.html">Immediate Alert Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Device Handle used for unique identification of each peer.  
+<p>Immediate Alert Service init structure. This contains all options and data needed for initialization of the service.  
  <a href="a00364.html#details">More...</a></p>
 
-<p><code>#include &lt;device_manager.h&gt;</code></p>
+<p><code>#include &lt;ble_ias.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a381fcabb6c06cd4b56c37f2f074debc7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00982.html#ga3c013385ac2ef5502370f598308d0339">dm_application_instance_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00364.html#a381fcabb6c06cd4b56c37f2f074debc7">appl_id</a></td></tr>
-<tr class="separator:a381fcabb6c06cd4b56c37f2f074debc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aada12513e0b4856726d23729171c4c0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00982.html#gae005241eac710952713e896d52646858">dm_connection_instance_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00364.html#aada12513e0b4856726d23729171c4c0f">connection_id</a></td></tr>
-<tr class="separator:aada12513e0b4856726d23729171c4c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac60c519ad6b47720e22b172283fbf2d3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00982.html#gaf1a000e90688eea8d02bd3854440ec6b">dm_device_instance_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00364.html#ac60c519ad6b47720e22b172283fbf2d3">device_id</a></td></tr>
-<tr class="separator:ac60c519ad6b47720e22b172283fbf2d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61539581cba803dbeb074913ba5d0988"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00982.html#ga7b2fb32d39e173997c5baa1e0383ace0">dm_service_instance_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00364.html#a61539581cba803dbeb074913ba5d0988">service_id</a></td></tr>
-<tr class="separator:a61539581cba803dbeb074913ba5d0988"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e40f1f02a66e26a1da20bbf3e2a275a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01206.html#gab059c5376beb245a8f876ee3d7b8480a">ble_ias_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00364.html#a5e40f1f02a66e26a1da20bbf3e2a275a">evt_handler</a></td></tr>
+<tr class="separator:a5e40f1f02a66e26a1da20bbf3e2a275a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Device Handle used for unique identification of each peer. </p>
-<p>This data type is used to uniquely identify each peer device. A peer device could be active and/or bonded. Therefore an instance for active and bonded is provided. However, the application is expected to treat this is an opaque structure and use this for all API interactions once stored on appropriate events. See <a class="el" href="a00978.html">Device Manager Events</a>. </p>
+<div class="textblock"><p>Immediate Alert Service init structure. This contains all options and data needed for initialization of the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a381fcabb6c06cd4b56c37f2f074debc7"></a>
+<a class="anchor" id="a5e40f1f02a66e26a1da20bbf3e2a275a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00982.html#ga3c013385ac2ef5502370f598308d0339">dm_application_instance_t</a> device_handle::appl_id</td>
+          <td class="memname"><a class="el" href="a01206.html#gab059c5376beb245a8f876ee3d7b8480a">ble_ias_evt_handler_t</a> ble_ias_init_t::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Identifies the application instances for the device that is being managed. </p>
-
-</div>
-</div>
-<a class="anchor" id="aada12513e0b4856726d23729171c4c0f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00982.html#gae005241eac710952713e896d52646858">dm_connection_instance_t</a> device_handle::connection_id</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Identifies the active connection instance. </p>
-
-</div>
-</div>
-<a class="anchor" id="ac60c519ad6b47720e22b172283fbf2d3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00982.html#gaf1a000e90688eea8d02bd3854440ec6b">dm_device_instance_t</a> device_handle::device_id</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Identifies peer instance in the data base. </p>
-
-</div>
-</div>
-<a class="anchor" id="a61539581cba803dbeb074913ba5d0988"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00982.html#ga7b2fb32d39e173997c5baa1e0383ace0">dm_service_instance_t</a> device_handle::service_id</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Service instance identifier. </p>
+<p>Event handler to be called for handling events in the Immediate Alert Service. </p>
 
 </div>
 </div>
@@ -187,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00364.html">device_handle</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00364.html">ble_ias_init_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

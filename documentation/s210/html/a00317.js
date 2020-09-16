@@ -1,13 +1,8 @@
 var a00317 =
 [
-    [ "app_fifo_t", "a00068.html", [
-      [ "buf_size_mask", "a00068.html#a03c6c7fcf087b5c1e0cfd5ce09661870", null ],
-      [ "p_buf", "a00068.html#a64eafd180a65260208be3b845f6acbf5", null ],
-      [ "read_pos", "a00068.html#aabcc538faf2ea4a374702c9896ae52d6", null ],
-      [ "write_pos", "a00068.html#a12631a6575aae2c98f1cca4034b38eaf", null ]
-    ] ],
-    [ "app_fifo_flush", "a00317.html#ga0944439787b55aafb3288a836efa3b9b", null ],
-    [ "app_fifo_get", "a00317.html#gab6292f78e91737ba0df83d6755e0abb9", null ],
-    [ "app_fifo_init", "a00317.html#gafc2ba3545e60f0134689fac2aa87f493", null ],
-    [ "app_fifo_put", "a00317.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e", null ]
+    [ "nrf_nvmc_page_erase", "a00317.html#ga8cf428dbb2a28a342c3b57cc07869d9d", null ],
+    [ "nrf_nvmc_write_byte", "a00317.html#ga008c6a4096bda07d67f33294af00ad9b", null ],
+    [ "nrf_nvmc_write_bytes", "a00317.html#ga7d566edd65fdc5655ce7be3cd17faba0", null ],
+    [ "nrf_nvmc_write_word", "a00317.html#ga1347c44095f9486554be7c3d62737925", null ],
+    [ "nrf_nvmc_write_words", "a00317.html#ga9ac0536be3127139fb91992e1c5b46c4", null ]
 ];

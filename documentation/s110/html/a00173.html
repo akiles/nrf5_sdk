@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_ans_control_point_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: SLIP handling library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,61 +96,21 @@ $(document).ready(function(){initNavTree('a00173.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ans_control_point_t Struct Reference<div class="ingroups"><a class="el" href="a00952.html">Alert Notification Service Client</a></div></div>  </div>
+<div class="title">SLIP handling library </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Alert Notification Control Point structure.  
- <a href="a00173.html#details">More...</a></p>
-
-<p><code>#include &lt;ble_ans_c.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a884740fe58c776baff9984a9aeb2364a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00952.html#ga27cf2fcb0272333911649738907a64ff">ble_ans_command_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00173.html#a884740fe58c776baff9984a9aeb2364a">command</a></td></tr>
-<tr class="separator:a884740fe58c776baff9984a9aeb2364a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fdff51ec3bc842205991b1d94a6203d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00952.html#gaadf812c0e22b456c6dd0ed92f9bff200">ble_ans_category_id_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00173.html#a4fdff51ec3bc842205991b1d94a6203d">category</a></td></tr>
-<tr class="separator:a4fdff51ec3bc842205991b1d94a6203d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Alert Notification Control Point structure. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a4fdff51ec3bc842205991b1d94a6203d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00952.html#gaadf812c0e22b456c6dd0ed92f9bff200">ble_ans_category_id_t</a> ble_ans_control_point_t::category</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The category for the control point for which the command applies, see <a class="el" href="a00952.html#gaadf812c0e22b456c6dd0ed92f9bff200">ble_ans_category_id_t</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="a884740fe58c776baff9984a9aeb2364a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00952.html#ga27cf2fcb0272333911649738907a64ff">ble_ans_command_id_t</a> ble_ans_control_point_t::command</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The command to be written to the control point, see <a class="el" href="a00952.html#ga27cf2fcb0272333911649738907a64ff">ble_ans_command_id_t</a>. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>SLIP layer for supporting packet framing in HCI transport.</p>
+<p>This module implements SLIP packet framing as described in the <em>Bluetooth</em> Core Specification 4.0, Volume 4, Part D, Chapter 3 SLIP Layer.</p>
+<p>SLIP framing ensures that all packets sent on the UART are framed as: &lt;0xC0&gt; SLIP packet 1 &lt;0xC0&gt; &lt;0xC0&gt; SLIP packet 2 &lt;0xC0&gt;.</p>
+<p>The SLIP layer uses events to notify the upper layer when data transmission is complete and when a SLIP packet is received. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00173.html">ble_ans_control_point_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00170.html">Transport Services</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

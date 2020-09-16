@@ -156,10 +156,11 @@ static uint32_t current_time_decode(current_time_char_t * p_time,
     p_time->exact_time_256.fractions256 = p_data[index++];
 
     // Reason for updating the time.
-    p_time->adjust_reason.change_of_daylight_savings_time = (p_data[index] >> 0) & 0x01;
-    p_time->adjust_reason.change_of_time_zone             = (p_data[index] >> 1) & 0x01;
-    p_time->adjust_reason.external_reference_time_update  = (p_data[index] >> 2) & 0x01;
-    p_time->adjust_reason.manual_time_update              = (p_data[index] >> 3) & 0x01;
+    p_time->adjust_reason.manual_time_update              = (p_data[index] >> 0) & 0x01;
+    p_time->adjust_reason.external_reference_time_update  = (p_data[index] >> 1) & 0x01;
+    p_time->adjust_reason.change_of_time_zone             = (p_data[index] >> 2) & 0x01;
+    p_time->adjust_reason.change_of_daylight_savings_time = (p_data[index] >> 3) & 0x01;
+
 
     //lint -restore
     return NRF_SUCCESS;

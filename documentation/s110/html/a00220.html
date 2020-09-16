@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_conn_params_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_common_opt_radio_cpu_mutex_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,81 +106,44 @@ $(document).ready(function(){initNavTree('a00220.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_conn_params_t Struct Reference<div class="ingroups"><a class="el" href="a01044.html">Structures</a></div></div>  </div>
+<div class="title">ble_common_opt_radio_cpu_mutex_t Struct Reference<div class="ingroups"><a class="el" href="a01283.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GAP connection parameters.  
+<p>Mutual exclusion of radio activity and CPU execution.  
  <a href="a00220.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gap.h&gt;</code></p>
+<p><code>#include &lt;ble.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a4d1975f7d25263004c405e0321fbae34"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#a4d1975f7d25263004c405e0321fbae34">min_conn_interval</a></td></tr>
-<tr class="separator:a4d1975f7d25263004c405e0321fbae34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd7a6e16a723de1d779afadae3f3113e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#abd7a6e16a723de1d779afadae3f3113e">max_conn_interval</a></td></tr>
-<tr class="separator:abd7a6e16a723de1d779afadae3f3113e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5caf55715aaac33f56cc996f91a92cc"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#aa5caf55715aaac33f56cc996f91a92cc">slave_latency</a></td></tr>
-<tr class="separator:aa5caf55715aaac33f56cc996f91a92cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab644e629af7eb4915b0f3a93f682f7ae"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#ab644e629af7eb4915b0f3a93f682f7ae">conn_sup_timeout</a></td></tr>
-<tr class="separator:ab644e629af7eb4915b0f3a93f682f7ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a750afb830aa9d1ea16fcddccce89dfa2"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00220.html#a750afb830aa9d1ea16fcddccce89dfa2">enable</a>: 1</td></tr>
+<tr class="separator:a750afb830aa9d1ea16fcddccce89dfa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GAP connection parameters. </p>
-<dl class="section note"><dt>Note</dt><dd>When ble_conn_params_t is received in an event, both min_conn_interval and max_conn_interval will be equal to the connection interval set by the central.</dd>
+<div class="textblock"><p>Mutual exclusion of radio activity and CPU execution. </p>
+<pre class="fragment">   This option configures the application's access to the CPU when the radio is active. The
+   application can configure itself to be blocked from using the CPU while the radio is
+   active. By default, the application will be able to share CPU time with the SoftDevice
+   during radio activity. This parameter structure is used together with @ref sd_ble_opt_set
+   to configure the @ref BLE_COMMON_OPT_RADIO_CPU_MUTEX option.
+</pre><dl class="section note"><dt>Note</dt><dd>Note that the application should use this option to configure the SoftDevice to block the CPU during radio activity (i.e enable mutual exclusion) when running the SoftDevice on hardware affected by PAN #44 "CCM may exceed real time requirements"and PAN #45 "AAR may
+       exceed real time requirements".</dd>
 <dd>
-If both conn_sup_timeout and max_conn_interval are specified, then the following constraint applies: conn_sup_timeout * 4 &gt; (1 + slave_latency) * max_conn_interval that corresponds to the following Bluetooth Spec requirement: The Supervision_Timeout in milliseconds shall be larger than (1 + Conn_Latency) * Conn_Interval_Max * 2, where Conn_Interval_Max is given in milliseconds. </dd></dl>
+Note that when acting as a scanner, the mutex is only enabled for radio TX activity.</dd>
+<dd>
+<a class="el" href="a01284.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> is not supported for this option. </dd></dl>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ab644e629af7eb4915b0f3a93f682f7ae"></a>
+<a class="anchor" id="a750afb830aa9d1ea16fcddccce89dfa2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gap_conn_params_t::conn_sup_timeout</td>
+          <td class="memname">uint8_t ble_common_opt_radio_cpu_mutex_t::enable</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Connection Supervision Timeout in 10 ms units, see <a class="el" href="a00838.html">GAP Connection Parameters Limits</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="abd7a6e16a723de1d779afadae3f3113e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gap_conn_params_t::max_conn_interval</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Maximum Connection Interval in 1.25 ms units, see <a class="el" href="a00838.html">GAP Connection Parameters Limits</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="a4d1975f7d25263004c405e0321fbae34"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gap_conn_params_t::min_conn_interval</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Minimum Connection Interval in 1.25 ms units, see <a class="el" href="a00838.html">GAP Connection Parameters Limits</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa5caf55715aaac33f56cc996f91a92cc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gap_conn_params_t::slave_latency</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Slave Latency in number of connection events, see <a class="el" href="a00838.html">GAP Connection Parameters Limits</a>. </p>
+<p>Enable mutual exclusion of radio activity and the CPU execution. </p>
 
 </div>
 </div>
@@ -189,8 +152,8 @@ If both conn_sup_timeout and max_conn_interval are specified, then the following
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00220.html">ble_gap_conn_params_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00220.html">ble_common_opt_radio_cpu_mutex_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

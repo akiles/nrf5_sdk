@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Broadcast</title>
+<title>nRF51 SDK - S210 SoftDevice: ANT</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,24 +97,25 @@ $(document).ready(function(){initNavTree('a00061.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Broadcast </div>  </div>
+<div class="title">ANT </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Basic examples to test ANT connectivity between Master and Slave.</p>
-<p>They both use public network key {0, 0, 0 , 0 , 0, 0, 0}</p>
-<p><b>ANT Broadcast TX</b></p>
-<p>The channel period is set to 4 Hz (8192). When a packet is transmitted, it will indicate the state <a class="el" href="a00055.html#BSP_INDICATE_SENT_OK">BSP_INDICATE_SENT_OK</a>. Whenever the processor enters sleep state, the state <a class="el" href="a00055.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> ist set. The <a class="el" href="a00055.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a> state is set when woken up by (any / RF ) interrupt.</p>
-<p>The name of the example for PCA10028 is <b>ant_broadcast_tx_s210_pca10028</b>, and for PCA10031 it is <b>ant_broadcast_tx_s210_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ant\ant_broadcast\broadcast_tx</code> </p>
-<p><b>ANT Broadcast RX</b></p>
-<p>The example uses wildcard connection, which implies that it will connect to the nearest ANT device that is broadcasting. The channel period is set to 4 Hz (8192). When a packet is received, it will indicate the state <a class="el" href="a00055.html#BSP_INDICATE_RCV_OK">BSP_INDICATE_RCV_OK</a>. Whenever the processor enters sleep state, the state <a class="el" href="a00055.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> ist set. The <a class="el" href="a00055.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a> state is set when woken up by (any / RF ) interrupt.</p>
-<p>The name of the example for PCA10028 is <b>ant_broadcast_rx_s210_pca10028</b>, and for PCA10031 it is <b>ant_broadcast_rx_s210_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ant\ant_broadcast\broadcast_rx</code> </p>
+<div class="textblock"><p><a class="el" href="a00066.html">Broadcast</a></p>
+<p><a class="el" href="a00067.html">ANT-FS Client</a></p>
+<p><a class="el" href="a00068.html">Heart Rate</a></p>
+<p><a class="el" href="a00069.html">Speed and Cadence</a></p>
+<p><a class="el" href="a00065.html">Bicycle Speed and Cadence</a></p>
+<p><a class="el" href="a00064.html">Bicycle Power</a></p>
+<p><a class="el" href="a00062.html">Experimental: ANT Bootloader/DFU</a></p>
+<p><a class="el" href="a00063.html">Experimental: Background Scanning</a></p>
+<p><a class="el" href="a00070.html">Experimental: Relay</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00056.html">ANT</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

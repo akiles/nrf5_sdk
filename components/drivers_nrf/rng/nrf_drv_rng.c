@@ -14,14 +14,17 @@
 #include <stddef.h>
 
 #include "nrf_drv_rng.h"
+#include "nrf_assert.h"
 #include "nrf_drv_common.h"
 #include "nordic_common.h"
 #include "nrf_error.h"
+#include "nrf_assert.h"
 #ifdef SOFTDEVICE_PRESENT
 #include "nrf_sdm.h"
 #include "nrf_soc.h"
 #else
 #include "app_fifo.h"
+#include "app_util_platform.h"
 
 static __INLINE uint32_t fifo_length(app_fifo_t * p_fifo)
 {
@@ -48,9 +51,9 @@ static void rng_start(void)
 {
     if (FIFO_LENGTH(m_rng_cb.rand_pool) <= m_rng_cb.rand_pool.buf_size_mask)
     {
-        nrf_rng_event_clear(NRF_RNG_EVENTS_VALRDY);
+        nrf_rng_event_clear(NRF_RNG_EVENT_VALRDY);
         nrf_rng_int_enable(NRF_RNG_INT_VALRDY_MASK);
-        nrf_rng_task_set(NRF_RNG_TASKS_START);
+        nrf_rng_task_trigger(NRF_RNG_TASK_START);
     }
 }
 
@@ -58,7 +61,7 @@ static void rng_start(void)
 static void rng_stop(void)
 {
     nrf_rng_int_disable(NRF_RNG_INT_VALRDY_MASK);
-    nrf_rng_task_set(NRF_RNG_TASKS_STOP);
+    nrf_rng_task_trigger(NRF_RNG_TASK_STOP);
 }
 
 
@@ -89,7 +92,7 @@ ret_code_t nrf_drv_rng_init(nrf_drv_rng_config_t const * p_config)
 
             nrf_drv_common_irq_enable(RNG_IRQn, p_config->interrupt_priority);
 
-            nrf_rng_shorts_clear(NRF_RNG_SHORTS_VALRDY_STOP_MASK);
+            nrf_rng_shorts_disable(NRF_RNG_SHORT_VALRDY_STOP_MASK);
 
             rng_start();
             m_rng_cb.state = NRF_DRV_STATE_INITIALIZED;
@@ -200,10 +203,10 @@ ret_code_t nrf_drv_rng_rand(uint8_t * p_buff, uint8_t length)
 #ifndef SOFTDEVICE_PRESENT
 void RNG_IRQHandler(void)
 {
-    if (nrf_rng_event_get(NRF_RNG_EVENTS_VALRDY) &&
+    if (nrf_rng_event_get(NRF_RNG_EVENT_VALRDY) &&
         nrf_rng_int_get(NRF_RNG_INT_VALRDY_MASK))
     {
-        nrf_rng_event_clear(NRF_RNG_EVENTS_VALRDY);
+        nrf_rng_event_clear(NRF_RNG_EVENT_VALRDY);
         uint32_t nrf_error = app_fifo_put(&m_rng_cb.rand_pool, nrf_rng_random_value_get());
 
         if ((FIFO_LENGTH(m_rng_cb.rand_pool) > m_rng_cb.rand_pool.buf_size_mask) || (nrf_error == NRF_ERROR_NO_MEM))

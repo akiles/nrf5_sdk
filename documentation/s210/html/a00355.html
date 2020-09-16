@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Enumerations</title>
+<title>nRF51 SDK - S210 SoftDevice: SWI driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,179 +97,249 @@ $(document).ready(function(){initNavTree('a00355.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Enumerations<div class="ingroups"><a class="el" href="a00342.html">SoftDevice Manager API</a></div></div>  </div>
+<div class="title">SWI driver<div class="ingroups"><a class="el" href="a00393.html">Peripheral Drivers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Driver for software interrupts (SWI).  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga4528cbf3f1a34d4712822ac456b1b305"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#ga4528cbf3f1a34d4712822ac456b1b305">NRF_SD_SVCS</a> { <br/>
-&#160;&#160;<a class="el" href="a00355.html#gga4528cbf3f1a34d4712822ac456b1b305ab692ec521a2f791184f7a4644897f781">SD_SOFTDEVICE_ENABLE</a> = (0x10), 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#gga4528cbf3f1a34d4712822ac456b1b305ab48ef4bb34f9d37c0a7005f7b7d13692">SD_SOFTDEVICE_DISABLE</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#gga4528cbf3f1a34d4712822ac456b1b305a6f89d282c869fd898e2c75141ac2bc5f">SD_SOFTDEVICE_IS_ENABLED</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#gga4528cbf3f1a34d4712822ac456b1b305a5e19adec24f31566eb74ff8222c7ab06">SD_SOFTDEVICE_VECTOR_TABLE_BASE_SET</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#gga4528cbf3f1a34d4712822ac456b1b305a11216cbdd9009464a16286385173bb5a">SVC_SDM_LAST</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga4528cbf3f1a34d4712822ac456b1b305"><td class="mdescLeft">&#160;</td><td class="mdescRight">nRF SoftDevice Manager API SVC numbers.  <a href="a00355.html#ga4528cbf3f1a34d4712822ac456b1b305">More...</a><br/></td></tr>
-<tr class="separator:ga4528cbf3f1a34d4712822ac456b1b305"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaef6aabaa8887cb4d7265d7e21b3ec242"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#gaef6aabaa8887cb4d7265d7e21b3ec242">NRF_CLOCK_LFCLKSRCS</a> { <br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242ad1191ed01bdf8e562500d9a38a059b39">NRF_CLOCK_LFCLKSRC_SYNTH_250_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242abadb40f1cba74435f3ad04f04c700c86">NRF_CLOCK_LFCLKSRC_XTAL_500_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a65044d23edf148cbeb93dd4e785f581d">NRF_CLOCK_LFCLKSRC_XTAL_250_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a02019daada779a6cdb69fa13dad053e2">NRF_CLOCK_LFCLKSRC_XTAL_150_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242ab5bb363243d2e2b382bc4c1dad745a33">NRF_CLOCK_LFCLKSRC_XTAL_100_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a87f389b60383a850468327a5970cb395">NRF_CLOCK_LFCLKSRC_XTAL_75_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a2d5febc7eb0c8f35c3279a705d7974dd">NRF_CLOCK_LFCLKSRC_XTAL_50_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242ad2464539b8d78659dc83998a4ae66fa6">NRF_CLOCK_LFCLKSRC_XTAL_30_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a1c5e9917211a50eac336a3fd2e467756">NRF_CLOCK_LFCLKSRC_XTAL_20_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a0263c1cff2fbded3ada7b18a691eeda5">NRF_CLOCK_LFCLKSRC_RC_250_PPM_250MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242aaa9263dbc5c7bfa094d654941dc36d55">NRF_CLOCK_LFCLKSRC_RC_250_PPM_500MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a7f2111bcf8ef8c355ca609a9fb84712c">NRF_CLOCK_LFCLKSRC_RC_250_PPM_1000MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242ad94caa1c4bbc8b28e8fd062a012defd7">NRF_CLOCK_LFCLKSRC_RC_250_PPM_2000MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a4b75e480fdf08028b4ad36e960474411">NRF_CLOCK_LFCLKSRC_RC_250_PPM_4000MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a2c0772805e06ad3966b4dc69abd3f247">NRF_CLOCK_LFCLKSRC_RC_250_PPM_8000MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a23b8dfa27131f4e191c90cf7b4e115f5">NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_1000MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242abb90009e7d3b437a38688790a086d475">NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_2000MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a4a1524c1e9bf9fdcab3c88282a272b0a">NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_4000MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a7fca54df825052849f20136cf5186c02">NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_8000MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242aa5f637eab2568c5a631337656d390b2e">NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_16000MS_CALIBRATION</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gaef6aabaa8887cb4d7265d7e21b3ec242"><td class="mdescLeft">&#160;</td><td class="mdescRight">Possible lfclk oscillator sources.  <a href="a00355.html#gaef6aabaa8887cb4d7265d7e21b3ec242">More...</a><br/></td></tr>
-<tr class="separator:gaef6aabaa8887cb4d7265d7e21b3ec242"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gac0c2f68fc91cad142fa66e974464a080"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac0c2f68fc91cad142fa66e974464a080"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#gac0c2f68fc91cad142fa66e974464a080">NRF_SWI_UNALLOCATED</a>&#160;&#160;&#160;((<a class="el" href="a00355.html#gaf4d75a31a62ec35d2667efcbb3421f64">nrf_swi_t</a>) 0xFFFFFFFFuL)</td></tr>
+<tr class="memdesc:gac0c2f68fc91cad142fa66e974464a080"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unallocated channel value. <br/></td></tr>
+<tr class="separator:gac0c2f68fc91cad142fa66e974464a080"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga72bcd8d082bc4576d2a476e58f5fe4a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga72bcd8d082bc4576d2a476e58f5fe4a1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#ga72bcd8d082bc4576d2a476e58f5fe4a1">SWI_MAX</a>&#160;&#160;&#160;6</td></tr>
+<tr class="memdesc:ga72bcd8d082bc4576d2a476e58f5fe4a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum numbers of SWIs. This number is fixed for a specific chip. <br/></td></tr>
+<tr class="separator:ga72bcd8d082bc4576d2a476e58f5fe4a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga816db2d44b92075e4614ea0a5e79cf34"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga816db2d44b92075e4614ea0a5e79cf34"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#ga816db2d44b92075e4614ea0a5e79cf34">SWI_MAX_FLAGS</a>&#160;&#160;&#160;16</td></tr>
+<tr class="memdesc:ga816db2d44b92075e4614ea0a5e79cf34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of flags per SWI (fixed number). <br/></td></tr>
+<tr class="separator:ga816db2d44b92075e4614ea0a5e79cf34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga35c10c60bdf590a8fa502f25b76499b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga35c10c60bdf590a8fa502f25b76499b1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#ga35c10c60bdf590a8fa502f25b76499b1">SWI_COUNT</a>&#160;&#160;&#160;4</td></tr>
+<tr class="memdesc:ga35c10c60bdf590a8fa502f25b76499b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of software interrupts available. This number can be set in the range from 1 to SWI_MAX. <br/></td></tr>
+<tr class="separator:ga35c10c60bdf590a8fa502f25b76499b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab24c61b48197503c9e4a204d8c98bb43"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab24c61b48197503c9e4a204d8c98bb43"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#gab24c61b48197503c9e4a204d8c98bb43">SWI_DEFAULT_PRIORITY</a>&#160;&#160;&#160;APP_IRQ_PRIORITY_LOW</td></tr>
+<tr class="memdesc:gab24c61b48197503c9e4a204d8c98bb43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default SWI priority. <br/></td></tr>
+<tr class="separator:gab24c61b48197503c9e4a204d8c98bb43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaf4d75a31a62ec35d2667efcbb3421f64"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf4d75a31a62ec35d2667efcbb3421f64"></a>
+typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#gaf4d75a31a62ec35d2667efcbb3421f64">nrf_swi_t</a></td></tr>
+<tr class="memdesc:gaf4d75a31a62ec35d2667efcbb3421f64"><td class="mdescLeft">&#160;</td><td class="mdescRight">SWI channel (unsigned integer). <br/></td></tr>
+<tr class="separator:gaf4d75a31a62ec35d2667efcbb3421f64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3958c1f57afcdee82f1d22cc966e7509"><td class="memItemLeft" align="right" valign="top">typedef uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#ga3958c1f57afcdee82f1d22cc966e7509">nrf_swi_flags_t</a></td></tr>
+<tr class="memdesc:ga3958c1f57afcdee82f1d22cc966e7509"><td class="mdescLeft">&#160;</td><td class="mdescRight">SWI user flags (unsigned integer).  <a href="#ga3958c1f57afcdee82f1d22cc966e7509">More...</a><br/></td></tr>
+<tr class="separator:ga3958c1f57afcdee82f1d22cc966e7509"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ad0fc3331fbcf6398d751f16858c228"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2ad0fc3331fbcf6398d751f16858c228"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#ga2ad0fc3331fbcf6398d751f16858c228">nrf_swi_handler_t</a> )(<a class="el" href="a00355.html#gaf4d75a31a62ec35d2667efcbb3421f64">nrf_swi_t</a>, <a class="el" href="a00355.html#ga3958c1f57afcdee82f1d22cc966e7509">nrf_swi_flags_t</a>)</td></tr>
+<tr class="memdesc:ga2ad0fc3331fbcf6398d751f16858c228"><td class="mdescLeft">&#160;</td><td class="mdescRight">SWI handler. Takes two arguments: SWI number (nrf_swi_t) and flags (nrf_swi_flags_t). <br/></td></tr>
+<tr class="separator:ga2ad0fc3331fbcf6398d751f16858c228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga1f1d64b1f9abf3476683733c0845a2ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00374.html#gaf6c20fb483036617204f12e99e0b997b">ret_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#ga1f1d64b1f9abf3476683733c0845a2ef">nrf_drv_swi_init</a> (void)</td></tr>
+<tr class="memdesc:ga1f1d64b1f9abf3476683733c0845a2ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the SWI module.  <a href="#ga1f1d64b1f9abf3476683733c0845a2ef">More...</a><br/></td></tr>
+<tr class="separator:ga1f1d64b1f9abf3476683733c0845a2ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa7b426edd78a6083c33df7e2d144bcf3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#gaa7b426edd78a6083c33df7e2d144bcf3">nrf_drv_swi_uninit</a> (void)</td></tr>
+<tr class="memdesc:gaa7b426edd78a6083c33df7e2d144bcf3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for uninitializing the SWI module.  <a href="#gaa7b426edd78a6083c33df7e2d144bcf3">More...</a><br/></td></tr>
+<tr class="separator:gaa7b426edd78a6083c33df7e2d144bcf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9707c5cfc723ed10f67c5a73810753bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00374.html#gaf6c20fb483036617204f12e99e0b997b">ret_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#ga9707c5cfc723ed10f67c5a73810753bf">nrf_drv_swi_alloc</a> (<a class="el" href="a00355.html#gaf4d75a31a62ec35d2667efcbb3421f64">nrf_swi_t</a> *p_swi, <a class="el" href="a00355.html#ga2ad0fc3331fbcf6398d751f16858c228">nrf_swi_handler_t</a> event_handler, uint32_t priority)</td></tr>
+<tr class="memdesc:ga9707c5cfc723ed10f67c5a73810753bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for allocating a first unused SWI instance and setting a handler.  <a href="#ga9707c5cfc723ed10f67c5a73810753bf">More...</a><br/></td></tr>
+<tr class="separator:ga9707c5cfc723ed10f67c5a73810753bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa7c89f3dde0fa17d3068807d2deba6fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#gaa7c89f3dde0fa17d3068807d2deba6fa">nrf_drv_swi_free</a> (<a class="el" href="a00355.html#gaf4d75a31a62ec35d2667efcbb3421f64">nrf_swi_t</a> *p_swi)</td></tr>
+<tr class="memdesc:gaa7c89f3dde0fa17d3068807d2deba6fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for freeing a previously allocated SWI.  <a href="#gaa7c89f3dde0fa17d3068807d2deba6fa">More...</a><br/></td></tr>
+<tr class="separator:gaa7c89f3dde0fa17d3068807d2deba6fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31366f910bb2a52eca033847bed37ed6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html#ga31366f910bb2a52eca033847bed37ed6">nrf_drv_swi_trigger</a> (<a class="el" href="a00355.html#gaf4d75a31a62ec35d2667efcbb3421f64">nrf_swi_t</a> swi, uint8_t flag_number)</td></tr>
+<tr class="memdesc:ga31366f910bb2a52eca033847bed37ed6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for triggering the SWI.  <a href="#ga31366f910bb2a52eca033847bed37ed6">More...</a><br/></td></tr>
+<tr class="separator:ga31366f910bb2a52eca033847bed37ed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaef6aabaa8887cb4d7265d7e21b3ec242"></a>
+<p>Driver for software interrupts (SWI). </p>
+<p>The SWI driver allows the user to allocate SWIs and pass extra flags to interrupt handler functions. </p>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="ga3958c1f57afcdee82f1d22cc966e7509"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00355.html#gaef6aabaa8887cb4d7265d7e21b3ec242">NRF_CLOCK_LFCLKSRCS</a></td>
+          <td class="memname">typedef uint16_t <a class="el" href="a00355.html#ga3958c1f57afcdee82f1d22cc966e7509">nrf_swi_flags_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Possible lfclk oscillator sources. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242ad1191ed01bdf8e562500d9a38a059b39"></a>NRF_CLOCK_LFCLKSRC_SYNTH_250_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK Synthesized from HFCLK. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242abadb40f1cba74435f3ad04f04c700c86"></a>NRF_CLOCK_LFCLKSRC_XTAL_500_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK crystal oscillator 500 PPM accuracy. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a65044d23edf148cbeb93dd4e785f581d"></a>NRF_CLOCK_LFCLKSRC_XTAL_250_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK crystal oscillator 250 PPM accuracy. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a02019daada779a6cdb69fa13dad053e2"></a>NRF_CLOCK_LFCLKSRC_XTAL_150_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK crystal oscillator 150 PPM accuracy. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242ab5bb363243d2e2b382bc4c1dad745a33"></a>NRF_CLOCK_LFCLKSRC_XTAL_100_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK crystal oscillator 100 PPM accuracy. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a87f389b60383a850468327a5970cb395"></a>NRF_CLOCK_LFCLKSRC_XTAL_75_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK crystal oscillator 75 PPM accuracy. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a2d5febc7eb0c8f35c3279a705d7974dd"></a>NRF_CLOCK_LFCLKSRC_XTAL_50_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK crystal oscillator 50 PPM accuracy. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242ad2464539b8d78659dc83998a4ae66fa6"></a>NRF_CLOCK_LFCLKSRC_XTAL_30_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK crystal oscillator 30 PPM accuracy. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a1c5e9917211a50eac336a3fd2e467756"></a>NRF_CLOCK_LFCLKSRC_XTAL_20_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK crystal oscillator 20 PPM accuracy. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a0263c1cff2fbded3ada7b18a691eeda5"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_250MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator, 250ms calibration interval. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242aaa9263dbc5c7bfa094d654941dc36d55"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_500MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator, 500ms calibration interval. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a7f2111bcf8ef8c355ca609a9fb84712c"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_1000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator, 1000ms calibration interval. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242ad94caa1c4bbc8b28e8fd062a012defd7"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_2000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator, 2000ms calibration interval. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a4b75e480fdf08028b4ad36e960474411"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_4000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator, 4000ms calibration interval. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a2c0772805e06ad3966b4dc69abd3f247"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_8000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator, 8000ms calibration interval. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a23b8dfa27131f4e191c90cf7b4e115f5"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_1000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator. Temperature checked every 1000ms, if changed above a threshold, a calibration is done. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242abb90009e7d3b437a38688790a086d475"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_2000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator. Temperature checked every 2000ms, if changed above a threshold, a calibration is done. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a4a1524c1e9bf9fdcab3c88282a272b0a"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_4000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator. Temperature checked every 4000ms, if changed above a threshold, a calibration is done. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a7fca54df825052849f20136cf5186c02"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_8000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator. Temperature checked every 8000ms, if changed above a threshold, a calibration is done. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242aa5f637eab2568c5a631337656d390b2e"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_16000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator. Temperature checked every 16000ms, if changed above a threshold, a calibration is done. </p>
-</td></tr>
-</table>
+<p>SWI user flags (unsigned integer). </p>
+<p>User flags are set during the SWI trigger and passed to the callback function as an argument. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga4528cbf3f1a34d4712822ac456b1b305"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga9707c5cfc723ed10f67c5a73810753bf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00355.html#ga4528cbf3f1a34d4712822ac456b1b305">NRF_SD_SVCS</a></td>
+          <td class="memname"><a class="el" href="a00374.html#gaf6c20fb483036617204f12e99e0b997b">ret_code_t</a> nrf_drv_swi_alloc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00355.html#gaf4d75a31a62ec35d2667efcbb3421f64">nrf_swi_t</a> *&#160;</td>
+          <td class="paramname"><em>p_swi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00355.html#ga2ad0fc3331fbcf6398d751f16858c228">nrf_swi_handler_t</a>&#160;</td>
+          <td class="paramname"><em>event_handler</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>priority</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>nRF SoftDevice Manager API SVC numbers. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4528cbf3f1a34d4712822ac456b1b305ab692ec521a2f791184f7a4644897f781"></a>SD_SOFTDEVICE_ENABLE</em>&nbsp;</td><td class="fielddoc">
-<p><a class="el" href="a00357.html#ga26ecfde6eee7363f88bed8a8b711122a" title="Enables the SoftDevice and by extension the protocol stack.">sd_softdevice_enable</a> </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4528cbf3f1a34d4712822ac456b1b305ab48ef4bb34f9d37c0a7005f7b7d13692"></a>SD_SOFTDEVICE_DISABLE</em>&nbsp;</td><td class="fielddoc">
-<p><a class="el" href="a00357.html#ga45900ecbe6d5ebf9ae78894fe6c75b23" title="Disables the SoftDevice and by extension the protocol stack.">sd_softdevice_disable</a> </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4528cbf3f1a34d4712822ac456b1b305a6f89d282c869fd898e2c75141ac2bc5f"></a>SD_SOFTDEVICE_IS_ENABLED</em>&nbsp;</td><td class="fielddoc">
-<p><a class="el" href="a00357.html#ga830210fec2b272bbd27af26e3b314d35" title="Check if the SoftDevice is enabled.">sd_softdevice_is_enabled</a> </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4528cbf3f1a34d4712822ac456b1b305a5e19adec24f31566eb74ff8222c7ab06"></a>SD_SOFTDEVICE_VECTOR_TABLE_BASE_SET</em>&nbsp;</td><td class="fielddoc">
-<p><a class="el" href="a00357.html#ga46d2ce943076d65947ea8919198be106" title="Sets the base address of the interrupt vector table for interrupts forwarded from the SoftDevice...">sd_softdevice_vector_table_base_set</a> </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4528cbf3f1a34d4712822ac456b1b305a11216cbdd9009464a16286385173bb5a"></a>SVC_SDM_LAST</em>&nbsp;</td><td class="fielddoc">
-<p>Placeholder for last SDM SVC </p>
-</td></tr>
-</table>
+<p>Function for allocating a first unused SWI instance and setting a handler. </p>
+<p>The event handler function returns void and takes one uint32_t argument (SWI number).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_swi</td><td>Pointer to the SWI that has been allocated. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event_handler</td><td>Event handler function (must not be NULL). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>Interrupt priority.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the SWI was successfully allocated. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>If there is no available SWI to be used. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa7c89f3dde0fa17d3068807d2deba6fa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_drv_swi_free </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00355.html#gaf4d75a31a62ec35d2667efcbb3421f64">nrf_swi_t</a> *&#160;</td>
+          <td class="paramname"><em>p_swi</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for freeing a previously allocated SWI. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_swi</td><td>SWI to free. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1f1d64b1f9abf3476683733c0845a2ef"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00374.html#gaf6c20fb483036617204f12e99e0b997b">ret_code_t</a> nrf_drv_swi_init </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for initializing the SWI module. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the module was successfully initialized. </td></tr>
+    <tr><td class="paramname">MODULE_ALREADY_INITIALIZED</td><td>If the module has already been initialized. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga31366f910bb2a52eca033847bed37ed6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_drv_swi_trigger </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00355.html#gaf4d75a31a62ec35d2667efcbb3421f64">nrf_swi_t</a>&#160;</td>
+          <td class="paramname"><em>swi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>flag_number</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for triggering the SWI. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">swi</td><td>SWI to trigger. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">flag_number</td><td>Number of user flag to trigger. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa7b426edd78a6083c33df7e2d144bcf3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_drv_swi_uninit </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for uninitializing the SWI module. </p>
+<p>This function also disables all SWIs.</p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the module was successfully uninitialized. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>If the module has not been initialized yet. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -278,7 +348,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:05 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

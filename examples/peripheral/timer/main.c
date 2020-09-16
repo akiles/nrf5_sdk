@@ -36,14 +36,14 @@ const uint8_t leds_list[LEDS_NUMBER] = LEDS_LIST;
 /**
  * @brief Handler for timer events.
  */
-void timer_led_event_handler(nrf_timer_events_t event_type)
+void timer_led_event_handler(nrf_timer_event_t event_type, void* p_context)
 {
     static uint32_t i;
     uint32_t led_to_invert = (1 << leds_list[(i++) % LEDS_NUMBER]);
     
     switch(event_type)
     {
-        case NRF_TIMER_EVENTS_COMPARE0:
+        case NRF_TIMER_EVENT_COMPARE0:
             LEDS_INVERT(led_to_invert);
             break;
         
@@ -74,7 +74,7 @@ int main(void)
     time_ticks = nrf_drv_timer_ms_to_ticks(&TIMER_LED, time_ms);
     
     nrf_drv_timer_extended_compare(
-         &TIMER_LED, NRF_TIMER_CC_CHANNEL0, time_ticks, NRF_TIMER_SHORTS_COMPARE0_CLEAR_MASK, true);
+         &TIMER_LED, NRF_TIMER_CC_CHANNEL0, time_ticks, NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK, true);
     
     nrf_drv_timer_enable(&TIMER_LED);
 

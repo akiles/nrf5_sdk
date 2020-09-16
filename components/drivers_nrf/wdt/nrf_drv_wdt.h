@@ -26,6 +26,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "sdk_errors.h"
+#include "nrf_wdt.h"
 #include "nrf_drv_config.h"
 
 /**@brief Struct for WDT initialization. */
@@ -100,7 +101,7 @@ void nrf_drv_wdt_channel_feed(nrf_drv_wdt_channel_id channel_id);
  *
  * @retval     Task address.
  */
-__STATIC_INLINE uint32_t nrf_drv_wdt_ppi_task_addr(nrf_wdt_tasks_t task)
+__STATIC_INLINE uint32_t nrf_drv_wdt_ppi_task_addr(nrf_wdt_task_t task)
 {
     return nrf_wdt_task_address_get(task);
 }
@@ -111,7 +112,7 @@ __STATIC_INLINE uint32_t nrf_drv_wdt_ppi_task_addr(nrf_wdt_tasks_t task)
  *
  * @retval     Event address
  */
-__STATIC_INLINE uint32_t nrf_drv_wdt_ppi_event_addr(nrf_wdt_events_t event)
+__STATIC_INLINE uint32_t nrf_drv_wdt_ppi_event_addr(nrf_wdt_event_t event)
 {
     return nrf_wdt_event_address_get(event);
 }

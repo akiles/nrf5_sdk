@@ -1,4 +1,5 @@
 var a00233 =
 [
-    [ "passkey", "a00233.html#a1966df5e1f2fc8e4c30f0af7b16b71c2", null ]
+    [ "cccd_handle", "a00233.html#a7ec4f43c4adba9c33d6c52fa6637540b", null ],
+    [ "characteristic", "a00233.html#ac1bd337f6b1acc35a908b13ee4877a88", null ]
 ];

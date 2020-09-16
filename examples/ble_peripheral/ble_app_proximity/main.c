@@ -47,66 +47,60 @@
 #include "app_timer.h"
 #include "device_manager.h"
 #include "ble_ias_c.h"
-#include "app_gpiote.h"
 #include "app_util.h"
 #include "pstorage.h"
 #include "app_trace.h"
 #include "bsp.h"
+#include "bsp_btn_ble.h"
 
 
-#define IS_SRVC_CHANGED_CHARACT_PRESENT   0                                                 /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
+#define IS_SRVC_CHANGED_CHARACT_PRESENT 0                                            /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
 
-#define SIGNAL_ALERT_BUTTON_ID            0                                                 /**< Button used for send or cancel High Alert to the peer. */
-#define WAKEUP_BUTTON_ID                  0                                                 /**< Button used to wakeup MCU from power off mode */
-#define STOP_ALERTING_BUTTON_ID           1                                                 /**< Button used for clearing the Alert LED that may be blinking or turned ON because of alerts from the central. */
-#define BOND_DELETE_ALL_BUTTON_ID         1                                                 /**< Button used for deleting all stored bonding data during startup. */
+#define SIGNAL_ALERT_BUTTON_ID          0                                            /**< Button used for send or cancel High Alert to the peer. */
+#define STOP_ALERTING_BUTTON_ID         1                                            /**< Button used for clearing the Alert LED that may be blinking or turned ON because of alerts from the central. */
 
-#define DEVICE_NAME                       "Nordic_Prox"                                     /**< Name of device. Will be included in the advertising data. */
-#define APP_ADV_INTERVAL_FAST             0x0028                                            /**< Fast advertising interval (in units of 0.625 ms. This value corresponds to 25 ms.). */
-#define APP_ADV_INTERVAL_SLOW             0x0C80                                            /**< Slow advertising interval (in units of 0.625 ms. This value corresponds to 2 seconds). */
-#define APP_SLOW_ADV_TIMEOUT              180                                               /**< The duration of the slow advertising period (in seconds). */
-#define APP_FAST_ADV_TIMEOUT              30                                                /**< The duration of the fast advertising period (in seconds). */
+#define DEVICE_NAME                     "Nordic_Prox"                                /**< Name of device. Will be included in the advertising data. */
+#define APP_ADV_INTERVAL_FAST           0x0028                                       /**< Fast advertising interval (in units of 0.625 ms. This value corresponds to 25 ms.). */
+#define APP_ADV_INTERVAL_SLOW           0x0C80                                       /**< Slow advertising interval (in units of 0.625 ms. This value corresponds to 2 seconds). */
+#define APP_SLOW_ADV_TIMEOUT            180                                          /**< The duration of the slow advertising period (in seconds). */
+#define APP_FAST_ADV_TIMEOUT            30                                           /**< The duration of the fast advertising period (in seconds). */
 
-#define APP_TIMER_PRESCALER               0                                                 /**< Value of the RTC1 PRESCALER register. */
-#define APP_TIMER_MAX_TIMERS              (3+BSP_APP_TIMERS_NUMBER)                         /**< Maximum number of simultaneously created timers. 1 for Battery measurement, 2 for flashing Advertising LED and Alert LED, 1 for connection parameters module, 1 for button polling timer needed by the app_button module,  */
-#define APP_TIMER_OP_QUEUE_SIZE           6                                                 /**< Size of timer operation queues. */
+#define APP_TIMER_PRESCALER             0                                            /**< Value of the RTC1 PRESCALER register. */
+#define APP_TIMER_MAX_TIMERS            (3+BSP_APP_TIMERS_NUMBER)                    /**< Maximum number of simultaneously created timers. 1 for Battery measurement, 2 for flashing Advertising LED and Alert LED, 1 for connection parameters module, 1 for button polling timer needed by the app_button module,  */
+#define APP_TIMER_OP_QUEUE_SIZE         6                                            /**< Size of timer operation queues. */
 
-#define BATTERY_LEVEL_MEAS_INTERVAL       APP_TIMER_TICKS(120000, APP_TIMER_PRESCALER)      /**< Battery level measurement interval (ticks). This value corresponds to 120 seconds. */
+#define BATTERY_LEVEL_MEAS_INTERVAL     APP_TIMER_TICKS(120000, APP_TIMER_PRESCALER) /**< Battery level measurement interval (ticks). This value corresponds to 120 seconds. */
 
-#define ADV_LED_ON_TIME                   APP_TIMER_TICKS(100, APP_TIMER_PRESCALER)         /**< Advertisement LED ON period when in blinking state. */
-#define ADV_LED_OFF_TIME                  APP_TIMER_TICKS(900, APP_TIMER_PRESCALER)         /**< Advertisement LED OFF period when in blinking state. */
+#define ADV_LED_ON_TIME                 APP_TIMER_TICKS(100, APP_TIMER_PRESCALER)    /**< Advertisement LED ON period when in blinking state. */
+#define ADV_LED_OFF_TIME                APP_TIMER_TICKS(900, APP_TIMER_PRESCALER)    /**< Advertisement LED OFF period when in blinking state. */
 
-#define MILD_ALERT_LED_ON_TIME            APP_TIMER_TICKS(100, APP_TIMER_PRESCALER)         /**< Alert LED ON period when in blinking state. */
-#define MILD_ALERT_LED_OFF_TIME           APP_TIMER_TICKS(900, APP_TIMER_PRESCALER)         /**< Alert LED OFF period when in blinking state. */
+#define MILD_ALERT_LED_ON_TIME          APP_TIMER_TICKS(100, APP_TIMER_PRESCALER)    /**< Alert LED ON period when in blinking state. */
+#define MILD_ALERT_LED_OFF_TIME         APP_TIMER_TICKS(900, APP_TIMER_PRESCALER)    /**< Alert LED OFF period when in blinking state. */
 
-#define MIN_CONN_INTERVAL                 MSEC_TO_UNITS(500, UNIT_1_25_MS)                  /**< Minimum acceptable connection interval (0.5 seconds).  */
-#define MAX_CONN_INTERVAL                 MSEC_TO_UNITS(1000, UNIT_1_25_MS)                 /**< Maximum acceptable connection interval (1 second). */
-#define SLAVE_LATENCY                     0                                                 /**< Slave latency. */
-#define CONN_SUP_TIMEOUT                  MSEC_TO_UNITS(4000, UNIT_10_MS)                   /**< Connection supervisory timeout (4 seconds). */
+#define MIN_CONN_INTERVAL               MSEC_TO_UNITS(500, UNIT_1_25_MS)             /**< Minimum acceptable connection interval (0.5 seconds).  */
+#define MAX_CONN_INTERVAL               MSEC_TO_UNITS(1000, UNIT_1_25_MS)            /**< Maximum acceptable connection interval (1 second). */
+#define SLAVE_LATENCY                   0                                            /**< Slave latency. */
+#define CONN_SUP_TIMEOUT                MSEC_TO_UNITS(4000, UNIT_10_MS)              /**< Connection supervisory timeout (4 seconds). */
 
-#define FIRST_CONN_PARAMS_UPDATE_DELAY    APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)        /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
-#define NEXT_CONN_PARAMS_UPDATE_DELAY     APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER)       /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
-#define MAX_CONN_PARAMS_UPDATE_COUNT      3                                                 /**< Number of attempts before giving up the connection parameter negotiation. */
+#define FIRST_CONN_PARAMS_UPDATE_DELAY  APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)   /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
+#define NEXT_CONN_PARAMS_UPDATE_DELAY   APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER)  /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
+#define MAX_CONN_PARAMS_UPDATE_COUNT    3                                            /**< Number of attempts before giving up the connection parameter negotiation. */
 
-#define APP_GPIOTE_MAX_USERS              1                                                 /**< Maximum number of users of the GPIOTE handler. */
+#define SEC_PARAM_BOND                  1                                            /**< Perform bonding. */
+#define SEC_PARAM_MITM                  0                                            /**< Man In The Middle protection not required. */
+#define SEC_PARAM_IO_CAPABILITIES       BLE_GAP_IO_CAPS_NONE                         /**< No I/O capabilities. */
+#define SEC_PARAM_OOB                   0                                            /**< Out Of Band data not available. */
+#define SEC_PARAM_MIN_KEY_SIZE          7                                            /**< Minimum encryption key size. */
+#define SEC_PARAM_MAX_KEY_SIZE          16                                           /**< Maximum encryption key size. */
 
-#define BUTTON_DETECTION_DELAY            APP_TIMER_TICKS(50, APP_TIMER_PRESCALER)          /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
+#define INITIAL_LLS_ALERT_LEVEL         BLE_CHAR_ALERT_LEVEL_NO_ALERT                /**< Initial value for the Alert Level characteristic in the Link Loss service. */
+#define TX_POWER_LEVEL                  (-8)                                         /**< TX Power Level value. This will be set both in the TX Power service, in the advertising data, and also used to set the radio transmit power. */
 
-#define SEC_PARAM_BOND                    1                                                 /**< Perform bonding. */
-#define SEC_PARAM_MITM                    0                                                 /**< Man In The Middle protection not required. */
-#define SEC_PARAM_IO_CAPABILITIES         BLE_GAP_IO_CAPS_NONE                              /**< No I/O capabilities. */
-#define SEC_PARAM_OOB                     0                                                 /**< Out Of Band data not available. */
-#define SEC_PARAM_MIN_KEY_SIZE            7                                                 /**< Minimum encryption key size. */
-#define SEC_PARAM_MAX_KEY_SIZE            16                                                /**< Maximum encryption key size. */
+#define ADC_REF_VOLTAGE_IN_MILLIVOLTS   1200                                         /**< Reference voltage (in milli volts) used by ADC while doing conversion. */
+#define ADC_PRE_SCALING_COMPENSATION    3                                            /**< The ADC is configured to use VDD with 1/3 prescaling as input. And hence the result of conversion is to be multiplied by 3 to get the actual value of the battery voltage.*/
+#define DIODE_FWD_VOLT_DROP_MILLIVOLTS  270                                          /**< Typical forward voltage drop of the diode (Part no: SD103ATW-7-F) that is connected in series with the voltage supply. This is the voltage drop when the forward current is 1mA. Source: Data sheet of 'SURFACE MOUNT SCHOTTKY BARRIER DIODE ARRAY' available at www.diodes.com. */
 
-#define INITIAL_LLS_ALERT_LEVEL           BLE_CHAR_ALERT_LEVEL_NO_ALERT                     /**< Initial value for the Alert Level characteristic in the Link Loss service. */
-#define TX_POWER_LEVEL                    (-8)                                              /**< TX Power Level value. This will be set both in the TX Power service, in the advertising data, and also used to set the radio transmit power. */
-
-#define ADC_REF_VOLTAGE_IN_MILLIVOLTS     1200                                              /**< Reference voltage (in milli volts) used by ADC while doing conversion. */
-#define ADC_PRE_SCALING_COMPENSATION      3                                                 /**< The ADC is configured to use VDD with 1/3 prescaling as input. And hence the result of conversion is to be multiplied by 3 to get the actual value of the battery voltage.*/
-#define DIODE_FWD_VOLT_DROP_MILLIVOLTS    270                                               /**< Typical forward voltage drop of the diode (Part no: SD103ATW-7-F) that is connected in series with the voltage supply. This is the voltage drop when the forward current is 1mA. Source: Data sheet of 'SURFACE MOUNT SCHOTTKY BARRIER DIODE ARRAY' available at www.diodes.com. */
-
-#define DEAD_BEEF                         0xDEADBEEF                                        /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
+#define DEAD_BEEF                       0xDEADBEEF                                   /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
 /**@brief Macro to convert the result of ADC conversion in millivolts.
  *
@@ -120,28 +114,30 @@
 /**@brief Advertisement states. */
 typedef enum
 {
-    BLE_NO_ADV,                                                                             /**< No advertising running. */
-    BLE_FAST_ADV_WHITELIST,                                                                 /**< Advertising with whitelist. */
-    BLE_FAST_ADV,                                                                           /**< Fast advertising running. */
-    BLE_SLOW_ADV,                                                                           /**< Slow advertising running. */
-    BLE_SLEEP,                                                                              /**< Go to system-off. */
+    BLE_NO_ADV,                                                                      /**< No advertising running. */
+    BLE_FAST_ADV_WHITELIST,                                                          /**< Advertising with whitelist. */
+    BLE_FAST_ADV,                                                                    /**< Fast advertising running. */
+    BLE_SLOW_ADV,                                                                    /**< Slow advertising running. */
+    BLE_SLEEP,                                                                       /**< Go to system-off. */
 } ble_advertising_mode_t;
 
-static ble_tps_t                          m_tps;                                            /**< Structure used to identify the TX Power service. */
-static ble_ias_t                          m_ias;                                            /**< Structure used to identify the Immediate Alert service. */
-static ble_lls_t                          m_lls;                                            /**< Structure used to identify the Link Loss service. */
+static ble_tps_t                        m_tps;                                       /**< Structure used to identify the TX Power service. */
+static ble_ias_t                        m_ias;                                       /**< Structure used to identify the Immediate Alert service. */
+static ble_lls_t                        m_lls;                                       /**< Structure used to identify the Link Loss service. */
 
-static ble_bas_t                          m_bas;                                            /**< Structure used to identify the battery service. */
-static ble_ias_c_t                        m_ias_c;                                          /**< Structure used to identify the client to the Immediate Alert Service at peer. */
+static ble_bas_t                        m_bas;                                       /**< Structure used to identify the battery service. */
+static ble_ias_c_t                      m_ias_c;                                     /**< Structure used to identify the client to the Immediate Alert Service at peer. */
 
-static uint8_t                            m_advertising_mode;                               /**< Variable to keep track of when we are advertising. */
+static uint8_t                          m_advertising_mode;                          /**< Variable to keep track of when we are advertising. */
+static uint16_t                         m_conn_handle = BLE_CONN_HANDLE_INVALID;     /**< Handle of the current connection. */
 
-static volatile bool                      m_is_high_alert_signalled;                        /**< Variable to indicate whether or not high alert is signalled to the peer. */
+static volatile bool                    m_is_high_alert_signalled;                   /**< Variable to indicate whether a high alert has been signalled to the peer. */
+static volatile bool                    m_is_ias_present = false;                    /**< Variable to indicate whether the immediate alert service has been discovered at the connected peer. */
 
-static app_timer_id_t                     m_battery_timer_id;                               /**< Battery measurement timer. */
-static dm_application_instance_t          m_app_handle;                                     /**< Application identifier allocated by device manager */
+static app_timer_id_t                   m_battery_timer_id;                          /**< Battery measurement timer. */
+static dm_application_instance_t        m_app_handle;                                /**< Application identifier allocated by device manager */
 
-static bool                               m_memory_access_in_progress = false;              /**< Flag to keep track of ongoing operations on persistent memory. */
+static bool                             m_memory_access_in_progress = false;         /**< Flag to keep track of ongoing operations on persistent memory. */
 
 static void on_ias_evt(ble_ias_t * p_ias, ble_ias_evt_t * p_evt);
 static void on_lls_evt(ble_lls_t * p_lls, ble_lls_evt_t * p_evt);
@@ -158,8 +154,8 @@ static void advertising_init(uint8_t adv_flags);
  *          how your product is supposed to react in case of Assert.
  * @warning On assert from the SoftDevice, the system can only recover on reset.
  *
- * @param[in]   line_num   Line number of the failing ASSERT call.
- * @param[in]   file_name  File name of the failing ASSERT call.
+ * @param[in] line_num   Line number of the failing ASSERT call.
+ * @param[in] file_name  File name of the failing ASSERT call.
  */
 void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 {
@@ -172,7 +168,7 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
  * @details A pointer to this function will be passed to each service which may need to inform the
  *          application about an error.
  *
- * @param[in]   nrf_error   Error code containing information about what went wrong.
+ * @param[in] nrf_error   Error code containing information about what went wrong.
  */
 static void service_error_handler(uint32_t nrf_error)
 {
@@ -310,7 +306,7 @@ static void advertising_start(void)
             adv_params.interval = APP_ADV_INTERVAL_FAST;
             adv_params.timeout  = APP_FAST_ADV_TIMEOUT;
 
-            err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_WHITELIST);
+            err_code            = bsp_indication_set(BSP_INDICATE_ADVERTISING_WHITELIST);
             APP_ERROR_CHECK(err_code);
             break;
         }
@@ -321,7 +317,7 @@ static void advertising_start(void)
             adv_params.interval = APP_ADV_INTERVAL_FAST;
             adv_params.timeout  = APP_FAST_ADV_TIMEOUT;
             m_advertising_mode  = BLE_SLOW_ADV;
-            err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
+            err_code            = bsp_indication_set(BSP_INDICATE_ADVERTISING);
             APP_ERROR_CHECK(err_code);
             break;
 
@@ -332,7 +328,7 @@ static void advertising_start(void)
             adv_params.timeout  = APP_SLOW_ADV_TIMEOUT;
             m_advertising_mode  = BLE_SLEEP;
 
-            err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING_SLOW);
+            err_code            = bsp_indication_set(BSP_INDICATE_ADVERTISING_SLOW);
             APP_ERROR_CHECK(err_code);
             break;
 
@@ -352,8 +348,8 @@ static void advertising_start(void)
  * @details This function will be called each time the battery level measurement timer expires.
  *          This function will start the ADC.
  *
- * @param[in]   p_context   Pointer used for passing some arbitrary information (context) from the
- *                          app_start_timer() call to the timeout handler.
+ * @param[in] p_context   Pointer used for passing some arbitrary information (context) from the
+ *                        app_start_timer() call to the timeout handler.
  */
 static void battery_level_meas_timeout_handler(void * p_context)
 {
@@ -422,7 +418,7 @@ static void gap_params_init(void)
  * @details Encodes the required advertising data and passes it to the stack.
  *          Also builds a structure to be passed to the stack when starting advertising.
  *
- * @param[in]  adv_flags  Indicates which type of advertisement to use, see @ref BLE_GAP_DISC_MODES.
+ * @param[in] adv_flags  Indicates which type of advertisement to use, see @ref BLE_GAP_DISC_MODES.
  *
  */
 static void advertising_init(uint8_t adv_flags)
@@ -570,7 +566,7 @@ static void services_init(void)
 
 /**@brief Function for handling a Connection Parameters error.
  *
- * @param[in]   nrf_error   Error code containing information about what went wrong.
+ * @param[in] nrf_error  Error code containing information about what went wrong.
  */
 static void conn_params_error_handler(uint32_t nrf_error)
 {
@@ -603,7 +599,7 @@ static void conn_params_init(void)
 
 /**@brief Function for the Signals alert event from Immediate Alert or Link Loss services.
  *
- * @param[in]   alert_level  Requested alert level.
+ * @param[in] alert_level  Requested alert level.
  */
 static void alert_signal(uint8_t alert_level)
 {
@@ -632,13 +628,32 @@ static void alert_signal(uint8_t alert_level)
 }
 
 
+/**@brief Function for putting the chip into sleep mode.
+ *
+ * @note This function will not return.
+ */
+static void sleep_mode_enter(void)
+{
+    uint32_t err_code = bsp_indication_set(BSP_INDICATE_IDLE);
+    APP_ERROR_CHECK(err_code);
+
+    // Prepare wakeup buttons.
+    err_code = bsp_btn_ble_sleep_mode_prepare();
+    APP_ERROR_CHECK(err_code);
+
+    // Go to system-off mode (this function will not return; wakeup will cause a reset).
+    err_code = sd_power_system_off();
+    APP_ERROR_CHECK(err_code);
+}
+
+
 /**@brief Function for handling Immediate Alert events.
  *
  * @details This function will be called for all Immediate Alert events which are passed to the
  *          application.
  *
- * @param[in]   p_ias  Immediate Alert structure.
- * @param[in]   p_evt  Event received from the Immediate Alert service.
+ * @param[in] p_ias  Immediate Alert structure.
+ * @param[in] p_evt  Event received from the Immediate Alert service.
  */
 static void on_ias_evt(ble_ias_t * p_ias, ble_ias_evt_t * p_evt)
 {
@@ -660,8 +675,8 @@ static void on_ias_evt(ble_ias_t * p_ias, ble_ias_evt_t * p_evt)
  * @details This function will be called for all Link Loss events which are passed to the
  *          application.
  *
- * @param[in]   p_lls  Link Loss structure.
- * @param[in]   p_evt  Event received from the Link Loss service.
+ * @param[in] p_lls  Link Loss structure.
+ * @param[in] p_evt  Event received from the Link Loss service.
  */
 static void on_lls_evt(ble_lls_t * p_lls, ble_lls_evt_t * p_evt)
 {
@@ -683,21 +698,16 @@ static void on_lls_evt(ble_lls_t * p_lls, ble_lls_evt_t * p_evt)
  * @details This function will be called for all IAS Client events which are passed to the
  *          application.
  *
- * @param[in]   p_ias_c  IAS Client structure.
- * @param[in]   p_evt    Event received.
+ * @param[in] p_ias_c  IAS Client structure.
+ * @param[in] p_evt    Event received.
  */
 static void on_ias_c_evt(ble_ias_c_t * p_ias_c, ble_ias_c_evt_t * p_evt)
 {
-    uint32_t err_code;
-
     switch (p_evt->evt_type)
     {
         case BLE_IAS_C_EVT_SRV_DISCOVERED:
             // IAS is found on peer. The Find Me Locator functionality of this app will work.
-            // Start handling button presses
-            err_code = bsp_buttons_enable( (1 << SIGNAL_ALERT_BUTTON_ID)
-                                         | ( 1 << STOP_ALERTING_BUTTON_ID));
-            APP_ERROR_CHECK(err_code);
+            m_is_ias_present = true;
             break;
 
         case BLE_IAS_C_EVT_SRV_NOT_FOUND:
@@ -706,8 +716,7 @@ static void on_ias_c_evt(ble_ias_c_t * p_ias_c, ble_ias_c_evt_t * p_evt)
 
         case BLE_IAS_C_EVT_DISCONN_COMPLETE:
             // Disable alert buttons
-            err_code = bsp_buttons_enable(BSP_BUTTONS_NONE);
-            APP_ERROR_CHECK(err_code);
+            m_is_ias_present = false;
             break;
 
         default:
@@ -721,8 +730,8 @@ static void on_ias_c_evt(ble_ias_c_t * p_ias_c, ble_ias_c_evt_t * p_evt)
  * @details This function will be called for all Battery Service events which are passed to the
  |          application.
  *
- * @param[in]   p_bas  Battery Service structure.
- * @param[in]   p_evt  Event received from the Battery Service.
+ * @param[in] p_bas  Battery Service structure.
+ * @param[in] p_evt  Event received from the Battery Service.
  */
 static void on_bas_evt(ble_bas_t * p_bas, ble_bas_evt_t *p_evt)
 {
@@ -750,12 +759,11 @@ static void on_bas_evt(ble_bas_t * p_bas, ble_bas_evt_t *p_evt)
 
 /**@brief Function for handling the Application's BLE Stack events.
  *
- * @param[in]   p_ble_evt   Bluetooth stack event.
+ * @param[in] p_ble_evt  Bluetooth stack event.
  */
 static void on_ble_evt(ble_evt_t * p_ble_evt)
 {
     uint32_t        err_code      = NRF_SUCCESS;
-    static uint16_t m_conn_handle = BLE_CONN_HANDLE_INVALID;
 
     switch (p_ble_evt->header.evt_id)
     {
@@ -781,20 +789,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             {
                 if (m_advertising_mode == BLE_SLEEP)
                 {
-                    err_code = bsp_indication_set(BSP_INDICATE_IDLE);
-                    APP_ERROR_CHECK(err_code);
-
-                    m_advertising_mode = BLE_NO_ADV;
-
-                    // enable buttons to wake-up from power off
-                    err_code = bsp_buttons_enable( (1 << WAKEUP_BUTTON_ID)
-                                                 | (1 << BOND_DELETE_ALL_BUTTON_ID));
-                    APP_ERROR_CHECK(err_code);
-
-                    // Go to system-off mode
-                    // (this function will not return; wakeup will cause a reset)
-                    err_code = sd_power_system_off();
-                    APP_ERROR_CHECK(err_code);
+                    sleep_mode_enter();
                 }
                 else
                 {
@@ -820,7 +815,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 
 /**@brief Function for handling the Application's system events.
  *
- * @param[in]   sys_evt   system event.
+ * @param[in] sys_evt  system event.
  */
 static void on_sys_evt(uint32_t sys_evt)
 {
@@ -848,7 +843,7 @@ static void on_sys_evt(uint32_t sys_evt)
  * @details This function is called from the BLE Stack event interrupt handler after a BLE stack
  *          event has been received.
  *
- * @param[in]   p_ble_evt   Bluetooth stack event.
+ * @param[in] p_ble_evt  Bluetooth stack event.
  */
 static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 {
@@ -859,6 +854,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
     ble_bas_on_ble_evt(&m_bas, p_ble_evt);
     ble_ias_c_on_ble_evt(&m_ias_c, p_ble_evt);
     ble_tps_on_ble_evt(&m_tps, p_ble_evt);
+    bsp_btn_ble_on_ble_evt(p_ble_evt);
     on_ble_evt(p_ble_evt);
 }
 
@@ -868,7 +864,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
  * @details This function is called from the System event interrupt handler after a system
  *          event has been received.
  *
- * @param[in]   sys_evt   System stack event.
+ * @param[in] sys_evt  System stack event.
  */
 static void sys_evt_dispatch(uint32_t sys_evt)
 {
@@ -891,6 +887,9 @@ static void ble_stack_init(void)
     // Enable BLE stack.
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
+#ifdef S130
+    ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
+#endif	
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
     err_code = sd_ble_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
@@ -907,7 +906,7 @@ static void ble_stack_init(void)
 
 /**@brief Function for handling the Device Manager events.
  *
- * @param[in]   p_evt   Data associated to the device manager event.
+ * @param[in] p_evt  Data associated to the device manager event.
  */
 static uint32_t device_manager_evt_handler(dm_handle_t const * p_handle,
                                            dm_event_t const  * p_event,
@@ -919,22 +918,21 @@ static uint32_t device_manager_evt_handler(dm_handle_t const * p_handle,
 
 
 /**@brief Function for the Device Manager initialization.
+ *
+ * @param[in] erase_bonds  Indicates whether bonding information should be cleared from
+ *                         persistent storage during initialization of the Device Manager.
  */
-static void device_manager_init(void)
+static void device_manager_init(bool erase_bonds)
 {
     uint32_t               err_code;
-    dm_init_param_t        init_data;
+    dm_init_param_t        init_param = {.clear_persistent_data = erase_bonds};
     dm_application_param_t register_param;
 
     // Initialize persistent storage module.
     err_code = pstorage_init();
     APP_ERROR_CHECK(err_code);
 
-    // Clear all bonded centrals if the Bonds Delete button is pushed.
-    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID, &(init_data.clear_persistent_data));
-    APP_ERROR_CHECK(err_code);
-
-    err_code = dm_init(&init_data);
+    err_code = dm_init(&init_param);
     APP_ERROR_CHECK(err_code);
 
     memset(&register_param.sec_param, 0, sizeof(ble_gap_sec_params_t));
@@ -953,40 +951,61 @@ static void device_manager_init(void)
 }
 
 
-/**@brief Function for handling button events.
+/**@brief Function for handling events from the BSP module.
  *
  * @param[in]   event   Event generated when button is pressed.
  */
-static void button_event_handler(bsp_event_t event)
+static void bsp_event_handler(bsp_event_t event)
 {
     uint32_t err_code;
-
     switch (event)
     {
-        case BSP_EVENT_KEY_0: //SIGNAL_ALERT_BOND_DELETE_BUTTON_ID
+        case BSP_EVENT_SLEEP:
+            sleep_mode_enter();
+            break;
 
-            if (!m_is_high_alert_signalled)
+        case BSP_EVENT_DISCONNECT:
+            err_code = sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+            if (err_code != NRF_ERROR_INVALID_STATE)
             {
-                err_code = ble_ias_c_send_alert_level(&m_ias_c, BLE_CHAR_ALERT_LEVEL_HIGH_ALERT);
+                APP_ERROR_CHECK(err_code);
             }
-            else
-            {
-                err_code = ble_ias_c_send_alert_level(&m_ias_c, BLE_CHAR_ALERT_LEVEL_NO_ALERT);
-            }
+            break;
 
-            if (err_code == NRF_SUCCESS)
+        case BSP_EVENT_WHITELIST_OFF:
+//            err_code = ble_advertising_restart_without_whitelist();
+//            if (err_code != NRF_ERROR_INVALID_STATE)
+//            {
+//                APP_ERROR_CHECK(err_code);
+//            }
+            break;
+
+        case BSP_EVENT_KEY_0:
+            if (m_is_ias_present)
             {
-                m_is_high_alert_signalled = !m_is_high_alert_signalled;
-            }
-            else if (
-                (err_code != BLE_ERROR_NO_TX_BUFFERS)
-                &&
-                (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
-                &&
-                (err_code != NRF_ERROR_NOT_FOUND)
-                )
-            {
-                APP_ERROR_HANDLER(err_code);
+                if (!m_is_high_alert_signalled)
+                {
+                    err_code = ble_ias_c_send_alert_level(&m_ias_c, BLE_CHAR_ALERT_LEVEL_HIGH_ALERT);
+                }
+                else
+                {
+                    err_code = ble_ias_c_send_alert_level(&m_ias_c, BLE_CHAR_ALERT_LEVEL_NO_ALERT);
+                }
+
+                if (err_code == NRF_SUCCESS)
+                {
+                    m_is_high_alert_signalled = !m_is_high_alert_signalled;
+                }
+                else if (
+                    (err_code != BLE_ERROR_NO_TX_BUFFERS)
+                    &&
+                    (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING)
+                    &&
+                    (err_code != NRF_ERROR_NOT_FOUND)
+                    )
+                {
+                    APP_ERROR_HANDLER(err_code);
+                }
             }
             break;
 
@@ -1000,12 +1019,23 @@ static void button_event_handler(bsp_event_t event)
     }
 }
 
-
-/**@brief Function for initializing the GPIOTE handler module.
+/**@brief Function for initializing buttons and leds.
+ *
+ * @param[out] p_erase_bonds  Will be true if the clear bonding button was pressed to wake the application up.
  */
-static void gpiote_init(void)
+static void buttons_leds_init(bool * p_erase_bonds)
 {
-    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
+    bsp_event_t startup_event;
+
+    uint32_t err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+                                 APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
+                                 bsp_event_handler);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = bsp_btn_ble_init(NULL, &startup_event);
+    APP_ERROR_CHECK(err_code);
+
+    *p_erase_bonds = (startup_event == BSP_EVENT_CLEAR_BONDING_DATA);
 }
 
 
@@ -1022,18 +1052,15 @@ static void power_manage(void)
  */
 int main(void)
 {
-    uint32_t err_code;
+    bool erase_bonds;
+
     // Initialize.
     app_trace_init();
     timers_init();
-    gpiote_init();
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
-                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
-                        button_event_handler);
-    APP_ERROR_CHECK(err_code);
+    buttons_leds_init(&erase_bonds);
     ble_stack_init();
     adc_configure();
-    device_manager_init();
+    device_manager_init(erase_bonds);
     gap_params_init();
     advertising_init(BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE);
     services_init();

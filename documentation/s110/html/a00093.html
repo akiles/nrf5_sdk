@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Safety-checking the image</title>
+<title>nRF51 SDK - S110 SoftDevice: DFU state machine</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,73 +97,42 @@ $(document).ready(function(){initNavTree('a00093.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Safety-checking the image </div>  </div>
+<div class="title">DFU state machine </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>To make sure that only compatible applications are installed on a device, the DFU procedure includes a mechanism to safety-check the transferred firmware image.</p>
-<p>When updating the application on the nRF51 IC, the image that is transferred must be accompanied by an init packet that contains information about the image. The tool that you use to perform the DFU must <a class="el" href="a00093.html#bledfu_initsend">send this packet</a> before transferring the actual image. The DFU processing in the bootloader must <a class="el" href="a00093.html#bledfu_initcheck">check the information in the init packet</a> to ensure that the transferred image is valid and to accept only compatible applications.</p>
-<p>The init packet contains the following information that is used for safety checks (see <a class="el" href="a00369.html">dfu_init_packet_t</a>):</p>
-<ul>
-<li>Device type: A 2-byte value specified by the developer that identifies the device type, for example Heart Rate Belt.</li>
-<li>Device revision: A 2-byte value that can be used to restrict the update to be accepted only on devices with a defined revision number.</li>
-<li>Application version: A 4-byte value identifying the version of the application that is being transferred. This value can be used to allow only software upgrades and prevent downgrades. No example code is provided for this feature.</li>
-<li>Supported SoftDevices: A list of 2-byte values identifying the SoftDevices that are compatible with the application, for example, S110 v7.1 or S110 v8.0.</li>
-<li>Checksum: A 2-byte CRC-16-CCITT for the image to transfer.</li>
-</ul>
+<div class="textblock"><p>The firmware update process has been modelled as an event-driven state machine, with each event signifying a specific DFU procedure. The events and procedures are agnostic of the transport protocol that is in use. Therefore, it is possible to perform a firmware update using any transport protocol. The DFU controller can trigger the events by sending a corresponding message on the DFU transport.</p>
+<p>The following figure illustrates the transitions in the state machine: </p>
 <div class="image">
-<img src="dfu_init_packet.png" alt="dfu_init_packet.png"/>
+<img src="DFU_state_machine.svg" alt="DFU_state_machine.svg"/>
 <div class="caption">
-DFU init packet</div></div>
- <h1><a class="anchor" id="bledfu_initsend"></a>
-Sending the init packet</h1>
-<p>How to send the init packet depends on the procedure that you use to perform the DFU.</p>
-<p>If you use Master Control Panel or a Python script to perform the update, you must provide a zip file that contains the image and the init packet.</p>
-<p>If you use Nordic Semiconductor's Android or iOS app to perform the update, the required file format depends on the version of the app. New versions support zip files that contain the firmware image and the init packet. Older versions support BIN or HEX files and will prompt you to select an init packet to send.</p>
-<h1><a class="anchor" id="bledfu_initcheck"></a>
-Checking the init packet</h1>
-<p>The nRF51 SDK provides a template, <code>dfu_init_template.c</code>, to perform safety checks of the init packet. The template is located in the <code>&lt;BaseFolder&gt;\bootloader_dfu</code> folder. If you are using Keil packs, the default <code>&lt;BaseFolder&gt;</code> is <code>C:\Keil\ARM\Pack\NordicSemiconductor\nRF_Libraries\&lt;version&gt;</code>. If you are using the repository distribution variant of the SDK, <code>&lt;BaseFolder&gt;</code> is <code>&lt;InstallFolder&gt;\Nordic\nrf51\components\libraries</code>.</p>
-<p><code>dfu_init_template.c</code>, which is also used in the DFU bootloader example projects, can be used as a starting point to develop procedures that increase the safety of the DFU. The current implementation includes checks for <a class="el" href="a00093.html#dfu_init_dev_rev_sec">Device type and revision</a>, <a class="el" href="a00093.html#dfu_init_sd_list_sec">Supported SoftDevices</a>, and the checksum, but not for the <a class="el" href="a00093.html#dfu_init_app_ver_sec">Application version</a>.</p>
-<h2><a class="anchor" id="dfu_init_dev_rev_sec"></a>
-Device type and revision</h2>
-<p>The device type and revision are stored in the user-reserved area of UICR (0x10001080) on the nRF51 IC. If this location is used for other purposes, update the offset <a class="el" href="a00942.html#ga7dbc00b26886d263bc3ff6fed3314df0">UICR_CUSTOMER_DEVICE_INFO_OFFSET</a> in <code>dfu_init.h</code> to match a free location in UICR.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#define UICR_CUSTOMER_DEVICE_INFO_OFFSET    0x0                                             </span><span class="comment">/**&lt; Device info offset inside the customer UICR reserved area. Customers may change this value to place the device information in a user-preferred location. */</span><span class="preprocessor"></span></div>
-</div><!-- fragment --><p> The values stored at this location are compared to the values from the init packet. If they match, the image is accepted. Otherwise, the image is rejected. To accept all device types and revisions and to disable the check, make sure not to set the UICR value to a specific value, but keep the default value 0xFFFF.</p>
-<h2><a class="anchor" id="dfu_init_app_ver_sec"></a>
-Application version</h2>
-<p><code>dfu_init_template.c</code> does not check the application version. However, you should implement an application version check if required.</p>
-<p>If you add an application version check, every application must be compiled with a version ID. This version ID can be placed at a predefined location in the application image, for example at the application start address + 0x0100, similar to the principle used by Nordic Semiconductor's SoftDevices.</p>
-<p>See the following code snippet from <code>dfu_init_template.c</code>, which illustrates where to extend the DFU Init packet handling with an application version safety check:</p>
-<div class="fragment"><div class="line">    <span class="comment">// To support application versioning, this check should be updated.</span></div>
-<div class="line">    <span class="comment">// This template allows for any application to be installed. However, </span></div>
-<div class="line">    <span class="comment">// customers can place a revision number at the bottom of the application </span></div>
-<div class="line">    <span class="comment">// to be verified by the bootloader. This can be done at a location </span></div>
-<div class="line">    <span class="comment">// relative to the application, for example the application start </span></div>
-<div class="line">    <span class="comment">// address + 0x0100.</span></div>
-</div><!-- fragment --> <h2><a class="anchor" id="dfu_init_sd_list_sec"></a>
-Supported SoftDevices</h2>
-<p>Applications that are compiled for the nRF51 IC target a specific SoftDevice, for example S110 v8.0. Some applications might work with multiple SoftDevice versions if the API is backward compatible. For example, an application that is compiled for S110 SoftDevice v7.0.0 can also run on S110 SoftDevice v7.1.0.</p>
-<p>Provide a list of supported SoftDevices for the application that is to be installed in the DFU init packet. The DFU procedure in the bootloader checks the list that is provided in the init packet against the currently installed SoftDevice on the IC and continues the update procedure only if a matching SoftDevice is installed.</p>
-<p>Use a value of 0xFFFE in the init packet if the application should be installed regardless of the SoftDevice that is present. This feature can be helpful during development, but you should not use it in a product.</p>
-<p>See the following table for the FWID values of current SoftDevices:</p>
+State machine transitions in the DFU process</div></div>
+<p> The entry point of the state machine is the bootloader starting up and entering DFU mode. During initialization, the selected transport layer is initialized. When an update process has been initiated, the DFU prepares the non-volatile memory region for the new application.</p>
+<p>The following messages initiate transitions:</p>
 <table class="doxtable">
 <tr>
-<th>SoftDevice S110 </th><th>FWID</th></tr>
+<th>Message type </th><th>Description</th></tr>
 <tr>
-<td>S110 v7.0.0 </td><td>0x004F </td></tr>
+<td>dfu_init </td><td>Initialize the Device Firmware Update module. </td></tr>
 <tr>
-<td>S110 v7.1.0 </td><td>0x005A </td></tr>
+<td>dfu_image_size_set </td><td>Set the DFU image size. </td></tr>
 <tr>
-<td>S110 v8.0.0 </td><td>0x0064 </td></tr>
+<td>dfu_init_pkt_handle </td><td>Customer-specific data (optional). </td></tr>
 <tr>
-<td>Development/any </td><td>0xFFFE </td></tr>
+<td>dfu_data_pkt_handle </td><td>A portion of the new application. </td></tr>
+<tr>
+<td>dfu_image_validate </td><td>Trigger validation of the new application. </td></tr>
+<tr>
+<td>dfu_image_activate </td><td>Activate the transferred image after validation has successfully completed. </td></tr>
+<tr>
+<td>dfu_sys_reset </td><td>Reset the device. A reset can occur at any time, for example if a bootloader time-out occurs or when triggered by an external message. </td></tr>
 </table>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00078.html">BLE DFU Bootloader</a></li><li class="navelem"><a class="el" href="a00089.html">Creating a DFU bootloader</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00084.html">BLE DFU Bootloader</a></li><li class="navelem"><a class="el" href="a00092.html">Architecture</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

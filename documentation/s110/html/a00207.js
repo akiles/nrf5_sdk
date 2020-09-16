@@ -1,7 +1,5 @@
 var a00207 =
 [
-    [ "product_id", "a00207.html#aa0d1f51b878c90d2ee68e8c332194345", null ],
-    [ "product_version", "a00207.html#a39d73de0dca55716ebcaed3ecf7a43e9", null ],
-    [ "vendor_id", "a00207.html#a06800d391cc463d5be9e1a7987e04c78", null ],
-    [ "vendor_id_source", "a00207.html#af3a10730991ad81e94ce05ff3dfdb6e3", null ]
+    [ "category", "a00207.html#a4fdff51ec3bc842205991b1d94a6203d", null ],
+    [ "command", "a00207.html#a884740fe58c776baff9984a9aeb2364a", null ]
 ];

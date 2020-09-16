@@ -1,7 +1,6 @@
 var a00230 =
 [
-    [ "distance_us", "a00230.html#a34cb59c0e80b3698a3df265ab88b34b5", null ],
-    [ "hfclk", "a00230.html#a23b414675dc9b11671f55601075f541d", null ],
-    [ "length_us", "a00230.html#adf9603de0e582965d4bb1c0a42d8e88c", null ],
-    [ "priority", "a00230.html#a18cc5dd5dc34877572e42ee8102fcb82", null ]
+    [ "company_id", "a00230.html#a39ff6a37dbb096bf608d850d0845d252", null ],
+    [ "subversion_number", "a00230.html#abd81a16510bfbcf3778af4daab021369", null ],
+    [ "version_number", "a00230.html#af18ca1a9b3d80b05042d9121e9d3c9ed", null ]
 ];

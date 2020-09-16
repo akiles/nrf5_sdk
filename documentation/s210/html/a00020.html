@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Schedule handling library</title>
+<title>nRF51 SDK - S210 SoftDevice: Button handling library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,67 +97,19 @@ $(document).ready(function(){initNavTree('a00020.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Schedule handling library </div>  </div>
+<div class="title">Button handling library </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The scheduler is used for transferring execution from the interrupt context to the main context.</p>
-<h1><a class="anchor" id="app_scheduler_req"></a>
-Requirements:</h1>
-<h2><a class="anchor" id="main_context_logic"></a>
-Logic in main context:</h2>
-<ul>
-<li>Define an event handler for each type of event expected.</li>
-<li>Initialize the scheduler by calling the <a class="el" href="a00323.html#gaa9670ed0053a67304c3d2d0cb3eb1333" title="Macro for initializing the event scheduler.">APP_SCHED_INIT()</a> macro before entering the application main loop.</li>
-<li>Call <a class="el" href="a00323.html#gab725820c32a8d05379db4567cf30e862" title="Function for executing all scheduled events.">app_sched_execute()</a> from the main loop each time the application wakes up because of an event (typically when <a class="el" href="a00360.html#ga11d88d38ac99fb72cde74c9385d36433" title="Waits for an application event.">sd_app_evt_wait()</a> returns).</li>
-</ul>
-<h2><a class="anchor" id="int_context_logic"></a>
-Logic in interrupt context:</h2>
-<ul>
-<li>In the interrupt handler, call <a class="el" href="a00323.html#ga49ec0ad278ece44b5dc56b86ac44489c" title="Function for scheduling an event.">app_sched_event_put()</a> with the appropriate data and event handler. This will insert an event into the scheduler's queue. The <a class="el" href="a00323.html#gab725820c32a8d05379db4567cf30e862" title="Function for executing all scheduled events.">app_sched_execute()</a> function will pull this event and call its handler in the main context.</li>
-</ul>
-<div class="image">
-<img src="scheduler_working.jpg" alt="scheduler_working.jpg"/>
-<div class="caption">
-The high level design of the scheduler</div></div>
-<h1><a class="anchor" id="seq_diagrams_sched"></a>
-Applications using the Scheduler</h1>
-<p>Sequence diagrams illustrating the flow of events for various scenarios in the example applications when using the Scheduler. <br/>
- <br/>
-</p>
-<div class="image">
-<img src="ble_event_with_scheduler.jpg" alt="ble_event_with_scheduler.jpg"/>
-<div class="caption">
-Figure 1: Receiving an event from the ble stack causing a service event</div></div>
-<p><br/>
- </p>
-<div class="image">
-<img src="battery_timer_with_scheduler.jpg" alt="battery_timer_with_scheduler.jpg"/>
-<div class="caption">
-Figure 2: The battery timer expires</div></div>
-<p><br/>
-</p>
-<h1><a class="anchor" id="seq_diagrams_no_sched"></a>
-Applications not using the Scheduler</h1>
-<p>Sequence diagrams illustrating the flow of events for various scenarios in the example applications when not using the Scheduler. <br/>
- <br/>
-</p>
-<div class="image">
-<img src="ble_event_without_scheduler.jpg" alt="ble_event_without_scheduler.jpg"/>
-<div class="caption">
-Figure 3: Receiving an event from the ble stack causing a service event</div></div>
-<p><br/>
- </p>
-<div class="image">
-<img src="battery_timer_without_scheduler.jpg" alt="battery_timer_without_scheduler.jpg"/>
-<div class="caption">
-Figure 4: The battery timer expires</div></div>
+<div class="textblock"><p>The button handler uses the <a class="el" href="a00360.html">GPIOTE Handler</a> to detect that a button has been pushed. To handle debouncing, it will start a timer in the GPIOTE event handler. The button will only be reported as pushed if the corresponding pin is still active when the timer expires. If there is a new GPIOTE event while the timer is running, the timer is restarted. Use the USE_SCHEDULER parameter of the APP_BUTTON_INIT() macro to select if the <a class="el" href="a00366.html">Scheduler</a> is to be used or not.</p>
+<p>The app_button module uses the app_timer module. The user must ensure that the queue in app_timer is large enough to hold the <a class="el" href="a00369.html#gad40fbb2a6a9e5bf7d00f838763f5514c" title="Function for stopping the specified timer.">app_timer_stop()</a> / <a class="el" href="a00369.html#ga03fb5f5fa85d16289db0d3c15bb0f24d" title="Function for starting a timer.">app_timer_start()</a> operations which will be executed on each event from GPIOTE module (2 operations), as well as other app_timer operations queued simultaneously in the application.</p>
+<p>Even if the scheduler is not used, app_button.h will include app_scheduler.h, so when compiling, app_scheduler.h must be available in one of the compiler include paths. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:37:16 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

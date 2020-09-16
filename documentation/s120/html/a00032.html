@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Pin Change Interrupt Example</title>
+<title>nRF51 SDK - S120 SoftDevice: Hardware Peripheral Examples</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,36 +97,44 @@ $(document).ready(function(){initNavTree('a00032.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Pin Change Interrupt Example </div>  </div>
+<div class="title">Hardware Peripheral Examples </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Pin Change Interrupt Example demonstrates interrupts on PIN_IN change. PIN_OUT is configured as output and toggled in the PIN_IN change interrupt handler.</p>
-<p>The application starts with configuring the pins and configuring GPIOTE to give an interrupt on PIN_IN change. The interrupt handler toggles PIN_OUT (LED 1) when PIN_IN (button 1) is pressed or released.</p>
-<h1><a class="anchor" id="pin_change_int_example_setup"></a>
-Setup</h1>
-<p>The name of the example is <b>pin_change_int_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\pin_change_int</code> </p>
-<p>LED assignments:</p>
-<ul>
-<li>LED 1 is toggled by interrupt.</li>
-</ul>
-<p>Button assignments:</p>
-<ul>
-<li>Button 1 triggers interrupt that toggles LED 1.</li>
-</ul>
-<h1><a class="anchor" id="pin_change_int_example_testing"></a>
-Testing</h1>
-<p>Test the Pin Change Interrupt Example application by performing the following steps:</p>
-<ol type="1">
-<li>Compile and program the application.</li>
-<li>Press button 1 and check if LED 1 toggles. </li>
-</ol>
+<div class="textblock"><p>The following Hardware Peripheral device examples are available for the nRF51 chip:</p>
+<p><a class="el" href="a00033.html">Blinky Example</a></p>
+<p><a class="el" href="a00065.html">Blinky RTX Example</a></p>
+<p><a class="el" href="a00055.html">ADC HAL Example</a></p>
+<p><a class="el" href="a00034.html">BSP Example</a></p>
+<p><a class="el" href="a00040.html">Clock Example</a></p>
+<p><a class="el" href="a00035.html">Flash Write Example</a></p>
+<p><a class="el" href="a00036.html">GPIOTE Example</a></p>
+<p><a class="el" href="a00056.html">LPCOMP Example</a></p>
+<p><a class="el" href="a00043.html">Radio Receiver Example</a></p>
+<p><a class="el" href="a00045.html">Radio Transmitter Example</a></p>
+<p><a class="el" href="a00037.html">Pin Change Interrupt Example</a></p>
+<p><a class="el" href="a00038.html">PPI Example</a></p>
+<p><a class="el" href="a00042.html">PWM Example</a></p>
+<p><a class="el" href="a00039.html">QDEC Example</a></p>
+<p><a class="el" href="a00044.html">Radio Test Example</a></p>
+<p><a class="el" href="a00046.html">RAM Retention Example</a></p>
+<p><a class="el" href="a00047.html">Random Number Generator Example</a></p>
+<p><a class="el" href="a00048.html">Real Time Counter Example</a></p>
+<p><a class="el" href="a00049.html">SPI Master Loopback Example</a></p>
+<p><a class="el" href="a00050.html">SPI Master Example to be used with SPI Slave Example</a></p>
+<p><a class="el" href="a00051.html">SPI Slave Example</a></p>
+<p><a class="el" href="a00052.html">Temperature Example</a></p>
+<p><a class="el" href="a00053.html">Timer Example</a></p>
+<p><a class="el" href="a00054.html">Simple Timer Example</a></p>
+<p><a class="el" href="a00041.html">WDT Example</a></p>
+<p><a class="el" href="a00057.html">UART Example</a></p>
+<p><a class="el" href="a00058.html">UICR Config Example</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00027.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:52 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:45 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

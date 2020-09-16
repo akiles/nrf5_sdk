@@ -1,6 +1,8 @@
 var a00211 =
 [
-    [ "evt_type", "a00211.html#ac7e76a07c099aed4eb9d8180a15368d8", null ],
-    [ "packet", "a00211.html#a005a67172eb3d6a4645d536db7fbb98f", null ],
-    [ "packet_length", "a00211.html#ac31d16ccc1a5fc4bd8852c58d710f821", null ]
+    [ "gatt_status", "a00211.html#a76066ec0dfed065ff7e58a709eaf8042", null ],
+    [ "len", "a00211.html#a5242203755359060a29308d0e64b6da7", null ],
+    [ "offset", "a00211.html#a7b823765dc8e01aa1dfc9a3124f92bc9", null ],
+    [ "p_data", "a00211.html#a777067adc297b1e3fa67a4671663ba2f", null ],
+    [ "update", "a00211.html#a27015e208127d98d0600657e4f9224fc", null ]
 ];

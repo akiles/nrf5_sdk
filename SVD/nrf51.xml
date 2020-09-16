@@ -8182,48 +8182,6 @@
           <description>Receiver timeout.</description>
           <addressOffset>0x144</addressOffset>
         </register>
-
-        <register>
-          <name>SHORTS</name>
-          <description>Shortcuts for UART.</description>
-          <addressOffset>0x200</addressOffset>
-          <fields>
-            <field>
-              <name>CTS_STARTRX</name>
-              <description>Shortcut between CTS event and the STARTRX task.</description>
-              <lsb>3</lsb> <msb>3</msb>
-              <enumeratedValues>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Shortcut disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Shortcut enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-            <field>
-              <name>NCTS_STOPRX</name>
-              <description>Shortcut between NCTS event and the STOPRX task.</description>
-              <lsb>4</lsb> <msb>4</msb>
-              <enumeratedValues>
-                <enumeratedValue>
-                  <name>Disabled</name>
-                  <description>Shortcut disabled.</description>
-                  <value>0</value>
-                </enumeratedValue>
-                <enumeratedValue>
-                  <name>Enabled</name>
-                  <description>Shortcut enabled.</description>
-                  <value>1</value>
-                </enumeratedValue>
-              </enumeratedValues>
-            </field>
-          </fields>
-        </register>
         
         <register>
           <name>INTENSET</name>
@@ -16484,15 +16442,9 @@
         </register>
 
         <register>
-          <name>ERASEPROTECTEDPAGE</name>
-          <description>Register for erasing a protected non-volatile memory page.</description>
-          <addressOffset>0x510</addressOffset>
-        </register>
-        <register>
           <name>ERASEPCR0</name>
           <description>Register for erasing a protected non-volatile memory page.</description>
           <addressOffset>0x510</addressOffset>
-          <alternateRegister>ERASEPROTECTEDPAGE</alternateRegister>
         </register>
         
         <register>

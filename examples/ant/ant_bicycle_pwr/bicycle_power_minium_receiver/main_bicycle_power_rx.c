@@ -30,7 +30,6 @@
 #include "nrf_soc.h"
 #include "app_timer.h"
 #include "app_button.h"
-#include "app_gpiote.h"
 #include "app_util.h"
 #include "bsp.h"
 #include "nordic_common.h"
@@ -49,8 +48,6 @@
 
 #define APP_TIMER_MAX_TIMERS             (2u + BSP_APP_TIMERS_NUMBER) /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE          2u                           /**< Size of timer operation queues. */
-
-#define APP_GPIOTE_MAX_USERS             1u                           /**< Maximum number of users of the GPIOTE handler. */
 
 #define EVT_BUTTON_0                     (1u << 0)                    /**< Event for: button 0 pressed. */
 #define EVT_CALIBRATION_RESPONSE_TIMEOUT (1u << 1u)                   /**< Event for: calibration response timeout. */
@@ -276,9 +273,6 @@ void bicycle_power_rx_main_loop_run(void)
 
     // Initialize timer module.
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
-
-    // Initialize GPIOTE module.
-    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
 
     err_code = bsp_init(BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), button_event_handler);
     APP_ERROR_CHECK(err_code);

@@ -1,5 +1,5 @@
 var a00368 =
 [
-    [ "device_rev", "a00368.html#a35291383c3fc311def52bf828fc99386", null ],
-    [ "device_type", "a00368.html#a1a77c3ef129c3527681c089fce4b95a5", null ]
+    [ "cid", "a00368.html#a6e40f192db4382919b6c1f3db8e70d46", null ],
+    [ "len", "a00368.html#a754900407e75298f4af89a59febed5b8", null ]
 ];

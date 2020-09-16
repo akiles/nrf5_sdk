@@ -13,16 +13,14 @@
 #include "dfu_transport.h"
 #include <stddef.h>
 #include "dfu.h"
-#include "dfu_types.h"
+#include <dfu_types.h>
 #include "app_error.h"
 #include "app_util.h"
 #include "hci_transport.h"
 #include "app_timer.h"
-#include "app_gpiote.h"
 #include "app_scheduler.h"
 
 #define MAX_BUFFERS          4u                                                      /**< Maximum number of buffers that can be received queued without being consumed. */
-#define APP_GPIOTE_MAX_USERS 1                                                       /**< Number of GPIOTE users in total. Used by dfu_transport_serial module (flow control). */
 
 /**
  * defgroup Data Packet Queue Access Operation Macros
@@ -285,8 +283,6 @@ uint32_t dfu_transport_update_start(void)
     data_queue_init();
 
     dfu_register_callback(dfu_cb_handler);
-
-    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
 
     // Open transport layer.
     err_code = hci_transport_open();

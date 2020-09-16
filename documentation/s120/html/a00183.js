@@ -1,4 +1,5 @@
 var a00183 =
 [
-    [ "hr_value", "a00183.html#a53ecfc95060fa37c8a748a769c90eb37", null ]
+    [ "count", "a00183.html#a50815a26acf0eaa4a6d7ef9bebf7f58d", null ],
+    [ "descs", "a00183.html#a3d41c7255fa19fa2b55acd6962be26ee", null ]
 ];

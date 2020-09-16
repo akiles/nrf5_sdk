@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: ADC HAL Example</title>
+<title>nRF51 SDK - S210 SoftDevice: SPI Master Example to be used with SPI Slave Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,44 +97,28 @@ $(document).ready(function(){initNavTree('a00050.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">ADC HAL Example </div>  </div>
+<div class="title">SPI Master Example to be used with SPI Slave Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The ADC HAL Example demonstrates the use of the analog-to-digital converter (ADC) peripheral in a simple way. It uses the ADC hardware abstraction layer (HAL).</p>
-<p>The example initializes ADC and constantly samples the analog input on pin 2. The output is printed on UART. The example is event-driven, which means that no busy loops are used. Therefore, the CPU can be turned off during inactive periods.</p>
-<p>The ADC IRQ handler is called when a new sampling result is available, to store the result in a buffer. The UART event handler is used to manage serial communication by filling the transmission buffer with the string to be sent. The main loop of the example is empty. It is used only to put the CPU into low-power consumption mode.</p>
-<p>The name of the example is <b>adc_simple_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\adc_simple</code> </p>
-<h1><a class="anchor" id="nrf_dev_adc_simple_example_testing"></a>
+<div class="textblock"><p>The SPI Master Example has been created for verifying the SPI connectivity link for the SPI Slave Example.</p>
+<p>The application executes SPI transactions every second and uses the <a class="el" href="a00380.html">Board Support Package</a> to indicate the status of the SPI transaction.</p>
+<p>The name of the example is <b>spi_master_with_spi_slave_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\peripheral\spi_master_with_spi_slave</code> </p>
+<h1><a class="anchor" id="spi_master_example_with_spi_slave_testing"></a>
 Testing</h1>
-<p>Test the ADC HAL Example application by performing the following steps:</p>
+<p>Test the SPI Master Example application by performing the following steps:</p>
 <ol type="1">
-<li>Compile and program the application.</li>
-<li>Start a COM listener like PUTTY and connect to the used COM port with the following UART settings:<ul>
-<li>
-Baud rate: 38.400</li>
-<li>
-8 data bits</li>
-<li>
-1 stop bit</li>
-<li>
-No parity</li>
-<li>
-HW flow control: RTS/CTS</li>
-</ul>
-</li>
-<li>Check the output and observe that:<ol type="a">
-<li>After reset, basic information about the example is output on UART.</li>
-<li>When the example is running, the ADC samples analog input 2 and outputs the result value on UART. </li>
-</ol>
-</li>
+<li>Connect two boards using SPI.</li>
+<li>Compile and program both applications (<code>spi_master_with_spi_slave_pca10028</code> and <code>spi_slave_pca10028</code>).</li>
+<li>Observe that <a class="el" href="a00060.html#BSP_INDICATE_RCV_OK">BSP_INDICATE_RCV_OK</a> is indicated every second.</li>
+<li><a class="el" href="a00060.html#BSP_INDICATE_FATAL_ERROR">BSP_INDICATE_FATAL_ERROR</a> is indicated if an error occurred. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00027.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00032.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

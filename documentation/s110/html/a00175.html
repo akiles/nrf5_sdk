@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_bas_c_init_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: BSP BLE Button Module</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,46 +96,38 @@ $(document).ready(function(){initNavTree('a00175.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_bas_c_init_t Struct Reference<div class="ingroups"><a class="el" href="a01002.html">Structures</a></div></div>  </div>
+<div class="title">BSP BLE Button Module </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Battery Service Client initialization structure.  
- <a href="a00175.html#details">More...</a></p>
-
-<p><code>#include &lt;ble_bas_c.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a4304bbf50589e7dea41870223731602d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01003.html#ga13d2aed8afc44d31865195d77b09c4ba">ble_bas_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00175.html#a4304bbf50589e7dea41870223731602d">evt_handler</a></td></tr>
-<tr class="separator:a4304bbf50589e7dea41870223731602d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<div class="textblock"><p>The BLE Button Module provides a dynamic configuration of button actions. It is used in most BLE examples in the SDK.</p>
+<p>The application must propagate BLE events to the BLE Button Module. Based on these events, the BLE Button Module configures the Board Support Package to generate BSP events for certain button actions. These BSP events should then be handled by the application's BSP event handler.</p>
+<p>For example, when the application is connected, long pressing Button 1 generates the event <a class="el" href="a00998.html#ggad026454d14088f6f37bd2ba15fe816dfa916be471c02f8ee369b41376ca39ae8f">BSP_EVENT_DISCONNECT</a>. The application's BSP event handler should react to this event by performing a disconnect.</p>
+<p>The Board Support Package, configured by the BLE Button Module, generates the following events for button actions:</p>
+<table class="doxtable">
+<tr>
+<th>Current state </th><th>Button </th><th>Action </th><th>Event</th></tr>
+<tr>
+<td>Sleep </td><td>1 </td><td>Push </td><td><a class="el" href="a00998.html#ggad026454d14088f6f37bd2ba15fe816dfaf55c58522aacfa472afe9168ea879d23">BSP_EVENT_WAKEUP</a> </td></tr>
+<tr>
+<td>Sleep </td><td>2 </td><td>Push </td><td><a class="el" href="a00998.html#ggad026454d14088f6f37bd2ba15fe816dfad7a944de00af3c108a40e6260e0d6281">BSP_EVENT_CLEAR_BONDING_DATA</a> </td></tr>
+<tr>
+<td>Awake </td><td>2 </td><td>Long Push </td><td><a class="el" href="a00998.html#ggad026454d14088f6f37bd2ba15fe816dfab893101bacbb0875faf3c9837c510a95">BSP_EVENT_WHITELIST_OFF</a> </td></tr>
+<tr>
+<td>Connected </td><td>1 </td><td>Long push </td><td><a class="el" href="a00998.html#ggad026454d14088f6f37bd2ba15fe816dfa916be471c02f8ee369b41376ca39ae8f">BSP_EVENT_DISCONNECT</a> </td></tr>
+<tr>
+<td>Not Connected </td><td>1 </td><td>Release </td><td><a class="el" href="a00998.html#ggad026454d14088f6f37bd2ba15fe816dfa080e5a2f7e4d93b3ac7e1f7d5b93f09c">BSP_EVENT_SLEEP</a> </td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Battery Service Client initialization structure. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a4304bbf50589e7dea41870223731602d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01003.html#ga13d2aed8afc44d31865195d77b09c4ba">ble_bas_c_evt_handler_t</a> ble_bas_c_init_t::evt_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event handler to be called by the Battery Service Client module whenever there is an event related to the Battery Service. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<p>The application is responsible for interpreting and implementing the event actions. The first two events will wake the device from sleep mode. These actions can therefore not be handled by the application's event handler. Instead, they are indicated to the application through the <a class="el" href="a01272.html#ga1bcd36f9d028265b7b23ba54723048dd">bsp_btn_ble_init</a> function.</p>
+<dl class="section note"><dt>Note</dt><dd>The <a class="el" href="a01272.html#ga1bcd36f9d028265b7b23ba54723048dd">bsp_btn_ble_init</a> function should be called as early as possible during device initialization to catch wakeup button presses.</dd></dl>
+<p>When the device is not in a connection, the BLE Button Module assumes full control of all button actions from button 1, in addition to the long push action on all buttons. When the device is connected, the BLE Button Module controls all long push actions, and assigns the default events to the push and release actions of all button 1 so they can be utilized by the application. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00175.html">ble_bas_c_init_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00143.html">BLE libraries</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

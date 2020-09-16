@@ -20,6 +20,7 @@
 
 #define ADV_PACK_LENGTH_IDX 1
 #define ADV_DATA_LENGTH_IDX 12
+#define ADV_HEADER_LEN      3
 
 #define ADV_TYPE_LEN 2
 
@@ -83,37 +84,45 @@ uint32_t m_request_earliest(enum NRF_RADIO_PRIORITY priority)
 static uint8_t * m_get_adv_packet(void)
 {
     static uint8_t adv_pdu[40];
-    
-    uint8_t length    = 0;
-    adv_pdu[length++] = BLE_GAP_ADV_TYPE_ADV_SCAN_IND;                                   // byte 0 : adv type : ADV_NONCONN_IND + rfu
-    adv_pdu[length++] = 0;                                                               // length (from adv address out...) + rf
-    adv_pdu[length++] = 0x00;                                                            // Extra byte used to map into the radio register. See ul_pdu_fields.h
-    memcpy(&adv_pdu[length], m_beacon.beacon_addr.addr, BLE_GAP_ADDR_LEN);
-    length += BLE_GAP_ADDR_LEN;
-    
-    adv_pdu[length++] =  ADV_TYPE_LEN;  
-    adv_pdu[length++] =  BLE_GAP_AD_TYPE_FLAGS; 
-    adv_pdu[length++] =  BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE; 
+    uint8_t packet_len_start_idx, manuf_data_len_start_idx, beacon_data_len_start_idx;
+    uint8_t offset    = 0;
 
-    uint8_t data_length             = 0;
-    adv_pdu[length++]               =  0x00;                                             // adv param length
-    adv_pdu[length + data_length++] =  BLE_GAP_AD_TYPE_MANUFACTURER_SPECIFIC_DATA;  
-    data_length += uint16_encode(m_beacon.manuf_id, &adv_pdu[length + data_length]);
-    adv_pdu[length + data_length++] =  APP_DEVICE_TYPE;  
-    
-    uint8_t manuf_specif_data_len   = 0;
-    uint8_t manuf_specif_data_idx   = length + data_length;
-    adv_pdu[length + data_length++] =  0;                                                // manufacturer specific data length
-    memcpy(&adv_pdu[length + data_length + manuf_specif_data_len], &m_beacon.uuid, sizeof(ble_uuid128_t));
-    manuf_specif_data_len += sizeof(ble_uuid128_t);
-    manuf_specif_data_len += uint16_encode(m_beacon.major, &adv_pdu[length + data_length + manuf_specif_data_len]);
-    manuf_specif_data_len += uint16_encode(m_beacon.minor, &adv_pdu[length + data_length + manuf_specif_data_len]);
+    // Constructing header
+    adv_pdu[offset]    = BLE_GAP_ADV_TYPE_ADV_SCAN_IND;    // Advertisement type ADV_NONCONN_IND
+    adv_pdu[offset++] |= 1 << 6;                           // TxAdd 1 (random address)
+    adv_pdu[offset++]  = 0;                                // Packet length field (will be filled later)
+    adv_pdu[offset++]  = 0x00;                             // Extra byte used to map into the radio register.
+    packet_len_start_idx = offset;
 
-    adv_pdu[length + data_length + manuf_specif_data_len++] = m_beacon.rssi;
+    // Constructing base advertising packet
+    memcpy(&adv_pdu[offset], m_beacon.beacon_addr.addr, BLE_GAP_ADDR_LEN);
+    offset += BLE_GAP_ADDR_LEN;
     
-    adv_pdu[ADV_PACK_LENGTH_IDX]   = length + data_length + manuf_specif_data_len;
-    adv_pdu[ADV_DATA_LENGTH_IDX]   = data_length + manuf_specif_data_len;
-    adv_pdu[manuf_specif_data_idx] = manuf_specif_data_len;
+    // Adding advertising data: Flags
+    adv_pdu[offset++] =  ADV_TYPE_LEN;
+    adv_pdu[offset++] =  BLE_GAP_AD_TYPE_FLAGS;
+    adv_pdu[offset++] =  BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
+
+    // Adding advertising data: Manufacturer specific data.
+    adv_pdu[offset++]               =  0x00;                             // Manufacturer specific data length field (will be filled later).
+    manuf_data_len_start_idx = offset;
+    adv_pdu[offset++] =  BLE_GAP_AD_TYPE_MANUFACTURER_SPECIFIC_DATA;
+    offset += uint16_encode(m_beacon.manuf_id, &adv_pdu[offset]);
+    adv_pdu[offset++] =  APP_DEVICE_TYPE;
+
+    // Adding manufacturer specific data (beacon data).
+    adv_pdu[offset++] =  0;                                              // Beacon data length field (will be filled later).
+    beacon_data_len_start_idx = offset;
+    memcpy(&adv_pdu[offset], &m_beacon.uuid, sizeof(ble_uuid128_t));
+    offset += sizeof(ble_uuid128_t);
+    offset += uint16_encode(m_beacon.major, &adv_pdu[offset]);
+    offset += uint16_encode(m_beacon.minor, &adv_pdu[offset]);
+    adv_pdu[offset++] = m_beacon.rssi;
+    
+    // Filling in length fields.
+    adv_pdu[ADV_PACK_LENGTH_IDX]         = offset - packet_len_start_idx;
+    adv_pdu[ADV_DATA_LENGTH_IDX]         = offset - manuf_data_len_start_idx;
+    adv_pdu[beacon_data_len_start_idx-1] = offset - beacon_data_len_start_idx;
     
     return &adv_pdu[0];
 }
@@ -227,6 +236,7 @@ static nrf_radio_signal_callback_return_param_t * m_timeslot_callback(uint8_t si
 
         if (mode == ADV_DONE)
         {
+            NRF_PPI->CHENCLR = (1 << 8);
             if (m_beacon.keep_running)
             {
                 signal_callback_return_param.params.request.p_next = m_configure_next_event();

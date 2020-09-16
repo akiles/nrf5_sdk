@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: sd_mbr_command_copy_bl_t Struct Reference</title>
+<title>nRF51 SDK - S210 SoftDevice: nrf_drv_twi_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,60 +106,78 @@ $(document).ready(function(){initNavTree('a00098.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">sd_mbr_command_copy_bl_t Struct Reference<div class="ingroups"><a class="el" href="a00352.html">Types</a></div></div>  </div>
+<div class="title">nrf_drv_twi_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00349.html">TWI driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This command copies a new BootLoader. With this command, destination of BootLoader is always the address written in NRF_UICR-&gt;BOOTADDR.  
+<p>Structure for a TWI event.  
  <a href="a00098.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_mbr.h&gt;</code></p>
+<p><code>#include &lt;nrf_drv_twi.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a504481143eb43e52488288d7de70a6f1"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00098.html#a504481143eb43e52488288d7de70a6f1">bl_src</a></td></tr>
-<tr class="separator:a504481143eb43e52488288d7de70a6f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a197755f22bcc92adc7c8288f48bd9ef8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00098.html#a197755f22bcc92adc7c8288f48bd9ef8">bl_len</a></td></tr>
-<tr class="separator:a197755f22bcc92adc7c8288f48bd9ef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a027c533b4dd58f7347692d54f5c759ec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00349.html#ga8dd2153e3c8fc75f486dc1fa33219c93">nrf_drv_twi_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00098.html#a027c533b4dd58f7347692d54f5c759ec">type</a></td></tr>
+<tr class="separator:a027c533b4dd58f7347692d54f5c759ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2475c0228de5a313deced4f0005f505d"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00098.html#a2475c0228de5a313deced4f0005f505d">p_data</a></td></tr>
+<tr class="separator:a2475c0228de5a313deced4f0005f505d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4aba5f92024fe448899e4e3443dd320c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00098.html#a4aba5f92024fe448899e4e3443dd320c">length</a></td></tr>
+<tr class="separator:a4aba5f92024fe448899e4e3443dd320c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56fdeb30536ba6886fbbc79b2a6786c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00324.html#ga7911f5fecbfe83193a83ca9cde36757e">nrf_twi_error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00098.html#a56fdeb30536ba6886fbbc79b2a6786c9">error_src</a></td></tr>
+<tr class="separator:a56fdeb30536ba6886fbbc79b2a6786c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This command copies a new BootLoader. With this command, destination of BootLoader is always the address written in NRF_UICR-&gt;BOOTADDR. </p>
-<p>Destination is erased by this function. If (destination+bl_len) is in the middle of a flash page, that whole flash page will be erased.</p>
-<p>This function will use PROTENSET to protect the flash that is not intended to be written.</p>
-<p>On Success, this function will not return. It will start the new BootLoader from reset-vector as normal.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00340.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>indicates that something was wrong. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00340.html#gadf8b0c33ea15352808e5ac7f69c2be8a" title="Internal Error.">NRF_ERROR_INTERNAL</a></td><td>indicates an internal error that should not happen. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00340.html#ga85125dae5d7e9d4b9964acbc13f641b3" title="Forbidden Operation.">NRF_ERROR_FORBIDDEN</a></td><td>if NRF_UICR-&gt;BOOTADDR is not set </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00340.html#ga59fe2a8fe184005aefa0835c7ff400fd" title="Invalid Length.">NRF_ERROR_INVALID_LENGTH</a></td><td>is invalid. </td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="textblock"><p>Structure for a TWI event. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a197755f22bcc92adc7c8288f48bd9ef8"></a>
+<a class="anchor" id="a56fdeb30536ba6886fbbc79b2a6786c9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_mbr_command_copy_bl_t::bl_len</td>
+          <td class="memname"><a class="el" href="a00324.html#ga7911f5fecbfe83193a83ca9cde36757e">nrf_twi_error_t</a> nrf_drv_twi_evt_t::error_src</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of 32 bit words to copy for BootLoader </p>
+<p>TWI error source (valid only for NRF_DRV_TWI_ERROR event). </p>
 
 </div>
 </div>
-<a class="anchor" id="a504481143eb43e52488288d7de70a6f1"></a>
+<a class="anchor" id="a4aba5f92024fe448899e4e3443dd320c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t* sd_mbr_command_copy_bl_t::bl_src</td>
+          <td class="memname">uint32_t nrf_drv_twi_evt_t::length</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to the source of the Bootloader to be be copied. </p>
+<p>Number of bytes transferred. </p>
+
+</div>
+</div>
+<a class="anchor" id="a2475c0228de5a313deced4f0005f505d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* nrf_drv_twi_evt_t::p_data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to transferred data. </p>
+
+</div>
+</div>
+<a class="anchor" id="a027c533b4dd58f7347692d54f5c759ec"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00349.html#ga8dd2153e3c8fc75f486dc1fa33219c93">nrf_drv_twi_evt_type_t</a> nrf_drv_twi_evt_t::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event type. </p>
 
 </div>
 </div>
@@ -168,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00098.html">sd_mbr_command_copy_bl_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:05 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00098.html">nrf_drv_twi_evt_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_l2cap_evt_rx_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gattc_evt_rel_disc_rsp_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,48 @@ $(document).ready(function(){initNavTree('a00187.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_l2cap_evt_rx_t Struct Reference<div class="ingroups"><a class="el" href="a00717.html">Structures</a></div></div>  </div>
+<div class="title">ble_gattc_evt_rel_disc_rsp_t Struct Reference<div class="ingroups"><a class="el" href="a00942.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>L2CAP Received packet event report.  
+<p>Event structure for <a class="el" href="a00940.html#ggafd9b8b42eeb832d688e33f4561f97efcac52e2f11dc65da2efe53f7041d0ead6b">BLE_GATTC_EVT_REL_DISC_RSP</a>.  
  <a href="a00187.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_l2cap.h&gt;</code></p>
+<p><code>#include &lt;ble_gattc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac81a081355f3a10c8496cf16918ac23a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00189.html">ble_l2cap_header_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00187.html#ac81a081355f3a10c8496cf16918ac23a">header</a></td></tr>
-<tr class="separator:ac81a081355f3a10c8496cf16918ac23a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3df37c1998b3d1d213a6e7b5cfbcd5e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00187.html#ad3df37c1998b3d1d213a6e7b5cfbcd5e">data</a> [1]</td></tr>
-<tr class="separator:ad3df37c1998b3d1d213a6e7b5cfbcd5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d254feed32dd66c692ad6cdcec386b9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00187.html#a6d254feed32dd66c692ad6cdcec386b9">count</a></td></tr>
+<tr class="separator:a6d254feed32dd66c692ad6cdcec386b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46a0118ff8e260244d2cf342d249e7cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00193.html">ble_gattc_include_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00187.html#a46a0118ff8e260244d2cf342d249e7cc">includes</a> [1]</td></tr>
+<tr class="separator:a46a0118ff8e260244d2cf342d249e7cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>L2CAP Received packet event report. </p>
+<div class="textblock"><p>Event structure for <a class="el" href="a00940.html#ggafd9b8b42eeb832d688e33f4561f97efcac52e2f11dc65da2efe53f7041d0ead6b">BLE_GATTC_EVT_REL_DISC_RSP</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ad3df37c1998b3d1d213a6e7b5cfbcd5e"></a>
+<a class="anchor" id="a6d254feed32dd66c692ad6cdcec386b9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_l2cap_evt_rx_t::data[1]</td>
+          <td class="memname">uint16_t ble_gattc_evt_rel_disc_rsp_t::count</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Packet data, variable length. </p>
+<p>Include count. </p>
 
 </div>
 </div>
-<a class="anchor" id="ac81a081355f3a10c8496cf16918ac23a"></a>
+<a class="anchor" id="a46a0118ff8e260244d2cf342d249e7cc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00189.html">ble_l2cap_header_t</a> ble_l2cap_evt_rx_t::header</td>
+          <td class="memname"><a class="el" href="a00193.html">ble_gattc_include_t</a> ble_gattc_evt_rel_disc_rsp_t::includes[1]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>L2CAP packet header. </p>
+<p>Include data, variable length. </p>
 
 </div>
 </div>
@@ -156,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00187.html">ble_l2cap_evt_rx_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00187.html">ble_gattc_evt_rel_disc_rsp_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['hci_20transport',['HCI Transport',['../a00322.html',1,'']]]
+  ['hci_20transport',['HCI Transport',['../a00364.html',1,'']]]
 ];

@@ -78,7 +78,7 @@ typedef struct
 /**@brief QDEC event handler structure. */
 typedef struct
 {
-    nrf_qdec_events_t  type;
+    nrf_qdec_event_t  type;
     union
     {
         nrf_drv_qdec_sample_data_evt_t sample; /**< Sample event data. */
@@ -133,7 +133,7 @@ void nrf_drv_qdec_accumulators_read(int16_t * p_acc, int16_t * p_accdbl);
  * @param[in]  task       QDEC task.
  * @param[out] p_task     Task address.
  */
-void nrf_drv_qdec_task_address_get(nrf_qdec_tasks_t task, uint32_t * p_task);
+void nrf_drv_qdec_task_address_get(nrf_qdec_task_t task, uint32_t * p_task);
 
 /**
  * @brief Function for returning the address of a specific timer event.
@@ -141,7 +141,7 @@ void nrf_drv_qdec_task_address_get(nrf_qdec_tasks_t task, uint32_t * p_task);
  * @param[in]  event       QDEC event.
  * @param[out] p_event     Event address.
  */
-void nrf_drv_qdec_event_address_get(nrf_qdec_events_t event, uint32_t * p_event);
+void nrf_drv_qdec_event_address_get(nrf_qdec_event_t event, uint32_t * p_event);
 
 /**
    *@}

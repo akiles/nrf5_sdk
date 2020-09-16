@@ -1,10 +1,9 @@
 var a00227 =
 [
-    [ "auth_status", "a00227.html#a7abaaec9ee09953586fa7ab79c106a25", null ],
-    [ "bonded", "a00227.html#a54615bc38138687aef17d617c49c6f2a", null ],
-    [ "error_src", "a00227.html#aace68175dd43ad9be164097ef656e04e", null ],
-    [ "kdist_central", "a00227.html#a78ff491a0868d626e18245792325c4a3", null ],
-    [ "kdist_periph", "a00227.html#a8fc7c09f814b1d3d0537d0411b2b143e", null ],
-    [ "sm1_levels", "a00227.html#a6843023d29415f3ede4471a9fe359acf", null ],
-    [ "sm2_levels", "a00227.html#a29d62f41ca47daabc4098310ceffd4e1", null ]
+    [ "cumulative_crank_revs", "a00227.html#abaf971426cea9d234838ad3896a5ebb0", null ],
+    [ "cumulative_wheel_revs", "a00227.html#a28e443636699abf5ac97850f4fb9eb39", null ],
+    [ "is_crank_rev_data_present", "a00227.html#a6750c3a77be5be56ef6e563164b85a4a", null ],
+    [ "is_wheel_rev_data_present", "a00227.html#ae78a3f62b14426e5a3fcc65d5cc54d7c", null ],
+    [ "last_crank_event_time", "a00227.html#a5ddda2de7f892024636795e85b9ba914", null ],
+    [ "last_wheel_event_time", "a00227.html#ab1b12075f983b9149eacf65f318f0482", null ]
 ];

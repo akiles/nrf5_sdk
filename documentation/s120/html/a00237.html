@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: sd_mbr_command_copy_sd_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: dm_event_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,71 +106,64 @@ $(document).ready(function(){initNavTree('a00237.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">sd_mbr_command_copy_sd_t Struct Reference<div class="ingroups"><a class="el" href="a00723.html">Types</a></div></div>  </div>
+<div class="title">dm_event_t Struct Reference<div class="ingroups"><a class="el" href="a00906.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This command copies part of a new SoftDevice The destination area is erased before copying. If dst is in the middle of a flash page, that whole flash page will be erased. If (dst+len) is in the middle of a flash page, that whole flash page will be erased.  
+<p>Asynchronous events details notified to the application by the module.  
  <a href="a00237.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_mbr.h&gt;</code></p>
+<p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a7fab268f5a8db5b0ccc3a4b85d47c0b7"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#a7fab268f5a8db5b0ccc3a4b85d47c0b7">src</a></td></tr>
-<tr class="separator:a7fab268f5a8db5b0ccc3a4b85d47c0b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8afbb5ddb539bf7d5aa63102313210a"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#ae8afbb5ddb539bf7d5aa63102313210a">dst</a></td></tr>
-<tr class="separator:ae8afbb5ddb539bf7d5aa63102313210a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36ada23cb97fb5ec6873d262689cbfdb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#a36ada23cb97fb5ec6873d262689cbfdb">len</a></td></tr>
-<tr class="separator:a36ada23cb97fb5ec6873d262689cbfdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a75f3476e816a31085bef063855687e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#a2a75f3476e816a31085bef063855687e">event_id</a></td></tr>
+<tr class="separator:a2a75f3476e816a31085bef063855687e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dbb0e734ebc009dcc98b7c5055d7112"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00236.html">dm_event_param_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#a2dbb0e734ebc009dcc98b7c5055d7112">event_param</a></td></tr>
+<tr class="separator:a2dbb0e734ebc009dcc98b7c5055d7112"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44a56d892899cd9a146cc4aaddd0d772"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00237.html#a44a56d892899cd9a146cc4aaddd0d772">event_paramlen</a></td></tr>
+<tr class="separator:a44a56d892899cd9a146cc4aaddd0d772"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This command copies part of a new SoftDevice The destination area is erased before copying. If dst is in the middle of a flash page, that whole flash page will be erased. If (dst+len) is in the middle of a flash page, that whole flash page will be erased. </p>
-<p>The user of this function is responsible for setting the PROTENSET registers.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00562.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>indicates that the contents of the memory blocks where copied correctly. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00562.html#gadf8b0c33ea15352808e5ac7f69c2be8a" title="Internal Error.">NRF_ERROR_INTERNAL</a></td><td>indicates that the contents of the memory blocks where not verified correctly after copying. </td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="textblock"><p>Asynchronous events details notified to the application by the module. </p>
+<p>Defines event type along with event parameters notified to the application by the module. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ae8afbb5ddb539bf7d5aa63102313210a"></a>
+<a class="anchor" id="a2a75f3476e816a31085bef063855687e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t* sd_mbr_command_copy_sd_t::dst</td>
+          <td class="memname">uint8_t dm_event_t::event_id</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to the destination where the content is to be copied. </p>
+<p>Identifies the event. See <a class="el" href="a00902.html">Device Manager Events</a> for details on event types and their significance. </p>
 
 </div>
 </div>
-<a class="anchor" id="a36ada23cb97fb5ec6873d262689cbfdb"></a>
+<a class="anchor" id="a2dbb0e734ebc009dcc98b7c5055d7112"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_mbr_command_copy_sd_t::len</td>
+          <td class="memname"><a class="el" href="a00236.html">dm_event_param_t</a> dm_event_t::event_param</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of 32 bit words to copy. Must be a multiple of 256 words. </p>
+<p>Event parameters. Can be NULL if the event does not have any parameters. </p>
 
 </div>
 </div>
-<a class="anchor" id="a7fab268f5a8db5b0ccc3a4b85d47c0b7"></a>
+<a class="anchor" id="a44a56d892899cd9a146cc4aaddd0d772"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t* sd_mbr_command_copy_sd_t::src</td>
+          <td class="memname">uint16_t dm_event_t::event_paramlen</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to the source of data to be copied. </p>
+<p>Length of the event parameters, is zero if the event does not have any parameters. </p>
 
 </div>
 </div>
@@ -179,8 +172,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00237.html">sd_mbr_command_copy_sd_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00237.html">dm_event_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

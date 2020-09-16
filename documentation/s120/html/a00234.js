@@ -1,6 +1,6 @@
 var a00234 =
 [
-    [ "block_count", "a00234.html#a7bb96f4e9d1b68cb94fd5c75570e5a99", null ],
-    [ "block_size", "a00234.html#a95b58714824957d4c930a5da78d7109a", null ],
-    [ "cb", "a00234.html#a3495db72b9ff587f0c9ea0ab38d5e9f8", null ]
+    [ "flags", "a00234.html#a6410a73c4b824cd8411f93f4e801c2e2", null ],
+    [ "len", "a00234.html#a584d9c286a840f2aa29cf3f6e76362d4", null ],
+    [ "p_data", "a00234.html#acbcb29305bde09573e35ed7f4c214641", null ]
 ];

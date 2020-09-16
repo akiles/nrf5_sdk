@@ -11,7 +11,7 @@
  */
 
 #include "nrf_gpio.h"
-#include "app_gpiote.h"
+#include "nrf_drv_gpiote.h"
 #include "nrf_error.h"
 #include "nrf_qdec.h"
 #include "qenc_sim.h"
@@ -41,7 +41,7 @@ _static volatile int32_t qenc_count = 0;
 _static volatile uint32_t qenc_dbl_count = 0;
 _static volatile bool  qenc_enable_flag = false;
 
-static void gpiote_event_handler(void)
+static void gpiote_event_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
 {
     if ((qenc_count > 0) && qenc_enable_flag)
     {
@@ -64,42 +64,54 @@ static void gpiote_event_handler(void)
       qenc_enable_flag = false;
     }
 
-    nrf_gpio_pin_write(QENC_CONFIG_PIO_B, qenc_state & 0x01);
-    nrf_gpio_pin_write(QENC_CONFIG_PIO_A, (qenc_state & 0x02) >> 1 );
-}
-
-static void qenc_init_gpio(void)
-{
-    nrf_gpio_cfg_input(QENC_CONFIG_PIO_LED, NRF_GPIO_PIN_PULLUP);
-    nrf_gpio_cfg_output(QENC_CONFIG_PIO_A);
-    nrf_gpio_cfg_output(QENC_CONFIG_PIO_B);
-}
-
-static void qenc_init_gpiote(uint8_t channel, nrf_qdec_ledpol_t led_pol)
-{
-    // change state on inactive edge of led pulse
-    if (led_pol == NRF_QDEC_LEPOL_ACTIVE_HIGH)
+    if (qenc_state & 0x01)
     {
-      (void)app_gpiote_input_event_handler_register(channel,
-                                                    QENC_CONFIG_PIO_LED,
-                                                    GPIOTE_CONFIG_POLARITY_LoToHi,
-                                                    gpiote_event_handler);
+        nrf_drv_gpiote_out_set(QENC_CONFIG_PIO_B);
     }
     else
     {
-      (void)app_gpiote_input_event_handler_register(channel,
-                                                    QENC_CONFIG_PIO_LED,
-                                                    GPIOTE_CONFIG_POLARITY_HiToLo,
-                                                    gpiote_event_handler);
+        nrf_drv_gpiote_out_clear(QENC_CONFIG_PIO_B);
     }
-    (void)app_gpiote_enable_interrupts();
 
+    if (qenc_state & 0x02)
+    {
+        nrf_drv_gpiote_out_set(QENC_CONFIG_PIO_A);
+    }
+    else
+    {
+        nrf_drv_gpiote_out_clear(QENC_CONFIG_PIO_A);
+    }
 }
 
-void qenc_init(uint8_t channel, nrf_qdec_ledpol_t led_pol)
+static void qenc_init_gpiote(nrf_qdec_ledpol_t led_pol)
 {
-    qenc_init_gpio();
-    qenc_init_gpiote(channel, led_pol);
+    nrf_drv_gpiote_in_config_t config = GPIOTE_CONFIG_IN_SENSE_HITOLO(true);
+    nrf_drv_gpiote_out_config_t out_config = GPIOTE_CONFIG_OUT_SIMPLE(false);
+
+    config.pull = NRF_GPIO_PIN_PULLUP;
+
+    if (!nrf_drv_gpiote_is_init())
+    {
+        (void)nrf_drv_gpiote_init();
+    }
+
+    // change state on inactive edge of led pulse
+    if (led_pol == NRF_QDEC_LEPOL_ACTIVE_LOW)
+    {
+        config.sense = NRF_GPIOTE_POLARITY_HITOLO;
+    }
+
+    (void)nrf_drv_gpiote_in_init(QENC_CONFIG_PIO_LED,&config,gpiote_event_handler);
+    nrf_drv_gpiote_in_event_enable(QENC_CONFIG_PIO_LED, true);
+
+    //Configure output pins.
+    (void)nrf_drv_gpiote_out_init(QENC_CONFIG_PIO_A, &out_config);
+    (void)nrf_drv_gpiote_out_init(QENC_CONFIG_PIO_B, &out_config);
+}
+
+void qenc_init(nrf_qdec_ledpol_t led_pol)
+{
+    qenc_init_gpiote(led_pol);
 }    
 
 // this function is used mainly in tests

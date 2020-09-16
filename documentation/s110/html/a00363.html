@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: day_date_time_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_ias_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,62 @@ $(document).ready(function(){initNavTree('a00363.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">day_date_time_t Struct Reference<div class="ingroups"><a class="el" href="a01005.html">Current Time Service client</a></div></div>  </div>
+<div class="title">ble_ias_evt_t Struct Reference<div class="ingroups"><a class="el" href="a01206.html">Immediate Alert Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>"Day Date Time" field of the "Exact Time 256" field of the Current Time Characteristic.  
+<p>Immediate Alert Service event.  
  <a href="a00363.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_cts_c.h&gt;</code></p>
+<p><code>#include &lt;ble_ias.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a4334018af68514028c905fa9e4d58e0e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4334018af68514028c905fa9e4d58e0e"></a>
-<a class="el" href="a00197.html">ble_date_time_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>date_time</b></td></tr>
-<tr class="separator:a4334018af68514028c905fa9e4d58e0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd3a9437f681f24fd37a336a98a57d5c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd3a9437f681f24fd37a336a98a57d5c"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>day_of_week</b></td></tr>
-<tr class="separator:afd3a9437f681f24fd37a336a98a57d5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a730fff52efb38d8f5f61973ef47696b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01206.html#gaa55445ca6b845393a2dc353e0afa38ec">ble_ias_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00363.html#a730fff52efb38d8f5f61973ef47696b4">evt_type</a></td></tr>
+<tr class="separator:a730fff52efb38d8f5f61973ef47696b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae300a2b4b80b0ab9c248124fae979a11"><td class="memItemLeft" ><a class="anchor" id="ae300a2b4b80b0ab9c248124fae979a11"></a>
+union {</td></tr>
+<tr class="memitem:a5407f8b1312f6849b36127ffb1cc7053"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00363.html#aadc350acbcf634cf778a5a253049ebe0">alert_level</a></td></tr>
+<tr class="separator:a5407f8b1312f6849b36127ffb1cc7053"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae300a2b4b80b0ab9c248124fae979a11"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
+<tr class="separator:ae300a2b4b80b0ab9c248124fae979a11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>"Day Date Time" field of the "Exact Time 256" field of the Current Time Characteristic. </p>
-</div></div><!-- contents -->
+<div class="textblock"><p>Immediate Alert Service event. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="aadc350acbcf634cf778a5a253049ebe0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_ias_evt_t::alert_level</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>New Alert Level value. </p>
+
+</div>
+</div>
+<a class="anchor" id="a730fff52efb38d8f5f61973ef47696b4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01206.html#gaa55445ca6b845393a2dc353e0afa38ec">ble_ias_evt_type_t</a> ble_ias_evt_t::evt_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Type of event. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00363.html">day_date_time_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00363.html">ble_ias_evt_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

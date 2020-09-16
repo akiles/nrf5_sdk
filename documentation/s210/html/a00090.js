@@ -1,5 +1,5 @@
 var a00090 =
 [
-    [ "detection", "a00090.html#a914c08cbe41a352676020b57ae1ba831", null ],
-    [ "reference", "a00090.html#aa74af967693de2d0d942b3389eb33038", null ]
+    [ "acc", "a00090.html#a3afbdbe1fac908534d75767ec26ce558", null ],
+    [ "accdbl", "a00090.html#ac20e31281d3b9bad34c94ec8abcc3a94", null ]
 ];

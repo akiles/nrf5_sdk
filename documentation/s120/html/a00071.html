@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Debug Assert Handler</title>
+<title>nRF51 SDK - S120 SoftDevice: Memory pool library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,17 +97,36 @@ $(document).ready(function(){initNavTree('a00071.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Debug Assert Handler </div>  </div>
+<div class="title">Memory pool library </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This module may be used during development of an application to facilitate debugging. It contains a function to write file name, line number and the Stack Memory to flash. This module is ONLY for debugging purposes and must never be used in final product. </p>
+<div class="textblock"><p>Memory pool implementation, based on circular buffer data structure, which supports asynchronous processing of RX data. The current default implementation supports 1 TX buffer and 4 RX buffers. The memory managed by the pool is allocated from static storage instead of heap. The internal design of the circular buffer implementing the RX memory layout is illustrated in the picture below.</p>
+<div class="image">
+<img src="memory_pool.png" alt="memory_pool.png"/>
+<div class="caption">
+Circular buffer design</div></div>
+<p> The expected call order for the RX APIs is as follows:</p>
+<ul>
+<li>hci_mem_pool_rx_produce</li>
+<li>hci_mem_pool_rx_data_size_set</li>
+<li>hci_mem_pool_rx_extract</li>
+<li>hci_mem_pool_rx_consume</li>
+</ul>
+<dl class="section warning"><dt>Warning</dt><dd>If the above mentioned expected call order is violated the end result can be undefined.</dd></dl>
+<dl class="section user"><dt>Component specific configuration options</dt><dd></dd></dl>
+<p>The following compile time configuration options are available to suit various implementations:</p>
+<ul>
+<li>TX_BUF_SIZE TX buffer size in bytes.</li>
+<li>RX_BUF_SIZE RX buffer size in bytes.</li>
+<li>RX_BUF_QUEUE_SIZE RX buffer element size. </li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00070.html">BLE libraries</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:52 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00069.html">Transport Services</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:45 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

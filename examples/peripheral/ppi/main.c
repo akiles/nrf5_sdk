@@ -27,7 +27,6 @@
 #include "nrf_delay.h"
 #include "app_uart.h"
 #include "app_error.h"
-#include "app_gpiote.h"
 #include "boards.h"
 #include "nrf_drv_ppi.h"
 #include "nrf_drv_timer.h"
@@ -55,7 +54,7 @@ void uart_error_handle(app_uart_evt_t * p_event)
 }
 
 // Timer even handler. Not used since timer is used only for PPI.
-void timer_event_handler(nrf_timer_events_t event_type){}
+void timer_event_handler(nrf_timer_event_t event_type, void * p_context){}
 
 /** @brief Function for initializing the PPI peripheral.
 */
@@ -70,16 +69,16 @@ static void ppi_init(void)
     err_code = nrf_drv_ppi_channel_alloc(&ppi_channel1);
     APP_ERROR_CHECK(err_code);
     err_code = nrf_drv_ppi_channel_assign(ppi_channel1,
-                                          nrf_drv_timer_event_address_get(&timer1, NRF_TIMER_EVENTS_COMPARE0),
-                                          nrf_drv_timer_task_address_get(&timer0, NRF_TIMER_TASKS_STOP));
+                                          nrf_drv_timer_event_address_get(&timer1, NRF_TIMER_EVENT_COMPARE0),
+                                          nrf_drv_timer_task_address_get(&timer0, NRF_TIMER_TASK_STOP));
     APP_ERROR_CHECK(err_code);
 
     // Configure 2nd available PPI channel to start timer0 counter at TIMER2 COMPARE[0] match, which is every odd number of seconds.
     err_code = nrf_drv_ppi_channel_alloc(&ppi_channel2);
     APP_ERROR_CHECK(err_code);
     err_code = nrf_drv_ppi_channel_assign(ppi_channel2,
-                                          nrf_drv_timer_event_address_get(&timer2, NRF_TIMER_EVENTS_COMPARE0),
-                                          nrf_drv_timer_task_address_get(&timer0, NRF_TIMER_TASKS_START));
+                                          nrf_drv_timer_event_address_get(&timer2, NRF_TIMER_EVENT_COMPARE0),
+                                          nrf_drv_timer_task_address_get(&timer0, NRF_TIMER_TASK_START));
     APP_ERROR_CHECK(err_code);
 
     // Enable both configured PPI channels
@@ -113,7 +112,7 @@ static void timer1_init(void)
     ret_code_t err_code = nrf_drv_timer_init(&timer1, NULL, timer_event_handler);
     APP_ERROR_CHECK(err_code);
 
-    nrf_drv_timer_extended_compare(&timer1, NRF_TIMER_CC_CHANNEL0, 0xFFFFUL, NRF_TIMER_SHORTS_COMPARE0_CLEAR_MASK, false);
+    nrf_drv_timer_extended_compare(&timer1, NRF_TIMER_CC_CHANNEL0, 0xFFFFUL, NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK, false);
 }
 
 
@@ -132,7 +131,7 @@ static void timer2_init(void)
     ret_code_t err_code = nrf_drv_timer_init(&timer2, NULL, timer_event_handler);
     APP_ERROR_CHECK(err_code);
 
-    nrf_drv_timer_extended_compare(&timer2, NRF_TIMER_CC_CHANNEL0, 0x7FFFUL, NRF_TIMER_SHORTS_COMPARE0_CLEAR_MASK, false);
+    nrf_drv_timer_extended_compare(&timer2, NRF_TIMER_CC_CHANNEL0, 0x7FFFUL, NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK, false);
 }
 
 
@@ -146,7 +145,6 @@ int main(void)
     timer2_init(); // Timer to generate events on odd number of seconds.
     ppi_init();    // PPI to redirect the event to timer start/stop tasks.
 
-    APP_GPIOTE_INIT(1);
     uint32_t err_code;
     const app_uart_comm_params_t comm_params =
      {

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: bootloader_settings_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_ias_c_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,138 +106,48 @@ $(document).ready(function(){initNavTree('a00361.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">bootloader_settings_t Struct Reference<div class="ingroups"><a class="el" href="a00935.html">Types and definitions.</a></div></div>  </div>
+<div class="title">ble_ias_c_init_t Struct Reference<div class="ingroups"><a class="el" href="a01207.html">Immediate Alert Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure holding bootloader settings for application and bank data.  
+<p>IAS Client init structure. This contains all options and data needed for initialization of the client.  
  <a href="a00361.html#details">More...</a></p>
 
-<p><code>#include &lt;bootloader_types.h&gt;</code></p>
+<p><code>#include &lt;ble_ias_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:af258a4e7aa2091a87bbbf900aee3a473"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00935.html#gaa42a54966d007c04ca5fbca6775187f2">bootloader_bank_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00361.html#af258a4e7aa2091a87bbbf900aee3a473">bank_0</a></td></tr>
-<tr class="separator:af258a4e7aa2091a87bbbf900aee3a473"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48a855222210663d34f20a90f6a3f98e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00361.html#a48a855222210663d34f20a90f6a3f98e">bank_0_crc</a></td></tr>
-<tr class="separator:a48a855222210663d34f20a90f6a3f98e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10a41bfab6e5113fb16ec3e302d4d81d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00935.html#gaa42a54966d007c04ca5fbca6775187f2">bootloader_bank_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00361.html#a10a41bfab6e5113fb16ec3e302d4d81d">bank_1</a></td></tr>
-<tr class="separator:a10a41bfab6e5113fb16ec3e302d4d81d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96f71ee507a86f0f69f9fd21c4f69f42"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00361.html#a96f71ee507a86f0f69f9fd21c4f69f42">bank_0_size</a></td></tr>
-<tr class="separator:a96f71ee507a86f0f69f9fd21c4f69f42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a482692b4f8d53402e500f1f5aafd81c2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00361.html#a482692b4f8d53402e500f1f5aafd81c2">sd_image_size</a></td></tr>
-<tr class="separator:a482692b4f8d53402e500f1f5aafd81c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a754414d2322ab954c6399a37559796bd"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00361.html#a754414d2322ab954c6399a37559796bd">bl_image_size</a></td></tr>
-<tr class="separator:a754414d2322ab954c6399a37559796bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0c7e6db30c6f2e8be1dbe1438dd6fa5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00361.html#ae0c7e6db30c6f2e8be1dbe1438dd6fa5">app_image_size</a></td></tr>
-<tr class="separator:ae0c7e6db30c6f2e8be1dbe1438dd6fa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa97a2363588ea364c63c65c9a6b37f17"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00361.html#aa97a2363588ea364c63c65c9a6b37f17">sd_image_start</a></td></tr>
-<tr class="separator:aa97a2363588ea364c63c65c9a6b37f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53302faad4381a87101012bf06af6101"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01207.html#ga96adb4273980cee3c28140485a07884f">ble_ias_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00361.html#a53302faad4381a87101012bf06af6101">evt_handler</a></td></tr>
+<tr class="separator:a53302faad4381a87101012bf06af6101"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83986799fa5972b6665f1dd70af89bca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01212.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00361.html#a83986799fa5972b6665f1dd70af89bca">error_handler</a></td></tr>
+<tr class="separator:a83986799fa5972b6665f1dd70af89bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure holding bootloader settings for application and bank data. </p>
+<div class="textblock"><p>IAS Client init structure. This contains all options and data needed for initialization of the client. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ae0c7e6db30c6f2e8be1dbe1438dd6fa5"></a>
+<a class="anchor" id="a83986799fa5972b6665f1dd70af89bca"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t bootloader_settings_t::app_image_size</td>
+          <td class="memname"><a class="el" href="a01212.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_ias_c_init_t::error_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Size of Application image in bank0 if bank_0 code is BANK_VALID_SD. </p>
+<p>Function to be called in case of an error. </p>
 
 </div>
 </div>
-<a class="anchor" id="af258a4e7aa2091a87bbbf900aee3a473"></a>
+<a class="anchor" id="a53302faad4381a87101012bf06af6101"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00935.html#gaa42a54966d007c04ca5fbca6775187f2">bootloader_bank_code_t</a> bootloader_settings_t::bank_0</td>
+          <td class="memname"><a class="el" href="a01207.html#ga96adb4273980cee3c28140485a07884f">ble_ias_c_evt_handler_t</a> ble_ias_c_init_t::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Variable to store if bank 0 contains a valid application. </p>
-
-</div>
-</div>
-<a class="anchor" id="a48a855222210663d34f20a90f6a3f98e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t bootloader_settings_t::bank_0_crc</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>If bank is valid, this field will contain a valid CRC of the total image. </p>
-
-</div>
-</div>
-<a class="anchor" id="a96f71ee507a86f0f69f9fd21c4f69f42"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t bootloader_settings_t::bank_0_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of active image in bank0 if present, otherwise 0. </p>
-
-</div>
-</div>
-<a class="anchor" id="a10a41bfab6e5113fb16ec3e302d4d81d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00935.html#gaa42a54966d007c04ca5fbca6775187f2">bootloader_bank_code_t</a> bootloader_settings_t::bank_1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Variable to store if bank 1 has been erased/prepared for new image. Bank 1 is only used in Banked Update scenario. </p>
-
-</div>
-</div>
-<a class="anchor" id="a754414d2322ab954c6399a37559796bd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t bootloader_settings_t::bl_image_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of Bootloader image in bank0 if bank_0 code is BANK_VALID_SD. </p>
-
-</div>
-</div>
-<a class="anchor" id="a482692b4f8d53402e500f1f5aafd81c2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t bootloader_settings_t::sd_image_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of SoftDevice image in bank0 if bank_0 code is BANK_VALID_SD. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa97a2363588ea364c63c65c9a6b37f17"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t bootloader_settings_t::sd_image_start</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Location in flash where SoftDevice image is stored for SoftDevice update. </p>
+<p>Event handler to be called for handling events from the Immediate Alert Service client. </p>
 
 </div>
 </div>
@@ -246,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00361.html">bootloader_settings_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00361.html">ble_ias_c_init_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

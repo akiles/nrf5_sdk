@@ -39,13 +39,13 @@ remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-ou
 C_SOURCE_FILES += \
 ../../../../../../components/libraries/util/app_error.c \
 ../../../../../../components/libraries/fifo/app_fifo.c \
-../../../../../../components/libraries/gpiote/app_gpiote.c \
 ../../../../../../components/libraries/timer/app_timer.c \
 ../../../../../../components/libraries/util/nrf_assert.c \
 ../../../../../../components/libraries/uart/retarget.c \
 ../../../../../../components/drivers_nrf/uart/app_uart_fifo.c \
 ../../../../../../components/drivers_nrf/hal/nrf_delay.c \
 ../../../../../../components/drivers_nrf/common/nrf_drv_common.c \
+../../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c \
 ../../../../../../components/drivers_nrf/rng/nrf_drv_rng.c \
 ../../../main.c \
 ../../../../../../components/ble/common/ble_advdata.c \
@@ -64,11 +64,11 @@ INC_PATHS += -I../../../../../../components/toolchain/gcc
 INC_PATHS += -I../../../../../../components/drivers_nrf/uart
 INC_PATHS += -I../../../../../../components/ble/common
 INC_PATHS += -I../../../../../../components/drivers_nrf/common
-INC_PATHS += -I../../../../../../components/libraries/gpiote
 INC_PATHS += -I../../../../../../components/softdevice/s110/headers
 INC_PATHS += -I../../..
 INC_PATHS += -I../../../../../bsp
 INC_PATHS += -I../../../../../../components/libraries/fifo
+INC_PATHS += -I../../../../../../components/drivers_nrf/gpiote
 INC_PATHS += -I../../../../../../components/drivers_nrf/rng
 INC_PATHS += -I../../../../../../components/toolchain
 INC_PATHS += -I../../../../../../components/device
@@ -85,7 +85,8 @@ OUTPUT_BINARY_DIRECTORY = $(OBJECT_DIRECTORY)
 BUILD_DIRECTORIES := $(sort $(OBJECT_DIRECTORY) $(OUTPUT_BINARY_DIRECTORY) $(LISTING_DIRECTORY) )
 
 #flags common to all targets
-CFLAGS  = -DBOARD_PCA10028
+CFLAGS  = -DSWI_DISABLE0
+CFLAGS += -DBOARD_PCA10028
 CFLAGS += -DSOFTDEVICE_PRESENT
 CFLAGS += -DNRF51
 CFLAGS += -DS110
@@ -97,7 +98,7 @@ CFLAGS += -Wall -Werror -O3
 CFLAGS += -mfloat-abi=soft
 # keep every function in separate section. This will allow linker to dump unused functions
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -flto -fno-builtin
+CFLAGS += -fno-builtin --short-enums
 
 # keep every function in separate section. This will allow linker to dump unused functions
 LDFLAGS += -Xlinker -Map=$(LISTING_DIRECTORY)/$(OUTPUT_FILENAME).map
@@ -110,6 +111,7 @@ LDFLAGS += --specs=nano.specs -lc -lnosys
 
 # Assembler flags
 ASMFLAGS += -x assembler-with-cpp
+ASMFLAGS += -DSWI_DISABLE0
 ASMFLAGS += -DBOARD_PCA10028
 ASMFLAGS += -DSOFTDEVICE_PRESENT
 ASMFLAGS += -DNRF51

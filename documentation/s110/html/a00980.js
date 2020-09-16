@@ -1,9 +1,12 @@
 var a00980 =
 [
-    [ "DM_EVT_CONNECTION", "a00980.html#ga0f770455b2a8d43faf3e18570163a3d8", null ],
-    [ "DM_EVT_DISCONNECTION", "a00980.html#ga7909152aa711df2ab18ddef129af9597", null ],
-    [ "DM_EVT_LINK_SECURED", "a00980.html#gaf572cf54f12fa19eec469c0fff0c9a38", null ],
-    [ "DM_EVT_SECURITY_SETUP", "a00980.html#gabeb39b4bbdb79dc5df6feffc467deae3", null ],
-    [ "DM_EVT_SECURITY_SETUP_COMPLETE", "a00980.html#ga44bd57374aa0379152253c85b3f2f898", null ],
-    [ "DM_EVT_SECURITY_SETUP_REFRESH", "a00980.html#gaf45fa4ad220ac72b86b2aa66aeb8979d", null ]
+    [ "Memory Pool Internal", "a00979.html", "a00979" ],
+    [ "hci_mem_pool_close", "a00980.html#ga46bf92027fa4fe402e53a8764713c99f", null ],
+    [ "hci_mem_pool_open", "a00980.html#gaadd0dcc9a737d2401c05dbd0cd350a13", null ],
+    [ "hci_mem_pool_rx_consume", "a00980.html#ga961c95e86995f3a6ad1a14822745c368", null ],
+    [ "hci_mem_pool_rx_data_size_set", "a00980.html#ga7aae0da2e09ccedb4deb30e01940c303", null ],
+    [ "hci_mem_pool_rx_extract", "a00980.html#gaf29059c4fa6204e2313069e90e7db51a", null ],
+    [ "hci_mem_pool_rx_produce", "a00980.html#ga06c527499f6006d354a540268b4ea124", null ],
+    [ "hci_mem_pool_tx_alloc", "a00980.html#gad1da3c1e38317a5c312650396d9da6e8", null ],
+    [ "hci_mem_pool_tx_free", "a00980.html#ga44dd78500f42bf6cddc5f90a03abd7af", null ]
 ];

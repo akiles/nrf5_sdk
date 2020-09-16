@@ -1,8 +1,8 @@
 var a00319 =
 [
-    [ "evt_handler", "a00319.html#aa86b9c7d2205607e9e77fa9c3affabbe", null ],
-    [ "hrs_bsl_attr_md", "a00319.html#a12b40292268a248ca7341f0298d16b1a", null ],
-    [ "hrs_hrm_attr_md", "a00319.html#a8023c653b5f45b8fd6de1fc61761275a", null ],
-    [ "is_sensor_contact_supported", "a00319.html#af531586afe7aa4c124e96e04d42e70d1", null ],
-    [ "p_body_sensor_location", "a00319.html#a6950ba718a00b8236331be362d3a9beb", null ]
+    [ "desc", "a00319.html#a9133fc1220787c07ac21291dab7b8b22", null ],
+    [ "exponent", "a00319.html#a931b1bdd89be7d3aaa1d1522d20c7dd5", null ],
+    [ "format", "a00319.html#a9a79d570aa8f758c81ddddbf345b289e", null ],
+    [ "name_space", "a00319.html#a279e1e8de47b628414382aed4cec3c68", null ],
+    [ "unit", "a00319.html#ab28e4dc2a48e6329df85b3f974cf4466", null ]
 ];

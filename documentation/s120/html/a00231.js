@@ -1,7 +1,6 @@
 var a00231 =
 [
-    [ "earliest", "a00231.html#a7ed176c3d465f35d68d00b70282bbb13", null ],
-    [ "normal", "a00231.html#a140d30391ab57e9fbd4e98536d687e09", null ],
-    [ "params", "a00231.html#a2578047d8488f7583ac55ffa58afc59a", null ],
-    [ "request_type", "a00231.html#af6c3fb2f810242bef92760745327f718", null ]
+    [ "long_push_event", "a00231.html#a84f09881275b5407455ec261aab66667", null ],
+    [ "push_event", "a00231.html#abff83314b5d5f68fb1f670c97ef52fc5", null ],
+    [ "release_event", "a00231.html#a2bc0087aeda2cd59f3ebfdb92df12b44", null ]
 ];

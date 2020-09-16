@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Transport Services</title>
+<title>nRF51 SDK - S120 SoftDevice: BLE Heart Rate Collector Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,19 +97,59 @@ $(document).ready(function(){initNavTree('a00063.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Transport Services </div>  </div>
+<div class="title">BLE Heart Rate Collector Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="el" href="a00064.html">HCI transport library</a></p>
-<p><a class="el" href="a00065.html">Memory pool library</a></p>
-<p><a class="el" href="a00066.html">SLIP handling library</a> </p>
+<div class="textblock"><p>The BLE Heart Rate Collector application implements the Heart Rate Collector Role using the S120 or S130 SoftDevice.</p>
+<p>GAP role implemented is the Central role. GATT role implemented is the Client role.</p>
+<p>The Heart Rate Collector application implements the Collector role for the Heart Rate Profile. It scans peripheral devices, connects to the device advertising with Heart Rate Service UUID in its advertisement report, and discovers and configures the <b>Heart Rate Service</b> to start sending Notifications of Heart Rate Measurement. The Heart Rate Measurement received is logged on UART interface. This application will also discover and configure <b>Battery Service</b> at the peer.</p>
+<p>The application includes the two services in the Heart Rate profile:</p>
+<ul>
+<li><a class="el" href="a00873.html">Heart Rate Service Client</a></li>
+<li><a class="el" href="a00868.html">Battery Service Client</a></li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>The application currently does not support connecting to multiple peripherals. Handling Connection Parameters Update and Pairing/Bonding are not implemented. Once connected, the application does not initiate disconnection but is capable of handling disconnection event initiated by peer or triggered unexpectedly.</dd></dl>
+<h1><a class="anchor" id="project_hrc_setup"></a>
+Setup</h1>
+<p>The name of the example for PCA10028 is <b>ble_app_hrs_c_s120_pca10028</b>, and for PCA10031 it is <b>ble_app_hrs_c_s120_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\ble_central\ble_app_hrs_c</code> </p>
+<p><b>Button assignments:</b> <a class="el" href="a00060.html#examples_ble_button_functionality">BSP BLE Button Assignments</a>.</p>
+<p>The application uses the following UART settings:</p>
+<ul>
+<li>
+Baud rate: 38.400</li>
+<li>
+8 data bits</li>
+<li>
+1 stop bit</li>
+<li>
+No parity</li>
+<li>
+HW flow control: RTS/CTS</li>
+</ul>
+<h1><a class="anchor" id="ble_hrc_test"></a>
+Testing</h1>
+<p>Two boards are needed to perform this test:</p>
+<ul>
+<li><b>Collector Board</b>: nRF51 Development board mounted with nRF51822 containing S120 or S130 SoftDevice.</li>
+<li><b>Sensor Board</b>: nRF51 Development board mounted with nRF51822 chip Board containing S110 or S130 SoftDevice and the Heart Rate Application provided with the nRF51 SDK.</li>
+</ul>
+<p>The application running on the Sensor Board is intended to serve as a peer (i.e. Heart Rate Sensor role) to this Heart Rate Collector application.</p>
+<p>Test the BLE Heart Rate Collector Example application by performing the following steps:</p>
+<ol type="1">
+<li>Compile and program the BLE Heart Rate Collector Example application on the Collector Board. Ensure that the S120 or S130 SoftDevice is used for this application.</li>
+<li>On the Collector board, observe that the <a class="el" href="a00060.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated. This shows that the application is scanning for Heart Rate Sensors.</li>
+<li>Compile and program the Heart Rate Sensor application on the Sensor Board. Ensure the S110 or S130 SoftDevice is used for this application.</li>
+<li>Observe that the Heart Rate Sensor is advertising.</li>
+<li>Once the connection is established, the <a class="el" href="a00060.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated on the Collector Board.</li>
+<li>After a few seconds, observe Heart Rate measurements displayed on the UART. </li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:52 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00062.html">BLE Central</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:45 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

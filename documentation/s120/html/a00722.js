@@ -1,13 +1,9 @@
 var a00722 =
 [
-    [ "NRF_MBR_COMMANDS", "a00722.html#gad416fbc71855eb8e1533a812164b85a7", [
-      [ "SD_MBR_COMMAND_COPY_BL", "a00722.html#ggad416fbc71855eb8e1533a812164b85a7a56ab45130d67e73165ac12b66e8db127", null ],
-      [ "SD_MBR_COMMAND_COPY_SD", "a00722.html#ggad416fbc71855eb8e1533a812164b85a7a425aceb6eaa893f49011dada2c1dd812", null ],
-      [ "SD_MBR_COMMAND_INIT_SD", "a00722.html#ggad416fbc71855eb8e1533a812164b85a7a1fcb02bcda46da19c7baff2b92c71fe5", null ],
-      [ "SD_MBR_COMMAND_COMPARE", "a00722.html#ggad416fbc71855eb8e1533a812164b85a7a5199987af2f952e4af19b1a30f02dbac", null ],
-      [ "SD_MBR_COMMAND_VECTOR_TABLE_BASE_SET", "a00722.html#ggad416fbc71855eb8e1533a812164b85a7a5317127853f0ad74b2705ae5675b2b9a", null ]
-    ] ],
-    [ "NRF_MBR_SVCS", "a00722.html#gaebb8642cfb30caf7eea66524b13c58be", [
-      [ "SD_MBR_COMMAND", "a00722.html#ggaebb8642cfb30caf7eea66524b13c58bea4306e887e1d767e0d8161213b7fe1357", null ]
-    ] ]
+    [ "BLE_GATT_OP_EXEC_WRITE_REQ", "a00722.html#ga7b4e1d78a5c63acda9f936be6293b513", null ],
+    [ "BLE_GATT_OP_INVALID", "a00722.html#ga608ba17cf0f6dd37f68bcca0f5bcc6c6", null ],
+    [ "BLE_GATT_OP_PREP_WRITE_REQ", "a00722.html#ga2a14ca8931148c5b97289f12acbb2a02", null ],
+    [ "BLE_GATT_OP_SIGN_WRITE_CMD", "a00722.html#ga9a87ace6849f8d15ba3117a5c50ec481", null ],
+    [ "BLE_GATT_OP_WRITE_CMD", "a00722.html#gac70b760454146bc15a51a3e2bbdccf9a", null ],
+    [ "BLE_GATT_OP_WRITE_REQ", "a00722.html#ga07b9cb136bbd9c0b85d0fff54dbe0103", null ]
 ];

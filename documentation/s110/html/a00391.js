@@ -1,5 +1,6 @@
 var a00391 =
 [
-    [ "cal_interval", "a00391.html#a8c8d61f45d2a74cc5958d825706d0d19", null ],
-    [ "interrupt_priority", "a00391.html#a846e56e628b146020a6ce96259e52bfd", null ]
+    [ "conn_handle", "a00391.html#a2a2b6f8257a24474edbcff183f92860b", null ],
+    [ "service_handle", "a00391.html#a4ebaa77023ad95d4ea1bb2a046b9ea80", null ],
+    [ "tx_power_level_handles", "a00391.html#a6b43774912f600a0069a22603c69bc48", null ]
 ];

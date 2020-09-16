@@ -1,5 +1,5 @@
 var a00420 =
 [
-    [ "exponent", "a00420.html#a831aa262a275e9fe9b611e074ab357fe", null ],
-    [ "mantissa", "a00420.html#a3f8b946e6d4361fa7a8e427a1c5cc0ef", null ]
+    [ "day_date_time", "a00420.html#ad071cd390df24216d293f7d70bf90d91", null ],
+    [ "fractions256", "a00420.html#a6aa8f8ad780b6f4712f0316b7f0a6c97", null ]
 ];

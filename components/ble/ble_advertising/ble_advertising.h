@@ -22,6 +22,8 @@
  *           Your main application can react to changes in advertising modes
  *           if an event handler is provided.
  *
+ * @note     The Advertising Module supports only applications with a single slave link.
+ *
  * The application must propagate BLE stack events to this module by calling
  * @ref ble_advertising_on_ble_evt() and system events by calling
  * @ref ble_advertising_on_sys_evt().
@@ -63,7 +65,7 @@ typedef enum
     BLE_ADV_EVT_FAST_WHITELIST,      /**< Fast advertising mode using the whitelist has started. */
     BLE_ADV_EVT_SLOW_WHITELIST,      /**< Slow advertising mode using the whitelist has started.*/
     BLE_ADV_EVT_WHITELIST_REQUEST,   /**< Request a whitelist from the main application. For whitelist advertising to work, the whitelist must be set when this event occurs. */
-    BLE_ADV_EVT_PEER_ADDR_REQUEST /**< Request a peer address from the main application. For directed advertising to work, the peer address must be set when this event occurs. */
+    BLE_ADV_EVT_PEER_ADDR_REQUEST    /**< Request a peer address from the main application. For directed advertising to work, the peer address must be set when this event occurs. */
 } ble_adv_evt_t;
 
 /**@brief Options for the different advertisement modes.
@@ -144,7 +146,8 @@ void ble_advertising_on_sys_evt(uint32_t sys_evt);
  *          The supplied advertising data is copied to a local structure and is manipulated
  *          depending on what advertising modes are started in @ref ble_advertising_start.
  *
- * @param[in] p_advdata     Set advertising data, name, appearance, discovery flags, and more.
+ * @param[in] p_advdata     Advertising data: name, appearance, discovery flags, and more.
+ * @param[in] p_srdata      Scan response data: Supplement to advertising data.
  * @param[in] p_config      Select which advertising modes and intervals will be utilized.
  * @param[in] evt_handler   Event handler that will be called upon advertising events.
  * @param[in] error_handler Error handler that will propogate internal errors to the main applications.
@@ -152,6 +155,7 @@ void ble_advertising_on_sys_evt(uint32_t sys_evt);
  * @retval NRF_SUCCESS If initialization was successful. Otherwise, an error code is returned.
  */
 uint32_t ble_advertising_init(ble_advdata_t const                 * p_advdata,
+                              ble_advdata_t const                 * p_srdata,
                               ble_adv_modes_config_t const        * p_config,
                               ble_advertising_evt_handler_t const   evt_handler,
                               ble_advertising_error_handler_t const error_handler);

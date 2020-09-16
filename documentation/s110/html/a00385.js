@@ -1,6 +1,6 @@
 var a00385 =
 [
-    [ "evt_type", "a00385.html#ac7e76a07c099aed4eb9d8180a15368d8", null ],
-    [ "packet", "a00385.html#a005a67172eb3d6a4645d536db7fbb98f", null ],
-    [ "packet_length", "a00385.html#ac31d16ccc1a5fc4bd8852c58d710f821", null ]
+    [ "cumulative_value", "a00385.html#a9dce1ef6b333542b081df12273229b2e", null ],
+    [ "location", "a00385.html#a27be823fda46c3deb2f3fd98a38bf29f", null ],
+    [ "opcode", "a00385.html#a000223ebda70c1ccce85e8746a7d8207", null ]
 ];

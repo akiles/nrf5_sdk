@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_bas_c_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: SoftDevice Handler Library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,65 +96,45 @@ $(document).ready(function(){initNavTree('a00174.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_bas_c_evt_t Struct Reference<div class="ingroups"><a class="el" href="a01002.html">Structures</a></div></div>  </div>
+<div class="title">SoftDevice Handler Library </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Battery Service Client Event structure.  
- <a href="a00174.html#details">More...</a></p>
-
-<p><code>#include &lt;ble_bas_c.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a19f2646a4734d1fc7cb27fdd7055fa55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01001.html#ga825ba0a7f2d9094574df073de10a3a15">ble_bas_c_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00174.html#a19f2646a4734d1fc7cb27fdd7055fa55">evt_type</a></td></tr>
-<tr class="separator:a19f2646a4734d1fc7cb27fdd7055fa55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43465c6212cc74be3fa082fd56891181"><td class="memItemLeft" ><a class="anchor" id="a43465c6212cc74be3fa082fd56891181"></a>
-union {</td></tr>
-<tr class="memitem:a1776022f2f6578e7e0507b1c6cf217bf"><td class="memItemLeft" >&#160;&#160;&#160;uint8_t&#160;&#160;&#160;<a class="el" href="a00174.html#aa06f57fc8285fed61a3c0dd89671f6d3">battery_level</a></td></tr>
-<tr class="separator:a1776022f2f6578e7e0507b1c6cf217bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43465c6212cc74be3fa082fd56891181"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:a43465c6212cc74be3fa082fd56891181"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Battery Service Client Event structure. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aa06f57fc8285fed61a3c0dd89671f6d3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_bas_c_evt_t::battery_level</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Battery level received from peer. This field will be used for the events <a class="el" href="a01001.html#gga825ba0a7f2d9094574df073de10a3a15a9d1d37260864fc90e1a1c56c6de13657">BLE_BAS_C_EVT_BATT_NOTIFICATION</a> and <a class="el" href="a01001.html#gga825ba0a7f2d9094574df073de10a3a15a424840c39dfabd3c63e1c10d0fc30f6c">BLE_BAS_C_EVT_BATT_READ_RESP</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="a19f2646a4734d1fc7cb27fdd7055fa55"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01001.html#ga825ba0a7f2d9094574df073de10a3a15">ble_bas_c_evt_type_t</a> ble_bas_c_evt_t::evt_type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event Type. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>This library is used for initializing and disabling the SoftDevice and also propagating SoftDevice events to the application.</p>
+<p>This library module contains the following functionalities.</p>
+<ul>
+<li>Initializing the SoftDevice and enabling the SoftDevice event interrupt.</li>
+<li>Disabling the SoftDevice.</li>
+<li>Receiving events from the SoftDevice and forwarding them to the application using interface functions that must be defined by the application. This module works with SoftDevices that have BLE, ANT, or BLE and ANT functionalities.</li>
+</ul>
+<p>Depending on the type of SoftDevice, the APIs used to fetch events from it will vary. For example, the S110 SoftDevice exposes 2 APIs - <a class="el" href="a01284.html#ga412b12b43c253dd744bcf574d6e86f43">sd_ble_evt_get</a> for fetching BLE events and <a class="el" href="a01316.html#ga8bb3db4bb663fe6deb65f92f1f0cbbcc">sd_evt_get</a> for fetching System (SOC) events. But the S210 SoftDevice does not have an API named sd_ble_evt_get. Instead it exposes sd_ant_event_get for fetching ANT events and <a class="el" href="a01316.html#ga8bb3db4bb663fe6deb65f92f1f0cbbcc">sd_evt_get</a> for fetching System (SOC) events. Depending on the type of SoftDevice, <a class="el" href="a01189.html">SoftDevice Event Handler</a> helps the application use the correct APIs for fetching SoftDevice events.</p>
+<p>The API exposed by this module is present in <code>&lt;InstallFolder&gt;\components\softdevice\common</code> in the files <code>softdevice_handler.h</code>, <code>ant_stack_handler_types.h</code>, and <code>ble_stack_handler_types.h</code>.</p>
+<h1><a class="anchor" id="expectations"></a>
+Expectations from the application/developer using this library</h1>
+<p>This module has the following expectations from the application. </p>
+<h2><a class="anchor" id="compiler_defines"></a>
+Preprocessor defines</h2>
+<p>This module uses conditional compilation. It expects certain preprocessor macros to be defined as follows.</p>
+<ul>
+<li><em>BLE_STACK_SUPPORT_REQD</em> to be defined, if the application needs to be run on a BLE-only SoftDevice (for example, S110 SoftDevice).</li>
+<li><em>ANT_STACK_SUPPORT_REQD</em> to be defined, if the application needs to be run on an ANT-only SoftDevice (for example, S210 SoftDevice).</li>
+<li>Both <em>BLE_STACK_SUPPORT_REQD</em> and <em>ANT_STACK_SUPPORT_REQD</em> to be defined, if the application needs to be run on a SoftDevice with both BLE and ANT support. (for example, S310 SoftDevice).</li>
+<li>If neither <em>BLE_STACK_SUPPORT_REQD</em> nor <em>ANT_STACK_SUPPORT_REQD</em> is defined, the module will only be capable of fetching system (SOC) events from the SoftDevice.</li>
+</ul>
+<h2><a class="anchor" id="function_defines"></a>
+Subscription to events</h2>
+<p>The application should subscribe for events using the function <em>softdevice_xxx_evt_handler_set</em>, where xxx can be ble (for BLE events), ant (for ANT events), or sys (for system (SOC) events).</p>
+<h2><a class="anchor" id="api_usage"></a>
+No direct calls to sd_softdevice_disable and sd_softdevice_enable</h2>
+<p>When the application needs to disable the SoftDevice, it must use the function <a class="el" href="a01189.html#gabbec783a89f93617d3661a819597d79c">softdevice_handler_sd_disable</a> and not directly call the function <a class="el" href="a01313.html#ga45900ecbe6d5ebf9ae78894fe6c75b23">sd_softdevice_disable</a> that is provided by the SoftDevice. If this is not done, this module will not be aware that the SoftDevice was disabled. This will result in the SoftDevice returning the error code <a class="el" href="a01051.html#ga9a2af1a322a5dfb3bdb69e2aacd3bc27">NRF_ERROR_SOFTDEVICE_NOT_ENABLED</a> when this module tries to fetch BLE or ANT events. This in turn will result in a call to <a class="el" href="a00989.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> function defined by the application.</p>
+<p>Similarly, if the application needs to enable the SoftDevice, it must do so using the function <a class="el" href="a01189.html#ga33d6c5c2cf0d6cd1e89ef172d75e0975">softdevice_handler_init</a> function. If this is not done, this module will never fetch the BLE or ANT events. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00174.html">ble_bas_c_evt_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

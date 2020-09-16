@@ -1,5 +1,5 @@
 var a01046 =
 [
-    [ "Defines", "a01047.html", "a01047" ],
-    [ "Structures", "a01048.html", "a01048" ]
+    [ "Defines", "a01304.html", "a01304" ],
+    [ "Structures", "a01305.html", "a01305" ]
 ];

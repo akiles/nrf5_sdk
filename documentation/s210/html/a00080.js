@@ -1,7 +1,6 @@
 var a00080 =
 [
-    [ "data", "a00080.html#a8d56210fd975e42c2b9d0558a5149929", null ],
-    [ "report", "a00080.html#a05207fa140ddc6e27ff4b1917d75b586", null ],
-    [ "sample", "a00080.html#a41b9730f7010c66f7311c1cbde202e35", null ],
-    [ "type", "a00080.html#a6bf33d5c66a14040814e347ee0456c45", null ]
+    [ "evt_type", "a00080.html#ac7e76a07c099aed4eb9d8180a15368d8", null ],
+    [ "packet", "a00080.html#a005a67172eb3d6a4645d536db7fbb98f", null ],
+    [ "packet_length", "a00080.html#ac31d16ccc1a5fc4bd8852c58d710f821", null ]
 ];

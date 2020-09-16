@@ -1,6 +1,7 @@
 var a00412 =
 [
-    [ "block_count", "a00412.html#a7bb96f4e9d1b68cb94fd5c75570e5a99", null ],
-    [ "block_size", "a00412.html#a95b58714824957d4c930a5da78d7109a", null ],
-    [ "cb", "a00412.html#a3495db72b9ff587f0c9ea0ab38d5e9f8", null ]
+    [ "p_app_context", "a00412.html#ae9ad98969539dba415cfb4cd9e0f0564", null ],
+    [ "p_device_context", "a00412.html#abeb2585ead8af941c5619bbfad06b963", null ],
+    [ "p_gap_param", "a00412.html#af0e4a6616d2156de4d92277ea7f0df5f", null ],
+    [ "p_service_context", "a00412.html#a7a1372003da3dd695160653c24e3eaf8", null ]
 ];

@@ -186,7 +186,7 @@ __STATIC_INLINE uint32_t nrf_rtc_task_address_get(NRF_RTC_Type * p_rtc, nrf_rtc_
  * @param[in]  p_rtc         Pointer to the instance register structure.
  * @param[in]  task          Requested task.
  */
-__STATIC_INLINE void nrf_rtc_task_set(NRF_RTC_Type * p_rtc, nrf_rtc_task_t task);
+__STATIC_INLINE void nrf_rtc_task_trigger(NRF_RTC_Type * p_rtc, nrf_rtc_task_t task);
 
 /**@brief Function for enabling events.
  *
@@ -276,7 +276,7 @@ __STATIC_INLINE uint32_t nrf_rtc_task_address_get(NRF_RTC_Type * p_rtc, nrf_rtc_
     return (uint32_t)p_rtc + task;
 }
 
-__STATIC_INLINE void nrf_rtc_task_set(NRF_RTC_Type * p_rtc, nrf_rtc_task_t task)
+__STATIC_INLINE void nrf_rtc_task_trigger(NRF_RTC_Type * p_rtc, nrf_rtc_task_t task)
 {
     *(__IO uint32_t *)((uint32_t)p_rtc + task) = 1;
 }

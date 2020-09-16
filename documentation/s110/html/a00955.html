@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Cycling Speed and Cadence Service</title>
+<title>nRF51 SDK - S110 SoftDevice: WDT driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,173 +97,104 @@ $(document).ready(function(){initNavTree('a00955.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Cycling Speed and Cadence Service<div class="ingroups"><a class="el" href="a01033.html">BLE Services</a></div></div>  </div>
+<div class="title">WDT driver<div class="ingroups"><a class="el" href="a00954.html">WDT HAL and driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Cycling Speed and Cadence Service module.  
+<p>WDT driver.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00956"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00956.html">Cycling Speed and Cadence Service feature bits</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00190.html">ble_cscs_evt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycling Speed and Cadence Service event.  <a href="a00190.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00443.html">nrf_drv_wdt_config_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct for WDT initialization.  <a href="a00443.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00191.html">ble_cscs_init_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycling Speed and Cadence Service init structure. This contains all options and data needed for initialization of the service.  <a href="a00191.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00193.html">ble_cscs_s</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycling Speed and Cadence Service structure. This contains various status information for the service.  <a href="a00193.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00192.html">ble_cscs_meas_s</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycling Speed and Cadence Service measurement structure. This contains a Cycling Speed and Cadence Service measurement.  <a href="a00192.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga36e849053987e9e6f8587e83bb34497b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>NRF_DRV_WDT_DEAFULT_CONFIG</b></td></tr>
+<tr class="separator:ga36e849053987e9e6f8587e83bb34497b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga8fb5ed5d9c117d85db4c59a4470bb627"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8fb5ed5d9c117d85db4c59a4470bb627"></a>
-typedef struct <a class="el" href="a00193.html">ble_cscs_s</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ble_cscs_t</b></td></tr>
-<tr class="separator:ga8fb5ed5d9c117d85db4c59a4470bb627"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga10281fbc8ffe1192d6047d3e9fa0ddc0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga10281fbc8ffe1192d6047d3e9fa0ddc0"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00955.html#ga10281fbc8ffe1192d6047d3e9fa0ddc0">ble_cscs_evt_handler_t</a> )(<a class="el" href="a00193.html">ble_cscs_t</a> *p_cscs, <a class="el" href="a00190.html">ble_cscs_evt_t</a> *p_evt)</td></tr>
-<tr class="memdesc:ga10281fbc8ffe1192d6047d3e9fa0ddc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycling Speed and Cadence Service event handler type. <br/></td></tr>
-<tr class="separator:ga10281fbc8ffe1192d6047d3e9fa0ddc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga48ac37bca68e48cda3c1ef093398c9c6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga48ac37bca68e48cda3c1ef093398c9c6"></a>
-typedef struct <a class="el" href="a00192.html">ble_cscs_meas_s</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00955.html#ga48ac37bca68e48cda3c1ef093398c9c6">ble_cscs_meas_t</a></td></tr>
-<tr class="memdesc:ga48ac37bca68e48cda3c1ef093398c9c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycling Speed and Cadence Service measurement structure. This contains a Cycling Speed and Cadence Service measurement. <br/></td></tr>
-<tr class="separator:ga48ac37bca68e48cda3c1ef093398c9c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gabd8c3101d93c08174d2e0d2085e2f02b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00955.html#gabd8c3101d93c08174d2e0d2085e2f02b">ble_cscs_evt_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00955.html#ggabd8c3101d93c08174d2e0d2085e2f02ba0a1409a9c76ef90b22cd76e03fde4b50">BLE_CSCS_EVT_NOTIFICATION_ENABLED</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00955.html#ggabd8c3101d93c08174d2e0d2085e2f02ba47805a8eed422166cb4d8415b91d13ee">BLE_CSCS_EVT_NOTIFICATION_DISABLED</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gabd8c3101d93c08174d2e0d2085e2f02b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cycling Speed and Cadence Service event type.  <a href="a00955.html#gabd8c3101d93c08174d2e0d2085e2f02b">More...</a><br/></td></tr>
-<tr class="separator:gabd8c3101d93c08174d2e0d2085e2f02b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga11d96383fa892bd1e36756dd4a57f831"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga11d96383fa892bd1e36756dd4a57f831"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00955.html#ga11d96383fa892bd1e36756dd4a57f831">nrf_wdt_event_handler_t</a> )(void)</td></tr>
+<tr class="memdesc:ga11d96383fa892bd1e36756dd4a57f831"><td class="mdescLeft">&#160;</td><td class="mdescRight">WDT event handler function type. <br/></td></tr>
+<tr class="separator:ga11d96383fa892bd1e36756dd4a57f831"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga04c2b909316e943d766df476729a251f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga04c2b909316e943d766df476729a251f"></a>
+typedef <a class="el" href="a00943.html#gad49f6a91acfd021376d8fe9281768682">nrf_wdt_rr_register_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00955.html#ga04c2b909316e943d766df476729a251f">nrf_drv_wdt_channel_id</a></td></tr>
+<tr class="memdesc:ga04c2b909316e943d766df476729a251f"><td class="mdescLeft">&#160;</td><td class="mdescRight">WDT channel id type. <br/></td></tr>
+<tr class="separator:ga04c2b909316e943d766df476729a251f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga12394192a629326cb7f4cab0b59dff1e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00955.html#ga12394192a629326cb7f4cab0b59dff1e">ble_cscs_init</a> (<a class="el" href="a00193.html">ble_cscs_t</a> *p_cscs, const <a class="el" href="a00191.html">ble_cscs_init_t</a> *p_cscs_init)</td></tr>
-<tr class="memdesc:ga12394192a629326cb7f4cab0b59dff1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Cycling Speed and Cadence Service.  <a href="#ga12394192a629326cb7f4cab0b59dff1e">More...</a><br/></td></tr>
-<tr class="separator:ga12394192a629326cb7f4cab0b59dff1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabcc0bd0d90b6d40220468349ba190b98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00955.html#gabcc0bd0d90b6d40220468349ba190b98">ble_cscs_on_ble_evt</a> (<a class="el" href="a00193.html">ble_cscs_t</a> *p_cscs, <a class="el" href="a00213.html">ble_evt_t</a> *p_ble_evt)</td></tr>
-<tr class="memdesc:gabcc0bd0d90b6d40220468349ba190b98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling the Application's BLE Stack events.  <a href="#gabcc0bd0d90b6d40220468349ba190b98">More...</a><br/></td></tr>
-<tr class="separator:gabcc0bd0d90b6d40220468349ba190b98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga445c4e7578c68607b1573e175c20323f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00955.html#ga445c4e7578c68607b1573e175c20323f">ble_cscs_measurement_send</a> (<a class="el" href="a00193.html">ble_cscs_t</a> *p_cscs, <a class="el" href="a00955.html#ga48ac37bca68e48cda3c1ef093398c9c6">ble_cscs_meas_t</a> *p_measurement)</td></tr>
-<tr class="memdesc:ga445c4e7578c68607b1573e175c20323f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for sending cycling speed and cadence measurement if notification has been enabled.  <a href="#ga445c4e7578c68607b1573e175c20323f">More...</a><br/></td></tr>
-<tr class="separator:ga445c4e7578c68607b1573e175c20323f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6789648906b2a8553a4c07e8859b040"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00992.html#gaf6c20fb483036617204f12e99e0b997b">ret_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00955.html#gab6789648906b2a8553a4c07e8859b040">nrf_drv_wdt_init</a> (<a class="el" href="a00443.html">nrf_drv_wdt_config_t</a> const *p_config, <a class="el" href="a00955.html#ga11d96383fa892bd1e36756dd4a57f831">nrf_wdt_event_handler_t</a> wdt_event_handler)</td></tr>
+<tr class="memdesc:gab6789648906b2a8553a4c07e8859b040"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function initializes watchdog.  <a href="#gab6789648906b2a8553a4c07e8859b040">More...</a><br/></td></tr>
+<tr class="separator:gab6789648906b2a8553a4c07e8859b040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga475227a9a2f65b8980300d3e6d8b8a4b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00992.html#gaf6c20fb483036617204f12e99e0b997b">ret_code_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00955.html#ga475227a9a2f65b8980300d3e6d8b8a4b">nrf_drv_wdt_channel_alloc</a> (<a class="el" href="a00943.html#gad49f6a91acfd021376d8fe9281768682">nrf_drv_wdt_channel_id</a> *p_channel_id)</td></tr>
+<tr class="memdesc:ga475227a9a2f65b8980300d3e6d8b8a4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function allocate watchdog channel.  <a href="#ga475227a9a2f65b8980300d3e6d8b8a4b">More...</a><br/></td></tr>
+<tr class="separator:ga475227a9a2f65b8980300d3e6d8b8a4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga02ca485fa408fb07080ff65154195536"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00955.html#ga02ca485fa408fb07080ff65154195536">nrf_drv_wdt_enable</a> (void)</td></tr>
+<tr class="memdesc:ga02ca485fa408fb07080ff65154195536"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function starts watchdog.  <a href="#ga02ca485fa408fb07080ff65154195536">More...</a><br/></td></tr>
+<tr class="separator:ga02ca485fa408fb07080ff65154195536"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1615aa53ca7eda3a31a6c65ba266912"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00955.html#gab1615aa53ca7eda3a31a6c65ba266912">nrf_drv_wdt_feed</a> (void)</td></tr>
+<tr class="memdesc:gab1615aa53ca7eda3a31a6c65ba266912"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function feeds the watchdog.  <a href="#gab1615aa53ca7eda3a31a6c65ba266912">More...</a><br/></td></tr>
+<tr class="separator:gab1615aa53ca7eda3a31a6c65ba266912"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaa6ffc697e839a5ce32261e94f92677b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00955.html#gaaa6ffc697e839a5ce32261e94f92677b">nrf_drv_wdt_channel_feed</a> (<a class="el" href="a00943.html#gad49f6a91acfd021376d8fe9281768682">nrf_drv_wdt_channel_id</a> channel_id)</td></tr>
+<tr class="memdesc:gaaa6ffc697e839a5ce32261e94f92677b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function feeds the invidual watchdog channel.  <a href="#gaaa6ffc697e839a5ce32261e94f92677b">More...</a><br/></td></tr>
+<tr class="separator:gaaa6ffc697e839a5ce32261e94f92677b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga46ee74abe669c44a214c110933effeec"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00955.html#ga46ee74abe669c44a214c110933effeec">nrf_drv_wdt_ppi_task_addr</a> (<a class="el" href="a00943.html#ga4e5aac87484fc059e81f79023c6676a3">nrf_wdt_task_t</a> task)</td></tr>
+<tr class="memdesc:ga46ee74abe669c44a214c110933effeec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for returning a requested task address for the wdt driver module.  <a href="#ga46ee74abe669c44a214c110933effeec">More...</a><br/></td></tr>
+<tr class="separator:ga46ee74abe669c44a214c110933effeec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga82e4afda3302ff0438ab7c11186795ae"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00955.html#ga82e4afda3302ff0438ab7c11186795ae">nrf_drv_wdt_ppi_event_addr</a> (<a class="el" href="a00943.html#gadca2b19e3bb4c0b4e1b3372ade1112ee">nrf_wdt_event_t</a> event)</td></tr>
+<tr class="memdesc:ga82e4afda3302ff0438ab7c11186795ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for returning a requested event address for the wdt driver module.  <a href="#ga82e4afda3302ff0438ab7c11186795ae">More...</a><br/></td></tr>
+<tr class="separator:ga82e4afda3302ff0438ab7c11186795ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Cycling Speed and Cadence Service module. </p>
-<p>This module implements the Cycling Speed and Cadence Service. If enabled, notification of the Cycling Speead and Candence Measurement is performed when the application calls <a class="el" href="a00955.html#ga445c4e7578c68607b1573e175c20323f" title="Function for sending cycling speed and cadence measurement if notification has been enabled...">ble_cscs_measurement_send()</a>.</p>
-<p>To use this service, you need to provide the the supported features (<a class="el" href="a00956.html">Cycling Speed and Cadence Service feature bits</a>). If you choose to support Wheel revolution data (feature bit <a class="el" href="a00956.html#ga740497a07aa6d00eca58fa70ec71b8a4">BLE_CSCS_FEATURE_WHEEL_REV_BIT</a>), you then need to support the 'setting of cumulative value' operation by the supporting the Speed and Cadence Control Point (<a class="el" href="a00969.html">Speed and Cadence Control Point</a>) by setting the <a class="el" href="a00970.html#ga057b47633228ff5da51d9c924f346637">BLE_SRV_SC_CTRLPT_CUM_VAL_OP_SUPPORTED</a> bit of the ctrplt_supported_functions in the <a class="el" href="a00191.html">ble_cscs_init_t</a> structure. If you want to support the 'start autocalibration' control point feature, you need, after the <a class="el" href="a00969.html#ggab3b9b97d8227deb568c21630514be078a59069c22afe68d6277c1ac033f14f1c5">BLE_SC_CTRLPT_EVT_START_CALIBRATION</a> has been received and the auto calibration is finished, to call the <a class="el" href="a00969.html#gaabf81487a67f728731c0358384452618">ble_sc_ctrlpt_rsp_send</a> to indicate that the operation is finished and thus be able to receive new control point operations. If you want to support the 'sensor location' related operation, you need to provide a list of supported location in the <a class="el" href="a00191.html">ble_cscs_init_t</a> structure.</p>
-<dl class="section note"><dt>Note</dt><dd>The application or the service using this module must propagate BLE stack events to the Cycling Speead and Candence Service module by calling <a class="el" href="a00955.html#gabcc0bd0d90b6d40220468349ba190b98" title="Function for handling the Application&#39;s BLE Stack events.">ble_cscs_on_ble_evt()</a> from the from the <a class="el" href="a00948.html">SoftDevice Event Handler</a> function. This service will forward the event to the <a class="el" href="a00969.html">Speed and Cadence Control Point</a> module.</dd>
-<dd>
-Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profile qualification listings, this section of source code must not be modified. </dd></dl>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gabd8c3101d93c08174d2e0d2085e2f02b"></a>
+<p>WDT driver. </p>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga36e849053987e9e6f8587e83bb34497b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00955.html#gabd8c3101d93c08174d2e0d2085e2f02b">ble_cscs_evt_type_t</a></td>
+          <td class="memname">#define NRF_DRV_WDT_DEAFULT_CONFIG</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Cycling Speed and Cadence Service event type. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabd8c3101d93c08174d2e0d2085e2f02ba0a1409a9c76ef90b22cd76e03fde4b50"></a>BLE_CSCS_EVT_NOTIFICATION_ENABLED</em>&nbsp;</td><td class="fielddoc">
-<p>Cycling Speed and Cadence value notification enabled event. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggabd8c3101d93c08174d2e0d2085e2f02ba47805a8eed422166cb4d8415b91d13ee"></a>BLE_CSCS_EVT_NOTIFICATION_DISABLED</em>&nbsp;</td><td class="fielddoc">
-<p>Cycling Speed and Cadence value notification disabled event. </p>
-</td></tr>
-</table>
-
+<b>Value:</b><div class="fragment"><div class="line">{                                                  \</div>
+<div class="line">        .behaviour          = WDT_CONFIG_BEHAVIOUR,    \</div>
+<div class="line">        .reload_value       = WDT_CONFIG_RELOAD_VALUE, \</div>
+<div class="line">        .interrupt_priority = WDT_CONFIG_IRQ_PRIORITY, \</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga12394192a629326cb7f4cab0b59dff1e"></a>
+<a class="anchor" id="ga475227a9a2f65b8980300d3e6d8b8a4b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_cscs_init </td>
+          <td class="memname"><a class="el" href="a00992.html#gaf6c20fb483036617204f12e99e0b997b">ret_code_t</a> nrf_drv_wdt_channel_alloc </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00193.html">ble_cscs_t</a> *&#160;</td>
-          <td class="paramname"><em>p_cscs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a00943.html#gad49f6a91acfd021376d8fe9281768682">nrf_drv_wdt_channel_id</a> *&#160;</td>
+          <td class="paramname"><em>p_channel_id</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00191.html">ble_cscs_init_t</a> *&#160;</td>
-          <td class="paramname"><em>p_cscs_init</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for initializing the Cycling Speed and Cadence Service. </p>
+<p>This function allocate watchdog channel. </p>
+<dl class="section note"><dt>Note</dt><dd>This function can not be called after nrf_drv_wdt_start(void).</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_cscs</td><td>Cycling Speed and Cadence Service structure. This structure will have to be supplied by the application. It will be initialized by this function, and will later be used to identify this particular service instance. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_cscs_init</td><td>Information needed to initialize the service.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization of service, otherwise an error code. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga445c4e7578c68607b1573e175c20323f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_cscs_measurement_send </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00193.html">ble_cscs_t</a> *&#160;</td>
-          <td class="paramname"><em>p_cscs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00955.html#ga48ac37bca68e48cda3c1ef093398c9c6">ble_cscs_meas_t</a> *&#160;</td>
-          <td class="paramname"><em>p_measurement</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for sending cycling speed and cadence measurement if notification has been enabled. </p>
-<p>The application calls this function after having performed a Cycling Speed and Cadence Service measurement. If notification has been enabled, the measurement data is encoded and sent to the client.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_cscs</td><td>Cycling Speed and Cadence Service structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_measurement</td><td>Pointer to new cycling speed and cadence measurement.</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_channel_id</td><td>ID of granted channel.</td></tr>
   </table>
   </dd>
 </dl>
@@ -271,21 +202,83 @@ Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profil
 
 </div>
 </div>
-<a class="anchor" id="gabcc0bd0d90b6d40220468349ba190b98"></a>
+<a class="anchor" id="gaaa6ffc697e839a5ce32261e94f92677b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ble_cscs_on_ble_evt </td>
+          <td class="memname">void nrf_drv_wdt_channel_feed </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00193.html">ble_cscs_t</a> *&#160;</td>
-          <td class="paramname"><em>p_cscs</em>, </td>
+          <td class="paramtype"><a class="el" href="a00943.html#gad49f6a91acfd021376d8fe9281768682">nrf_drv_wdt_channel_id</a>&#160;</td>
+          <td class="paramname"><em>channel_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function feeds the invidual watchdog channel. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">channel_id</td><td>ID of watchdog channel. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga02ca485fa408fb07080ff65154195536"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_drv_wdt_enable </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function starts watchdog. </p>
+<dl class="section note"><dt>Note</dt><dd>After calling this function the watchdog is started, so the user needs to feed all allocated watchdog channels to avoid reset. At least one watchdog channel has to be allocated. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gab1615aa53ca7eda3a31a6c65ba266912"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_drv_wdt_feed </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function feeds the watchdog. </p>
+<p>Function feeds all allocated watchdog channels. </p>
+
+</div>
+</div>
+<a class="anchor" id="gab6789648906b2a8553a4c07e8859b040"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00992.html#gaf6c20fb483036617204f12e99e0b997b">ret_code_t</a> nrf_drv_wdt_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00443.html">nrf_drv_wdt_config_t</a> const *&#160;</td>
+          <td class="paramname"><em>p_config</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00213.html">ble_evt_t</a> *&#160;</td>
-          <td class="paramname"><em>p_ble_evt</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00955.html#ga11d96383fa892bd1e36756dd4a57f831">nrf_wdt_event_handler_t</a>&#160;</td>
+          <td class="paramname"><em>wdt_event_handler</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -295,12 +288,73 @@ Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profil
       </table>
 </div><div class="memdoc">
 
-<p>Function for handling the Application's BLE Stack events. </p>
-<p>Handles all events from the BLE stack of interest to the Cycling Speed and Cadence Service.</p>
+<p>This function initializes watchdog. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_cscs</td><td>Cycling Speed and Cadence Service structure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>Event received from the BLE stack. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_config</td><td>Initial configuration. Default configuration used if NULL. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">wdt_event_handler</td><td>specifies event handler provided by user.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Function asserts if wdt_event_handler is NULL.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on success, NRF_ERROR_INVALID_STATE if module ws already initialized. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga82e4afda3302ff0438ab7c11186795ae"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint32_t nrf_drv_wdt_ppi_event_addr </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00943.html#gadca2b19e3bb4c0b4e1b3372ade1112ee">nrf_wdt_event_t</a>&#160;</td>
+          <td class="paramname"><em>event</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for returning a requested event address for the wdt driver module. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>One of the peripheral events.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">Event</td><td>address </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga46ee74abe669c44a214c110933effeec"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint32_t nrf_drv_wdt_ppi_task_addr </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00943.html#ga4e5aac87484fc059e81f79023c6676a3">nrf_wdt_task_t</a>&#160;</td>
+          <td class="paramname"><em>task</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for returning a requested task address for the wdt driver module. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">task</td><td>One of the peripheral tasks.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">Task</td><td>address. </td></tr>
   </table>
   </dd>
 </dl>
@@ -312,7 +366,7 @@ Attention! To maintain compliance with Nordic Semiconductor ASA Bluetooth profil
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

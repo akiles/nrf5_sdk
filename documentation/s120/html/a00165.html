@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gatts_attr_md_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gap_opt_privacy_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,108 +106,66 @@ $(document).ready(function(){initNavTree('a00165.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gatts_attr_md_t Struct Reference<div class="ingroups"><a class="el" href="a00713.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_opt_privacy_t Struct Reference<div class="ingroups"><a class="el" href="a00935.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Attribute metadata.  
+<p>Custom Privacy Option.  
  <a href="a00165.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gatts.h&gt;</code></p>
+<p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a61a4ef92eba3a3b2b3f616557f6b74aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00105.html">ble_gap_conn_sec_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00165.html#a61a4ef92eba3a3b2b3f616557f6b74aa">read_perm</a></td></tr>
-<tr class="separator:a61a4ef92eba3a3b2b3f616557f6b74aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af04a8d72352f3c02dbef021b360f477f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00105.html">ble_gap_conn_sec_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00165.html#af04a8d72352f3c02dbef021b360f477f">write_perm</a></td></tr>
-<tr class="separator:af04a8d72352f3c02dbef021b360f477f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a921e414734cd784e0c3b7309d3a14f39"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00165.html#a921e414734cd784e0c3b7309d3a14f39">vlen</a>:1</td></tr>
-<tr class="separator:a921e414734cd784e0c3b7309d3a14f39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbd6b9b2d75565fc6fd66074a47308c7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00165.html#abbd6b9b2d75565fc6fd66074a47308c7">vloc</a>:2</td></tr>
-<tr class="separator:abbd6b9b2d75565fc6fd66074a47308c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d2f2743a556d382513a43607a08c057"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00165.html#a0d2f2743a556d382513a43607a08c057">rd_auth</a>:1</td></tr>
-<tr class="separator:a0d2f2743a556d382513a43607a08c057"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affcd971025cbaa9525c2ed9ff95d913c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00165.html#affcd971025cbaa9525c2ed9ff95d913c">wr_auth</a>:1</td></tr>
-<tr class="separator:affcd971025cbaa9525c2ed9ff95d913c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03cc47081b7b470ad239d1bf9055ea34"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00159.html">ble_gap_irk_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00165.html#a03cc47081b7b470ad239d1bf9055ea34">p_irk</a></td></tr>
+<tr class="separator:a03cc47081b7b470ad239d1bf9055ea34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac6428abddc0bf75fc092a553312661a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00165.html#aac6428abddc0bf75fc092a553312661a">interval_s</a></td></tr>
+<tr class="separator:aac6428abddc0bf75fc092a553312661a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Attribute metadata. </p>
+<div class="textblock"><p>Custom Privacy Option. </p>
+<pre class="fragment">   This structure is used with both @ref sd_ble_opt_set (as input) and with
+   @ref sd_ble_opt_get (as output).
+
+   Structure containing:
+   - A pointer to an IRK to set (if input), or a place to store a read IRK (if output).
+   - A private address refresh cycle.
+</pre><dl class="section note"><dt>Note</dt><dd>The specified address cycle interval is used when the address cycle mode is <a class="el" href="a00703.html#gad1b508bba948e89462e018fecc38b13f">BLE_GAP_ADDR_CYCLE_MODE_AUTO</a>. If 0 is given, the address will not be automatically refreshed at all. The default interval is <a class="el" href="a00934.html#ga09366f020307b3079d1038062b7e162d">BLE_GAP_DEFAULT_PRIVATE_ADDR_CYCLE_INTERVAL_S</a>.</dd>
+<dd>
+If the current address cycle mode is <a class="el" href="a00703.html#gad1b508bba948e89462e018fecc38b13f">BLE_GAP_ADDR_CYCLE_MODE_AUTO</a>, the address will immediately be refreshed when a custom privacy option is set. A new address can be generated manually by calling <a class="el" href="a00936.html#gaaf0deb48ed35d1e6ede6222dd72fe12c">sd_ble_gap_address_set</a> with the same type again.</dd>
+<dd>
+If the IRK is updated, the new IRK becomes the one to be distributed in all bonding procedures performed after <a class="el" href="a00932.html#ga511d431bc3d9ccf9bef09ad20cbf855a">sd_ble_opt_set</a> returns.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname"><a class="el" href="a00745.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Set or read successfully. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00745.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>The pointer to IRK storage is invalid. </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a0d2f2743a556d382513a43607a08c057"></a>
+<a class="anchor" id="aac6428abddc0bf75fc092a553312661a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gatts_attr_md_t::rd_auth</td>
+          <td class="memname">uint16_t ble_gap_opt_privacy_t::interval_s</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read Authorization and value will be requested from the application on every read operation. </p>
+<p>When input: Custom private address cycle interval in seconds. When output: The current private address cycle interval. </p>
 
 </div>
 </div>
-<a class="anchor" id="a61a4ef92eba3a3b2b3f616557f6b74aa"></a>
+<a class="anchor" id="a03cc47081b7b470ad239d1bf9055ea34"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00105.html">ble_gap_conn_sec_mode_t</a> ble_gatts_attr_md_t::read_perm</td>
+          <td class="memname"><a class="el" href="a00159.html">ble_gap_irk_t</a>* ble_gap_opt_privacy_t::p_irk</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Read permissions. </p>
-
-</div>
-</div>
-<a class="anchor" id="a921e414734cd784e0c3b7309d3a14f39"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gatts_attr_md_t::vlen</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Variable length attribute. </p>
-
-</div>
-</div>
-<a class="anchor" id="abbd6b9b2d75565fc6fd66074a47308c7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gatts_attr_md_t::vloc</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Value location, see <a class="el" href="a00551.html">GATT Value Locations</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="affcd971025cbaa9525c2ed9ff95d913c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gatts_attr_md_t::wr_auth</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Write Authorization will be requested from the application on every Write Request operation (but not Write Command). </p>
-
-</div>
-</div>
-<a class="anchor" id="af04a8d72352f3c02dbef021b360f477f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00105.html">ble_gap_conn_sec_mode_t</a> ble_gatts_attr_md_t::write_perm</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Write permissions. </p>
+<p>When input: Pointer to custom IRK, or NULL to use/reset to the device's default IRK. When output: Pointer to where the current IRK is to be stored, or NULL to not read out the IRK. </p>
 
 </div>
 </div>
@@ -216,8 +174,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00165.html">ble_gatts_attr_md_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00165.html">ble_gap_opt_privacy_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

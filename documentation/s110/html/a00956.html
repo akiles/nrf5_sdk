@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Cycling Speed and Cadence Service feature bits</title>
+<title>nRF51 SDK - S110 SoftDevice: Persistent Storage Interface</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,68 +97,36 @@ $(document).ready(function(){initNavTree('a00956.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Cycling Speed and Cadence Service feature bits<div class="ingroups"><a class="el" href="a00955.html">Cycling Speed and Cadence Service</a></div></div>  </div>
+<div class="title">Persistent Storage Interface<div class="ingroups"><a class="el" href="a01278.html">SDK Common Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Abstracted flash interface.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga740497a07aa6d00eca58fa70ec71b8a4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00956.html#ga740497a07aa6d00eca58fa70ec71b8a4">BLE_CSCS_FEATURE_WHEEL_REV_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 0)</td></tr>
-<tr class="separator:ga740497a07aa6d00eca58fa70ec71b8a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae8a3b12ea932fb3d6d9bfc13bfb1ed38"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00956.html#gae8a3b12ea932fb3d6d9bfc13bfb1ed38">BLE_CSCS_FEATURE_CRANK_REV_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 1)</td></tr>
-<tr class="separator:gae8a3b12ea932fb3d6d9bfc13bfb1ed38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaf07908111823b6edcc9f09c3b00c9af"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00956.html#gaaf07908111823b6edcc9f09c3b00c9af">BLE_CSCS_FEATURE_MULTIPLE_SENSORS_BIT</a>&#160;&#160;&#160;(0x01 &lt;&lt; 2)</td></tr>
-<tr class="separator:gaaf07908111823b6edcc9f09c3b00c9af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00957"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00957.html">Persistent Storage Access Operation Codes</a></td></tr>
+<tr class="memdesc:a00957"><td class="mdescLeft">&#160;</td><td class="mdescRight">Persistent Storage Access Operation Codes. These are used to report any error during a persistent storage access operation or any general error that may occur in the interface. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00958"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00958.html">Persistent Memory Interface Data Types</a></td></tr>
+<tr class="memdesc:a00958"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data Types needed for interfacing with persistent memory. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00959"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00959.html">Persistent Storage Access Routines</a></td></tr>
+<tr class="memdesc:a00959"><td class="mdescLeft">&#160;</td><td class="mdescRight">Functions/Interface SDK modules use to persistently store data. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gae8a3b12ea932fb3d6d9bfc13bfb1ed38"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_CSCS_FEATURE_CRANK_REV_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 1)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Crank Revolution Data Supported bit. </p>
-
-</div>
-</div>
-<a class="anchor" id="gaaf07908111823b6edcc9f09c3b00c9af"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_CSCS_FEATURE_MULTIPLE_SENSORS_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 2)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Multiple Sensor Locations Supported bit. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga740497a07aa6d00eca58fa70ec71b8a4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BLE_CSCS_FEATURE_WHEEL_REV_BIT&#160;&#160;&#160;(0x01 &lt;&lt; 0)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Wheel Revolution Data Supported bit. </p>
-
-</div>
-</div>
+<p>Abstracted flash interface. </p>
+<p>In order to ensure that the SDK and application be moved to alternate persistent storage options other than the default provided with NRF solution, an abstracted interface is provided by the module to ensure SDK modules and application can be ported to alternate option with ease. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

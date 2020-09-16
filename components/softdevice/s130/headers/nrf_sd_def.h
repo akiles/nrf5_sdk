@@ -15,9 +15,10 @@
 
 #include <stdint.h>
 
-#define NRF_PPI_RESTRICTED              1                        /**< 1 if PPI peripheral is restricted, 0 otherwise. */
-#define NRF_PPI_ALL_APP_CHANNELS_MASK   ((uint32_t)0x000000FFuL) /**< All PPI channels available to the application. */
-#define NRF_PPI_PROG_APP_CHANNELS_MASK  ((uint32_t)0x000000FFuL) /**< Programmable PPI channels available to the application. */
-#define NRF_PPI_ALL_APP_GROUPS_MASK     ((uint32_t)0x00000003uL) /**< All PPI groups available to the application. */
+#define SD_PPI_RESTRICTED               1            /**< 1 if PPI peripheral is restricted, 0 otherwise. */
+#define SD_PPI_CHANNELS_USED       		0xFFF0FF00uL /**< PPI channels utilized by SotfDevice (not available to th spplication). */
+#define SD_PPI_GROUPS_USED              0x0000000CuL /**< PPI groups utilized by SoftDevice (not available to the application). */
+#define SD_TIMERS_USED                  0x00000001uL /**< Timers used by SoftDevice. */
+#define SD_SWI_USED                     0x0000003CuL /**< Software interrupts used by SoftDevice */
 
 #endif /* NRF_SD_DEF_H__ */

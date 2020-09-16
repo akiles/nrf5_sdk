@@ -1,6 +1,6 @@
 var a00672 =
 [
-    [ "dm_security_setup_req", "a00672.html#ga483e7f5db6fdaa2178ad175bbdb535b0", null ],
-    [ "dm_security_status_req", "a00672.html#ga94876c139d64ad665a445bfb7ee37f13", null ],
-    [ "dm_whitelist_create", "a00672.html#gac5af9f76a8de0285c8a4d5c05dfa72e0", null ]
+    [ "nrf51_sdk_mem_alloc", "a00672.html#gae56ae5e5fbdc399e4e53f80162d6c849", null ],
+    [ "nrf51_sdk_mem_free", "a00672.html#ga396c54dcbeec7caf87484dd451ba5245", null ],
+    [ "nrf51_sdk_mem_init", "a00672.html#ga546904b981eb4b1de1d53afb357ab71f", null ]
 ];

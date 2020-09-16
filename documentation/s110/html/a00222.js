@@ -1,5 +1,4 @@
 var a00222 =
 [
-    [ "encr_key_size", "a00222.html#abca3beb1304d60fd03f5ae098495dd6f", null ],
-    [ "sec_mode", "a00222.html#ada618e26f99059e7ccbe5be9f5d1049d", null ]
+    [ "evt_type", "a00222.html#a6efeb9489be1517dba8b60d09a51583a", null ]
 ];

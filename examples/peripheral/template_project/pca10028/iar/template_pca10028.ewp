@@ -168,7 +168,7 @@
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
-		      <name>CCGuardCalls</name>
+          <name>CCGuardCalls</name>
           <state>1</state>
         </option>
         <option>
@@ -240,7 +240,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00000000</state>
+          <state>11111110</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -310,8 +310,10 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\..</state>
           <state>$PROJ_DIR$\..\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\libraries\util</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\device</state>
           <state>$PROJ_DIR$\..\..\..\..\..\components\toolchain</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</state>
           <state>$TOOLKIT_DIR$\CMSIS\Include</state>
         </option>
         <option>
@@ -337,11 +339,11 @@
         <option>
           <name>CCOptStrategy</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>1</state>
+          <state>3</state>
         </option>
         <option>
           <name>CompilerMisraRules98</name>
@@ -412,7 +414,7 @@
         <option>
           <name>CCOptStrategySlave</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -469,7 +471,7 @@
           <state>0</state>
         </option>
         <option>
-		  <name>ADefines</name>
+      <name>ADefines</name>
           <state>BSP_DEFINES_ONLY</state>
           <state>BOARD_PCA10028</state>
           <state>NRF51</state>
@@ -692,7 +694,7 @@
         </option>
         <option>
           <name>IlinkMapFile</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IlinkLogFile</name>
@@ -720,7 +722,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-		  <state>$PROJ_DIR$\template_iar_nrf51.icf</state>
+      <state>$PROJ_DIR$\template_iar_nrf51.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -965,6 +967,12 @@
   <name>Application</name>
     <file>
     <name>$PROJ_DIR$\..\..\main.c</name>
+    </file>
+  </group>
+  <group>
+  <name>nRF_Libraries</name>
+    <file>
+    <name>$PROJ_DIR$\..\..\..\..\..\components\libraries\util\app_error.c</name>
     </file>
   </group>
   <group>

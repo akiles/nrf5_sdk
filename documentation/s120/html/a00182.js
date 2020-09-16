@@ -1,4 +1,5 @@
 var a00182 =
 [
-    [ "gatt_status", "a00182.html#a1e360fe54c33885b6e23e57c483f6959", null ]
+    [ "len", "a00182.html#a6ece59636f724d7a7759d4bc11cec8d9", null ],
+    [ "values", "a00182.html#ac586dcb02b8f378127157ee8c45abea9", null ]
 ];

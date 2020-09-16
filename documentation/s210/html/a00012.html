@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Timer</title>
+<title>nRF51 SDK - S210 SoftDevice: SPI Slave</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,20 +97,27 @@ $(document).ready(function(){initNavTree('a00012.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Timer </div>  </div>
+<div class="title">SPI Slave </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The timer driver includes two layers: the hardware abstraction layer (HAL) and the driver layer (DRV).</p>
-<p>The hardware abstraction layer provides basic APIs for accessing the registers of the timer. All functions in this layer are implemented as inline functions. See the API documentation for the <a class="el" href="a00288.html">Timer HAL</a> for details.</p>
-<p>The driver layer provides support for a multi-instance timer and APIs on a higher level than the HAL. See the API documentation for the <a class="el" href="a00291.html">Timer driver</a> for details.</p>
-<p>The <a class="el" href="a00048.html">Timer Example</a> provides sample code that you can use to quickly get started. </p>
-</div></div><!-- contents -->
+<div class="textblock"><dl class="section user"><dt>Features supported</dt><dd><ul>
+<li>Full duplex communication through SPI.</li>
+<li>SPI slave EasyDMA functionality for reading and writing from and to the RAM.</li>
+<li>SPI1_TWI1_IRQHandler used as IRQ handler.</li>
+</ul>
+</dd></dl>
+<p>The internal design of the SPI slave driver is illustrated by the statemachine below.</p>
+<div class="image">
+<img src="spi_slave_driver_sm.png" alt="spi_slave_driver_sm.png"/>
+<div class="caption">
+SPI slave driver statemachine</div></div>
+ </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00002.html">Hardware Drivers</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:37:16 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: General Events</title>
+<title>nRF51 SDK - S120 SoftDevice: PPI HAL and driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,58 +97,33 @@ $(document).ready(function(){initNavTree('a00666.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">General Events<div class="ingroups"><a class="el" href="a00665.html">Device Manager Events</a></div></div>  </div>
+<div class="title">PPI HAL and driver<div class="ingroups"><a class="el" href="a00924.html">Peripheral Drivers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>General or miscellaneous events.  
+<p>Programmable Peripheral Interconnect (PPI) APIs.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gad038033184e5745ddd4fef4d52bfcea4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00666.html#gad038033184e5745ddd4fef4d52bfcea4">DM_EVT_RFU</a>&#160;&#160;&#160;0x00</td></tr>
-<tr class="separator:gad038033184e5745ddd4fef4d52bfcea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga14b9e8a4e4dd9d6223d414bf25762f7b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00666.html#ga14b9e8a4e4dd9d6223d414bf25762f7b">DM_EVT_ERROR</a>&#160;&#160;&#160;0x01</td></tr>
-<tr class="separator:ga14b9e8a4e4dd9d6223d414bf25762f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00631"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00631.html">PPI HAL</a></td></tr>
+<tr class="memdesc:a00631"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardware abstraction layer for setting up Programmable Peripheral Interconnect (PPI) channels. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00667"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00667.html">PPI driver</a></td></tr>
+<tr class="memdesc:a00667"><td class="mdescLeft">&#160;</td><td class="mdescRight">Programmable Peripheral Interconnect (PPI) driver. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>General or miscellaneous events. </p>
-<p>This category of events are general events not pertaining to a peer or context. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga14b9e8a4e4dd9d6223d414bf25762f7b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_ERROR&#160;&#160;&#160;0x01</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Device Manager Event Error. </p>
-
-</div>
-</div>
-<a class="anchor" id="gad038033184e5745ddd4fef4d52bfcea4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_RFU&#160;&#160;&#160;0x00</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Reserved for future use, is never notified. </p>
-
-</div>
-</div>
+<p>Programmable Peripheral Interconnect (PPI) APIs. </p>
+<p>The PPI HAL provides basic APIs for accessing the registers of the PPI. The PPI driver provides APIs on a higher level. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:46 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

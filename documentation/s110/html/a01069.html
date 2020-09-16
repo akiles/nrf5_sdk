@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Types</title>
+<title>nRF51 SDK - S110 SoftDevice: GAP Peripheral Pairing: Just Works</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -96,55 +96,20 @@ $(document).ready(function(){initNavTree('a01069.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">Types<div class="ingroups"><a class="el" href="a00868.html">SoftDevice Manager API</a></div></div>  </div>
+<div class="title">GAP Peripheral Pairing: Just Works<div class="ingroups"><a class="el" href="a01063.html">Message Sequence Charts</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gabfecdd0b916a4022bd5688d4f842c473"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabfecdd0b916a4022bd5688d4f842c473"></a>
-typedef uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01069.html#gabfecdd0b916a4022bd5688d4f842c473">nrf_clock_lfclksrc_t</a></td></tr>
-<tr class="memdesc:gabfecdd0b916a4022bd5688d4f842c473"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type representing lfclk oscillator source. <br/></td></tr>
-<tr class="separator:gabfecdd0b916a4022bd5688d4f842c473"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaddfb569a9b86648e642ed0d7e3a83034"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01069.html#gaddfb569a9b86648e642ed0d7e3a83034">softdevice_assertion_handler_t</a> )(uint32_t pc, uint16_t line_number, const uint8_t *p_file_name)</td></tr>
-<tr class="memdesc:gaddfb569a9b86648e642ed0d7e3a83034"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoftDevice Assertion Handler type.  <a href="#gaddfb569a9b86648e642ed0d7e3a83034">More...</a><br/></td></tr>
-<tr class="separator:gaddfb569a9b86648e642ed0d7e3a83034"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="gaddfb569a9b86648e642ed0d7e3a83034"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef void(* softdevice_assertion_handler_t)(uint32_t pc, uint16_t line_number, const uint8_t *p_file_name)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>SoftDevice Assertion Handler type. </p>
-<p>When an unexpected error occurs within the SoftDevice it will call the SoftDevice assertion handler callback. The protocol stack will be in an undefined state when this happens and the only way to recover will be to perform a reset, using e.g. CMSIS NVIC_SystemReset().</p>
-<dl class="section note"><dt>Note</dt><dd>This callback is executed in HardFault context, thus SVC functions cannot be called from the SoftDevice assert callback.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pc</td><td>The program counter of the failed assert. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">line_number</td><td>Line number where the assert failed. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">file_name</td><td>File name where the assert failed. </td></tr>
-  </table>
-  </dd>
-</dl>
-
+<div align="center">
+<img src="msc_inline_mscgraph_9.png" alt="msc_inline_mscgraph_9" border="0" usemap="#msc_inline_mscgraph_9.map"/>
+<map name="msc_inline_mscgraph_9.map" id="msc_inline_mscgraph_9.map"></map>
 </div>
-</div>
-</div><!-- contents -->
+ </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:30 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

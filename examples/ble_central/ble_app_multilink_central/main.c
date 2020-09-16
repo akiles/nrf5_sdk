@@ -383,9 +383,13 @@ static void ble_stack_init(void)
     // Enable BLE stack.
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-
+#ifdef S130
+    ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
+#endif
     ble_enable_params.gatts_enable_params.service_changed = false;
+#ifdef S120
     ble_enable_params.gap_enable_params.role              = BLE_GAP_ROLE_CENTRAL;
+#endif
 
     err_code = sd_ble_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
@@ -497,7 +501,7 @@ int main(void)
     // Initialization of various modules.
     app_trace_init();
     LEDS_CONFIGURE(LEDS_MASK);
-	  LEDS_OFF(LEDS_MASK);
+    LEDS_OFF(LEDS_MASK);
     buttons_init();
     ble_stack_init();
     client_handling_init();

@@ -1,9 +1,7 @@
 var a00136 =
 [
-    [ "active", "a00136.html#a7f3eda85d15916ad467a81faba18f076", null ],
-    [ "interval", "a00136.html#a086b92604899521d85052d48d8552b7d", null ],
-    [ "p_whitelist", "a00136.html#a2c611522e99e67bd89d484bc2ad96463", null ],
-    [ "selective", "a00136.html#abbe25b20112d8859f9ceff46b5711651", null ],
-    [ "timeout", "a00136.html#a1ddedc25ebdb29351a7cbd0039ce6ed8", null ],
-    [ "window", "a00136.html#a89a91dffe2c1b7edc26567c932a491b7", null ]
+    [ "conn_sup_timeout", "a00136.html#ab644e629af7eb4915b0f3a93f682f7ae", null ],
+    [ "max_conn_interval", "a00136.html#abd7a6e16a723de1d779afadae3f3113e", null ],
+    [ "min_conn_interval", "a00136.html#a4d1975f7d25263004c405e0321fbae34", null ],
+    [ "slave_latency", "a00136.html#aa5caf55715aaac33f56cc996f91a92cc", null ]
 ];

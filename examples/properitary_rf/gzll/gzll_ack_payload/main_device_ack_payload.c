@@ -97,7 +97,11 @@ int main()
     while(1)
     {
         // Error handling
-        debug_led_output = ((uint8_t)tx_success << 4) | ((uint8_t)pop_ok << 3) | ((uint8_t)push_ok << 2) | ((uint8_t)enable_ok << 1) | (uint8_t)init_ok;                
+        debug_led_output = ((uint8_t)tx_success << 4);
+        debug_led_output |= ((uint8_t)pop_ok << 3);
+        debug_led_output |= ((uint8_t)push_ok << 2);
+        debug_led_output |= ((uint8_t)enable_ok << 1);
+        debug_led_output |= (uint8_t)init_ok;            
         
         // If an error has occured
         if(debug_led_output != 0x1F)

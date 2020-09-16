@@ -1,10 +1,10 @@
 var a00213 =
 [
-    [ "common_evt", "a00213.html#a65014fa31bf6c86c113ef47dc929a755", null ],
-    [ "evt", "a00213.html#aef8699c52739460f3052387e62eeacc8", null ],
-    [ "gap_evt", "a00213.html#a67ca1f9db570d1c2f196c0a316151af5", null ],
-    [ "gattc_evt", "a00213.html#a2bdcb3c197239b4e5957d89bb0f26161", null ],
-    [ "gatts_evt", "a00213.html#aea997556a147ad5541998f13699e27c1", null ],
-    [ "header", "a00213.html#a31f5fb5f33b8020c1b91639d048a6efa", null ],
-    [ "l2cap_evt", "a00213.html#a615ab3df54ef7363a90f915d6440ce1a", null ]
+    [ "battery_level_handles", "a00213.html#ade3d3767c6bec8d2c8fc37ed8303d4fb", null ],
+    [ "battery_level_last", "a00213.html#a90db9b31ace864a1952fd520957cb831", null ],
+    [ "conn_handle", "a00213.html#a4906d1aa3c702704f4392d90cd8102f0", null ],
+    [ "evt_handler", "a00213.html#a84827e57e33bae7cf628c4c5826b1ac4", null ],
+    [ "is_notification_supported", "a00213.html#a877690be6248d047f102fc238ab0c527", null ],
+    [ "report_ref_handle", "a00213.html#a70d124cbed946045d133aa76acd9581a", null ],
+    [ "service_handle", "a00213.html#af8c61a4fe0b938cc1b47989d67a20c4c", null ]
 ];

@@ -14,7 +14,7 @@
         <TargetCommonOption>
           <Device>nRF51422_xxAC</Device>
           <Vendor>Nordic Semiconductor</Vendor>
-          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.7.1.0</PackID>
+          <PackID>NordicSemiconductor.nRF_DeviceFamilyPack.7.2.1</PackID>
           <PackURL>http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/</PackURL>
           <Cpu>IROM(0x00000000,0x40000) IRAM(0x20000000,0x8000) CPUTYPE("Cortex-M0") CLOCK(16000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -358,9 +358,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define> ANT_STACK_SUPPORT_REQD TRACE_UART TRACE_CALIBRATION TRACE_DATA_PAGE S210 BOARD_PCA10028 NRF51 SOFTDEVICE_PRESENT</Define>
+              <Define> ANT_STACK_SUPPORT_REQD TRACE_UART TRACE_CALIBRATION TRACE_DATA_PAGE S210 BOARD_PCA10028 SWI_DISABLE0 NRF51 SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\include;..\..\..\..\..\..\components\softdevice\s210\headers;..\..\..\..\..\bsp;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\..\components\libraries\gpiote</IncludePath>
+              <IncludePath>..\..\config;..\..\include;..\..\..\..\..\..\components\softdevice\s210\headers;..\..\..\..\..\bsp;..\..\..\..\..\..\components\drivers_nrf\uart;..\..\..\..\..\..\components\libraries\timer;..\..\..\..\..\..\components\libraries\button;..\..\..\..\..\..\components\device;..\..\..\..\..\..\components\toolchain;..\..\..\..\..\..\components\libraries\util;..\..\..\..\..\..\components\libraries\fifo;..\..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\..\components\drivers_nrf\config;..\..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\..\components\drivers_nrf\hal</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -374,7 +374,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>        </Define>
+              <Define>         </Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -460,6 +460,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\drivers_nrf\hal\nrf_delay.c</FilePath>
             </File>
+            <File>
+              <FileName>nrf_drv_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrf_drv_gpiote.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -481,14 +491,14 @@
               <FilePath>..\..\..\..\..\..\components\libraries\fifo\app_fifo.c</FilePath>
             </File>
             <File>
-              <FileName>app_gpiote.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\..\components\libraries\gpiote\app_gpiote.c</FilePath>
-            </File>
-            <File>
               <FileName>app_timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\..\components\libraries\timer\app_timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>nrf_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\..\components\libraries\util\nrf_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -515,7 +525,7 @@
         <targetInfo name="nrf51422_xxac"/>
       </targetInfos>
     </package>
-    <package name="nRF_DeviceFamilyPack" schemaVersion="1.0" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="7.1.0">
+    <package name="nRF_DeviceFamilyPack" schemaVersion="1.0" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="7.2.1">
       <targetInfos>
         <targetInfo name="nrf51422_xxac"/>
       </targetInfos>
@@ -529,8 +539,8 @@
         <targetInfo name="nrf51422_xxac"/>
       </targetInfos>
     </component>
-    <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="7.1.0" condition="nRF51 Series CMSIS Device">
-      <package name="nRF_DeviceFamilyPack" schemaVersion="1.0" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="7.1.0"/>
+    <component Cclass="Device" Cgroup="Startup" Cvendor="NordicSemiconductor" Cversion="7.2.1" condition="nRF51 Series CMSIS Device">
+      <package name="nRF_DeviceFamilyPack" schemaVersion="1.0" url="http://developer.nordicsemi.com/nRF51_SDK/pieces/nRF_DeviceFamilyPack/" vendor="NordicSemiconductor" version="7.2.1"/>
       <targetInfos>
         <targetInfo name="nrf51422_xxac"/>
       </targetInfos>

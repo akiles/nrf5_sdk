@@ -1,7 +1,5 @@
 var a00423 =
 [
-    [ "data", "a00423.html#a800d239d1224cc1226201c6b9a635713", null ],
-    [ "data_count", "a00423.html#a370358835ed2aa53bcc515894b13eb87", null ],
-    [ "evt_type", "a00423.html#a622197dded7bfa292535944e6870c5f7", null ],
-    [ "type", "a00423.html#a6d7cb2ed26034e0c1cb5dcb0022a612a", null ]
+    [ "cmd_type", "a00423.html#a4955a964032009d6b9b5cc167e758d32", null ],
+    [ "tx_done_result", "a00423.html#ac9e1ac1b373abcbd4e761600473340bc", null ]
 ];

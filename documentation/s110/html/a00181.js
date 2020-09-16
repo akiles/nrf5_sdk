@@ -1,7 +1,7 @@
 var a00181 =
 [
-    [ "bps_feature_attr_md", "a00181.html#aa811a90c7dd0b8bea4434fe2ef2c4ede", null ],
-    [ "bps_meas_attr_md", "a00181.html#a977afca322fd5a03271e0fa35300a164", null ],
-    [ "evt_handler", "a00181.html#a22943d0794c7a162398ddb54872d1751", null ],
-    [ "feature", "a00181.html#a811bba9e34ca00cad260b8d50aadbe5f", null ]
+    [ "num_of_channels", "a00181.html#a15cb4361b2aa835dbf3860ba2d4b3603", null ],
+    [ "period_us", "a00181.html#a4ee3248fdfda7ba386b94be56f4913d5", null ],
+    [ "pin_polarity", "a00181.html#a83466b8f4a8b52a58772c3d2e712fd02", null ],
+    [ "pins", "a00181.html#a06422abddaa496b9168f334df42f67d0", null ]
 ];

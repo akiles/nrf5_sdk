@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_hrs_c_evt_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gattc_evt_hvx_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,52 +106,78 @@ $(document).ready(function(){initNavTree('a00184.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_hrs_c_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00656.html">Structures</a></div></div>  </div>
+<div class="title">ble_gattc_evt_hvx_t Struct Reference<div class="ingroups"><a class="el" href="a00942.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Heart Rate Event structure.  
+<p>Event structure for <a class="el" href="a00940.html#ggafd9b8b42eeb832d688e33f4561f97efca0f71b4e016b2049dfbd74fa2e46b9cd3">BLE_GATTC_EVT_HVX</a>.  
  <a href="a00184.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_hrs_c.h&gt;</code></p>
+<p><code>#include &lt;ble_gattc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ab349bf82213ea8f4ae3b547b2a3a4f5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00655.html#ga1cb65f3c0928fd75d0e186c28fca8c0e">ble_hrs_c_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00184.html#ab349bf82213ea8f4ae3b547b2a3a4f5f">evt_type</a></td></tr>
-<tr class="separator:ab349bf82213ea8f4ae3b547b2a3a4f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acdf52b6eeeb0a7856b16cfd6d1aa2e3f"><td class="memItemLeft" ><a class="anchor" id="acdf52b6eeeb0a7856b16cfd6d1aa2e3f"></a>
-union {</td></tr>
-<tr class="memitem:a1a6dff4173f29160c5cdd58a75788ff7"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00183.html">ble_hrm_t</a>&#160;&#160;&#160;<a class="el" href="a00184.html#abbddddc557dc3729730e6ccd02041fa9">hrm</a></td></tr>
-<tr class="separator:a1a6dff4173f29160c5cdd58a75788ff7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acdf52b6eeeb0a7856b16cfd6d1aa2e3f"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:acdf52b6eeeb0a7856b16cfd6d1aa2e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96ee6ce1546af608cf4b3b9d81cd7f09"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00184.html#a96ee6ce1546af608cf4b3b9d81cd7f09">handle</a></td></tr>
+<tr class="separator:a96ee6ce1546af608cf4b3b9d81cd7f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1de2368e40b7e4c7eab1fcb770605f2"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00184.html#ac1de2368e40b7e4c7eab1fcb770605f2">type</a></td></tr>
+<tr class="separator:ac1de2368e40b7e4c7eab1fcb770605f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a173be268109e2223c485a9a10a6a9ba3"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00184.html#a173be268109e2223c485a9a10a6a9ba3">len</a></td></tr>
+<tr class="separator:a173be268109e2223c485a9a10a6a9ba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af239b9ba3cff6d1fc678f3f71711a2f3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00184.html#af239b9ba3cff6d1fc678f3f71711a2f3">data</a> [1]</td></tr>
+<tr class="separator:af239b9ba3cff6d1fc678f3f71711a2f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Heart Rate Event structure. </p>
+<div class="textblock"><p>Event structure for <a class="el" href="a00940.html#ggafd9b8b42eeb832d688e33f4561f97efca0f71b4e016b2049dfbd74fa2e46b9cd3">BLE_GATTC_EVT_HVX</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ab349bf82213ea8f4ae3b547b2a3a4f5f"></a>
+<a class="anchor" id="af239b9ba3cff6d1fc678f3f71711a2f3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00655.html#ga1cb65f3c0928fd75d0e186c28fca8c0e">ble_hrs_c_evt_type_t</a> ble_hrs_c_evt_t::evt_type</td>
+          <td class="memname">uint8_t ble_gattc_evt_hvx_t::data[1]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of the event. </p>
+<p>Attribute data, variable length. </p>
 
 </div>
 </div>
-<a class="anchor" id="abbddddc557dc3729730e6ccd02041fa9"></a>
+<a class="anchor" id="a96ee6ce1546af608cf4b3b9d81cd7f09"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00183.html">ble_hrm_t</a> ble_hrs_c_evt_t::hrm</td>
+          <td class="memname">uint16_t ble_gattc_evt_hvx_t::handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Heart rate measurement received. This will be filled if the evt_type is <a class="el" href="a00655.html#gga1cb65f3c0928fd75d0e186c28fca8c0ea8c95bb250aab94f4b82257bdeadfa673">BLE_HRS_C_EVT_HRM_NOTIFICATION</a>. </p>
+<p>Handle to which the HVx operation applies. </p>
+
+</div>
+</div>
+<a class="anchor" id="a173be268109e2223c485a9a10a6a9ba3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_gattc_evt_hvx_t::len</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Attribute data length. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac1de2368e40b7e4c7eab1fcb770605f2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_gattc_evt_hvx_t::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indication or Notification, see <a class="el" href="a00724.html">GATT Handle Value operations</a>. </p>
 
 </div>
 </div>
@@ -160,8 +186,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00184.html">ble_hrs_c_evt_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00184.html">ble_gattc_evt_hvx_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Radio Receiver Example</title>
+<title>nRF51 SDK - S120 SoftDevice: PPI Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,19 +97,30 @@ $(document).ready(function(){initNavTree('a00038.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Radio Receiver Example </div>  </div>
+<div class="title">PPI Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Radio Receiver Example shows how to receive data with the NRF_RADIO peripheral. The receiver is configured to continuously receive packets from the corresponding transmitter project. The packet is printed in a COM listener (for example PUTTY) using UART.</p>
-<p>The application first enables the 16 MHz crystal oscillator and configures the <a class="el" href="a00510.html">Board Support Package</a> and the radio. Next, it enables the radio, waits for an event to be ready, and starts listening. When a packet is received and the Cyclic Redundancy Check (CRC) matches, the value is updated. Radio and events are then disabled.</p>
-<p>The name of the example for PCA10028 is <b>receiver_pca10028</b>, and for PCA10031 it is <b>receiver_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\radio\receiver</code> </p>
-<h1><a class="anchor" id="nrf_dev_radio_rx_example_testing"></a>
+<div class="textblock"><p>The Programmable Peripheral Interconnect (PPI) Example uses the PPI module to communicate between three timers.</p>
+<p>Timer 0 is triggered by the main program loop every 100 milliseconds. The counter value of timer 0 is passed through the UART port and can be observed with a COM listener like, for example, PUTTY.</p>
+<p>Timer 1 generates events every even second, thus at 2, 4, 6, 8, ... seconds. These events trigger a stop task for timer 0. Timer 2 generates events every odd second, thus at 1, 3, 5, 7, ... seconds. These events trigger a start task for timer 0, which is running in counter mode. The start and stop tasks are triggered using PPI.</p>
+<p>When the application starts, the counter value of timer 0 increases every 100 milliseconds for the first second. Then, timer 2 creates an event that is passed through PPI, generating a stop task for timer 0. Therefore, timer 0 stops. Even though the main program loop triggers timer 0 to increment, its value does not change because the counter is stopped. After one second, timer 1 creates an event that is passed through PPI, generating a start task for timer 0. Timer 0 starts again, and the counter value increases again every 100 milliseconds until it is stopped again by timer 2 after one second.</p>
+<div class="image">
+<img src="ppi_example.png" alt="ppi_example.png"/>
+</div>
+<p>The application starts with configuring the three timers:</p>
+<ul>
+<li>Timer 0 is configured in counter mode.</li>
+<li>Timer 1 is configured to generate events on even numbered seconds.</li>
+<li>Timer 2 is configured to generate events on odd numbered seconds.</li>
+</ul>
+<p>The PPI is configured to make timer 0 stop and start when timer 1 and timer 2, respectively, generate events. The main loop increments timer 0 and prints the count every 100 milliseconds.</p>
+<p>The name of the example is <b>ppi_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\peripheral\ppi</code> </p>
+<h1><a class="anchor" id="ppi_example_testing"></a>
 Testing</h1>
-<p>Test the Radio Receiver Example application by performing the following steps:</p>
+<p>Test the PPI Example application by performing the following steps:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Program the Radio Transmitter Example application to another board.</li>
-<li>Start a COM listener like PUTTY and connect to the used COM port of the receiver board with the following UART settings:<ul>
+<li>Start a COM listener like PUTTY and connect to the used COM port with the following UART settings:<ul>
 <li>
 Baud rate: 38.400</li>
 <li>
@@ -122,15 +133,15 @@ No parity</li>
 HW flow control: RTS/CTS</li>
 </ul>
 </li>
-<li>Press buttons on the transmitter board and observe the PUTTY terminal connected to the receiver board. </li>
+<li>Check the output and observe that the counting stops and starts every second. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00027.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:52 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00032.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:45 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

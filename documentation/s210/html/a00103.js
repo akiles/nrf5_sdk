@@ -1,7 +1,7 @@
 var a00103 =
 [
-    [ "data", "a00103.html#a800d239d1224cc1226201c6b9a635713", null ],
-    [ "data_count", "a00103.html#a370358835ed2aa53bcc515894b13eb87", null ],
-    [ "evt_type", "a00103.html#a622197dded7bfa292535944e6870c5f7", null ],
-    [ "type", "a00103.html#a6d7cb2ed26034e0c1cb5dcb0022a612a", null ]
+    [ "hfclk", "a00103.html#a5d6e28106247179b7cde2e289f0f9c39", null ],
+    [ "length_us", "a00103.html#a0495f3c5f7e2fd20663af081ca7e4c0b", null ],
+    [ "priority", "a00103.html#ad45d8189eff4584a13d7069d3c877a55", null ],
+    [ "timeout_us", "a00103.html#af56601d1b7ef92d49dbd1567bd1d39e0", null ]
 ];

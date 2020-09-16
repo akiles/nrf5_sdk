@@ -14,7 +14,7 @@
 #include <stddef.h>
 #include <string.h>
 #include "dfu.h"
-#include "dfu_types.h"
+#include <dfu_types.h>
 #include "dfu_bank_internal.h"
 #include "nrf.h"
 #include "nrf51.h"
@@ -145,7 +145,7 @@ static void dfu_prepare_func_app_erase(uint32_t image_size)
     // Doing a SoftDevice update thus current application must be cleared to ensure enough space
     // for new SoftDevice.
     m_dfu_state = DFU_STATE_PREPARING;
-    err_code    = pstorage_raw_clear(&m_storage_handle_app, m_image_size);
+    err_code    = pstorage_clear(&m_storage_handle_app, m_image_size);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -163,7 +163,7 @@ static void dfu_prepare_func_swap_erase(uint32_t image_size)
     mp_storage_handle_active = &m_storage_handle_swap;
 
     m_dfu_state = DFU_STATE_PREPARING;
-    err_code    = pstorage_raw_clear(&m_storage_handle_swap, DFU_IMAGE_MAX_SIZE_BANKED);
+    err_code    = pstorage_clear(&m_storage_handle_swap, DFU_IMAGE_MAX_SIZE_BANKED);
     APP_ERROR_CHECK(err_code);
 }
 
@@ -251,10 +251,10 @@ static uint32_t dfu_activate_app(void)
     uint32_t err_code;
 
     // Erase BANK 0.
-    err_code = pstorage_raw_clear(&m_storage_handle_app, m_start_packet.app_image_size);
+    err_code = pstorage_clear(&m_storage_handle_app, m_start_packet.app_image_size);
     APP_ERROR_CHECK(err_code);
 
-    err_code = pstorage_raw_store(&m_storage_handle_app,
+    err_code = pstorage_store(&m_storage_handle_app,
                                   (uint8_t *)m_storage_handle_swap.block_id,
                                   m_start_packet.app_image_size,
                                   0);
@@ -307,7 +307,7 @@ uint32_t dfu_init(void)
     m_init_packet_length = 0;
     m_image_crc          = 0;
 
-    err_code = pstorage_raw_register(&storage_module_param, &m_storage_handle_app);
+    err_code = pstorage_register(&storage_module_param, &m_storage_handle_app);
     if (err_code != NRF_SUCCESS)
     {
         m_dfu_state = DFU_STATE_INIT_ERROR;
@@ -475,7 +475,7 @@ uint32_t dfu_data_pkt_handle(dfu_update_packet_t * p_packet)
 
             p_data = (uint32_t *)p_packet->params.data_packet.p_data_packet;
 
-            err_code = pstorage_raw_store(mp_storage_handle_active,
+            err_code = pstorage_store(mp_storage_handle_active,
                                           (uint8_t *)p_data,
                                           data_length,
                                           m_data_received);

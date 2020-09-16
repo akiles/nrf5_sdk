@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: BLE Multi-link Example</title>
+<title>nRF51 SDK - S120 SoftDevice: UICR Config Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,40 +97,80 @@ $(document).ready(function(){initNavTree('a00058.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BLE Multi-link Example </div>  </div>
+<div class="title">UICR Config Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The BLE Multi-link Central application together with the BLE Multi-link Peripheral application tests the multi-link functionality of the S120 SoftDevice. The BLE Multi-link Example demonstrates how one central device can connect to multiple peripheral devices.</p>
-<p>On startup, the peripheral devices will start advertising. Once connected to the central, pressing button 1 on the peripheral changes the state of the peripheral and a corresponding LED on the central. When multiple peripherals are connected, each peripheral is assigned one LED by the central depending on the order in which the peripherals got connected. For example, LED 1 will be assigned to the peripheral that connects first. LED 2 will be assigned to the peripheral that connects second and so on.</p>
-<h1><a class="anchor" id="project_multilink_setup"></a>
-Setup</h1>
-<p>BLE Multi-link Central: The name of the example for PCA10028 is <b>ble_app_multilink_central_s120_pca10028</b>, and for PCA10031 it is <b>ble_app_multilink_central_s120_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_central\ble_app_multilink_central</code> </p>
-<p>BLE Multi-link Peripheral: The name of the example is <b>ble_app_multilink_peripheral_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_central\ble_app_multilink_peripheral</code> </p>
-<dl class="section note"><dt>Note</dt><dd>The BLE Multi-link Peripheral application needs the S110 SoftDevice to work. Its primary use is to act as helper application to test the BLE Multi-link Central application.</dd></dl>
-<p>The BLE Multi-link Example requires at least three boards to verify that more than one link is active. The central device can have a maximum of 8 concurrent connections to peripheral devices.</p>
-<p>Button assignments peripheral:</p>
+<div class="textblock"><p>This example shows how to include UICR values into the application hex file. Also, it shows how to setup Keil to download and debug the hexfile generated.</p>
+<p>The project uses the "uicr_config.h" to define the User Information Configuration Registers (UICR) values to be included into the hex file.</p>
+<p>The file declares one variable per register of the UICR area and informs the linker where to place them. To include the desired value in the desired address, uncomment the variable with the proper address at the target area and update the assignment value. As shown below, the UICR register with address 0x10001080 will be assigned the value 0x12345678.</p>
+<div class="fragment"><div class="line"><span class="keyword">const</span> uint32_t UICR_ADDR_0x80 __attribute__((at(0x10001080))) __attribute__((used)) = 0x12345678;</div>
+<div class="line"><span class="comment">// const uint32_t UICR_ADDR_0x84 __attribute__((at(0x10001084))) __attribute__((used)) = 0xFFFFFFFF;</span></div>
+<div class="line"><span class="comment">// const uint32_t UICR_ADDR_0x88 __attribute__((at(0x10001088))) __attribute__((used)) = 0xFFFFFFFF;</span></div>
+</div><!-- fragment --><p>When compiling the project with the uicr_config.h stated above it will add the section shown below into the hex. The two lines (intel hex format) shows that we have successfully generated a hex file which will fill the value 0x12345678 into the UICR address. </p>
+<div class="fragment"><div class="line">:020000041000EA</div>
+<div class="line">:041080007856341258</div>
+</div><!-- fragment --><p>Note that UICR values are stored in a reserved area of the flash and should only be stored into when downloading a hex file. Do not use these defined variables to store data at run time.</p>
+<dl class="section note"><dt>Note</dt><dd>The file uses one non-standard attribute ("at"). It will only function with the ARMCC compiler toolset.</dd></dl>
+<p>The hex file generated when this file is included will fail to download when using the standard download algorithm provided by Nordic. How to configure Keil to download the hex is shown below.</p>
+<p>The name of the example is <b>uicr_config_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\peripheral\uicr_config</code> </p>
+<h1><a class="anchor" id="uicr_config_keil_config"></a>
+Keil Configuration</h1>
+<p>To configure Keil to not use the standard download algorithm follow these steps:</p>
 <ul>
-<li>Button 1: Change state on peripheral side (<a class="el" href="a00055.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a>/<a class="el" href="a00055.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a>) and toggle assigned LED on central side</li>
+<li>Open "Target Options" by selecting the target in the project window, then pressing Alt+F7.</li>
+<li>Select the tab labeled "Utilities".</li>
+<li>Select the radio button "Use External Tool for Flash Programming".</li>
+<li>Fill in "nrfjprog.exe" in the "Command" text field.</li>
+<li>Fill "Arguments" according to the chip variant and use of SoftDevice (See below).</li>
 </ul>
-<p>UART logging can be used instead of the LEDs.</p>
-<h1><a class="anchor" id="project_multilink_testing"></a>
+<p><code>nrfjprog.exe</code> is an extra tool installed with the SDK. And will be located in system path.</p>
+<h2><a class="anchor" id="uicr_config_example_ant"></a>
+nRF51422 256K with S210 SoftDevice (ANT)</h2>
+<div class="image">
+<img src="uicr_example_ant_aa.png" alt="uicr_example_ant_aa.png"/>
+<div class="caption">
+Figure 1: Example settings for nRF51422.</div></div>
+<h2><a class="anchor" id="uicr_config_example_nrf51822_blank"></a>
+nRF51822 128K/256K without SoftDevice</h2>
+<div class="image">
+<img src="uicr_example_blank_aa_ab.png" alt="uicr_example_blank_aa_ab.png"/>
+<div class="caption">
+Figure 2: Example settings for nRF51822 without SoftDevice.</div></div>
+<h2><a class="anchor" id="uicr_config_example_nrf51822_ble"></a>
+nRF51822 128K/256K with S120 SoftDevice (BLE)</h2>
+<p>The SoftDevice must first be flashed by other means. If using nRFgo Studio, remember to uncheck "Enable SoftDevice protection". </p>
+<div class="image">
+<img src="uicr_example_ble_aa_ab.png" alt="uicr_example_ble_aa_ab.png"/>
+<div class="caption">
+Figure 3: Example settings for nRF51822 with SoftDevice. SoftDevice must be flashed separately.</div></div>
+<h1><a class="anchor" id="uicr_trouble_sec"></a>
+Troubleshooting</h1>
+<p>This section covers some known issues and their solution for the UICR example project</p>
+<table class="doxtable">
+<tr>
+<th>Error </th><th>Solution</th></tr>
+<tr>
+<td>No Algorithm found for: 10001014H - 10001017H <br/>
+ Partial Erase Done (areas with no algorithms skipped!) <br/>
+ No Algorithm found for: 10001014H - 10001017H </td><td>Those error messages are seen when trying to flash with the J-Link Target Driver, as it does not support writing of UICR. Use <code>nrjjprog.exe</code> instead. </td></tr>
+<tr>
+<td>&mdash; Error: failed to execute '"nrfjprog.exe" ..... </td><td>nrfjprog.exe could not be found in windows path. Add nrfjprog.exe to windows %PATH% or specify full path to nrfjprog in Keil-'Options for Target'-'Utilities' as seen in the above figures. </td></tr>
+</table>
+<h1><a class="anchor" id="uicr_config_example_testing"></a>
 Testing</h1>
-<p>Test the BLE Multi-link Example application by performing the following steps:</p>
+<p>Test the UICR Configuration Example application by performing the following steps:</p>
 <ol type="1">
-<li>Compile and program the peripheral application to two boards. The <a class="el" href="a00055.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated on both boards. This means they are advertising and are waiting for the central device to connect.</li>
-<li>Compile and program the central application onto another board.</li>
-<li>As soon as the central application is programmed, it starts scanning and attempts to connect to the peripherals and enable notifications. Hence on the peripherals, observe that the <a class="el" href="a00055.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated after a few seconds.</li>
-<li>Press button 1 on one of the peripherals. Observe that <a class="el" href="a00055.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a> is indicated on that peripheral and one of the LEDs on the central turns ON.</li>
-<li>Press button 1 on the same peripheral again. Observe that <a class="el" href="a00055.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a> is indicated and the corresponding LED on the central is turned off.</li>
-<li>Repeat the last two steps with other connected peripherals and observe the same behavior. </li>
+<li>Compile and program the application with the chip variant configuration as described in <a class="el" href="a00058.html#uicr_config_keil_config">Keil Configuration</a>.</li>
+<li>Verify that the UICR register with the address 0x10001080 has been assigned the value 0x12345678 with this nrfjprog command: <div class="fragment"><div class="line">nrfjprog --memrd 0x10001080 --n 4</div>
+</div><!-- fragment --> </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00056.html">BLE Central</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:52 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00032.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:45 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

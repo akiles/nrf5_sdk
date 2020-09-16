@@ -1,14 +1,13 @@
 var a01056 =
 [
-    [ "sd_ble_gatts_characteristic_add", "a01056.html#ga9ee07ea4b96dcca1537b01ff9a7692ba", null ],
-    [ "sd_ble_gatts_descriptor_add", "a01056.html#ga0e1478bd565ad99f998671e3baf9847d", null ],
-    [ "sd_ble_gatts_hvx", "a01056.html#ga313fe43c2e93267da668572e885945db", null ],
-    [ "sd_ble_gatts_include_add", "a01056.html#ga591ba1e7e2b8ecb63541a1f2d5282b76", null ],
-    [ "sd_ble_gatts_rw_authorize_reply", "a01056.html#ga6de7aea3a870669e1d869b047de95545", null ],
-    [ "sd_ble_gatts_service_add", "a01056.html#ga39fea660228e4b2e788af7018a83927a", null ],
-    [ "sd_ble_gatts_service_changed", "a01056.html#ga2c8c90d73fa27ba6691ad82b4a960adc", null ],
-    [ "sd_ble_gatts_sys_attr_get", "a01056.html#ga4a44241bdcc7262603841f77d9eeb29f", null ],
-    [ "sd_ble_gatts_sys_attr_set", "a01056.html#ga577c788e199b1a2c0d19602b07ef2515", null ],
-    [ "sd_ble_gatts_value_get", "a01056.html#gad95321e157e632e7ac3a77f3388cbdf7", null ],
-    [ "sd_ble_gatts_value_set", "a01056.html#ga2760c51ea71853bd74e2e7e7117ef52a", null ]
+    [ "NRF_ERROR_SOC_MUTEX_ALREADY_TAKEN", "a01056.html#ga08505c75d1cc68c75b2b529f0acfd9e7", null ],
+    [ "NRF_ERROR_SOC_NVIC_INTERRUPT_NOT_AVAILABLE", "a01056.html#ga4660c0925c76d795707fe77c41aac89b", null ],
+    [ "NRF_ERROR_SOC_NVIC_INTERRUPT_PRIORITY_NOT_ALLOWED", "a01056.html#gae2b0d8c5f538bbcab43d82f04412463d", null ],
+    [ "NRF_ERROR_SOC_NVIC_SHOULD_NOT_RETURN", "a01056.html#gadb16c01a8206067f0831b6a7d9cd41c1", null ],
+    [ "NRF_ERROR_SOC_POWER_MODE_UNKNOWN", "a01056.html#gaba78285df6e85daaa153bce5890364df", null ],
+    [ "NRF_ERROR_SOC_POWER_OFF_SHOULD_NOT_RETURN", "a01056.html#ga57d53aa15592b0bfacc98d99c4dda07b", null ],
+    [ "NRF_ERROR_SOC_POWER_POF_THRESHOLD_UNKNOWN", "a01056.html#ga4c66885f407427c323d19539f6e59e0d", null ],
+    [ "NRF_ERROR_SOC_PPI_INVALID_CHANNEL", "a01056.html#ga563fa0ece398152e3256b09da51fda7f", null ],
+    [ "NRF_ERROR_SOC_PPI_INVALID_GROUP", "a01056.html#ga78bb614cb480357c7cb191ec8efba5fb", null ],
+    [ "NRF_ERROR_SOC_RAND_NOT_ENOUGH_VALUES", "a01056.html#gabb7186c1f08507eecc60e99b569ee2f7", null ]
 ];

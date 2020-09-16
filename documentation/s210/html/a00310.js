@@ -1,51 +1,25 @@
 var a00310 =
 [
-    [ "app_uart_comm_params_t", "a00071.html", [
-      [ "baud_rate", "a00071.html#aed401d2ee067394f8996bd5c0f4ff894", null ],
-      [ "cts_pin_no", "a00071.html#afd55bb9fe47cfd5eff8b468083b2dfed", null ],
-      [ "flow_control", "a00071.html#a0f003e30e3587f068bf45fad9f99bbc4", null ],
-      [ "rts_pin_no", "a00071.html#a836f131cb64d3cdf9831c0354483a65f", null ],
-      [ "rx_pin_no", "a00071.html#a30ae0cdf9181248fa08411af42a938a9", null ],
-      [ "tx_pin_no", "a00071.html#a7153a5ce2ab2d164224a7a17d5b1c56c", null ],
-      [ "use_parity", "a00071.html#a0851da050a073c86c13d0734e78f9d97", null ]
+    [ "TOUCHPAD_BUTTON_STATUS", "a00310.html#ga31521894e811710e49d5d9bb9abcecb8", null ],
+    [ "TOUCHPAD_COMMAND", "a00310.html#gaf471db4675c021cc375b84815f2c3561", null ],
+    [ "TOUCHPAD_CONTROL", "a00310.html#gaf5a2290d3919707171195ce78d02c091", null ],
+    [ "TOUCHPAD_FINGER0_REL", "a00310.html#gab981111abcb9a726d0963a0ad9099de0", null ],
+    [ "TOUCHPAD_GESTURE_FLAGS", "a00310.html#ga95556e3ba7e191db7a7c877501aa9a1d", null ],
+    [ "TOUCHPAD_INT_STATUS", "a00310.html#ga45323ee0dff39f598de4e6913ce06ef8", null ],
+    [ "TOUCHPAD_PAGESELECT", "a00310.html#ga40ad4ab55f47fb885452b74af1d61b06", null ],
+    [ "TOUCHPAD_PRODUCT_ID", "a00310.html#ga2fc2cf0bedd74903e7181acfe0df6941", null ],
+    [ "TOUCHPAD_RESET", "a00310.html#ga81cf02c11ea295d8110493005dd1babd", null ],
+    [ "TOUCHPAD_SCROLL", "a00310.html#ga62a3433c5a8ef739a8f0520247c70efd", null ],
+    [ "TouchpadSleepMode_t", "a00310.html#ga330fdbd5e3557a42f4c73c445d0f7337", [
+      [ "SleepmodeNormal", "a00310.html#gga330fdbd5e3557a42f4c73c445d0f7337a2529a190fc6b8b859b7248b35f83f391", null ],
+      [ "SleepmodeSensorSleep", "a00310.html#gga330fdbd5e3557a42f4c73c445d0f7337a689a10deefd36760eee23b59321bcadb", null ]
     ] ],
-    [ "app_uart_buffers_t", "a00070.html", [
-      [ "rx_buf", "a00070.html#ab5c77995614a78b4a7baf6f5ab59bb5c", null ],
-      [ "rx_buf_size", "a00070.html#a42c5f8c78ee123d84c7de5da43f703e0", null ],
-      [ "tx_buf", "a00070.html#a1073bbd41b6d0ddc55e7ec432cf517dd", null ],
-      [ "tx_buf_size", "a00070.html#a8a0ff8a830eadfc972a4d44e1340e392", null ]
-    ] ],
-    [ "app_uart_evt_t", "a00072.html", [
-      [ "data", "a00072.html#ae56c2b716e2c87405f89d31aa1b46b06", null ],
-      [ "error_code", "a00072.html#ab2aeea864de0050ec22790a186a4e9b1", null ],
-      [ "error_communication", "a00072.html#ae2f48256edd4052e8273d098bb8249c4", null ],
-      [ "evt_type", "a00072.html#ae89e1d236d49d18fa5be6fa32ba3c0d8", null ],
-      [ "value", "a00072.html#a9e34eabccc01fe3eeff1c7392d737d84", null ]
-    ] ],
-    [ "APP_UART_FIFO_INIT", "a00310.html#ga25b7b23e541732b945b5992b5519a10f", null ],
-    [ "APP_UART_INIT", "a00310.html#gab37ec15202892ba42f454daacaa38b7f", null ],
-    [ "UART_PIN_DISCONNECTED", "a00310.html#gaa790ff39126a00c4308f30f1139f4efa", null ],
-    [ "app_uart_event_handler_t", "a00310.html#gae903f13e59955f64c03db53d9b74ba2e", null ],
-    [ "app_uart_connection_state_t", "a00310.html#ga683d8281c00679b243c06fd9b7815557", [
-      [ "APP_UART_DISCONNECTED", "a00310.html#gga683d8281c00679b243c06fd9b7815557acb220f64509a4882b0b79f1a4620398c", null ],
-      [ "APP_UART_CONNECTED", "a00310.html#gga683d8281c00679b243c06fd9b7815557a026c1999c42fd293cc7ead39f6de1cf2", null ]
-    ] ],
-    [ "app_uart_evt_type_t", "a00310.html#ga9346b21b144fd9499e24853bbf781e17", [
-      [ "APP_UART_DATA_READY", "a00310.html#gga9346b21b144fd9499e24853bbf781e17ad0c6e0d9cef6b81de23e2f2583013ef1", null ],
-      [ "APP_UART_FIFO_ERROR", "a00310.html#gga9346b21b144fd9499e24853bbf781e17ac4e8a2753ab64a36a3bd0e723a3f26ea", null ],
-      [ "APP_UART_COMMUNICATION_ERROR", "a00310.html#gga9346b21b144fd9499e24853bbf781e17a6ee822a8a07d1be09ac336495a5238d8", null ],
-      [ "APP_UART_TX_EMPTY", "a00310.html#gga9346b21b144fd9499e24853bbf781e17a9fa032c57eadcef66e102eb78a04c2d1", null ],
-      [ "APP_UART_DATA", "a00310.html#gga9346b21b144fd9499e24853bbf781e17a5b4c2503e1e658ff28dcaad17eff6ac4", null ]
-    ] ],
-    [ "app_uart_flow_control_t", "a00310.html#gad0b0f33b12902ce08681e06f304f0cba", [
-      [ "APP_UART_FLOW_CONTROL_DISABLED", "a00310.html#ggad0b0f33b12902ce08681e06f304f0cbaae7fd58fef6c10140a659be29f0b81b8b", null ],
-      [ "APP_UART_FLOW_CONTROL_ENABLED", "a00310.html#ggad0b0f33b12902ce08681e06f304f0cbaa76123f43769a3f237d5a670844c6d235", null ],
-      [ "APP_UART_FLOW_CONTROL_LOW_POWER", "a00310.html#ggad0b0f33b12902ce08681e06f304f0cbaa26a16d7573f75722e220954fa4fbf27f", null ]
-    ] ],
-    [ "app_uart_close", "a00310.html#ga8b5b23229363aefa52be33360dfb5fde", null ],
-    [ "app_uart_flush", "a00310.html#ga2b867b8dfc7209b87e2e8f0da0741105", null ],
-    [ "app_uart_get", "a00310.html#gacddb5b7b711ef104f9eb181a13bc4503", null ],
-    [ "app_uart_get_connection_state", "a00310.html#ga4360a21365ae56f22344f84c20933d64", null ],
-    [ "app_uart_init", "a00310.html#gae650b57bf30da0f26ae409782de9fcbd", null ],
-    [ "app_uart_put", "a00310.html#ga2e4c8407274a151e72ed5a226529dc36", null ]
+    [ "touchpad_init", "a00310.html#ga56d2b2da22fd614a12dead51b86f5be8", null ],
+    [ "touchpad_interrupt_status_read", "a00310.html#ga22b2f1fbcc1c09d3fcb5dae98e7a7dd2", null ],
+    [ "touchpad_product_id_read", "a00310.html#ga32ff3519e36304ef6111a893730a22a8", null ],
+    [ "touchpad_product_id_verify", "a00310.html#ga64efe8dc563464be3110e139729c663b", null ],
+    [ "touchpad_read_register", "a00310.html#ga517f43a4e4520713f69f14b38efc927b", null ],
+    [ "touchpad_reset", "a00310.html#gac053ca9455c2ee583def58d2d826cd9c", null ],
+    [ "touchpad_set_sleep_mode", "a00310.html#gaeaf145b444000da6d332bf4f0333380c", null ],
+    [ "touchpad_write_register", "a00310.html#gad33761514312c640fc14e096069476b9", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_bas_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: app_fifo_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,123 +106,78 @@ $(document).ready(function(){initNavTree('a00179.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_bas_s Struct Reference<div class="ingroups"><a class="el" href="a00953.html">Battery Service</a></div></div>  </div>
+<div class="title">app_fifo_t Struct Reference<div class="ingroups"><a class="el" href="a00976.html">FIFO implementation</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Battery Service structure. This contains various status information for the service.  
+<p>A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the information about which memory is allocated for the buffer and its size. This needs to be initialized by <a class="el" href="a00976.html#gafc2ba3545e60f0134689fac2aa87f493" title="Function for initializing the FIFO.">app_fifo_init()</a> before use.  
  <a href="a00179.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_bas.h&gt;</code></p>
+<p><code>#include &lt;app_fifo.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a84827e57e33bae7cf628c4c5826b1ac4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00953.html#ga07fd95f8afa679110161bb8391496abd">ble_bas_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00179.html#a84827e57e33bae7cf628c4c5826b1ac4">evt_handler</a></td></tr>
-<tr class="separator:a84827e57e33bae7cf628c4c5826b1ac4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8c61a4fe0b938cc1b47989d67a20c4c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00179.html#af8c61a4fe0b938cc1b47989d67a20c4c">service_handle</a></td></tr>
-<tr class="separator:af8c61a4fe0b938cc1b47989d67a20c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade3d3767c6bec8d2c8fc37ed8303d4fb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00282.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00179.html#ade3d3767c6bec8d2c8fc37ed8303d4fb">battery_level_handles</a></td></tr>
-<tr class="separator:ade3d3767c6bec8d2c8fc37ed8303d4fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70d124cbed946045d133aa76acd9581a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00179.html#a70d124cbed946045d133aa76acd9581a">report_ref_handle</a></td></tr>
-<tr class="separator:a70d124cbed946045d133aa76acd9581a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90db9b31ace864a1952fd520957cb831"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00179.html#a90db9b31ace864a1952fd520957cb831">battery_level_last</a></td></tr>
-<tr class="separator:a90db9b31ace864a1952fd520957cb831"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4906d1aa3c702704f4392d90cd8102f0"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00179.html#a4906d1aa3c702704f4392d90cd8102f0">conn_handle</a></td></tr>
-<tr class="separator:a4906d1aa3c702704f4392d90cd8102f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a877690be6248d047f102fc238ab0c527"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00179.html#a877690be6248d047f102fc238ab0c527">is_notification_supported</a></td></tr>
-<tr class="separator:a877690be6248d047f102fc238ab0c527"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64eafd180a65260208be3b845f6acbf5"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00179.html#a64eafd180a65260208be3b845f6acbf5">p_buf</a></td></tr>
+<tr class="separator:a64eafd180a65260208be3b845f6acbf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03c6c7fcf087b5c1e0cfd5ce09661870"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00179.html#a03c6c7fcf087b5c1e0cfd5ce09661870">buf_size_mask</a></td></tr>
+<tr class="separator:a03c6c7fcf087b5c1e0cfd5ce09661870"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabcc538faf2ea4a374702c9896ae52d6"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00179.html#aabcc538faf2ea4a374702c9896ae52d6">read_pos</a></td></tr>
+<tr class="separator:aabcc538faf2ea4a374702c9896ae52d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12631a6575aae2c98f1cca4034b38eaf"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00179.html#a12631a6575aae2c98f1cca4034b38eaf">write_pos</a></td></tr>
+<tr class="separator:a12631a6575aae2c98f1cca4034b38eaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Battery Service structure. This contains various status information for the service. </p>
+<div class="textblock"><p>A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the information about which memory is allocated for the buffer and its size. This needs to be initialized by <a class="el" href="a00976.html#gafc2ba3545e60f0134689fac2aa87f493" title="Function for initializing the FIFO.">app_fifo_init()</a> before use. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ade3d3767c6bec8d2c8fc37ed8303d4fb"></a>
+<a class="anchor" id="a03c6c7fcf087b5c1e0cfd5ce09661870"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00282.html">ble_gatts_char_handles_t</a> ble_bas_s::battery_level_handles</td>
+          <td class="memname">uint16_t app_fifo_t::buf_size_mask</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handles related to the Battery Level characteristic. </p>
+<p>Read/write index mask. Also used for size checking. </p>
 
 </div>
 </div>
-<a class="anchor" id="a90db9b31ace864a1952fd520957cb831"></a>
+<a class="anchor" id="a64eafd180a65260208be3b845f6acbf5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_bas_s::battery_level_last</td>
+          <td class="memname">uint8_t* app_fifo_t::p_buf</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Last Battery Level measurement passed to the Battery Service. </p>
+<p>Pointer to FIFO buffer memory. </p>
 
 </div>
 </div>
-<a class="anchor" id="a4906d1aa3c702704f4392d90cd8102f0"></a>
+<a class="anchor" id="aabcc538faf2ea4a374702c9896ae52d6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_bas_s::conn_handle</td>
+          <td class="memname">volatile uint32_t app_fifo_t::read_pos</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
+<p>Next read position in the FIFO buffer. </p>
 
 </div>
 </div>
-<a class="anchor" id="a84827e57e33bae7cf628c4c5826b1ac4"></a>
+<a class="anchor" id="a12631a6575aae2c98f1cca4034b38eaf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00953.html#ga07fd95f8afa679110161bb8391496abd">ble_bas_evt_handler_t</a> ble_bas_s::evt_handler</td>
+          <td class="memname">volatile uint32_t app_fifo_t::write_pos</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Event handler to be called for handling events in the Battery Service. </p>
-
-</div>
-</div>
-<a class="anchor" id="a877690be6248d047f102fc238ab0c527"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_bas_s::is_notification_supported</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>TRUE if notification of Battery Level is supported. </p>
-
-</div>
-</div>
-<a class="anchor" id="a70d124cbed946045d133aa76acd9581a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_bas_s::report_ref_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle of the Report Reference descriptor. </p>
-
-</div>
-</div>
-<a class="anchor" id="af8c61a4fe0b938cc1b47989d67a20c4c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_bas_s::service_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle of Battery Service (as provided by the BLE stack). </p>
+<p>Next write position in the FIFO buffer. </p>
 
 </div>
 </div>
@@ -231,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00179.html">ble_bas_s</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00179.html">app_fifo_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

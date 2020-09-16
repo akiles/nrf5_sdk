@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Radio Notification Event Handler</title>
+<title>nRF51 SDK - S110 SoftDevice: BLE SoftDevice Common</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,81 +97,48 @@ $(document).ready(function(){initNavTree('a00999.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Radio Notification Event Handler<div class="ingroups"><a class="el" href="a01034.html">BLE Libraries</a></div></div>  </div>
+<div class="title">BLE SoftDevice Common<div class="ingroups"><a class="el" href="a01317.html">S110 (BLE peripheral)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Module for propagating Radio Notification events to the application.  
+<p>Type definitions, macros, error codes, SVC and event number subranges etc. common to all S110 SoftDevice modules.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga7d22caf17609042ff0c07873c1ad2a13"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7d22caf17609042ff0c07873c1ad2a13"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00999.html#ga7d22caf17609042ff0c07873c1ad2a13">ble_radio_notification_evt_handler_t</a> )(bool radio_active)</td></tr>
-<tr class="memdesc:ga7d22caf17609042ff0c07873c1ad2a13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application radio notification event handler type. <br/></td></tr>
-<tr class="separator:ga7d22caf17609042ff0c07873c1ad2a13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga0e02811c4ce9dff7bd190daa42b7a58b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00999.html#ga0e02811c4ce9dff7bd190daa42b7a58b">ble_radio_notification_init</a> (<a class="el" href="a01072.html#ga2b45edb07b58c30c52475c673d0db856">nrf_app_irq_priority_t</a> irq_priority, <a class="el" href="a01072.html#ga2be0dce389b0d728a857b178b0f3d7ae">nrf_radio_notification_distance_t</a> distance, <a class="el" href="a00999.html#ga7d22caf17609042ff0c07873c1ad2a13">ble_radio_notification_evt_handler_t</a> evt_handler)</td></tr>
-<tr class="memdesc:ga0e02811c4ce9dff7bd190daa42b7a58b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Radio Notification module.  <a href="#ga0e02811c4ce9dff7bd190daa42b7a58b">More...</a><br/></td></tr>
-<tr class="separator:ga0e02811c4ce9dff7bd190daa42b7a58b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a01000"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01000.html">Events, type definitions and API calls</a></td></tr>
+<tr class="memdesc:a01000"><td class="mdescLeft">&#160;</td><td class="mdescRight">Module independent events, type definitions and API calls for the BLE SoftDevice. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01002"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01002.html">General error codes</a></td></tr>
+<tr class="memdesc:a01002"><td class="mdescLeft">&#160;</td><td class="mdescRight">General error code definitions for the BLE API. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01003"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01003.html">Module specific error code subranges</a></td></tr>
+<tr class="memdesc:a01003"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment of subranges for module specific error codes. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01043"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01043.html">Bluetooth status codes</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01045"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01045.html">Module specific SVC, event and option number subranges</a></td></tr>
+<tr class="memdesc:a01045"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of SVC, event and option number subranges for each API module. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01046"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01046.html">Common types and macro definitions</a></td></tr>
+<tr class="memdesc:a01046"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common types and macro definitions for the BLE SoftDevice. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01058"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01058.html">Message Sequence Charts</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01051"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01051.html">SoftDevice Global Error Codes</a></td></tr>
+<tr class="memdesc:a01051"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global Error definitions. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Module for propagating Radio Notification events to the application. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga0e02811c4ce9dff7bd190daa42b7a58b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_radio_notification_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a01072.html#ga2b45edb07b58c30c52475c673d0db856">nrf_app_irq_priority_t</a>&#160;</td>
-          <td class="paramname"><em>irq_priority</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a01072.html#ga2be0dce389b0d728a857b178b0f3d7ae">nrf_radio_notification_distance_t</a>&#160;</td>
-          <td class="paramname"><em>distance</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00999.html#ga7d22caf17609042ff0c07873c1ad2a13">ble_radio_notification_evt_handler_t</a>&#160;</td>
-          <td class="paramname"><em>evt_handler</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for initializing the Radio Notification module. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">irq_priority</td><td>Interrupt priority for the Radio Notification interrupt handler. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">distance</td><td>The time from an Active event until the radio is activated. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">evt_handler</td><td>Handler to be executed when a radio notification event has been received.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS on successful initialization, otherwise an error code. </dd></dl>
-
-</div>
-</div>
+<p>Type definitions, macros, error codes, SVC and event number subranges etc. common to all S110 SoftDevice modules. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

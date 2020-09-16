@@ -1,12 +1,16 @@
 var a00668 =
 [
-    [ "DM_EVT_APPL_CONTEXT_DELETED", "a00668.html#ga1a76738f1010b5aa7c2e46c709821a27", null ],
-    [ "DM_EVT_APPL_CONTEXT_LOADED", "a00668.html#ga4ce522c3a6565d1b96b94ae14bac67c5", null ],
-    [ "DM_EVT_APPL_CONTEXT_STORED", "a00668.html#gaad12d77f6d3eccb97277869480549ee5", null ],
-    [ "DM_EVT_DEVICE_CONTEXT_DELETED", "a00668.html#gac14de4b8aad6be951c60c421942eb7a7", null ],
-    [ "DM_EVT_DEVICE_CONTEXT_LOADED", "a00668.html#ga0031b878e929a75ec8271ad0c94eef50", null ],
-    [ "DM_EVT_DEVICE_CONTEXT_STORED", "a00668.html#ga914c5f8e7244019d80470eb488afe51c", null ],
-    [ "DM_EVT_SERVICE_CONTEXT_DELETED", "a00668.html#ga45acfe7588e09f49236071ca79f123f7", null ],
-    [ "DM_EVT_SERVICE_CONTEXT_LOADED", "a00668.html#ga5f701544ed21d80e9f5c6198bd0de3d1", null ],
-    [ "DM_EVT_SERVICE_CONTEXT_STORED", "a00668.html#ga4918299ce9ecf37463834a62e4cc28b0", null ]
+    [ "NRF_SWI_UNALLOCATED", "a00668.html#gac0c2f68fc91cad142fa66e974464a080", null ],
+    [ "SWI_COUNT", "a00668.html#ga35c10c60bdf590a8fa502f25b76499b1", null ],
+    [ "SWI_DEFAULT_PRIORITY", "a00668.html#gab24c61b48197503c9e4a204d8c98bb43", null ],
+    [ "SWI_MAX", "a00668.html#ga72bcd8d082bc4576d2a476e58f5fe4a1", null ],
+    [ "SWI_MAX_FLAGS", "a00668.html#ga816db2d44b92075e4614ea0a5e79cf34", null ],
+    [ "nrf_swi_flags_t", "a00668.html#ga3958c1f57afcdee82f1d22cc966e7509", null ],
+    [ "nrf_swi_handler_t", "a00668.html#ga2ad0fc3331fbcf6398d751f16858c228", null ],
+    [ "nrf_swi_t", "a00668.html#gaf4d75a31a62ec35d2667efcbb3421f64", null ],
+    [ "nrf_drv_swi_alloc", "a00668.html#ga9707c5cfc723ed10f67c5a73810753bf", null ],
+    [ "nrf_drv_swi_free", "a00668.html#gaa7c89f3dde0fa17d3068807d2deba6fa", null ],
+    [ "nrf_drv_swi_init", "a00668.html#ga1f1d64b1f9abf3476683733c0845a2ef", null ],
+    [ "nrf_drv_swi_trigger", "a00668.html#ga31366f910bb2a52eca033847bed37ed6", null ],
+    [ "nrf_drv_swi_uninit", "a00668.html#gaa7b426edd78a6083c33df7e2d144bcf3", null ]
 ];

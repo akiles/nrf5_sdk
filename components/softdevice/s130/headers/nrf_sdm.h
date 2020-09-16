@@ -76,11 +76,11 @@ This is the offset where the first byte of the softdevice hex file is written.*/
 #define SD_FWID_OFFSET (SOFTDEVICE_INFO_STRUCT_OFFSET + 0x0C)
 
 /** @brief Defines a macro for retreiving the actual Softdevice size value from a given base address
-           use MBR_SIZE when Softdevice is installed just above the MBR (the usual case)*/
+           use @ref MBR_SIZE when Softdevice is installed just above the MBR (the usual case)*/
 #define SD_SIZE_GET(baseaddr) (*((uint32_t *) ((baseaddr) + SD_SIZE_OFFSET)))
 
 /** @brief Defines a macro for retreiving the actual FWID value from a given base address
-           use MBR_SIZE when Softdevice is installed just above the MBR (the usual case)*/
+           use @ref MBR_SIZE when Softdevice is installed just above the MBR (the usual case)*/
 #define SD_FWID_GET(baseaddr) ((*((uint32_t *) ((baseaddr) + SD_FWID_OFFSET))) & 0xFFFF)
 
 
@@ -161,20 +161,21 @@ typedef void (*softdevice_assertion_handler_t)(uint32_t pc, uint16_t line_number
  * @note This function has no effect when returning with an error.
  *
  * @post If return code is ::NRF_SUCCESS 
- *       - SoC library and protocol stack APIs are made available
- *       - A portion of RAM will be unavailable (see relevant SDS documentation)
- *       - Some peripherals will be unavailable or available only through the SoC API (see relevant SDS documentation)
- *       - Interrupts will not arrive from protected peripherals or interrupts
+ *       - SoC library and protocol stack APIs are made available.
+ *       - A portion of RAM will be unavailable (see relevant SDS documentation).
+ *       - Some peripherals will be unavailable or available only through the SoC API (see relevant SDS documentation).
+ *       - Interrupts will not arrive from protected peripherals or interrupts.
  *       - nrf_nvic_ functions must be used instead of CMSIS NVIC_ functions for reliable usage of the softdevice.
- *       - Interrupt latency may be affected by the SoftDevice  (see relevant SDS documentation)
- *       - Chosen low frequency clock source will be running
+ *       - Interrupt latency may be affected by the SoftDevice  (see relevant SDS documentation).
+ *       - Chosen low frequency clock source will be running.
  *
  * @param clock_source Low frequency clock source and accuracy. (Note: In the case of XTAL source, the PPM accuracy of the chosen clock source must be greater than or equal to the actual characteristics of your XTAL clock).
  * @param assertion_handler Callback for SoftDevice assertions.
  *
  * @retval ::NRF_SUCCESS
- * @retval ::NRF_ERROR_SDM_INCORRECT_INTERRUPT_CONFIGURATION SoftDeviceinterrupt is already enabled, or an enabled interrupt has an illegal priority level
- * @retval ::NRF_ERROR_SDM_LFCLK_SOURCE_UNKNOWN Unknown low frequency clock source selected
+ * @retval ::NRF_ERROR_INVALID_STATE SoftDevice is already enabled, and the clock source and assertion handler cannot be updated.
+ * @retval ::NRF_ERROR_SDM_INCORRECT_INTERRUPT_CONFIGURATION SoftDeviceinterrupt is already enabled, or an enabled interrupt has an illegal priority level.
+ * @retval ::NRF_ERROR_SDM_LFCLK_SOURCE_UNKNOWN Unknown low frequency clock source selected.
  */
 SVCALL(SD_SOFTDEVICE_ENABLE, uint32_t, sd_softdevice_enable(nrf_clock_lfclksrc_t clock_source, softdevice_assertion_handler_t assertion_handler));
 

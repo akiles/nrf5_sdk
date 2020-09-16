@@ -27,36 +27,36 @@
  */
 
 /**
- * @enum nrf_qdec_tasks_t
+ * @enum nrf_qdec_task_t
  * @brief QDEC tasks.
  */
 typedef enum /*lint -save -e30 -esym(628,__INTADDR__) */
 {
-    NRF_QDEC_TASKS_START      = offsetof(NRF_QDEC_Type, TASKS_START),     /**< Starting the quadrature decoder. */
-    NRF_QDEC_TASKS_STOP       = offsetof(NRF_QDEC_Type, TASKS_STOP),      /**< Stopping the quadrature decoder. */
-    NRF_QDEC_TASKS_READCLRACC = offsetof(NRF_QDEC_Type, TASKS_READCLRACC) /**< Reading and clearing ACC and ACCDBL registers. */
-} nrf_qdec_tasks_t;
+    NRF_QDEC_TASK_START      = offsetof(NRF_QDEC_Type, TASKS_START),     /**< Starting the quadrature decoder. */
+    NRF_QDEC_TASK_STOP       = offsetof(NRF_QDEC_Type, TASKS_STOP),      /**< Stopping the quadrature decoder. */
+    NRF_QDEC_TASK_READCLRACC = offsetof(NRF_QDEC_Type, TASKS_READCLRACC) /**< Reading and clearing ACC and ACCDBL registers. */
+} nrf_qdec_task_t;
 
 /**
- * @enum nrf_qdec_events_t
+ * @enum nrf_qdec_event_t
  * @brief QDEC events.
  */
 typedef enum
 {
-    NRF_QDEC_EVENTS_SAMPLERDY = offsetof(NRF_QDEC_Type, EVENTS_SAMPLERDY), /**< Event generated for every new sample.  */
-    NRF_QDEC_EVENTS_REPORTRDY = offsetof(NRF_QDEC_Type, EVENTS_REPORTRDY), /**< Event generated for every new report.  */
-    NRF_QDEC_EVENTS_ACCOF     = offsetof(NRF_QDEC_Type, EVENTS_ACCOF)      /**< Event generated for every accumulator overflow. */
-} nrf_qdec_events_t;                                                       /*lint -restore */
+    NRF_QDEC_EVENT_SAMPLERDY = offsetof(NRF_QDEC_Type, EVENTS_SAMPLERDY), /**< Event generated for every new sample.  */
+    NRF_QDEC_EVENT_REPORTRDY = offsetof(NRF_QDEC_Type, EVENTS_REPORTRDY), /**< Event generated for every new report.  */
+    NRF_QDEC_EVENT_ACCOF     = offsetof(NRF_QDEC_Type, EVENTS_ACCOF)      /**< Event generated for every accumulator overflow. */
+} nrf_qdec_event_t;                                                       /*lint -restore */
 
 /**
- * @enum nrf_qdec_shorts_mask_t
+ * @enum nrf_qdec_short_mask_t
  * @brief QDEC shortcuts.
  */
 typedef enum
 {
-    NRF_QDEC_SHORTS_REPORTRDY_READCLRACC_MASK = QDEC_SHORTS_REPORTRDY_READCLRACC_Msk, /**< Shortcut between REPORTRDY event and READCLRACC task.  */
-    NRF_QDEC_SHORTS_SAMPLERDY_STOP_MASK       = QDEC_SHORTS_SAMPLERDY_STOP_Msk        /**< Shortcut between SAMPLERDY event and STOP task.  */
-} nrf_qdec_shorts_mask_t;
+    NRF_QDEC_SHORT_REPORTRDY_READCLRACC_MASK = QDEC_SHORTS_REPORTRDY_READCLRACC_Msk, /**< Shortcut between REPORTRDY event and READCLRACC task.  */
+    NRF_QDEC_SHORT_SAMPLERDY_STOP_MASK       = QDEC_SHORTS_SAMPLERDY_STOP_Msk        /**< Shortcut between SAMPLERDY event and STOP task.  */
+} nrf_qdec_short_mask_t;
 
 /**
  * @enum nrf_qdec_int_mask_t
@@ -309,7 +309,7 @@ __STATIC_INLINE uint32_t nrf_qdec_pio_assignment_get(nrf_qdec_pio_t qdec_pio,
  * @brief Function for setting a specific QDEC task.
  * @param[in] qdec_task QDEC task to be set.
  */
-__STATIC_INLINE void nrf_qdec_task_set(nrf_qdec_tasks_t qdec_task)
+__STATIC_INLINE void nrf_qdec_task_trigger(nrf_qdec_task_t qdec_task)
 {
     *( (volatile uint32_t *)( (uint8_t *)NRF_QDEC + qdec_task) ) = 1;
 }
@@ -319,7 +319,7 @@ __STATIC_INLINE void nrf_qdec_task_set(nrf_qdec_tasks_t qdec_task)
  * @brief Function for retrieving the address of a QDEC task register.
  * @param[in] qdec_task QDEC task.
  */
-__STATIC_INLINE uint32_t * nrf_qdec_task_address_get(nrf_qdec_tasks_t qdec_task)
+__STATIC_INLINE uint32_t * nrf_qdec_task_address_get(nrf_qdec_task_t qdec_task)
 {
     return (uint32_t *)( (uint8_t *)NRF_QDEC + qdec_task);
 }
@@ -329,7 +329,7 @@ __STATIC_INLINE uint32_t * nrf_qdec_task_address_get(nrf_qdec_tasks_t qdec_task)
  * @brief Function for clearing a specific QDEC event.
  * @param[in] qdec_event QDEC event to clear.
  */
-__STATIC_INLINE void nrf_qdec_event_clear(nrf_qdec_events_t qdec_event)
+__STATIC_INLINE void nrf_qdec_event_clear(nrf_qdec_event_t qdec_event)
 {
     *( (volatile uint32_t *)( (uint8_t *)NRF_QDEC + qdec_event) ) = 0;
 }
@@ -339,7 +339,7 @@ __STATIC_INLINE void nrf_qdec_event_clear(nrf_qdec_events_t qdec_event)
  * @brief Function for retrieving the state of a specific QDEC event.
  * @return State of the QDEC event.
  */
-__STATIC_INLINE uint32_t nrf_qdec_event_check(nrf_qdec_events_t qdec_event)
+__STATIC_INLINE uint32_t nrf_qdec_event_check(nrf_qdec_event_t qdec_event)
 {
     return *(volatile uint32_t *)( (uint8_t *)NRF_QDEC + qdec_event);
 }
@@ -350,7 +350,7 @@ __STATIC_INLINE uint32_t nrf_qdec_event_check(nrf_qdec_events_t qdec_event)
  * @param[in] qdec_event QDEC event.
  * @return Address of the specified QDEC event.
  */
-__STATIC_INLINE uint32_t * nrf_qdec_event_address_get(nrf_qdec_events_t qdec_event)
+__STATIC_INLINE uint32_t * nrf_qdec_event_address_get(nrf_qdec_event_t qdec_event)
 {
     return (uint32_t *)( (uint8_t *)NRF_QDEC + qdec_event);
 }
@@ -360,7 +360,7 @@ __STATIC_INLINE uint32_t * nrf_qdec_event_address_get(nrf_qdec_events_t qdec_eve
  * @brief  Function for setting QDEC shortcuts.
  * @param[in] qdec_short_mask QDEC shortcut by mask.
  */
-__STATIC_INLINE void nrf_qdec_shorts_set(uint32_t qdec_short_mask)
+__STATIC_INLINE void nrf_qdec_shorts_enable(uint32_t qdec_short_mask)
 {
     NRF_QDEC->SHORTS |= qdec_short_mask;
 }
@@ -370,7 +370,7 @@ __STATIC_INLINE void nrf_qdec_shorts_set(uint32_t qdec_short_mask)
  * @brief Function for clearing shortcuts of the QDEC by mask.
  * @param[in] qdec_short_mask QDEC shortcute to be cleared.
  */
-__STATIC_INLINE void nrf_qdec_shorts_clear(uint32_t qdec_short_mask)
+__STATIC_INLINE void nrf_qdec_shorts_disable(uint32_t qdec_short_mask)
 {
     NRF_QDEC->SHORTS &= ~qdec_short_mask;
 }

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Radio Transmitter Example</title>
+<title>nRF51 SDK - S210 SoftDevice: Clock Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,40 +97,25 @@ $(document).ready(function(){initNavTree('a00040.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Radio Transmitter Example </div>  </div>
+<div class="title">Clock Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Radio Transmitter Example shows how to transmit data with the NRF_RADIO peripheral. The transmitter is configured to send packets on button press.</p>
-<p>The application first enables the 16 MHz crystal oscillator and configures the <a class="el" href="a00335.html">Board Support Package</a> and the radio. When you press a button, the button state is read and the radio is enabled. When an event is ready, the packet is transmitted and the value is printed in a COM listener (for example PUTTY) using UART. Radio and events are then disabled.</p>
-<p>The name of the example is <b>transmitter_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\radio\transmitter</code> </p>
-<h1><a class="anchor" id="nrf_dev_radio_tx_example_testing"></a>
+<div class="textblock"><p>The Clock Example demonstrates the use of the clock peripherals. The example initializes the clock driver and configures an RTC0 tick event to toggle LED 1 (using PPI). The application then loops while toggling the state of the low-frequency clock, LFCLK, every 1000 milliseconds.</p>
+<p>The name of the example is <b>clock_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\peripheral\clock</code> </p>
+<h1><a class="anchor" id="nrf_dev_clock_example_testing"></a>
 Testing</h1>
-<p>Test the Radio Transmitter Example application by performing the following steps:</p>
+<p>Test the Clock Example application by performing the following steps:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Program the Radio Receiver Example application to another board.</li>
-<li>Start a COM listener like PUTTY and connect to the used COM port of the receiver board with the following UART settings:<ul>
-<li>
-Baud rate: 38.400</li>
-<li>
-8 data bits</li>
-<li>
-1 stop bit</li>
-<li>
-No parity</li>
-<li>
-HW flow control: RTS/CTS</li>
-</ul>
-</li>
-<li>Press buttons on the transmitter board and observe the PUTTY terminal connected to the receiver board. </li>
+<li>Observe that LED 1 starts and stops blinking every second. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00027.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00032.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

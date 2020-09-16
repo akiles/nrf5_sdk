@@ -1,9 +1,8 @@
 var a00197 =
 [
-    [ "day", "a00197.html#a94bdc52cbceff5f14951b6f7e8c02263", null ],
-    [ "hours", "a00197.html#a5288a98f74703cf1c5f9d0b9b1119461", null ],
-    [ "minutes", "a00197.html#a1328373bafcaa7e7ed28e2a3f52ec6e4", null ],
-    [ "month", "a00197.html#a49262472d4a8f721997adc626ae4f693", null ],
-    [ "seconds", "a00197.html#a20bab791a65115383e5e355e97078e27", null ],
-    [ "year", "a00197.html#a469839121af0c966717424b7649e0532", null ]
+    [ "category_count", "a00197.html#a8fae5850f02d99e832a3c5496113b43b", null ],
+    [ "category_id", "a00197.html#af8ce4a122076e4a6bdde910921c10e02", null ],
+    [ "evt_flags", "a00197.html#a975f24fc4a3dbc7055ba1dc43386d446", null ],
+    [ "evt_id", "a00197.html#a2153c44c6879b60d2a9dc6b7818b3881", null ],
+    [ "notif_uid", "a00197.html#ab5a67d503ee13d1c5bf06d41301b4c5d", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: ANT</title>
+<title>nRF51 SDK - S210 SoftDevice: LPCOMP Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,26 +97,44 @@ $(document).ready(function(){initNavTree('a00056.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">ANT </div>  </div>
+<div class="title">LPCOMP Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="el" href="a00061.html">Broadcast</a></p>
-<p><a class="el" href="a00062.html">ANT-FS Client</a></p>
-<p><a class="el" href="a00063.html">Heart Rate</a></p>
-<p><a class="el" href="a00064.html">Speed and Cadence</a></p>
-<p><a class="el" href="a00060.html">Bicycle Speed and Cadence</a></p>
-<p><a class="el" href="a00059.html">Bicycle Power</a></p>
-<p><a class="el" href="a00057.html">Experimental: ANT Bootloader/DFU</a></p>
-<p><a class="el" href="a00058.html">Experimental: Background Scanning</a></p>
-<p><a class="el" href="a00065.html">Experimental: Relay</a></p>
-<p><a class="el" href="a00066.html">Experimental: Auto Shared Channels</a> </p>
+<div class="textblock"><p>The Low Power Comparator (LPCOMP) Example demonstrates how to use the Low Power Comparator peripheral and the LPCOMP driver.</p>
+<p>The example initializes LPCOMP to constantly monitor the level of the analog input 2 (AIN2). If the level falls below half of the power supply, the registered event handler is called.</p>
+<p>Information about the detected events is forwarded to the registered LPCOMP event handler, which then increases counters. This event handler is called in an interrupt context; therefore, it should return as quickly as possible. If LPCOMP IRQ priority is set to NRF_APP_PRIORITY_HIGH, there is a limitation in calling SoftDevice functions from the event handler.</p>
+<p>The name of the example is <b>lpcomp_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\peripheral\lpcomp</code> </p>
+<h1><a class="anchor" id="lpcomp_example_testing"></a>
+Testing</h1>
+<p>Test the LPCOMP example application by performing the following steps:</p>
+<ol type="1">
+<li>Compile and program the application.</li>
+<li>Start a COM listener like PUTTY and connect to the used COM port with the following UART settings:<ul>
+<li>
+Baud rate: 38.400</li>
+<li>
+8 data bits</li>
+<li>
+1 stop bit</li>
+<li>
+No parity</li>
+<li>
+HW flow control: RTS/CTS</li>
+</ul>
+</li>
+<li>After reset, basic information about the example is output on UART.</li>
+<li>LED 2 starts flashing to indicate that the example is running. In addition, a wave is generated on P0.02.</li>
+<li>LPCOMP now monitors the analog input 2. If the voltage on AIN2 drops below half of the power supply, information is printed on UART. In addition, LED 1 toggles.</li>
+</ol>
+<p>To generate a voltage change on AIN2, short pin P0.01 with P0.02. This should indicate two events every second.</p>
+<p>On PCA10028, you can also connect pin P0.01 with pin P0.17, where Button 1 is connected. Every button press will then generate an event, and information should be output on UART. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00032.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

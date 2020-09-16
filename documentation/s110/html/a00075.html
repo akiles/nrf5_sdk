@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Running Speed and Cadence Application</title>
+<title>nRF51 SDK - S110 SoftDevice: Heart Rate Application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,50 +97,54 @@ $(document).ready(function(){initNavTree('a00075.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Running Speed and Cadence Application </div>  </div>
+<div class="title">Heart Rate Application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Running Speed and Cadence Application is an example that implements the Running Speed and Cadence profile using the hardware delivered in the nRF51 Development Kit.</p>
-<p>The application includes the two services in the Running Speed and Cadence profile:</p>
+<div class="textblock"><p>The Heart Rate Application is an example that implements the Heart Rate profile using the hardware delivered in the nRF51 Development Kit.</p>
+<p>The application includes the three services in the Heart Rate profile:</p>
 <ul>
-<li><a class="el" href="a00968.html">Running Speed and Cadence Service</a></li>
-<li><a class="el" href="a00958.html">Device Information Service</a></li>
+<li><a class="el" href="a01204.html">Heart Rate Service</a></li>
+<li><a class="el" href="a01194.html">Battery Service</a></li>
+<li><a class="el" href="a01199.html">Device Information Service</a></li>
 </ul>
-<p>In addition, use of the <a class="el" href="a00953.html">Battery Service</a> is also demonstrated.</p>
-<p>When the application starts, it starts a timer to simulate Running Speed and Cadence Measurements.</p>
+<p>When the application starts, the <a class="el" href="a00998.html">Board Support Package</a> is initialized. Next, three timers are started. These timers control the generation of various parts of the Heart Rate Measurement characteristic value:</p>
+<ul>
+<li>Heart Rate</li>
+<li>RR Interval</li>
+<li>Sensor Contact Detected</li>
+</ul>
 <p>Also, a timer for generating battery measurements is started.</p>
 <p>The sensor measurements are simulated the following way:</p>
 <ul>
-<li>Instantaneous speed and instantaneous cadence: see <a class="el" href="a01029.html">Sensor Data Simulator</a>.</li>
-<li>Battery Level: see <a class="el" href="a01029.html">Sensor Data Simulator</a>.</li>
+<li>Heart Rate: See <a class="el" href="a01270.html">Sensor Data Simulator</a>.</li>
+<li>RR Interval: See <a class="el" href="a01270.html">Sensor Data Simulator</a>.</li>
+<li>Sensor Contact: The state is toggled each time the timer expires.</li>
+<li>Battery Level: See <a class="el" href="a01270.html">Sensor Data Simulator</a>.</li>
 </ul>
-<p>When notification of Running Speed and Cadence Measurement characteristic is enabled, the Running Speed and Cadence Measurement, containing the current value for all the components of the Running Speed and Cadence Measurement characteristic, is notified each time the Running Speed and Cadence measurement timer expires. When notification of Battery Level characteristic is enabled, the Battery Level is notified each time the Battery Level measurement timer expires.</p>
+<p>When notification of Heart Rate Measurement characteristic is enabled, the Heart Rate Measurement, containing the current value for all the components of the Heart Rate Measurement characteristic, is notified each time the Heart Rate measurement timer expires. When notification of Battery Level characteristic is enabled, the Battery Level is notified each time the Battery Level measurement timer expires.</p>
 <dl class="section note"><dt>Note</dt><dd>This application is not power optimized! </dd>
 <dd>
-The application will stop advertising after 3 minutes and go to system-off mode. Push the button 1 restart advertising.</dd></dl>
-<h1><a class="anchor" id="project_rscs_setup"></a>
+The application will stop advertising after 3 minutes and go to system-off mode. Push the button 1 to restart advertising.</dd></dl>
+<h1><a class="anchor" id="project_hrs_setup"></a>
 Setup</h1>
-<p>The name of the example is <b>ble_app_rscs_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_rscs</code> </p>
-<p>Button assignments:</p>
-<ul>
-<li>Button 1: Wake up from system-off and restart advertising.</li>
-<li>Button 2: Wake up from system-off, erase all bonds, and restart advertising.</li>
-</ul>
-<h1><a class="anchor" id="project_rscs_test"></a>
+<p>The name of the example is <b>ble_app_hrs_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\ble_peripheral\ble_app_hrs</code> </p>
+<p><b>Button assignments:</b> <a class="el" href="a00062.html#examples_ble_button_functionality">BSP BLE Button Assignments</a>.</p>
+<h1><a class="anchor" id="project_hrs_test"></a>
 Testing</h1>
-<p>Test the Running Speed and Cadence Application with the Master Control Panel by performing the following steps:</p>
+<p>Test the Heart Rate Application with the nRF Toolbox app, which is available on both iOS (Apple Store) and Android (Google Play).</p>
+<p>You can also test the application with the Master Control Panel by performing the following steps:</p>
 <ol type="1">
-<li>Compile and program the application. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
-<li>Connect to the device from Master Control Panel (the device will be advertising as 'Nordic_RSC'), then perform service discovery. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
-<li>Click the 'Enable services' button on the Master Control Panel. Observe that Running Speed and Cadence notifications are received every second, and Battery Level notifications are received every two seconds. </li>
+<li>Compile and program the application. Observe that the <a class="el" href="a00062.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>Connect to the device from Master Control Panel (the device will be advertising as 'Nordic_HRM'), then perform service discovery. Observe that the <a class="el" href="a00062.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Click the 'Enable services' button on the Master Control Panel. Observe that Heart Rate notifications are received every second, and Battery Level notifications are received every two seconds. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00058.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00064.html">BLE Peripheral</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

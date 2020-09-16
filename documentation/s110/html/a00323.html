@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_hts_meas_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gatts_evt_rw_authorize_request_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,123 +106,79 @@ $(document).ready(function(){initNavTree('a00323.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_hts_meas_s Struct Reference<div class="ingroups"><a class="el" href="a00964.html">Health Thermometer Service</a></div></div>  </div>
+<div class="title">ble_gatts_evt_rw_authorize_request_t Struct Reference<div class="ingroups"><a class="el" href="a01298.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Health Thermometer Service measurement structure. This contains a Health Thermometer measurement.  
+<p>Event structure for <a class="el" href="a01296.html#ggae537647902af1b05c1e32f12d6b401c7a333a0e896f77ea1c7f9a0e1e11f8240d">BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST</a>.  
  <a href="a00323.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_hts.h&gt;</code></p>
+<p><code>#include &lt;ble_gatts.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a16e05739a1ac3b03a2b4dc683bc1eacd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#a16e05739a1ac3b03a2b4dc683bc1eacd">temp_in_fahr_units</a></td></tr>
-<tr class="separator:a16e05739a1ac3b03a2b4dc683bc1eacd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21a7a430b8f85908438c9bd1fc2e0dce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#a21a7a430b8f85908438c9bd1fc2e0dce">time_stamp_present</a></td></tr>
-<tr class="separator:a21a7a430b8f85908438c9bd1fc2e0dce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10dadb1129dd55a6d597e4e08764d7ff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#a10dadb1129dd55a6d597e4e08764d7ff">temp_type_present</a></td></tr>
-<tr class="separator:a10dadb1129dd55a6d597e4e08764d7ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4065a89fde57ebf2effce6a1401e38c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00389.html">ieee_float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#a4065a89fde57ebf2effce6a1401e38c4">temp_in_celcius</a></td></tr>
-<tr class="separator:a4065a89fde57ebf2effce6a1401e38c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0120700a8a6185ce21e1a05391fbc706"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00389.html">ieee_float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#a0120700a8a6185ce21e1a05391fbc706">temp_in_fahr</a></td></tr>
-<tr class="separator:a0120700a8a6185ce21e1a05391fbc706"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab4240703a233a4bd2cd1a7b3a5997c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00197.html">ble_date_time_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#aab4240703a233a4bd2cd1a7b3a5997c0">time_stamp</a></td></tr>
-<tr class="separator:aab4240703a233a4bd2cd1a7b3a5997c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12b9d8fddee8e461bfcedb3489bd5f92"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#a12b9d8fddee8e461bfcedb3489bd5f92">temp_type</a></td></tr>
-<tr class="separator:a12b9d8fddee8e461bfcedb3489bd5f92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8de6fad49332e37d86887303f2bc28a8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#a8de6fad49332e37d86887303f2bc28a8">type</a></td></tr>
+<tr class="separator:a8de6fad49332e37d86887303f2bc28a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affd49e24a3ab2be6b75aba5383eb63da"><td class="memItemLeft" >union {</td></tr>
+<tr class="memitem:aa49b328f6a8e228f3b2833a4c099386e"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00322.html">ble_gatts_evt_read_t</a>&#160;&#160;&#160;<a class="el" href="a00323.html#aa2fe207fe3fe3b8d5ff5e8fbbf65f495">read</a></td></tr>
+<tr class="separator:aa49b328f6a8e228f3b2833a4c099386e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02f0c28ecebc396f8c2006594fb099e9"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00327.html">ble_gatts_evt_write_t</a>&#160;&#160;&#160;<a class="el" href="a00323.html#ae846e97ba3f096abf3f54e92fcb30049">write</a></td></tr>
+<tr class="separator:a02f0c28ecebc396f8c2006594fb099e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affd49e24a3ab2be6b75aba5383eb63da"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00323.html#affd49e24a3ab2be6b75aba5383eb63da">request</a></td></tr>
+<tr class="separator:affd49e24a3ab2be6b75aba5383eb63da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Health Thermometer Service measurement structure. This contains a Health Thermometer measurement. </p>
+<div class="textblock"><p>Event structure for <a class="el" href="a01296.html#ggae537647902af1b05c1e32f12d6b401c7a333a0e896f77ea1c7f9a0e1e11f8240d">BLE_GATTS_EVT_RW_AUTHORIZE_REQUEST</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a4065a89fde57ebf2effce6a1401e38c4"></a>
+<a class="anchor" id="aa2fe207fe3fe3b8d5ff5e8fbbf65f495"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00389.html">ieee_float32_t</a> ble_hts_meas_s::temp_in_celcius</td>
+          <td class="memname"><a class="el" href="a00322.html">ble_gatts_evt_read_t</a> ble_gatts_evt_rw_authorize_request_t::read</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Temperature Measurement Value (Celcius). </p>
+<p>Attribute Read Parameters. </p>
 
 </div>
 </div>
-<a class="anchor" id="a0120700a8a6185ce21e1a05391fbc706"></a>
+<a class="anchor" id="affd49e24a3ab2be6b75aba5383eb63da"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00389.html">ieee_float32_t</a> ble_hts_meas_s::temp_in_fahr</td>
+          <td class="memname">union { ... }   ble_gatts_evt_rw_authorize_request_t::request</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Temperature Measurement Value (Fahrenheit). </p>
+<p>Request Parameters. </p>
 
 </div>
 </div>
-<a class="anchor" id="a16e05739a1ac3b03a2b4dc683bc1eacd"></a>
+<a class="anchor" id="a8de6fad49332e37d86887303f2bc28a8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool ble_hts_meas_s::temp_in_fahr_units</td>
+          <td class="memname">uint8_t ble_gatts_evt_rw_authorize_request_t::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>True if Temperature is in Fahrenheit units, Celcius otherwise. </p>
+<p>Type of authorize operation, see <a class="el" href="a01040.html">GATT Server Authorization Types</a>. </p>
 
 </div>
 </div>
-<a class="anchor" id="a12b9d8fddee8e461bfcedb3489bd5f92"></a>
+<a class="anchor" id="ae846e97ba3f096abf3f54e92fcb30049"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_hts_meas_s::temp_type</td>
+          <td class="memname"><a class="el" href="a00327.html">ble_gatts_evt_write_t</a> ble_gatts_evt_rw_authorize_request_t::write</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Temperature Type. </p>
-
-</div>
-</div>
-<a class="anchor" id="a10dadb1129dd55a6d597e4e08764d7ff"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_hts_meas_s::temp_type_present</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>True if Temperature Type is present. </p>
-
-</div>
-</div>
-<a class="anchor" id="aab4240703a233a4bd2cd1a7b3a5997c0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00197.html">ble_date_time_t</a> ble_hts_meas_s::time_stamp</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Time Stamp. </p>
-
-</div>
-</div>
-<a class="anchor" id="a21a7a430b8f85908438c9bd1fc2e0dce"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_hts_meas_s::time_stamp_present</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>True if Time Stamp is present. </p>
+<p>Attribute Write Parameters. </p>
 
 </div>
 </div>
@@ -231,8 +187,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00323.html">ble_hts_meas_s</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00323.html">ble_gatts_evt_rw_authorize_request_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

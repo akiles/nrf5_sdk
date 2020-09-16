@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: sd_mbr_command_copy_sd_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dm_init_param_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,71 +106,34 @@ $(document).ready(function(){initNavTree('a00415.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">sd_mbr_command_copy_sd_t Struct Reference<div class="ingroups"><a class="el" href="a01065.html">Types</a></div></div>  </div>
+<div class="title">dm_init_param_t Struct Reference<div class="ingroups"><a class="el" href="a01223.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This command copies part of a new SoftDevice The destination area is erased before copying. If dst is in the middle of a flash page, that whole flash page will be erased. If (dst+len) is in the middle of a flash page, that whole flash page will be erased.  
+<p>Initialization Parameters.  
  <a href="a00415.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_mbr.h&gt;</code></p>
+<p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a7fab268f5a8db5b0ccc3a4b85d47c0b7"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00415.html#a7fab268f5a8db5b0ccc3a4b85d47c0b7">src</a></td></tr>
-<tr class="separator:a7fab268f5a8db5b0ccc3a4b85d47c0b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8afbb5ddb539bf7d5aa63102313210a"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00415.html#ae8afbb5ddb539bf7d5aa63102313210a">dst</a></td></tr>
-<tr class="separator:ae8afbb5ddb539bf7d5aa63102313210a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36ada23cb97fb5ec6873d262689cbfdb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00415.html#a36ada23cb97fb5ec6873d262689cbfdb">len</a></td></tr>
-<tr class="separator:a36ada23cb97fb5ec6873d262689cbfdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5feebf730ecc50b0c78c0f4354d6fc3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00415.html#ab5feebf730ecc50b0c78c0f4354d6fc3">clear_persistent_data</a></td></tr>
+<tr class="separator:ab5feebf730ecc50b0c78c0f4354d6fc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This command copies part of a new SoftDevice The destination area is erased before copying. If dst is in the middle of a flash page, that whole flash page will be erased. If (dst+len) is in the middle of a flash page, that whole flash page will be erased. </p>
-<p>The user of this function is responsible for setting the PROTENSET registers.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>indicates that the contents of the memory blocks where copied correctly. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00866.html#gadf8b0c33ea15352808e5ac7f69c2be8a" title="Internal Error.">NRF_ERROR_INTERNAL</a></td><td>indicates that the contents of the memory blocks where not verified correctly after copying. </td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="textblock"><p>Initialization Parameters. </p>
+<p>Indicates the application parameters. Currently this only encompasses clearing all persistent data. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ae8afbb5ddb539bf7d5aa63102313210a"></a>
+<a class="anchor" id="ab5feebf730ecc50b0c78c0f4354d6fc3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t* sd_mbr_command_copy_sd_t::dst</td>
+          <td class="memname">bool dm_init_param_t::clear_persistent_data</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to the destination where the content is to be copied. </p>
-
-</div>
-</div>
-<a class="anchor" id="a36ada23cb97fb5ec6873d262689cbfdb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t sd_mbr_command_copy_sd_t::len</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Number of 32 bit words to copy. Must be a multiple of PAGE_SIZE_IN_WORDS words. </p>
-
-</div>
-</div>
-<a class="anchor" id="a7fab268f5a8db5b0ccc3a4b85d47c0b7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t* sd_mbr_command_copy_sd_t::src</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to the source of data to be copied. </p>
+<p>Set to true in case the module should clear all persistent data. </p>
 
 </div>
 </div>
@@ -179,8 +142,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00415.html">sd_mbr_command_copy_sd_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00415.html">dm_init_param_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

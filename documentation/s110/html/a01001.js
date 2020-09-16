@@ -1,8 +1,5 @@
 var a01001 =
 [
-    [ "ble_bas_c_evt_type_t", "a01001.html#ga825ba0a7f2d9094574df073de10a3a15", [
-      [ "BLE_BAS_C_EVT_DISCOVERY_COMPLETE", "a01001.html#gga825ba0a7f2d9094574df073de10a3a15a427a6611278fff5ee71ac80463d5c4e2", null ],
-      [ "BLE_BAS_C_EVT_BATT_NOTIFICATION", "a01001.html#gga825ba0a7f2d9094574df073de10a3a15a9d1d37260864fc90e1a1c56c6de13657", null ],
-      [ "BLE_BAS_C_EVT_BATT_READ_RESP", "a01001.html#gga825ba0a7f2d9094574df073de10a3a15a424840c39dfabd3c63e1c10d0fc30f6c", null ]
-    ] ]
+    [ "BLE_USER_MEM_TYPE_GATTS_QUEUED_WRITES", "a01001.html#ga77c2aca2438a868f228f877cafb5b910", null ],
+    [ "BLE_USER_MEM_TYPE_INVALID", "a01001.html#ga690838a139a17cdd21661c8045073277", null ]
 ];

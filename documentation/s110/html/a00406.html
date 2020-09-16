@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: nrf_lpcomp_config_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dfu_start_packet_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,78 @@ $(document).ready(function(){initNavTree('a00406.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_lpcomp_config_t Struct Reference<div class="ingroups"><a class="el" href="a00759.html">LPCOMP HAL</a></div></div>  </div>
+<div class="title">dfu_start_packet_t Struct Reference<div class="ingroups"><a class="el" href="a01185.html">Types and definitions.</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>LPCOMP configuration.  
+<p>Structure holding a start packet containing update mode and image sizes.  
  <a href="a00406.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_lpcomp.h&gt;</code></p>
+<p><code>#include &lt;dfu_types.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aa74af967693de2d0d942b3389eb33038"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00759.html#ga0c957a3dd1132acd90e420b70477cef0">nrf_lpcomp_ref_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00406.html#aa74af967693de2d0d942b3389eb33038">reference</a></td></tr>
-<tr class="separator:aa74af967693de2d0d942b3389eb33038"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a914c08cbe41a352676020b57ae1ba831"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00759.html#ga98b70e2e8ab4595eb74b92e7036f09b3">nrf_lpcomp_detect_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00406.html#a914c08cbe41a352676020b57ae1ba831">detection</a></td></tr>
-<tr class="separator:a914c08cbe41a352676020b57ae1ba831"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a271c95e67d665b66ce9874ccf3c6bf06"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00406.html#a271c95e67d665b66ce9874ccf3c6bf06">dfu_update_mode</a></td></tr>
+<tr class="separator:a271c95e67d665b66ce9874ccf3c6bf06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2354b9f4313acad5c73ebd01107d68b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00406.html#af2354b9f4313acad5c73ebd01107d68b">sd_image_size</a></td></tr>
+<tr class="separator:af2354b9f4313acad5c73ebd01107d68b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a5a89e5964fb6ed069b9c790449848b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00406.html#a5a5a89e5964fb6ed069b9c790449848b">bl_image_size</a></td></tr>
+<tr class="separator:a5a5a89e5964fb6ed069b9c790449848b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5283e751eac2c4b317c3429f9138ea5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00406.html#ab5283e751eac2c4b317c3429f9138ea5">app_image_size</a></td></tr>
+<tr class="separator:ab5283e751eac2c4b317c3429f9138ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>LPCOMP configuration. </p>
+<div class="textblock"><p>Structure holding a start packet containing update mode and image sizes. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a914c08cbe41a352676020b57ae1ba831"></a>
+<a class="anchor" id="ab5283e751eac2c4b317c3429f9138ea5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00759.html#ga98b70e2e8ab4595eb74b92e7036f09b3">nrf_lpcomp_detect_t</a> nrf_lpcomp_config_t::detection</td>
+          <td class="memname">uint32_t dfu_start_packet_t::app_image_size</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>LPCOMP detection type. </p>
+<p>Size of the application image to be transmitted. Zero if no Bootloader image will be transfered. </p>
 
 </div>
 </div>
-<a class="anchor" id="aa74af967693de2d0d942b3389eb33038"></a>
+<a class="anchor" id="a5a5a89e5964fb6ed069b9c790449848b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00759.html#ga0c957a3dd1132acd90e420b70477cef0">nrf_lpcomp_ref_t</a> nrf_lpcomp_config_t::reference</td>
+          <td class="memname">uint32_t dfu_start_packet_t::bl_image_size</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>LPCOMP reference. </p>
+<p>Size of the Bootloader image to be transferred. Zero if no Bootloader image will be transfered. </p>
+
+</div>
+</div>
+<a class="anchor" id="a271c95e67d665b66ce9874ccf3c6bf06"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t dfu_start_packet_t::dfu_update_mode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Packet type, used to identify the content of the received packet referenced by data packet. </p>
+
+</div>
+</div>
+<a class="anchor" id="af2354b9f4313acad5c73ebd01107d68b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t dfu_start_packet_t::sd_image_size</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size of the SoftDevice image to be transferred. Zero if no SoftDevice image will be transfered. </p>
 
 </div>
 </div>
@@ -156,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00406.html">nrf_lpcomp_config_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00406.html">dfu_start_packet_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

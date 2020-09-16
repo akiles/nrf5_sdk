@@ -1,12 +1,7 @@
 var a00710 =
 [
-    [ "sd_ble_gattc_char_value_by_uuid_read", "a00710.html#ga1e5d6f7c678b7db3205fa6b5c419f665", null ],
-    [ "sd_ble_gattc_char_values_read", "a00710.html#gac13467be9f6901defc8fc04258c88d36", null ],
-    [ "sd_ble_gattc_characteristics_discover", "a00710.html#gaf2bbf5162938f59bae419282d54f76fa", null ],
-    [ "sd_ble_gattc_descriptors_discover", "a00710.html#gaf896032d8502d0e535c2889955e3ad64", null ],
-    [ "sd_ble_gattc_hv_confirm", "a00710.html#ga173e2d16c9bbd24dcf2c724ded6708a5", null ],
-    [ "sd_ble_gattc_primary_services_discover", "a00710.html#gaa778ccc1990e05fffa4aaf304c95e614", null ],
-    [ "sd_ble_gattc_read", "a00710.html#ga813daa5810a1d2ed31d2d6fe49d3ef11", null ],
-    [ "sd_ble_gattc_relationships_discover", "a00710.html#ga2c03757248d02fc59591354688e402bc", null ],
-    [ "sd_ble_gattc_write", "a00710.html#ga90298b8dcd8bbe7bbe69d362d1133378", null ]
+    [ "BLE_GAP_ADV_TYPE_ADV_DIRECT_IND", "a00710.html#gafefde83f6b598e7fb14868e0610bdf43", null ],
+    [ "BLE_GAP_ADV_TYPE_ADV_IND", "a00710.html#ga6cc0db53453977ee0a31e59f07de2b86", null ],
+    [ "BLE_GAP_ADV_TYPE_ADV_NONCONN_IND", "a00710.html#ga8c86ca45ebffc3938fd97f9556daa49c", null ],
+    [ "BLE_GAP_ADV_TYPE_ADV_SCAN_IND", "a00710.html#ga594ca8490efef1702e8ccb6a28d2a1de", null ]
 ];

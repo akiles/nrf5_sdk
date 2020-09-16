@@ -98,7 +98,7 @@ static void data_message_handle(uint8_t const * const p_event_message_buffer)
     // Heart beat count from previous received page.
     static uint32_t m_previous_beat_count = 0;  
 #endif 
-    const uint32_t  current_page          = p_event_message_buffer[BUFFER_INDEX_MESG_DATA];
+    const uint8_t  current_page          = p_event_message_buffer[BUFFER_INDEX_MESG_DATA];
 
     // Decode the default page data present in all pages.
     default_hrm_info_decode(&p_event_message_buffer[BUFFER_INDEX_MESG_DATA + 4]);  
@@ -150,6 +150,7 @@ static void data_message_handle(uint8_t const * const p_event_message_buffer)
 #if defined(TRACE_HRM_PAGE_2)
             printf("Manufacturer ID: %u\n", (unsigned int)m_page2_data.manuf_id);
             printf("Serial No (upper 16-bits): 0x%X\n", (unsigned int)m_page2_data.serial_num);
+            printf("Instantaneous heart rate: %u bpm\n\n", (unsigned int)m_page0_data.computed_heart_rate);                
 #endif // TRACE_HRM_PAGE_2
             break;                
       
@@ -161,6 +162,7 @@ static void data_message_handle(uint8_t const * const p_event_message_buffer)
             printf("Hardware Rev ID %u ", (unsigned int)m_page3_data.hw_version);
             printf("Model %u\n", (unsigned int)m_page3_data.model_num);
             printf("Software Ver ID %u\n", (unsigned int)m_page3_data.sw_version);
+            printf("Instantaneous heart rate: %u bpm\n\n", (unsigned int)m_page0_data.computed_heart_rate);        
 #else
             (void)m_page3_data;
 #endif // TRACE_HRM_PAGE_3

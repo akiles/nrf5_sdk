@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_hids_feature_rep_init_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gattc_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,230 @@ $(document).ready(function(){initNavTree('a00306.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_hids_feature_rep_init_t Struct Reference<div class="ingroups"><a class="el" href="a00962.html">Human Interface Device Service</a></div></div>  </div>
+<div class="title">ble_gattc_evt_t Struct Reference<div class="ingroups"><a class="el" href="a01294.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>HID Service Feature Report characteristic init structure. This contains all options and data needed for initialization of one Feature Report characteristic.  
+<p>GATTC event structure.  
  <a href="a00306.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_hids.h&gt;</code></p>
+<p><code>#include &lt;ble_gattc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a021ad724a66d2f8e54c1bdff8def4b4c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00306.html#a021ad724a66d2f8e54c1bdff8def4b4c">max_len</a></td></tr>
-<tr class="separator:a021ad724a66d2f8e54c1bdff8def4b4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af12bb312c4056f52bc2e83ff0ef66233"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00352.html">ble_srv_report_ref_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00306.html#af12bb312c4056f52bc2e83ff0ef66233">rep_ref</a></td></tr>
-<tr class="separator:af12bb312c4056f52bc2e83ff0ef66233"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88082cfc1a5360f43e333ea838257ccb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00351.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00306.html#a88082cfc1a5360f43e333ea838257ccb">security_mode</a></td></tr>
-<tr class="separator:a88082cfc1a5360f43e333ea838257ccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ed64286300a70a9d26f1839f2396221"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00306.html#a9ed64286300a70a9d26f1839f2396221">read_resp</a>: 1</td></tr>
-<tr class="separator:a9ed64286300a70a9d26f1839f2396221"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26991e5deaf0de51e7b2413de1114c0e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00306.html#a26991e5deaf0de51e7b2413de1114c0e">conn_handle</a></td></tr>
+<tr class="separator:a26991e5deaf0de51e7b2413de1114c0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a844b25b255a6a17284b6285baa1fec6f"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00306.html#a844b25b255a6a17284b6285baa1fec6f">gatt_status</a></td></tr>
+<tr class="separator:a844b25b255a6a17284b6285baa1fec6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dd6ec7de3d6017e588120106e918bc9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00306.html#a3dd6ec7de3d6017e588120106e918bc9">error_handle</a></td></tr>
+<tr class="separator:a3dd6ec7de3d6017e588120106e918bc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4498670b6f66ad03452ca465968124e9"><td class="memItemLeft" >union {</td></tr>
+<tr class="memitem:ad833038d88dc8a1da252975687f48deb"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00303.html">ble_gattc_evt_prim_srvc_disc_rsp_t</a>&#160;&#160;&#160;<a class="el" href="a00306.html#a07f81765794c5b6bb0f8aeb0971807c6">prim_srvc_disc_rsp</a></td></tr>
+<tr class="separator:ad833038d88dc8a1da252975687f48deb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f9c9a112a9e09e8dfb8a35c9504f542"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00305.html">ble_gattc_evt_rel_disc_rsp_t</a>&#160;&#160;&#160;<a class="el" href="a00306.html#ae83b3965e69f4226c8fe7586a30a4d7e">rel_disc_rsp</a></td></tr>
+<tr class="separator:a3f9c9a112a9e09e8dfb8a35c9504f542"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96282b5e7b4e96cf0f3be2459b5f286d"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00298.html">ble_gattc_evt_char_disc_rsp_t</a>&#160;&#160;&#160;<a class="el" href="a00306.html#a34bad897428604d4b08c4f8cf4ef47e5">char_disc_rsp</a></td></tr>
+<tr class="separator:a96282b5e7b4e96cf0f3be2459b5f286d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b0af365474522ef572249030552dc53"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00301.html">ble_gattc_evt_desc_disc_rsp_t</a>&#160;&#160;&#160;<a class="el" href="a00306.html#a23df4ef5d71063a9921c787dbf2dfa85">desc_disc_rsp</a></td></tr>
+<tr class="separator:a0b0af365474522ef572249030552dc53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf30f1ba799f3657b2c0fe6f3a79ea63"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00299.html">ble_gattc_evt_char_val_by_uuid_read_rsp_t</a>&#160;&#160;&#160;<a class="el" href="a00306.html#ae5be4e95ec69711bb425db151632b3e1">char_val_by_uuid_read_rsp</a></td></tr>
+<tr class="separator:abf30f1ba799f3657b2c0fe6f3a79ea63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fdbef5d13d3f2fb9cb7a6ab46be407b"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00304.html">ble_gattc_evt_read_rsp_t</a>&#160;&#160;&#160;<a class="el" href="a00306.html#afe94966527cf767c92f028de45d04e6d">read_rsp</a></td></tr>
+<tr class="separator:a6fdbef5d13d3f2fb9cb7a6ab46be407b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3ad53f2e8968393f3e7bb7ee9bf6990"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00300.html">ble_gattc_evt_char_vals_read_rsp_t</a>&#160;&#160;&#160;<a class="el" href="a00306.html#a9c786b070343169cfdd505415880d789">char_vals_read_rsp</a></td></tr>
+<tr class="separator:ab3ad53f2e8968393f3e7bb7ee9bf6990"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94a7f572c686843c8683894efafb6510"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00308.html">ble_gattc_evt_write_rsp_t</a>&#160;&#160;&#160;<a class="el" href="a00306.html#ad9a800da6785563a3f837db443568496">write_rsp</a></td></tr>
+<tr class="separator:a94a7f572c686843c8683894efafb6510"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05b39c83ef3132be0bf728f6937c9309"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00302.html">ble_gattc_evt_hvx_t</a>&#160;&#160;&#160;<a class="el" href="a00306.html#a5f0bb863ceca0550c1bfa5482a79222d">hvx</a></td></tr>
+<tr class="separator:a05b39c83ef3132be0bf728f6937c9309"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1783f1265ec0441b3c217bb3e35f31f1"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00307.html">ble_gattc_evt_timeout_t</a>&#160;&#160;&#160;<a class="el" href="a00306.html#aca37c05800643ee41df04d1007c3e7e9">timeout</a></td></tr>
+<tr class="separator:a1783f1265ec0441b3c217bb3e35f31f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4498670b6f66ad03452ca465968124e9"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00306.html#a4498670b6f66ad03452ca465968124e9">params</a></td></tr>
+<tr class="separator:a4498670b6f66ad03452ca465968124e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>HID Service Feature Report characteristic init structure. This contains all options and data needed for initialization of one Feature Report characteristic. </p>
+<div class="textblock"><p>GATTC event structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a021ad724a66d2f8e54c1bdff8def4b4c"></a>
+<a class="anchor" id="a34bad897428604d4b08c4f8cf4ef47e5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_hids_feature_rep_init_t::max_len</td>
+          <td class="memname"><a class="el" href="a00298.html">ble_gattc_evt_char_disc_rsp_t</a> ble_gattc_evt_t::char_disc_rsp</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Maximum length of characteristic value. </p>
+<p>Characteristic Discovery Response Event Parameters. </p>
 
 </div>
 </div>
-<a class="anchor" id="a9ed64286300a70a9d26f1839f2396221"></a>
+<a class="anchor" id="ae5be4e95ec69711bb425db151632b3e1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_hids_feature_rep_init_t::read_resp</td>
+          <td class="memname"><a class="el" href="a00299.html">ble_gattc_evt_char_val_by_uuid_read_rsp_t</a> ble_gattc_evt_t::char_val_by_uuid_read_rsp</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Should application generate a response to read requests. </p>
+<p>Characteristic Value Read by UUID Response Event Parameters. </p>
 
 </div>
 </div>
-<a class="anchor" id="af12bb312c4056f52bc2e83ff0ef66233"></a>
+<a class="anchor" id="a9c786b070343169cfdd505415880d789"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00352.html">ble_srv_report_ref_t</a> ble_hids_feature_rep_init_t::rep_ref</td>
+          <td class="memname"><a class="el" href="a00300.html">ble_gattc_evt_char_vals_read_rsp_t</a> ble_gattc_evt_t::char_vals_read_rsp</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Value of the Report Reference descriptor. </p>
+<p>Characteristic Values Read Response Event Parameters. </p>
 
 </div>
 </div>
-<a class="anchor" id="a88082cfc1a5360f43e333ea838257ccb"></a>
+<a class="anchor" id="a26991e5deaf0de51e7b2413de1114c0e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00351.html">ble_srv_cccd_security_mode_t</a> ble_hids_feature_rep_init_t::security_mode</td>
+          <td class="memname">uint16_t ble_gattc_evt_t::conn_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Security mode for the HID Service Feature Report characteristic, including cccd. </p>
+<p>Connection Handle on which event occured. </p>
+
+</div>
+</div>
+<a class="anchor" id="a23df4ef5d71063a9921c787dbf2dfa85"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00301.html">ble_gattc_evt_desc_disc_rsp_t</a> ble_gattc_evt_t::desc_disc_rsp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Descriptor Discovery Response Event Parameters. </p>
+
+</div>
+</div>
+<a class="anchor" id="a3dd6ec7de3d6017e588120106e918bc9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_gattc_evt_t::error_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>In case of error: The handle causing the error. In all other cases <a class="el" href="a01290.html#ga755613d0f9d0979be50a3814c1436ab9">BLE_GATT_HANDLE_INVALID</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a844b25b255a6a17284b6285baa1fec6f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_gattc_evt_t::gatt_status</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>GATT status code for the operation, see <a class="el" href="a01030.html">GATT Status Codes</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5f0bb863ceca0550c1bfa5482a79222d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00302.html">ble_gattc_evt_hvx_t</a> ble_gattc_evt_t::hvx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle Value Notification/Indication Event Parameters. </p>
+
+</div>
+</div>
+<a class="anchor" id="a4498670b6f66ad03452ca465968124e9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">union { ... }   ble_gattc_evt_t::params</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event Parameters.</p>
+<dl class="section note"><dt>Note</dt><dd>Only valid if <a class="el" href="a00306.html#a844b25b255a6a17284b6285baa1fec6f">gatt_status</a> == <a class="el" href="a01030.html#gae174167fed3e7dadb25adbf9a3deed00">BLE_GATT_STATUS_SUCCESS</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a07f81765794c5b6bb0f8aeb0971807c6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00303.html">ble_gattc_evt_prim_srvc_disc_rsp_t</a> ble_gattc_evt_t::prim_srvc_disc_rsp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Primary Service Discovery Response Event Parameters. </p>
+
+</div>
+</div>
+<a class="anchor" id="afe94966527cf767c92f028de45d04e6d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00304.html">ble_gattc_evt_read_rsp_t</a> ble_gattc_evt_t::read_rsp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Read Response Event Parameters. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae83b3965e69f4226c8fe7586a30a4d7e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00305.html">ble_gattc_evt_rel_disc_rsp_t</a> ble_gattc_evt_t::rel_disc_rsp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Relationship Discovery Response Event Parameters. </p>
+
+</div>
+</div>
+<a class="anchor" id="aca37c05800643ee41df04d1007c3e7e9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00307.html">ble_gattc_evt_timeout_t</a> ble_gattc_evt_t::timeout</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Timeout Event Parameters. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad9a800da6785563a3f837db443568496"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00308.html">ble_gattc_evt_write_rsp_t</a> ble_gattc_evt_t::write_rsp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Write Response Event Parameters. </p>
 
 </div>
 </div>
@@ -186,8 +338,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00306.html">ble_hids_feature_rep_init_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00306.html">ble_gattc_evt_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: nrf_ecb_hal_data_t Struct Reference</title>
+<title>nRF51 SDK - S210 SoftDevice: nrf_drv_qdec_event_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,55 @@ $(document).ready(function(){initNavTree('a00089.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_ecb_hal_data_t Struct Reference<div class="ingroups"><a class="el" href="a00359.html">Types</a></div></div>  </div>
+<div class="title">nrf_drv_qdec_event_t Struct Reference<div class="ingroups"><a class="el" href="a00329.html">QDEC driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>AES ECB data structure.  
+<p>QDEC event handler structure.  
  <a href="a00089.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_soc.h&gt;</code></p>
+<p><code>#include &lt;nrf_drv_qdec.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aab4ea408dd38499ceff3935ecb5fa39f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00089.html#aab4ea408dd38499ceff3935ecb5fa39f">key</a> [(16)]</td></tr>
-<tr class="separator:aab4ea408dd38499ceff3935ecb5fa39f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad4c798195f0d6d399a7f75d09ef89793"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00089.html#ad4c798195f0d6d399a7f75d09ef89793">cleartext</a> [(16)]</td></tr>
-<tr class="separator:ad4c798195f0d6d399a7f75d09ef89793"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a478942ae65d7433678164a95e4944115"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00089.html#a478942ae65d7433678164a95e4944115">ciphertext</a> [((16))]</td></tr>
-<tr class="separator:a478942ae65d7433678164a95e4944115"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4192503fe8c2f82f310599833d9361d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae4192503fe8c2f82f310599833d9361d"></a>
+<a class="el" href="a00319.html#gae87c0c925cac2e5e1833534e51e7d1e4">nrf_qdec_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>type</b></td></tr>
+<tr class="separator:ae4192503fe8c2f82f310599833d9361d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d56210fd975e42c2b9d0558a5149929"><td class="memItemLeft" ><a class="anchor" id="a8d56210fd975e42c2b9d0558a5149929"></a>
+union {</td></tr>
+<tr class="memitem:aa56fcdc8f11013670fc13bf3041db006"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00091.html">nrf_drv_qdec_sample_data_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00089.html#a41b9730f7010c66f7311c1cbde202e35">sample</a></td></tr>
+<tr class="separator:aa56fcdc8f11013670fc13bf3041db006"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62605bcf573041c63aff72308957559b"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00090.html">nrf_drv_qdec_report_data_evt_t</a>&#160;&#160;&#160;<a class="el" href="a00089.html#a05207fa140ddc6e27ff4b1917d75b586">report</a></td></tr>
+<tr class="separator:a62605bcf573041c63aff72308957559b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d56210fd975e42c2b9d0558a5149929"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
+<tr class="separator:a8d56210fd975e42c2b9d0558a5149929"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>AES ECB data structure. </p>
+<div class="textblock"><p>QDEC event handler structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a478942ae65d7433678164a95e4944115"></a>
+<a class="anchor" id="a05207fa140ddc6e27ff4b1917d75b586"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_ecb_hal_data_t::ciphertext[((16))]</td>
+          <td class="memname"><a class="el" href="a00090.html">nrf_drv_qdec_report_data_evt_t</a> nrf_drv_qdec_event_t::report</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Cipher Text data. </p>
+<p>Report event data. </p>
 
 </div>
 </div>
-<a class="anchor" id="ad4c798195f0d6d399a7f75d09ef89793"></a>
+<a class="anchor" id="a41b9730f7010c66f7311c1cbde202e35"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_ecb_hal_data_t::cleartext[(16)]</td>
+          <td class="memname"><a class="el" href="a00091.html">nrf_drv_qdec_sample_data_evt_t</a> nrf_drv_qdec_event_t::sample</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Clear Text data. </p>
-
-</div>
-</div>
-<a class="anchor" id="aab4ea408dd38499ceff3935ecb5fa39f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t nrf_ecb_hal_data_t::key[(16)]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Encryption key. </p>
+<p>Sample event data. </p>
 
 </div>
 </div>
@@ -171,8 +163,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00089.html">nrf_ecb_hal_data_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:05 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00089.html">nrf_drv_qdec_event_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

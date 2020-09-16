@@ -1,5 +1,5 @@
 var a00133 =
 [
-    [ "interval_s", "a00133.html#aac6428abddc0bf75fc092a553312661a", null ],
-    [ "p_irk", "a00133.html#a03cc47081b7b470ad239d1bf9055ea34", null ]
+    [ "addr", "a00133.html#a7e756ddbde7ebf78f17a043d7ebe602c", null ],
+    [ "addr_type", "a00133.html#ad056845594972dd031a09700194d660c", null ]
 ];

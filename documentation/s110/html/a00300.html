@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gls_meas_context_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gattc_evt_char_vals_read_rsp_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,183 +106,48 @@ $(document).ready(function(){initNavTree('a00300.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gls_meas_context_t Struct Reference<div class="ingroups"><a class="el" href="a00960.html">Glucose Service</a></div></div>  </div>
+<div class="title">ble_gattc_evt_char_vals_read_rsp_t Struct Reference<div class="ingroups"><a class="el" href="a01294.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Glucose measurement context structure.  
+<p>Event structure for <a class="el" href="a01292.html#ggafd9b8b42eeb832d688e33f4561f97efcaab8322d0d775f2726cfc0215ef63f298">BLE_GATTC_EVT_CHAR_VALS_READ_RSP</a>.  
  <a href="a00300.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gls.h&gt;</code></p>
+<p><code>#include &lt;ble_gattc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aeb34e1ef25f19e2bfaf246df822b2cea"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html#aeb34e1ef25f19e2bfaf246df822b2cea">flags</a></td></tr>
-<tr class="separator:aeb34e1ef25f19e2bfaf246df822b2cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44cd84da95e919dfd61bf31e8e582e27"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html#a44cd84da95e919dfd61bf31e8e582e27">extended_flags</a></td></tr>
-<tr class="separator:a44cd84da95e919dfd61bf31e8e582e27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a323005a484d605979ee196edc65b565a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html#a323005a484d605979ee196edc65b565a">carbohydrate_id</a></td></tr>
-<tr class="separator:a323005a484d605979ee196edc65b565a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9beb857a6df2f0813640626d818c4e4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00420.html">sfloat_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html#a9beb857a6df2f0813640626d818c4e4d">carbohydrate</a></td></tr>
-<tr class="separator:a9beb857a6df2f0813640626d818c4e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f9f2d7f29fea28f00c9771f8bf8138d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html#a5f9f2d7f29fea28f00c9771f8bf8138d">meal</a></td></tr>
-<tr class="separator:a5f9f2d7f29fea28f00c9771f8bf8138d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac05ff23f10d9438197ae912cb4cec6b1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html#ac05ff23f10d9438197ae912cb4cec6b1">tester_and_health</a></td></tr>
-<tr class="separator:ac05ff23f10d9438197ae912cb4cec6b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d38fe5be64903f80f797630db249455"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html#a8d38fe5be64903f80f797630db249455">exercise_duration</a></td></tr>
-<tr class="separator:a8d38fe5be64903f80f797630db249455"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad339663b61c39d8d1c547def62931771"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html#ad339663b61c39d8d1c547def62931771">exercise_intensity</a></td></tr>
-<tr class="separator:ad339663b61c39d8d1c547def62931771"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf0ae945c97e9a34a1c6ae48b90eac8d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html#adf0ae945c97e9a34a1c6ae48b90eac8d">medication_id</a></td></tr>
-<tr class="separator:adf0ae945c97e9a34a1c6ae48b90eac8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fbcf26226c924ca64c94fb52659eaa6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00420.html">sfloat_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html#a6fbcf26226c924ca64c94fb52659eaa6">medication</a></td></tr>
-<tr class="separator:a6fbcf26226c924ca64c94fb52659eaa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a509541df40935394dbaee9c1d4cab4f6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html#a509541df40935394dbaee9c1d4cab4f6">hba1c</a></td></tr>
-<tr class="separator:a509541df40935394dbaee9c1d4cab4f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ece59636f724d7a7759d4bc11cec8d9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html#a6ece59636f724d7a7759d4bc11cec8d9">len</a></td></tr>
+<tr class="separator:a6ece59636f724d7a7759d4bc11cec8d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac586dcb02b8f378127157ee8c45abea9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00300.html#ac586dcb02b8f378127157ee8c45abea9">values</a> [1]</td></tr>
+<tr class="separator:ac586dcb02b8f378127157ee8c45abea9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Glucose measurement context structure. </p>
+<div class="textblock"><p>Event structure for <a class="el" href="a01292.html#ggafd9b8b42eeb832d688e33f4561f97efcaab8322d0d775f2726cfc0215ef63f298">BLE_GATTC_EVT_CHAR_VALS_READ_RSP</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a9beb857a6df2f0813640626d818c4e4d"></a>
+<a class="anchor" id="a6ece59636f724d7a7759d4bc11cec8d9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00420.html">sfloat_t</a> ble_gls_meas_context_t::carbohydrate</td>
+          <td class="memname">uint16_t ble_gattc_evt_char_vals_read_rsp_t::len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Carbohydrate </p>
+<p>Concatenated Attribute values length. </p>
 
 </div>
 </div>
-<a class="anchor" id="a323005a484d605979ee196edc65b565a"></a>
+<a class="anchor" id="ac586dcb02b8f378127157ee8c45abea9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gls_meas_context_t::carbohydrate_id</td>
+          <td class="memname">uint8_t ble_gattc_evt_char_vals_read_rsp_t::values[1]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Carbohydrate ID </p>
-
-</div>
-</div>
-<a class="anchor" id="a8d38fe5be64903f80f797630db249455"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gls_meas_context_t::exercise_duration</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Exercise Duration </p>
-
-</div>
-</div>
-<a class="anchor" id="ad339663b61c39d8d1c547def62931771"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gls_meas_context_t::exercise_intensity</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Exercise Intensity </p>
-
-</div>
-</div>
-<a class="anchor" id="a44cd84da95e919dfd61bf31e8e582e27"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gls_meas_context_t::extended_flags</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Extended Flags </p>
-
-</div>
-</div>
-<a class="anchor" id="aeb34e1ef25f19e2bfaf246df822b2cea"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gls_meas_context_t::flags</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Flags </p>
-
-</div>
-</div>
-<a class="anchor" id="a509541df40935394dbaee9c1d4cab4f6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gls_meas_context_t::hba1c</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>HbA1c </p>
-
-</div>
-</div>
-<a class="anchor" id="a5f9f2d7f29fea28f00c9771f8bf8138d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gls_meas_context_t::meal</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Meal </p>
-
-</div>
-</div>
-<a class="anchor" id="a6fbcf26226c924ca64c94fb52659eaa6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00420.html">sfloat_t</a> ble_gls_meas_context_t::medication</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Medication </p>
-
-</div>
-</div>
-<a class="anchor" id="adf0ae945c97e9a34a1c6ae48b90eac8d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gls_meas_context_t::medication_id</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Medication ID </p>
-
-</div>
-</div>
-<a class="anchor" id="ac05ff23f10d9438197ae912cb4cec6b1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gls_meas_context_t::tester_and_health</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Tester and health </p>
+<p>Attribute values, variable length. </p>
 
 </div>
 </div>
@@ -291,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00300.html">ble_gls_meas_context_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00300.html">ble_gattc_evt_char_vals_read_rsp_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

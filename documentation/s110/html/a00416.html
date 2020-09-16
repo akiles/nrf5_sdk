@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: sd_mbr_command_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dm_sec_keyset Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,90 +106,67 @@ $(document).ready(function(){initNavTree('a00416.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">sd_mbr_command_t Struct Reference<div class="ingroups"><a class="el" href="a01065.html">Types</a></div></div>  </div>
+<div class="title">dm_sec_keyset Struct Reference<div class="ingroups"><a class="el" href="a01223.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Security keys.  
+ <a href="a00416.html#details">More...</a></p>
+
+<p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ace7fb69d83a5ef3dc0a35dbdb58cb78a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00416.html#ace7fb69d83a5ef3dc0a35dbdb58cb78a">command</a></td></tr>
-<tr class="separator:ace7fb69d83a5ef3dc0a35dbdb58cb78a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70bed057faf7078a35077f752f7583c5"><td class="memItemLeft" ><a class="anchor" id="a70bed057faf7078a35077f752f7583c5"></a>
+<tr class="memitem:a5183224abdce507c7d0933aabae8f07a"><td class="memItemLeft" ><a class="anchor" id="a5183224abdce507c7d0933aabae8f07a"></a>
 union {</td></tr>
-<tr class="memitem:a079d6631805fd8a6aa7f87e162b3d7e6"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00415.html">sd_mbr_command_copy_sd_t</a>&#160;&#160;&#160;<a class="el" href="a00416.html#a7efb4f5913fbaef52ae323305cf6e98c">copy_sd</a></td></tr>
-<tr class="separator:a079d6631805fd8a6aa7f87e162b3d7e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03768aa840bd768ef3cedd02482cbb2d"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00414.html">sd_mbr_command_copy_bl_t</a>&#160;&#160;&#160;<a class="el" href="a00416.html#a0ae5a869c2d4e2ac60daa53b66d2da38">copy_bl</a></td></tr>
-<tr class="separator:a03768aa840bd768ef3cedd02482cbb2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a222904d124bbf275132516d271357949"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00413.html">sd_mbr_command_compare_t</a>&#160;&#160;&#160;<a class="el" href="a00416.html#a45bdd29ee5d7bc0a20a3d5c06dca7de6">compare</a></td></tr>
-<tr class="separator:a222904d124bbf275132516d271357949"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9154e6009f82268257486c9d81d87d92"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00417.html">sd_mbr_command_vector_table_base_set_t</a>&#160;&#160;&#160;<a class="el" href="a00416.html#aa16e258dae73733a2f1acc82d2aff10f">base_set</a></td></tr>
-<tr class="separator:a9154e6009f82268257486c9d81d87d92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70bed057faf7078a35077f752f7583c5"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:a70bed057faf7078a35077f752f7583c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b2d1b4f036952fd5ded40fcf63455d3"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a01223.html#gadd6aca8bf4cd897655618df17c575e76">dm_enc_key_t</a> *&#160;&#160;&#160;<a class="el" href="a00416.html#acb47eb790d404b15b97a680189d75061">p_enc_key</a></td></tr>
+<tr class="separator:a1b2d1b4f036952fd5ded40fcf63455d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5183224abdce507c7d0933aabae8f07a"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>enc_key</b></td></tr>
+<tr class="separator:a5183224abdce507c7d0933aabae8f07a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa48365f0a84031d3dbb1d22c2f8ac2b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01223.html#ga38566c0de9c9fb2ad4eda1b7cd415321">dm_id_key_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00416.html#aa48365f0a84031d3dbb1d22c2f8ac2b9">p_id_key</a></td></tr>
+<tr class="separator:aa48365f0a84031d3dbb1d22c2f8ac2b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25fa7f5a74279f24f44607335f5138b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01223.html#ga4ecd6e25cc653bbe21a293f34f3c9dd6">dm_sign_key_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00416.html#a25fa7f5a74279f24f44607335f5138b7">p_sign_key</a></td></tr>
+<tr class="separator:a25fa7f5a74279f24f44607335f5138b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aa16e258dae73733a2f1acc82d2aff10f"></a>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Security keys. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="acb47eb790d404b15b97a680189d75061"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00417.html">sd_mbr_command_vector_table_base_set_t</a> sd_mbr_command_t::base_set</td>
+          <td class="memname"><a class="el" href="a01223.html#gadd6aca8bf4cd897655618df17c575e76">dm_enc_key_t</a>* dm_sec_keyset::p_enc_key</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Parameters for vector table base set. </p>
+<p>Pointer to Device Manager encryption information structure. </p>
 
 </div>
 </div>
-<a class="anchor" id="ace7fb69d83a5ef3dc0a35dbdb58cb78a"></a>
+<a class="anchor" id="aa48365f0a84031d3dbb1d22c2f8ac2b9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_mbr_command_t::command</td>
+          <td class="memname"><a class="el" href="a01223.html#ga38566c0de9c9fb2ad4eda1b7cd415321">dm_id_key_t</a>* dm_sec_keyset::p_id_key</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>type of command to be issued see <a class="el" href="a01064.html#gad416fbc71855eb8e1533a812164b85a7">NRF_MBR_COMMANDS</a>. </p>
+<p>Identity key, or NULL. </p>
 
 </div>
 </div>
-<a class="anchor" id="a45bdd29ee5d7bc0a20a3d5c06dca7de6"></a>
+<a class="anchor" id="a25fa7f5a74279f24f44607335f5138b7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00413.html">sd_mbr_command_compare_t</a> sd_mbr_command_t::compare</td>
+          <td class="memname"><a class="el" href="a01223.html#ga4ecd6e25cc653bbe21a293f34f3c9dd6">dm_sign_key_t</a>* dm_sec_keyset::p_sign_key</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Parameters for verify. </p>
-
-</div>
-</div>
-<a class="anchor" id="a0ae5a869c2d4e2ac60daa53b66d2da38"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00414.html">sd_mbr_command_copy_bl_t</a> sd_mbr_command_t::copy_bl</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Parameters for copy BootLoader. </p>
-
-</div>
-</div>
-<a class="anchor" id="a7efb4f5913fbaef52ae323305cf6e98c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00415.html">sd_mbr_command_copy_sd_t</a> sd_mbr_command_t::copy_sd</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Parameters for copy SoftDevice. </p>
+<p>Signing key, or NULL. </p>
 
 </div>
 </div>
@@ -198,8 +175,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00416.html">sd_mbr_command_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00416.html">dm_sec_keyset</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

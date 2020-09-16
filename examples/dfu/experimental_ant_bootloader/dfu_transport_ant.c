@@ -6,7 +6,7 @@ All rights reserved.
 
 #include "dfu_transport.h"
 #include "dfu.h"
-#include "dfu_types.h"
+#include <dfu_types.h>
 #include "nrf51.h"
 #include "nrf_sdm.h"
 #include "nrf_gpio.h"

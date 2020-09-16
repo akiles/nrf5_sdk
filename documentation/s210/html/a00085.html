@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: nrf_drv_rtc_t Struct Reference</title>
+<title>nRF51 SDK - S210 SoftDevice: nrf_drv_gpiote_in_config_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,78 @@ $(document).ready(function(){initNavTree('a00085.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_drv_rtc_t Struct Reference<div class="ingroups"><a class="el" href="a00305.html">RTC driver</a></div></div>  </div>
+<div class="title">nrf_drv_gpiote_in_config_t Struct Reference<div class="ingroups"><a class="el" href="a00333.html">GPIOTE driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>RTC driver instance structure.  
+<p>Input pin configuration.  
  <a href="a00085.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_drv_rtc.h&gt;</code></p>
+<p><code>#include &lt;nrf_drv_gpiote.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ab45287af2512c2277a6bb35c4e37c3c0"><td class="memItemLeft" align="right" valign="top">NRF_RTC_Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00085.html#ab45287af2512c2277a6bb35c4e37c3c0">p_reg</a></td></tr>
-<tr class="separator:ab45287af2512c2277a6bb35c4e37c3c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d46eefc5f87c6e7e469f5a87ff554ba"><td class="memItemLeft" align="right" valign="top">IRQn_Type&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00085.html#a4d46eefc5f87c6e7e469f5a87ff554ba">irq</a></td></tr>
-<tr class="separator:a4d46eefc5f87c6e7e469f5a87ff554ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adddb0bddab148beb1b7ebbd61287aa7c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00085.html#adddb0bddab148beb1b7ebbd61287aa7c">instance_id</a></td></tr>
-<tr class="separator:adddb0bddab148beb1b7ebbd61287aa7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ef116b709107668fd13c20edf25391c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00315.html#ga9a424db0997c11092f8f69d52155dd9d">nrf_gpiote_polarity_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00085.html#a5ef116b709107668fd13c20edf25391c">sense</a></td></tr>
+<tr class="separator:a5ef116b709107668fd13c20edf25391c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5d4cbf2562ddb316fb73a98cb7c2214"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00314.html#ga07e0c8c0b30499cf0a7b79dbe62d3fcc">nrf_gpio_pin_pull_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00085.html#ae5d4cbf2562ddb316fb73a98cb7c2214">pull</a></td></tr>
+<tr class="separator:ae5d4cbf2562ddb316fb73a98cb7c2214"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50723f57881719a6fb533299e963c3af"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00085.html#a50723f57881719a6fb533299e963c3af">is_watcher</a></td></tr>
+<tr class="separator:a50723f57881719a6fb533299e963c3af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12f540cc96a043c443c13a49a11d91a0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00085.html#a12f540cc96a043c443c13a49a11d91a0">hi_accuracy</a></td></tr>
+<tr class="separator:a12f540cc96a043c443c13a49a11d91a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>RTC driver instance structure. </p>
+<div class="textblock"><p>Input pin configuration. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="adddb0bddab148beb1b7ebbd61287aa7c"></a>
+<a class="anchor" id="a12f540cc96a043c443c13a49a11d91a0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_drv_rtc_t::instance_id</td>
+          <td class="memname">bool nrf_drv_gpiote_in_config_t::hi_accuracy</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Instance index. </p>
+<p>True when high accuracy (IN_EVENT) is used. </p>
 
 </div>
 </div>
-<a class="anchor" id="a4d46eefc5f87c6e7e469f5a87ff554ba"></a>
+<a class="anchor" id="a50723f57881719a6fb533299e963c3af"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">IRQn_Type nrf_drv_rtc_t::irq</td>
+          <td class="memname">bool nrf_drv_gpiote_in_config_t::is_watcher</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Instance IRQ ID. </p>
+<p>True when the input pin is tracking an output pin. </p>
 
 </div>
 </div>
-<a class="anchor" id="ab45287af2512c2277a6bb35c4e37c3c0"></a>
+<a class="anchor" id="ae5d4cbf2562ddb316fb73a98cb7c2214"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">NRF_RTC_Type* nrf_drv_rtc_t::p_reg</td>
+          <td class="memname"><a class="el" href="a00314.html#ga07e0c8c0b30499cf0a7b79dbe62d3fcc">nrf_gpio_pin_pull_t</a> nrf_drv_gpiote_in_config_t::pull</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to instance register set. </p>
+<p>Pulling mode. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5ef116b709107668fd13c20edf25391c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00315.html#ga9a424db0997c11092f8f69d52155dd9d">nrf_gpiote_polarity_t</a> nrf_drv_gpiote_in_config_t::sense</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Transition that triggers interrupt. </p>
 
 </div>
 </div>
@@ -171,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00085.html">nrf_drv_rtc_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:05 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00085.html">nrf_drv_gpiote_in_config_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

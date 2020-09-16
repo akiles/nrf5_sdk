@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gatts_value_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_gattc_evt_char_val_by_uuid_read_rsp_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,64 +106,63 @@ $(document).ready(function(){initNavTree('a00181.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gatts_value_t Struct Reference<div class="ingroups"><a class="el" href="a00713.html">Structures</a></div></div>  </div>
+<div class="title">ble_gattc_evt_char_val_by_uuid_read_rsp_t Struct Reference<div class="ingroups"><a class="el" href="a00942.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GATT Attribute Value.  
+<p>Event structure for <a class="el" href="a00940.html#ggafd9b8b42eeb832d688e33f4561f97efca9741363d5e934220a35f1c01f62a194c">BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP</a>.  
  <a href="a00181.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gatts.h&gt;</code></p>
+<p><code>#include &lt;ble_gattc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:acae832d95748fb397e07709a6fb01a46"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#acae832d95748fb397e07709a6fb01a46">len</a></td></tr>
-<tr class="separator:acae832d95748fb397e07709a6fb01a46"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a797c5008eafbee3716c25b8c48ec88c9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a797c5008eafbee3716c25b8c48ec88c9">offset</a></td></tr>
-<tr class="separator:a797c5008eafbee3716c25b8c48ec88c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35a7c78cbceed615e33307620aa63c12"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a35a7c78cbceed615e33307620aa63c12">p_value</a></td></tr>
-<tr class="separator:a35a7c78cbceed615e33307620aa63c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50e19076a010925f0ec9c71d40c33eff"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a50e19076a010925f0ec9c71d40c33eff">count</a></td></tr>
+<tr class="separator:a50e19076a010925f0ec9c71d40c33eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91e554093e8f445960abff9c0015193c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a91e554093e8f445960abff9c0015193c">value_len</a></td></tr>
+<tr class="separator:a91e554093e8f445960abff9c0015193c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e8890391646f5df02ede436e3f1d987"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00192.html">ble_gattc_handle_value_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a0e8890391646f5df02ede436e3f1d987">handle_value</a> [1]</td></tr>
+<tr class="separator:a0e8890391646f5df02ede436e3f1d987"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GATT Attribute Value. </p>
+<div class="textblock"><p>Event structure for <a class="el" href="a00940.html#ggafd9b8b42eeb832d688e33f4561f97efca9741363d5e934220a35f1c01f62a194c">BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="acae832d95748fb397e07709a6fb01a46"></a>
+<a class="anchor" id="a50e19076a010925f0ec9c71d40c33eff"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gatts_value_t::len</td>
+          <td class="memname">uint16_t ble_gattc_evt_char_val_by_uuid_read_rsp_t::count</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Length in bytes to be written or read. Length in bytes written or read after successful return. </p>
+<p>Handle-Value Pair Count. </p>
 
 </div>
 </div>
-<a class="anchor" id="a797c5008eafbee3716c25b8c48ec88c9"></a>
+<a class="anchor" id="a0e8890391646f5df02ede436e3f1d987"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gatts_value_t::offset</td>
+          <td class="memname"><a class="el" href="a00192.html">ble_gattc_handle_value_t</a> ble_gattc_evt_char_val_by_uuid_read_rsp_t::handle_value[1]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Attribute value offset. </p>
+<p>Handle-Value(s) list, variable length. </p>
 
 </div>
 </div>
-<a class="anchor" id="a35a7c78cbceed615e33307620aa63c12"></a>
+<a class="anchor" id="a91e554093e8f445960abff9c0015193c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* ble_gatts_value_t::p_value</td>
+          <td class="memname">uint16_t ble_gattc_evt_char_val_by_uuid_read_rsp_t::value_len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">   Pointer to where value is stored or will be stored. 
-</pre><p> If value is stored in user memory, only the attribute length is updated when p_value == NULL. Set to NULL when reading to obtain the complete length of the attribute value </p>
+<p>Length of the value in Handle-Value(s) list. </p>
 
 </div>
 </div>
@@ -172,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00181.html">ble_gatts_value_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:02 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00181.html">ble_gattc_evt_char_val_by_uuid_read_rsp_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

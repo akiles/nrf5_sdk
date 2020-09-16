@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Functions</title>
+<title>nRF51 SDK - S120 SoftDevice: GAP Connection Parameters Limits</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,145 +97,164 @@ $(document).ready(function(){initNavTree('a00718.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Functions<div class="ingroups"><a class="el" href="a00634.html">Logical Link Control and Adaptation Protocol (L2CAP)</a></div></div>  </div>
+<div class="title">GAP Connection Parameters Limits<div class="ingroups"><a class="el" href="a00934.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga124cd974cfc529057218a14af8ee9780"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#ga124cd974cfc529057218a14af8ee9780">sd_ble_l2cap_cid_register</a> (uint16_t cid)</td></tr>
-<tr class="memdesc:ga124cd974cfc529057218a14af8ee9780"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register a CID with L2CAP.  <a href="#ga124cd974cfc529057218a14af8ee9780">More...</a><br/></td></tr>
-<tr class="separator:ga124cd974cfc529057218a14af8ee9780"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga78af254844e078b90868b3c827200e25"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#ga78af254844e078b90868b3c827200e25">sd_ble_l2cap_cid_unregister</a> (uint16_t cid)</td></tr>
-<tr class="memdesc:ga78af254844e078b90868b3c827200e25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregister a CID with L2CAP.  <a href="#ga78af254844e078b90868b3c827200e25">More...</a><br/></td></tr>
-<tr class="separator:ga78af254844e078b90868b3c827200e25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gace234d2360cf35ac03317771b041294e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#gace234d2360cf35ac03317771b041294e">sd_ble_l2cap_tx</a> (uint16_t conn_handle, <a class="el" href="a00189.html">ble_l2cap_header_t</a> const *p_header, uint8_t const *p_data)</td></tr>
-<tr class="memdesc:gace234d2360cf35ac03317771b041294e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmit an L2CAP packet.  <a href="#gace234d2360cf35ac03317771b041294e">More...</a><br/></td></tr>
-<tr class="separator:gace234d2360cf35ac03317771b041294e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga9b7880da1b563d33b45f68cfdd9f6d1d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#ga9b7880da1b563d33b45f68cfdd9f6d1d">BLE_GAP_CP_MIN_CONN_INTVL_NONE</a>&#160;&#160;&#160;0xFFFF</td></tr>
+<tr class="separator:ga9b7880da1b563d33b45f68cfdd9f6d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7995b13da25ea7cd40a21da59306def9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#ga7995b13da25ea7cd40a21da59306def9">BLE_GAP_CP_MIN_CONN_INTVL_MIN</a>&#160;&#160;&#160;0x0006</td></tr>
+<tr class="separator:ga7995b13da25ea7cd40a21da59306def9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6ec422217d939654d1dd252abd169d82"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#ga6ec422217d939654d1dd252abd169d82">BLE_GAP_CP_MIN_CONN_INTVL_MAX</a>&#160;&#160;&#160;0x0C80</td></tr>
+<tr class="separator:ga6ec422217d939654d1dd252abd169d82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadda6e71a42de04bd48870afcad38a81c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#gadda6e71a42de04bd48870afcad38a81c">BLE_GAP_CP_MAX_CONN_INTVL_NONE</a>&#160;&#160;&#160;0xFFFF</td></tr>
+<tr class="separator:gadda6e71a42de04bd48870afcad38a81c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac6071964ea94ef548da1beaf23f032da"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#gac6071964ea94ef548da1beaf23f032da">BLE_GAP_CP_MAX_CONN_INTVL_MIN</a>&#160;&#160;&#160;0x0006</td></tr>
+<tr class="separator:gac6071964ea94ef548da1beaf23f032da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6bf5d65e6d586000cd5f7ba43c0d2e76"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#ga6bf5d65e6d586000cd5f7ba43c0d2e76">BLE_GAP_CP_MAX_CONN_INTVL_MAX</a>&#160;&#160;&#160;0x0C80</td></tr>
+<tr class="separator:ga6bf5d65e6d586000cd5f7ba43c0d2e76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga122ace1cb2bbc5e346ae167e48f7e07e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#ga122ace1cb2bbc5e346ae167e48f7e07e">BLE_GAP_CP_SLAVE_LATENCY_MAX</a>&#160;&#160;&#160;0x01F3</td></tr>
+<tr class="separator:ga122ace1cb2bbc5e346ae167e48f7e07e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga86dea9b13bb39d0f50ee2c6e12184864"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#ga86dea9b13bb39d0f50ee2c6e12184864">BLE_GAP_CP_CONN_SUP_TIMEOUT_NONE</a>&#160;&#160;&#160;0xFFFF</td></tr>
+<tr class="separator:ga86dea9b13bb39d0f50ee2c6e12184864"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad6c79a8455ea1155d03321f3379dd415"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#gad6c79a8455ea1155d03321f3379dd415">BLE_GAP_CP_CONN_SUP_TIMEOUT_MIN</a>&#160;&#160;&#160;0x000A</td></tr>
+<tr class="separator:gad6c79a8455ea1155d03321f3379dd415"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1db7005189c241b0eba9209103bddc8d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00718.html#ga1db7005189c241b0eba9209103bddc8d">BLE_GAP_CP_CONN_SUP_TIMEOUT_MAX</a>&#160;&#160;&#160;0x0C80</td></tr>
+<tr class="separator:ga1db7005189c241b0eba9209103bddc8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga124cd974cfc529057218a14af8ee9780"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga1db7005189c241b0eba9209103bddc8d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_ble_l2cap_cid_register </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>cid</em></td><td>)</td>
-          <td></td>
+          <td class="memname">#define BLE_GAP_CP_CONN_SUP_TIMEOUT_MAX&#160;&#160;&#160;0x0C80</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Register a CID with L2CAP. </p>
-<p>This registers a higher protocol layer with the L2CAP multiplexer, and is requried prior to all operations on the CID.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">cid</td><td>L2CAP CID.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00562.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully registered a CID with the L2CAP layer. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00562.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied, CID must be above <a class="el" href="a00716.html#ga04c14ff9adffadf03baad98d7632b620">BLE_L2CAP_CID_DYN_BASE</a>. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00555.html#ga258b4a1e6ac5f32e23036ef0b88af3fa">BLE_ERROR_L2CAP_CID_IN_USE</a></td><td>L2CAP CID already in use. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00562.html#ga7ef4d466b79b31c6325f8b7af5d4f75f" title="No Memory for operation.">NRF_ERROR_NO_MEM</a></td><td>Not enough memory to complete operation. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Highest supervision timeout permitted, in units of 10 ms, i.e. 32 s. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga78af254844e078b90868b3c827200e25"></a>
+<a class="anchor" id="gad6c79a8455ea1155d03321f3379dd415"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_ble_l2cap_cid_unregister </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>cid</em></td><td>)</td>
-          <td></td>
+          <td class="memname">#define BLE_GAP_CP_CONN_SUP_TIMEOUT_MIN&#160;&#160;&#160;0x000A</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Unregister a CID with L2CAP. </p>
-<p>This unregisters a previously registerd higher protocol layer with the L2CAP multiplexer.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">cid</td><td>L2CAP CID.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00562.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully unregistered the CID. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00562.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00562.html#ga349d25ada15be023e0d507f45ada682c" title="Not found.">NRF_ERROR_NOT_FOUND</a></td><td>CID not previously registered. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Lowest supervision timeout permitted, in units of 10 ms, i.e. 100 ms. </p>
 
 </div>
 </div>
-<a class="anchor" id="gace234d2360cf35ac03317771b041294e"></a>
+<a class="anchor" id="ga86dea9b13bb39d0f50ee2c6e12184864"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_ble_l2cap_tx </td>
-          <td>(</td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>conn_handle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00189.html">ble_l2cap_header_t</a> const *&#160;</td>
-          <td class="paramname"><em>p_header</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t const *&#160;</td>
-          <td class="paramname"><em>p_data</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">#define BLE_GAP_CP_CONN_SUP_TIMEOUT_NONE&#160;&#160;&#160;0xFFFF</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>No new supervision timeout specified in connect parameters. </p>
 
-<p>Transmit an L2CAP packet. </p>
-<dl class="section note"><dt>Note</dt><dd>It is important to note that a call to this function will <b>consume an application buffer</b>, and will therefore generate a <a class="el" href="a00696.html#ggaa55e423bfea45f03764a636f2cec7a8ba408a77f131a2d314fbf477cdb2d1e0f6">BLE_EVT_TX_COMPLETE</a> event when the packet has been transmitted. Please see the documentation of <a class="el" href="a00699.html#ga37e443c585217475a97e40dfb443a1b6">sd_ble_tx_buffer_count_get</a> for more details.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">conn_handle</td><td>Connection Handle. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_header</td><td>Pointer to a packet header containing length and CID. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Pointer to the data to be transmitted.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00562.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Successfully queued an L2CAP packet for transmission. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00562.html#gabc562e4ddfe2f427666a3acdd0b469a3" title="Bad Memory Address.">NRF_ERROR_INVALID_ADDR</a></td><td>Invalid pointer supplied. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00562.html#ga0a5831cf5092e0dd43a01869676ee076" title="Invalid Parameter.">NRF_ERROR_INVALID_PARAM</a></td><td>Invalid parameter(s) supplied, CIDs must be registered beforehand with <a class="el" href="a00718.html#ga124cd974cfc529057218a14af8ee9780">sd_ble_l2cap_cid_register</a>. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00562.html#ga349d25ada15be023e0d507f45ada682c" title="Not found.">NRF_ERROR_NOT_FOUND</a></td><td>CID not found. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00562.html#ga7ef4d466b79b31c6325f8b7af5d4f75f" title="No Memory for operation.">NRF_ERROR_NO_MEM</a></td><td>Not enough memory to complete operation. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00514.html#ga901e1bc3ccae29eff9fb31cabdbb5e02">BLE_ERROR_NO_TX_BUFFERS</a></td><td>Not enough application buffers available. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00562.html#ga4c61f2b54667506e90cc296721b2e658" title="Data size exceeds limit.">NRF_ERROR_DATA_SIZE</a></td><td>Invalid data size(s) supplied, see <a class="el" href="a00716.html#gacc63c6e5847699642179a1ec792fe1c1">BLE_L2CAP_MTU_DEF</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
+</div>
+</div>
+<a class="anchor" id="ga6bf5d65e6d586000cd5f7ba43c0d2e76"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_CP_MAX_CONN_INTVL_MAX&#160;&#160;&#160;0x0C80</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Highest maximum connection interval permitted, in units of 1.25 ms, i.e. 4 s. </p>
+
+</div>
+</div>
+<a class="anchor" id="gac6071964ea94ef548da1beaf23f032da"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_CP_MAX_CONN_INTVL_MIN&#160;&#160;&#160;0x0006</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Lowest maximum connection interval permitted, in units of 1.25 ms, i.e. 7.5 ms. </p>
+
+</div>
+</div>
+<a class="anchor" id="gadda6e71a42de04bd48870afcad38a81c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_CP_MAX_CONN_INTVL_NONE&#160;&#160;&#160;0xFFFF</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>No new maximum connction interval specified in connect parameters. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga6ec422217d939654d1dd252abd169d82"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_CP_MIN_CONN_INTVL_MAX&#160;&#160;&#160;0x0C80</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Highest minimum connection interval permitted, in units of 1.25 ms, i.e. 4 s. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga7995b13da25ea7cd40a21da59306def9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_CP_MIN_CONN_INTVL_MIN&#160;&#160;&#160;0x0006</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Lowest mimimum connection interval permitted, in units of 1.25 ms, i.e. 7.5 ms. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga9b7880da1b563d33b45f68cfdd9f6d1d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_CP_MIN_CONN_INTVL_NONE&#160;&#160;&#160;0xFFFF</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>No new minimum connction interval specified in connect parameters. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga122ace1cb2bbc5e346ae167e48f7e07e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_CP_SLAVE_LATENCY_MAX&#160;&#160;&#160;0x01F3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Highest slave latency permitted, in connection events. </p>
 
 </div>
 </div>
@@ -244,7 +263,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:46 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

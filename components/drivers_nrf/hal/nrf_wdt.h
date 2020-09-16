@@ -34,26 +34,26 @@
 #define NRF_WDT_EVENT_CLEAR    0UL
 
 /**
- * @enum nrf_wdt_tasks_t
+ * @enum nrf_wdt_task_t
  * @brief WDT tasks.
  */
 typedef enum
 {
     /*lint -save -e30 -esym(628,__INTADDR__)*/
-    NRF_WDT_TASKS_START = offsetof(NRF_WDT_Type, TASKS_START), /**< Task for starting WDT. */
+    NRF_WDT_TASK_START = offsetof(NRF_WDT_Type, TASKS_START), /**< Task for starting WDT. */
     /*lint -restore*/
-} nrf_wdt_tasks_t;
+} nrf_wdt_task_t;
 
 /**
- * @enum nrf_wdt_events_t
+ * @enum nrf_wdt_event_t
  * @brief WDT events.
  */
 typedef enum
 {
     /*lint -save -e30*/
-    NRF_WDT_EVENTS_TIMEOUT = offsetof(NRF_WDT_Type, EVENTS_TIMEOUT), /**< Event from WDT time-out. */
+    NRF_WDT_EVENT_TIMEOUT = offsetof(NRF_WDT_Type, EVENTS_TIMEOUT), /**< Event from WDT time-out. */
     /*lint -restore*/
-} nrf_wdt_events_t;
+} nrf_wdt_event_t;
 
 /**
  * @enum nrf_wdt_behaviour_t
@@ -108,7 +108,7 @@ __STATIC_INLINE void nrf_wdt_behaviour_set(nrf_wdt_behaviour_t behaviour)
  *
  * @param[in]  task             Task.
  */
-__STATIC_INLINE void nrf_wdt_task_set(nrf_wdt_tasks_t task)
+__STATIC_INLINE void nrf_wdt_task_trigger(nrf_wdt_task_t task)
 {
     *((volatile uint32_t *)((uint8_t *)NRF_WDT + task)) = NRF_WDT_TASK_SET;
 }
@@ -119,7 +119,7 @@ __STATIC_INLINE void nrf_wdt_task_set(nrf_wdt_tasks_t task)
  *
  * @param[in]  event       Event.
  */
-__STATIC_INLINE void nrf_wdt_event_clear(nrf_wdt_events_t event)
+__STATIC_INLINE void nrf_wdt_event_clear(nrf_wdt_event_t event)
 {
     *((volatile uint32_t *)((uint8_t *)NRF_WDT + (uint32_t)event)) = NRF_WDT_EVENT_CLEAR;
 }
@@ -133,7 +133,7 @@ __STATIC_INLINE void nrf_wdt_event_clear(nrf_wdt_events_t event)
  * @retval     true              If the event is set.
  * @retval     false             If the event is not set.
  */
-__STATIC_INLINE bool nrf_wdt_event_check(nrf_wdt_events_t event)
+__STATIC_INLINE bool nrf_wdt_event_check(nrf_wdt_event_t event)
 {
     return (bool)*((volatile uint32_t *)((uint8_t *)NRF_WDT + event));
 }
@@ -180,7 +180,7 @@ __STATIC_INLINE void nrf_wdt_int_disable(uint32_t int_mask)
  *
  * @param[in]  task             Task.
  */
-__STATIC_INLINE uint32_t nrf_wdt_task_address_get(nrf_wdt_tasks_t task)
+__STATIC_INLINE uint32_t nrf_wdt_task_address_get(nrf_wdt_task_t task)
 {
     return ((uint32_t)NRF_WDT + task);
 }
@@ -193,7 +193,7 @@ __STATIC_INLINE uint32_t nrf_wdt_task_address_get(nrf_wdt_tasks_t task)
  *
  * @retval     address of requested event register
  */
-__STATIC_INLINE uint32_t nrf_wdt_event_address_get(nrf_wdt_events_t event)
+__STATIC_INLINE uint32_t nrf_wdt_event_address_get(nrf_wdt_event_t event)
 {
     return ((uint32_t)NRF_WDT + event);
 }

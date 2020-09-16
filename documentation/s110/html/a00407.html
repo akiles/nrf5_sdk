@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: nrf_radio_request_earliest_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dfu_update_packet_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,67 @@ $(document).ready(function(){initNavTree('a00407.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_radio_request_earliest_t Struct Reference<div class="ingroups"><a class="el" href="a01072.html">Types</a></div></div>  </div>
+<div class="title">dfu_update_packet_t Struct Reference<div class="ingroups"><a class="el" href="a01185.html">Types and definitions.</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Parameters for a request for a timeslot as early as possible.  
+<p>Structure for holding dfu update packet. Packet type indicate the type of packet.  
  <a href="a00407.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_soc.h&gt;</code></p>
+<p><code>#include &lt;dfu_types.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a5d6e28106247179b7cde2e289f0f9c39"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00407.html#a5d6e28106247179b7cde2e289f0f9c39">hfclk</a></td></tr>
-<tr class="separator:a5d6e28106247179b7cde2e289f0f9c39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad45d8189eff4584a13d7069d3c877a55"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00407.html#ad45d8189eff4584a13d7069d3c877a55">priority</a></td></tr>
-<tr class="separator:ad45d8189eff4584a13d7069d3c877a55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0495f3c5f7e2fd20663af081ca7e4c0b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00407.html#a0495f3c5f7e2fd20663af081ca7e4c0b">length_us</a></td></tr>
-<tr class="separator:a0495f3c5f7e2fd20663af081ca7e4c0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af56601d1b7ef92d49dbd1567bd1d39e0"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00407.html#af56601d1b7ef92d49dbd1567bd1d39e0">timeout_us</a></td></tr>
-<tr class="separator:af56601d1b7ef92d49dbd1567bd1d39e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab181d68ce3f0f88e0f4020c1e07bb14d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00407.html#ab181d68ce3f0f88e0f4020c1e07bb14d">packet_type</a></td></tr>
+<tr class="separator:ab181d68ce3f0f88e0f4020c1e07bb14d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43ff043f6111e3f0ea38419613453270"><td class="memItemLeft" ><a class="anchor" id="a43ff043f6111e3f0ea38419613453270"></a>
+union {</td></tr>
+<tr class="memitem:a046720491ee8af195962bb9703b7d0e4"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00403.html">dfu_data_packet_t</a>&#160;&#160;&#160;<a class="el" href="a00407.html#acefd384a51f51514c417758c5d870a10">data_packet</a></td></tr>
+<tr class="separator:a046720491ee8af195962bb9703b7d0e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a168e9beee15ae1e741251cd9be480ad7"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00406.html">dfu_start_packet_t</a> *&#160;&#160;&#160;<a class="el" href="a00407.html#a3a677307c9b4796855cdc9d208cd8dee">start_packet</a></td></tr>
+<tr class="separator:a168e9beee15ae1e741251cd9be480ad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43ff043f6111e3f0ea38419613453270"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
+<tr class="separator:a43ff043f6111e3f0ea38419613453270"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Parameters for a request for a timeslot as early as possible. </p>
+<div class="textblock"><p>Structure for holding dfu update packet. Packet type indicate the type of packet. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a5d6e28106247179b7cde2e289f0f9c39"></a>
+<a class="anchor" id="acefd384a51f51514c417758c5d870a10"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_radio_request_earliest_t::hfclk</td>
+          <td class="memname"><a class="el" href="a00403.html">dfu_data_packet_t</a> dfu_update_packet_t::data_packet</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>High frequency clock source, see <a class="el" href="a01072.html#gac7d87a0d58b5d7b5a619d7587cd139a4">NRF_RADIO_HFCLK_CFG</a>. </p>
+<p>Used when packet type is INIT_PACKET or DATA_PACKET. Packet contains data received for init or data. </p>
 
 </div>
 </div>
-<a class="anchor" id="a0495f3c5f7e2fd20663af081ca7e4c0b"></a>
+<a class="anchor" id="ab181d68ce3f0f88e0f4020c1e07bb14d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t nrf_radio_request_earliest_t::length_us</td>
+          <td class="memname">uint32_t dfu_update_packet_t::packet_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The radio timeslot length (in the range 100 to 100,000] microseconds). </p>
+<p>Packet type, used to identify the content of the received packet referenced by data packet. </p>
 
 </div>
 </div>
-<a class="anchor" id="ad45d8189eff4584a13d7069d3c877a55"></a>
+<a class="anchor" id="a3a677307c9b4796855cdc9d208cd8dee"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_radio_request_earliest_t::priority</td>
+          <td class="memname"><a class="el" href="a00406.html">dfu_start_packet_t</a>* dfu_update_packet_t::start_packet</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The radio timeslot priority, see <a class="el" href="a01072.html#ga5026e138e16d9a9664b804608062e9a1">NRF_RADIO_PRIORITY</a>. </p>
-
-</div>
-</div>
-<a class="anchor" id="af56601d1b7ef92d49dbd1567bd1d39e0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t nrf_radio_request_earliest_t::timeout_us</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Longest acceptable delay until the start of the requested timeslot (up to <a class="el" href="a01071.html#gace6d931f266ad76277d7de831a6b45ee">NRF_RADIO_EARLIEST_TIMEOUT_MAX_US</a> microseconds). </p>
+<p>Used when packet type is START_DATA_PACKET. Will contain information on software to be updtaed, i.e. SoftDevice, Bootloader and/or Application along with image sizes. </p>
 
 </div>
 </div>
@@ -186,8 +175,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00407.html">nrf_radio_request_earliest_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00407.html">dfu_update_packet_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

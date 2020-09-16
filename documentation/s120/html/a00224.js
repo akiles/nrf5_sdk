@@ -1,7 +1,5 @@
 var a00224 =
 [
-    [ "bit_width", "a00224.html#abb3f5d76f1cc9f033474a5c24d116025", null ],
-    [ "frequency", "a00224.html#acc77482beb52c3d8102c65ddc67c01c7", null ],
-    [ "interrupt_priority", "a00224.html#ad0b6c866ca3e572ba89747f507675375", null ],
-    [ "mode", "a00224.html#ac3211f3bb290d9bab58bf069bd477bc3", null ]
+    [ "report_id", "a00224.html#a4db26fdff00f44138f9f684ff1dfd149", null ],
+    [ "report_type", "a00224.html#a765872684206db6d91ad6de596599434", null ]
 ];

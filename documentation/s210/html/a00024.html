@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Error module</title>
+<title>nRF51 SDK - S210 SoftDevice: Simple timer</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,22 +97,21 @@ $(document).ready(function(){initNavTree('a00024.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Error module </div>  </div>
+<div class="title">Simple timer </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The error module provides the weak function <a class="el" href="a00327.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> for handling application errors. This function is used by most applications if it is not defined explicitly in the application code.</p>
-<p>The behavior of the error handler differs depending on whether the DEBUG flag is set:</p>
+<div class="textblock"><p>The simple timer driver can be used to create a single timer instance based on the TIMER1 peripheral. On time-out, a user-defined time-out handler is called directly from the TIMER1 interrupt handler.</p>
+<p>The interrupt handler runs at priority level APP_LOW.</p>
+<p>The following features are supported:</p>
 <ul>
-<li><p class="startli"><b>If the DEBUG flag is not set:</b></p>
-<p class="startli">When <a class="el" href="a00327.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> is invoked, the MCU is reset.</p>
-</li>
+<li>Tickless timer.</li>
+<li>Two modes: single shot mode and repeated mode.</li>
 </ul>
+<p>The following limitations are known:</p>
 <ul>
-<li><p class="startli"><b>If the DEBUG flag is set:</b></p>
-<p class="startli">When <a class="el" href="a00327.html#gad8b5b293dfa06cbbfeb03aaaaa2772cf">app_error_handler</a> is invoked, the function parameters (error code, line number, and file name) are copied to global memory, interrupts are disabled, and the application enters an infinite loop.</p>
-<p class="startli">If the BSP_DEFINES_ONLY flag is set, all LEDs available on the board are turned on.</p>
-<p class="startli">If the BSP_DEFINES_ONLY flag is not set, the <a class="el" href="a00055.html#BSP_INDICATE_FATAL_ERROR">BSP_INDICATE_FATAL_ERROR</a> state is indicated. </p>
-</li>
+<li>No more than one timer can run simultaneously.</li>
+<li>The timer is hard-coded to use the TIMER1 peripheral.</li>
+<li>The timer is hard-coded to 16-bit width mode. </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
@@ -120,7 +119,7 @@ $(document).ready(function(){initNavTree('a00024.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:37:16 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

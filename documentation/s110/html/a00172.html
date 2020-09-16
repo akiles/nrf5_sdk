@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_ans_c_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: Memory pool library</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,136 +96,37 @@ $(document).ready(function(){initNavTree('a00172.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ans_c_s Struct Reference<div class="ingroups"><a class="el" href="a00952.html">Alert Notification Service Client</a></div></div>  </div>
+<div class="title">Memory pool library </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Alert Notification structure. This contains various status information for the client.  
- <a href="a00172.html#details">More...</a></p>
-
-<p><code>#include &lt;ble_ans_c.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a5125f0b98f069ac8c455b109212d3d33"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00952.html#gaf4d6c41652f6accd6829112a74334c4e">ble_ans_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00172.html#a5125f0b98f069ac8c455b109212d3d33">evt_handler</a></td></tr>
-<tr class="separator:a5125f0b98f069ac8c455b109212d3d33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad18e423fbc97fa13b4f5f99097b5c3e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00971.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00172.html#ad18e423fbc97fa13b4f5f99097b5c3e6">error_handler</a></td></tr>
-<tr class="separator:ad18e423fbc97fa13b4f5f99097b5c3e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafc23bf2964f2476098f8841b808829a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00172.html#aafc23bf2964f2476098f8841b808829a">conn_handle</a></td></tr>
-<tr class="separator:aafc23bf2964f2476098f8841b808829a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0522feee52899c6d746fb496458c8681"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00172.html#a0522feee52899c6d746fb496458c8681">central_handle</a></td></tr>
-<tr class="separator:a0522feee52899c6d746fb496458c8681"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae696c92497734c92e20a628893a621b3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00172.html#ae696c92497734c92e20a628893a621b3">service_handle</a></td></tr>
-<tr class="separator:ae696c92497734c92e20a628893a621b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af58f6202418c1aab68d7224dcec9ba95"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00172.html#af58f6202418c1aab68d7224dcec9ba95">message_buffer_size</a></td></tr>
-<tr class="separator:af58f6202418c1aab68d7224dcec9ba95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12d3fef2b50b34a7cf6e42fbbc55308e"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00172.html#a12d3fef2b50b34a7cf6e42fbbc55308e">p_message_buffer</a></td></tr>
-<tr class="separator:a12d3fef2b50b34a7cf6e42fbbc55308e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Alert Notification structure. This contains various status information for the client. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a0522feee52899c6d746fb496458c8681"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_ans_c_s::central_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle for the currently connected central if peer is bonded. </p>
-
-</div>
-</div>
-<a class="anchor" id="aafc23bf2964f2476098f8841b808829a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_ans_c_s::conn_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
-
-</div>
-</div>
-<a class="anchor" id="ad18e423fbc97fa13b4f5f99097b5c3e6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00971.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_ans_c_s::error_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Function to be called in case of an error. </p>
-
-</div>
-</div>
-<a class="anchor" id="a5125f0b98f069ac8c455b109212d3d33"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00952.html#gaf4d6c41652f6accd6829112a74334c4e">ble_ans_c_evt_handler_t</a> ble_ans_c_s::evt_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event handler to be called for handling events in the Alert Notification Client Application. </p>
-
-</div>
-</div>
-<a class="anchor" id="af58f6202418c1aab68d7224dcec9ba95"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_ans_c_s::message_buffer_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size of message buffer to hold the additional text messages received on notifications. </p>
-
-</div>
-</div>
-<a class="anchor" id="a12d3fef2b50b34a7cf6e42fbbc55308e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t* ble_ans_c_s::p_message_buffer</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to the buffer to be used for additional text message handling. </p>
-
-</div>
-</div>
-<a class="anchor" id="ae696c92497734c92e20a628893a621b3"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_ans_c_s::service_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle to the service in the database to use for this instance. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>Memory pool implementation, based on circular buffer data structure, which supports asynchronous processing of RX data. The current default implementation supports 1 TX buffer and 4 RX buffers. The memory managed by the pool is allocated from static storage instead of heap. The internal design of the circular buffer implementing the RX memory layout is illustrated in the picture below.</p>
+<div class="image">
+<img src="memory_pool.png" alt="memory_pool.png"/>
+<div class="caption">
+Circular buffer design</div></div>
+<p> The expected call order for the RX APIs is as follows:</p>
+<ul>
+<li>hci_mem_pool_rx_produce</li>
+<li>hci_mem_pool_rx_data_size_set</li>
+<li>hci_mem_pool_rx_extract</li>
+<li>hci_mem_pool_rx_consume</li>
+</ul>
+<dl class="section warning"><dt>Warning</dt><dd>If the above mentioned expected call order is violated the end result can be undefined.</dd></dl>
+<dl class="section user"><dt>Component specific configuration options</dt><dd></dd></dl>
+<p>The following compile time configuration options are available to suit various implementations:</p>
+<ul>
+<li>TX_BUF_SIZE TX buffer size in bytes.</li>
+<li>RX_BUF_SIZE RX buffer size in bytes.</li>
+<li>RX_BUF_QUEUE_SIZE RX buffer element size. </li>
+</ul>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00172.html">ble_ans_c_s</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00170.html">Transport Services</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

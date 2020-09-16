@@ -1,7 +1,5 @@
 var a00180 =
 [
-    [ "params", "a00180.html#ac364488294f0c0ad5c857e56935ca602", null ],
-    [ "read", "a00180.html#a7d0c5d0586fa2a048d724a7ededf5e18", null ],
-    [ "type", "a00180.html#a70efda4990b7c7e43bc7c0b1ae75c05e", null ],
-    [ "write", "a00180.html#aa536efc6b3a866b5ae2d4c6cd9b2aafa", null ]
+    [ "chars", "a00180.html#aae5e676db57239ee9cfe89c13f603dd0", null ],
+    [ "count", "a00180.html#a91337d714a569e896c896a3b255db8ff", null ]
 ];

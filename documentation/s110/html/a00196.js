@@ -1,8 +1,6 @@
 var a00196 =
 [
-    [ "conn_handle", "a00196.html#aeef0bb9260018febc5b92af0d5359e9b", null ],
-    [ "cts_cccd_handle", "a00196.html#a14d458eaa378edf691dec5bbb5c6e453", null ],
-    [ "current_time_handle", "a00196.html#aa0866b1353b97df6deece0172c0cc3dd", null ],
-    [ "error_handler", "a00196.html#aa4032c144fac9fbf1ae0d84ef377caf5", null ],
-    [ "evt_handler", "a00196.html#a046c1b0b4fe1c7e83680b9654963b156", null ]
+    [ "attr_id", "a00196.html#a4eb3557171856c2bcf80b86fc1dba336", null ],
+    [ "attr_len", "a00196.html#a428b12b123e9af77601c2a1d35315a22", null ],
+    [ "notif_uid", "a00196.html#ad2bea3b9c015643b56804750b894d72d", null ]
 ];

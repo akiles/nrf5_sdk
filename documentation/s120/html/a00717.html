@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Structures</title>
+<title>nRF51 SDK - S120 SoftDevice: GAP Security status sources</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,31 +97,53 @@ $(document).ready(function(){initNavTree('a00717.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Structures<div class="ingroups"><a class="el" href="a00634.html">Logical Link Control and Adaptation Protocol (L2CAP)</a></div></div>  </div>
+<div class="title">GAP Security status sources<div class="ingroups"><a class="el" href="a00934.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00189.html">ble_l2cap_header_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Packet header format for L2CAP transmission.  <a href="a00189.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00187.html">ble_l2cap_evt_rx_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">L2CAP Received packet event report.  <a href="a00187.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00188.html">ble_l2cap_evt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">L2CAP event callback event structure.  <a href="a00188.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga7c6035361c3893781b15f788954ea564"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00717.html#ga7c6035361c3893781b15f788954ea564">BLE_GAP_SEC_STATUS_SOURCE_LOCAL</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga7c6035361c3893781b15f788954ea564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd7d314e3a27338396a80cf38c71f1e2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00717.html#gacd7d314e3a27338396a80cf38c71f1e2">BLE_GAP_SEC_STATUS_SOURCE_REMOTE</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:gacd7d314e3a27338396a80cf38c71f1e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga7c6035361c3893781b15f788954ea564"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_SOURCE_LOCAL&#160;&#160;&#160;0x00</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Local failure. </p>
+
+</div>
+</div>
+<a class="anchor" id="gacd7d314e3a27338396a80cf38c71f1e2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_SEC_STATUS_SOURCE_REMOTE&#160;&#160;&#160;0x01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Remote failure. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:46 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,5 +1,4 @@
 var a00081 =
 [
-    [ "acc", "a00081.html#a3afbdbe1fac908534d75767ec26ce558", null ],
-    [ "accdbl", "a00081.html#ac20e31281d3b9bad34c94ec8abcc3a94", null ]
+    [ "evt_type", "a00081.html#ad8b8284f5d85ee34da6a3db177c35d20", null ]
 ];

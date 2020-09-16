@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_bps_init_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: app_pwm_config_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,88 +106,39 @@ $(document).ready(function(){initNavTree('a00181.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_bps_init_t Struct Reference<div class="ingroups"><a class="el" href="a00954.html">Blood Pressure Service</a></div></div>  </div>
+<div class="title">app_pwm_config_t Struct Reference<div class="ingroups"><a class="el" href="a00983.html">Pulse-width modulation (PWM)</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Blood Pressure Service init structure. This contains all options and data needed for initialization of the service.  
+<p>PWM configuration structure used for initialization.  
  <a href="a00181.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_bps.h&gt;</code></p>
+<p><code>#include &lt;app_pwm.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a22943d0794c7a162398ddb54872d1751"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00954.html#ga4c7199796f540fc4ea76d6eb9cd98809">ble_bps_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a22943d0794c7a162398ddb54872d1751">evt_handler</a></td></tr>
-<tr class="separator:a22943d0794c7a162398ddb54872d1751"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a977afca322fd5a03271e0fa35300a164"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00351.html">ble_srv_cccd_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a977afca322fd5a03271e0fa35300a164">bps_meas_attr_md</a></td></tr>
-<tr class="separator:a977afca322fd5a03271e0fa35300a164"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa811a90c7dd0b8bea4434fe2ef2c4ede"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00353.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#aa811a90c7dd0b8bea4434fe2ef2c4ede">bps_feature_attr_md</a></td></tr>
-<tr class="separator:aa811a90c7dd0b8bea4434fe2ef2c4ede"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a811bba9e34ca00cad260b8d50aadbe5f"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00181.html#a811bba9e34ca00cad260b8d50aadbe5f">feature</a></td></tr>
-<tr class="separator:a811bba9e34ca00cad260b8d50aadbe5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06422abddaa496b9168f334df42f67d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a06422abddaa496b9168f334df42f67d0"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>pins</b> [2]</td></tr>
+<tr class="separator:a06422abddaa496b9168f334df42f67d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83466b8f4a8b52a58772c3d2e712fd02"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83466b8f4a8b52a58772c3d2e712fd02"></a>
+<a class="el" href="a00983.html#ga58cb721dc6ca8fdea7907bbd8cedbced">app_pwm_polarity_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>pin_polarity</b> [2]</td></tr>
+<tr class="separator:a83466b8f4a8b52a58772c3d2e712fd02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15cb4361b2aa835dbf3860ba2d4b3603"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15cb4361b2aa835dbf3860ba2d4b3603"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>num_of_channels</b></td></tr>
+<tr class="separator:a15cb4361b2aa835dbf3860ba2d4b3603"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ee3248fdfda7ba386b94be56f4913d5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4ee3248fdfda7ba386b94be56f4913d5"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>period_us</b></td></tr>
+<tr class="separator:a4ee3248fdfda7ba386b94be56f4913d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Blood Pressure Service init structure. This contains all options and data needed for initialization of the service. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aa811a90c7dd0b8bea4434fe2ef2c4ede"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00353.html">ble_srv_security_mode_t</a> ble_bps_init_t::bps_feature_attr_md</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Initial security level for blood pressure feature attribute </p>
-
-</div>
-</div>
-<a class="anchor" id="a977afca322fd5a03271e0fa35300a164"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00351.html">ble_srv_cccd_security_mode_t</a> ble_bps_init_t::bps_meas_attr_md</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Initial security level for blood pressure measurement attribute </p>
-
-</div>
-</div>
-<a class="anchor" id="a22943d0794c7a162398ddb54872d1751"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00954.html#ga4c7199796f540fc4ea76d6eb9cd98809">ble_bps_evt_handler_t</a> ble_bps_init_t::evt_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event handler to be called for handling events in the Blood Pressure Service. </p>
-
-</div>
-</div>
-<a class="anchor" id="a811bba9e34ca00cad260b8d50aadbe5f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_bps_init_t::feature</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Initial value for blood pressure feature </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>PWM configuration structure used for initialization. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00181.html">ble_bps_init_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00181.html">app_pwm_config_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_ias_c_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gatts_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,124 @@ $(document).ready(function(){initNavTree('a00325.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ias_c_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00966.html">Immediate Alert Service Client</a></div></div>  </div>
+<div class="title">ble_gatts_evt_t Struct Reference<div class="ingroups"><a class="el" href="a01298.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Immediate Alert Service client event.  
+<p>GATT Server event callback event structure.  
  <a href="a00325.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_ias_c.h&gt;</code></p>
+<p><code>#include &lt;ble_gatts.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aa03cb513eb320bde9c8f800162a7142f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00966.html#ga1363ef6107e67c26fd0ace31f6afa7cd">ble_ias_c_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00325.html#aa03cb513eb320bde9c8f800162a7142f">evt_type</a></td></tr>
-<tr class="separator:aa03cb513eb320bde9c8f800162a7142f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abeb8d79046f5ed809e6ac8b5fd40614d"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00325.html#abeb8d79046f5ed809e6ac8b5fd40614d">conn_handle</a></td></tr>
+<tr class="separator:abeb8d79046f5ed809e6ac8b5fd40614d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a750065b8cf4aae2c44cfe89c1b5e273b"><td class="memItemLeft" >union {</td></tr>
+<tr class="memitem:a33234d4a082708be21b61b7883c9f955"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00327.html">ble_gatts_evt_write_t</a>&#160;&#160;&#160;<a class="el" href="a00325.html#aaef77783fee30e58006d76bbc976bc9e">write</a></td></tr>
+<tr class="separator:a33234d4a082708be21b61b7883c9f955"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5fde418d931bdf8b371b673b570045a"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00323.html">ble_gatts_evt_rw_authorize_request_t</a>&#160;&#160;&#160;<a class="el" href="a00325.html#a27802389d2c209e149fd644a35eae956">authorize_request</a></td></tr>
+<tr class="separator:ae5fde418d931bdf8b371b673b570045a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3391891c52efc983bf8f712a952514e"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00324.html">ble_gatts_evt_sys_attr_missing_t</a>&#160;&#160;&#160;<a class="el" href="a00325.html#ab8c7e34509068fb9d8b78e4cdc2ab0f2">sys_attr_missing</a></td></tr>
+<tr class="separator:ab3391891c52efc983bf8f712a952514e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe14ea934792987a807c5e4395cb12b8"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00321.html">ble_gatts_evt_hvc_t</a>&#160;&#160;&#160;<a class="el" href="a00325.html#a9be30265f4a80ba2d5982bc7eda48891">hvc</a></td></tr>
+<tr class="separator:afe14ea934792987a807c5e4395cb12b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a57f0ff74d2e83c59068a048452f626"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00326.html">ble_gatts_evt_timeout_t</a>&#160;&#160;&#160;<a class="el" href="a00325.html#a5a5ade5ed126bc40ac43a302b4c7ae44">timeout</a></td></tr>
+<tr class="separator:a0a57f0ff74d2e83c59068a048452f626"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a750065b8cf4aae2c44cfe89c1b5e273b"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00325.html#a750065b8cf4aae2c44cfe89c1b5e273b">params</a></td></tr>
+<tr class="separator:a750065b8cf4aae2c44cfe89c1b5e273b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Immediate Alert Service client event. </p>
+<div class="textblock"><p>GATT Server event callback event structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aa03cb513eb320bde9c8f800162a7142f"></a>
+<a class="anchor" id="a27802389d2c209e149fd644a35eae956"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00966.html#ga1363ef6107e67c26fd0ace31f6afa7cd">ble_ias_c_evt_type_t</a> ble_ias_c_evt_t::evt_type</td>
+          <td class="memname"><a class="el" href="a00323.html">ble_gatts_evt_rw_authorize_request_t</a> ble_gatts_evt_t::authorize_request</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of event. </p>
+<p>Read or Write Authorize Request Parameters. </p>
+
+</div>
+</div>
+<a class="anchor" id="abeb8d79046f5ed809e6ac8b5fd40614d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_gatts_evt_t::conn_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Connection Handle on which the event occurred. </p>
+
+</div>
+</div>
+<a class="anchor" id="a9be30265f4a80ba2d5982bc7eda48891"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00321.html">ble_gatts_evt_hvc_t</a> ble_gatts_evt_t::hvc</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle Value Confirmation Event Parameters. </p>
+
+</div>
+</div>
+<a class="anchor" id="a750065b8cf4aae2c44cfe89c1b5e273b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">union { ... }   ble_gatts_evt_t::params</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event Parameters. </p>
+
+</div>
+</div>
+<a class="anchor" id="ab8c7e34509068fb9d8b78e4cdc2ab0f2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00324.html">ble_gatts_evt_sys_attr_missing_t</a> ble_gatts_evt_t::sys_attr_missing</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>System attributes missing. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5a5ade5ed126bc40ac43a302b4c7ae44"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00326.html">ble_gatts_evt_timeout_t</a> ble_gatts_evt_t::timeout</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Timeout Event. </p>
+
+</div>
+</div>
+<a class="anchor" id="aaef77783fee30e58006d76bbc976bc9e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00327.html">ble_gatts_evt_write_t</a> ble_gatts_evt_t::write</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Write Event Parameters. </p>
 
 </div>
 </div>
@@ -141,8 +232,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00325.html">ble_ias_c_evt_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00325.html">ble_gatts_evt_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

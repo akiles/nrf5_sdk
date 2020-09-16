@@ -173,21 +173,21 @@
 typedef struct
 {
   /* Standard properties */
-  uint8_t broadcast       :1; /**< Broadcasting of value permitted. */
-  uint8_t read            :1; /**< Reading value permitted. */
-  uint8_t write_wo_resp   :1; /**< Writing value with Write Command permitted. */
-  uint8_t write           :1; /**< Writing value with Write Request permitted. */
-  uint8_t notify          :1; /**< Notications of value permitted. */
-  uint8_t indicate        :1; /**< Indications of value permitted. */
-  uint8_t auth_signed_wr  :1; /**< Writing value with Signed Write Command permitted. */
+  uint8_t broadcast       :1; /**< Broadcasting of the value permitted. */
+  uint8_t read            :1; /**< Reading the value permitted. */
+  uint8_t write_wo_resp   :1; /**< Writing the value with Write Command permitted. */
+  uint8_t write           :1; /**< Writing the value with Write Request permitted. */
+  uint8_t notify          :1; /**< Notications of the value permitted. */
+  uint8_t indicate        :1; /**< Indications of the value permitted. */
+  uint8_t auth_signed_wr  :1; /**< Writing the value with Signed Write Command permitted. */
 } ble_gatt_char_props_t;
 
 /**@brief GATT Characteristic Extended Properties. */
 typedef struct
 {
   /* Extended properties */
-  uint8_t reliable_wr     :1; /**< Writing value with Queued Write Request permitted. */
-  uint8_t wr_aux          :1; /**< Writing the Characteristic User Description permitted. */
+  uint8_t reliable_wr     :1; /**< Writing the value with Queued Write operations permitted. */
+  uint8_t wr_aux          :1; /**< Writing the Characteristic User Description descriptor permitted. */
 } ble_gatt_char_ext_props_t;
 
 #endif // BLE_GATT_H__

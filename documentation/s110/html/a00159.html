@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_advdata_service_data_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: Health Thermometer Service</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,61 +96,20 @@ $(document).ready(function(){initNavTree('a00159.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_advdata_service_data_t Struct Reference<div class="ingroups"><a class="el" href="a01012.html">Advertising Data Encoder</a></div></div>  </div>
+<div class="title">Health Thermometer Service </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Service data structure.  
- <a href="a00159.html#details">More...</a></p>
-
-<p><code>#include &lt;ble_advdata.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a45ecd97813de71e19a317ee6e0d8e20a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00159.html#a45ecd97813de71e19a317ee6e0d8e20a">service_uuid</a></td></tr>
-<tr class="separator:a45ecd97813de71e19a317ee6e0d8e20a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a401ea8c0aad582a93685a929677b7111"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00426.html">uint8_array_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00159.html#a401ea8c0aad582a93685a929677b7111">data</a></td></tr>
-<tr class="separator:a401ea8c0aad582a93685a929677b7111"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Service data structure. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a401ea8c0aad582a93685a929677b7111"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00426.html">uint8_array_t</a> ble_advdata_service_data_t::data</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Additional service data. </p>
-
-</div>
-</div>
-<a class="anchor" id="a45ecd97813de71e19a317ee6e0d8e20a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_advdata_service_data_t::service_uuid</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Service UUID. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>This module implements the Health Thermometer Service.</p>
+<p>If an event handler is supplied by the application, the Health Thermometer Service will generate Health Thermometer Service events to the application.</p>
+<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Health Thermometer Service module by calling <a class="el" href="a01205.html#ga1d50a1758227869205ce213a564b436c" title="Function for handling the Application&#39;s BLE Stack events.">ble_hts_on_ble_evt()</a> from the <a class="el" href="a01189.html">SoftDevice Event Handler</a> function. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00159.html">ble_advdata_service_data_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00144.html">BLE Services</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gap_evt_disconnected_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_bas_c_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,78 @@ $(document).ready(function(){initNavTree('a00117.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_evt_disconnected_t Struct Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
+<div class="title">ble_bas_c_s Struct Reference<div class="ingroups"><a class="el" href="a00870.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event data for disconnected event.  
+<p>Battery Service Client structure.  
  <a href="a00117.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gap.h&gt;</code></p>
+<p><code>#include &lt;ble_bas_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a11211be968ad2898f3dd9b4d31b5ce22"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00117.html#a11211be968ad2898f3dd9b4d31b5ce22">reason</a></td></tr>
-<tr class="separator:a11211be968ad2898f3dd9b4d31b5ce22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97ef9e28546757bc5c42fc566e331380"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00117.html#a97ef9e28546757bc5c42fc566e331380">conn_handle</a></td></tr>
+<tr class="separator:a97ef9e28546757bc5c42fc566e331380"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ea89dfa950963404b32410a8e42a04f"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00117.html#a2ea89dfa950963404b32410a8e42a04f">bl_cccd_handle</a></td></tr>
+<tr class="separator:a2ea89dfa950963404b32410a8e42a04f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58c7f1553ce38426e3656bd61bd21748"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00117.html#a58c7f1553ce38426e3656bd61bd21748">bl_handle</a></td></tr>
+<tr class="separator:a58c7f1553ce38426e3656bd61bd21748"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13ed1988cc9320c7eaad37ec21272201"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00871.html#ga13d2aed8afc44d31865195d77b09c4ba">ble_bas_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00117.html#a13ed1988cc9320c7eaad37ec21272201">evt_handler</a></td></tr>
+<tr class="separator:a13ed1988cc9320c7eaad37ec21272201"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event data for disconnected event. </p>
+<div class="textblock"><p>Battery Service Client structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a11211be968ad2898f3dd9b4d31b5ce22"></a>
+<a class="anchor" id="a2ea89dfa950963404b32410a8e42a04f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_evt_disconnected_t::reason</td>
+          <td class="memname">uint16_t ble_bas_c_s::bl_cccd_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>HCI error code, see <a class="el" href="a00554.html">Bluetooth status codes</a>. </p>
+<p>Handle of the CCCD of the Battery Level characteristic. </p>
+
+</div>
+</div>
+<a class="anchor" id="a58c7f1553ce38426e3656bd61bd21748"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_bas_c_s::bl_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle of the Battery Level characteristic as provided by the SoftDevice. </p>
+
+</div>
+</div>
+<a class="anchor" id="a97ef9e28546757bc5c42fc566e331380"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_bas_c_s::conn_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Connection handle as provided by the SoftDevice. </p>
+
+</div>
+</div>
+<a class="anchor" id="a13ed1988cc9320c7eaad37ec21272201"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00871.html#ga13d2aed8afc44d31865195d77b09c4ba">ble_bas_c_evt_handler_t</a> ble_bas_c_s::evt_handler</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Application event handler to be called when there is an event related to the Battery service. </p>
 
 </div>
 </div>
@@ -141,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00117.html">ble_gap_evt_disconnected_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00117.html">ble_bas_c_s</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

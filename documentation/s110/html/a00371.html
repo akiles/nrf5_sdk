@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: dfu_update_packet_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_lls_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,67 +106,93 @@ $(document).ready(function(){initNavTree('a00371.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dfu_update_packet_t Struct Reference<div class="ingroups"><a class="el" href="a00944.html">Types and definitions.</a></div></div>  </div>
+<div class="title">ble_lls_s Struct Reference<div class="ingroups"><a class="el" href="a01208.html">Link Loss Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure for holding dfu update packet. Packet type indicate the type of packet.  
+<p>Link Loss Service structure. This contains various status information for the service.  
  <a href="a00371.html#details">More...</a></p>
 
-<p><code>#include &lt;dfu_types.h&gt;</code></p>
+<p><code>#include &lt;ble_lls.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ab181d68ce3f0f88e0f4020c1e07bb14d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00371.html#ab181d68ce3f0f88e0f4020c1e07bb14d">packet_type</a></td></tr>
-<tr class="separator:ab181d68ce3f0f88e0f4020c1e07bb14d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ea1365c329ce36970746a406336374a"><td class="memItemLeft" ><a class="anchor" id="a3ea1365c329ce36970746a406336374a"></a>
-union {</td></tr>
-<tr class="memitem:ab61165700e8b2a7099936be6ce53a2e0"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00367.html">dfu_data_packet_t</a>&#160;&#160;&#160;<a class="el" href="a00371.html#acefd384a51f51514c417758c5d870a10">data_packet</a></td></tr>
-<tr class="separator:ab61165700e8b2a7099936be6ce53a2e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a764c73a9acd6cc727469a9c4f88bf467"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00370.html">dfu_start_packet_t</a> *&#160;&#160;&#160;<a class="el" href="a00371.html#a3a677307c9b4796855cdc9d208cd8dee">start_packet</a></td></tr>
-<tr class="separator:a764c73a9acd6cc727469a9c4f88bf467"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ea1365c329ce36970746a406336374a"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:a3ea1365c329ce36970746a406336374a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a331d5f75c24c9f4be6b9f4464ce828c9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01208.html#ga2ff59fd3c572afa373d8731265a2daee">ble_lls_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00371.html#a331d5f75c24c9f4be6b9f4464ce828c9">evt_handler</a></td></tr>
+<tr class="separator:a331d5f75c24c9f4be6b9f4464ce828c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a22ac8304ea3a4bc7dacb72a8d65bc0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01212.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00371.html#a4a22ac8304ea3a4bc7dacb72a8d65bc0">error_handler</a></td></tr>
+<tr class="separator:a4a22ac8304ea3a4bc7dacb72a8d65bc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8ad660b1350238c9bb1f4ff6e043ef7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00371.html#ae8ad660b1350238c9bb1f4ff6e043ef7">service_handle</a></td></tr>
+<tr class="separator:ae8ad660b1350238c9bb1f4ff6e043ef7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee2e9a72478596b53d8d99a398360591"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00317.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00371.html#aee2e9a72478596b53d8d99a398360591">alert_level_handles</a></td></tr>
+<tr class="separator:aee2e9a72478596b53d8d99a398360591"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a279ea77b56e98f810efce3dc8ecc635b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00371.html#a279ea77b56e98f810efce3dc8ecc635b">conn_handle</a></td></tr>
+<tr class="separator:a279ea77b56e98f810efce3dc8ecc635b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure for holding dfu update packet. Packet type indicate the type of packet. </p>
+<div class="textblock"><p>Link Loss Service structure. This contains various status information for the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="acefd384a51f51514c417758c5d870a10"></a>
+<a class="anchor" id="aee2e9a72478596b53d8d99a398360591"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00367.html">dfu_data_packet_t</a> dfu_update_packet_t::data_packet</td>
+          <td class="memname"><a class="el" href="a00317.html">ble_gatts_char_handles_t</a> ble_lls_s::alert_level_handles</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Used when packet type is INIT_PACKET or DATA_PACKET. Packet contains data received for init or data. </p>
+<p>Handles related to the Alert Level characteristic. </p>
 
 </div>
 </div>
-<a class="anchor" id="ab181d68ce3f0f88e0f4020c1e07bb14d"></a>
+<a class="anchor" id="a279ea77b56e98f810efce3dc8ecc635b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t dfu_update_packet_t::packet_type</td>
+          <td class="memname">uint16_t ble_lls_s::conn_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Packet type, used to identify the content of the received packet referenced by data packet. </p>
+<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
 
 </div>
 </div>
-<a class="anchor" id="a3a677307c9b4796855cdc9d208cd8dee"></a>
+<a class="anchor" id="a4a22ac8304ea3a4bc7dacb72a8d65bc0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00370.html">dfu_start_packet_t</a>* dfu_update_packet_t::start_packet</td>
+          <td class="memname"><a class="el" href="a01212.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_lls_s::error_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Used when packet type is START_DATA_PACKET. Will contain information on software to be updtaed, i.e. SoftDevice, Bootloader and/or Application along with image sizes. </p>
+<p>Function to be called in case of an error. </p>
+
+</div>
+</div>
+<a class="anchor" id="a331d5f75c24c9f4be6b9f4464ce828c9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01208.html#ga2ff59fd3c572afa373d8731265a2daee">ble_lls_evt_handler_t</a> ble_lls_s::evt_handler</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event handler to be called for handling events in the Link Loss Service. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae8ad660b1350238c9bb1f4ff6e043ef7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_lls_s::service_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle of Link Loss Service (as provided by the BLE stack). </p>
 
 </div>
 </div>
@@ -175,8 +201,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00371.html">dfu_update_packet_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00371.html">ble_lls_s</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

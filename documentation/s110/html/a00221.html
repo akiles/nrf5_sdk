@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_conn_sec_mode_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_common_opt_t Union Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,55 +106,33 @@ $(document).ready(function(){initNavTree('a00221.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_conn_sec_mode_t Struct Reference<div class="ingroups"><a class="el" href="a01044.html">Structures</a></div></div>  </div>
+<div class="title">ble_common_opt_t Union Reference<div class="ingroups"><a class="el" href="a01283.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GAP connection security modes.  
+<p>Option structure for common options.  
  <a href="a00221.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gap.h&gt;</code></p>
+<p><code>#include &lt;ble.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ab1014e45933756f4e790ef8181730f7f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00221.html#ab1014e45933756f4e790ef8181730f7f">sm</a>: 4</td></tr>
-<tr class="separator:ab1014e45933756f4e790ef8181730f7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c0b55f3c9f8c589ca46e85d2c8f235c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00221.html#a3c0b55f3c9f8c589ca46e85d2c8f235c">lv</a>: 4</td></tr>
-<tr class="separator:a3c0b55f3c9f8c589ca46e85d2c8f235c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a442df28e3a6a2f5cb6b7d74999011525"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html">ble_common_opt_radio_cpu_mutex_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00221.html#a442df28e3a6a2f5cb6b7d74999011525">radio_cpu_mutex</a></td></tr>
+<tr class="separator:a442df28e3a6a2f5cb6b7d74999011525"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GAP connection security modes. </p>
-<p>Security Mode 0 Level 0: No access permissions at all (this level is not defined by the Bluetooth Core specification).<br/>
- Security Mode 1 Level 1: No security is needed (aka open link).<br/>
- Security Mode 1 Level 2: Encrypted link required, MITM protection not necessary.<br/>
- Security Mode 1 Level 3: MITM protected encrypted link required.<br/>
- Security Mode 2 Level 1: Signing or encryption required, MITM protection not necessary.<br/>
- Security Mode 2 Level 2: MITM protected signing required, unless link is MITM protected encrypted.<br/>
- </p>
+<div class="textblock"><p>Option structure for common options. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a3c0b55f3c9f8c589ca46e85d2c8f235c"></a>
+<a class="anchor" id="a442df28e3a6a2f5cb6b7d74999011525"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_conn_sec_mode_t::lv</td>
+          <td class="memname"><a class="el" href="a00220.html">ble_common_opt_radio_cpu_mutex_t</a> ble_common_opt_t::radio_cpu_mutex</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Level (1, 2 or 3), 0 for no permissions at all. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab1014e45933756f4e790ef8181730f7f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_conn_sec_mode_t::sm</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Security Mode (1 or 2), 0 for no permissions at all. </p>
+<p>Parameters for the option for the mutual exclusion of radio activity and CPU execution. </p>
 
 </div>
 </div>
@@ -163,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00221.html">ble_gap_conn_sec_mode_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00221.html">ble_common_opt_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

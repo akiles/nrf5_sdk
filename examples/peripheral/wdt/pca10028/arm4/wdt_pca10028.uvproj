@@ -351,9 +351,9 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define> BOARD_PCA10028 NRF51</Define>
+              <Define> BOARD_PCA10028 SWI_DISABLE0 NRF51</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\config;..\..;..\..\..\..\bsp;..\..\..\..\..\components\libraries\timer;..\..\..\..\..\components\libraries\gpiote;..\..\..\..\..\components\drivers_nrf\wdt;..\..\..\..\..\components\drivers_nrf\config;..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\components\libraries\util;..\..\..\..\..\components\device;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\libraries\button;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</IncludePath>
+              <IncludePath>..\..\config;..\..;..\..\..\..\bsp;..\..\..\..\..\components\libraries\timer;..\..\..\..\..\components\drivers_nrf\wdt;..\..\..\..\..\components\drivers_nrf\config;..\..\..\..\..\components\drivers_nrf\clock;..\..\..\..\..\components\libraries\util;..\..\..\..\..\components\device;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\libraries\button;..\..\..\..\..\components\drivers_nrf\gpiote;..\..\..\..\..\components\drivers_nrf\common;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -367,7 +367,7 @@
             <uSurpInc>0</uSurpInc>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define> BOARD_PCA10028 NRF51</Define>
+              <Define> BOARD_PCA10028 SWI_DISABLE0 NRF51</Define>
               <Undefine></Undefine>
               <IncludePath></IncludePath>
             </VariousControls>
@@ -459,6 +459,11 @@
               <FilePath>..\..\..\..\..\components\drivers_nrf\common\nrf_drv_common.c</FilePath>
             </File>
             <File>
+              <FileName>nrf_drv_gpiote.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\drivers_nrf\gpiote\nrf_drv_gpiote.c</FilePath>
+            </File>
+            <File>
               <FileName>nrf_drv_wdt.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\components\drivers_nrf\wdt\nrf_drv_wdt.c</FilePath>
@@ -477,11 +482,6 @@
               <FileName>app_error.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\components\libraries\util\app_error.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_gpiote.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\components\libraries\gpiote\app_gpiote.c</FilePath>
             </File>
             <File>
               <FileName>app_timer.c</FileName>

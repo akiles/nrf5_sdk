@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Troubleshooting</title>
+<title>nRF51 SDK - S110 SoftDevice: Creating an image file</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,55 +97,44 @@ $(document).ready(function(){initNavTree('a00098.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Troubleshooting </div>  </div>
+<div class="title">Creating an image file </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The following sections describe some common errors that you might encounter when creating a DFU bootloader and their solutions.</p>
-<h1><a class="anchor" id="dfuble_ts_1"></a>
-No Algorithm found for: 10001014H - 10001017H</h1>
-<p>The following error message is displayed in Keil when programming the DFU bootloader: </p>
-<pre class="fragment">No Algorithm found for: 10001014H - 10001017H
-Partial Erase Done (areas with no algorithms skipped!)
-No Algorithm found for: 10001014H - 10001017H
-</pre><p><b>Cause:</b> You attempted to use the default J-Link target driver to flash the DFU bootloader to the device. This does not work, because in addition to flashing the bootloader, the bootloader start address must be written to the UICR register. The default J-Link driver cannot do this.</p>
-<p><b>Solution:</b> Use the external tool <code>nrfjprog.exe</code> instead of the default J-Link driver. You can configure the tool that is used for flash programming on the Utilities tab of the project options in Keil.</p>
-<h1><a class="anchor" id="dfuble_ts_2"></a>
-Failed to execute "nrfjprog.exe"</h1>
-<p>The following error message is displayed in Keil when programming the DFU bootloader: </p>
-<pre class="fragment">Error: failed to execute "nrfjprog.exe"
-</pre><p><b>Cause:</b> The external tool <code>nrfjprog.exe</code> that is required to flash the DFU bootloader to the device cannot be found in the Windows PATH variable.</p>
-<p><b>Solution:</b> Add the path to <code>nrfjprog.exe</code> to the Windows PATH variable, or add the full path to <code>nrfjprog.exe</code> on the Utilities tab of the project options in Keil. The tool is delivered with the nRF51 MDK, which is required to use the SDK. The default path to <code>nrfjprog.exe</code> is <code>C:\Program Files (x86)\Nordic Semiconductor\nrf51\bin\nrfjprog.exe</code>.</p>
-<h1><a class="anchor" id="dfuble_ts_3"></a>
-Error L6406E: No space in execution regions</h1>
-<p>The following error message is displayed in Keil when compiling the DFU bootloader: </p>
-<pre class="fragment">linking...
-.\_build\nrf51422_xxac.axf: Error: L6406E: No space in 
-execution regions with .ANY selector matching \c .....
-</pre><p><b>Cause:</b> The size of the compiled bootloader project exceeds the size that is configured in the project settings. This problem can occur if you modify the example code so that the resulting image becomes much bigger, or if you modify the project settings that define the memory areas on the IC.</p>
-<p><b>Solution:</b> Try using a higher optimization level (<code>-O3</code>), or increase the code area for the DFU bootloader as described in <a class="el" href="a00095.html">Relocating the bootloader</a>.</p>
-<h1><a class="anchor" id="dfuble_ts_4"></a>
-DFU bootloader stops working after changing the start address</h1>
-<p>After changing the start address of the bootloader and flashing the image to the device again, the bootloader stops working.</p>
-<p><b>Cause:</b> Flashing the image to the device at a different memory location does not correctly set the pointer to the start address that is stored in the UICR register. Therefore, the pointer might point to the wrong start address, and there is no bootloader at this location.</p>
-<p><b>Solution:</b> Erase the device. This will delete the start address that is stored in the UICR register. Then program the SoftDevice and the DFU bootloader again. See <a class="el" href="a00095.html">Relocating the bootloader</a> for more information.</p>
-<h1><a class="anchor" id="dfuble_ts_5"></a>
-Uploaded application does not run</h1>
-<p>You uploaded an application, but the application does not run when the device is reset.</p>
-<p><b>Cause:</b> The application cannot be started because it does not start at the expected start address.</p>
-<p><b>Solution:</b> Compile the application with the correct start address. For example, the correct start address for the S110 SoftDevice v7.0.0 is 0x00016000. For the S310 SoftDevice v0.9.0, the correct start address is 0x00020000. To determine the correct start address for the SoftDevice you are using, check the SoftDevice Specification (SDS). See <a class="el" href="a00094.html">Memory layout</a> for more information.</p>
-<h1><a class="anchor" id="dfuble_ts_6"></a>
-Access to the port 'COMxx' is denied</h1>
-<p>When performing a Device Firmware Update using the IronPython script, the following error is reported: </p>
-<pre class="fragment">[EXCEPTION] Access to the port 'COMxx' is denied.
-</pre><p><b>Cause:</b> The script cannot access the device at the specified address, either because you specified an incorrect address or because the device is in use by another application.</p>
-<p><b>Solution:</b> Make sure that the specified address is correct and close other applications that might use the device, for example, the Master Control Panel. </p>
-</div></div><!-- contents -->
+<div class="textblock"><p>The format of the firmware image that you use to update the device firmware depends on the tool that you use to perform the DFU. The DFU bootloader expects the image in binary format; however, some tools automatically convert the image from HEX format to binary format.</p>
+<h1><a class="anchor" id="bledfu_createzip"></a>
+Creating a zip with image and init packet</h1>
+<p>If you use Master Control Panel or other tools by Nordic Semiconductor to update the device firmware, you must provide a zip that contains the image file and a corresponding init packet. To create this zip file, use the <code>nrf.exe</code> tool that is installed with the Master Control Panel. By default, the tool is located in the <code>C:\Program Files (x86)\Nordic Semiconductor\Master Control Panel\&lt;version&gt;\nrf\</code> folder. Run <code>nrf.exe dfu genpkg --help</code> to display usage instructions.</p>
+<p>You can add the following firmware images in binary format to the zip file:</p>
+<ul>
+<li><code>--application</code> <em>image.bin:</em> a binary image of an application</li>
+<li><code>--bootloader</code> <em>image.bin:</em> a binary image of a bootloader</li>
+<li><code>--softdevice</code> <em>image.bin:</em> a binary image of a SoftDevice</li>
+</ul>
+<p>You can also combine several images in one zip file.</p>
+<p>In addition to the images, you must specify the information that will be added to the init packet:</p>
+<ul>
+<li><code>--application-version</code> <em>version:</em> the version of the application image, for example, <code>0xff</code> </li>
+<li><code>--dev-revision</code> <em>version:</em> the revision of the device that should accept the image, for example, <code>1</code> </li>
+<li><code>--dev-type</code> <em>type:</em> the type of the device that should accept the image, for example, <code>1</code> </li>
+<li><code>--sd-req</code> <em>sd_list:</em> a comma-separated list of FWID values of SoftDevices that are valid to be used with the new image, for example, <code>0x4f,0x5a</code></li>
+</ul>
+<h1><a class="anchor" id="bledfu_binary"></a>
+Creating a binary image</h1>
+<p>When you compile an application in Keil, two images are created:</p>
+<ul>
+<li>A HEX file</li>
+<li>An AXF (ELF) file</li>
+</ul>
+<p>In most cases, you can use the image in HEX format to perform the DFU. If you need a binary image, use the command line tool <code>fromelf.exe</code> to convert the AXF file into a binary image. The tool is located in the <code>&lt;KeilFolder&gt;\ARM\ARMCC\bin</code> folder.</p>
+<p>Call <code>fromelf.exe</code> as follows to convert an AXF image into a binary file: </p>
+<pre class="fragment">&lt;Keil-folder&gt;\ARM\ARMCC\bin\fromelf.exe --bin --output &lt;outfile.bin&gt; &lt;infile.axf&gt;
+</pre> </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00078.html">BLE DFU Bootloader</a></li><li class="navelem"><a class="el" href="a00089.html">Creating a DFU bootloader</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00084.html">BLE DFU Bootloader</a></li><li class="navelem"><a class="el" href="a00095.html">Creating a DFU bootloader</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

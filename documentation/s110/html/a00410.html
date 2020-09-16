@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: nrf_radio_signal_callback_return_param_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dm_context_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,99 +106,64 @@ $(document).ready(function(){initNavTree('a00410.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_radio_signal_callback_return_param_t Struct Reference<div class="ingroups"><a class="el" href="a01072.html">Types</a></div></div>  </div>
+<div class="title">dm_context_t Struct Reference<div class="ingroups"><a class="el" href="a01223.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Return parameters of the radio timeslot signal callback.  
+<p>Definition of Data Context.  
  <a href="a00410.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_soc.h&gt;</code></p>
+<p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac938534ea4bdd342a3cb36c94071e073"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00410.html#ac938534ea4bdd342a3cb36c94071e073">callback_action</a></td></tr>
-<tr class="separator:ac938534ea4bdd342a3cb36c94071e073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1bfa769ae244408f40a866229c1deeb5"><td class="memItemLeft" ><a class="anchor" id="a1bfa769ae244408f40a866229c1deeb5"></a>
-union {</td></tr>
-<tr class="memitem:a9782e2570bc1739bc7a32d51e4997afd"><td class="memItemLeft" >&#160;&#160;&#160;struct {</td></tr>
-<tr class="memitem:a021ad6360ec08535bd0e38b1cdac0e05"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;<a class="el" href="a00409.html">nrf_radio_request_t</a> *&#160;&#160;&#160;<a class="el" href="a00410.html#a3f55c9628d7b2e8dbecb594a49eb4a34">p_next</a></td></tr>
-<tr class="separator:a021ad6360ec08535bd0e38b1cdac0e05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9782e2570bc1739bc7a32d51e4997afd"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;&#160;&#160;<a class="el" href="a00410.html#a5574ea584b5bb5c1537fe280902d58d0">request</a></td></tr>
-<tr class="separator:a9782e2570bc1739bc7a32d51e4997afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae6d8e546a487dc11987e6743f916e94"><td class="memItemLeft" >&#160;&#160;&#160;struct {</td></tr>
-<tr class="memitem:a405bca573e2ff0f9f675d7bfd34433b4"><td class="memItemLeft" >&#160;&#160;&#160;&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="a00410.html#ae6f6fa462f50a24ee278512c394beb46">length_us</a></td></tr>
-<tr class="separator:a405bca573e2ff0f9f675d7bfd34433b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae6d8e546a487dc11987e6743f916e94"><td class="memItemLeft" valign="top">&#160;&#160;&#160;}&#160;&#160;&#160;<a class="el" href="a00410.html#a07c71b95235fc1f947730c0eb68450b6">extend</a></td></tr>
-<tr class="separator:aae6d8e546a487dc11987e6743f916e94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1bfa769ae244408f40a866229c1deeb5"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:a1bfa769ae244408f40a866229c1deeb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6410a73c4b824cd8411f93f4e801c2e2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00410.html#a6410a73c4b824cd8411f93f4e801c2e2">flags</a></td></tr>
+<tr class="separator:a6410a73c4b824cd8411f93f4e801c2e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a584d9c286a840f2aa29cf3f6e76362d4"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00410.html#a584d9c286a840f2aa29cf3f6e76362d4">len</a></td></tr>
+<tr class="separator:a584d9c286a840f2aa29cf3f6e76362d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbcb29305bde09573e35ed7f4c214641"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00410.html#acbcb29305bde09573e35ed7f4c214641">p_data</a></td></tr>
+<tr class="separator:acbcb29305bde09573e35ed7f4c214641"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Return parameters of the radio timeslot signal callback. </p>
+<div class="textblock"><p>Definition of Data Context. </p>
+<p>Defines contextual data format, it consists of context data length and pointer to data. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ac938534ea4bdd342a3cb36c94071e073"></a>
+<a class="anchor" id="a6410a73c4b824cd8411f93f4e801c2e2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_radio_signal_callback_return_param_t::callback_action</td>
+          <td class="memname">uint32_t dm_context_t::flags</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The action requested by the application when returning from the signal callback, see <a class="el" href="a01072.html#ga21172c0e9efda8656ee3954b822a61f9">NRF_RADIO_SIGNAL_CALLBACK_ACTION</a>. </p>
+<p>Additional flags identifying data. </p>
 
 </div>
 </div>
-<a class="anchor" id="a07c71b95235fc1f947730c0eb68450b6"></a>
+<a class="anchor" id="a584d9c286a840f2aa29cf3f6e76362d4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct { ... }   nrf_radio_signal_callback_return_param_t::extend</td>
+          <td class="memname">uint32_t dm_context_t::len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Additional parameters for return_code <a class="el" href="a01072.html#gga21172c0e9efda8656ee3954b822a61f9af8b1e7127849acd108c79c0a7ea8fefd">NRF_RADIO_SIGNAL_CALLBACK_ACTION_EXTEND</a>. </p>
+<p>Length of data. </p>
 
 </div>
 </div>
-<a class="anchor" id="ae6f6fa462f50a24ee278512c394beb46"></a>
+<a class="anchor" id="acbcb29305bde09573e35ed7f4c214641"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t nrf_radio_signal_callback_return_param_t::length_us</td>
+          <td class="memname">uint8_t* dm_context_t::p_data</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Requested extension of the timeslot duration (microseconds) (for minimum time see <a class="el" href="a01071.html#ga09f23a55e7c1e507dbbf6f134c789497">NRF_RADIO_MINIMUM_TIMESLOT_LENGTH_EXTENSION_TIME_US</a>). </p>
-
-</div>
-</div>
-<a class="anchor" id="a3f55c9628d7b2e8dbecb594a49eb4a34"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00409.html">nrf_radio_request_t</a>* nrf_radio_signal_callback_return_param_t::p_next</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The request parameters for the next radio timeslot. </p>
-
-</div>
-</div>
-<a class="anchor" id="a5574ea584b5bb5c1537fe280902d58d0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct { ... }   nrf_radio_signal_callback_return_param_t::request</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Additional parameters for return_code <a class="el" href="a01072.html#gga21172c0e9efda8656ee3954b822a61f9a4f2f3f6df9a22f2f8d56e33326f1682e">NRF_RADIO_SIGNAL_CALLBACK_ACTION_REQUEST_AND_END</a>. </p>
+<p>Pointer to contextual data, a copy is made of the data. </p>
 
 </div>
 </div>
@@ -207,8 +172,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00410.html">nrf_radio_signal_callback_return_param_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00410.html">dm_context_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

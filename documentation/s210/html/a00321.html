@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: SLIP module</title>
+<title>nRF51 SDK - S210 SoftDevice: RTC HAL</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,201 +97,270 @@ $(document).ready(function(){initNavTree('a00321.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">SLIP module<div class="ingroups"><a class="el" href="a00349.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">RTC HAL<div class="ingroups"><a class="el" href="a00342.html">RTC HAL and driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>SLIP layer for supporting packet framing in HCI transport.  
+<p>Hardware abstraction layer for managing the real time counter (RTC).  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00073.html">hci_slip_evt_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure containing an event from the SLIP layer.  <a href="a00073.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:gab1b3735b482e480ee925e78c544f84d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab1b3735b482e480ee925e78c544f84d0"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#gab1b3735b482e480ee925e78c544f84d0">hci_slip_event_handler_t</a> )(<a class="el" href="a00073.html">hci_slip_evt_t</a> event)</td></tr>
-<tr class="memdesc:gab1b3735b482e480ee925e78c544f84d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for the SLIP layer event callback. <br/></td></tr>
-<tr class="separator:gab1b3735b482e480ee925e78c544f84d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gaab20bab2129073fed812c452d0d58cd9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#gaab20bab2129073fed812c452d0d58cd9">RTC_CHANNEL_NUM</a>&#160;&#160;&#160;4</td></tr>
+<tr class="separator:gaab20bab2129073fed812c452d0d58cd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05d33b1e64fc3150998c82b42c9339be"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#ga05d33b1e64fc3150998c82b42c9339be">RTC_INPUT_FREQ</a>&#160;&#160;&#160;32768</td></tr>
+<tr class="separator:ga05d33b1e64fc3150998c82b42c9339be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc16b8d4470e8d3ca416cd844501d045"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabc16b8d4470e8d3ca416cd844501d045"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RTC_WRAP</b>(val)&#160;&#160;&#160;(val &amp; RTC_COUNTER_COUNTER_Msk)</td></tr>
+<tr class="separator:gabc16b8d4470e8d3ca416cd844501d045"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga77626779c0b172803f201ae0e2aa66a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga77626779c0b172803f201ae0e2aa66a0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RTC_CHANNEL_INT_MASK</b>(ch)&#160;&#160;&#160;((uint32_t)<a class="el" href="a00321.html#gga22211dc20a5c2f6cf1b43039d2bae4a3acb0d6d71f2dcb78604936e1ba924ab9b">NRF_RTC_INT_COMPARE0_MASK</a> &lt;&lt; ch)</td></tr>
+<tr class="separator:ga77626779c0b172803f201ae0e2aa66a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf427bf8e3d74f2222b50ab1ec142d4f3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf427bf8e3d74f2222b50ab1ec142d4f3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RTC_CHANNEL_EVENT_ADDR</b>(ch)&#160;&#160;&#160;(<a class="el" href="a00321.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a>)(<a class="el" href="a00321.html#ggaeefe46b9280fd5e11516b4148b9c5950aed2f00b3d07e65411e4b63982efd2e07">NRF_RTC_EVENT_COMPARE_0</a> + ch*sizeof(uint32_t))</td></tr>
+<tr class="separator:gaf427bf8e3d74f2222b50ab1ec142d4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gaf03d61e05dd64c3a61644580c29aa0b4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00321.html#ggaf03d61e05dd64c3a61644580c29aa0b4a518c3406525586d68bf2f476c1935eb9">HCI_SLIP_RX_RDY</a>, 
+<tr class="memitem:gab1bbbc39c6dac153baf61aeae33c4274"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#gab1bbbc39c6dac153baf61aeae33c4274">nrf_rtc_task_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00321.html#ggab1bbbc39c6dac153baf61aeae33c4274a2a8ffc1fb20f19a5b14826564e5d03e5">NRF_RTC_TASK_START</a> = offsetof(NRF_RTC_Type,TASKS_START), 
 <br/>
-&#160;&#160;<a class="el" href="a00321.html#ggaf03d61e05dd64c3a61644580c29aa0b4a507424cf2788c502b25b730450fa3c1b">HCI_SLIP_TX_DONE</a>, 
+&#160;&#160;<a class="el" href="a00321.html#ggab1bbbc39c6dac153baf61aeae33c4274a6dbaa4bbd6d58e079767f0309239eec1">NRF_RTC_TASK_STOP</a> = offsetof(NRF_RTC_Type,TASKS_STOP), 
 <br/>
-&#160;&#160;<a class="el" href="a00321.html#ggaf03d61e05dd64c3a61644580c29aa0b4acd2a18f379c0f764d52782bf13ae7f60">HCI_SLIP_RX_OVERFLOW</a>, 
+&#160;&#160;<a class="el" href="a00321.html#ggab1bbbc39c6dac153baf61aeae33c4274a0b5cbfbb54397b0ec8ea8fb73f4a7bc0">NRF_RTC_TASK_CLEAR</a> = offsetof(NRF_RTC_Type,TASKS_CLEAR), 
 <br/>
-&#160;&#160;<a class="el" href="a00321.html#ggaf03d61e05dd64c3a61644580c29aa0b4a89ce814e3c2dbfc49432118d735d6eef">HCI_SLIP_ERROR</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00321.html#ggaf03d61e05dd64c3a61644580c29aa0b4a1922de9f57ef7bf2c0e2af37877224f1">HCI_SLIP_EVT_TYPE_MAX</a>
+&#160;&#160;<a class="el" href="a00321.html#ggab1bbbc39c6dac153baf61aeae33c4274a4cda1feac46eb1092cad53e9abe1a3d2">NRF_RTC_TASK_TRIGGER_OVERFLOW</a> = offsetof(NRF_RTC_Type,TASKS_TRIGOVRFLW)
 <br/>
  }</td></tr>
-<tr class="memdesc:gaf03d61e05dd64c3a61644580c29aa0b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event types from the SLIP Layer.  <a href="a00321.html#gaf03d61e05dd64c3a61644580c29aa0b4">More...</a><br/></td></tr>
-<tr class="separator:gaf03d61e05dd64c3a61644580c29aa0b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gab1bbbc39c6dac153baf61aeae33c4274"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTC tasks.  <a href="a00321.html#gab1bbbc39c6dac153baf61aeae33c4274">More...</a><br/></td></tr>
+<tr class="separator:gab1bbbc39c6dac153baf61aeae33c4274"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeefe46b9280fd5e11516b4148b9c5950"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00321.html#ggaeefe46b9280fd5e11516b4148b9c5950a1c477c236900018c2dec4265129739c7">NRF_RTC_EVENT_TICK</a> = offsetof(NRF_RTC_Type,EVENTS_TICK), 
+<br/>
+&#160;&#160;<a class="el" href="a00321.html#ggaeefe46b9280fd5e11516b4148b9c5950acca3da90aab0fc0950facce3d9c60b9c">NRF_RTC_EVENT_OVERFLOW</a> = offsetof(NRF_RTC_Type,EVENTS_OVRFLW), 
+<br/>
+&#160;&#160;<a class="el" href="a00321.html#ggaeefe46b9280fd5e11516b4148b9c5950aed2f00b3d07e65411e4b63982efd2e07">NRF_RTC_EVENT_COMPARE_0</a> = offsetof(NRF_RTC_Type,EVENTS_COMPARE[0]), 
+<br/>
+&#160;&#160;<a class="el" href="a00321.html#ggaeefe46b9280fd5e11516b4148b9c5950a4910d903ba14a05187dedfcc842ef26a">NRF_RTC_EVENT_COMPARE_1</a> = offsetof(NRF_RTC_Type,EVENTS_COMPARE[1]), 
+<br/>
+&#160;&#160;<a class="el" href="a00321.html#ggaeefe46b9280fd5e11516b4148b9c5950a913f4348d8da28f6253ffcca803ed937">NRF_RTC_EVENT_COMPARE_2</a> = offsetof(NRF_RTC_Type,EVENTS_COMPARE[2]), 
+<br/>
+&#160;&#160;<a class="el" href="a00321.html#ggaeefe46b9280fd5e11516b4148b9c5950af7b99708af83d76a4d4b59116f328bbc">NRF_RTC_EVENT_COMPARE_3</a> = offsetof(NRF_RTC_Type,EVENTS_COMPARE[3])
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaeefe46b9280fd5e11516b4148b9c5950"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTC events.  <a href="a00321.html#gaeefe46b9280fd5e11516b4148b9c5950">More...</a><br/></td></tr>
+<tr class="separator:gaeefe46b9280fd5e11516b4148b9c5950"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22211dc20a5c2f6cf1b43039d2bae4a3"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#ga22211dc20a5c2f6cf1b43039d2bae4a3">nrf_rtc_int_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00321.html#gga22211dc20a5c2f6cf1b43039d2bae4a3ab01e1e883741734b5cac05c92efc952e">NRF_RTC_INT_TICK_MASK</a> = RTC_INTENSET_TICK_Msk, 
+<br/>
+&#160;&#160;<a class="el" href="a00321.html#gga22211dc20a5c2f6cf1b43039d2bae4a3a18c66e1dcbc43cd4c82a6f5d0fb8d922">NRF_RTC_INT_OVERFLOW_MASK</a> = RTC_INTENSET_OVRFLW_Msk, 
+<br/>
+&#160;&#160;<a class="el" href="a00321.html#gga22211dc20a5c2f6cf1b43039d2bae4a3acb0d6d71f2dcb78604936e1ba924ab9b">NRF_RTC_INT_COMPARE0_MASK</a> = RTC_INTENSET_COMPARE0_Msk, 
+<br/>
+&#160;&#160;<a class="el" href="a00321.html#gga22211dc20a5c2f6cf1b43039d2bae4a3af842e26d22b97607c1b778c4119b82a6">NRF_RTC_INT_COMPARE1_MASK</a> = RTC_INTENSET_COMPARE1_Msk, 
+<br/>
+&#160;&#160;<a class="el" href="a00321.html#gga22211dc20a5c2f6cf1b43039d2bae4a3adf3bfc6e4f76ed0ecb3b1784d3dad2e0">NRF_RTC_INT_COMPARE2_MASK</a> = RTC_INTENSET_COMPARE2_Msk, 
+<br/>
+&#160;&#160;<a class="el" href="a00321.html#gga22211dc20a5c2f6cf1b43039d2bae4a3a04d8a6817769b5b2b231b7ebfcde893c">NRF_RTC_INT_COMPARE3_MASK</a> = RTC_INTENSET_COMPARE3_Msk
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga22211dc20a5c2f6cf1b43039d2bae4a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">RTC interrupts.  <a href="a00321.html#ga22211dc20a5c2f6cf1b43039d2bae4a3">More...</a><br/></td></tr>
+<tr class="separator:ga22211dc20a5c2f6cf1b43039d2bae4a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga5174ac7933b8633a86c1560e645dcf43"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#ga5174ac7933b8633a86c1560e645dcf43">hci_slip_evt_handler_register</a> (<a class="el" href="a00321.html#gab1b3735b482e480ee925e78c544f84d0">hci_slip_event_handler_t</a> event_handler)</td></tr>
-<tr class="memdesc:ga5174ac7933b8633a86c1560e645dcf43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering the event handler provided as parameter and this event handler will be used by SLIP layer to send events described in <a class="el" href="a00321.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a>.  <a href="#ga5174ac7933b8633a86c1560e645dcf43">More...</a><br/></td></tr>
-<tr class="separator:ga5174ac7933b8633a86c1560e645dcf43"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga395ec28c5fd6a5ca2f8dcd68817cced1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#ga395ec28c5fd6a5ca2f8dcd68817cced1">hci_slip_open</a> (void)</td></tr>
-<tr class="memdesc:ga395ec28c5fd6a5ca2f8dcd68817cced1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for opening the SLIP layer. This function must be called before <a class="el" href="a00321.html#gaba13b94dd501034bd33b1d10941ded4b">hci_slip_write</a> and before any data can be received.  <a href="#ga395ec28c5fd6a5ca2f8dcd68817cced1">More...</a><br/></td></tr>
-<tr class="separator:ga395ec28c5fd6a5ca2f8dcd68817cced1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac07c6af846ecdbdaa3def1860aff6e47"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#gac07c6af846ecdbdaa3def1860aff6e47">hci_slip_close</a> (void)</td></tr>
-<tr class="memdesc:gac07c6af846ecdbdaa3def1860aff6e47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for closing the SLIP layer. After this function is called no data can be transmitted or received in this layer.  <a href="#gac07c6af846ecdbdaa3def1860aff6e47">More...</a><br/></td></tr>
-<tr class="separator:gac07c6af846ecdbdaa3def1860aff6e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaba13b94dd501034bd33b1d10941ded4b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#gaba13b94dd501034bd33b1d10941ded4b">hci_slip_write</a> (const uint8_t *p_buffer, uint32_t length)</td></tr>
-<tr class="memdesc:gaba13b94dd501034bd33b1d10941ded4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for writing a packet with SLIP encoding. Packet transmission is confirmed when the HCI_SLIP_TX_DONE event is received by the function caller.  <a href="#gaba13b94dd501034bd33b1d10941ded4b">More...</a><br/></td></tr>
-<tr class="separator:gaba13b94dd501034bd33b1d10941ded4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabd00a0b89127a66990a2ea728fd39b3f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#gabd00a0b89127a66990a2ea728fd39b3f">hci_slip_rx_buffer_register</a> (uint8_t *p_buffer, uint32_t length)</td></tr>
-<tr class="memdesc:gabd00a0b89127a66990a2ea728fd39b3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering a receive buffer. The receive buffer will be used for storage of received and SLIP decoded data. No data can be received by the SLIP layer until a receive buffer has been registered.  <a href="#gabd00a0b89127a66990a2ea728fd39b3f">More...</a><br/></td></tr>
-<tr class="separator:gabd00a0b89127a66990a2ea728fd39b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga64787233b50e4c8d9d937536a449e8e4"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#ga64787233b50e4c8d9d937536a449e8e4">nrf_rtc_cc_set</a> (NRF_RTC_Type *p_rtc, uint32_t ch, uint32_t cc_val)</td></tr>
+<tr class="memdesc:ga64787233b50e4c8d9d937536a449e8e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting a compare value for a channel.  <a href="#ga64787233b50e4c8d9d937536a449e8e4">More...</a><br/></td></tr>
+<tr class="separator:ga64787233b50e4c8d9d937536a449e8e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05f9b1daf63f4638929d910cc3eec753"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#ga05f9b1daf63f4638929d910cc3eec753">nrf_rtc_cc_get</a> (NRF_RTC_Type *p_rtc, uint32_t ch)</td></tr>
+<tr class="memdesc:ga05f9b1daf63f4638929d910cc3eec753"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for returning the compare value for a channel.  <a href="#ga05f9b1daf63f4638929d910cc3eec753">More...</a><br/></td></tr>
+<tr class="separator:ga05f9b1daf63f4638929d910cc3eec753"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9bf27c728a3f08434ae56c2e3e4b49d8"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#ga9bf27c728a3f08434ae56c2e3e4b49d8">nrf_rtc_int_enable</a> (NRF_RTC_Type *p_rtc, uint32_t mask)</td></tr>
+<tr class="memdesc:ga9bf27c728a3f08434ae56c2e3e4b49d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for enabling interrupts.  <a href="#ga9bf27c728a3f08434ae56c2e3e4b49d8">More...</a><br/></td></tr>
+<tr class="separator:ga9bf27c728a3f08434ae56c2e3e4b49d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b60105662ed3b084621a44fd5a3ef20"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#ga0b60105662ed3b084621a44fd5a3ef20">nrf_rtc_int_disable</a> (NRF_RTC_Type *p_rtc, uint32_t mask)</td></tr>
+<tr class="memdesc:ga0b60105662ed3b084621a44fd5a3ef20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for disabling interrupts.  <a href="#ga0b60105662ed3b084621a44fd5a3ef20">More...</a><br/></td></tr>
+<tr class="separator:ga0b60105662ed3b084621a44fd5a3ef20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga853a0f021abc9b2f62a77810880b035f"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#ga853a0f021abc9b2f62a77810880b035f">nrf_rtc_int_is_enabled</a> (NRF_RTC_Type *p_rtc, uint32_t mask)</td></tr>
+<tr class="memdesc:ga853a0f021abc9b2f62a77810880b035f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for checking if interrupts are enabled.  <a href="#ga853a0f021abc9b2f62a77810880b035f">More...</a><br/></td></tr>
+<tr class="separator:ga853a0f021abc9b2f62a77810880b035f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d40ce8e93725c6b447cc9356303406c"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#ga7d40ce8e93725c6b447cc9356303406c">nrf_rtc_int_get</a> (NRF_RTC_Type *p_rtc)</td></tr>
+<tr class="memdesc:ga7d40ce8e93725c6b447cc9356303406c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for returning the status of currently enabled interrupts.  <a href="#ga7d40ce8e93725c6b447cc9356303406c">More...</a><br/></td></tr>
+<tr class="separator:ga7d40ce8e93725c6b447cc9356303406c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab7b7c9f171ca92e0a6e022deeb6b2c59"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#gab7b7c9f171ca92e0a6e022deeb6b2c59">nrf_rtc_event_pending</a> (NRF_RTC_Type *p_rtc, <a class="el" href="a00321.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a> event)</td></tr>
+<tr class="memdesc:gab7b7c9f171ca92e0a6e022deeb6b2c59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for checking if an event is pending.  <a href="#gab7b7c9f171ca92e0a6e022deeb6b2c59">More...</a><br/></td></tr>
+<tr class="separator:gab7b7c9f171ca92e0a6e022deeb6b2c59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga48f44b45200368ed146abb9e489e8231"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#ga48f44b45200368ed146abb9e489e8231">nrf_rtc_event_clear</a> (NRF_RTC_Type *p_rtc, <a class="el" href="a00321.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a> event)</td></tr>
+<tr class="memdesc:ga48f44b45200368ed146abb9e489e8231"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for clearing an event.  <a href="#ga48f44b45200368ed146abb9e489e8231">More...</a><br/></td></tr>
+<tr class="separator:ga48f44b45200368ed146abb9e489e8231"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac530a192ba3559478b8c653ba924abfc"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#gac530a192ba3559478b8c653ba924abfc">nrf_rtc_counter_get</a> (NRF_RTC_Type *p_rtc)</td></tr>
+<tr class="memdesc:gac530a192ba3559478b8c653ba924abfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for returning a counter value.  <a href="#gac530a192ba3559478b8c653ba924abfc">More...</a><br/></td></tr>
+<tr class="separator:gac530a192ba3559478b8c653ba924abfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84628657e0fd0d31777fbdbbc95ed4e1"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#ga84628657e0fd0d31777fbdbbc95ed4e1">nrf_rtc_prescaler_set</a> (NRF_RTC_Type *p_rtc, uint32_t val)</td></tr>
+<tr class="memdesc:ga84628657e0fd0d31777fbdbbc95ed4e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting a prescaler value.  <a href="#ga84628657e0fd0d31777fbdbbc95ed4e1">More...</a><br/></td></tr>
+<tr class="separator:ga84628657e0fd0d31777fbdbbc95ed4e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9a9b117a910e07ec21c9a4c9b10b19db"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#ga9a9b117a910e07ec21c9a4c9b10b19db">nrf_rtc_event_address_get</a> (NRF_RTC_Type *p_rtc, <a class="el" href="a00321.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a> event)</td></tr>
+<tr class="memdesc:ga9a9b117a910e07ec21c9a4c9b10b19db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for returning the address of an event.  <a href="#ga9a9b117a910e07ec21c9a4c9b10b19db">More...</a><br/></td></tr>
+<tr class="separator:ga9a9b117a910e07ec21c9a4c9b10b19db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1aad5ee25dbb338e9d902c85dac761f"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#gab1aad5ee25dbb338e9d902c85dac761f">nrf_rtc_task_address_get</a> (NRF_RTC_Type *p_rtc, <a class="el" href="a00321.html#gab1bbbc39c6dac153baf61aeae33c4274">nrf_rtc_task_t</a> task)</td></tr>
+<tr class="memdesc:gab1aad5ee25dbb338e9d902c85dac761f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for returning the address of a task.  <a href="#gab1aad5ee25dbb338e9d902c85dac761f">More...</a><br/></td></tr>
+<tr class="separator:gab1aad5ee25dbb338e9d902c85dac761f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2aae0db622731be438c4aebed18025d4"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#ga2aae0db622731be438c4aebed18025d4">nrf_rtc_task_trigger</a> (NRF_RTC_Type *p_rtc, <a class="el" href="a00321.html#gab1bbbc39c6dac153baf61aeae33c4274">nrf_rtc_task_t</a> task)</td></tr>
+<tr class="memdesc:ga2aae0db622731be438c4aebed18025d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for starting a task.  <a href="#ga2aae0db622731be438c4aebed18025d4">More...</a><br/></td></tr>
+<tr class="separator:ga2aae0db622731be438c4aebed18025d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga022195e61bf8c1b7db06049e8b9c2190"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#ga022195e61bf8c1b7db06049e8b9c2190">nrf_rtc_event_enable</a> (NRF_RTC_Type *p_rtc, uint32_t mask)</td></tr>
+<tr class="memdesc:ga022195e61bf8c1b7db06049e8b9c2190"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for enabling events.  <a href="#ga022195e61bf8c1b7db06049e8b9c2190">More...</a><br/></td></tr>
+<tr class="separator:ga022195e61bf8c1b7db06049e8b9c2190"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga994b40bb8f40bf17f44d6acff487cf60"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html#ga994b40bb8f40bf17f44d6acff487cf60">nrf_rtc_event_disable</a> (NRF_RTC_Type *p_rtc, uint32_t event)</td></tr>
+<tr class="memdesc:ga994b40bb8f40bf17f44d6acff487cf60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for disabling an event.  <a href="#ga994b40bb8f40bf17f44d6acff487cf60">More...</a><br/></td></tr>
+<tr class="separator:ga994b40bb8f40bf17f44d6acff487cf60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>SLIP layer for supporting packet framing in HCI transport. </p>
-<p>This module implements SLIP packet framing as described in the Bluetooth Core Specification 4.0, Volume 4, Part D, Chapter 3 SLIP Layer.</p>
-<p>SLIP framing ensures that all packets sent on the UART are framed as: &lt;0xC0&gt; SLIP packet 1 &lt;0xC0&gt; &lt;0xC0&gt; SLIP packet 2 &lt;0xC0&gt;.</p>
-<p>The SLIP layer uses events to notify the upper layer when data transmission is complete and when a SLIP packet is received. </p>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaf03d61e05dd64c3a61644580c29aa0b4"></a>
+<p>Hardware abstraction layer for managing the real time counter (RTC). </p>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gaab20bab2129073fed812c452d0d58cd9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00321.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a></td>
+          <td class="memname">#define RTC_CHANNEL_NUM&#160;&#160;&#160;4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Number of compare channels in the RTC instance. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga05d33b1e64fc3150998c82b42c9339be"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RTC_INPUT_FREQ&#160;&#160;&#160;32768</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Input frequency of the RTC instance. Macro for wrapping values to RTC capacity. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gaeefe46b9280fd5e11516b4148b9c5950"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00321.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Event types from the SLIP Layer. </p>
+<p>RTC events. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4a518c3406525586d68bf2f476c1935eb9"></a>HCI_SLIP_RX_RDY</em>&nbsp;</td><td class="fielddoc">
-<p>An event indicating that an RX packet is ready to be read. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaeefe46b9280fd5e11516b4148b9c5950a1c477c236900018c2dec4265129739c7"></a>NRF_RTC_EVENT_TICK</em>&nbsp;</td><td class="fielddoc">
+<p>Tick event. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4a507424cf2788c502b25b730450fa3c1b"></a>HCI_SLIP_TX_DONE</em>&nbsp;</td><td class="fielddoc">
-<p>An event indicating write completion of the TX packet provided in the function call <a class="el" href="a00321.html#gaba13b94dd501034bd33b1d10941ded4b">hci_slip_write</a> . </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaeefe46b9280fd5e11516b4148b9c5950acca3da90aab0fc0950facce3d9c60b9c"></a>NRF_RTC_EVENT_OVERFLOW</em>&nbsp;</td><td class="fielddoc">
+<p>Overflow event. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4acd2a18f379c0f764d52782bf13ae7f60"></a>HCI_SLIP_RX_OVERFLOW</em>&nbsp;</td><td class="fielddoc">
-<p>An event indicating that RX data has been discarded due to lack of free RX memory. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaeefe46b9280fd5e11516b4148b9c5950aed2f00b3d07e65411e4b63982efd2e07"></a>NRF_RTC_EVENT_COMPARE_0</em>&nbsp;</td><td class="fielddoc">
+<p>Compare 0 event. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4a89ce814e3c2dbfc49432118d735d6eef"></a>HCI_SLIP_ERROR</em>&nbsp;</td><td class="fielddoc">
-<p>An event indicating that an unrecoverable error has occurred. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaeefe46b9280fd5e11516b4148b9c5950a4910d903ba14a05187dedfcc842ef26a"></a>NRF_RTC_EVENT_COMPARE_1</em>&nbsp;</td><td class="fielddoc">
+<p>Compare 1 event. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4a1922de9f57ef7bf2c0e2af37877224f1"></a>HCI_SLIP_EVT_TYPE_MAX</em>&nbsp;</td><td class="fielddoc">
-<p>Enumeration upper bound. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaeefe46b9280fd5e11516b4148b9c5950a913f4348d8da28f6253ffcca803ed937"></a>NRF_RTC_EVENT_COMPARE_2</em>&nbsp;</td><td class="fielddoc">
+<p>Compare 2 event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaeefe46b9280fd5e11516b4148b9c5950af7b99708af83d76a4d4b59116f328bbc"></a>NRF_RTC_EVENT_COMPARE_3</em>&nbsp;</td><td class="fielddoc">
+<p>Compare 3 event. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga22211dc20a5c2f6cf1b43039d2bae4a3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00321.html#ga22211dc20a5c2f6cf1b43039d2bae4a3">nrf_rtc_int_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>RTC interrupts. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga22211dc20a5c2f6cf1b43039d2bae4a3ab01e1e883741734b5cac05c92efc952e"></a>NRF_RTC_INT_TICK_MASK</em>&nbsp;</td><td class="fielddoc">
+<p>RTC interrupt from tick event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga22211dc20a5c2f6cf1b43039d2bae4a3a18c66e1dcbc43cd4c82a6f5d0fb8d922"></a>NRF_RTC_INT_OVERFLOW_MASK</em>&nbsp;</td><td class="fielddoc">
+<p>RTC interrupt from overflow event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga22211dc20a5c2f6cf1b43039d2bae4a3acb0d6d71f2dcb78604936e1ba924ab9b"></a>NRF_RTC_INT_COMPARE0_MASK</em>&nbsp;</td><td class="fielddoc">
+<p>RTC interrupt from compare event on channel 0. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga22211dc20a5c2f6cf1b43039d2bae4a3af842e26d22b97607c1b778c4119b82a6"></a>NRF_RTC_INT_COMPARE1_MASK</em>&nbsp;</td><td class="fielddoc">
+<p>RTC interrupt from compare event on channel 1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga22211dc20a5c2f6cf1b43039d2bae4a3adf3bfc6e4f76ed0ecb3b1784d3dad2e0"></a>NRF_RTC_INT_COMPARE2_MASK</em>&nbsp;</td><td class="fielddoc">
+<p>RTC interrupt from compare event on channel 2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga22211dc20a5c2f6cf1b43039d2bae4a3a04d8a6817769b5b2b231b7ebfcde893c"></a>NRF_RTC_INT_COMPARE3_MASK</em>&nbsp;</td><td class="fielddoc">
+<p>RTC interrupt from compare event on channel 3. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gab1bbbc39c6dac153baf61aeae33c4274"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00321.html#gab1bbbc39c6dac153baf61aeae33c4274">nrf_rtc_task_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>RTC tasks. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggab1bbbc39c6dac153baf61aeae33c4274a2a8ffc1fb20f19a5b14826564e5d03e5"></a>NRF_RTC_TASK_START</em>&nbsp;</td><td class="fielddoc">
+<p>Start. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab1bbbc39c6dac153baf61aeae33c4274a6dbaa4bbd6d58e079767f0309239eec1"></a>NRF_RTC_TASK_STOP</em>&nbsp;</td><td class="fielddoc">
+<p>Stop. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab1bbbc39c6dac153baf61aeae33c4274a0b5cbfbb54397b0ec8ea8fb73f4a7bc0"></a>NRF_RTC_TASK_CLEAR</em>&nbsp;</td><td class="fielddoc">
+<p>Clear. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggab1bbbc39c6dac153baf61aeae33c4274a4cda1feac46eb1092cad53e9abe1a3d2"></a>NRF_RTC_TASK_TRIGGER_OVERFLOW</em>&nbsp;</td><td class="fielddoc">
+<p>Trigger overflow. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gac07c6af846ecdbdaa3def1860aff6e47"></a>
+<a class="anchor" id="ga05f9b1daf63f4638929d910cc3eec753"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t hci_slip_close </td>
+          <td class="memname">__STATIC_INLINE uint32_t nrf_rtc_cc_get </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for closing the SLIP layer. After this function is called no data can be transmitted or received in this layer. </p>
-<dl class="section note"><dt>Note</dt><dd>This function can be called multiple times and also for an unopened channel.</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5174ac7933b8633a86c1560e645dcf43"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t hci_slip_evt_handler_register </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00321.html#gab1b3735b482e480ee925e78c544f84d0">hci_slip_event_handler_t</a>&#160;</td>
-          <td class="paramname"><em>event_handler</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for registering the event handler provided as parameter and this event handler will be used by SLIP layer to send events described in <a class="el" href="a00321.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a>. </p>
-<dl class="section note"><dt>Note</dt><dd>Multiple registration requests will overwrite any existing registration.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_handler</td><td>This function is called by the SLIP layer upon an event.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga395ec28c5fd6a5ca2f8dcd68817cced1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t hci_slip_open </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for opening the SLIP layer. This function must be called before <a class="el" href="a00321.html#gaba13b94dd501034bd33b1d10941ded4b">hci_slip_write</a> and before any data can be received. </p>
-<dl class="section note"><dt>Note</dt><dd>Can be called multiple times.</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>The SLIP layer module will propagate errors from underlying sub-modules. This implementation is using UART module as a physical transmission layer, and hci_slip_open executes <a class="el" href="a00310.html#gae650b57bf30da0f26ae409782de9fcbd">app_uart_init</a> . For an extended error list, please refer to <a class="el" href="a00310.html#gae650b57bf30da0f26ae409782de9fcbd">app_uart_init</a> . </p>
-
-</div>
-</div>
-<a class="anchor" id="gabd00a0b89127a66990a2ea728fd39b3f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t hci_slip_rx_buffer_register </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_buffer</em>, </td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>length</em>&#160;</td>
+          <td class="paramname"><em>ch</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -301,40 +370,39 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for registering a receive buffer. The receive buffer will be used for storage of received and SLIP decoded data. No data can be received by the SLIP layer until a receive buffer has been registered. </p>
-<dl class="section note"><dt>Note</dt><dd>The lifetime of the buffer must be valid during complete reception of data. A static buffer is recommended.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>Multiple registration requests will overwrite any existing registration.</dd></dl>
+<p>Function for returning the compare value for a channel. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to receive buffer. The received and SLIP decoded packet will be placed in this buffer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Buffer length, in bytes.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ch</td><td>Channel.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>COMPARE[ch] value. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gaba13b94dd501034bd33b1d10941ded4b"></a>
+<a class="anchor" id="ga64787233b50e4c8d9d937536a449e8e4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t hci_slip_write </td>
+          <td class="memname">__STATIC_INLINE void nrf_rtc_cc_set </td>
           <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>p_buffer</em>, </td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>length</em>&#160;</td>
+          <td class="paramname"><em>ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>cc_val</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -344,20 +412,451 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for writing a packet with SLIP encoding. Packet transmission is confirmed when the HCI_SLIP_TX_DONE event is received by the function caller. </p>
+<p>Function for setting a compare value for a channel. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to the packet to transmit. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Packet length, in bytes.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ch</td><td>Channel. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cc_val</td><td>Compare value to set. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. Packet was encoded and added to the transmission queue and an event will be sent upon transmission completion. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>Operation failure. Transmission queue is full and packet was not added to the transmission queue. Application shall wait for the <a class="el" href="a00321.html#ggaf03d61e05dd64c3a61644580c29aa0b4a507424cf2788c502b25b730450fa3c1b">HCI_SLIP_TX_DONE</a> event. After HCI_SLIP_TX_DONE this function can be executed for transmission of next packet. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>If a NULL pointer is provided. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Operation failure. Module is not open. </td></tr>
+
+</div>
+</div>
+<a class="anchor" id="gac530a192ba3559478b8c653ba924abfc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint32_t nrf_rtc_counter_get </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for returning a counter value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Counter value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9a9b117a910e07ec21c9a4c9b10b19db"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint32_t nrf_rtc_event_address_get </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00321.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a>&#160;</td>
+          <td class="paramname"><em>event</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for returning the address of an event. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>Requested event.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Address of the requested event register. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga48f44b45200368ed146abb9e489e8231"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void nrf_rtc_event_clear </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00321.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a>&#160;</td>
+          <td class="paramname"><em>event</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for clearing an event. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>Event to clear. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga994b40bb8f40bf17f44d6acff487cf60"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void nrf_rtc_event_disable </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>event</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for disabling an event. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>Requested event. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga022195e61bf8c1b7db06049e8b9c2190"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void nrf_rtc_event_enable </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for enabling events. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Mask of event flags to enable. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab7b7c9f171ca92e0a6e022deeb6b2c59"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint32_t nrf_rtc_event_pending </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00321.html#gaeefe46b9280fd5e11516b4148b9c5950">nrf_rtc_event_t</a>&#160;</td>
+          <td class="paramname"><em>event</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for checking if an event is pending. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event</td><td>Address of the event.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Mask of pending events. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga0b60105662ed3b084621a44fd5a3ef20"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void nrf_rtc_int_disable </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for disabling interrupts. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Interrupt mask to be disabled. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9bf27c728a3f08434ae56c2e3e4b49d8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void nrf_rtc_int_enable </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for enabling interrupts. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Interrupt mask to be enabled. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7d40ce8e93725c6b447cc9356303406c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint32_t nrf_rtc_int_get </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for returning the status of currently enabled interrupts. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Value in INTEN register. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga853a0f021abc9b2f62a77810880b035f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint32_t nrf_rtc_int_is_enabled </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for checking if interrupts are enabled. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Mask of interrupt flags to check.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Mask with enabled interrupts. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga84628657e0fd0d31777fbdbbc95ed4e1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void nrf_rtc_prescaler_set </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>val</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for setting a prescaler value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">val</td><td>Value to set the prescaler to. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab1aad5ee25dbb338e9d902c85dac761f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE uint32_t nrf_rtc_task_address_get </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00321.html#gab1bbbc39c6dac153baf61aeae33c4274">nrf_rtc_task_t</a>&#160;</td>
+          <td class="paramname"><em>task</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for returning the address of a task. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">task</td><td>Requested task.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Address of the requested task register. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2aae0db622731be438c4aebed18025d4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE void nrf_rtc_task_trigger </td>
+          <td>(</td>
+          <td class="paramtype">NRF_RTC_Type *&#160;</td>
+          <td class="paramname"><em>p_rtc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00321.html#gab1bbbc39c6dac153baf61aeae33c4274">nrf_rtc_task_t</a>&#160;</td>
+          <td class="paramname"><em>task</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for starting a task. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_rtc</td><td>Pointer to the instance register structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">task</td><td>Requested task. </td></tr>
   </table>
   </dd>
 </dl>
@@ -369,7 +868,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:05 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

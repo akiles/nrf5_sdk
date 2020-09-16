@@ -1,11 +1,12 @@
 var a00986 =
 [
-    [ "dm_application_context_delete", "a00986.html#gaff35c970367a7966cbb393fe24147ca5", null ],
-    [ "dm_application_context_get", "a00986.html#gac60803907fbc03b492f28cc254b0799f", null ],
-    [ "dm_application_context_set", "a00986.html#ga8e5dc36911e6ea1588eec9a3dc320943", null ],
-    [ "dm_device_delete", "a00986.html#gaf267e34f237c41665fd9df15dd32c531", null ],
-    [ "dm_device_delete_all", "a00986.html#ga677524b3230bd620c91a83e4f68e3e01", null ],
-    [ "dm_service_context_delete", "a00986.html#ga5aa5e62e38607fa93a2bd33ca101bed9", null ],
-    [ "dm_service_context_get", "a00986.html#gad7ee88165a162a5754ea971c2cca1df4", null ],
-    [ "dm_service_context_set", "a00986.html#ga8cc7db88fe9495e3d3da074bfd4800ba", null ]
+    [ "app_simple_timer_timeout_handler_t", "a00986.html#ga483768f93042f5718cc9e194936a8918", null ],
+    [ "app_simple_timer_mode_t", "a00986.html#gad7076002d6f9bc89a678c94a49c061e4", [
+      [ "APP_SIMPLE_TIMER_MODE_SINGLE_SHOT", "a00986.html#ggad7076002d6f9bc89a678c94a49c061e4a189bddae8d6e0965ca9a12c83dc8a35a", null ],
+      [ "APP_SIMPLE_TIMER_MODE_REPEATED", "a00986.html#ggad7076002d6f9bc89a678c94a49c061e4a7ac2ba9bfb3b1b37c0eb0acb06a9a9f7", null ]
+    ] ],
+    [ "app_simple_timer_init", "a00986.html#ga7763826e316676eefab5416529f2da18", null ],
+    [ "app_simple_timer_start", "a00986.html#gadb5a3205c34aa67769059f8fa7f63b3f", null ],
+    [ "app_simple_timer_stop", "a00986.html#ga2de31d54126b0f7ee6ac7c6f8a1bec51", null ],
+    [ "app_simple_timer_uninit", "a00986.html#ga20e4f91287f50df937981e64f8f29e1a", null ]
 ];

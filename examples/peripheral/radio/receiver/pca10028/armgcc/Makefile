@@ -40,12 +40,14 @@ C_SOURCE_FILES += \
 ../../../../../../components/libraries/button/app_button.c \
 ../../../../../../components/libraries/util/app_error.c \
 ../../../../../../components/libraries/fifo/app_fifo.c \
-../../../../../../components/libraries/gpiote/app_gpiote.c \
 ../../../../../../components/libraries/timer/app_timer.c \
 ../../../../../../components/libraries/util/app_util_platform.c \
+../../../../../../components/libraries/util/nrf_assert.c \
 ../../../../../../components/libraries/uart/retarget.c \
 ../../../../../../components/drivers_nrf/uart/app_uart_fifo.c \
 ../../../../../../components/drivers_nrf/hal/nrf_delay.c \
+../../../../../../components/drivers_nrf/common/nrf_drv_common.c \
+../../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c \
 ../../../../../../components/drivers_nrf/radio_config/radio_config.c \
 ../../../../../bsp/bsp.c \
 ../../main.c \
@@ -55,13 +57,16 @@ C_SOURCE_FILES += \
 ASM_SOURCE_FILES  = ../../../../../../components/toolchain/gcc/gcc_startup_nrf51.s
 
 #includes common to all targets
-INC_PATHS  = -I../../../../../../components/libraries/util
+INC_PATHS  = -I../../config
+INC_PATHS += -I../../../../../../components/libraries/util
 INC_PATHS += -I../../../../../../components/toolchain/gcc
 INC_PATHS += -I../../../../../../components/drivers_nrf/uart
+INC_PATHS += -I../../../../../../components/drivers_nrf/common
 INC_PATHS += -I../../../../../../components/drivers_nrf/radio_config
-INC_PATHS += -I../../../../../../components/libraries/gpiote
+INC_PATHS += -I../../../../../../components/drivers_nrf/config
 INC_PATHS += -I../../../../../bsp
 INC_PATHS += -I../../../../../../components/libraries/fifo
+INC_PATHS += -I../../../../../../components/drivers_nrf/gpiote
 INC_PATHS += -I../..
 INC_PATHS += -I../../../../../../components/drivers_nrf/nrf_soc_nosd
 INC_PATHS += -I../../../../../../components/toolchain
@@ -80,6 +85,7 @@ BUILD_DIRECTORIES := $(sort $(OBJECT_DIRECTORY) $(OUTPUT_BINARY_DIRECTORY) $(LIS
 #flags common to all targets
 CFLAGS  = -DNRF51
 CFLAGS += -DBSP_UART_SUPPORT
+CFLAGS += -DSWI_DISABLE0
 CFLAGS += -DBOARD_PCA10028
 CFLAGS += -mcpu=cortex-m0
 CFLAGS += -mthumb -mabi=aapcs --std=gnu99
@@ -87,7 +93,7 @@ CFLAGS += -Wall -Werror -O3
 CFLAGS += -mfloat-abi=soft
 # keep every function in separate section. This will allow linker to dump unused functions
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -flto -fno-builtin
+CFLAGS += -fno-builtin --short-enums
 
 # keep every function in separate section. This will allow linker to dump unused functions
 LDFLAGS += -Xlinker -Map=$(LISTING_DIRECTORY)/$(OUTPUT_FILENAME).map
@@ -102,6 +108,7 @@ LDFLAGS += --specs=nano.specs -lc -lnosys
 ASMFLAGS += -x assembler-with-cpp
 ASMFLAGS += -DNRF51
 ASMFLAGS += -DBSP_UART_SUPPORT
+ASMFLAGS += -DSWI_DISABLE0
 ASMFLAGS += -DBOARD_PCA10028
 #default target - first one defined
 default: clean nrf51422_xxac

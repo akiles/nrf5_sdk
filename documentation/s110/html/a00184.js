@@ -1,8 +1,7 @@
 var a00184 =
 [
-    [ "conn_handle", "a00184.html#ad7c997d8d0c6e0d3d24de3ecad426645", null ],
-    [ "params", "a00184.html#aa1bd5d9383036225f08d3dd0a9e62557", null ],
-    [ "tx_complete", "a00184.html#a0550e7a2c8b61ab27ea5a691b3f1fac4", null ],
-    [ "user_mem_release", "a00184.html#a21a25a889c763bceb2891d506331f484", null ],
-    [ "user_mem_request", "a00184.html#a4d36c1c20a1ff24a62abba8ea73c74c8", null ]
+    [ "rx_buf", "a00184.html#ab5c77995614a78b4a7baf6f5ab59bb5c", null ],
+    [ "rx_buf_size", "a00184.html#a42c5f8c78ee123d84c7de5da43f703e0", null ],
+    [ "tx_buf", "a00184.html#a1073bbd41b6d0ddc55e7ec432cf517dd", null ],
+    [ "tx_buf_size", "a00184.html#a8a0ff8a830eadfc972a4d44e1340e392", null ]
 ];

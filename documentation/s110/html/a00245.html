@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_opt_compat_mode_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_enable_params_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,43 +106,33 @@ $(document).ready(function(){initNavTree('a00245.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_opt_compat_mode_t Struct Reference<div class="ingroups"><a class="el" href="a01044.html">Structures</a></div></div>  </div>
+<div class="title">ble_enable_params_t Struct Reference<div class="ingroups"><a class="el" href="a01283.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Compatibility mode option.  
+<p>BLE GATTS init options.  
  <a href="a00245.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gap.h&gt;</code></p>
+<p><code>#include &lt;ble.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a31a0c4f5b1772c99ccafa37ec3a03c37"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00245.html#a31a0c4f5b1772c99ccafa37ec3a03c37">mode_1_enable</a>: 1</td></tr>
-<tr class="separator:a31a0c4f5b1772c99ccafa37ec3a03c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2de18bc975930cadc754c5e3468c870"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00320.html">ble_gatts_enable_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00245.html#ad2de18bc975930cadc754c5e3468c870">gatts_enable_params</a></td></tr>
+<tr class="separator:ad2de18bc975930cadc754c5e3468c870"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Compatibility mode option. </p>
-<pre class="fragment">   This can be used with @ref sd_ble_opt_set to enable and disable
-   compatibility modes. Compatibility modes are disabled by default.
-</pre><dl class="section note"><dt>Note</dt><dd>Compatibility mode 1 enables interoperability with devices that do not support a value of 0 for the WinOffset parameter in the Link Layer CONNECT_REQ packet.</dd></dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00866.html#ga7e6367efeaac363d8cf024940b4ec123" title="Successful command.">NRF_SUCCESS</a></td><td>Set successfully. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00866.html#gaf0aff2ba7864b34a36b4a96986e1851e" title="Invalid state, operation disallowed in this state.">NRF_ERROR_INVALID_STATE</a></td><td>When connection creation is ongoing while mode 1 is set. </td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="textblock"><p>BLE GATTS init options. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a31a0c4f5b1772c99ccafa37ec3a03c37"></a>
+<a class="anchor" id="ad2de18bc975930cadc754c5e3468c870"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_opt_compat_mode_t::mode_1_enable</td>
+          <td class="memname"><a class="el" href="a00320.html">ble_gatts_enable_params_t</a> ble_enable_params_t::gatts_enable_params</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enable compatibility mode 1. </p>
+<p>GATTS init options <a class="el" href="a00320.html">ble_gatts_enable_params_t</a>. </p>
 
 </div>
 </div>
@@ -151,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00245.html">ble_gap_opt_compat_mode_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00245.html">ble_enable_params_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

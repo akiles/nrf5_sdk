@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: HCI transport library</title>
+<title>nRF51 SDK - S120 SoftDevice: BLE Multi-link Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,57 +97,55 @@ $(document).ready(function(){initNavTree('a00064.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">HCI transport library </div>  </div>
+<div class="title">BLE Multi-link Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This module implements certain specific features from the three-wire UART transport layer, defined by the <em>Bluetooth</em> specification version 4.0 [Vol 4] part D.</p>
-<dl class="section user"><dt>Features supported</dt><dd><ul>
-<li>Transmission and reception of Vendor Specific HCI packet type application packets.</li>
-<li>Transmission and reception of reliable packets: defined by chapter 6 of the specification.</li>
-</ul>
-</dd></dl>
-<dl class="section user"><dt>Features not supported</dt><dd><ul>
-<li>Link establishment procedure: defined by chapter 8 of the specification.</li>
-<li>Low power: defined by chapter 9 of the specification.</li>
-</ul>
-</dd></dl>
-<dl class="section user"><dt>Implementation specific behaviour</dt><dd><ul>
-<li>As Link establishment procedure is not supported following static link configuration parameters are used:</li>
-<li>TX window size is 1.</li>
-<li>16 bit CCITT-CRC must be used.</li>
-<li>Out of frame software flow control not supported.</li>
-<li>Parameters specific for resending reliable packets are compile time configurable (clarifed later in this document).</li>
-<li>Acknowledgement packet transmissions are not timeout driven , meaning they are delivered for transmission within same context which the corresponding application packet was received.</li>
-</ul>
-</dd></dl>
-<dl class="section user"><dt>Implementation specific limitations</dt><dd>Current implementation has the following limitations which will have impact to system wide behaviour:<ul>
-<li>Delayed acknowledgement scheduling not implemented: There exists a possibility that acknowledgement TX packet and application TX packet will collide in the TX pipeline having the end result that acknowledgement packet will be excluded from the TX pipeline which will trigger the retransmission algorithm within the peer protocol entity.</li>
-<li>Delayed retransmission scheduling not implemented: There exists a possibility that retransmitted application TX packet and acknowledgement TX packet will collide in the TX pipeline having the end result that retransmitted application TX packet will be excluded from the TX pipeline.</li>
-<li>Processing of the acknowledgement number from RX application packets: Acknowledgement number is not pocessed from the RX application packets having the end result that unnecessary application packet retransmissions can occur.</li>
-</ul>
-</dd></dl>
-<p>The application TX packet processing flow is illustrated by the statemachine below.</p>
-<div class="image">
-<img src="hci_transport_tx_sm.png" alt="hci_transport_tx_sm.png"/>
-<div class="caption">
-TX - application packet statemachine</div></div>
- <dl class="section user"><dt>Component specific configuration options</dt><dd></dd></dl>
-<p>The following compile time configuration options are available, and used to configure the application TX packet retransmission interval, in order to suite various application specific implementations:</p>
+<div class="textblock"><p>The BLE Multi-link Central application together with the BLE Multi-link Peripheral application tests the multi-link functionality of the S120 and S130 SoftDevice. The BLE Multi-link Example demonstrates how one central device can connect to multiple peripheral devices.</p>
+<p>On startup, the peripheral devices will start advertising. Once connected to the central, pressing button 1 on the peripheral changes the state of the peripheral and a corresponding LED on the central. When multiple peripherals are connected, each peripheral is assigned one LED by the central depending on the order in which the peripherals got connected. For example, LED 1 will be assigned to the peripheral that connects first. LED 2 will be assigned to the peripheral that connects second and so on.</p>
+<h1><a class="anchor" id="project_multilink_setup"></a>
+Setup</h1>
+<p>BLE Multi-link Central (choose if you want to run the example with an S120 or an S130 SoftDevice):</p>
 <ul>
-<li>MAC_PACKET_SIZE_IN_BITS Maximum size of a single application packet in bits.</li>
-<li>USED_BAUD_RATE Used uart baudrate.</li>
+<li>S120: The name of the example for PCA10028 is <b>ble_app_multilink_central_s120_pca10028</b>, and for PCA10031 it is <b>ble_app_multilink_central_s120_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\ble_central\ble_app_multilink_central</code> </li>
 </ul>
-<p>The following compile time configuration option is available to configure module specific behaviour:</p>
 <ul>
-<li>MAX_RETRY_COUNT Max retransmission retry count for applicaton packets. </li>
+<li>S130: The name of the example for PCA10028 is <b>ble_app_multilink_central_s130_pca10028</b>, and for PCA10031 it is <b>ble_app_multilink_central_s130_pca10031</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\ble_central\ble_app_multilink_central</code> </li>
 </ul>
+<p>BLE Multi-link Peripheral(choose if you want to run the example with an S110 or an S130 SoftDevice):</p>
+<ul>
+<li>S110: The name of the example is <b>ble_app_multilink_peripheral_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\ble_central\ble_app_multilink_peripheral</code> </li>
+</ul>
+<ul>
+<li>S130: The name of the example is <b>ble_app_multilink_peripheral_s130_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\ble_central\ble_app_multilink_peripheral</code> </li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>The BLE Multi-link Peripheral application needs the S110 or S130 SoftDevice to work. Its primary use is to act as helper application to test the BLE Multi-link Central application.</dd></dl>
+<p>The BLE Multi-link Example requires at least three boards to verify that more than one link is active. The central device can have a maximum of 8 concurrent connections to peripheral devices.</p>
+<p><b>Button assignments</b> peripheral - in addition to those defined in <a class="el" href="a00060.html#examples_ble_button_functionality">BSP BLE Button Assignments</a><span>:</span></p>
+<ul>
+<li>During Connection:<ul>
+<li>Button 1: Change state on peripheral side (<a class="el" href="a00060.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a>/<a class="el" href="a00060.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a>) and toggle assigned LED on central side</li>
+</ul>
+</li>
+</ul>
+<p>UART logging can be used instead of the LEDs.</p>
+<h1><a class="anchor" id="project_multilink_testing"></a>
+Testing</h1>
+<p>Test the BLE Multi-link Example application by performing the following steps:</p>
+<ol type="1">
+<li>Compile and program the peripheral application to two boards. The <a class="el" href="a00060.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated on both boards. This means they are advertising and are waiting for the central device to connect.</li>
+<li>Compile and program the central application onto another board.</li>
+<li>As soon as the central application is programmed, it starts scanning and attempts to connect to the peripherals and enable notifications. Hence on the peripherals, observe that the <a class="el" href="a00060.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated after a few seconds.</li>
+<li>Press button 1 on one of the peripherals. Observe that <a class="el" href="a00060.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a> is indicated on that peripheral and one of the LEDs on the central turns ON.</li>
+<li>Press button 1 on the same peripheral again. Observe that <a class="el" href="a00060.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a> is indicated and the corresponding LED on the central is turned off.</li>
+<li>Repeat the last two steps with other connected peripherals and observe the same behavior. </li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00063.html">Transport Services</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:52 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00062.html">BLE Central</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:45 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

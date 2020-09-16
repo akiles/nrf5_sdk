@@ -31,23 +31,23 @@
 #define NRF_RNG_TASK_SET    (1UL)
 #define NRF_RNG_EVENT_CLEAR (0UL)
 /**
- * @enum nrf_rng_tasks_t
+ * @enum nrf_rng_task_t
  * @brief RNG tasks.
  */
 typedef enum /*lint -save -e30 -esym(628,__INTADDR__) */
 {
-    NRF_RNG_TASKS_START = offsetof(NRF_RNG_Type, TASKS_START), /**< Start the random number generator. */
-    NRF_RNG_TASKS_STOP  = offsetof(NRF_RNG_Type, TASKS_STOP)   /**< Stop the random number generator. */
-} nrf_rng_tasks_t;                                             /*lint -restore */
+    NRF_RNG_TASK_START = offsetof(NRF_RNG_Type, TASKS_START), /**< Start the random number generator. */
+    NRF_RNG_TASK_STOP  = offsetof(NRF_RNG_Type, TASKS_STOP)   /**< Stop the random number generator. */
+} nrf_rng_task_t;                                             /*lint -restore */
 
 /**
- * @enum nrf_rng_events_t
+ * @enum nrf_rng_event_t
  * @brief RNG events.
  */
 typedef enum /*lint -save -e30 -esym(628,__INTADDR__) */
 {
-    NRF_RNG_EVENTS_VALRDY = offsetof(NRF_RNG_Type, EVENTS_VALRDY) /**< New random number generated event. */
-} nrf_rng_events_t;                                               /*lint -restore */
+    NRF_RNG_EVENT_VALRDY = offsetof(NRF_RNG_Type, EVENTS_VALRDY) /**< New random number generated event. */
+} nrf_rng_event_t;                                               /*lint -restore */
 
 /**
  * @enum nrf_rng_int_mask_t
@@ -59,13 +59,13 @@ typedef enum
 } nrf_rng_int_mask_t;
 
 /**
- * @enum nrf_rng_shorts_mask_t
+ * @enum nrf_rng_short_mask_t
  * @brief Types of RNG shortcuts.
  */
 typedef enum
 {
-    NRF_RNG_SHORTS_VALRDY_STOP_MASK = RNG_SHORTS_VALRDY_STOP_Msk /**<  Mask for setting shortcut between EVENT_VALRDY and TASK_STOP. */
-} nrf_rng_shorts_mask_t;
+    NRF_RNG_SHORT_VALRDY_STOP_MASK = RNG_SHORTS_VALRDY_STOP_Msk /**<  Mask for setting shortcut between EVENT_VALRDY and TASK_STOP. */
+} nrf_rng_short_mask_t;
 
 /**
  * @brief Function for enabling interrupts.
@@ -107,7 +107,7 @@ __STATIC_INLINE bool nrf_rng_int_get(nrf_rng_int_mask_t rng_int_mask)
  *
  * @param[in]  rng_task              Task.
  */
-__STATIC_INLINE uint32_t * nrf_rng_task_address_get(nrf_rng_tasks_t rng_task)
+__STATIC_INLINE uint32_t * nrf_rng_task_address_get(nrf_rng_task_t rng_task)
 {
     return (uint32_t *)((uint8_t *)NRF_RNG + rng_task);
 }
@@ -117,7 +117,7 @@ __STATIC_INLINE uint32_t * nrf_rng_task_address_get(nrf_rng_tasks_t rng_task)
  *
  * @param[in]  rng_task              Task.
  */
-__STATIC_INLINE void nrf_rng_task_set(nrf_rng_tasks_t rng_task)
+__STATIC_INLINE void nrf_rng_task_trigger(nrf_rng_task_t rng_task)
 {
     *((volatile uint32_t *)((uint8_t *)NRF_RNG + rng_task)) = NRF_RNG_TASK_SET;
 }
@@ -129,7 +129,7 @@ __STATIC_INLINE void nrf_rng_task_set(nrf_rng_tasks_t rng_task)
  *
  * @param[in]  rng_event              Event.
  */
-__STATIC_INLINE uint32_t * nrf_rng_event_address_get(nrf_rng_events_t rng_event)
+__STATIC_INLINE uint32_t * nrf_rng_event_address_get(nrf_rng_event_t rng_event)
 {
     return (uint32_t *)((uint8_t *)NRF_RNG + rng_event);
 }
@@ -139,7 +139,7 @@ __STATIC_INLINE uint32_t * nrf_rng_event_address_get(nrf_rng_events_t rng_event)
  *
  * @param[in]  rng_event              Event.
  */
-__STATIC_INLINE void nrf_rng_event_clear(nrf_rng_events_t rng_event)
+__STATIC_INLINE void nrf_rng_event_clear(nrf_rng_event_t rng_event)
 {
     *((volatile uint32_t *)((uint8_t *)NRF_RNG + rng_event)) = NRF_RNG_EVENT_CLEAR;
 }
@@ -152,7 +152,7 @@ __STATIC_INLINE void nrf_rng_event_clear(nrf_rng_events_t rng_event)
  * @retval     true               If the event is not set.
  * @retval     false              If the event is set.
  */
-__STATIC_INLINE bool nrf_rng_event_get(nrf_rng_events_t rng_event)
+__STATIC_INLINE bool nrf_rng_event_get(nrf_rng_event_t rng_event)
 {
     return (bool)*((volatile uint32_t *)((uint8_t *)NRF_RNG + rng_event));
 }
@@ -163,7 +163,7 @@ __STATIC_INLINE bool nrf_rng_event_get(nrf_rng_events_t rng_event)
  * @param[in]  rng_short_mask              Mask of shortcuts.
  *
  */
-__STATIC_INLINE void nrf_rng_shorts_set(uint32_t rng_short_mask)
+__STATIC_INLINE void nrf_rng_shorts_enable(uint32_t rng_short_mask)
 {
      NRF_RNG->SHORTS |= rng_short_mask;
 }
@@ -174,7 +174,7 @@ __STATIC_INLINE void nrf_rng_shorts_set(uint32_t rng_short_mask)
  * @param[in]  rng_short_mask              Mask of shortcuts.
  *
  */
-__STATIC_INLINE void nrf_rng_shorts_clear(uint32_t rng_short_mask)
+__STATIC_INLINE void nrf_rng_shorts_disable(uint32_t rng_short_mask)
 {
      NRF_RNG->SHORTS &= ~rng_short_mask;
 }

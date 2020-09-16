@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: dm_event_param_t Union Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_racp_value_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,79 +106,78 @@ $(document).ready(function(){initNavTree('a00376.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">dm_event_param_t Union Reference<div class="ingroups"><a class="el" href="a00982.html">Device Manager Data Types</a></div></div>  </div>
+<div class="title">ble_racp_value_t Struct Reference<div class="ingroups"><a class="el" href="a01239.html">Record Access Control Point</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event parameters.  
+<p>Record Access Control Point value structure.  
  <a href="a00376.html#details">More...</a></p>
 
-<p><code>#include &lt;device_manager.h&gt;</code></p>
+<p><code>#include &lt;ble_racp.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:af0e4a6616d2156de4d92277ea7f0df5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00239.html">ble_gap_evt_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#af0e4a6616d2156de4d92277ea7f0df5f">p_gap_param</a></td></tr>
-<tr class="separator:af0e4a6616d2156de4d92277ea7f0df5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9ad98969539dba415cfb4cd9e0f0564"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00982.html#gaca2973e52020d6f1078540f0b1a732fa">dm_application_context_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#ae9ad98969539dba415cfb4cd9e0f0564">p_app_context</a></td></tr>
-<tr class="separator:ae9ad98969539dba415cfb4cd9e0f0564"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a1372003da3dd695160653c24e3eaf8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00382.html">dm_service_context_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#a7a1372003da3dd695160653c24e3eaf8">p_service_context</a></td></tr>
-<tr class="separator:a7a1372003da3dd695160653c24e3eaf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abeb2585ead8af941c5619bbfad06b963"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00982.html#ga7e116c1567d58a325c14a1b8a9a75d48">dm_device_context_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#abeb2585ead8af941c5619bbfad06b963">p_device_context</a></td></tr>
-<tr class="separator:abeb2585ead8af941c5619bbfad06b963"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9347eb17ef67e3f06df043008ffb2fc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#ac9347eb17ef67e3f06df043008ffb2fc">opcode</a></td></tr>
+<tr class="separator:ac9347eb17ef67e3f06df043008ffb2fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d079df679dec85ecc10fe70a2d349f1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#a3d079df679dec85ecc10fe70a2d349f1">operator</a></td></tr>
+<tr class="separator:a3d079df679dec85ecc10fe70a2d349f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af49baa0004db22db129862b609928a62"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#af49baa0004db22db129862b609928a62">operand_len</a></td></tr>
+<tr class="separator:af49baa0004db22db129862b609928a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2560ddd094bfd6960dd5cc3a6ee54c48"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00376.html#a2560ddd094bfd6960dd5cc3a6ee54c48">p_operand</a></td></tr>
+<tr class="separator:a2560ddd094bfd6960dd5cc3a6ee54c48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event parameters. </p>
-<p>Defines event parameters for each of the events notified by the module. </p>
+<div class="textblock"><p>Record Access Control Point value structure. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ae9ad98969539dba415cfb4cd9e0f0564"></a>
+<a class="anchor" id="ac9347eb17ef67e3f06df043008ffb2fc"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00982.html#gaca2973e52020d6f1078540f0b1a732fa">dm_application_context_t</a>* dm_event_param_t::p_app_context</td>
+          <td class="memname">uint8_t ble_racp_value_t::opcode</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>All events that are associated with application context procedures of store, load, and deletion have this as event parameter. </p>
+<p>Op Code. </p>
 
 </div>
 </div>
-<a class="anchor" id="abeb2585ead8af941c5619bbfad06b963"></a>
+<a class="anchor" id="af49baa0004db22db129862b609928a62"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00982.html#ga7e116c1567d58a325c14a1b8a9a75d48">dm_device_context_t</a>* dm_event_param_t::p_device_context</td>
+          <td class="memname">uint8_t ble_racp_value_t::operand_len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>All events that are associated with device context procedures of store, load and deletion have this as event parameter. </p>
+<p>Length of the operand. </p>
 
 </div>
 </div>
-<a class="anchor" id="af0e4a6616d2156de4d92277ea7f0df5f"></a>
+<a class="anchor" id="a3d079df679dec85ecc10fe70a2d349f1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00239.html">ble_gap_evt_t</a>* dm_event_param_t::p_gap_param</td>
+          <td class="memname">uint8_t ble_racp_value_t::operator</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>All events that are triggered in device manager as a result of GAP events, like connection, disconnection and security procedures are accompanied with GAP parameters. </p>
+<p>Operator. </p>
 
 </div>
 </div>
-<a class="anchor" id="a7a1372003da3dd695160653c24e3eaf8"></a>
+<a class="anchor" id="a2560ddd094bfd6960dd5cc3a6ee54c48"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00382.html">dm_service_context_t</a>* dm_event_param_t::p_service_context</td>
+          <td class="memname">uint8_t* ble_racp_value_t::p_operand</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>All events that are associated with service context procedures of store, load and deletion have this as event parameter. </p>
+<p>Pointer to the operand. </p>
 
 </div>
 </div>
@@ -187,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00376.html">dm_event_param_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00376.html">ble_racp_value_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

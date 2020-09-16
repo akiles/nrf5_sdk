@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Relocating the bootloader</title>
+<title>nRF51 SDK - S110 SoftDevice: Creating a DFU bootloader</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,36 +97,35 @@ $(document).ready(function(){initNavTree('a00095.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Relocating the bootloader </div>  </div>
+<div class="title">Creating a DFU bootloader </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The start address of the bootloader is stored in the UICR.BOOTLOADERADDR register, which is located at address 0x10001014. In the DFU bootloader example, writing the UICR.BOOTLOADERADDR is linked into the HEX file, so that it is automatically written when programming the bootloader (see <a class="el" href="a00091.html#bledfu_example_running_program">Programming the DFU bootloader</a>).</p>
-<p>Note that UICR.BOOTLOADERADDR can only be written if you use <code>nrfjprog.exe</code> as the tool for flash programming. Always erase the device before programming the bootloader, so that the value can be set correctly.</p>
-<p>The following code in <code>bootloader_util_arm.c</code> writes the bootloader start address to UICR.BOOTLOADERADDR: </p>
-<div class="fragment"><div class="line">uint32_t m_uicr_bootloader_start_address __attribute__((at(<a class="code" href="a00944.html#gae4ec3580aab0657ce2c1212adec2c0b8">NRF_UICR_BOOT_START_ADDRESS</a>))) = <a class="code" href="a00944.html#ga86b4872454e09cda5b4156b2f9f5f689">BOOTLOADER_REGION_START</a>;</div>
-</div><!-- fragment --><p>BOOTLOADER_REGION_START must point to the correct location of the bootloader in the flash. In this example, this location is 0x0003C000.</p>
-<p>You can change the start address of the bootloader if the size of your bootloader image exceeds the available memory. For example, changing the start address from 0x0003C000 to 0x00038000 increases the available bootloader size to 0x8000 (instead of 0x4000).</p>
-<p>When selecting a new start address, keep in mind that all start addresses must be page aligned. The page size is 0x400 (1024) bytes. Also, start address and size of the memory for the bootloader must add up to 0x00040000 bytes (the end of the application area in the flash).</p>
-<p>Complete the following steps to relocate the bootloader to a new start address:</p>
-<ol type="1">
-<li>Erase the device.</li>
-<li>Program the SoftDevice.</li>
-<li>Change the value of BOOTLOADER_REGION_START in <code>dfu_types.h</code>.</li>
-<li>Compile the bootloader.</li>
-<li>In Keil, select <b>Project</b> &gt; <b>Options for Target '<em>xxx</em>'</b> and change the IROM1 start address and size: <div class="image">
-<img src="keil_project_bootloader_location.png" alt="keil_project_bootloader_location.png"/>
-<div class="caption">
-DFU bootloader start address setting in Keil</div></div>
-</li>
-<li>Program the bootloader. </li>
-</ol>
+<div class="textblock"><p>The SDK provides some example projects that implement a bootloader with Device Firmware Update (DFU) capabilities, which can receive a firmware image and copy it to the nRF51 IC to replace the current bootloader, SoftDevice, or application.</p>
+<p>The examples support the following Device Firmware Updates:</p>
+<ul>
+<li>Updating the SoftDevice.</li>
+<li>Updating the bootloader.</li>
+<li>Updating SoftDevice and bootloader in a single operation.</li>
+<li>Installing or updating an application.</li>
+</ul>
+<p>Before updating the device firmware, make sure that the following prerequisites are fulfilled:</p>
+<ul>
+<li>SoftDevice S110 v7.0.0 or later is installed on the IC.</li>
+<li>If the register UICR.CLENR0 has a size value (for example 0x00016000) and you are updating the SoftDevice, the new SoftDevice must not be larger than the current SoftDevice.</li>
+<li>When updating the SoftDevice, the bootloader, or SoftDevice and bootloader, the flash size of the target device must be 256 kB. When updating or installing an application, the flash size can be 128 kB or 256 kB.</li>
+</ul>
+<p>If the device has an existing application when performing a SoftDevice update, the application is erased. Transferring a bootloader or application using dual-bank mode (see <a class="el" href="a00094.html">Dual-bank and single-bank updates</a>) preserves the current image until the new image is copied, validated, and activated.</p>
+<p>To get started, program and test one of the provided example projects. <a class="el" href="a00097.html">Running the BLE bootloader example</a> describes the process for the default example, which uses BLE transport. Alternatively, you can run an example that uses serial transport (see <a class="el" href="a00102.html">Running the serial bootloader example</a>).</p>
+<p>The SDK provides sample images that you can use to test the DFU process. <a class="el" href="a00098.html">Creating an image file</a> explains how you can convert your own image into the correct format.</p>
+<p>The examples include a method for ensuring that the uploaded image is valid. See <a class="el" href="a00099.html">Safety-checking the image</a> for information on how to ensure that only valid images are accepted.</p>
+<p>If you encounter any errors, check the <a class="el" href="a00107.html">Troubleshooting</a> section. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00078.html">BLE DFU Bootloader</a></li><li class="navelem"><a class="el" href="a00094.html">Memory layout</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00084.html">BLE DFU Bootloader</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

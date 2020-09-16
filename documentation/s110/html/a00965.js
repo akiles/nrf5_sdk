@@ -1,24 +1,18 @@
 var a00965 =
 [
-    [ "ble_ias_evt_t", "a00328.html", [
-      [ "alert_level", "a00328.html#aadc350acbcf634cf778a5a253049ebe0", null ],
-      [ "evt_type", "a00328.html#a730fff52efb38d8f5f61973ef47696b4", null ],
-      [ "params", "a00328.html#a436ccefb86ad7804abe101b61110304d", null ]
-    ] ],
-    [ "ble_ias_init_t", "a00329.html", [
-      [ "evt_handler", "a00329.html#a5e40f1f02a66e26a1da20bbf3e2a275a", null ]
-    ] ],
-    [ "ble_ias_s", "a00330.html", [
-      [ "alert_level_handles", "a00330.html#a67d6395f4804c00de308270dddf15b7e", null ],
-      [ "conn_handle", "a00330.html#a9bd3acaad1b3accf09eb6d179225204d", null ],
-      [ "evt_handler", "a00330.html#a6304bcdac9c7d2758f64aa1dd5844959", null ],
-      [ "service_handle", "a00330.html#afa6a28eec3f1b9b4f7ea596af7ee2c29", null ]
-    ] ],
-    [ "ble_ias_evt_handler_t", "a00965.html#gab059c5376beb245a8f876ee3d7b8480a", null ],
-    [ "ble_ias_evt_type_t", "a00965.html#gaa55445ca6b845393a2dc353e0afa38ec", [
-      [ "BLE_IAS_EVT_ALERT_LEVEL_UPDATED", "a00965.html#ggaa55445ca6b845393a2dc353e0afa38ecaf04e8963239be8fd6c09d876f88db8ff", null ]
-    ] ],
-    [ "ble_ias_alert_level_get", "a00965.html#ga2b433148292e1fdf6ab22633e2d8dde1", null ],
-    [ "ble_ias_init", "a00965.html#gaa1d939e0499a5e34f6c9752347f6b974", null ],
-    [ "ble_ias_on_ble_evt", "a00965.html#ga7aceea1ccf7fa036d066a08e19fe1504", null ]
+    [ "TWI_DELAY", "a00965.html#ga0bdffa7178084c5e1b2e11d3a95c5e85", null ],
+    [ "TWI_DONT_ISSUE_STOP", "a00965.html#gaedaa985feb5cea808d8811bd7ceeb318", null ],
+    [ "TWI_ISSUE_STOP", "a00965.html#ga13a824cf1c6a37f2ddea21c962128a3e", null ],
+    [ "TWI_READ_BIT", "a00965.html#ga67c0f91739433360f513b097acf11946", null ],
+    [ "TWI_SCL_HIGH", "a00965.html#ga7635564961ef4b40ebe54c566b25dc75", null ],
+    [ "TWI_SCL_LOW", "a00965.html#gafef260a0ebd7d5669cd2731d2c20f55d", null ],
+    [ "TWI_SCL_OUTPUT", "a00965.html#gaa73e62b201f371e4d2e543f0ba2bb4cb", null ],
+    [ "TWI_SCL_READ", "a00965.html#ga45cf9fc8c9487711c3b8457b8e1116b2", null ],
+    [ "TWI_SDA_HIGH", "a00965.html#ga112251118224f5623c20423efce89ae8", null ],
+    [ "TWI_SDA_INPUT", "a00965.html#ga63ae25f476902e9df0c31b057e2bb527", null ],
+    [ "TWI_SDA_LOW", "a00965.html#ga6b884c7770898bf063884f3f1893d492", null ],
+    [ "TWI_SDA_OUTPUT", "a00965.html#gaa6c311f207bff59456fb22648965c53b", null ],
+    [ "TWI_SDA_READ", "a00965.html#ga0a7e559c3bceb5b50ff3e51cabb21f73", null ],
+    [ "twi_master_init", "a00965.html#ga148f1dd10bc0248c6c6c5336ce07a540", null ],
+    [ "twi_master_transfer", "a00965.html#ga36e8039d4cbb4f66c0cf0cf1e3a72445", null ]
 ];

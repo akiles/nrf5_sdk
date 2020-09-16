@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: SoftDevice Global Error Codes</title>
+<title>nRF51 SDK - S210 SoftDevice: Persistent Memory Interface Data Types</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,104 +97,61 @@ $(document).ready(function(){initNavTree('a00340.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
-<div class="title">SoftDevice Global Error Codes<div class="ingroups"><a class="el" href="a00361.html">S210 (ANT)</a></div></div>  </div>
+<div class="title">Persistent Memory Interface Data Types<div class="ingroups"><a class="el" href="a00338.html">Persistent Storage Interface</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Global Error definitions.  
+<p>Data Types needed for interfacing with persistent memory.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00341"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00341.html">Error Codes Base number definitions</a></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00108.html">pstorage_module_param_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga7e6367efeaac363d8cf024940b4ec123"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7e6367efeaac363d8cf024940b4ec123"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 0)</td></tr>
-<tr class="memdesc:ga7e6367efeaac363d8cf024940b4ec123"><td class="mdescLeft">&#160;</td><td class="mdescRight">Successful command. <br/></td></tr>
-<tr class="separator:ga7e6367efeaac363d8cf024940b4ec123"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacee74578161456da0759c7b80f55d2e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gacee74578161456da0759c7b80f55d2e0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#gacee74578161456da0759c7b80f55d2e0">NRF_ERROR_SVC_HANDLER_MISSING</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 1)</td></tr>
-<tr class="memdesc:gacee74578161456da0759c7b80f55d2e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">SVC handler is missing. <br/></td></tr>
-<tr class="separator:gacee74578161456da0759c7b80f55d2e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9a2af1a322a5dfb3bdb69e2aacd3bc27"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9a2af1a322a5dfb3bdb69e2aacd3bc27"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#ga9a2af1a322a5dfb3bdb69e2aacd3bc27">NRF_ERROR_SOFTDEVICE_NOT_ENABLED</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 2)</td></tr>
-<tr class="memdesc:ga9a2af1a322a5dfb3bdb69e2aacd3bc27"><td class="mdescLeft">&#160;</td><td class="mdescRight">SoftDevice has not been enabled. <br/></td></tr>
-<tr class="separator:ga9a2af1a322a5dfb3bdb69e2aacd3bc27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadf8b0c33ea15352808e5ac7f69c2be8a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadf8b0c33ea15352808e5ac7f69c2be8a"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#gadf8b0c33ea15352808e5ac7f69c2be8a">NRF_ERROR_INTERNAL</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 3)</td></tr>
-<tr class="memdesc:gadf8b0c33ea15352808e5ac7f69c2be8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal Error. <br/></td></tr>
-<tr class="separator:gadf8b0c33ea15352808e5ac7f69c2be8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7ef4d466b79b31c6325f8b7af5d4f75f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7ef4d466b79b31c6325f8b7af5d4f75f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#ga7ef4d466b79b31c6325f8b7af5d4f75f">NRF_ERROR_NO_MEM</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 4)</td></tr>
-<tr class="memdesc:ga7ef4d466b79b31c6325f8b7af5d4f75f"><td class="mdescLeft">&#160;</td><td class="mdescRight">No Memory for operation. <br/></td></tr>
-<tr class="separator:ga7ef4d466b79b31c6325f8b7af5d4f75f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga349d25ada15be023e0d507f45ada682c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga349d25ada15be023e0d507f45ada682c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#ga349d25ada15be023e0d507f45ada682c">NRF_ERROR_NOT_FOUND</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 5)</td></tr>
-<tr class="memdesc:ga349d25ada15be023e0d507f45ada682c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Not found. <br/></td></tr>
-<tr class="separator:ga349d25ada15be023e0d507f45ada682c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaacf52836cc3860c5ffd4e129f725f138"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaacf52836cc3860c5ffd4e129f725f138"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#gaacf52836cc3860c5ffd4e129f725f138">NRF_ERROR_NOT_SUPPORTED</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 6)</td></tr>
-<tr class="memdesc:gaacf52836cc3860c5ffd4e129f725f138"><td class="mdescLeft">&#160;</td><td class="mdescRight">Not supported. <br/></td></tr>
-<tr class="separator:gaacf52836cc3860c5ffd4e129f725f138"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0a5831cf5092e0dd43a01869676ee076"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0a5831cf5092e0dd43a01869676ee076"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#ga0a5831cf5092e0dd43a01869676ee076">NRF_ERROR_INVALID_PARAM</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 7)</td></tr>
-<tr class="memdesc:ga0a5831cf5092e0dd43a01869676ee076"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid Parameter. <br/></td></tr>
-<tr class="separator:ga0a5831cf5092e0dd43a01869676ee076"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf0aff2ba7864b34a36b4a96986e1851e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf0aff2ba7864b34a36b4a96986e1851e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#gaf0aff2ba7864b34a36b4a96986e1851e">NRF_ERROR_INVALID_STATE</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 8)</td></tr>
-<tr class="memdesc:gaf0aff2ba7864b34a36b4a96986e1851e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid state, operation disallowed in this state. <br/></td></tr>
-<tr class="separator:gaf0aff2ba7864b34a36b4a96986e1851e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga59fe2a8fe184005aefa0835c7ff400fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga59fe2a8fe184005aefa0835c7ff400fd"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#ga59fe2a8fe184005aefa0835c7ff400fd">NRF_ERROR_INVALID_LENGTH</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 9)</td></tr>
-<tr class="memdesc:ga59fe2a8fe184005aefa0835c7ff400fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid Length. <br/></td></tr>
-<tr class="separator:ga59fe2a8fe184005aefa0835c7ff400fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga10f61a8901fb865840da22a0792eca18"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga10f61a8901fb865840da22a0792eca18"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#ga10f61a8901fb865840da22a0792eca18">NRF_ERROR_INVALID_FLAGS</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 10)</td></tr>
-<tr class="memdesc:ga10f61a8901fb865840da22a0792eca18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid Flags. <br/></td></tr>
-<tr class="separator:ga10f61a8901fb865840da22a0792eca18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca6d57e218563351e7abdbdebb049f69"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaca6d57e218563351e7abdbdebb049f69"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#gaca6d57e218563351e7abdbdebb049f69">NRF_ERROR_INVALID_DATA</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 11)</td></tr>
-<tr class="memdesc:gaca6d57e218563351e7abdbdebb049f69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid Data. <br/></td></tr>
-<tr class="separator:gaca6d57e218563351e7abdbdebb049f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4c61f2b54667506e90cc296721b2e658"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4c61f2b54667506e90cc296721b2e658"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#ga4c61f2b54667506e90cc296721b2e658">NRF_ERROR_DATA_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 12)</td></tr>
-<tr class="memdesc:ga4c61f2b54667506e90cc296721b2e658"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data size exceeds limit. <br/></td></tr>
-<tr class="separator:ga4c61f2b54667506e90cc296721b2e658"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf3ac440fa84dedc1a80baab36da36f80"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf3ac440fa84dedc1a80baab36da36f80"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#gaf3ac440fa84dedc1a80baab36da36f80">NRF_ERROR_TIMEOUT</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 13)</td></tr>
-<tr class="memdesc:gaf3ac440fa84dedc1a80baab36da36f80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Operation timed out. <br/></td></tr>
-<tr class="separator:gaf3ac440fa84dedc1a80baab36da36f80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf6e08e45224ec612e6c95660eb1bcfa0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf6e08e45224ec612e6c95660eb1bcfa0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#gaf6e08e45224ec612e6c95660eb1bcfa0">NRF_ERROR_NULL</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 14)</td></tr>
-<tr class="memdesc:gaf6e08e45224ec612e6c95660eb1bcfa0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Null Pointer. <br/></td></tr>
-<tr class="separator:gaf6e08e45224ec612e6c95660eb1bcfa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga85125dae5d7e9d4b9964acbc13f641b3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga85125dae5d7e9d4b9964acbc13f641b3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#ga85125dae5d7e9d4b9964acbc13f641b3">NRF_ERROR_FORBIDDEN</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 15)</td></tr>
-<tr class="memdesc:ga85125dae5d7e9d4b9964acbc13f641b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forbidden Operation. <br/></td></tr>
-<tr class="separator:ga85125dae5d7e9d4b9964acbc13f641b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabc562e4ddfe2f427666a3acdd0b469a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabc562e4ddfe2f427666a3acdd0b469a3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#gabc562e4ddfe2f427666a3acdd0b469a3">NRF_ERROR_INVALID_ADDR</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 16)</td></tr>
-<tr class="memdesc:gabc562e4ddfe2f427666a3acdd0b469a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bad Memory Address. <br/></td></tr>
-<tr class="separator:gabc562e4ddfe2f427666a3acdd0b469a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5d2d8608f6d6a0329f58961a969e946e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5d2d8608f6d6a0329f58961a969e946e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#ga5d2d8608f6d6a0329f58961a969e946e">NRF_ERROR_BUSY</a>&#160;&#160;&#160;(<a class="el" href="a00341.html#ga6657d0b1e8f050685ddf7d7c1d85c8e8">NRF_ERROR_BASE_NUM</a> + 17)</td></tr>
-<tr class="memdesc:ga5d2d8608f6d6a0329f58961a969e946e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busy. <br/></td></tr>
-<tr class="separator:ga5d2d8608f6d6a0329f58961a969e946e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gaac1d429f24eb2850da6d8f8773a14c47"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html#gaac1d429f24eb2850da6d8f8773a14c47">pstorage_ntf_cb_t</a> )(pstorage_handle_t *p_handle, uint8_t op_code, uint32_t result, uint8_t *p_data, uint32_t data_len)</td></tr>
+<tr class="memdesc:gaac1d429f24eb2850da6d8f8773a14c47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Persistent Storage Error Reporting Callback.  <a href="#gaac1d429f24eb2850da6d8f8773a14c47">More...</a><br/></td></tr>
+<tr class="separator:gaac1d429f24eb2850da6d8f8773a14c47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Global Error definitions. </p>
+<p>Data Types needed for interfacing with persistent memory. </p>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a class="anchor" id="gaac1d429f24eb2850da6d8f8773a14c47"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* pstorage_ntf_cb_t)(pstorage_handle_t *p_handle, uint8_t op_code, uint32_t result, uint8_t *p_data, uint32_t data_len)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Persistent Storage Error Reporting Callback. </p>
+<p>Persistent Storage Error Reporting Callback that is used by the interface to report success or failure of a flash operation. Therefore, for any operations, application can know when the procedure was complete. For store operation, since no data copy is made, receiving a success or failure notification, indicated by the reason parameter of callback is an indication that the resident memory could now be reused or freed, as the case may be.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>Identifies module and block for which callback is received. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">op_code</td><td>Identifies the operation for which the event is notified. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">result</td><td>Identifies the result of flash access operation. NRF_SUCCESS implies, operation succeeded. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Identifies the application data pointer. In case of store operation, this points to the resident source of application memory that application can now free or reuse. In case of clear, this is NULL as no application pointer is needed for this operation. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data_len</td><td>Length data application had provided for the operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:05 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

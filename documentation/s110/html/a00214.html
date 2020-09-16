@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_evt_tx_complete_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_bps_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,33 @@ $(document).ready(function(){initNavTree('a00214.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_evt_tx_complete_t Struct Reference<div class="ingroups"><a class="el" href="a01040.html">Structures</a></div></div>  </div>
+<div class="title">ble_bps_evt_t Struct Reference<div class="ingroups"><a class="el" href="a01195.html">Blood Pressure Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event structure for <a class="el" href="a01038.html#ggaa55e423bfea45f03764a636f2cec7a8ba408a77f131a2d314fbf477cdb2d1e0f6">BLE_EVT_TX_COMPLETE</a>.  
+<p>Blood Pressure Service event.  
  <a href="a00214.html#details">More...</a></p>
 
-<p><code>#include &lt;ble.h&gt;</code></p>
+<p><code>#include &lt;ble_bps.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a2f0ff85ec5add11dad58af0a0ba5a5a8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00214.html#a2f0ff85ec5add11dad58af0a0ba5a5a8">count</a></td></tr>
-<tr class="separator:a2f0ff85ec5add11dad58af0a0ba5a5a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83328e50ff25cb6d23ccd0922452590d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01195.html#ga98f1cefcd43052be0eede287994762e6">ble_bps_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00214.html#a83328e50ff25cb6d23ccd0922452590d">evt_type</a></td></tr>
+<tr class="separator:a83328e50ff25cb6d23ccd0922452590d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event structure for <a class="el" href="a01038.html#ggaa55e423bfea45f03764a636f2cec7a8ba408a77f131a2d314fbf477cdb2d1e0f6">BLE_EVT_TX_COMPLETE</a>. </p>
+<div class="textblock"><p>Blood Pressure Service event. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a2f0ff85ec5add11dad58af0a0ba5a5a8"></a>
+<a class="anchor" id="a83328e50ff25cb6d23ccd0922452590d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_evt_tx_complete_t::count</td>
+          <td class="memname"><a class="el" href="a01195.html#ga98f1cefcd43052be0eede287994762e6">ble_bps_evt_type_t</a> ble_bps_evt_t::evt_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of packets transmitted. </p>
+<p>Type of event. </p>
 
 </div>
 </div>
@@ -141,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00214.html">ble_evt_tx_complete_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00214.html">ble_bps_evt_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

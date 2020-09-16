@@ -70,16 +70,16 @@ enum BLE_GATTC_SVCS
  */
 enum BLE_GATTC_EVTS
 {
-  BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP = BLE_GATTC_EVT_BASE,  /**< Primary Service Discovery Response event.  */
-  BLE_GATTC_EVT_REL_DISC_RSP,                             /**< Relationship Discovery Response event. */
-  BLE_GATTC_EVT_CHAR_DISC_RSP,                            /**< Characteristic Discovery Response event. */
-  BLE_GATTC_EVT_DESC_DISC_RSP,                            /**< Descriptor Discovery Response event. */
-  BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP,                /**< Read By UUID Response event. */
-  BLE_GATTC_EVT_READ_RSP,                                 /**< Read Response event. */
-  BLE_GATTC_EVT_CHAR_VALS_READ_RSP,                       /**< Read multiple Response event. */
-  BLE_GATTC_EVT_WRITE_RSP,                                /**< Write Response event. */
-  BLE_GATTC_EVT_HVX,                                      /**< Handle Value Notification or Indication event. */
-  BLE_GATTC_EVT_TIMEOUT                                   /**< Timeout event. */
+  BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP = BLE_GATTC_EVT_BASE,  /**< Primary Service Discovery Response event. @ref ble_gattc_evt_prim_srvc_disc_rsp_t */
+  BLE_GATTC_EVT_REL_DISC_RSP,                             /**< Relationship Discovery Response event. @ref ble_gattc_evt_rel_disc_rsp_t */
+  BLE_GATTC_EVT_CHAR_DISC_RSP,                            /**< Characteristic Discovery Response event. @ref ble_gattc_evt_char_disc_rsp_t */
+  BLE_GATTC_EVT_DESC_DISC_RSP,                            /**< Descriptor Discovery Response event. @ref ble_gattc_evt_desc_disc_rsp_t */
+  BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP,                /**< Read By UUID Response event. @ref ble_gattc_evt_char_val_by_uuid_read_rsp_t */
+  BLE_GATTC_EVT_READ_RSP,                                 /**< Read Response event. @ref ble_gattc_evt_read_rsp_t */
+  BLE_GATTC_EVT_CHAR_VALS_READ_RSP,                       /**< Read multiple Response event. @ref ble_gattc_evt_char_vals_read_rsp_t */
+  BLE_GATTC_EVT_WRITE_RSP,                                /**< Write Response event. @ref ble_gattc_evt_write_rsp_t */
+  BLE_GATTC_EVT_HVX,                                      /**< Handle Value Notification or Indication event. @ref ble_gattc_evt_hvx_t */
+  BLE_GATTC_EVT_TIMEOUT                                   /**< Timeout event. @ref ble_gattc_evt_timeout_t */
 };
 
 /** @} */
@@ -154,28 +154,28 @@ typedef struct
   uint8_t   *p_value;                  /**< Pointer to the value data. */
 } ble_gattc_write_params_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_PRIM_SRVC_DISC_RSP. */
 typedef struct
 {
   uint16_t             count;           /**< Service count. */
   ble_gattc_service_t services[1];      /**< Service data, variable length. */
 } ble_gattc_evt_prim_srvc_disc_rsp_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_REL_DISC_RSP. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_REL_DISC_RSP. */
 typedef struct
 {
   uint16_t             count;           /**< Include count. */
   ble_gattc_include_t includes[1];      /**< Include data, variable length. */
 } ble_gattc_evt_rel_disc_rsp_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_CHAR_DISC_RSP. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_CHAR_DISC_RSP. */
 typedef struct
 {
   uint16_t            count;          /**< Characteristic count. */
   ble_gattc_char_t    chars[1];       /**< Characteristic data, variable length. */
 } ble_gattc_evt_char_disc_rsp_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_DESC_DISC_RSP. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_DESC_DISC_RSP. */
 typedef struct
 {
   uint16_t            count;          /**< Descriptor count. */
@@ -186,12 +186,12 @@ typedef struct
 typedef struct 
 {
   uint16_t            handle;          /**< Attribute Handle. */
-  uint8_t             *p_value;        /**< Pointer to value, variable length (length available as value_len in ble_gattc_evt_read_by_uuid_rsp_t). 
+  uint8_t             *p_value;        /**< Pointer to value, variable length (length available as value_len in @ref ble_gattc_evt_char_val_by_uuid_read_rsp_t). 
                                             Please note that this pointer is absolute to the memory provided by the user when retrieving the event,
                                             so it will effectively point to a location inside the handle_value array. */
 } ble_gattc_handle_value_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_CHAR_VAL_BY_UUID_READ_RSP. */
 typedef struct
 {
   uint16_t                  count;            /**< Handle-Value Pair Count. */
@@ -199,7 +199,7 @@ typedef struct
   ble_gattc_handle_value_t  handle_value[1];  /**< Handle-Value(s) list, variable length. */
 } ble_gattc_evt_char_val_by_uuid_read_rsp_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_READ_RSP. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_READ_RSP. */
 typedef struct
 {
   uint16_t            handle;         /**< Attribute Handle. */
@@ -208,24 +208,24 @@ typedef struct
   uint8_t             data[1];        /**< Attribute data, variable length. */
 } ble_gattc_evt_read_rsp_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_CHAR_VALS_READ_RSP. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_CHAR_VALS_READ_RSP. */
 typedef struct
 {
   uint16_t            len;            /**< Concatenated Attribute values length. */
   uint8_t             values[1];      /**< Attribute values, variable length. */
 } ble_gattc_evt_char_vals_read_rsp_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_WRITE_RSP. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_WRITE_RSP. */
 typedef struct
 {
   uint16_t            handle;           /**< Attribute Handle. */
   uint8_t             write_op;         /**< Type of write operation, see @ref BLE_GATT_WRITE_OPS. */
-  uint16_t            offset;           /**< Data Offset. */
+  uint16_t            offset;           /**< Data offset. */
   uint16_t            len;              /**< Data length. */
   uint8_t             data[1];          /**< Data, variable length. */
 } ble_gattc_evt_write_rsp_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_HVX. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_HVX. */
 typedef struct
 {
   uint16_t            handle;         /**< Handle to which the HVx operation applies. */
@@ -234,18 +234,18 @@ typedef struct
   uint8_t             data[1];        /**< Attribute data, variable length. */
 } ble_gattc_evt_hvx_t;
 
-/**@brief Event structure for BLE_GATTC_EVT_TIMEOUT. */
+/**@brief Event structure for @ref BLE_GATTC_EVT_TIMEOUT. */
 typedef struct
 {
   uint8_t          src;                       /**< Timeout source, see @ref BLE_GATT_TIMEOUT_SOURCES. */
 } ble_gattc_evt_timeout_t;
 
-/**@brief GATTC event type. */
+/**@brief GATTC event structure. */
 typedef struct
 {
   uint16_t            conn_handle;                /**< Connection Handle on which event occured. */
   uint16_t            gatt_status;                /**< GATT status code for the operation, see @ref BLE_GATT_STATUS_CODES. */
-  uint16_t            error_handle;               /**< In case of error: The handle causing the error. In all other cases BLE_GATT_HANDLE_INVALID. */
+  uint16_t            error_handle;               /**< In case of error: The handle causing the error. In all other cases @ref BLE_GATT_HANDLE_INVALID. */
   union
   {
     ble_gattc_evt_prim_srvc_disc_rsp_t          prim_srvc_disc_rsp;         /**< Primary Service Discovery Response Event Parameters. */
@@ -258,7 +258,7 @@ typedef struct
     ble_gattc_evt_write_rsp_t                   write_rsp;                  /**< Write Response Event Parameters. */
     ble_gattc_evt_hvx_t                         hvx;                        /**< Handle Value Notification/Indication Event Parameters. */
     ble_gattc_evt_timeout_t                     timeout;                    /**< Timeout Event Parameters. */
-  } params;                                                                 /**< Event Parameters. @note Only valid if @ref gatt_status == BLE_GATT_STATUS_SUCCESS. */
+  } params;                                                                 /**< Event Parameters. @note Only valid if @ref gatt_status == @ref BLE_GATT_STATUS_SUCCESS. */
 } ble_gattc_evt_t;
 /** @} */
 
@@ -267,11 +267,11 @@ typedef struct
 
 /**@brief Initiate or continue a GATT Primary Service Discovery procedure.
  *
- * @details This function initiates a Primary Service discovery, starting from the supplied handle. 
- *          If the last service has not been reached, this must be called again with an updated start handle value to continue the search.
+ * @details This function initiates or resumes a Primary Service discovery procedure, starting from the supplied handle. 
+ *          If the last service has not been reached, this function must be called again with an updated start handle value to continue the search.
  *
  * @note If any of the discovered services have 128-bit UUIDs which are not present in the table provided to ble_vs_uuids_assign, a UUID structure with
- *       type BLE_UUID_TYPE_UNKNOWN will be received in the corresponding event.
+ *       type @ref BLE_UUID_TYPE_UNKNOWN will be received in the corresponding event.
  *
  * @param[in] conn_handle The connection handle identifying the connection to perform this procedure on.
  * @param[in] start_handle Handle to start searching from.
@@ -288,7 +288,7 @@ SVCALL(SD_BLE_GATTC_PRIMARY_SERVICES_DISCOVER, uint32_t, sd_ble_gattc_primary_se
 
 /**@brief Initiate or continue a GATT Relationship Discovery procedure.
  *
- * @details This function initiates the Find Included Services sub-procedure. If the last included service has not been reached,
+ * @details This function initiates or resumes the Find Included Services sub-procedure. If the last included service has not been reached,
  *          this must be called again with an updated handle range to continue the search.
  *
  * @param[in] conn_handle The connection handle identifying the connection to perform this procedure on.
@@ -306,11 +306,11 @@ SVCALL(SD_BLE_GATTC_RELATIONSHIPS_DISCOVER, uint32_t, sd_ble_gattc_relationships
 
 /**@brief Initiate or continue a GATT Characteristic Discovery procedure.
  *
- * @details This function initiates a Characteristic discovery procedure. If the last Characteristic has not been reached,
+ * @details This function initiates or resumes a Characteristic discovery procedure. If the last Characteristic has not been reached,
  *          this must be called again with an updated handle range to continue the discovery.
  *
  * @note If any of the discovered characteristics have 128-bit UUIDs which are not present in the table provided to ble_vs_uuids_assign, a UUID structure with
- *       type BLE_UUID_TYPE_UNKNOWN will be received in the corresponding event.
+ *       type @ref BLE_UUID_TYPE_UNKNOWN will be received in the corresponding event.
  *
  * @param[in] conn_handle The connection handle identifying the connection to perform this procedure on.
  * @param[in] p_handle_range A pointer to the range of handles of the Service to perform this procedure on.
@@ -326,7 +326,7 @@ SVCALL(SD_BLE_GATTC_CHARACTERISTICS_DISCOVER, uint32_t, sd_ble_gattc_characteris
 
 /**@brief Initiate or continue a GATT Characteristic Descriptor Discovery procedure.
  *
- * @details This function initiates the Characteristic Descriptor discovery procedure. If the last Descriptor has not been reached,
+ * @details This function initiates or resumes a Characteristic Descriptor discovery procedure. If the last Descriptor has not been reached,
  *          this must be called again with an updated handle range to continue the discovery.
  *
  * @param[in] conn_handle The connection handle identifying the connection to perform this procedure on.
@@ -343,7 +343,7 @@ SVCALL(SD_BLE_GATTC_DESCRIPTORS_DISCOVER, uint32_t, sd_ble_gattc_descriptors_dis
 
 /**@brief Initiate or continue a GATT Read using Characteristic UUID procedure.
  *
- * @details This function initiates the Read using Characteristic UUID procedure. If the last Characteristic has not been reached,
+ * @details This function initiates or resumes a Read using Characteristic UUID procedure. If the last Characteristic has not been reached,
  *          this must be called again with an updated handle range to continue the discovery.
  *
  * @param[in] conn_handle The connection handle identifying the connection to perform this procedure on.
@@ -361,8 +361,8 @@ SVCALL(SD_BLE_GATTC_CHAR_VALUE_BY_UUID_READ, uint32_t, sd_ble_gattc_char_value_b
 
 /**@brief Initiate or continue a GATT Read (Long) Characteristic or Descriptor procedure.
  *
- * @details This function initiates a GATT Read (Long) Characteristic or Descriptor procedure. If the Characteristic or Descriptor
- *          to be read is longer than GATT_MTU - 1, this function must be called multiple times with appropriate offset to read the 
+ * @details This function initiates or resumes a GATT Read (Long) Characteristic or Descriptor procedure. If the Characteristic or Descriptor
+ *          to be read is longer than ATT_MTU - 1, this function must be called multiple times with appropriate offset to read the 
  *          complete value.
  *
  * @param[in] conn_handle The connection handle identifying the connection to perform this procedure on.
@@ -400,7 +400,7 @@ SVCALL(SD_BLE_GATTC_CHAR_VALUES_READ, uint32_t, sd_ble_gattc_char_values_read(ui
  * @details This function can perform all write procedures described in GATT. 
  *
  * @note    It is important to note that a write without response will <b>consume an application buffer</b>, and will therefore 
- *          generate a @ref BLE_EVT_TX_COMPLETE event when the packet has been transmitted. A write on the other hand will use the 
+ *          generate a @ref BLE_EVT_TX_COMPLETE event when the packet has been transmitted. A write (with response) on the other hand will use the 
  *          standard client internal buffer and thus will only generate a @ref BLE_GATTC_EVT_WRITE_RSP event as soon as the write response 
  *          has been received from the peer. Please see the documentation of @ref sd_ble_tx_buffer_count_get for more details.
  *

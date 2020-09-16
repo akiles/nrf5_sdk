@@ -1,7 +1,8 @@
 var a00371 =
 [
-    [ "data_packet", "a00371.html#acefd384a51f51514c417758c5d870a10", null ],
-    [ "packet_type", "a00371.html#ab181d68ce3f0f88e0f4020c1e07bb14d", null ],
-    [ "params", "a00371.html#a3ea1365c329ce36970746a406336374a", null ],
-    [ "start_packet", "a00371.html#a3a677307c9b4796855cdc9d208cd8dee", null ]
+    [ "alert_level_handles", "a00371.html#aee2e9a72478596b53d8d99a398360591", null ],
+    [ "conn_handle", "a00371.html#a279ea77b56e98f810efce3dc8ecc635b", null ],
+    [ "error_handler", "a00371.html#a4a22ac8304ea3a4bc7dacb72a8d65bc0", null ],
+    [ "evt_handler", "a00371.html#a331d5f75c24c9f4be6b9f4464ce828c9", null ],
+    [ "service_handle", "a00371.html#ae8ad660b1350238c9bb1f4ff6e043ef7", null ]
 ];

@@ -76,7 +76,7 @@ typedef struct
  * @param[in]  p_config                           Initial configuration. Default configuration used if NULL.
  *
  * @retval     NRF_SUCCESS                        If the procedure was successful.
- * @retval     NRF_ERROR_INVALID_STATE            If the driver was already initialized.
+ * @retval     MODULE_ALREADY_INITIALIZED         If the driver was already initialized.
  * @retval     NRF_ERROR_SOFTDEVICE_NOT_ENABLED   If the SoftDevice was not enabled.
  */
 ret_code_t nrf_drv_clock_init(nrf_drv_clock_config_t const * p_config);
@@ -160,7 +160,7 @@ ret_code_t nrf_drv_clock_is_calibrating(bool * p_is_calibrating);
  *
  * @retval     Task address.
  */
-__STATIC_INLINE uint32_t nrf_drv_clock_ppi_task_addr(nrf_clock_tasks_t task)
+__STATIC_INLINE uint32_t nrf_drv_clock_ppi_task_addr(nrf_clock_task_t task)
 {
     return nrf_clock_task_address_get(task);
 }
@@ -171,7 +171,7 @@ __STATIC_INLINE uint32_t nrf_drv_clock_ppi_task_addr(nrf_clock_tasks_t task)
  *
  * @retval     Event address.
  */
-__STATIC_INLINE uint32_t nrf_drv_clock_ppi_event_addr(nrf_clock_events_t event)
+__STATIC_INLINE uint32_t nrf_drv_clock_ppi_event_addr(nrf_clock_event_t event)
 {
     return nrf_clock_event_address_get(event);
 }

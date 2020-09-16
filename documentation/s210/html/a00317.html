@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: FIFO implementation</title>
+<title>nRF51 SDK - S210 SoftDevice: Non-volatile memory controller</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,177 +97,76 @@ $(document).ready(function(){initNavTree('a00317.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">FIFO implementation<div class="ingroups"><a class="el" href="a00349.html">SDK Common Libraries</a></div></div>  </div>
+<div class="title">Non-volatile memory controller<div class="ingroups"><a class="el" href="a00393.html">Peripheral Drivers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>FIFO implementation.  
+<p>Driver for the nRF51 NVMC peripheral.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Data Structures</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00068.html">app_fifo_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the information about which memory is allocated for the buffer and its size. This needs to be initialized by <a class="el" href="a00317.html#gafc2ba3545e60f0134689fac2aa87f493" title="Function for initializing the FIFO.">app_fifo_init()</a> before use.  <a href="a00068.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gafc2ba3545e60f0134689fac2aa87f493"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#gafc2ba3545e60f0134689fac2aa87f493">app_fifo_init</a> (<a class="el" href="a00068.html">app_fifo_t</a> *p_fifo, uint8_t *p_buf, uint16_t buf_size)</td></tr>
-<tr class="memdesc:gafc2ba3545e60f0134689fac2aa87f493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the FIFO.  <a href="#gafc2ba3545e60f0134689fac2aa87f493">More...</a><br/></td></tr>
-<tr class="separator:gafc2ba3545e60f0134689fac2aa87f493"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga76ac40c5174cc17b8b6ebd8d86cf0f0e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">app_fifo_put</a> (<a class="el" href="a00068.html">app_fifo_t</a> *p_fifo, uint8_t byte)</td></tr>
-<tr class="memdesc:ga76ac40c5174cc17b8b6ebd8d86cf0f0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for adding an element to the FIFO.  <a href="#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">More...</a><br/></td></tr>
-<tr class="separator:ga76ac40c5174cc17b8b6ebd8d86cf0f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab6292f78e91737ba0df83d6755e0abb9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#gab6292f78e91737ba0df83d6755e0abb9">app_fifo_get</a> (<a class="el" href="a00068.html">app_fifo_t</a> *p_fifo, uint8_t *p_byte)</td></tr>
-<tr class="memdesc:gab6292f78e91737ba0df83d6755e0abb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the next element from the FIFO.  <a href="#gab6292f78e91737ba0df83d6755e0abb9">More...</a><br/></td></tr>
-<tr class="separator:gab6292f78e91737ba0df83d6755e0abb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0944439787b55aafb3288a836efa3b9b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#ga0944439787b55aafb3288a836efa3b9b">app_fifo_flush</a> (<a class="el" href="a00068.html">app_fifo_t</a> *p_fifo)</td></tr>
-<tr class="memdesc:ga0944439787b55aafb3288a836efa3b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for flushing the FIFO.  <a href="#ga0944439787b55aafb3288a836efa3b9b">More...</a><br/></td></tr>
-<tr class="separator:ga0944439787b55aafb3288a836efa3b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8cf428dbb2a28a342c3b57cc07869d9d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#ga8cf428dbb2a28a342c3b57cc07869d9d">nrf_nvmc_page_erase</a> (uint32_t address)</td></tr>
+<tr class="memdesc:ga8cf428dbb2a28a342c3b57cc07869d9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erase a page in flash. This is required before writing to any address in the page.  <a href="#ga8cf428dbb2a28a342c3b57cc07869d9d">More...</a><br/></td></tr>
+<tr class="separator:ga8cf428dbb2a28a342c3b57cc07869d9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga008c6a4096bda07d67f33294af00ad9b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#ga008c6a4096bda07d67f33294af00ad9b">nrf_nvmc_write_byte</a> (uint32_t address, uint8_t value)</td></tr>
+<tr class="memdesc:ga008c6a4096bda07d67f33294af00ad9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a single byte to flash.  <a href="#ga008c6a4096bda07d67f33294af00ad9b">More...</a><br/></td></tr>
+<tr class="separator:ga008c6a4096bda07d67f33294af00ad9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1347c44095f9486554be7c3d62737925"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#ga1347c44095f9486554be7c3d62737925">nrf_nvmc_write_word</a> (uint32_t address, uint32_t value)</td></tr>
+<tr class="memdesc:ga1347c44095f9486554be7c3d62737925"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a 32-bit word to flash.  <a href="#ga1347c44095f9486554be7c3d62737925">More...</a><br/></td></tr>
+<tr class="separator:ga1347c44095f9486554be7c3d62737925"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d566edd65fdc5655ce7be3cd17faba0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#ga7d566edd65fdc5655ce7be3cd17faba0">nrf_nvmc_write_bytes</a> (uint32_t address, const uint8_t *src, uint32_t num_bytes)</td></tr>
+<tr class="memdesc:ga7d566edd65fdc5655ce7be3cd17faba0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write consecutive bytes to flash.  <a href="#ga7d566edd65fdc5655ce7be3cd17faba0">More...</a><br/></td></tr>
+<tr class="separator:ga7d566edd65fdc5655ce7be3cd17faba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9ac0536be3127139fb91992e1c5b46c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00317.html#ga9ac0536be3127139fb91992e1c5b46c4">nrf_nvmc_write_words</a> (uint32_t address, const uint32_t *src, uint32_t num_words)</td></tr>
+<tr class="memdesc:ga9ac0536be3127139fb91992e1c5b46c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write consecutive words to flash.  <a href="#ga9ac0536be3127139fb91992e1c5b46c4">More...</a><br/></td></tr>
+<tr class="separator:ga9ac0536be3127139fb91992e1c5b46c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>FIFO implementation. </p>
+<p>Driver for the nRF51 NVMC peripheral. </p>
+<p>This driver allows writing to the non-volatile memory (NVM) regions of the nRF51. In order to write to NVM the controller must be powered on and the relevant page must be erased. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga0944439787b55aafb3288a836efa3b9b"></a>
+<a class="anchor" id="ga8cf428dbb2a28a342c3b57cc07869d9d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t app_fifo_flush </td>
+          <td class="memname">void nrf_nvmc_page_erase </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html">app_fifo_t</a> *&#160;</td>
-          <td class="paramname"><em>p_fifo</em></td><td>)</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for flushing the FIFO. </p>
+<p>Erase a page in flash. This is required before writing to any address in the page. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_fifo</td><td>Pointer to the FIFO.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If the FIFO flushed successfully. </td></tr>
+    <tr><td class="paramname">address</td><td>Start address of the page. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gab6292f78e91737ba0df83d6755e0abb9"></a>
+<a class="anchor" id="ga008c6a4096bda07d67f33294af00ad9b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t app_fifo_get </td>
+          <td class="memname">void nrf_nvmc_write_byte </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html">app_fifo_t</a> *&#160;</td>
-          <td class="paramname"><em>p_fifo</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_byte</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for getting the next element from the FIFO. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_fifo</td><td>Pointer to the FIFO. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_byte</td><td>Byte fetched from the FIFO.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If an element was returned. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NOT_FOUND</td><td>If there is no more elements in the queue. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gafc2ba3545e60f0134689fac2aa87f493"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t app_fifo_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html">app_fifo_t</a> *&#160;</td>
-          <td class="paramname"><em>p_fifo</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>p_buf</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>buf_size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function for initializing the FIFO. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_fifo</td><td>FIFO object. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>FIFO buffer for storing data. The buffer size has to be a power of two. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">buf_size</td><td>Size of the FIFO buffer provided, has to be a power of 2.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If initialization was successful. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NULL</td><td>If a NULL pointer is provided as buffer. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>If size of buffer provided is not a power of two. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga76ac40c5174cc17b8b6ebd8d86cf0f0e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t app_fifo_put </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00068.html">app_fifo_t</a> *&#160;</td>
-          <td class="paramname"><em>p_fifo</em>, </td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>byte</em>&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -277,18 +176,131 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for adding an element to the FIFO. </p>
+<p>Write a single byte to flash. </p>
+<p>The function reads the word containing the byte, and then rewrites the entire word.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_fifo</td><td>Pointer to the FIFO. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">byte</td><td>Data byte to add to the FIFO.</td></tr>
+    <tr><td class="paramname">address</td><td>Address to write to. </td></tr>
+    <tr><td class="paramname">value</td><td>Value to write. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">NRF_SUCCESS</td><td>If an element has been successfully added to the FIFO. </td></tr>
-    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>If the FIFO is full. </td></tr>
+
+</div>
+</div>
+<a class="anchor" id="ga7d566edd65fdc5655ce7be3cd17faba0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_nvmc_write_bytes </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>num_bytes</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write consecutive bytes to flash. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Address to write to. </td></tr>
+    <tr><td class="paramname">src</td><td>Pointer to data to copy from. </td></tr>
+    <tr><td class="paramname">num_bytes</td><td>Number of bytes in src to write. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1347c44095f9486554be7c3d62737925"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_nvmc_write_word </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write a 32-bit word to flash. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Address to write to. </td></tr>
+    <tr><td class="paramname">value</td><td>Value to write. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9ac0536be3127139fb91992e1c5b46c4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nrf_nvmc_write_words </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>num_words</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write consecutive words to flash. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>Address to write to. </td></tr>
+    <tr><td class="paramname">src</td><td>Pointer to data to copy from. </td></tr>
+    <tr><td class="paramname">num_words</td><td>Number of bytes in src to write. </td></tr>
   </table>
   </dd>
 </dl>
@@ -300,7 +312,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

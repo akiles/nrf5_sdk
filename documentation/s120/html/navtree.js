@@ -21,19 +21,24 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "a00001.html",
-"a00092.html#a97887d3332bca8ac17806b8d328e4a2c",
-"a00154.html",
-"a00214.html",
-"a00451.html#ga7efdf26b2463b9e15aaaaffa76ee224f",
-"a00458.html#ggabb15d5be643cacaa7fa78d89ba1b9e76a7cb2a5e54337a1f8ef199eff46b90b04",
-"a00464.html#gad8213f183b7a612694ad21bb308605b0",
-"a00489.html#ga89bde49fa68a5ded0ca5c5efdb4ce0c0",
-"a00519.html#gabe27b8f22c3a52413fa064c2ee1e4fba",
-"a00554.html#ga2a4e1ac74fc8805c1c78879a100f0a99",
-"a00614.html",
-"a00688.html#ga1ab2795a93cef9ae076027e04819aa2b",
-"a00710.html#ga90298b8dcd8bbe7bbe69d362d1133378",
-"a00732.html"
+"a00084.html#nrf51_evt_conn_param_update_request_encoding_sec",
+"a00090.html#nrf51_sd_ble_gattc_primary_services_discover_encoding",
+"a00140.html",
+"a00198.html",
+"a00260.html#a0da7a46f813f94e2499cf3d2f38498fb",
+"a00623.html#ga31521894e811710e49d5d9bb9abcecb8",
+"a00629.html#gga83cf5132660ff61f588166298174ef68a538fa7fa9540fd3d53730a3d4f1703ef",
+"a00636.html#gaa2f32b8a906c23d37cef53d63d232b22",
+"a00654.html#ga0316f640da7481e9bd03ed51b29a3e65",
+"a00674.html",
+"a00704.html#ga06d8b368ebe6d72db8c32a22ae9a31f0",
+"a00737.html#ga8dcf12cdc7a9ee6aec5eca3a89b140e5",
+"a00803.html",
+"a00846.html#gae38acff86f53c1f8d3db8cc6db778a4d",
+"a00874.html",
+"a00919.html#ga9504eca7b4df3ce415dad46abd2ea24f",
+"a00947.html#ga313fe43c2e93267da668572e885945db",
+"functions_0x75.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

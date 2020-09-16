@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_sec_kdist_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gap_addr_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,48 @@ $(document).ready(function(){initNavTree('a00252.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_sec_kdist_t Struct Reference<div class="ingroups"><a class="el" href="a01044.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_addr_t Struct Reference<div class="ingroups"><a class="el" href="a01287.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Keys that can be exchanged during a bonding procedure.  
+<p>Bluetooth Low Energy address.  
  <a href="a00252.html#details">More...</a></p>
 
 <p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:aa84265de1334d3ddeed29a09209f02a9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00252.html#aa84265de1334d3ddeed29a09209f02a9">enc</a>: 1</td></tr>
-<tr class="separator:aa84265de1334d3ddeed29a09209f02a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6319f6981dbbcff973574420e81090ce"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00252.html#a6319f6981dbbcff973574420e81090ce">id</a>: 1</td></tr>
-<tr class="separator:a6319f6981dbbcff973574420e81090ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91ecd2873c5ed1bd4902929bb9194c9e"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00252.html#a91ecd2873c5ed1bd4902929bb9194c9e">sign</a>: 1</td></tr>
-<tr class="separator:a91ecd2873c5ed1bd4902929bb9194c9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad056845594972dd031a09700194d660c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00252.html#ad056845594972dd031a09700194d660c">addr_type</a></td></tr>
+<tr class="separator:ad056845594972dd031a09700194d660c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e756ddbde7ebf78f17a043d7ebe602c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00252.html#a7e756ddbde7ebf78f17a043d7ebe602c">addr</a> [6]</td></tr>
+<tr class="separator:a7e756ddbde7ebf78f17a043d7ebe602c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Keys that can be exchanged during a bonding procedure. </p>
+<div class="textblock"><p>Bluetooth Low Energy address. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="aa84265de1334d3ddeed29a09209f02a9"></a>
+<a class="anchor" id="a7e756ddbde7ebf78f17a043d7ebe602c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_sec_kdist_t::enc</td>
+          <td class="memname">uint8_t ble_gap_addr_t::addr[6]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Long Term Key and Master Identification. </p>
+<p>48-bit address, LSB format. </p>
 
 </div>
 </div>
-<a class="anchor" id="a6319f6981dbbcff973574420e81090ce"></a>
+<a class="anchor" id="ad056845594972dd031a09700194d660c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_sec_kdist_t::id</td>
+          <td class="memname">uint8_t ble_gap_addr_t::addr_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Identity Resolving Key and Identity Address Information. </p>
-
-</div>
-</div>
-<a class="anchor" id="a91ecd2873c5ed1bd4902929bb9194c9e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_gap_sec_kdist_t::sign</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Connection Signature Resolving Key. </p>
+<p>See <a class="el" href="a01007.html">GAP Address types</a>. </p>
 
 </div>
 </div>
@@ -171,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00252.html">ble_gap_sec_kdist_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00252.html">ble_gap_addr_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

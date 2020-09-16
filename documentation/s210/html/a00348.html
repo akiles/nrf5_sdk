@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Peripheral Drivers</title>
+<title>nRF51 SDK - S210 SoftDevice: TWI HAL and driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,88 +99,31 @@ $(document).ready(function(){initNavTree('a00348.html','');});
   <div class="summary">
 <a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">Peripheral Drivers<div class="ingroups"><a class="el" href="a00347.html">nRF51 SDK</a></div></div>  </div>
+<div class="title">TWI HAL and driver<div class="ingroups"><a class="el" href="a00393.html">Peripheral Drivers</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>TWI APIs.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:a00271"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00271.html">ADNS2080 driver</a></td></tr>
-<tr class="memdesc:a00271"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADNS2080 mouse sensor driver. <br/></td></tr>
+<tr class="memitem:a00324"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00324.html">TWI HAL</a></td></tr>
+<tr class="memdesc:a00324"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardware access layer for the two-wire interface (TWI) peripheral. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00272"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html">Cherry 8x16 keyboard matrix driver</a></td></tr>
-<tr class="memdesc:a00272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cherry 8x16 keyboard matrix driver. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00273"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00273.html">DS1624 digital temperature sensor driver</a></td></tr>
-<tr class="memdesc:a00273"><td class="mdescLeft">&#160;</td><td class="mdescRight">DS1624 digital temperature sensor driver. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00274"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00274.html">MPU6050 gyro/accelerometer driver</a></td></tr>
-<tr class="memdesc:a00274"><td class="mdescLeft">&#160;</td><td class="mdescRight">MPU6050 gyro/accelerometer driver. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00275"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00275.html">Synaptics Touchpad driver.</a></td></tr>
-<tr class="memdesc:a00275"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synaptics Touchpad driver. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00276"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00276.html">ADC HAL</a></td></tr>
-<tr class="memdesc:a00276"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardware abstraction layer for managing the analog-to-digital converter. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00278"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html">AES ECB encryption</a></td></tr>
-<tr class="memdesc:a00278"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver for the nRF51 AES Electronic Code Book (ECB) peripheral. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00279"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00279.html">GPIO abstraction</a></td></tr>
-<tr class="memdesc:a00279"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO pin abstraction and port abstraction for reading and writing byte-wise to GPIO ports. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00280"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00280.html">GPIOTE abstraction</a></td></tr>
-<tr class="memdesc:a00280"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIOTE abstraction for configuration of channels. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00282"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00282.html">Non-volatile memory controller</a></td></tr>
-<tr class="memdesc:a00282"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver for the nRF51 NVMC peripheral. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00287"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00287.html">TEMP (temperature) abstraction</a></td></tr>
-<tr class="memdesc:a00287"><td class="mdescLeft">&#160;</td><td class="mdescRight">Temperature module init and read functions. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00290"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00290.html">Timer HAL and driver</a></td></tr>
-<tr class="memdesc:a00290"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer APIs. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00292"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00292.html">QDEC HAL and driver</a></td></tr>
-<tr class="memdesc:a00292"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quadrature decoder (QDEC) APIs. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00294"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00294.html">Clock HAL and driver</a></td></tr>
-<tr class="memdesc:a00294"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock APIs. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00296"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00296.html">LPCOMP HAL and driver</a></td></tr>
-<tr class="memdesc:a00296"><td class="mdescLeft">&#160;</td><td class="mdescRight">Low Power Comparator (LPCOMP) APIs. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00298"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00298.html">WDT HAL and driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00304"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00304.html">RTC HAL and driver</a></td></tr>
-<tr class="memdesc:a00304"><td class="mdescLeft">&#160;</td><td class="mdescRight">Real timer counter (RTC) APIs. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00306"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00306.html">SDIO driver</a></td></tr>
-<tr class="memdesc:a00306"><td class="mdescLeft">&#160;</td><td class="mdescRight">2-wire serial interface driver. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00307"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00307.html">SPI Master driver</a></td></tr>
-<tr class="memdesc:a00307"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPI master driver. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00308"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00308.html">Software controlled SPI Slave driver.</a></td></tr>
-<tr class="memdesc:a00308"><td class="mdescLeft">&#160;</td><td class="mdescRight">Software controlled SPI Slave driver. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00309"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00309.html">Software controlled TWI Master driver</a></td></tr>
-<tr class="memdesc:a00309"><td class="mdescLeft">&#160;</td><td class="mdescRight">Software controlled TWI Master driver. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00311"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00311.html">RNG HAL and driver</a></td></tr>
-<tr class="memdesc:a00311"><td class="mdescLeft">&#160;</td><td class="mdescRight">Random number generator (RNG) APIs. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00313"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00313.html">PPI HAL and driver</a></td></tr>
-<tr class="memdesc:a00313"><td class="mdescLeft">&#160;</td><td class="mdescRight">Programmable Peripheral Interconnect (PPI) APIs. <br/></td></tr>
+<tr class="memitem:a00349"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00349.html">TWI driver</a></td></tr>
+<tr class="memdesc:a00349"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver for managing the TWI. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<p>TWI APIs. </p>
+<p>The TWI HAL provides basic APIs for accessing the registers of the TWI. The TWI driver provides APIs on a higher level. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:05 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

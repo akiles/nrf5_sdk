@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Temperature Example</title>
+<title>nRF51 SDK - S210 SoftDevice: Random Number Generator Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,15 +97,15 @@ $(document).ready(function(){initNavTree('a00047.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Temperature Example </div>  </div>
+<div class="title">Random Number Generator Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Temperature Example shows how to use a temperature sensor and print the measurement.</p>
-<p>The application starts with configuring the temperature module and app_uart. The main loop reads the temperature sensor and prints measurement every 500 milliseconds.</p>
-<p>The name of the example is <b>temperature_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\temperature</code> </p>
-<h1><a class="anchor" id="temperature_example_testing"></a>
+<div class="textblock"><p>The Random Number Generator Example demonstrates the use of the RNG driver by obtaining a vector of random numbers and printing the numbers in a COM listener (for example PUTTY) using UART.</p>
+<p>The application starts by configuring app_uart and the RNG driver. The main loop prints the vector of random numbers and waits for 100 milliseconds.</p>
+<p>The name of the example is <b>rng_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\peripheral\rng</code> </p>
+<h1><a class="anchor" id="rng_example_testing"></a>
 Testing</h1>
-<p>Test the Temperature Example application by performing the following steps:</p>
+<p>Test the Random Number Generator Example application by performing the following steps:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
 <li>Start a COM listener like PUTTY and connect to the used COM port with the following UART settings:<ul>
@@ -121,15 +121,15 @@ No parity</li>
 HW flow control: RTS/CTS</li>
 </ul>
 </li>
-<li>Observe that a temperature value is printed every 500 milliseconds. </li>
+<li>Observe that a vector of random numbers is output every 100 milliseconds. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00027.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00032.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

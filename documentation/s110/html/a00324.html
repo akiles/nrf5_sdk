@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_hts_s Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gatts_evt_sys_attr_missing_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,108 +106,33 @@ $(document).ready(function(){initNavTree('a00324.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_hts_s Struct Reference<div class="ingroups"><a class="el" href="a00964.html">Health Thermometer Service</a></div></div>  </div>
+<div class="title">ble_gatts_evt_sys_attr_missing_t Struct Reference<div class="ingroups"><a class="el" href="a01298.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Health Thermometer Service structure. This contains various status information for the service.  
+<p>Event structure for <a class="el" href="a01296.html#ggae537647902af1b05c1e32f12d6b401c7ae3776204f11a583e105aed0e477601da">BLE_GATTS_EVT_SYS_ATTR_MISSING</a>.  
  <a href="a00324.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_hts.h&gt;</code></p>
+<p><code>#include &lt;ble_gatts.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ab0392a7012b01ace2dad863bc8f573cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00964.html#ga78edebed11dc6c480b65706199500862">ble_hts_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00324.html#ab0392a7012b01ace2dad863bc8f573cc">evt_handler</a></td></tr>
-<tr class="separator:ab0392a7012b01ace2dad863bc8f573cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac62f9c0c453beef41d04c488c5d19ecc"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00324.html#ac62f9c0c453beef41d04c488c5d19ecc">service_handle</a></td></tr>
-<tr class="separator:ac62f9c0c453beef41d04c488c5d19ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e3f96502d28802be863f09b2839817d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00282.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00324.html#a6e3f96502d28802be863f09b2839817d">meas_handles</a></td></tr>
-<tr class="separator:a6e3f96502d28802be863f09b2839817d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a514df962e0856554cd6eee1e2b11bf26"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00282.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00324.html#a514df962e0856554cd6eee1e2b11bf26">temp_type_handles</a></td></tr>
-<tr class="separator:a514df962e0856554cd6eee1e2b11bf26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71533de99d438bb326730e08da1d402a"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00324.html#a71533de99d438bb326730e08da1d402a">conn_handle</a></td></tr>
-<tr class="separator:a71533de99d438bb326730e08da1d402a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8e572095f9a6cecdf4bcde49c527aab"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00324.html#ad8e572095f9a6cecdf4bcde49c527aab">temp_type</a></td></tr>
-<tr class="separator:ad8e572095f9a6cecdf4bcde49c527aab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a185bd248ff35543e4a827438c881d51d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00324.html#a185bd248ff35543e4a827438c881d51d">hint</a></td></tr>
+<tr class="separator:a185bd248ff35543e4a827438c881d51d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Health Thermometer Service structure. This contains various status information for the service. </p>
+<div class="textblock"><p>Event structure for <a class="el" href="a01296.html#ggae537647902af1b05c1e32f12d6b401c7ae3776204f11a583e105aed0e477601da">BLE_GATTS_EVT_SYS_ATTR_MISSING</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a71533de99d438bb326730e08da1d402a"></a>
+<a class="anchor" id="a185bd248ff35543e4a827438c881d51d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_hts_s::conn_handle</td>
+          <td class="memname">uint8_t ble_gatts_evt_sys_attr_missing_t::hint</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
-
-</div>
-</div>
-<a class="anchor" id="ab0392a7012b01ace2dad863bc8f573cc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00964.html#ga78edebed11dc6c480b65706199500862">ble_hts_evt_handler_t</a> ble_hts_s::evt_handler</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Event handler to be called for handling events in the Health Thermometer Service. </p>
-
-</div>
-</div>
-<a class="anchor" id="a6e3f96502d28802be863f09b2839817d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00282.html">ble_gatts_char_handles_t</a> ble_hts_s::meas_handles</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handles related to the Health Thermometer Measurement characteristic. </p>
-
-</div>
-</div>
-<a class="anchor" id="ac62f9c0c453beef41d04c488c5d19ecc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_hts_s::service_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle of Health Thermometer Service (as provided by the BLE stack). </p>
-
-</div>
-</div>
-<a class="anchor" id="ad8e572095f9a6cecdf4bcde49c527aab"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_hts_s::temp_type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Temperature type indicates where the measurement was taken. </p>
-
-</div>
-</div>
-<a class="anchor" id="a514df962e0856554cd6eee1e2b11bf26"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00282.html">ble_gatts_char_handles_t</a> ble_hts_s::temp_type_handles</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handles related to the Health Thermometer Temperature Type characteristic. </p>
+<p>Hint (currently unused). </p>
 
 </div>
 </div>
@@ -216,8 +141,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00324.html">ble_hts_s</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00324.html">ble_gatts_evt_sys_attr_missing_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Health Thermometer Service</title>
+<title>nRF51 SDK - S110 SoftDevice: RTX Support</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,19 +97,55 @@ $(document).ready(function(){initNavTree('a00131.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Health Thermometer Service </div>  </div>
+<div class="title">RTX Support </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This module implements the Health Thermometer Service.</p>
-<p>If an event handler is supplied by the application, the Health Thermometer Service will generate Health Thermometer Service events to the application.</p>
-<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Health Thermometer Service module by calling <a class="el" href="a00964.html#ga1d50a1758227869205ce213a564b436c" title="Function for handling the Application&#39;s BLE Stack events.">ble_hts_on_ble_evt()</a> from the <a class="el" href="a00948.html">SoftDevice Event Handler</a> function. </dd></dl>
+<div class="textblock"><p>The SDK provides an implementation of an extension to ARM Keil RTX that is referred to as tickless mode. It allows waking up the MCU only when it is needed.</p>
+<h1><a class="anchor" id="rtx_limitation"></a>
+Limitations</h1>
+<p>You should be aware of the following limitations when using RTX:</p>
+<ul>
+<li>nRF51 does not have a SysTick timer. Therefore, RTC1 is used instead.</li>
+<li>To provide the early wake-up mechanism, the rtos_suspend variable must be cleared in every interrupt handler that uses system services. See <a class="el" href="a00131.html#rtx_interrupt">Examples</a> for a code example.</li>
+<li><p class="startli">All interrupts are passed to the application through the SoftDevice, which generates additional interrupt latency. See the SoftDevice and RTX specification for more information.</p>
+<p class="startli">The following table lists the additional latency according to the specifications for RTX (V4.74) and S110 nRF51822 (v1.2): </p>
+<table class="doxtable">
+<tr>
+<th>Interrupt </th><th>S110 (CPU cycles)</th><th>RTX (CPU cycles)</th></tr>
+<tr>
+<td>Open peripheral interrupt </td><td>50 </td><td>&lt; 20 </td></tr>
+<tr>
+<td>Blocked or restricted peripheral interrupt </td><td>63 </td><td>&lt; 20 </td></tr>
+<tr>
+<td>Application SVC interrupt </td><td>14 </td><td>≈ 35 </td></tr>
+</table>
+</li>
+</ul>
+<h1><a class="anchor" id="rtx_softdevice"></a>
+Cooperation with the SoftDevice</h1>
+<p>RTX shares the SVC interrupt with the SoftDevice. Therefore, it works on the same interrupt priority (UpperStack) as the SoftDevice API functions.</p>
+<h1><a class="anchor" id="rtx_interrupt"></a>
+Examples</h1>
+<p>This example shows how to use the system function in interrupt handlers. </p>
+<dl class="section warning"><dt>Warning</dt><dd>You must always clear the rtos_suspend variable in interrupt handlers that use RTX functions. Not clearing it might cause undefined behaviour.</dd></dl>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> ***_IRQHandler(<span class="keywordtype">void</span>);</div>
+<div class="line">{<span class="comment"></span></div>
+<div class="line"><span class="comment">    /**</span></div>
+<div class="line"><span class="comment">    *implementation of handler</span></div>
+<div class="line"><span class="comment">    */</span></div>
+<div class="line">    rtos_suspend = 0;</div>
+<div class="line">    osSignalSet (thread_id, SIGNAL); <span class="comment">//example of system function</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><p>The following example applications demonstrate the use of RTX:</p>
+<p><a class="el" href="a00108.html">Blinky RTX Example</a></p>
+<p><a class="el" href="a00076.html">Heart Rate Application with RTX</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00116.html">BLE Services</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00130.html">RTOS support</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

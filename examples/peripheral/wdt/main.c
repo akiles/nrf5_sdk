@@ -26,12 +26,12 @@
 #include "nrf.h"
 #include "bsp.h"
 #include "app_timer.h"
-#include "app_gpiote.h"
 #include "app_error.h"
 #include "nrf_drv_wdt.h"
 #include "nrf_drv_clock.h"
 #include "nrf_delay.h"
-
+#include "app_util_platform.h"
+ 
 #define APP_TIMER_PRESCALER     0                           /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_MAX_TIMERS    (1 + BSP_APP_TIMERS_NUMBER) /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE 2                           /**< Size of timer operation queues. */
@@ -98,11 +98,10 @@ int main(void)
     nrf_drv_clock_lfclk_request();
 
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
-    APP_GPIOTE_INIT(1);
     err_code = bsp_init(BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), bsp_event_callback);
     APP_ERROR_CHECK(err_code);
-    err_code = bsp_buttons_enable(1 << FEED_BUTTON_ID);
-    APP_ERROR_CHECK(err_code);
+    // err_code = bsp_buttons_enable(1 << FEED_BUTTON_ID);
+    // APP_ERROR_CHECK(err_code);
     
     //Configure WDT.
     nrf_drv_wdt_config_t config = NRF_DRV_WDT_DEAFULT_CONFIG;

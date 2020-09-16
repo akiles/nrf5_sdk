@@ -1,32 +1,16 @@
 var a00355 =
 [
-    [ "NRF_CLOCK_LFCLKSRCS", "a00355.html#gaef6aabaa8887cb4d7265d7e21b3ec242", [
-      [ "NRF_CLOCK_LFCLKSRC_SYNTH_250_PPM", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242ad1191ed01bdf8e562500d9a38a059b39", null ],
-      [ "NRF_CLOCK_LFCLKSRC_XTAL_500_PPM", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242abadb40f1cba74435f3ad04f04c700c86", null ],
-      [ "NRF_CLOCK_LFCLKSRC_XTAL_250_PPM", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a65044d23edf148cbeb93dd4e785f581d", null ],
-      [ "NRF_CLOCK_LFCLKSRC_XTAL_150_PPM", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a02019daada779a6cdb69fa13dad053e2", null ],
-      [ "NRF_CLOCK_LFCLKSRC_XTAL_100_PPM", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242ab5bb363243d2e2b382bc4c1dad745a33", null ],
-      [ "NRF_CLOCK_LFCLKSRC_XTAL_75_PPM", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a87f389b60383a850468327a5970cb395", null ],
-      [ "NRF_CLOCK_LFCLKSRC_XTAL_50_PPM", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a2d5febc7eb0c8f35c3279a705d7974dd", null ],
-      [ "NRF_CLOCK_LFCLKSRC_XTAL_30_PPM", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242ad2464539b8d78659dc83998a4ae66fa6", null ],
-      [ "NRF_CLOCK_LFCLKSRC_XTAL_20_PPM", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a1c5e9917211a50eac336a3fd2e467756", null ],
-      [ "NRF_CLOCK_LFCLKSRC_RC_250_PPM_250MS_CALIBRATION", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a0263c1cff2fbded3ada7b18a691eeda5", null ],
-      [ "NRF_CLOCK_LFCLKSRC_RC_250_PPM_500MS_CALIBRATION", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242aaa9263dbc5c7bfa094d654941dc36d55", null ],
-      [ "NRF_CLOCK_LFCLKSRC_RC_250_PPM_1000MS_CALIBRATION", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a7f2111bcf8ef8c355ca609a9fb84712c", null ],
-      [ "NRF_CLOCK_LFCLKSRC_RC_250_PPM_2000MS_CALIBRATION", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242ad94caa1c4bbc8b28e8fd062a012defd7", null ],
-      [ "NRF_CLOCK_LFCLKSRC_RC_250_PPM_4000MS_CALIBRATION", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a4b75e480fdf08028b4ad36e960474411", null ],
-      [ "NRF_CLOCK_LFCLKSRC_RC_250_PPM_8000MS_CALIBRATION", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a2c0772805e06ad3966b4dc69abd3f247", null ],
-      [ "NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_1000MS_CALIBRATION", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a23b8dfa27131f4e191c90cf7b4e115f5", null ],
-      [ "NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_2000MS_CALIBRATION", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242abb90009e7d3b437a38688790a086d475", null ],
-      [ "NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_4000MS_CALIBRATION", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a4a1524c1e9bf9fdcab3c88282a272b0a", null ],
-      [ "NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_8000MS_CALIBRATION", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a7fca54df825052849f20136cf5186c02", null ],
-      [ "NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_16000MS_CALIBRATION", "a00355.html#ggaef6aabaa8887cb4d7265d7e21b3ec242aa5f637eab2568c5a631337656d390b2e", null ]
-    ] ],
-    [ "NRF_SD_SVCS", "a00355.html#ga4528cbf3f1a34d4712822ac456b1b305", [
-      [ "SD_SOFTDEVICE_ENABLE", "a00355.html#gga4528cbf3f1a34d4712822ac456b1b305ab692ec521a2f791184f7a4644897f781", null ],
-      [ "SD_SOFTDEVICE_DISABLE", "a00355.html#gga4528cbf3f1a34d4712822ac456b1b305ab48ef4bb34f9d37c0a7005f7b7d13692", null ],
-      [ "SD_SOFTDEVICE_IS_ENABLED", "a00355.html#gga4528cbf3f1a34d4712822ac456b1b305a6f89d282c869fd898e2c75141ac2bc5f", null ],
-      [ "SD_SOFTDEVICE_VECTOR_TABLE_BASE_SET", "a00355.html#gga4528cbf3f1a34d4712822ac456b1b305a5e19adec24f31566eb74ff8222c7ab06", null ],
-      [ "SVC_SDM_LAST", "a00355.html#gga4528cbf3f1a34d4712822ac456b1b305a11216cbdd9009464a16286385173bb5a", null ]
-    ] ]
+    [ "NRF_SWI_UNALLOCATED", "a00355.html#gac0c2f68fc91cad142fa66e974464a080", null ],
+    [ "SWI_COUNT", "a00355.html#ga35c10c60bdf590a8fa502f25b76499b1", null ],
+    [ "SWI_DEFAULT_PRIORITY", "a00355.html#gab24c61b48197503c9e4a204d8c98bb43", null ],
+    [ "SWI_MAX", "a00355.html#ga72bcd8d082bc4576d2a476e58f5fe4a1", null ],
+    [ "SWI_MAX_FLAGS", "a00355.html#ga816db2d44b92075e4614ea0a5e79cf34", null ],
+    [ "nrf_swi_flags_t", "a00355.html#ga3958c1f57afcdee82f1d22cc966e7509", null ],
+    [ "nrf_swi_handler_t", "a00355.html#ga2ad0fc3331fbcf6398d751f16858c228", null ],
+    [ "nrf_swi_t", "a00355.html#gaf4d75a31a62ec35d2667efcbb3421f64", null ],
+    [ "nrf_drv_swi_alloc", "a00355.html#ga9707c5cfc723ed10f67c5a73810753bf", null ],
+    [ "nrf_drv_swi_free", "a00355.html#gaa7c89f3dde0fa17d3068807d2deba6fa", null ],
+    [ "nrf_drv_swi_init", "a00355.html#ga1f1d64b1f9abf3476683733c0845a2ef", null ],
+    [ "nrf_drv_swi_trigger", "a00355.html#ga31366f910bb2a52eca033847bed37ed6", null ],
+    [ "nrf_drv_swi_uninit", "a00355.html#gaa7b426edd78a6083c33df7e2d144bcf3", null ]
 ];

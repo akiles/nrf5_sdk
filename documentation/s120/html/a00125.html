@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_gap_evt_timeout_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: ble_db_discovery_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,110 @@ $(document).ready(function(){initNavTree('a00125.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_evt_timeout_t Struct Reference<div class="ingroups"><a class="el" href="a00702.html">Structures</a></div></div>  </div>
+<div class="title">ble_db_discovery_t Struct Reference<div class="ingroups"><a class="el" href="a00881.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event data for timeout event.  
+<p>Structure for holding the information related to the GATT database at the server.  
  <a href="a00125.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gap.h&gt;</code></p>
+<p><code>#include &lt;ble_db_discovery.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a956b696e25efbd2d7badc93da691a049"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00125.html#a956b696e25efbd2d7badc93da691a049">src</a></td></tr>
-<tr class="separator:a956b696e25efbd2d7badc93da691a049"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a982a55a9d1b9f10e010fcebeea5b8911"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00124.html">ble_db_discovery_srv_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00125.html#a982a55a9d1b9f10e010fcebeea5b8911">services</a> [2]</td></tr>
+<tr class="separator:a982a55a9d1b9f10e010fcebeea5b8911"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea6b3ca0b15ba3d4684ac2dfaafb584b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00125.html#aea6b3ca0b15ba3d4684ac2dfaafb584b">conn_handle</a></td></tr>
+<tr class="separator:aea6b3ca0b15ba3d4684ac2dfaafb584b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cbdc7069a26178c67b3b558633fa261"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00125.html#a0cbdc7069a26178c67b3b558633fa261">srv_count</a></td></tr>
+<tr class="separator:a0cbdc7069a26178c67b3b558633fa261"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ca30b7a259a7342dc23272fcd6d889f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00125.html#a2ca30b7a259a7342dc23272fcd6d889f">curr_char_ind</a></td></tr>
+<tr class="separator:a2ca30b7a259a7342dc23272fcd6d889f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa598c16586a07aa4b13e38c35b8b803d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00125.html#aa598c16586a07aa4b13e38c35b8b803d">curr_srv_ind</a></td></tr>
+<tr class="separator:aa598c16586a07aa4b13e38c35b8b803d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afca8a6f17e6b6d6c40f9fa490ed42b94"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00125.html#afca8a6f17e6b6d6c40f9fa490ed42b94">discovery_in_progress</a></td></tr>
+<tr class="separator:afca8a6f17e6b6d6c40f9fa490ed42b94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event data for timeout event. </p>
+<div class="textblock"><p>Structure for holding the information related to the GATT database at the server. </p>
+<p>This module identifies a remote database. Use one instance of this structure per connection.</p>
+<dl class="section warning"><dt>Warning</dt><dd>This structure must be zero-initialized. </dd></dl>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a956b696e25efbd2d7badc93da691a049"></a>
+<a class="anchor" id="aea6b3ca0b15ba3d4684ac2dfaafb584b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_evt_timeout_t::src</td>
+          <td class="memname">uint16_t ble_db_discovery_t::conn_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Source of timeout event, see <a class="el" href="a00518.html">GAP Timeout sources</a>. </p>
+<p>Connection handle as provided by the SoftDevice. </p>
+
+</div>
+</div>
+<a class="anchor" id="a2ca30b7a259a7342dc23272fcd6d889f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_db_discovery_t::curr_char_ind</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Index of the current characteristic being discovered. This is intended for internal use during service discovery. </p>
+
+</div>
+</div>
+<a class="anchor" id="aa598c16586a07aa4b13e38c35b8b803d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_db_discovery_t::curr_srv_ind</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Index of the current service being discovered. This is intended for internal use during service discovery. </p>
+
+</div>
+</div>
+<a class="anchor" id="afca8a6f17e6b6d6c40f9fa490ed42b94"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ble_db_discovery_t::discovery_in_progress</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Variable to indicate if there is a service discovery in progress. </p>
+
+</div>
+</div>
+<a class="anchor" id="a982a55a9d1b9f10e010fcebeea5b8911"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00124.html">ble_db_discovery_srv_t</a> ble_db_discovery_t::services[2]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Information related to the current service being discovered. This is intended for internal use during service discovery. </p>
+
+</div>
+</div>
+<a class="anchor" id="a0cbdc7069a26178c67b3b558633fa261"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_db_discovery_t::srv_count</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Number of services at the peers GATT database. </p>
 
 </div>
 </div>
@@ -141,8 +218,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00125.html">ble_gap_evt_timeout_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00125.html">ble_db_discovery_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:56 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

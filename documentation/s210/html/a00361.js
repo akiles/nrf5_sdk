@@ -1,8 +1,6 @@
 var a00361 =
 [
-    [ "ANT STACK", "a00337.html", "a00337" ],
-    [ "SoC Library API", "a00344.html", "a00344" ],
-    [ "SoftDevice Manager API", "a00342.html", "a00342" ],
-    [ "SoftDevice Global Error Codes", "a00340.html", "a00340" ],
-    [ "Master Boot Record API", "a00346.html", "a00346" ]
+    [ "RX_BUF_QUEUE_SIZE", "a00361.html#gae8e478dba1ce71687ba038123e8da2f4", null ],
+    [ "RX_BUF_SIZE", "a00361.html#ga690f985c933da2ce6fe62b6c61dfa662", null ],
+    [ "TX_BUF_SIZE", "a00361.html#ga5d3fb1970e1e98050006978a14b3d95e", null ]
 ];

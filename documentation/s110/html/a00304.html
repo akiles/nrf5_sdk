@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_hids_char_id_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gattc_evt_read_rsp_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,78 @@ $(document).ready(function(){initNavTree('a00304.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_hids_char_id_t Struct Reference<div class="ingroups"><a class="el" href="a00962.html">Human Interface Device Service</a></div></div>  </div>
+<div class="title">ble_gattc_evt_read_rsp_t Struct Reference<div class="ingroups"><a class="el" href="a01294.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>HID Service characteristic id.  
+<p>Event structure for <a class="el" href="a01292.html#ggafd9b8b42eeb832d688e33f4561f97efca2355be2e3b5c9bd1c235f7abbc56ef6d">BLE_GATTC_EVT_READ_RSP</a>.  
  <a href="a00304.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_hids.h&gt;</code></p>
+<p><code>#include &lt;ble_gattc.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a47c01b1e08f6757e61e2dd38dcb67044"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00304.html#a47c01b1e08f6757e61e2dd38dcb67044">uuid</a></td></tr>
-<tr class="separator:a47c01b1e08f6757e61e2dd38dcb67044"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affea5bdaeda61718d00cf34afa060f20"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00304.html#affea5bdaeda61718d00cf34afa060f20">rep_type</a></td></tr>
-<tr class="separator:affea5bdaeda61718d00cf34afa060f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06b63ec45cda32c75e842421f1235063"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00304.html#a06b63ec45cda32c75e842421f1235063">rep_index</a></td></tr>
-<tr class="separator:a06b63ec45cda32c75e842421f1235063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54644f05780b15248eba975decdd4e48"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00304.html#a54644f05780b15248eba975decdd4e48">handle</a></td></tr>
+<tr class="separator:a54644f05780b15248eba975decdd4e48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ed66c83e153fd6471056d19b10fac67"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00304.html#a1ed66c83e153fd6471056d19b10fac67">offset</a></td></tr>
+<tr class="separator:a1ed66c83e153fd6471056d19b10fac67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5131e80ad4da52f707a84aed7240f2ee"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00304.html#a5131e80ad4da52f707a84aed7240f2ee">len</a></td></tr>
+<tr class="separator:a5131e80ad4da52f707a84aed7240f2ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaf3ed862b2c96947da60d9b576b31c9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00304.html#adaf3ed862b2c96947da60d9b576b31c9">data</a> [1]</td></tr>
+<tr class="separator:adaf3ed862b2c96947da60d9b576b31c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>HID Service characteristic id. </p>
+<div class="textblock"><p>Event structure for <a class="el" href="a01292.html#ggafd9b8b42eeb832d688e33f4561f97efca2355be2e3b5c9bd1c235f7abbc56ef6d">BLE_GATTC_EVT_READ_RSP</a>. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a06b63ec45cda32c75e842421f1235063"></a>
+<a class="anchor" id="adaf3ed862b2c96947da60d9b576b31c9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_hids_char_id_t::rep_index</td>
+          <td class="memname">uint8_t ble_gattc_evt_read_rsp_t::data[1]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Index of the characteristic (only used for BLE_UUID_REPORT_CHAR). </p>
+<p>Attribute data, variable length. </p>
 
 </div>
 </div>
-<a class="anchor" id="affea5bdaeda61718d00cf34afa060f20"></a>
+<a class="anchor" id="a54644f05780b15248eba975decdd4e48"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_hids_char_id_t::rep_type</td>
+          <td class="memname">uint16_t ble_gattc_evt_read_rsp_t::handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of report (only used for BLE_UUID_REPORT_CHAR, see <a class="el" href="a00962.html#BLE_HIDS_REPORT_TYPE">BLE_HIDS_REPORT_TYPE</a>). </p>
+<p>Attribute Handle. </p>
 
 </div>
 </div>
-<a class="anchor" id="a47c01b1e08f6757e61e2dd38dcb67044"></a>
+<a class="anchor" id="a5131e80ad4da52f707a84aed7240f2ee"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_hids_char_id_t::uuid</td>
+          <td class="memname">uint16_t ble_gattc_evt_read_rsp_t::len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>UUID of characteristic. </p>
+<p>Attribute data length. </p>
+
+</div>
+</div>
+<a class="anchor" id="a1ed66c83e153fd6471056d19b10fac67"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_gattc_evt_read_rsp_t::offset</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Offset of the attribute data. </p>
 
 </div>
 </div>
@@ -171,8 +186,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00304.html">ble_hids_char_id_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00304.html">ble_gattc_evt_read_rsp_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

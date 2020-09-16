@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Context Management Events</title>
+<title>nRF51 SDK - S110 SoftDevice: SLIP module</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,154 +97,270 @@ $(document).ready(function(){initNavTree('a00981.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Context Management Events<div class="ingroups"><a class="el" href="a00978.html">Device Manager Events</a></div></div>  </div>
+<div class="title">SLIP module<div class="ingroups"><a class="el" href="a01278.html">SDK Common Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Context Management Events.  
+<p>SLIP layer for supporting packet framing in HCI transport.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ga0031b878e929a75ec8271ad0c94eef50"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga0031b878e929a75ec8271ad0c94eef50">DM_EVT_DEVICE_CONTEXT_LOADED</a>&#160;&#160;&#160;0x21</td></tr>
-<tr class="separator:ga0031b878e929a75ec8271ad0c94eef50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga914c5f8e7244019d80470eb488afe51c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga914c5f8e7244019d80470eb488afe51c">DM_EVT_DEVICE_CONTEXT_STORED</a>&#160;&#160;&#160;0x22</td></tr>
-<tr class="separator:ga914c5f8e7244019d80470eb488afe51c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac14de4b8aad6be951c60c421942eb7a7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#gac14de4b8aad6be951c60c421942eb7a7">DM_EVT_DEVICE_CONTEXT_DELETED</a>&#160;&#160;&#160;0x23</td></tr>
-<tr class="separator:gac14de4b8aad6be951c60c421942eb7a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5f701544ed21d80e9f5c6198bd0de3d1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga5f701544ed21d80e9f5c6198bd0de3d1">DM_EVT_SERVICE_CONTEXT_LOADED</a>&#160;&#160;&#160;0x31</td></tr>
-<tr class="separator:ga5f701544ed21d80e9f5c6198bd0de3d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4918299ce9ecf37463834a62e4cc28b0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga4918299ce9ecf37463834a62e4cc28b0">DM_EVT_SERVICE_CONTEXT_STORED</a>&#160;&#160;&#160;0x32</td></tr>
-<tr class="separator:ga4918299ce9ecf37463834a62e4cc28b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga45acfe7588e09f49236071ca79f123f7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga45acfe7588e09f49236071ca79f123f7">DM_EVT_SERVICE_CONTEXT_DELETED</a>&#160;&#160;&#160;0x33</td></tr>
-<tr class="separator:ga45acfe7588e09f49236071ca79f123f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4ce522c3a6565d1b96b94ae14bac67c5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga4ce522c3a6565d1b96b94ae14bac67c5">DM_EVT_APPL_CONTEXT_LOADED</a>&#160;&#160;&#160;0x41</td></tr>
-<tr class="separator:ga4ce522c3a6565d1b96b94ae14bac67c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaad12d77f6d3eccb97277869480549ee5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#gaad12d77f6d3eccb97277869480549ee5">DM_EVT_APPL_CONTEXT_STORED</a>&#160;&#160;&#160;0x42</td></tr>
-<tr class="separator:gaad12d77f6d3eccb97277869480549ee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1a76738f1010b5aa7c2e46c709821a27"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga1a76738f1010b5aa7c2e46c709821a27">DM_EVT_APPL_CONTEXT_DELETED</a>&#160;&#160;&#160;0x43</td></tr>
-<tr class="separator:ga1a76738f1010b5aa7c2e46c709821a27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00421.html">hci_slip_evt_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure containing an event from the SLIP layer.  <a href="a00421.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:gab1b3735b482e480ee925e78c544f84d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab1b3735b482e480ee925e78c544f84d0"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#gab1b3735b482e480ee925e78c544f84d0">hci_slip_event_handler_t</a> )(<a class="el" href="a00421.html">hci_slip_evt_t</a> event)</td></tr>
+<tr class="memdesc:gab1b3735b482e480ee925e78c544f84d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for the SLIP layer event callback. <br/></td></tr>
+<tr class="separator:gab1b3735b482e480ee925e78c544f84d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gaf03d61e05dd64c3a61644580c29aa0b4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00981.html#ggaf03d61e05dd64c3a61644580c29aa0b4a518c3406525586d68bf2f476c1935eb9">HCI_SLIP_RX_RDY</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00981.html#ggaf03d61e05dd64c3a61644580c29aa0b4a507424cf2788c502b25b730450fa3c1b">HCI_SLIP_TX_DONE</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00981.html#ggaf03d61e05dd64c3a61644580c29aa0b4acd2a18f379c0f764d52782bf13ae7f60">HCI_SLIP_RX_OVERFLOW</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00981.html#ggaf03d61e05dd64c3a61644580c29aa0b4a89ce814e3c2dbfc49432118d735d6eef">HCI_SLIP_ERROR</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00981.html#ggaf03d61e05dd64c3a61644580c29aa0b4a1922de9f57ef7bf2c0e2af37877224f1">HCI_SLIP_EVT_TYPE_MAX</a>
+<br/>
+ }</td></tr>
+<tr class="memdesc:gaf03d61e05dd64c3a61644580c29aa0b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event types from the SLIP Layer.  <a href="a00981.html#gaf03d61e05dd64c3a61644580c29aa0b4">More...</a><br/></td></tr>
+<tr class="separator:gaf03d61e05dd64c3a61644580c29aa0b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga5174ac7933b8633a86c1560e645dcf43"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga5174ac7933b8633a86c1560e645dcf43">hci_slip_evt_handler_register</a> (<a class="el" href="a00981.html#gab1b3735b482e480ee925e78c544f84d0">hci_slip_event_handler_t</a> event_handler)</td></tr>
+<tr class="memdesc:ga5174ac7933b8633a86c1560e645dcf43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering the event handler provided as parameter and this event handler will be used by SLIP layer to send events described in <a class="el" href="a00981.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a>.  <a href="#ga5174ac7933b8633a86c1560e645dcf43">More...</a><br/></td></tr>
+<tr class="separator:ga5174ac7933b8633a86c1560e645dcf43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga395ec28c5fd6a5ca2f8dcd68817cced1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#ga395ec28c5fd6a5ca2f8dcd68817cced1">hci_slip_open</a> (void)</td></tr>
+<tr class="memdesc:ga395ec28c5fd6a5ca2f8dcd68817cced1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for opening the SLIP layer. This function must be called before <a class="el" href="a00981.html#gaba13b94dd501034bd33b1d10941ded4b">hci_slip_write</a> and before any data can be received.  <a href="#ga395ec28c5fd6a5ca2f8dcd68817cced1">More...</a><br/></td></tr>
+<tr class="separator:ga395ec28c5fd6a5ca2f8dcd68817cced1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac07c6af846ecdbdaa3def1860aff6e47"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#gac07c6af846ecdbdaa3def1860aff6e47">hci_slip_close</a> (void)</td></tr>
+<tr class="memdesc:gac07c6af846ecdbdaa3def1860aff6e47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for closing the SLIP layer. After this function is called no data can be transmitted or received in this layer.  <a href="#gac07c6af846ecdbdaa3def1860aff6e47">More...</a><br/></td></tr>
+<tr class="separator:gac07c6af846ecdbdaa3def1860aff6e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba13b94dd501034bd33b1d10941ded4b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#gaba13b94dd501034bd33b1d10941ded4b">hci_slip_write</a> (const uint8_t *p_buffer, uint32_t length)</td></tr>
+<tr class="memdesc:gaba13b94dd501034bd33b1d10941ded4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for writing a packet with SLIP encoding. Packet transmission is confirmed when the HCI_SLIP_TX_DONE event is received by the function caller.  <a href="#gaba13b94dd501034bd33b1d10941ded4b">More...</a><br/></td></tr>
+<tr class="separator:gaba13b94dd501034bd33b1d10941ded4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabd00a0b89127a66990a2ea728fd39b3f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00981.html#gabd00a0b89127a66990a2ea728fd39b3f">hci_slip_rx_buffer_register</a> (uint8_t *p_buffer, uint32_t length)</td></tr>
+<tr class="memdesc:gabd00a0b89127a66990a2ea728fd39b3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for registering a receive buffer. The receive buffer will be used for storage of received and SLIP decoded data. No data can be received by the SLIP layer until a receive buffer has been registered.  <a href="#gabd00a0b89127a66990a2ea728fd39b3f">More...</a><br/></td></tr>
+<tr class="separator:gabd00a0b89127a66990a2ea728fd39b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Context Management Events. </p>
-<p>These events notify the application of the status of context loading and storing. </p>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga1a76738f1010b5aa7c2e46c709821a27"></a>
+<p>SLIP layer for supporting packet framing in HCI transport. </p>
+<p>This module implements SLIP packet framing as described in the Bluetooth Core Specification 4.0, Volume 4, Part D, Chapter 3 SLIP Layer.</p>
+<p>SLIP framing ensures that all packets sent on the UART are framed as: &lt;0xC0&gt; SLIP packet 1 &lt;0xC0&gt; &lt;0xC0&gt; SLIP packet 2 &lt;0xC0&gt;.</p>
+<p>The SLIP layer uses events to notify the upper layer when data transmission is complete and when a SLIP packet is received. </p>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="gaf03d61e05dd64c3a61644580c29aa0b4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_APPL_CONTEXT_DELETED&#160;&#160;&#160;0x43</td>
+          <td class="memname">enum <a class="el" href="a00981.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Indicates that application context is deleted. </p>
+
+<p>Event types from the SLIP Layer. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4a518c3406525586d68bf2f476c1935eb9"></a>HCI_SLIP_RX_RDY</em>&nbsp;</td><td class="fielddoc">
+<p>An event indicating that an RX packet is ready to be read. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4a507424cf2788c502b25b730450fa3c1b"></a>HCI_SLIP_TX_DONE</em>&nbsp;</td><td class="fielddoc">
+<p>An event indicating write completion of the TX packet provided in the function call <a class="el" href="a00981.html#gaba13b94dd501034bd33b1d10941ded4b">hci_slip_write</a> . </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4acd2a18f379c0f764d52782bf13ae7f60"></a>HCI_SLIP_RX_OVERFLOW</em>&nbsp;</td><td class="fielddoc">
+<p>An event indicating that RX data has been discarded due to lack of free RX memory. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4a89ce814e3c2dbfc49432118d735d6eef"></a>HCI_SLIP_ERROR</em>&nbsp;</td><td class="fielddoc">
+<p>An event indicating that an unrecoverable error has occurred. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaf03d61e05dd64c3a61644580c29aa0b4a1922de9f57ef7bf2c0e2af37877224f1"></a>HCI_SLIP_EVT_TYPE_MAX</em>&nbsp;</td><td class="fielddoc">
+<p>Enumeration upper bound. </p>
+</td></tr>
+</table>
 
 </div>
 </div>
-<a class="anchor" id="ga4ce522c3a6565d1b96b94ae14bac67c5"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gac07c6af846ecdbdaa3def1860aff6e47"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_APPL_CONTEXT_LOADED&#160;&#160;&#160;0x41</td>
+          <td class="memname">uint32_t hci_slip_close </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Indicates that application context for a peer is loaded. </p>
+
+<p>Function for closing the SLIP layer. After this function is called no data can be transmitted or received in this layer. </p>
+<dl class="section note"><dt>Note</dt><dd>This function can be called multiple times and also for an unopened channel.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="gaad12d77f6d3eccb97277869480549ee5"></a>
+<a class="anchor" id="ga5174ac7933b8633a86c1560e645dcf43"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_APPL_CONTEXT_STORED&#160;&#160;&#160;0x42</td>
+          <td class="memname">uint32_t hci_slip_evt_handler_register </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00981.html#gab1b3735b482e480ee925e78c544f84d0">hci_slip_event_handler_t</a>&#160;</td>
+          <td class="paramname"><em>event_handler</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Indicates that application context is stored persistently. </p>
+
+<p>Function for registering the event handler provided as parameter and this event handler will be used by SLIP layer to send events described in <a class="el" href="a00981.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a>. </p>
+<dl class="section note"><dt>Note</dt><dd>Multiple registration requests will overwrite any existing registration.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">event_handler</td><td>This function is called by the SLIP layer upon an event.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="gac14de4b8aad6be951c60c421942eb7a7"></a>
+<a class="anchor" id="ga395ec28c5fd6a5ca2f8dcd68817cced1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_DEVICE_CONTEXT_DELETED&#160;&#160;&#160;0x23</td>
+          <td class="memname">uint32_t hci_slip_open </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Indicates that device context is deleted. </p>
+
+<p>Function for opening the SLIP layer. This function must be called before <a class="el" href="a00981.html#gaba13b94dd501034bd33b1d10941ded4b">hci_slip_write</a> and before any data can be received. </p>
+<dl class="section note"><dt>Note</dt><dd>Can be called multiple times.</dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The SLIP layer module will propagate errors from underlying sub-modules. This implementation is using UART module as a physical transmission layer, and hci_slip_open executes <a class="el" href="a00968.html#gae650b57bf30da0f26ae409782de9fcbd">app_uart_init</a> . For an extended error list, please refer to <a class="el" href="a00968.html#gae650b57bf30da0f26ae409782de9fcbd">app_uart_init</a> . </p>
 
 </div>
 </div>
-<a class="anchor" id="ga0031b878e929a75ec8271ad0c94eef50"></a>
+<a class="anchor" id="gabd00a0b89127a66990a2ea728fd39b3f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_DEVICE_CONTEXT_LOADED&#160;&#160;&#160;0x21</td>
+          <td class="memname">uint32_t hci_slip_rx_buffer_register </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Indicates that device context for a peer is loaded. </p>
+
+<p>Function for registering a receive buffer. The receive buffer will be used for storage of received and SLIP decoded data. No data can be received by the SLIP layer until a receive buffer has been registered. </p>
+<dl class="section note"><dt>Note</dt><dd>The lifetime of the buffer must be valid during complete reception of data. A static buffer is recommended.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Multiple registration requests will overwrite any existing registration.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to receive buffer. The received and SLIP decoded packet will be placed in this buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Buffer length, in bytes.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga914c5f8e7244019d80470eb488afe51c"></a>
+<a class="anchor" id="gaba13b94dd501034bd33b1d10941ded4b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_EVT_DEVICE_CONTEXT_STORED&#160;&#160;&#160;0x22</td>
+          <td class="memname">uint32_t hci_slip_write </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramname"><em>p_buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Indicates that device context is stored persistently. </p>
 
-</div>
-</div>
-<a class="anchor" id="ga45acfe7588e09f49236071ca79f123f7"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_SERVICE_CONTEXT_DELETED&#160;&#160;&#160;0x33</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates that service context is deleted. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga5f701544ed21d80e9f5c6198bd0de3d1"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_SERVICE_CONTEXT_LOADED&#160;&#160;&#160;0x31</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates that service context for a peer is loaded. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga4918299ce9ecf37463834a62e4cc28b0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DM_EVT_SERVICE_CONTEXT_STORED&#160;&#160;&#160;0x32</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indicates that service context is stored persistently. </p>
+<p>Function for writing a packet with SLIP encoding. Packet transmission is confirmed when the HCI_SLIP_TX_DONE event is received by the function caller. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buffer</td><td>Pointer to the packet to transmit. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Packet length, in bytes.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>Operation success. Packet was encoded and added to the transmission queue and an event will be sent upon transmission completion. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>Operation failure. Transmission queue is full and packet was not added to the transmission queue. Application shall wait for the <a class="el" href="a00981.html#ggaf03d61e05dd64c3a61644580c29aa0b4a507424cf2788c502b25b730450fa3c1b">HCI_SLIP_TX_DONE</a> event. After HCI_SLIP_TX_DONE this function can be executed for transmission of next packet. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_ADDR</td><td>If a NULL pointer is provided. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_STATE</td><td>Operation failure. Module is not open. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -253,7 +369,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

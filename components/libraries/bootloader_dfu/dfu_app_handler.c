@@ -90,12 +90,13 @@ static void dfu_app_peer_data_set(uint16_t conn_handle)
             m_peer_data.enc_key.enc_info  = key_set.keys_periph.enc_key.p_enc_key->enc_info;
             m_peer_data.enc_key.master_id = key_set.keys_periph.enc_key.p_enc_key->master_id;
 
-            err_code = dfu_ble_svc_set_peer_data(&m_peer_data);
+            err_code = dfu_ble_svc_peer_data_set(&m_peer_data);
             APP_ERROR_CHECK(err_code);
 
             app_context_data   = (DFU_APP_ATT_TABLE_CHANGED << DFU_APP_ATT_TABLE_POS);
             app_context.len    = sizeof(app_context_data);
             app_context.p_data = (uint8_t *)&app_context_data;
+            app_context.flags  = 0;
 
             err_code = dm_application_context_set(&m_dm_handle, &app_context);
             APP_ERROR_CHECK(err_code);
@@ -106,7 +107,7 @@ static void dfu_app_peer_data_set(uint16_t conn_handle)
             err_code = dm_peer_addr_get(&m_dm_handle, &m_peer_data.addr);
             APP_ERROR_CHECK(err_code);
 
-            err_code = dfu_ble_svc_set_peer_data(&m_peer_data);
+            err_code = dfu_ble_svc_peer_data_set(&m_peer_data);
             APP_ERROR_CHECK(err_code);
         }
     }

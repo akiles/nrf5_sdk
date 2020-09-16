@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_ancs_c_evt_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: Running Speed and Cadence Service</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,85 +96,20 @@ $(document).ready(function(){initNavTree('a00165.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ancs_c_evt_t Struct Reference<div class="ingroups"><a class="el" href="a01028.html">Apple Notification Service Client</a></div></div>  </div>
+<div class="title">Running Speed and Cadence Service </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Apple Notification Event structure.  
- <a href="a00165.html#details">More...</a></p>
-
-<p><code>#include &lt;ble_ancs_c.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:aa11f9ec43554a7e299bac599bcca39ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01028.html#ga82d6e5664766c42d7c3bd7c87ef7c390">ble_ancs_c_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00165.html#aa11f9ec43554a7e299bac599bcca39ff">evt_type</a></td></tr>
-<tr class="separator:aa11f9ec43554a7e299bac599bcca39ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b8853a2fa48267ea2e36eeedf0dbacf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00359.html">ble_uuid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00165.html#a9b8853a2fa48267ea2e36eeedf0dbacf">uuid</a></td></tr>
-<tr class="separator:a9b8853a2fa48267ea2e36eeedf0dbacf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74de40b810769bd3169a6cb072014142"><td class="memItemLeft" ><a class="anchor" id="a74de40b810769bd3169a6cb072014142"></a>
-union {</td></tr>
-<tr class="memitem:a4c247c18a7b0c9b838679a45191bd0a8"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00163.html">ble_ancs_c_evt_ios_notification_t</a>&#160;&#160;&#160;<b>notification</b></td></tr>
-<tr class="separator:a4c247c18a7b0c9b838679a45191bd0a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f758e65d697aed45065b697bbb94189"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00164.html">ble_ancs_c_evt_notif_attribute_t</a>&#160;&#160;&#160;<b>attribute</b></td></tr>
-<tr class="separator:a9f758e65d697aed45065b697bbb94189"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c9cd284a042b035464d10f194000a04"><td class="memItemLeft" >&#160;&#160;&#160;uint32_t&#160;&#160;&#160;<a class="el" href="a00165.html#af6c7c0fce10e07d23e7d1506c40dbbcf">error_code</a></td></tr>
-<tr class="separator:a4c9cd284a042b035464d10f194000a04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74de40b810769bd3169a6cb072014142"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
-<tr class="separator:a74de40b810769bd3169a6cb072014142"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Apple Notification Event structure. </p>
-<p>The structure contains the event that should be handled, as well as additional information. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="af6c7c0fce10e07d23e7d1506c40dbbcf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_ancs_c_evt_t::error_code</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Additional status/error code if the event was caused by a stack error or gatt status, e.g. during service discovery. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa11f9ec43554a7e299bac599bcca39ff"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a01028.html#ga82d6e5664766c42d7c3bd7c87ef7c390">ble_ancs_c_evt_type_t</a> ble_ancs_c_evt_t::evt_type</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Type of event. </p>
-
-</div>
-</div>
-<a class="anchor" id="a9b8853a2fa48267ea2e36eeedf0dbacf"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00359.html">ble_uuid_t</a> ble_ancs_c_evt_t::uuid</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>UUID of the event in case of an apple or notification. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>This module implements the Running Speed and Cadence Service. If enabled, notification of the Running Speead and Candence Measurement is performed when the application calls <a class="el" href="a01209.html#ga16080f0b2880066d0e1f88fbe960079b" title="Function for sending running speed and cadence measurement if notification has been enabled...">ble_rscs_measurement_send()</a>.</p>
+<p>If an event handler is supplied by the application, the Running Speed and Cadence Service will generate Running Speed and Cadence Service events to the application.</p>
+<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Running Speead and Candence Service module by calling <a class="el" href="a01209.html#ga23555a37f7903b50d65a818f32c362ec" title="Function for handling the Application&#39;s BLE Stack events.">ble_rscs_on_ble_evt()</a> from the <a class="el" href="a01189.html">SoftDevice Event Handler</a> function. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00165.html">ble_ancs_c_evt_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00144.html">BLE Services</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

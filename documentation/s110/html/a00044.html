@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Random Number Generator Example</title>
+<title>nRF51 SDK - S110 SoftDevice: PWM Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,39 +97,34 @@ $(document).ready(function(){initNavTree('a00044.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Random Number Generator Example </div>  </div>
+<div class="title">PWM Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Random Number Generator Example demonstrates the use of the RNG driver by obtaining a vector of random numbers and printing the numbers in a COM listener (for example PUTTY) using UART.</p>
-<p>The application starts by configuring app_uart and the RNG driver. The main loop prints the vector of random numbers and waits for 100 milliseconds.</p>
-<p>The name of the example is <b>rng_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\rng</code> </p>
-<h1><a class="anchor" id="rng_example_testing"></a>
+<div class="textblock"><p>The PWM Example demonstrates the use of the pulse-width modulation library by generating waveforms over a GPIO. The GPIO pin could drive a small speaker, for example.</p>
+<p>This example generates two variable duty cycle pulses using two PWM channels (with positive and negative polarity). The duty cycle is changed automatically and will vary between 0 and 100.</p>
+<p>The application will emit light on LED 1 and LED 2, corresponding to the duty cycle. With a higher value, the LED will emit less intense light.</p>
+<h1><a class="anchor" id="pwm_example_setup"></a>
+Setup</h1>
+<p>The name of the example is <b>pwm_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\peripheral\pwm</code> </p>
+<p><b>LED assignments:</b></p>
+<ul>
+<li>LED 1 shows the duty cycle of channel 1.</li>
+<li>LED 2 shows the duty cycle of channel 2 (negative polarity).</li>
+</ul>
+<h1><a class="anchor" id="pwm_example_testing"></a>
 Testing</h1>
-<p>Test the Random Number Generator Example application by performing the following steps:</p>
+<p>Test the PWM Example application by performing the following steps:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Start a COM listener like PUTTY and connect to the used COM port with the following UART settings:<ul>
-<li>
-Baud rate: 38.400</li>
-<li>
-8 data bits</li>
-<li>
-1 stop bit</li>
-<li>
-No parity</li>
-<li>
-HW flow control: RTS/CTS</li>
-</ul>
-</li>
-<li>Observe that a vector of random numbers is output every 100 milliseconds. </li>
+<li>Observe that the LED light intensity changes. LED 1 should give the opposite light intensity compared to LED 2. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00029.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00034.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -1,6 +1,8 @@
 var a00328 =
 [
-    [ "alert_level", "a00328.html#aadc350acbcf634cf778a5a253049ebe0", null ],
-    [ "evt_type", "a00328.html#a730fff52efb38d8f5f61973ef47696b4", null ],
-    [ "params", "a00328.html#a436ccefb86ad7804abe101b61110304d", null ]
+    [ "handle", "a00328.html#a1a0552b266c588f67d3a6abc712bbfd6", null ],
+    [ "offset", "a00328.html#a07033f6e0e63974b67627ae84bc12fc9", null ],
+    [ "p_data", "a00328.html#a68325153be760c7742d1bec69da625cf", null ],
+    [ "p_len", "a00328.html#a8b0b2dadb3128b0838c71235661f8174", null ],
+    [ "type", "a00328.html#a2971c791821bea067f3bc2bbc35b9193", null ]
 ];

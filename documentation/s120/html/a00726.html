@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: Enumerations</title>
+<title>nRF51 SDK - S120 SoftDevice: Characteristic Presentation Formats</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,179 +97,435 @@ $(document).ready(function(){initNavTree('a00726.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Enumerations<div class="ingroups"><a class="el" href="a00564.html">SoftDevice Manager API</a></div></div>  </div>
+<div class="title">Characteristic Presentation Formats<div class="ingroups"><a class="el" href="a00938.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga4528cbf3f1a34d4712822ac456b1b305"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga4528cbf3f1a34d4712822ac456b1b305">NRF_SD_SVCS</a> { <br/>
-&#160;&#160;<a class="el" href="a00726.html#gga4528cbf3f1a34d4712822ac456b1b305ab692ec521a2f791184f7a4644897f781">SD_SOFTDEVICE_ENABLE</a> = 0x10, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#gga4528cbf3f1a34d4712822ac456b1b305ab48ef4bb34f9d37c0a7005f7b7d13692">SD_SOFTDEVICE_DISABLE</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#gga4528cbf3f1a34d4712822ac456b1b305a6f89d282c869fd898e2c75141ac2bc5f">SD_SOFTDEVICE_IS_ENABLED</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#gga4528cbf3f1a34d4712822ac456b1b305a5e19adec24f31566eb74ff8222c7ab06">SD_SOFTDEVICE_VECTOR_TABLE_BASE_SET</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#gga4528cbf3f1a34d4712822ac456b1b305a11216cbdd9009464a16286385173bb5a">SVC_SDM_LAST</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:ga4528cbf3f1a34d4712822ac456b1b305"><td class="mdescLeft">&#160;</td><td class="mdescRight">nRF SoftDevice Manager API SVC numbers.  <a href="a00726.html#ga4528cbf3f1a34d4712822ac456b1b305">More...</a><br/></td></tr>
-<tr class="separator:ga4528cbf3f1a34d4712822ac456b1b305"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaef6aabaa8887cb4d7265d7e21b3ec242"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#gaef6aabaa8887cb4d7265d7e21b3ec242">NRF_CLOCK_LFCLKSRCS</a> { <br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242ad1191ed01bdf8e562500d9a38a059b39">NRF_CLOCK_LFCLKSRC_SYNTH_250_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242abadb40f1cba74435f3ad04f04c700c86">NRF_CLOCK_LFCLKSRC_XTAL_500_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a65044d23edf148cbeb93dd4e785f581d">NRF_CLOCK_LFCLKSRC_XTAL_250_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a02019daada779a6cdb69fa13dad053e2">NRF_CLOCK_LFCLKSRC_XTAL_150_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242ab5bb363243d2e2b382bc4c1dad745a33">NRF_CLOCK_LFCLKSRC_XTAL_100_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a87f389b60383a850468327a5970cb395">NRF_CLOCK_LFCLKSRC_XTAL_75_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a2d5febc7eb0c8f35c3279a705d7974dd">NRF_CLOCK_LFCLKSRC_XTAL_50_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242ad2464539b8d78659dc83998a4ae66fa6">NRF_CLOCK_LFCLKSRC_XTAL_30_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a1c5e9917211a50eac336a3fd2e467756">NRF_CLOCK_LFCLKSRC_XTAL_20_PPM</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a0263c1cff2fbded3ada7b18a691eeda5">NRF_CLOCK_LFCLKSRC_RC_250_PPM_250MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242aaa9263dbc5c7bfa094d654941dc36d55">NRF_CLOCK_LFCLKSRC_RC_250_PPM_500MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a7f2111bcf8ef8c355ca609a9fb84712c">NRF_CLOCK_LFCLKSRC_RC_250_PPM_1000MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242ad94caa1c4bbc8b28e8fd062a012defd7">NRF_CLOCK_LFCLKSRC_RC_250_PPM_2000MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a4b75e480fdf08028b4ad36e960474411">NRF_CLOCK_LFCLKSRC_RC_250_PPM_4000MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a2c0772805e06ad3966b4dc69abd3f247">NRF_CLOCK_LFCLKSRC_RC_250_PPM_8000MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a23b8dfa27131f4e191c90cf7b4e115f5">NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_1000MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242abb90009e7d3b437a38688790a086d475">NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_2000MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a4a1524c1e9bf9fdcab3c88282a272b0a">NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_4000MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242a7fca54df825052849f20136cf5186c02">NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_8000MS_CALIBRATION</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00726.html#ggaef6aabaa8887cb4d7265d7e21b3ec242aa5f637eab2568c5a631337656d390b2e">NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_16000MS_CALIBRATION</a>
-<br/>
- }</td></tr>
-<tr class="memdesc:gaef6aabaa8887cb4d7265d7e21b3ec242"><td class="mdescLeft">&#160;</td><td class="mdescRight">Possible lfclk oscillator sources.  <a href="a00726.html#gaef6aabaa8887cb4d7265d7e21b3ec242">More...</a><br/></td></tr>
-<tr class="separator:gaef6aabaa8887cb4d7265d7e21b3ec242"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gacb9f124cc059fc8ee71835a02138b490"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#gacb9f124cc059fc8ee71835a02138b490">BLE_GATT_CPF_FORMAT_RFU</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:gacb9f124cc059fc8ee71835a02138b490"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6ff3ee1da47aed450fc4578e1554781d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga6ff3ee1da47aed450fc4578e1554781d">BLE_GATT_CPF_FORMAT_BOOLEAN</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:ga6ff3ee1da47aed450fc4578e1554781d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52685313bb3952ebc70769328225a02d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga52685313bb3952ebc70769328225a02d">BLE_GATT_CPF_FORMAT_2BIT</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:ga52685313bb3952ebc70769328225a02d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gace207b94dccae2ca5eff3f37f788fb11"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#gace207b94dccae2ca5eff3f37f788fb11">BLE_GATT_CPF_FORMAT_NIBBLE</a>&#160;&#160;&#160;0x03</td></tr>
+<tr class="separator:gace207b94dccae2ca5eff3f37f788fb11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga74967a47a9dd043e3b2bf17a97bc55bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga74967a47a9dd043e3b2bf17a97bc55bb">BLE_GATT_CPF_FORMAT_UINT8</a>&#160;&#160;&#160;0x04</td></tr>
+<tr class="separator:ga74967a47a9dd043e3b2bf17a97bc55bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gace2cac76cd3ef127716cb57748380a11"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#gace2cac76cd3ef127716cb57748380a11">BLE_GATT_CPF_FORMAT_UINT12</a>&#160;&#160;&#160;0x05</td></tr>
+<tr class="separator:gace2cac76cd3ef127716cb57748380a11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacec27c7cd658d75eded544aafe9c6e15"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#gacec27c7cd658d75eded544aafe9c6e15">BLE_GATT_CPF_FORMAT_UINT16</a>&#160;&#160;&#160;0x06</td></tr>
+<tr class="separator:gacec27c7cd658d75eded544aafe9c6e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1622747d761e51dadde198e33d1d77b6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga1622747d761e51dadde198e33d1d77b6">BLE_GATT_CPF_FORMAT_UINT24</a>&#160;&#160;&#160;0x07</td></tr>
+<tr class="separator:ga1622747d761e51dadde198e33d1d77b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa8247c1476d287af369579bbc99872be"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#gaa8247c1476d287af369579bbc99872be">BLE_GATT_CPF_FORMAT_UINT32</a>&#160;&#160;&#160;0x08</td></tr>
+<tr class="separator:gaa8247c1476d287af369579bbc99872be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0a2d411bcd760541e7e6757e801ed169"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga0a2d411bcd760541e7e6757e801ed169">BLE_GATT_CPF_FORMAT_UINT48</a>&#160;&#160;&#160;0x09</td></tr>
+<tr class="separator:ga0a2d411bcd760541e7e6757e801ed169"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga01ca488fb6924a1c97883ae69e1ce25e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga01ca488fb6924a1c97883ae69e1ce25e">BLE_GATT_CPF_FORMAT_UINT64</a>&#160;&#160;&#160;0x0A</td></tr>
+<tr class="separator:ga01ca488fb6924a1c97883ae69e1ce25e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga061f563686819cff44ae81cd64ea0ecb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga061f563686819cff44ae81cd64ea0ecb">BLE_GATT_CPF_FORMAT_UINT128</a>&#160;&#160;&#160;0x0B</td></tr>
+<tr class="separator:ga061f563686819cff44ae81cd64ea0ecb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafaeea14940939c32ce4f4059b68b7873"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#gafaeea14940939c32ce4f4059b68b7873">BLE_GATT_CPF_FORMAT_SINT8</a>&#160;&#160;&#160;0x0C</td></tr>
+<tr class="separator:gafaeea14940939c32ce4f4059b68b7873"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf61f7b56995f219c14b7ba332aa09b1d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#gaf61f7b56995f219c14b7ba332aa09b1d">BLE_GATT_CPF_FORMAT_SINT12</a>&#160;&#160;&#160;0x0D</td></tr>
+<tr class="separator:gaf61f7b56995f219c14b7ba332aa09b1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3ed5390316d186d8bf8a4f8e9a0f1837"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga3ed5390316d186d8bf8a4f8e9a0f1837">BLE_GATT_CPF_FORMAT_SINT16</a>&#160;&#160;&#160;0x0E</td></tr>
+<tr class="separator:ga3ed5390316d186d8bf8a4f8e9a0f1837"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f48e016d5fa3ee888844184be0c2d6d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga0f48e016d5fa3ee888844184be0c2d6d">BLE_GATT_CPF_FORMAT_SINT24</a>&#160;&#160;&#160;0x0F</td></tr>
+<tr class="separator:ga0f48e016d5fa3ee888844184be0c2d6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d95ebebc388766712c85d7800412569"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga3d95ebebc388766712c85d7800412569">BLE_GATT_CPF_FORMAT_SINT32</a>&#160;&#160;&#160;0x10</td></tr>
+<tr class="separator:ga3d95ebebc388766712c85d7800412569"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c087b44666108d0e09a34472be7f4d3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga8c087b44666108d0e09a34472be7f4d3">BLE_GATT_CPF_FORMAT_SINT48</a>&#160;&#160;&#160;0x11</td></tr>
+<tr class="separator:ga8c087b44666108d0e09a34472be7f4d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga560e9ed6819d03d50d03ad6c4cf53d57"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga560e9ed6819d03d50d03ad6c4cf53d57">BLE_GATT_CPF_FORMAT_SINT64</a>&#160;&#160;&#160;0x12</td></tr>
+<tr class="separator:ga560e9ed6819d03d50d03ad6c4cf53d57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2f718099089b272595ab7d9235c5d922"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga2f718099089b272595ab7d9235c5d922">BLE_GATT_CPF_FORMAT_SINT128</a>&#160;&#160;&#160;0x13</td></tr>
+<tr class="separator:ga2f718099089b272595ab7d9235c5d922"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a300f4bdb1df2fb033dd3833b4577d4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga7a300f4bdb1df2fb033dd3833b4577d4">BLE_GATT_CPF_FORMAT_FLOAT32</a>&#160;&#160;&#160;0x14</td></tr>
+<tr class="separator:ga7a300f4bdb1df2fb033dd3833b4577d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadeee6028c2ba575eb6757de1b4c766e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#gadeee6028c2ba575eb6757de1b4c766e0">BLE_GATT_CPF_FORMAT_FLOAT64</a>&#160;&#160;&#160;0x15</td></tr>
+<tr class="separator:gadeee6028c2ba575eb6757de1b4c766e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga512f7de075cbb311f05fe2f2afa7a59c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga512f7de075cbb311f05fe2f2afa7a59c">BLE_GATT_CPF_FORMAT_SFLOAT</a>&#160;&#160;&#160;0x16</td></tr>
+<tr class="separator:ga512f7de075cbb311f05fe2f2afa7a59c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad4fe3c596b0f64413b410dc0c9e8b684"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#gad4fe3c596b0f64413b410dc0c9e8b684">BLE_GATT_CPF_FORMAT_FLOAT</a>&#160;&#160;&#160;0x17</td></tr>
+<tr class="separator:gad4fe3c596b0f64413b410dc0c9e8b684"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga42d6858202e8d7ed9ba25a2e06a78065"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga42d6858202e8d7ed9ba25a2e06a78065">BLE_GATT_CPF_FORMAT_DUINT16</a>&#160;&#160;&#160;0x18</td></tr>
+<tr class="separator:ga42d6858202e8d7ed9ba25a2e06a78065"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf4564e8d2a592f4016ac2be0a82bfdf"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#gacf4564e8d2a592f4016ac2be0a82bfdf">BLE_GATT_CPF_FORMAT_UTF8S</a>&#160;&#160;&#160;0x19</td></tr>
+<tr class="separator:gacf4564e8d2a592f4016ac2be0a82bfdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf597838130de7828d96b69d1fd3030b7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#gaf597838130de7828d96b69d1fd3030b7">BLE_GATT_CPF_FORMAT_UTF16S</a>&#160;&#160;&#160;0x1A</td></tr>
+<tr class="separator:gaf597838130de7828d96b69d1fd3030b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga997ab4dd2ed31e35bee23df7e8535c5f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00726.html#ga997ab4dd2ed31e35bee23df7e8535c5f">BLE_GATT_CPF_FORMAT_STRUCT</a>&#160;&#160;&#160;0x1B</td></tr>
+<tr class="separator:ga997ab4dd2ed31e35bee23df7e8535c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaef6aabaa8887cb4d7265d7e21b3ec242"></a>
+<dl class="section note"><dt>Note</dt><dd>Found at <a href="http://developer.bluetooth.org/gatt/descriptors/Pages/DescriptorViewer.aspx?u=org.bluetooth.descriptor.gatt.characteristic_presentation_format.xml">http://developer.bluetooth.org/gatt/descriptors/Pages/DescriptorViewer.aspx?u=org.bluetooth.descriptor.gatt.characteristic_presentation_format.xml</a> </dd></dl>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga52685313bb3952ebc70769328225a02d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00726.html#gaef6aabaa8887cb4d7265d7e21b3ec242">NRF_CLOCK_LFCLKSRCS</a></td>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_2BIT&#160;&#160;&#160;0x02</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Possible lfclk oscillator sources. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242ad1191ed01bdf8e562500d9a38a059b39"></a>NRF_CLOCK_LFCLKSRC_SYNTH_250_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK Synthesized from HFCLK. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242abadb40f1cba74435f3ad04f04c700c86"></a>NRF_CLOCK_LFCLKSRC_XTAL_500_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK crystal oscillator 500 PPM accuracy. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a65044d23edf148cbeb93dd4e785f581d"></a>NRF_CLOCK_LFCLKSRC_XTAL_250_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK crystal oscillator 250 PPM accuracy. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a02019daada779a6cdb69fa13dad053e2"></a>NRF_CLOCK_LFCLKSRC_XTAL_150_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK crystal oscillator 150 PPM accuracy. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242ab5bb363243d2e2b382bc4c1dad745a33"></a>NRF_CLOCK_LFCLKSRC_XTAL_100_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK crystal oscillator 100 PPM accuracy. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a87f389b60383a850468327a5970cb395"></a>NRF_CLOCK_LFCLKSRC_XTAL_75_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK crystal oscillator 75 PPM accuracy. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a2d5febc7eb0c8f35c3279a705d7974dd"></a>NRF_CLOCK_LFCLKSRC_XTAL_50_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK crystal oscillator 50 PPM accuracy. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242ad2464539b8d78659dc83998a4ae66fa6"></a>NRF_CLOCK_LFCLKSRC_XTAL_30_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK crystal oscillator 30 PPM accuracy. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a1c5e9917211a50eac336a3fd2e467756"></a>NRF_CLOCK_LFCLKSRC_XTAL_20_PPM</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK crystal oscillator 20 PPM accuracy. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a0263c1cff2fbded3ada7b18a691eeda5"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_250MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator, 250ms calibration interval. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242aaa9263dbc5c7bfa094d654941dc36d55"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_500MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator, 500ms calibration interval. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a7f2111bcf8ef8c355ca609a9fb84712c"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_1000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator, 1000ms calibration interval. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242ad94caa1c4bbc8b28e8fd062a012defd7"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_2000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator, 2000ms calibration interval. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a4b75e480fdf08028b4ad36e960474411"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_4000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator, 4000ms calibration interval. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a2c0772805e06ad3966b4dc69abd3f247"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_8000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator, 8000ms calibration interval. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a23b8dfa27131f4e191c90cf7b4e115f5"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_1000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator. Temperature checked every 1000ms, if changed above a threshold, a calibration is done. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242abb90009e7d3b437a38688790a086d475"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_2000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator. Temperature checked every 2000ms, if changed above a threshold, a calibration is done. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a4a1524c1e9bf9fdcab3c88282a272b0a"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_4000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator. Temperature checked every 4000ms, if changed above a threshold, a calibration is done. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242a7fca54df825052849f20136cf5186c02"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_8000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator. Temperature checked every 8000ms, if changed above a threshold, a calibration is done. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaef6aabaa8887cb4d7265d7e21b3ec242aa5f637eab2568c5a631337656d390b2e"></a>NRF_CLOCK_LFCLKSRC_RC_250_PPM_TEMP_16000MS_CALIBRATION</em>&nbsp;</td><td class="fielddoc">
-<p>LFCLK RC oscillator. Temperature checked every 16000ms, if changed above a threshold, a calibration is done. </p>
-</td></tr>
-</table>
+<p>Unsigned 2-bit integer. </p>
 
 </div>
 </div>
-<a class="anchor" id="ga4528cbf3f1a34d4712822ac456b1b305"></a>
+<a class="anchor" id="ga6ff3ee1da47aed450fc4578e1554781d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00726.html#ga4528cbf3f1a34d4712822ac456b1b305">NRF_SD_SVCS</a></td>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_BOOLEAN&#160;&#160;&#160;0x01</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Boolean. </p>
 
-<p>nRF SoftDevice Manager API SVC numbers. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga4528cbf3f1a34d4712822ac456b1b305ab692ec521a2f791184f7a4644897f781"></a>SD_SOFTDEVICE_ENABLE</em>&nbsp;</td><td class="fielddoc">
-<p><a class="el" href="a00728.html#ga26ecfde6eee7363f88bed8a8b711122a" title="Enables the SoftDevice and by extension the protocol stack.">sd_softdevice_enable</a> </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4528cbf3f1a34d4712822ac456b1b305ab48ef4bb34f9d37c0a7005f7b7d13692"></a>SD_SOFTDEVICE_DISABLE</em>&nbsp;</td><td class="fielddoc">
-<p><a class="el" href="a00728.html#ga45900ecbe6d5ebf9ae78894fe6c75b23" title="Disables the SoftDevice and by extension the protocol stack.">sd_softdevice_disable</a> </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4528cbf3f1a34d4712822ac456b1b305a6f89d282c869fd898e2c75141ac2bc5f"></a>SD_SOFTDEVICE_IS_ENABLED</em>&nbsp;</td><td class="fielddoc">
-<p><a class="el" href="a00728.html#ga830210fec2b272bbd27af26e3b314d35" title="Check if the SoftDevice is enabled.">sd_softdevice_is_enabled</a> </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4528cbf3f1a34d4712822ac456b1b305a5e19adec24f31566eb74ff8222c7ab06"></a>SD_SOFTDEVICE_VECTOR_TABLE_BASE_SET</em>&nbsp;</td><td class="fielddoc">
-<p><a class="el" href="a00728.html#ga46d2ce943076d65947ea8919198be106" title="Sets the base address of the interrupt vector table for interrupts forwarded from the SoftDevice...">sd_softdevice_vector_table_base_set</a> </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga4528cbf3f1a34d4712822ac456b1b305a11216cbdd9009464a16286385173bb5a"></a>SVC_SDM_LAST</em>&nbsp;</td><td class="fielddoc">
-<p>Placeholder for last SDM SVC </p>
-</td></tr>
-</table>
+</div>
+</div>
+<a class="anchor" id="ga42d6858202e8d7ed9ba25a2e06a78065"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_DUINT16&#160;&#160;&#160;0x18</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>IEEE-20601 format. </p>
+
+</div>
+</div>
+<a class="anchor" id="gad4fe3c596b0f64413b410dc0c9e8b684"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_FLOAT&#160;&#160;&#160;0x17</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>IEEE-11073 32-bit FLOAT. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga7a300f4bdb1df2fb033dd3833b4577d4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_FLOAT32&#160;&#160;&#160;0x14</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>IEEE-754 32-bit floating point. </p>
+
+</div>
+</div>
+<a class="anchor" id="gadeee6028c2ba575eb6757de1b4c766e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_FLOAT64&#160;&#160;&#160;0x15</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>IEEE-754 64-bit floating point. </p>
+
+</div>
+</div>
+<a class="anchor" id="gace207b94dccae2ca5eff3f37f788fb11"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_NIBBLE&#160;&#160;&#160;0x03</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Unsigned 4-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="gacb9f124cc059fc8ee71835a02138b490"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_RFU&#160;&#160;&#160;0x00</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reserved For Future Use. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga512f7de075cbb311f05fe2f2afa7a59c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_SFLOAT&#160;&#160;&#160;0x16</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>IEEE-11073 16-bit SFLOAT. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaf61f7b56995f219c14b7ba332aa09b1d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_SINT12&#160;&#160;&#160;0x0D</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Signed 12-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga2f718099089b272595ab7d9235c5d922"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_SINT128&#160;&#160;&#160;0x13</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Signed 128-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga3ed5390316d186d8bf8a4f8e9a0f1837"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_SINT16&#160;&#160;&#160;0x0E</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Signed 16-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga0f48e016d5fa3ee888844184be0c2d6d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_SINT24&#160;&#160;&#160;0x0F</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Signed 24-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga3d95ebebc388766712c85d7800412569"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_SINT32&#160;&#160;&#160;0x10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Signed 32-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga8c087b44666108d0e09a34472be7f4d3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_SINT48&#160;&#160;&#160;0x11</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Signed 48-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga560e9ed6819d03d50d03ad6c4cf53d57"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_SINT64&#160;&#160;&#160;0x12</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Signed 64-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="gafaeea14940939c32ce4f4059b68b7873"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_SINT8&#160;&#160;&#160;0x0C</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Signed 2-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga997ab4dd2ed31e35bee23df7e8535c5f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_STRUCT&#160;&#160;&#160;0x1B</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Opaque Structure. </p>
+
+</div>
+</div>
+<a class="anchor" id="gace2cac76cd3ef127716cb57748380a11"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_UINT12&#160;&#160;&#160;0x05</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Unsigned 12-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga061f563686819cff44ae81cd64ea0ecb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_UINT128&#160;&#160;&#160;0x0B</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Unsigned 128-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="gacec27c7cd658d75eded544aafe9c6e15"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_UINT16&#160;&#160;&#160;0x06</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Unsigned 16-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga1622747d761e51dadde198e33d1d77b6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_UINT24&#160;&#160;&#160;0x07</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Unsigned 24-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaa8247c1476d287af369579bbc99872be"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_UINT32&#160;&#160;&#160;0x08</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Unsigned 32-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga0a2d411bcd760541e7e6757e801ed169"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_UINT48&#160;&#160;&#160;0x09</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Unsigned 48-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga01ca488fb6924a1c97883ae69e1ce25e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_UINT64&#160;&#160;&#160;0x0A</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Unsigned 64-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga74967a47a9dd043e3b2bf17a97bc55bb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_UINT8&#160;&#160;&#160;0x04</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Unsigned 8-bit integer. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaf597838130de7828d96b69d1fd3030b7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_UTF16S&#160;&#160;&#160;0x1A</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UTF-16 string. </p>
+
+</div>
+</div>
+<a class="anchor" id="gacf4564e8d2a592f4016ac2be0a82bfdf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GATT_CPF_FORMAT_UTF8S&#160;&#160;&#160;0x19</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>UTF-8 string. </p>
 
 </div>
 </div>
@@ -278,7 +534,7 @@ Enumerations</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:46 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

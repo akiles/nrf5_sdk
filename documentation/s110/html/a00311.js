@@ -1,5 +1,5 @@
 var a00311 =
 [
-    [ "char_handles", "a00311.html#a3f137cc3f92bf439d93a8491e4314d5a", null ],
-    [ "ref_handle", "a00311.html#a0209468bba2c298192f4500a652dd6d1", null ]
+    [ "handle", "a00311.html#ab1f14809099e66b0dc7a4a70cb3dc124", null ],
+    [ "included_srvc", "a00311.html#a3342baabc3197898f17ce875e7a5ba80", null ]
 ];

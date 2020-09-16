@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Experimental: Multi Activity Example</title>
+<title>nRF51 SDK - S110 SoftDevice: Health Thermometer Application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,27 +97,48 @@ $(document).ready(function(){initNavTree('a00077.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Experimental: Multi Activity Example </div>  </div>
+<div class="title">Health Thermometer Application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The two examples included here (<a class="el" href="a00077.html#ble_sdk_adv_beacon">Advertisement Beacon</a> and <a class="el" href="a00077.html#ble_sdk_scan_beacon">Scanner Beacon</a>) illustrate how to use the Radio Timeslot API of the S110.</p>
-<p>This folder contains an advertiser module that is shown in a heart rate sensor example and that advertises beacon data while in a connection. </p>
-<dl class="section note"><dt>Note</dt><dd>This application is not power optimized!</dd></dl>
-<h1><a class="anchor" id="ble_sdk_adv_beacon"></a>
-Advertisement Beacon</h1>
-<p>The advertiser beacon module illustrates using periodic timeslots on the radio when the SoftDevice is running. The example using the advertiser beacon is based on Heart Rate service example and starts advertising as a beacon when in a connection.</p>
-<p>The name of the example is <b>experimental_ble_app_hrs_advertiser_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\experimental_ble_app_multiactivity_beacon\hrs_advertiser</code> </p>
-<h1><a class="anchor" id="ble_sdk_scan_beacon"></a>
-Scanner Beacon</h1>
-<p>The scanner beacon module illustrates using as much as possible of available radio time when the SoftDevice is running. The example using the advertiser beacon is based on Heart Rate service example and scans for advertising beacon at all times. If a beacon is found, indicated by the call to beacon_evt_handler, and if the major, minor and rssi values matches the expected one, the LED 2 is lit (it is cleared on a disconnect event).</p>
-<p>The name of the example is <b>experimental_ble_app_hrs_scanner_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\experimental_ble_app_multiactivity_beacon\hrs_scanner</code> </p>
+<div class="textblock"><p>The Health Thermometer Application is an example that implements the Health Thermometer profile using the hardware delivered in the nRF51 Development Kit.</p>
+<p>The application includes the two services in the Health Thermometer profile:</p>
+<ul>
+<li><a class="el" href="a01205.html">Health Thermometer Service</a></li>
+<li><a class="el" href="a01199.html">Device Information Service</a></li>
+</ul>
+<p>In addition, use of the <a class="el" href="a01194.html">Battery Service</a> is also demonstrated. When the application starts, a timer for generating battery measurements is started.</p>
+<p>When indication of the Temperature Measurement characteristic is enabled, a Temperature Measurement is transmitted. This also happens when reconnecting to a previously bonded central. A Temperature Measurement is also transmitted each time button 1 is pushed.</p>
+<dl class="section note"><dt>Note</dt><dd>This application is not power optimized! </dd>
+<dd>
+The application will stop advertising after 3 minutes and go to system-off mode. Push button 1 to wake it up and restart advertising.</dd></dl>
+<h1><a class="anchor" id="project_hts_setup"></a>
+Setup</h1>
+<p>The name of the example is <b>ble_app_hts_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\ble_peripheral\ble_app_hts</code> </p>
+<p><b>Button assignments</b> - in addition to those defined in <a class="el" href="a00062.html#examples_ble_button_functionality">BSP BLE Button Assignments</a><span>:</span></p>
+<ul>
+<li>During Connection:<ul>
+<li>Button 1: Simulate and send a Temperature Measurement.</li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="project_hts_test"></a>
+Testing</h1>
+<p>Test the Health Thermometer Application with the nRF Toolbox app, which is available on both iOS (Apple Store) and Android (Google Play).</p>
+<p>You can also test the application with the Master Control Panel by performing the following steps:</p>
+<ol type="1">
+<li>Compile and program the application. Observe that the <a class="el" href="a00062.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>Connect to the device from Master Control Panel (the device will be advertising as 'Nordic_HTS'), then bond and perform service discovery. Observe that the <a class="el" href="a00062.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Click the 'Enable services' button on the Master Control Panel. Observe that one Temperature Measurement indication is received. Also, Battery Level notifications are received every two seconds.</li>
+<li>Click the 'Disconnect' button and then the 'Connect' button on the Master Control Panel. Observe that one Temperature Measurement indication is received.</li>
+<li>Push Button 1. Observe that one Temperature Measurement indication is received each time the button is pushed. </li>
+</ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00058.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00064.html">BLE Peripheral</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

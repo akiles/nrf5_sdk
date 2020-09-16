@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: nrf_radio_request_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dm_application_param_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,67 +106,64 @@ $(document).ready(function(){initNavTree('a00409.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_radio_request_t Struct Reference<div class="ingroups"><a class="el" href="a01072.html">Types</a></div></div>  </div>
+<div class="title">dm_application_param_t Struct Reference<div class="ingroups"><a class="el" href="a01223.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Radio request parameters.  
+<p>Application Registration Parameters.  
  <a href="a00409.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_soc.h&gt;</code></p>
+<p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:af6c3fb2f810242bef92760745327f718"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#af6c3fb2f810242bef92760745327f718">request_type</a></td></tr>
-<tr class="separator:af6c3fb2f810242bef92760745327f718"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2578047d8488f7583ac55ffa58afc59a"><td class="memItemLeft" ><a class="anchor" id="a2578047d8488f7583ac55ffa58afc59a"></a>
-union {</td></tr>
-<tr class="memitem:a7a743c88f2f59adeb4389ea1a5748cbe"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00407.html">nrf_radio_request_earliest_t</a>&#160;&#160;&#160;<a class="el" href="a00409.html#a7ed176c3d465f35d68d00b70282bbb13">earliest</a></td></tr>
-<tr class="separator:a7a743c88f2f59adeb4389ea1a5748cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0921849d5967bad7a5a06fa280f8a07"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00408.html">nrf_radio_request_normal_t</a>&#160;&#160;&#160;<a class="el" href="a00409.html#a140d30391ab57e9fbd4e98536d687e09">normal</a></td></tr>
-<tr class="separator:ad0921849d5967bad7a5a06fa280f8a07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2578047d8488f7583ac55ffa58afc59a"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>params</b></td></tr>
-<tr class="separator:a2578047d8488f7583ac55ffa58afc59a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46b0eb7fa4e86eaa2c5f793b2750da38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01223.html#ga3126c8f560fd793097a8ee19dc9bf2f0">dm_event_cb_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#a46b0eb7fa4e86eaa2c5f793b2750da38">evt_handler</a></td></tr>
+<tr class="separator:a46b0eb7fa4e86eaa2c5f793b2750da38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01e7f59d291d6e3962ab36b22a7d1683"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#a01e7f59d291d6e3962ab36b22a7d1683">service_type</a></td></tr>
+<tr class="separator:a01e7f59d291d6e3962ab36b22a7d1683"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a763895cc4380ab52a871637ad5156d94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00291.html">ble_gap_sec_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00409.html#a763895cc4380ab52a871637ad5156d94">sec_param</a></td></tr>
+<tr class="separator:a763895cc4380ab52a871637ad5156d94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Radio request parameters. </p>
+<div class="textblock"><p>Application Registration Parameters. </p>
+<p>Parameters needed by the module when registering with it. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a7ed176c3d465f35d68d00b70282bbb13"></a>
+<a class="anchor" id="a46b0eb7fa4e86eaa2c5f793b2750da38"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00407.html">nrf_radio_request_earliest_t</a> nrf_radio_request_t::earliest</td>
+          <td class="memname"><a class="el" href="a01223.html#ga3126c8f560fd793097a8ee19dc9bf2f0">dm_event_cb_t</a> dm_application_param_t::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Parameters for a request for a timeslot as early as possible. </p>
+<p>Event Handler to be registered. It will receive asynchronous notification from the module, see <a class="el" href="a01219.html">Device Manager Events</a> for asynchronous events. </p>
 
 </div>
 </div>
-<a class="anchor" id="a140d30391ab57e9fbd4e98536d687e09"></a>
+<a class="anchor" id="a763895cc4380ab52a871637ad5156d94"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00408.html">nrf_radio_request_normal_t</a> nrf_radio_request_t::normal</td>
+          <td class="memname"><a class="el" href="a00291.html">ble_gap_sec_params_t</a> dm_application_param_t::sec_param</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Parameters for a normal radio request. </p>
+<p>Security parameters to be used for the application. </p>
 
 </div>
 </div>
-<a class="anchor" id="af6c3fb2f810242bef92760745327f718"></a>
+<a class="anchor" id="a01e7f59d291d6e3962ab36b22a7d1683"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_radio_request_t::request_type</td>
+          <td class="memname">uint8_t dm_application_param_t::service_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Type of request, see <a class="el" href="a01072.html#ga1d048df14a3eeef46aabec45e9643858">NRF_RADIO_REQUEST_TYPE</a>. </p>
+<p>Bit mask identifying services that the application intends to support for all peers. </p>
 
 </div>
 </div>
@@ -175,8 +172,8 @@ union {</td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00409.html">nrf_radio_request_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00409.html">dm_application_param_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_ias_init_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gatts_read_authorize_params_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,93 @@ $(document).ready(function(){initNavTree('a00329.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ias_init_t Struct Reference<div class="ingroups"><a class="el" href="a00965.html">Immediate Alert Service</a></div></div>  </div>
+<div class="title">ble_gatts_read_authorize_params_t Struct Reference<div class="ingroups"><a class="el" href="a01298.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Immediate Alert Service init structure. This contains all options and data needed for initialization of the service.  
+<p>GATT Read Authorization parameters.  
  <a href="a00329.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_ias.h&gt;</code></p>
+<p><code>#include &lt;ble_gatts.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a5e40f1f02a66e26a1da20bbf3e2a275a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00965.html#gab059c5376beb245a8f876ee3d7b8480a">ble_ias_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#a5e40f1f02a66e26a1da20bbf3e2a275a">evt_handler</a></td></tr>
-<tr class="separator:a5e40f1f02a66e26a1da20bbf3e2a275a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76066ec0dfed065ff7e58a709eaf8042"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#a76066ec0dfed065ff7e58a709eaf8042">gatt_status</a></td></tr>
+<tr class="separator:a76066ec0dfed065ff7e58a709eaf8042"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27015e208127d98d0600657e4f9224fc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#a27015e208127d98d0600657e4f9224fc">update</a>: 1</td></tr>
+<tr class="separator:a27015e208127d98d0600657e4f9224fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b823765dc8e01aa1dfc9a3124f92bc9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#a7b823765dc8e01aa1dfc9a3124f92bc9">offset</a></td></tr>
+<tr class="separator:a7b823765dc8e01aa1dfc9a3124f92bc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5242203755359060a29308d0e64b6da7"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#a5242203755359060a29308d0e64b6da7">len</a></td></tr>
+<tr class="separator:a5242203755359060a29308d0e64b6da7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a777067adc297b1e3fa67a4671663ba2f"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00329.html#a777067adc297b1e3fa67a4671663ba2f">p_data</a></td></tr>
+<tr class="separator:a777067adc297b1e3fa67a4671663ba2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Immediate Alert Service init structure. This contains all options and data needed for initialization of the service. </p>
+<div class="textblock"><p>GATT Read Authorization parameters. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a5e40f1f02a66e26a1da20bbf3e2a275a"></a>
+<a class="anchor" id="a76066ec0dfed065ff7e58a709eaf8042"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00965.html#gab059c5376beb245a8f876ee3d7b8480a">ble_ias_evt_handler_t</a> ble_ias_init_t::evt_handler</td>
+          <td class="memname">uint16_t ble_gatts_read_authorize_params_t::gatt_status</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Event handler to be called for handling events in the Immediate Alert Service. </p>
+<p>GATT status code for the operation, see <a class="el" href="a01030.html">GATT Status Codes</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5242203755359060a29308d0e64b6da7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_gatts_read_authorize_params_t::len</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Length in bytes of the value in p_data pointer, see <a class="el" href="a01035.html">Maximum attribute lengths</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a7b823765dc8e01aa1dfc9a3124f92bc9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_gatts_read_authorize_params_t::offset</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Offset of the attribute value being updated. </p>
+
+</div>
+</div>
+<a class="anchor" id="a777067adc297b1e3fa67a4671663ba2f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* ble_gatts_read_authorize_params_t::p_data</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to new value used to update the attribute value. </p>
+
+</div>
+</div>
+<a class="anchor" id="a27015e208127d98d0600657e4f9224fc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_gatts_read_authorize_params_t::update</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If set, data supplied in p_data will be used in the ATT response. </p>
 
 </div>
 </div>
@@ -141,8 +201,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00329.html">ble_ias_init_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00329.html">ble_gatts_read_authorize_params_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

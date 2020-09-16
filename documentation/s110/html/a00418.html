@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: sensorsim_cfg_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dm_service_context_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,49 @@ $(document).ready(function(){initNavTree('a00418.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">sensorsim_cfg_t Struct Reference<div class="ingroups"><a class="el" href="a01029.html">Sensor Data Simulator</a></div></div>  </div>
+<div class="title">dm_service_context_t Struct Reference<div class="ingroups"><a class="el" href="a01223.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Triangular waveform sensor simulator configuration.  
+<p>Service Context.  
  <a href="a00418.html#details">More...</a></p>
 
-<p><code>#include &lt;sensorsim.h&gt;</code></p>
+<p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a653b2ca2f8c5c411edfcedebf147cc9b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#a653b2ca2f8c5c411edfcedebf147cc9b">min</a></td></tr>
-<tr class="separator:a653b2ca2f8c5c411edfcedebf147cc9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87eea4bdd6b47b51092ebfe9b9727591"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#a87eea4bdd6b47b51092ebfe9b9727591">max</a></td></tr>
-<tr class="separator:a87eea4bdd6b47b51092ebfe9b9727591"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4653f071951c38cb3d551ae33eb70e24"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#a4653f071951c38cb3d551ae33eb70e24">incr</a></td></tr>
-<tr class="separator:a4653f071951c38cb3d551ae33eb70e24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3126f899a2336293e327b675970c94f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#ab3126f899a2336293e327b675970c94f">start_at_max</a></td></tr>
-<tr class="separator:ab3126f899a2336293e327b675970c94f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fa1bd3f934dbc782a82fcdffda7316e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01223.html#gaef588a149a4cc5b665658cfb032d6f6a">service_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#a9fa1bd3f934dbc782a82fcdffda7316e">service_type</a></td></tr>
+<tr class="separator:a9fa1bd3f934dbc782a82fcdffda7316e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6692f2d4301c1ef4dc4d967dff35782"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00410.html">dm_context_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00418.html#aa6692f2d4301c1ef4dc4d967dff35782">context_data</a></td></tr>
+<tr class="separator:aa6692f2d4301c1ef4dc4d967dff35782"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Triangular waveform sensor simulator configuration. </p>
+<div class="textblock"><p>Service Context. </p>
+<p>Service context data for a service identified by the 'service_type' field. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a4653f071951c38cb3d551ae33eb70e24"></a>
+<a class="anchor" id="aa6692f2d4301c1ef4dc4d967dff35782"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sensorsim_cfg_t::incr</td>
+          <td class="memname"><a class="el" href="a00410.html">dm_context_t</a> dm_service_context_t::context_data</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Increment between each measurement. </p>
+<p>Contains length and pointer to context data </p>
 
 </div>
 </div>
-<a class="anchor" id="a87eea4bdd6b47b51092ebfe9b9727591"></a>
+<a class="anchor" id="a9fa1bd3f934dbc782a82fcdffda7316e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sensorsim_cfg_t::max</td>
+          <td class="memname"><a class="el" href="a01223.html#gaef588a149a4cc5b665658cfb032d6f6a">service_type_t</a> dm_service_context_t::service_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Maximum simulated value. </p>
-
-</div>
-</div>
-<a class="anchor" id="a653b2ca2f8c5c411edfcedebf147cc9b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t sensorsim_cfg_t::min</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Minimum simulated value. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab3126f899a2336293e327b675970c94f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool sensorsim_cfg_t::start_at_max</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>TRUE is measurement is to start at the maximum value, FALSE if it is to start at the minimum. </p>
+<p>Identifies the service/protocol to which the context data is related. </p>
 
 </div>
 </div>
@@ -186,8 +157,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00418.html">sensorsim_cfg_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00418.html">dm_service_context_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

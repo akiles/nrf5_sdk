@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_ancs_c_evt_ios_notification_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: Human Immediate Alert Service Client</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,38 +96,19 @@ $(document).ready(function(){initNavTree('a00163.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_ancs_c_evt_ios_notification_t Struct Reference<div class="ingroups"><a class="el" href="a01028.html">Apple Notification Service Client</a></div></div>  </div>
+<div class="title">Human Immediate Alert Service Client </div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a90230cdca1fd3326d9e518cf30df6763"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90230cdca1fd3326d9e518cf30df6763"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>event_id</b></td></tr>
-<tr class="separator:a90230cdca1fd3326d9e518cf30df6763"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae86652b6297b0f664e3f4a655307867c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae86652b6297b0f664e3f4a655307867c"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>event_flags</b></td></tr>
-<tr class="separator:ae86652b6297b0f664e3f4a655307867c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f0bc8006e7125a2caf605bfe15fa975"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f0bc8006e7125a2caf605bfe15fa975"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>category_id</b></td></tr>
-<tr class="separator:a4f0bc8006e7125a2caf605bfe15fa975"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac740d5f60d9d28e844d7b208a4f142d5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac740d5f60d9d28e844d7b208a4f142d5"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>category_count</b></td></tr>
-<tr class="separator:ac740d5f60d9d28e844d7b208a4f142d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a242555b46f8d02b0c966462a6c853456"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a242555b46f8d02b0c966462a6c853456"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>notification_uid</b> [4]</td></tr>
-<tr class="separator:a242555b46f8d02b0c966462a6c853456"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-</div><!-- contents -->
+<div class="textblock"><p>This module implements the Immediate Alert Service client - locator role of the Find Me profile. On <a class="el" href="a01285.html#ggada486dd3c0cce897b23a887bed284fefaa0b4789724d202a13a5e7eab85c52957">BLE_GAP_EVT_CONNECTED</a> event, this module starts discovery of the Immediate Alert Service with Alert Level characteristic at the peer. This module will indicate the application about a successful service &amp; characteristic discovery using <a class="el" href="a01207.html#gga1363ef6107e67c26fd0ace31f6afa7cda108c1542b350d15f6acf09092cda957a">BLE_IAS_C_EVT_SRV_DISCOVERED</a> event. The application can use <a class="el" href="a01207.html#gab37ce69f8533cd510dc5620effba4409">ble_ias_c_send_alert_level</a> function to signal alerts to the peer.</p>
+<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to this module by calling <a class="el" href="a01207.html#ga7f98bafec49ce5bf78e444e46c628a1f" title="Function for handling the Application&#39;s BLE Stack events for Immediate Alert Service client...">ble_ias_c_on_ble_evt()</a> from the <a class="el" href="a01189.html">SoftDevice Event Handler</a> callback function. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00163.html">ble_ancs_c_evt_ios_notification_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00144.html">BLE Services</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

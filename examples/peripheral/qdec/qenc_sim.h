@@ -20,18 +20,16 @@
 #define QENC_CONFIG_PIO_A           6
 #define QENC_CONFIG_PIO_B           5
 #define QENC_CONFIG_PIO_PULL_CFG    NRF_GPIO_PIN_NOPULL
-#define QENC_CONFIG_GPIOTE_CHANNEL  0
 
 /**@brief quadrature encoder simulator initialization.
  *
  * The simulator uses GPIOTE module to generate pulses compatible with QDEC on A,B outputs using LED input as a clocking signal
  * The sole purpose of this module is to test software driver
  *
- * @param[in] channel in fast GPIOTE module
  * @param[in] active level for LED in QDEC
  *
  */
-void qenc_init(uint8_t channel, nrf_qdec_ledpol_t led_pol);
+void qenc_init(nrf_qdec_ledpol_t led_pol);
 
 
 /**@brief quadrature simulator simulator set-up for pulse generation.

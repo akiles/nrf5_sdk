@@ -1,6 +1,6 @@
 var a00087 =
 [
-    [ "instance_id", "a00087.html#ad3d35b697eb00153c57c93bcc7878a22", null ],
-    [ "irq", "a00087.html#a0da7a46f813f94e2499cf3d2f38498fb", null ],
-    [ "p_reg", "a00087.html#a485c160d231915b3ea3155106b07826f", null ]
+    [ "hal", "a00087.html#aa4bb9bf17e4cf04d2c9b1db1151324f7", null ],
+    [ "input", "a00087.html#acad9446d75e78c3ecd98a7a2ac9cabd0", null ],
+    [ "interrupt_priority", "a00087.html#a7254d65f29337e4023b86096d06b60c0", null ]
 ];

@@ -1,5 +1,5 @@
 var a00276 =
 [
-    [ "handle", "a00276.html#ab1f14809099e66b0dc7a4a70cb3dc124", null ],
-    [ "included_srvc", "a00276.html#a3342baabc3197898f17ce875e7a5ba80", null ]
+    [ "id_addr_info", "a00276.html#a1bd1659b09527f11f048c6e26cc7dfbe", null ],
+    [ "id_info", "a00276.html#afacb110ee8e9be828954f516a04008ad", null ]
 ];

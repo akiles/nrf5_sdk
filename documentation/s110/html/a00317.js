@@ -1,7 +1,7 @@
 var a00317 =
 [
-    [ "conn_handle", "a00317.html#ab8700a2ae7c425ac15d6622e66967f74", null ],
-    [ "evt_handler", "a00317.html#ad1c46431c0465c0d35c17aef3e184a07", null ],
-    [ "hrm_cccd_handle", "a00317.html#aa39c35324a4a66fc088ca76085d2a932", null ],
-    [ "hrm_handle", "a00317.html#a77ef344286d863fa38ebd60dc06e5e62", null ]
+    [ "cccd_handle", "a00317.html#a7764817bceb1a13dde2a2d614aaff900", null ],
+    [ "sccd_handle", "a00317.html#a0ebe446f83e8675203f224b1796939fa", null ],
+    [ "user_desc_handle", "a00317.html#a263781c226cad6bfeeb894e133b19c55", null ],
+    [ "value_handle", "a00317.html#a685865a59e73158fd661e9d64407e9d9", null ]
 ];

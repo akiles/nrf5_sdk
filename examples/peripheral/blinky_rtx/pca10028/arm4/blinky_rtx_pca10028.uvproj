@@ -353,7 +353,7 @@
               <MiscControls>--c99</MiscControls>
               <Define> __HEAP_SIZE=0 __STACK_SIZE=1024 BSP_DEFINES_ONLY BOARD_PCA10028 RTX NRF51</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..;..\..\..\..\bsp;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\components\libraries\util;..\..\..\..\..\external\rtx\include;..\..\..\..\..\components\device;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</IncludePath>
+              <IncludePath>..\..;..\..\..\..\bsp;..\..\..\..\..\components\libraries\util;..\..\..\..\..\components\drivers_nrf\hal;..\..\..\..\..\external\rtx\include;..\..\..\..\..\components\device;..\..\..\..\..\components\toolchain;..\..\..\..\..\components\drivers_nrf\nrf_soc_nosd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -442,6 +442,16 @@
               <FileName>RTX_Conf_CM.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\external\rtx\port\RTX_Conf_CM.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>nRF_Libraries</GroupName>
+          <Files>
+            <File>
+              <FileName>app_error.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\components\libraries\util\app_error.c</FilePath>
             </File>
           </Files>
         </Group>

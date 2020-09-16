@@ -1,7 +1,5 @@
 var a00309 =
 [
-    [ "max_len", "a00309.html#a656fc246bd9f18026083e3efb640052e", null ],
-    [ "read_resp", "a00309.html#a49208f982abf135a1f8d5c76ee893995", null ],
-    [ "rep_ref", "a00309.html#aeb77c0bc0738fbb0be766e574ac173b5", null ],
-    [ "security_mode", "a00309.html#a757afd0e411e7e67224c94fefcf26bab", null ]
+    [ "end_handle", "a00309.html#a7ef3ed6409b66e9b087a761bd6a2b747", null ],
+    [ "start_handle", "a00309.html#a091b1b8aeda9dcc211ec3f44d6832c51", null ]
 ];

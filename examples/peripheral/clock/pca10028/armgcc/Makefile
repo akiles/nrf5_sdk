@@ -45,6 +45,7 @@ C_SOURCE_FILES += \
 ../../../../../components/drivers_nrf/hal/nrf_delay.c \
 ../../../../../components/drivers_nrf/clock/nrf_drv_clock.c \
 ../../../../../components/drivers_nrf/common/nrf_drv_common.c \
+../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c \
 ../../../../../components/drivers_nrf/ppi/nrf_drv_ppi.c \
 ../../../../../components/drivers_nrf/rtc/nrf_drv_rtc.c \
 
@@ -65,6 +66,7 @@ INC_PATHS += -I../../../../../components/drivers_nrf/common
 INC_PATHS += -I../../../../../components/drivers_nrf/rtc
 INC_PATHS += -I../../../../../components/drivers_nrf/config
 INC_PATHS += -I../../../../../components/toolchain/gcc
+INC_PATHS += -I../../../../../components/drivers_nrf/gpiote
 INC_PATHS += -I../../../../../components/drivers_nrf/clock
 
 OBJECT_DIRECTORY = _build
@@ -84,7 +86,7 @@ CFLAGS += -Wall -Werror -O3
 CFLAGS += -mfloat-abi=soft
 # keep every function in separate section. This will allow linker to dump unused functions
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -flto -fno-builtin
+CFLAGS += -fno-builtin --short-enums
 
 # keep every function in separate section. This will allow linker to dump unused functions
 LDFLAGS += -Xlinker -Map=$(LISTING_DIRECTORY)/$(OUTPUT_FILENAME).map

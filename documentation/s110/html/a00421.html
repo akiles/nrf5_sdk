@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: SOFTDEVICE_INFORMATION_Type Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: hci_slip_evt_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,108 +106,63 @@ $(document).ready(function(){initNavTree('a00421.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">SOFTDEVICE_INFORMATION_Type Struct Reference<div class="ingroups"><a class="el" href="a00944.html">Types and definitions.</a></div></div>  </div>
+<div class="title">hci_slip_evt_t Struct Reference<div class="ingroups"><a class="el" href="a00981.html">SLIP module</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Structure holding SoftDevice information to be used by the Bootloader/DFU. Only size field is used.  
+<p>Structure containing an event from the SLIP layer.  
  <a href="a00421.html#details">More...</a></p>
 
-<p><code>#include &lt;dfu_types.h&gt;</code></p>
+<p><code>#include &lt;hci_slip.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a0dfa8dc981701b47ad619d778bb646bf"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00421.html#a0dfa8dc981701b47ad619d778bb646bf">info_size</a></td></tr>
-<tr class="separator:a0dfa8dc981701b47ad619d778bb646bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa17f21260d985fdbf5eeabd8ff4ab0ca"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00421.html#aa17f21260d985fdbf5eeabd8ff4ab0ca">reserved1</a> [3]</td></tr>
-<tr class="separator:aa17f21260d985fdbf5eeabd8ff4ab0ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e3c0ed915d2c32a3a486ce625155466"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00421.html#a8e3c0ed915d2c32a3a486ce625155466">magic_number</a></td></tr>
-<tr class="separator:a8e3c0ed915d2c32a3a486ce625155466"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab12be31117d5f9746bd9ea8920863540"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00421.html#ab12be31117d5f9746bd9ea8920863540">softdevice_size</a></td></tr>
-<tr class="separator:ab12be31117d5f9746bd9ea8920863540"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71d3fb8b5eb37e1b988cf4d24e83ff05"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00421.html#a71d3fb8b5eb37e1b988cf4d24e83ff05">firmware_id</a></td></tr>
-<tr class="separator:a71d3fb8b5eb37e1b988cf4d24e83ff05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3ab6d531e4101f61f2b86443d9abb06"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00421.html#ac3ab6d531e4101f61f2b86443d9abb06">reserved2</a> [2]</td></tr>
-<tr class="separator:ac3ab6d531e4101f61f2b86443d9abb06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7e76a07c099aed4eb9d8180a15368d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00981.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00421.html#ac7e76a07c099aed4eb9d8180a15368d8">evt_type</a></td></tr>
+<tr class="separator:ac7e76a07c099aed4eb9d8180a15368d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a005a67172eb3d6a4645d536db7fbb98f"><td class="memItemLeft" align="right" valign="top">const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00421.html#a005a67172eb3d6a4645d536db7fbb98f">packet</a></td></tr>
+<tr class="separator:a005a67172eb3d6a4645d536db7fbb98f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac31d16ccc1a5fc4bd8852c58d710f821"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00421.html#ac31d16ccc1a5fc4bd8852c58d710f821">packet_length</a></td></tr>
+<tr class="separator:ac31d16ccc1a5fc4bd8852c58d710f821"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Structure holding SoftDevice information to be used by the Bootloader/DFU. Only size field is used. </p>
+<div class="textblock"><p>Structure containing an event from the SLIP layer. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a71d3fb8b5eb37e1b988cf4d24e83ff05"></a>
+<a class="anchor" id="ac7e76a07c099aed4eb9d8180a15368d8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t SOFTDEVICE_INFORMATION_Type::firmware_id</td>
+          <td class="memname"><a class="el" href="a00981.html#gaf03d61e05dd64c3a61644580c29aa0b4">hci_slip_evt_type_t</a> hci_slip_evt_t::evt_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Firmware id. </p>
+<p>Type of event. </p>
 
 </div>
 </div>
-<a class="anchor" id="a0dfa8dc981701b47ad619d778bb646bf"></a>
+<a class="anchor" id="a005a67172eb3d6a4645d536db7fbb98f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t SOFTDEVICE_INFORMATION_Type::info_size</td>
+          <td class="memname">const uint8_t* hci_slip_evt_t::packet</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Not used. </p>
+<p>This field contains a pointer to the packet for which the event relates, i.e. SLIP_TX_DONE: the packet transmitted, SLIP_RX_RDY: the packet received, SLIP_RX_OVERFLOW: The packet which overflow/or NULL if no receive buffer is available. </p>
 
 </div>
 </div>
-<a class="anchor" id="a8e3c0ed915d2c32a3a486ce625155466"></a>
+<a class="anchor" id="ac31d16ccc1a5fc4bd8852c58d710f821"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t SOFTDEVICE_INFORMATION_Type::magic_number</td>
+          <td class="memname">uint32_t hci_slip_evt_t::packet_length</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Not used. </p>
-
-</div>
-</div>
-<a class="anchor" id="aa17f21260d985fdbf5eeabd8ff4ab0ca"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t SOFTDEVICE_INFORMATION_Type::reserved1[3]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Not used. </p>
-
-</div>
-</div>
-<a class="anchor" id="ac3ab6d531e4101f61f2b86443d9abb06"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t SOFTDEVICE_INFORMATION_Type::reserved2[2]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Not used. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab12be31117d5f9746bd9ea8920863540"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t SOFTDEVICE_INFORMATION_Type::softdevice_size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Size field containing the size of installed SoftDevice. </p>
+<p>Packet length, i.e. SLIP_TX_DONE: Bytes transmitted, SLIP_RX_RDY: Bytes received, SLIP_RX_OVERFLOW: index at which the packet overflowed. </p>
 
 </div>
 </div>
@@ -216,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00421.html">SOFTDEVICE_INFORMATION_Type</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00421.html">hci_slip_evt_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

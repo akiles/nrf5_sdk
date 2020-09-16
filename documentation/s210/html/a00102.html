@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: spi_master_config_t Struct Reference</title>
+<title>nRF51 SDK - S210 SoftDevice: nrf_lpcomp_config_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,215 +106,48 @@ $(document).ready(function(){initNavTree('a00102.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">spi_master_config_t Struct Reference<div class="ingroups"><a class="el" href="a00307.html">SPI Master driver</a></div></div>  </div>
+<div class="title">nrf_lpcomp_config_t Struct Reference<div class="ingroups"><a class="el" href="a00316.html">LPCOMP HAL</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Struct containing configuration parameters of the SPI master.  
+<p>LPCOMP configuration.  
  <a href="a00102.html#details">More...</a></p>
 
-<p><code>#include &lt;spi_master.h&gt;</code></p>
+<p><code>#include &lt;nrf_lpcomp.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:afd21a8a469598aaa408f4e13a9a3040f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#afd21a8a469598aaa408f4e13a9a3040f">SPI_Freq</a></td></tr>
-<tr class="separator:afd21a8a469598aaa408f4e13a9a3040f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0beff1248c5fd9d9f257fc2c3ea12a84"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#a0beff1248c5fd9d9f257fc2c3ea12a84">SPI_Pin_SCK</a></td></tr>
-<tr class="separator:a0beff1248c5fd9d9f257fc2c3ea12a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee3ebe39323764d06cef34ab601ed870"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#aee3ebe39323764d06cef34ab601ed870">SPI_Pin_MISO</a></td></tr>
-<tr class="separator:aee3ebe39323764d06cef34ab601ed870"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a104ebda3a0069d2dc638022dd4e4d385"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#a104ebda3a0069d2dc638022dd4e4d385">SPI_Pin_MOSI</a></td></tr>
-<tr class="separator:a104ebda3a0069d2dc638022dd4e4d385"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0203f17b181806c009086cce9c5c044c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#a0203f17b181806c009086cce9c5c044c">SPI_Pin_SS</a></td></tr>
-<tr class="separator:a0203f17b181806c009086cce9c5c044c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38633561e69f0d3e8dbb8a14c34fa61f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#a38633561e69f0d3e8dbb8a14c34fa61f">SPI_ORDER</a></td></tr>
-<tr class="separator:a38633561e69f0d3e8dbb8a14c34fa61f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4d3bd41e35948de16b495e1fe29d867"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#af4d3bd41e35948de16b495e1fe29d867">SPI_CPOL</a></td></tr>
-<tr class="separator:af4d3bd41e35948de16b495e1fe29d867"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19f2a3a33b059fe627b89a04bdcd69b6"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#a19f2a3a33b059fe627b89a04bdcd69b6">SPI_CPHA</a></td></tr>
-<tr class="separator:a19f2a3a33b059fe627b89a04bdcd69b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae73b65ac984bdc5b1855cb026009ff0e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#ae73b65ac984bdc5b1855cb026009ff0e">SPI_PriorityIRQ</a></td></tr>
-<tr class="separator:ae73b65ac984bdc5b1855cb026009ff0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ae7b60e2bf798c6c3c2a31e05d71436"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#a9ae7b60e2bf798c6c3c2a31e05d71436">SPI_CONFIG_ORDER</a></td></tr>
-<tr class="separator:a9ae7b60e2bf798c6c3c2a31e05d71436"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcfa3b91400e01c58ed4bcb01579957b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#afcfa3b91400e01c58ed4bcb01579957b">SPI_CONFIG_CPOL</a></td></tr>
-<tr class="separator:afcfa3b91400e01c58ed4bcb01579957b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d9ec5e520efd6528eac731dc6ec1d09"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#a8d9ec5e520efd6528eac731dc6ec1d09">SPI_CONFIG_CPHA</a></td></tr>
-<tr class="separator:a8d9ec5e520efd6528eac731dc6ec1d09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8eb5716e03de5b39ef991a7fe237b77d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#a8eb5716e03de5b39ef991a7fe237b77d">SPI_DisableAllIRQ</a></td></tr>
-<tr class="separator:a8eb5716e03de5b39ef991a7fe237b77d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa74af967693de2d0d942b3389eb33038"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00316.html#ga0c957a3dd1132acd90e420b70477cef0">nrf_lpcomp_ref_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#aa74af967693de2d0d942b3389eb33038">reference</a></td></tr>
+<tr class="separator:aa74af967693de2d0d942b3389eb33038"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a914c08cbe41a352676020b57ae1ba831"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00316.html#ga98b70e2e8ab4595eb74b92e7036f09b3">nrf_lpcomp_detect_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00102.html#a914c08cbe41a352676020b57ae1ba831">detection</a></td></tr>
+<tr class="separator:a914c08cbe41a352676020b57ae1ba831"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Struct containing configuration parameters of the SPI master. </p>
-<p>A structure containing configuration parameters of the SPI master driver. </p>
+<div class="textblock"><p>LPCOMP configuration. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a8d9ec5e520efd6528eac731dc6ec1d09"></a>
+<a class="anchor" id="a914c08cbe41a352676020b57ae1ba831"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t spi_master_config_t::SPI_CONFIG_CPHA</td>
+          <td class="memname"><a class="el" href="a00316.html#ga98b70e2e8ab4595eb74b92e7036f09b3">nrf_lpcomp_detect_t</a> nrf_lpcomp_config_t::detection</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Serial clock phase LEADING or TRAILING. </p>
+<p>LPCOMP detection type. </p>
 
 </div>
 </div>
-<a class="anchor" id="afcfa3b91400e01c58ed4bcb01579957b"></a>
+<a class="anchor" id="aa74af967693de2d0d942b3389eb33038"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t spi_master_config_t::SPI_CONFIG_CPOL</td>
+          <td class="memname"><a class="el" href="a00316.html#ga0c957a3dd1132acd90e420b70477cef0">nrf_lpcomp_ref_t</a> nrf_lpcomp_config_t::reference</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Serial clock polarity ACTIVEHIGH or ACTIVELOW. </p>
-
-</div>
-</div>
-<a class="anchor" id="a9ae7b60e2bf798c6c3c2a31e05d71436"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t spi_master_config_t::SPI_CONFIG_ORDER</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Bytes order LSB or MSB shifted out first. </p>
-
-</div>
-</div>
-<a class="anchor" id="a19f2a3a33b059fe627b89a04bdcd69b6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t spi_master_config_t::SPI_CPHA</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Serial clock phase LEADING or TRAILING. </p>
-
-</div>
-</div>
-<a class="anchor" id="af4d3bd41e35948de16b495e1fe29d867"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t spi_master_config_t::SPI_CPOL</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Serial clock polarity ACTIVEHIGH or ACTIVELOW. </p>
-
-</div>
-</div>
-<a class="anchor" id="a8eb5716e03de5b39ef991a7fe237b77d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t spi_master_config_t::SPI_DisableAllIRQ</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Disable all IRQs in critical section. </p>
-
-</div>
-</div>
-<a class="anchor" id="afd21a8a469598aaa408f4e13a9a3040f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t spi_master_config_t::SPI_Freq</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>SPI frequency.</p>
-<p>SPI master frequency </p>
-
-</div>
-</div>
-<a class="anchor" id="a38633561e69f0d3e8dbb8a14c34fa61f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t spi_master_config_t::SPI_ORDER</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Bytes order MSBFIRST or LSBFIRST. </p>
-
-</div>
-</div>
-<a class="anchor" id="aee3ebe39323764d06cef34ab601ed870"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t spi_master_config_t::SPI_Pin_MISO</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>MISO pin number. </p>
-
-</div>
-</div>
-<a class="anchor" id="a104ebda3a0069d2dc638022dd4e4d385"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t spi_master_config_t::SPI_Pin_MOSI</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>MOSI pin number . </p>
-
-</div>
-</div>
-<a class="anchor" id="a0beff1248c5fd9d9f257fc2c3ea12a84"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t spi_master_config_t::SPI_Pin_SCK</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>SCK pin number. </p>
-
-</div>
-</div>
-<a class="anchor" id="a0203f17b181806c009086cce9c5c044c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t spi_master_config_t::SPI_Pin_SS</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Slave select pin number. </p>
-
-</div>
-</div>
-<a class="anchor" id="ae73b65ac984bdc5b1855cb026009ff0e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t spi_master_config_t::SPI_PriorityIRQ</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>SPI master interrupt priority. </p>
+<p>LPCOMP reference. </p>
 
 </div>
 </div>
@@ -323,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00102.html">spi_master_config_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:05 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00102.html">nrf_lpcomp_config_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

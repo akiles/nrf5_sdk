@@ -1,6 +1,7 @@
 var a00108 =
 [
-    [ "auth", "a00108.html#a5f21ad24fa7cce2e56ae61beccdcb0b8", null ],
-    [ "ltk", "a00108.html#a545fe8321eef3b128572882aa3997f7f", null ],
-    [ "ltk_len", "a00108.html#a91966f65c4bb6988f847a19ce0b1541e", null ]
+    [ "num_of_channels", "a00108.html#a15cb4361b2aa835dbf3860ba2d4b3603", null ],
+    [ "period_us", "a00108.html#a4ee3248fdfda7ba386b94be56f4913d5", null ],
+    [ "pin_polarity", "a00108.html#a83466b8f4a8b52a58772c3d2e712fd02", null ],
+    [ "pins", "a00108.html#a06422abddaa496b9168f334df42f67d0", null ]
 ];

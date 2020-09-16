@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gatts_char_handles_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gap_opt_passkey_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,78 +106,37 @@ $(document).ready(function(){initNavTree('a00282.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gatts_char_handles_t Struct Reference<div class="ingroups"><a class="el" href="a01055.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_opt_passkey_t Struct Reference<div class="ingroups"><a class="el" href="a01287.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>GATT Characteristic Definition Handles.  
+<p>Passkey Option.  
  <a href="a00282.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gatts.h&gt;</code></p>
+<p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a685865a59e73158fd661e9d64407e9d9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00282.html#a685865a59e73158fd661e9d64407e9d9">value_handle</a></td></tr>
-<tr class="separator:a685865a59e73158fd661e9d64407e9d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a263781c226cad6bfeeb894e133b19c55"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00282.html#a263781c226cad6bfeeb894e133b19c55">user_desc_handle</a></td></tr>
-<tr class="separator:a263781c226cad6bfeeb894e133b19c55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7764817bceb1a13dde2a2d614aaff900"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00282.html#a7764817bceb1a13dde2a2d614aaff900">cccd_handle</a></td></tr>
-<tr class="separator:a7764817bceb1a13dde2a2d614aaff900"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ebe446f83e8675203f224b1796939fa"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00282.html#a0ebe446f83e8675203f224b1796939fa">sccd_handle</a></td></tr>
-<tr class="separator:a0ebe446f83e8675203f224b1796939fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e16c43a1b5706db1120bd0742a48c50"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00282.html#a9e16c43a1b5706db1120bd0742a48c50">p_passkey</a></td></tr>
+<tr class="separator:a9e16c43a1b5706db1120bd0742a48c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GATT Characteristic Definition Handles. </p>
+<div class="textblock"><p>Passkey Option. </p>
+<pre class="fragment">   Structure containing the passkey to be used during pairing. This can be used with @ref
+   sd_ble_opt_set to make the SoftDevice use a pre-programmed passkey for authentication
+   instead of generating a random one.
+</pre><dl class="section note"><dt>Note</dt><dd><a class="el" href="a01284.html#gad64712eef7dba0287275d185768c5291">sd_ble_opt_get</a> is not supported for this option. </dd></dl>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a7764817bceb1a13dde2a2d614aaff900"></a>
+<a class="anchor" id="a9e16c43a1b5706db1120bd0742a48c50"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint16_t ble_gatts_char_handles_t::cccd_handle</td>
+          <td class="memname">uint8_t* ble_gap_opt_passkey_t::p_passkey</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle to the Client Characteristic Configuration Descriptor, or <a class="el" href="a01047.html#ga755613d0f9d0979be50a3814c1436ab9">BLE_GATT_HANDLE_INVALID</a> if not present. </p>
-
-</div>
-</div>
-<a class="anchor" id="a0ebe446f83e8675203f224b1796939fa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gatts_char_handles_t::sccd_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle to the Server Characteristic Configuration Descriptor, or <a class="el" href="a01047.html#ga755613d0f9d0979be50a3814c1436ab9">BLE_GATT_HANDLE_INVALID</a> if not present. </p>
-
-</div>
-</div>
-<a class="anchor" id="a263781c226cad6bfeeb894e133b19c55"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gatts_char_handles_t::user_desc_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle to the User Description descriptor, or <a class="el" href="a01047.html#ga755613d0f9d0979be50a3814c1436ab9">BLE_GATT_HANDLE_INVALID</a> if not present. </p>
-
-</div>
-</div>
-<a class="anchor" id="a685865a59e73158fd661e9d64407e9d9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_gatts_char_handles_t::value_handle</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Handle to the characteristic value. </p>
+<p>Pointer to 6-digit ASCII string (digit 0..9 only, no NULL termination) passkey to be used during pairing. If this is NULL, the SoftDevice will generate a random passkey if required. </p>
 
 </div>
 </div>
@@ -186,8 +145,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00282.html">ble_gatts_char_handles_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00282.html">ble_gap_opt_passkey_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

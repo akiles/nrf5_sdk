@@ -23,7 +23,7 @@
 
 #include <stdint.h>
 #include "bootloader_types.h"
-#include "dfu_types.h"
+#include <dfu_types.h>
 
 /**@brief Function for starting the application.
  *

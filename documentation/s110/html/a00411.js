@@ -1,5 +1,5 @@
 var a00411 =
 [
-    [ "high_to_low", "a00411.html#ae5b08a4f0525b94727edf87267f57c0b", null ],
-    [ "low_to_high", "a00411.html#ab74530adb87a0c8728839d2bbdc0f8f0", null ]
+    [ "enc_info", "a00411.html#a86cd792e42804720a97e6f64884d0fd4", null ],
+    [ "master_id", "a00411.html#a6d0dc86cbbad08e963a13c3a4070454d", null ]
 ];

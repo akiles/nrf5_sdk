@@ -36,56 +36,56 @@
 #define TIMER_IS_BIT_WIDTH_VALID(instance_id, mode) \
     (((instance_id>0) && (mode>NRF_TIMER_BIT_WIDTH_16)) ? false : true)
 
-#define TIMER_CC_SHORTS(ch) ((TIMER_SHORTS_COMPARE0_STOP_Msk << ch) |                              \
-                             (TIMER_SHORTS_COMPARE0_CLEAR_Msk << ch))
+#define TIMER_CC_SHORT(ch) ((TIMER_SHORTS_COMPARE0_STOP_Msk << ch) |                              \
+                            (TIMER_SHORTS_COMPARE0_CLEAR_Msk << ch))
 /**
- * @enum nrf_timer_tasks_t
+ * @enum nrf_timer_task_t
  * @brief Timer tasks.
  */
 typedef enum
 {
     /*lint -save -e30 -esym(628,__INTADDR__)*/
-    NRF_TIMER_TASKS_START    = offsetof(NRF_TIMER_Type, TASKS_START),      /**< Task for starting the timer. */
-    NRF_TIMER_TASKS_STOP     = offsetof(NRF_TIMER_Type, TASKS_STOP),       /**< Task for stoping the timer. */
-    NRF_TIMER_TASKS_COUNT    = offsetof(NRF_TIMER_Type, TASKS_COUNT),      /**< Task for incrementing the timer (in counter mode). */
-    NRF_TIMER_TASKS_CLEAR    = offsetof(NRF_TIMER_Type, TASKS_CLEAR),      /**< Task for resetting the timer value. */
-    NRF_TIMER_TASKS_SHUTDOWN = offsetof(NRF_TIMER_Type, TASKS_SHUTDOWN),   /**< Task for powering off the timer. */
-    NRF_TIMER_TASKS_CAPTURE0 = offsetof(NRF_TIMER_Type, TASKS_CAPTURE[0]), /**< Task for capturing the timer value on channel 0. */
-    NRF_TIMER_TASKS_CAPTURE1 = offsetof(NRF_TIMER_Type, TASKS_CAPTURE[1]), /**< Task for capturing the timer value on channel 1. */
-    NRF_TIMER_TASKS_CAPTURE2 = offsetof(NRF_TIMER_Type, TASKS_CAPTURE[2]), /**< Task for capturing the timer value on channel 2. */
-    NRF_TIMER_TASKS_CAPTURE3 = offsetof(NRF_TIMER_Type, TASKS_CAPTURE[3]), /**< Task for capturing the timer value on channel 3. */
+    NRF_TIMER_TASK_START    = offsetof(NRF_TIMER_Type, TASKS_START),      /**< Task for starting the timer. */
+    NRF_TIMER_TASK_STOP     = offsetof(NRF_TIMER_Type, TASKS_STOP),       /**< Task for stoping the timer. */
+    NRF_TIMER_TASK_COUNT    = offsetof(NRF_TIMER_Type, TASKS_COUNT),      /**< Task for incrementing the timer (in counter mode). */
+    NRF_TIMER_TASK_CLEAR    = offsetof(NRF_TIMER_Type, TASKS_CLEAR),      /**< Task for resetting the timer value. */
+    NRF_TIMER_TASK_SHUTDOWN = offsetof(NRF_TIMER_Type, TASKS_SHUTDOWN),   /**< Task for powering off the timer. */
+    NRF_TIMER_TASK_CAPTURE0 = offsetof(NRF_TIMER_Type, TASKS_CAPTURE[0]), /**< Task for capturing the timer value on channel 0. */
+    NRF_TIMER_TASK_CAPTURE1 = offsetof(NRF_TIMER_Type, TASKS_CAPTURE[1]), /**< Task for capturing the timer value on channel 1. */
+    NRF_TIMER_TASK_CAPTURE2 = offsetof(NRF_TIMER_Type, TASKS_CAPTURE[2]), /**< Task for capturing the timer value on channel 2. */
+    NRF_TIMER_TASK_CAPTURE3 = offsetof(NRF_TIMER_Type, TASKS_CAPTURE[3]), /**< Task for capturing the timer value on channel 3. */
     /*lint -restore*/
-} nrf_timer_tasks_t;
+} nrf_timer_task_t;
 
 /**
- * @enum nrf_timer_events_t
+ * @enum nrf_timer_event_t
  * @brief Timer events.
  */
 typedef enum
 {
     /*lint -save -e30*/
-    NRF_TIMER_EVENTS_COMPARE0 = offsetof(NRF_TIMER_Type, EVENTS_COMPARE[0]), /**< Event from compare channel 0. */
-    NRF_TIMER_EVENTS_COMPARE1 = offsetof(NRF_TIMER_Type, EVENTS_COMPARE[1]), /**< Event from compare channel 1. */
-    NRF_TIMER_EVENTS_COMPARE2 = offsetof(NRF_TIMER_Type, EVENTS_COMPARE[2]), /**< Event from compare channel 2. */
-    NRF_TIMER_EVENTS_COMPARE3 = offsetof(NRF_TIMER_Type, EVENTS_COMPARE[3])  /**< Event from compare channel 3. */
+    NRF_TIMER_EVENT_COMPARE0 = offsetof(NRF_TIMER_Type, EVENTS_COMPARE[0]), /**< Event from compare channel 0. */
+    NRF_TIMER_EVENT_COMPARE1 = offsetof(NRF_TIMER_Type, EVENTS_COMPARE[1]), /**< Event from compare channel 1. */
+    NRF_TIMER_EVENT_COMPARE2 = offsetof(NRF_TIMER_Type, EVENTS_COMPARE[2]), /**< Event from compare channel 2. */
+    NRF_TIMER_EVENT_COMPARE3 = offsetof(NRF_TIMER_Type, EVENTS_COMPARE[3])  /**< Event from compare channel 3. */
     /*lint -restore*/
-} nrf_timer_events_t;
+} nrf_timer_event_t;
 
 /**
- * @enum nrf_timer_shorts_mask_t
+ * @enum nrf_timer_short_mask_t
  * @brief Types of timer shortcuts.
  */
 typedef enum
 {
-    NRF_TIMER_SHORTS_COMPARE0_STOP_MASK = TIMER_SHORTS_COMPARE0_STOP_Msk,   /**< Shortcut for stopping the timer based on compare 0. */
-    NRF_TIMER_SHORTS_COMPARE1_STOP_MASK = TIMER_SHORTS_COMPARE1_STOP_Msk,   /**< Shortcut for stopping the timer based on compare 1. */
-    NRF_TIMER_SHORTS_COMPARE2_STOP_MASK = TIMER_SHORTS_COMPARE2_STOP_Msk,   /**< Shortcut for stopping the timer based on compare 2. */
-    NRF_TIMER_SHORTS_COMPARE3_STOP_MASK = TIMER_SHORTS_COMPARE3_STOP_Msk,   /**< Shortcut for stopping the timer based on compare 3. */
-    NRF_TIMER_SHORTS_COMPARE0_CLEAR_MASK = TIMER_SHORTS_COMPARE0_CLEAR_Msk, /**< Shortcut for clearing the timer based on compare 0. */
-    NRF_TIMER_SHORTS_COMPARE1_CLEAR_MASK = TIMER_SHORTS_COMPARE1_CLEAR_Msk, /**< Shortcut for clearing the timer based on compare 1. */
-    NRF_TIMER_SHORTS_COMPARE2_CLEAR_MASK = TIMER_SHORTS_COMPARE2_CLEAR_Msk, /**< Shortcut for clearing the timer based on compare 2. */
-    NRF_TIMER_SHORTS_COMPARE3_CLEAR_MASK = TIMER_SHORTS_COMPARE3_CLEAR_Msk  /**< Shortcut for clearing the timer based on compare 3. */
-} nrf_timer_shorts_mask_t;
+    NRF_TIMER_SHORT_COMPARE0_STOP_MASK = TIMER_SHORTS_COMPARE0_STOP_Msk,   /**< Shortcut for stopping the timer based on compare 0. */
+    NRF_TIMER_SHORT_COMPARE1_STOP_MASK = TIMER_SHORTS_COMPARE1_STOP_Msk,   /**< Shortcut for stopping the timer based on compare 1. */
+    NRF_TIMER_SHORT_COMPARE2_STOP_MASK = TIMER_SHORTS_COMPARE2_STOP_Msk,   /**< Shortcut for stopping the timer based on compare 2. */
+    NRF_TIMER_SHORT_COMPARE3_STOP_MASK = TIMER_SHORTS_COMPARE3_STOP_Msk,   /**< Shortcut for stopping the timer based on compare 3. */
+    NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK = TIMER_SHORTS_COMPARE0_CLEAR_Msk, /**< Shortcut for clearing the timer based on compare 0. */
+    NRF_TIMER_SHORT_COMPARE1_CLEAR_MASK = TIMER_SHORTS_COMPARE1_CLEAR_Msk, /**< Shortcut for clearing the timer based on compare 1. */
+    NRF_TIMER_SHORT_COMPARE2_CLEAR_MASK = TIMER_SHORTS_COMPARE2_CLEAR_Msk, /**< Shortcut for clearing the timer based on compare 2. */
+    NRF_TIMER_SHORT_COMPARE3_CLEAR_MASK = TIMER_SHORTS_COMPARE3_CLEAR_Msk  /**< Shortcut for clearing the timer based on compare 3. */
+} nrf_timer_short_mask_t;
 
 /**
  * @enum nrf_timer_mode_t
@@ -158,7 +158,7 @@ typedef enum
  *
  * @param timer_task Timer task.
  */
-__STATIC_INLINE void nrf_timer_task_set(NRF_TIMER_Type * NRF_TIMERx, nrf_timer_tasks_t timer_task)
+__STATIC_INLINE void nrf_timer_task_trigger(NRF_TIMER_Type * NRF_TIMERx, nrf_timer_task_t timer_task)
 {
     *((volatile uint32_t *)((uint8_t *)NRF_TIMERx + (uint32_t)timer_task)) = 0x1UL;
 }
@@ -172,7 +172,7 @@ __STATIC_INLINE void nrf_timer_task_set(NRF_TIMER_Type * NRF_TIMERx, nrf_timer_t
  * @param timer_task Timer task.
  */
 __STATIC_INLINE uint32_t * nrf_timer_task_address_get(NRF_TIMER_Type * NRF_TIMERx,
-                                                      nrf_timer_tasks_t timer_task)
+                                                      nrf_timer_task_t timer_task)
 {
     return (uint32_t *)((uint8_t *)NRF_TIMERx + (uint32_t)timer_task);
 }
@@ -185,8 +185,8 @@ __STATIC_INLINE uint32_t * nrf_timer_task_address_get(NRF_TIMER_Type * NRF_TIMER
  *
  * @param timer_event Timer event to clear.
  */
-__STATIC_INLINE void nrf_timer_event_clear(NRF_TIMER_Type  * NRF_TIMERx,
-                                           nrf_timer_events_t timer_event)
+__STATIC_INLINE void nrf_timer_event_clear(NRF_TIMER_Type * NRF_TIMERx,
+                                           nrf_timer_event_t timer_event)
 {
     *((volatile uint32_t *)((uint8_t *)NRF_TIMERx + (uint32_t)timer_event)) = 0x0UL;
 }
@@ -199,8 +199,8 @@ __STATIC_INLINE void nrf_timer_event_clear(NRF_TIMER_Type  * NRF_TIMERx,
  *
  * @param timer_event Timer event to check.
  */
-__STATIC_INLINE bool nrf_timer_event_check(NRF_TIMER_Type  * NRF_TIMERx,
-                                         nrf_timer_events_t timer_event)
+__STATIC_INLINE bool nrf_timer_event_check(NRF_TIMER_Type * NRF_TIMERx,
+                                           nrf_timer_event_t timer_event)
 {
     return (bool)*(volatile uint32_t *)((uint8_t *)NRF_TIMERx + (uint32_t)timer_event);
 }
@@ -213,8 +213,8 @@ __STATIC_INLINE bool nrf_timer_event_check(NRF_TIMER_Type  * NRF_TIMERx,
  *
  * @param timer_event Timer event.
  */
-__STATIC_INLINE uint32_t * nrf_timer_event_address_get(NRF_TIMER_Type  * NRF_TIMERx,
-                                                       nrf_timer_events_t timer_event)
+__STATIC_INLINE uint32_t * nrf_timer_event_address_get(NRF_TIMER_Type * NRF_TIMERx,
+                                                       nrf_timer_event_t timer_event)
 {
     return (uint32_t *)((uint8_t *)NRF_TIMERx + (uint32_t)timer_event);
 }
@@ -227,7 +227,7 @@ __STATIC_INLINE uint32_t * nrf_timer_event_address_get(NRF_TIMER_Type  * NRF_TIM
  *
  * @param timer_short_mask Type of timer shortcut.
  */
-__STATIC_INLINE void nrf_timer_shorts_set(NRF_TIMER_Type * NRF_TIMERx, uint32_t timer_short_mask)
+__STATIC_INLINE void nrf_timer_shorts_enable(NRF_TIMER_Type * NRF_TIMERx, uint32_t timer_short_mask)
 {
     NRF_TIMERx->SHORTS |= timer_short_mask;
 }
@@ -240,7 +240,7 @@ __STATIC_INLINE void nrf_timer_shorts_set(NRF_TIMER_Type * NRF_TIMERx, uint32_t 
  *
  * @param timer_short_mask Type of timer shortcut.
  */
-__STATIC_INLINE void nrf_timer_shorts_clear(NRF_TIMER_Type * NRF_TIMERx, uint32_t timer_short_mask)
+__STATIC_INLINE void nrf_timer_shorts_disable(NRF_TIMER_Type * NRF_TIMERx, uint32_t timer_short_mask)
 {
     NRF_TIMERx->SHORTS &= ~(timer_short_mask);
 }

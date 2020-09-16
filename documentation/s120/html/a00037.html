@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: PWM Example</title>
+<title>nRF51 SDK - S120 SoftDevice: Pin Change Interrupt Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,38 +97,36 @@ $(document).ready(function(){initNavTree('a00037.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">PWM Example </div>  </div>
+<div class="title">Pin Change Interrupt Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The PWM Example shows how the Programmable Peripheral Interconnect (PPI) and a free running timer can be used to output a PWM waveform over a GPIO. The GPIO pin could drive a small speaker, for example.</p>
-<p>This example generates a variable duty cycle pulse. The duty cycle is changed by buttons and will vary between 1 and 255. Note that the value 0 is omitted because it would cause two events to be triggered at the same time, which would result in only one toggle of the output pin. Timer 2 is used to dispatch GPIOTE toggle events on every compare match. CC1 will set the output pin high, while CC0 and CC2 will toggle it low every other turn, ending a duty cycle. These compare timings will be set by an interrupt that happens every CC1 at the 0 (or 256) mark for the period. This interrupt will increase CC1 with one more period. Also, this interrupt will set CC0 or CC2 to the value retrieved from the state of the buttons. If CC0 or CC2 is set changes every turn.</p>
-<p>The application will emit light on LED 1, corresponding to the duty cycle. With a higher value, the LED will emit less intense light.</p>
-<h1><a class="anchor" id="pwm_example_setup"></a>
+<div class="textblock"><p>The Pin Change Interrupt Example demonstrates interrupts on PIN_IN change. PIN_OUT is configured as output and toggled in the PIN_IN change interrupt handler.</p>
+<p>The application starts with configuring the pins and configuring GPIOTE to give an interrupt on PIN_IN change. The interrupt handler toggles PIN_OUT (LED 1) when PIN_IN (button 1) is pressed or released.</p>
+<h1><a class="anchor" id="pin_change_int_example_setup"></a>
 Setup</h1>
-<p>The name of the example is <b>pwm_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\pwm</code> </p>
-<p>LED assignments:</p>
+<p>The name of the example is <b>pin_change_int_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\peripheral\pin_change_int</code> </p>
+<p><b>LED assignments:</b></p>
 <ul>
-<li>LED 1 shows the duty cycle of the current state.</li>
+<li>LED 1 is toggled by interrupt.</li>
 </ul>
-<p>Button assignments:</p>
+<p><b>Button assignments:</b></p>
 <ul>
-<li>Button 1 and button 2 change the duty cycle.</li>
+<li>Button 1 triggers interrupt that toggles LED 1.</li>
 </ul>
-<h1><a class="anchor" id="pwm_example_testing"></a>
+<h1><a class="anchor" id="pin_change_int_example_testing"></a>
 Testing</h1>
-<p>Test the PWM Example application by performing the following steps:</p>
+<p>Test the Pin Change Interrupt Example application by performing the following steps:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>LED 1 should give high light intensity.</li>
-<li>Press BUTTON_1 or BUTTON_2 to change LED light intensity. </li>
+<li>Press button 1 and check if LED 1 toggles. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00027.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:52 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00032.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:45 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

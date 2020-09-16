@@ -1,6 +1,5 @@
 var a00194 =
 [
-    [ "current_time", "a00194.html#ad4214462de201aca0f837ef8d9590055", null ],
-    [ "evt_type", "a00194.html#a6bec1fdb999d69c2655a2ebdce989455", null ],
-    [ "params", "a00194.html#a1873342e6ee11bb1cecb177bf0223a81", null ]
+    [ "p_uuids", "a00194.html#ad2afd54b16525fc33156e9cea8b8a90d", null ],
+    [ "uuid_cnt", "a00194.html#a5ef99273de36b66fcbe5cc2c18091cec", null ]
 ];

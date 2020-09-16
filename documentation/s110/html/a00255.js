@@ -1,6 +1,7 @@
 var a00255 =
 [
-    [ "lv1", "a00255.html#ad5928e9ef7150d0ea5769a7a4ce6e0e9", null ],
-    [ "lv2", "a00255.html#a3a5ac21e29c1c675ad3b1ccf0db2fec6", null ],
-    [ "lv3", "a00255.html#a78aa0c3d2fee6fccf52f73e45cd66cf6", null ]
+    [ "conn_sup_timeout", "a00255.html#ab644e629af7eb4915b0f3a93f682f7ae", null ],
+    [ "max_conn_interval", "a00255.html#abd7a6e16a723de1d779afadae3f3113e", null ],
+    [ "min_conn_interval", "a00255.html#a4d1975f7d25263004c405e0321fbae34", null ],
+    [ "slave_latency", "a00255.html#aa5caf55715aaac33f56cc996f91a92cc", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gatts_enable_params_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_gap_opt_t Union Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,108 @@ $(document).ready(function(){initNavTree('a00285.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gatts_enable_params_t Struct Reference<div class="ingroups"><a class="el" href="a01055.html">Structures</a></div></div>  </div>
+<div class="title">ble_gap_opt_t Union Reference<div class="ingroups"><a class="el" href="a01287.html">Structures</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>BLE GATTS init options.  
+<p>Option structure for GAP options.  
  <a href="a00285.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gatts.h&gt;</code></p>
+<p><code>#include &lt;ble_gap.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac3916b537d3da7b08ca7f8bf8f31eb5c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html#ac3916b537d3da7b08ca7f8bf8f31eb5c">service_changed</a>:1</td></tr>
-<tr class="separator:ac3916b537d3da7b08ca7f8bf8f31eb5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7683e0545cb08151ff5526f7dacdc53"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html#ad7683e0545cb08151ff5526f7dacdc53">attr_tab_size</a></td></tr>
-<tr class="separator:ad7683e0545cb08151ff5526f7dacdc53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac467d9642d6caa41dd4fdf8a4a3909d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00279.html">ble_gap_opt_ch_map_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html#ac467d9642d6caa41dd4fdf8a4a3909d5">ch_map</a></td></tr>
+<tr class="separator:ac467d9642d6caa41dd4fdf8a4a3909d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bb53c22c985681a03ee48b81498112c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00281.html">ble_gap_opt_local_conn_latency_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html#a1bb53c22c985681a03ee48b81498112c">local_conn_latency</a></td></tr>
+<tr class="separator:a1bb53c22c985681a03ee48b81498112c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada41fdfa545113ec48371bc74ec7aa9a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00282.html">ble_gap_opt_passkey_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html#ada41fdfa545113ec48371bc74ec7aa9a">passkey</a></td></tr>
+<tr class="separator:ada41fdfa545113ec48371bc74ec7aa9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19819de8fc2357584b987c5087f2c54a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00283.html">ble_gap_opt_privacy_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html#a19819de8fc2357584b987c5087f2c54a">privacy</a></td></tr>
+<tr class="separator:a19819de8fc2357584b987c5087f2c54a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67d4b73802048b55b9b9d65ad556ce8b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00284.html">ble_gap_opt_scan_req_report_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html#a67d4b73802048b55b9b9d65ad556ce8b">scan_req_report</a></td></tr>
+<tr class="separator:a67d4b73802048b55b9b9d65ad556ce8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61c3c3ab3b03d8e4fe8e70b69e33c4e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00280.html">ble_gap_opt_compat_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00285.html#a61c3c3ab3b03d8e4fe8e70b69e33c4e8">compat_mode</a></td></tr>
+<tr class="separator:a61c3c3ab3b03d8e4fe8e70b69e33c4e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>BLE GATTS init options. </p>
+<div class="textblock"><p>Option structure for GAP options. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ad7683e0545cb08151ff5526f7dacdc53"></a>
+<a class="anchor" id="ac467d9642d6caa41dd4fdf8a4a3909d5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t ble_gatts_enable_params_t::attr_tab_size</td>
+          <td class="memname"><a class="el" href="a00279.html">ble_gap_opt_ch_map_t</a> ble_gap_opt_t::ch_map</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Attribute Table size in bytes. The size must be a multiple of 4. <a class="el" href="a00857.html#ga3b329810a73308879c5c755ead002655">BLE_GATTS_ATTR_TAB_SIZE_DEFAULT</a> is used to set the default size. </p>
+<p>Parameters for the Channel Map option. </p>
 
 </div>
 </div>
-<a class="anchor" id="ac3916b537d3da7b08ca7f8bf8f31eb5c"></a>
+<a class="anchor" id="a61c3c3ab3b03d8e4fe8e70b69e33c4e8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gatts_enable_params_t::service_changed</td>
+          <td class="memname"><a class="el" href="a00280.html">ble_gap_opt_compat_mode_t</a> ble_gap_opt_t::compat_mode</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Include the Service Changed characteristic in the Attribute Table. </p>
+<p>Parameters for the compatibility mode option. </p>
+
+</div>
+</div>
+<a class="anchor" id="a1bb53c22c985681a03ee48b81498112c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00281.html">ble_gap_opt_local_conn_latency_t</a> ble_gap_opt_t::local_conn_latency</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parameters for the Local connection latency option </p>
+
+</div>
+</div>
+<a class="anchor" id="ada41fdfa545113ec48371bc74ec7aa9a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00282.html">ble_gap_opt_passkey_t</a> ble_gap_opt_t::passkey</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parameters for the Passkey option. </p>
+
+</div>
+</div>
+<a class="anchor" id="a19819de8fc2357584b987c5087f2c54a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00283.html">ble_gap_opt_privacy_t</a> ble_gap_opt_t::privacy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parameters for the Custom privacy option. </p>
+
+</div>
+</div>
+<a class="anchor" id="a67d4b73802048b55b9b9d65ad556ce8b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00284.html">ble_gap_opt_scan_req_report_t</a> ble_gap_opt_t::scan_req_report</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parameters for the scan request report option. </p>
 
 </div>
 </div>
@@ -156,8 +216,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00285.html">ble_gatts_enable_params_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00285.html">ble_gap_opt_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

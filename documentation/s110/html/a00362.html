@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: current_time_char_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_ias_c_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,88 @@ $(document).ready(function(){initNavTree('a00362.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">current_time_char_t Struct Reference<div class="ingroups"><a class="el" href="a01005.html">Current Time Service client</a></div></div>  </div>
+<div class="title">ble_ias_c_s Struct Reference<div class="ingroups"><a class="el" href="a01207.html">Immediate Alert Service Client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Data structure for the Current Time Characteristic.  
+<p>IAS Client structure. This contains various status information for the client.  
  <a href="a00362.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_cts_c.h&gt;</code></p>
+<p><code>#include &lt;ble_ias_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a898016293e0403acf53e255b8047d8ae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a898016293e0403acf53e255b8047d8ae"></a>
-<a class="el" href="a00384.html">exact_time_256_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>exact_time_256</b></td></tr>
-<tr class="separator:a898016293e0403acf53e255b8047d8ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab71aa26294e80fc69e2c504ccb9e6f12"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab71aa26294e80fc69e2c504ccb9e6f12"></a>
-<a class="el" href="a00147.html">adjust_reason_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>adjust_reason</b></td></tr>
-<tr class="separator:ab71aa26294e80fc69e2c504ccb9e6f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac306d48fcd140ddbffb4d4c64ca4d007"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01207.html#ga96adb4273980cee3c28140485a07884f">ble_ias_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00362.html#ac306d48fcd140ddbffb4d4c64ca4d007">evt_handler</a></td></tr>
+<tr class="separator:ac306d48fcd140ddbffb4d4c64ca4d007"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cecf3d78ec7d72912dd4215455720ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01212.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00362.html#a6cecf3d78ec7d72912dd4215455720ed">error_handler</a></td></tr>
+<tr class="separator:a6cecf3d78ec7d72912dd4215455720ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad136ca554bce057fd4cd38ba0f796ea6"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00362.html#ad136ca554bce057fd4cd38ba0f796ea6">alert_level_handle</a></td></tr>
+<tr class="separator:ad136ca554bce057fd4cd38ba0f796ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad18ae38bccb88d086eedbc1647ce2386"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00362.html#ad18ae38bccb88d086eedbc1647ce2386">conn_handle</a></td></tr>
+<tr class="separator:ad18ae38bccb88d086eedbc1647ce2386"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Data structure for the Current Time Characteristic. </p>
-</div></div><!-- contents -->
+<div class="textblock"><p>IAS Client structure. This contains various status information for the client. </p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="ad136ca554bce057fd4cd38ba0f796ea6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_ias_c_s::alert_level_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle of Alert Level characteristic at peer (as provided by the BLE stack). </p>
+
+</div>
+</div>
+<a class="anchor" id="ad18ae38bccb88d086eedbc1647ce2386"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_ias_c_s::conn_handle</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
+
+</div>
+</div>
+<a class="anchor" id="a6cecf3d78ec7d72912dd4215455720ed"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01212.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_ias_c_s::error_handler</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Function to be called in case of an error. </p>
+
+</div>
+</div>
+<a class="anchor" id="ac306d48fcd140ddbffb4d4c64ca4d007"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a01207.html#ga96adb4273980cee3c28140485a07884f">ble_ias_c_evt_handler_t</a> ble_ias_c_s::evt_handler</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Event handler to be called for handling events in the Immediate Alert Service client. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00362.html">current_time_char_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00362.html">ble_ias_c_s</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

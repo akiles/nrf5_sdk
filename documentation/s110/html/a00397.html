@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: nrf_drv_rng_config_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: bsp_button_event_cfg_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,56 @@ $(document).ready(function(){initNavTree('a00397.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_drv_rng_config_t Struct Reference<div class="ingroups"><a class="el" href="a00790.html">RNG driver</a></div></div>  </div>
+<div class="title">bsp_button_event_cfg_t Struct Reference<div class="ingroups"><a class="el" href="a00998.html">Board Support Package</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Struct for RNG configuration.  
- <a href="a00397.html#details">More...</a></p>
-
-<p><code>#include &lt;nrf_drv_rng.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:af58a8aa9061b77b4f2cd95080a438352"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00397.html#af58a8aa9061b77b4f2cd95080a438352">error_correction</a></td></tr>
-<tr class="separator:af58a8aa9061b77b4f2cd95080a438352"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbf813c769e9c5f2929fe116ed6b882b"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00397.html#afbf813c769e9c5f2929fe116ed6b882b">interrupt_priority</a></td></tr>
-<tr class="separator:afbf813c769e9c5f2929fe116ed6b882b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abff83314b5d5f68fb1f670c97ef52fc5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00998.html#gad026454d14088f6f37bd2ba15fe816df">bsp_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00397.html#abff83314b5d5f68fb1f670c97ef52fc5">push_event</a></td></tr>
+<tr class="separator:abff83314b5d5f68fb1f670c97ef52fc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84f09881275b5407455ec261aab66667"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00998.html#gad026454d14088f6f37bd2ba15fe816df">bsp_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00397.html#a84f09881275b5407455ec261aab66667">long_push_event</a></td></tr>
+<tr class="separator:a84f09881275b5407455ec261aab66667"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bc0087aeda2cd59f3ebfdb92df12b44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00998.html#gad026454d14088f6f37bd2ba15fe816df">bsp_event_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00397.html#a2bc0087aeda2cd59f3ebfdb92df12b44">release_event</a></td></tr>
+<tr class="separator:a2bc0087aeda2cd59f3ebfdb92df12b44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Struct for RNG configuration. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="af58a8aa9061b77b4f2cd95080a438352"></a>
+<h2 class="groupheader">Field Documentation</h2>
+<a class="anchor" id="a84f09881275b5407455ec261aab66667"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool nrf_drv_rng_config_t::error_correction</td>
+          <td class="memname"><a class="el" href="a00998.html#gad026454d14088f6f37bd2ba15fe816df">bsp_event_t</a> bsp_button_event_cfg_t::long_push_event</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Error correction flag. </p>
+<p>The event to fire on long button press. </p>
 
 </div>
 </div>
-<a class="anchor" id="afbf813c769e9c5f2929fe116ed6b882b"></a>
+<a class="anchor" id="abff83314b5d5f68fb1f670c97ef52fc5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_drv_rng_config_t::interrupt_priority</td>
+          <td class="memname"><a class="el" href="a00998.html#gad026454d14088f6f37bd2ba15fe816df">bsp_event_t</a> bsp_button_event_cfg_t::push_event</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>interrupt priority </p>
+<p>The event to fire on regular button press. </p>
+
+</div>
+</div>
+<a class="anchor" id="a2bc0087aeda2cd59f3ebfdb92df12b44"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00998.html#gad026454d14088f6f37bd2ba15fe816df">bsp_event_t</a> bsp_button_event_cfg_t::release_event</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The event to fire on button release. </p>
 
 </div>
 </div>
@@ -156,8 +164,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00397.html">nrf_drv_rng_config_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00397.html">bsp_button_event_cfg_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

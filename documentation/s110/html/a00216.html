@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_evt_user_mem_request_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_bps_meas_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,33 +106,198 @@ $(document).ready(function(){initNavTree('a00216.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_evt_user_mem_request_t Struct Reference<div class="ingroups"><a class="el" href="a01040.html">Structures</a></div></div>  </div>
+<div class="title">ble_bps_meas_s Struct Reference<div class="ingroups"><a class="el" href="a01195.html">Blood Pressure Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event structure for <a class="el" href="a01038.html#ggaa55e423bfea45f03764a636f2cec7a8ba3b9d0631bda508c2657f746ffaa6ed97">BLE_EVT_USER_MEM_REQUEST</a>.  
+<p>Blood Pressure Service measurement structure. This contains a Blood Pressure measurement.  
  <a href="a00216.html#details">More...</a></p>
 
-<p><code>#include &lt;ble.h&gt;</code></p>
+<p><code>#include &lt;ble_bps.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:ac0a51b3ce3131df1dcc57a440f5a816c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#ac0a51b3ce3131df1dcc57a440f5a816c">type</a></td></tr>
-<tr class="separator:ac0a51b3ce3131df1dcc57a440f5a816c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d4f46ef4a031f2c849bba6ac9d68ba3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#a3d4f46ef4a031f2c849bba6ac9d68ba3">blood_pressure_units_in_kpa</a></td></tr>
+<tr class="separator:a3d4f46ef4a031f2c849bba6ac9d68ba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ed42a9cdaf140e3e18dc44e1b1baa5b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#a5ed42a9cdaf140e3e18dc44e1b1baa5b">time_stamp_present</a></td></tr>
+<tr class="separator:a5ed42a9cdaf140e3e18dc44e1b1baa5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcd3739c6e00a92c9c9026894e4248b8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#adcd3739c6e00a92c9c9026894e4248b8">pulse_rate_present</a></td></tr>
+<tr class="separator:adcd3739c6e00a92c9c9026894e4248b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48e9ed959366ea1e7c7c8bb284a01979"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#a48e9ed959366ea1e7c7c8bb284a01979">user_id_present</a></td></tr>
+<tr class="separator:a48e9ed959366ea1e7c7c8bb284a01979"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80874044508391d1569ff1c476a4b5a7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#a80874044508391d1569ff1c476a4b5a7">measurement_status_present</a></td></tr>
+<tr class="separator:a80874044508391d1569ff1c476a4b5a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab097c85436eecc592213cdb75435f596"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00424.html">ieee_float16_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#ab097c85436eecc592213cdb75435f596">blood_pressure_systolic</a></td></tr>
+<tr class="separator:ab097c85436eecc592213cdb75435f596"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed7e0a29d6cda87a84a69f4f7551fb6c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00424.html">ieee_float16_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#aed7e0a29d6cda87a84a69f4f7551fb6c">blood_pressure_diastolic</a></td></tr>
+<tr class="separator:aed7e0a29d6cda87a84a69f4f7551fb6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2455e564b8569f3f3bc999420efa7c1d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00424.html">ieee_float16_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#a2455e564b8569f3f3bc999420efa7c1d">mean_arterial_pressure</a></td></tr>
+<tr class="separator:a2455e564b8569f3f3bc999420efa7c1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5724947dd197246dea1db93935a24b32"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00232.html">ble_date_time_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#a5724947dd197246dea1db93935a24b32">time_stamp</a></td></tr>
+<tr class="separator:a5724947dd197246dea1db93935a24b32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4cec6cfcf650361edada4efe2d612461"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00424.html">ieee_float16_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#a4cec6cfcf650361edada4efe2d612461">pulse_rate</a></td></tr>
+<tr class="separator:a4cec6cfcf650361edada4efe2d612461"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68b822db90d51c550cddfb74fec7b1a7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#a68b822db90d51c550cddfb74fec7b1a7">user_id</a></td></tr>
+<tr class="separator:a68b822db90d51c550cddfb74fec7b1a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa825f66cc38338e2f8bb4f767cdc8805"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00216.html#aa825f66cc38338e2f8bb4f767cdc8805">measurement_status</a></td></tr>
+<tr class="separator:aa825f66cc38338e2f8bb4f767cdc8805"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event structure for <a class="el" href="a01038.html#ggaa55e423bfea45f03764a636f2cec7a8ba3b9d0631bda508c2657f746ffaa6ed97">BLE_EVT_USER_MEM_REQUEST</a>. </p>
+<div class="textblock"><p>Blood Pressure Service measurement structure. This contains a Blood Pressure measurement. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="ac0a51b3ce3131df1dcc57a440f5a816c"></a>
+<a class="anchor" id="aed7e0a29d6cda87a84a69f4f7551fb6c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_evt_user_mem_request_t::type</td>
+          <td class="memname"><a class="el" href="a00424.html">ieee_float16_t</a> ble_bps_meas_s::blood_pressure_diastolic</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>User memory type, see <a class="el" href="a00816.html">User Memory Types</a>. </p>
+<p>Blood Pressure Measurement Compound Value - Diastolic . </p>
+
+</div>
+</div>
+<a class="anchor" id="ab097c85436eecc592213cdb75435f596"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00424.html">ieee_float16_t</a> ble_bps_meas_s::blood_pressure_systolic</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Blood Pressure Measurement Compound Value - Systolic. </p>
+
+</div>
+</div>
+<a class="anchor" id="a3d4f46ef4a031f2c849bba6ac9d68ba3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ble_bps_meas_s::blood_pressure_units_in_kpa</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Blood Pressure Units Flag, 0=mmHg, 1=kPa </p>
+
+</div>
+</div>
+<a class="anchor" id="a2455e564b8569f3f3bc999420efa7c1d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00424.html">ieee_float16_t</a> ble_bps_meas_s::mean_arterial_pressure</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Blood Pressure Measurement Compound Value - Mean Arterial Pressure. </p>
+
+</div>
+</div>
+<a class="anchor" id="aa825f66cc38338e2f8bb4f767cdc8805"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t ble_bps_meas_s::measurement_status</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Measurement Status. </p>
+
+</div>
+</div>
+<a class="anchor" id="a80874044508391d1569ff1c476a4b5a7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ble_bps_meas_s::measurement_status_present</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Measurement Status Flag, 0=not present, 1=present. </p>
+
+</div>
+</div>
+<a class="anchor" id="a4cec6cfcf650361edada4efe2d612461"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00424.html">ieee_float16_t</a> ble_bps_meas_s::pulse_rate</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pulse Rate. </p>
+
+</div>
+</div>
+<a class="anchor" id="adcd3739c6e00a92c9c9026894e4248b8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ble_bps_meas_s::pulse_rate_present</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pulse Rate Flag, 0=not present, 1=present. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5724947dd197246dea1db93935a24b32"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00232.html">ble_date_time_t</a> ble_bps_meas_s::time_stamp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Time Stamp. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5ed42a9cdaf140e3e18dc44e1b1baa5b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ble_bps_meas_s::time_stamp_present</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Time Stamp Flag, 0=not present, 1=present. </p>
+
+</div>
+</div>
+<a class="anchor" id="a68b822db90d51c550cddfb74fec7b1a7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t ble_bps_meas_s::user_id</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>User ID. </p>
+
+</div>
+</div>
+<a class="anchor" id="a48e9ed959366ea1e7c7c8bb284a01979"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ble_bps_meas_s::user_id_present</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>User ID Flag, 0=not present, 1=present. </p>
 
 </div>
 </div>
@@ -141,8 +306,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00216.html">ble_evt_user_mem_request_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00216.html">ble_bps_meas_s</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

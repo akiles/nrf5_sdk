@@ -39,14 +39,16 @@ remduplicates = $(strip $(if $1,$(firstword $1) $(call remduplicates,$(filter-ou
 C_SOURCE_FILES += \
 ../../../../../../components/libraries/util/app_error.c \
 ../../../../../../components/libraries/fifo/app_fifo.c \
-../../../../../../components/libraries/gpiote/app_gpiote.c \
 ../../../../../../components/libraries/trace/app_trace.c \
 ../../../../../../components/libraries/util/nrf_assert.c \
 ../../../../../../components/libraries/uart/retarget.c \
 ../../../../../../components/drivers_nrf/uart/app_uart_fifo.c \
+../../../../../../components/drivers_nrf/common/nrf_drv_common.c \
+../../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c \
 ../../../../../../components/drivers_nrf/pstorage/pstorage.c \
 ../../../client_handling.c \
 ../../../main.c \
+../../../../../../components/ble/common/ble_advdata.c \
 ../../../../../../components/ble/ble_db_discovery/ble_db_discovery.c \
 ../../../../../../components/ble/common/ble_srv_common.c \
 ../../../../../../components/ble/device_manager/device_manager_central.c \
@@ -63,10 +65,12 @@ INC_PATHS += -I../../../../../../components/drivers_nrf/pstorage
 INC_PATHS += -I../../../../../../components/toolchain/gcc
 INC_PATHS += -I../../../../../../components/drivers_nrf/uart
 INC_PATHS += -I../../../../../../components/ble/common
+INC_PATHS += -I../../../../../../components/drivers_nrf/common
 INC_PATHS += -I../../../../../../components/libraries/trace
-INC_PATHS += -I../../../../../../components/libraries/gpiote
+INC_PATHS += -I../../../../../../components/drivers_nrf/config
 INC_PATHS += -I../../../../../bsp
 INC_PATHS += -I../../../../../../components/libraries/fifo
+INC_PATHS += -I../../../../../../components/drivers_nrf/gpiote
 INC_PATHS += -I../../../../../../components/ble/device_manager
 INC_PATHS += -I../../../../../../components/toolchain
 INC_PATHS += -I../../../../../../components/device
@@ -96,7 +100,7 @@ CFLAGS += -Wall -Werror -O3
 CFLAGS += -mfloat-abi=soft
 # keep every function in separate section. This will allow linker to dump unused functions
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -flto -fno-builtin
+CFLAGS += -fno-builtin --short-enums
 
 # keep every function in separate section. This will allow linker to dump unused functions
 LDFLAGS += -Xlinker -Map=$(LISTING_DIRECTORY)/$(OUTPUT_FILENAME).map

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_adv_modes_config_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: Cycling Speed and Cadence Service</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,167 +96,20 @@ $(document).ready(function(){initNavTree('a00156.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_adv_modes_config_t Struct Reference<div class="ingroups"><a class="el" href="a00988.html">Advertising Module</a></div></div>  </div>
+<div class="title">Cycling Speed and Cadence Service </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Options for the different advertisement modes.  
- <a href="a00156.html#details">More...</a></p>
-
-<p><code>#include &lt;ble_advertising.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:ad34bab35df0220c5e7fb3a21e11f9623"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#ad34bab35df0220c5e7fb3a21e11f9623">ble_adv_whitelist_enabled</a></td></tr>
-<tr class="separator:ad34bab35df0220c5e7fb3a21e11f9623"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a022364c3a05eec09c1f477ae59eb6c8b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#a022364c3a05eec09c1f477ae59eb6c8b">ble_adv_directed_enabled</a></td></tr>
-<tr class="separator:a022364c3a05eec09c1f477ae59eb6c8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68a4f2038bb1b60cb81672a6b806db44"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#a68a4f2038bb1b60cb81672a6b806db44">ble_adv_directed_timeout</a></td></tr>
-<tr class="separator:a68a4f2038bb1b60cb81672a6b806db44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75f559dde193549661ef9d69b78e057d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#a75f559dde193549661ef9d69b78e057d">ble_adv_fast_enabled</a></td></tr>
-<tr class="separator:a75f559dde193549661ef9d69b78e057d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1113347e2fd0e86b7decd9485d14ba26"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#a1113347e2fd0e86b7decd9485d14ba26">ble_adv_fast_interval</a></td></tr>
-<tr class="separator:a1113347e2fd0e86b7decd9485d14ba26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f7025bcb28e3622313487edb0a2e966"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#a0f7025bcb28e3622313487edb0a2e966">ble_adv_fast_timeout</a></td></tr>
-<tr class="separator:a0f7025bcb28e3622313487edb0a2e966"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cc0a66107b75af49ffa817f251dd706"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#a6cc0a66107b75af49ffa817f251dd706">ble_adv_slow_enabled</a></td></tr>
-<tr class="separator:a6cc0a66107b75af49ffa817f251dd706"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad95cae5d7c26b6a4690c307cafee99c2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#ad95cae5d7c26b6a4690c307cafee99c2">ble_adv_slow_interval</a></td></tr>
-<tr class="separator:ad95cae5d7c26b6a4690c307cafee99c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a106c33de5cbcd870019071e287366fa9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00156.html#a106c33de5cbcd870019071e287366fa9">ble_adv_slow_timeout</a></td></tr>
-<tr class="separator:a106c33de5cbcd870019071e287366fa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Options for the different advertisement modes. </p>
-<p>This structure is used to enable or disable advertising modes and to configure time-out periods and advertising intervals. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a022364c3a05eec09c1f477ae59eb6c8b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_adv_modes_config_t::ble_adv_directed_enabled</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Enable or disable direct advertising mode. </p>
-
-</div>
-</div>
-<a class="anchor" id="a68a4f2038bb1b60cb81672a6b806db44"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_adv_modes_config_t::ble_adv_directed_timeout</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Time-out (number of tries) for direct advertising. </p>
-
-</div>
-</div>
-<a class="anchor" id="a75f559dde193549661ef9d69b78e057d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_adv_modes_config_t::ble_adv_fast_enabled</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Enable or disable fast advertising mode. </p>
-
-</div>
-</div>
-<a class="anchor" id="a1113347e2fd0e86b7decd9485d14ba26"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_adv_modes_config_t::ble_adv_fast_interval</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Advertising interval for fast advertising. </p>
-
-</div>
-</div>
-<a class="anchor" id="a0f7025bcb28e3622313487edb0a2e966"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_adv_modes_config_t::ble_adv_fast_timeout</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Time-out (in seconds) for fast advertising. </p>
-
-</div>
-</div>
-<a class="anchor" id="a6cc0a66107b75af49ffa817f251dd706"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_adv_modes_config_t::ble_adv_slow_enabled</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Enable or disable slow advertising mode. </p>
-
-</div>
-</div>
-<a class="anchor" id="ad95cae5d7c26b6a4690c307cafee99c2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_adv_modes_config_t::ble_adv_slow_interval</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Advertising interval for slow advertising. </p>
-
-</div>
-</div>
-<a class="anchor" id="a106c33de5cbcd870019071e287366fa9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_adv_modes_config_t::ble_adv_slow_timeout</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Time-out (in seconds) for slow advertising. </p>
-
-</div>
-</div>
-<a class="anchor" id="ad34bab35df0220c5e7fb3a21e11f9623"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool ble_adv_modes_config_t::ble_adv_whitelist_enabled</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Enable or disable use of the whitelist. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><p>This module implements the Cycling Speed and Cadence Service. If enabled, notification of the Cycling Speead and Candence Measurement is performed when the application calls <a class="el" href="a01196.html#ga445c4e7578c68607b1573e175c20323f" title="Function for sending cycling speed and cadence measurement if notification has been enabled...">ble_cscs_measurement_send()</a>.</p>
+<p>If an event handler is supplied by the application, the Cycling Speed and Cadence Service will generate Cycling Speed and Cadence Service events to the application.</p>
+<dl class="section note"><dt>Note</dt><dd>The application must propagate BLE stack events to the Cycling Speead and Candence Service module by calling <a class="el" href="a01196.html#gabcc0bd0d90b6d40220468349ba190b98" title="Function for handling the Application&#39;s BLE Stack events.">ble_cscs_on_ble_evt()</a> from the <a class="el" href="a01189.html">SoftDevice Event Handler</a> function. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00156.html">ble_adv_modes_config_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00144.html">BLE Services</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: nrf_drv_clock_config_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_tps_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,48 +106,63 @@ $(document).ready(function(){initNavTree('a00391.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">nrf_drv_clock_config_t Struct Reference<div class="ingroups"><a class="el" href="a00773.html">Clock driver</a></div></div>  </div>
+<div class="title">ble_tps_t Struct Reference<div class="ingroups"><a class="el" href="a01216.html">TX Power Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Struct for Clock initialization. Thise parameters are used when SoftDevice is not present and low-frequency RC oscillator is selected.  
+<p>TX Power Service structure. This contains various status information for the service.  
  <a href="a00391.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_drv_clock.h&gt;</code></p>
+<p><code>#include &lt;ble_tps.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a8c8d61f45d2a74cc5958d825706d0d19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00773.html#ga3ca00661a996194c36d96f721f73b7aa">nrf_drv_clock_lf_cal_interval_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00391.html#a8c8d61f45d2a74cc5958d825706d0d19">cal_interval</a></td></tr>
-<tr class="separator:a8c8d61f45d2a74cc5958d825706d0d19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a846e56e628b146020a6ce96259e52bfd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00391.html#a846e56e628b146020a6ce96259e52bfd">interrupt_priority</a></td></tr>
-<tr class="separator:a846e56e628b146020a6ce96259e52bfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ebaa77023ad95d4ea1bb2a046b9ea80"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00391.html#a4ebaa77023ad95d4ea1bb2a046b9ea80">service_handle</a></td></tr>
+<tr class="separator:a4ebaa77023ad95d4ea1bb2a046b9ea80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b43774912f600a0069a22603c69bc48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00317.html">ble_gatts_char_handles_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00391.html#a6b43774912f600a0069a22603c69bc48">tx_power_level_handles</a></td></tr>
+<tr class="separator:a6b43774912f600a0069a22603c69bc48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a2b6f8257a24474edbcff183f92860b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00391.html#a2a2b6f8257a24474edbcff183f92860b">conn_handle</a></td></tr>
+<tr class="separator:a2a2b6f8257a24474edbcff183f92860b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Struct for Clock initialization. Thise parameters are used when SoftDevice is not present and low-frequency RC oscillator is selected. </p>
+<div class="textblock"><p>TX Power Service structure. This contains various status information for the service. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a8c8d61f45d2a74cc5958d825706d0d19"></a>
+<a class="anchor" id="a2a2b6f8257a24474edbcff183f92860b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00773.html#ga3ca00661a996194c36d96f721f73b7aa">nrf_drv_clock_lf_cal_interval_t</a> nrf_drv_clock_config_t::cal_interval</td>
+          <td class="memname">uint16_t ble_tps_t::conn_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Calibration interval. </p>
+<p>Handle of the current connection (as provided by the BLE stack, is BLE_CONN_HANDLE_INVALID if not in a connection). </p>
 
 </div>
 </div>
-<a class="anchor" id="a846e56e628b146020a6ce96259e52bfd"></a>
+<a class="anchor" id="a4ebaa77023ad95d4ea1bb2a046b9ea80"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t nrf_drv_clock_config_t::interrupt_priority</td>
+          <td class="memname">uint16_t ble_tps_t::service_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Clock interrupt priority. </p>
+<p>Handle of TX Power Service (as provided by the BLE stack). </p>
+
+</div>
+</div>
+<a class="anchor" id="a6b43774912f600a0069a22603c69bc48"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00317.html">ble_gatts_char_handles_t</a> ble_tps_t::tx_power_level_handles</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Handles related to the TX Power Level characteristic. </p>
 
 </div>
 </div>
@@ -156,8 +171,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00391.html">nrf_drv_clock_config_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00391.html">ble_tps_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -265,10 +265,20 @@ void print_string(char* p_expr);
 
 static nrf_gzll_device_tx_info_t latest_tx_info;  ///< Information about the last TX attempt, e.g. RSSI of ACK.
 
-static bool tx_complete; ///< Flag to indicate whether a GZLL TX attempt has completed.
+static volatile bool tx_complete; ///< Flag to indicate whether a GZLL TX attempt has completed.
 static bool tx_success;  ///< Flag to indicate whether a GZLL TX attempt was successful.
 
+#if defined(__ICCARM__)
+  #if GZP_PARAMS_DB_ADR == 0x1000
+    static const uint32_t database[GZP_DEVICE_PARAMS_STORAGE_SIZE/4] @ "gzp_dev_data"
+  #elif GZP_PARAMS_DB_ADR == 0x15000
+    static const uint32_t database[GZP_DEVICE_PARAMS_STORAGE_SIZE/4] @ "gzp_dev_data_sd"
+  #else
+    #error
+  #endif
+#else
 static const uint32_t database[GZP_DEVICE_PARAMS_STORAGE_SIZE/4] __attribute__((at(GZP_PARAMS_DB_ADR)))
+#endif
 = {
 0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF, 
 0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,0xFFFFFFFF,

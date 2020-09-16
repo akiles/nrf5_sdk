@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Device Manager</title>
+<title>nRF51 SDK - S110 SoftDevice: FIFO implementation</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,61 +97,201 @@ $(document).ready(function(){initNavTree('a00976.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Device Manager<div class="ingroups"><a class="el" href="a01034.html">BLE Libraries</a></div></div>  </div>
+<div class="title">FIFO implementation<div class="ingroups"><a class="el" href="a01278.html">SDK Common Libraries</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Device Manager Application Interface Abstraction.  
+<p>FIFO implementation.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00977"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00977.html">Service/Protocol Types</a></td></tr>
-<tr class="memdesc:a00977"><td class="mdescLeft">&#160;</td><td class="mdescRight">Describes the possible types of Service/Protocol Contexts for a bonded/peer device. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00978"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00978.html">Device Manager Events</a></td></tr>
-<tr class="memdesc:a00978"><td class="mdescLeft">&#160;</td><td class="mdescRight">This section describes the device manager events that are notified to the application. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00982"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00982.html">Device Manager Data Types</a></td></tr>
-<tr class="memdesc:a00982"><td class="mdescLeft">&#160;</td><td class="mdescRight">This section describes all the data types exposed by the module to the application. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00983"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00983.html">Device Module APIs</a></td></tr>
-<tr class="memdesc:a00983"><td class="mdescLeft">&#160;</td><td class="mdescRight">This section describes APIs exposed by the module. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01015"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01015.html">Device Manager Sequence Charts</a></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00179.html">app_fifo_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A FIFO instance structure. Keeps track of which bytes to read and write next. Also it keeps the information about which memory is allocated for the buffer and its size. This needs to be initialized by <a class="el" href="a00976.html#gafc2ba3545e60f0134689fac2aa87f493" title="Function for initializing the FIFO.">app_fifo_init()</a> before use.  <a href="a00179.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaffbf0ad98e25546a4645eb2cac9bef8a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00976.html#gaffbf0ad98e25546a4645eb2cac9bef8a">DM_INVALID_ID</a>&#160;&#160;&#160;0xFF</td></tr>
-<tr class="separator:gaffbf0ad98e25546a4645eb2cac9bef8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gafc2ba3545e60f0134689fac2aa87f493"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00976.html#gafc2ba3545e60f0134689fac2aa87f493">app_fifo_init</a> (<a class="el" href="a00179.html">app_fifo_t</a> *p_fifo, uint8_t *p_buf, uint16_t buf_size)</td></tr>
+<tr class="memdesc:gafc2ba3545e60f0134689fac2aa87f493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the FIFO.  <a href="#gafc2ba3545e60f0134689fac2aa87f493">More...</a><br/></td></tr>
+<tr class="separator:gafc2ba3545e60f0134689fac2aa87f493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga76ac40c5174cc17b8b6ebd8d86cf0f0e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00976.html#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">app_fifo_put</a> (<a class="el" href="a00179.html">app_fifo_t</a> *p_fifo, uint8_t byte)</td></tr>
+<tr class="memdesc:ga76ac40c5174cc17b8b6ebd8d86cf0f0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for adding an element to the FIFO.  <a href="#ga76ac40c5174cc17b8b6ebd8d86cf0f0e">More...</a><br/></td></tr>
+<tr class="separator:ga76ac40c5174cc17b8b6ebd8d86cf0f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6292f78e91737ba0df83d6755e0abb9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00976.html#gab6292f78e91737ba0df83d6755e0abb9">app_fifo_get</a> (<a class="el" href="a00179.html">app_fifo_t</a> *p_fifo, uint8_t *p_byte)</td></tr>
+<tr class="memdesc:gab6292f78e91737ba0df83d6755e0abb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the next element from the FIFO.  <a href="#gab6292f78e91737ba0df83d6755e0abb9">More...</a><br/></td></tr>
+<tr class="separator:gab6292f78e91737ba0df83d6755e0abb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0944439787b55aafb3288a836efa3b9b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00976.html#ga0944439787b55aafb3288a836efa3b9b">app_fifo_flush</a> (<a class="el" href="a00179.html">app_fifo_t</a> *p_fifo)</td></tr>
+<tr class="memdesc:ga0944439787b55aafb3288a836efa3b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for flushing the FIFO.  <a href="#ga0944439787b55aafb3288a836efa3b9b">More...</a><br/></td></tr>
+<tr class="separator:ga0944439787b55aafb3288a836efa3b9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Device Manager Application Interface Abstraction. </p>
-<p>The Device Manager module manages Active and Bonded Peers. Management of peer includes book keeping of contextual information like the Security Keys, GATT configuration and any application specific information.</p>
-<p>Active Peers are devices which are connected, and may or may not be bonded. Bonded Peers are devices which are bonded, and may or may not be Active (Connected). Active Bonded Peer refers to a device which is connected and bonded.</p>
-<p>Paired Devices refers to peer devices that are connected and have necessary context establishment/exchange for the current connection session. On disconnect, all contextual information is flushed. For example, SMP Information Exchanged during pairing and GATT Configuration is not retained on disconnection.</p>
-<p>Note that this module allows management of contextual information but does not provide an interface for connection management. Therefore, entering connectible mode, connection establishment, or disconnection of a link with peer is not in scope of this module.</p>
-<p>For bonded peers, the contextual information is required to be retained on disconnection and power cycling. Persistent storage of contextual information is handled by the module. This module categorizes the contextual information into 3 categories:</p>
-<ul>
-<li><b>Bonding Information</b> Bond information is the information exchanged between local and peer device to establish a bond. It also includes peer identification information, like the peer address or the IRK or both. From here on this category of information is referred to as Device Context.</li>
-<li><b>Service/Protocol Information</b> Service/Protocol information is the information retained for the peer to save on one-time procedures like the GATT Service Discovery procedures and Service Configurations. It allows devices to resume data exchange on subsequent reconnection without having to perform initial set-up procedures each time. From here on this category is referred to as Service Context.</li>
-<li><b>Application Information</b> Application information is the context that the application would like to associate with each of the bonded device. For example, if the application chooses to rank its peers in order to manage them better, the rank information could be treated as Application Information. This storage space is provided to save the application from maintaining a mapping table with each Device Instance and Application Information. However, if the application have no use for this, it is possible to not use or employ this at compile time. From here on this category of information is referred to as Application Context. </li>
-</ul>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gaffbf0ad98e25546a4645eb2cac9bef8a"></a>
+<p>FIFO implementation. </p>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga0944439787b55aafb3288a836efa3b9b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define DM_INVALID_ID&#160;&#160;&#160;0xFF</td>
+          <td class="memname">uint32_t app_fifo_flush </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00179.html">app_fifo_t</a> *&#160;</td>
+          <td class="paramname"><em>p_fifo</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Invalid instance idenitifer. </p>
+
+<p>Function for flushing the FIFO. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_fifo</td><td>Pointer to the FIFO.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If the FIFO flushed successfully. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab6292f78e91737ba0df83d6755e0abb9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t app_fifo_get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00179.html">app_fifo_t</a> *&#160;</td>
+          <td class="paramname"><em>p_fifo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_byte</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for getting the next element from the FIFO. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_fifo</td><td>Pointer to the FIFO. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_byte</td><td>Byte fetched from the FIFO.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If an element was returned. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NOT_FOUND</td><td>If there is no more elements in the queue. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gafc2ba3545e60f0134689fac2aa87f493"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t app_fifo_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00179.html">app_fifo_t</a> *&#160;</td>
+          <td class="paramname"><em>p_fifo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_buf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>buf_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for initializing the FIFO. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_fifo</td><td>FIFO object. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_buf</td><td>FIFO buffer for storing data. The buffer size has to be a power of two. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">buf_size</td><td>Size of the FIFO buffer provided, has to be a power of 2.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If initialization was successful. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NULL</td><td>If a NULL pointer is provided as buffer. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_INVALID_LENGTH</td><td>If size of buffer provided is not a power of two. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga76ac40c5174cc17b8b6ebd8d86cf0f0e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t app_fifo_put </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00179.html">app_fifo_t</a> *&#160;</td>
+          <td class="paramname"><em>p_fifo</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>byte</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for adding an element to the FIFO. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_fifo</td><td>Pointer to the FIFO. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">byte</td><td>Data byte to add to the FIFO.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">NRF_SUCCESS</td><td>If an element has been successfully added to the FIFO. </td></tr>
+    <tr><td class="paramname">NRF_ERROR_NO_MEM</td><td>If the FIFO is full. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -160,7 +300,7 @@ Macros</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

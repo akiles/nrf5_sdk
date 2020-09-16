@@ -38,7 +38,6 @@
 #include "ble_advdata.h"
 #include "softdevice_handler.h"
 #include "app_timer.h"
-#include "app_gpiote.h"
 #include "bsp.h"
 
 #define IS_SRVC_CHANGED_CHARACT_PRESENT     0                                       /**< Include or not the service_changed characteristic. if not enabled, the server's database cannot be changed for the lifetime of the device*/
@@ -607,6 +606,9 @@ static void ble_stack_init(void)
     // Enable BLE stack 
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
+#ifdef S130
+    ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
+#endif	
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
     err_code = sd_ble_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
@@ -640,7 +642,6 @@ int main(void)
 
     timers_init();
 
-    APP_GPIOTE_INIT(1);
     err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
     APP_ERROR_CHECK(err_code);
 #if BUTTONS_NUMBER > 2

@@ -20,8 +20,14 @@
 #define PSTORAGE_PL_H__
 
 #include <stdint.h>
+#include "nrf.h"
 
-#define PSTORAGE_FLASH_PAGE_SIZE    ((uint16_t)NRF_FICR->CODEPAGESIZE)   /**< Size of one flash page. */
+static __INLINE uint16_t pstorage_flash_page_size()
+{
+  return (uint16_t)NRF_FICR->CODEPAGESIZE;
+}
+
+#define PSTORAGE_FLASH_PAGE_SIZE     pstorage_flash_page_size()          /**< Size of one flash page. */
 #define PSTORAGE_FLASH_EMPTY_MASK    0xFFFFFFFF                          /**< Bit mask that defines an empty address in flash. */
 
 #define PSTORAGE_FLASH_PAGE_END                                     \

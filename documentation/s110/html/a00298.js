@@ -1,4 +1,5 @@
 var a00298 =
 [
-    [ "evt_type", "a00298.html#a39db0aa9d490aabff63660a979a372fa", null ]
+    [ "chars", "a00298.html#aae5e676db57239ee9cfe89c13f603dd0", null ],
+    [ "count", "a00298.html#a91337d714a569e896c896a3b255db8ff", null ]
 ];

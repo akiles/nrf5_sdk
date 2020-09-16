@@ -24,7 +24,6 @@
 #include "boards.h"
 #include "bsp.h"
 #include "app_timer.h"
-#include "app_gpiote.h"
 #include "nordic_common.h"
 #include "nrf_error.h"
 
@@ -99,9 +98,42 @@ void clock_initialization()
 void bsp_configuration()
 {
     uint32_t err_code;
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), 
+
+    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+                        APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
                         bsp_evt_handler);
-    err_code = bsp_buttons_enable( (1 << BUTTON_PREV_ID) | (1 << BUTTON_NEXT_ID) );
+    APP_ERROR_CHECK(err_code);
+
+    // err_code = bsp_buttons_enable( (1 << BUTTON_PREV_ID) | (1 << BUTTON_NEXT_ID) );
+    // APP_ERROR_CHECK(err_code);
+}
+
+
+/**@brief Function for initializing the UART.
+ */
+static void uart_init(void)
+{
+    uint32_t err_code;
+
+    
+    const app_uart_comm_params_t comm_params =  
+    {
+        RX_PIN_NUMBER, 
+        TX_PIN_NUMBER, 
+        RTS_PIN_NUMBER, 
+        CTS_PIN_NUMBER, 
+        APP_UART_FLOW_CONTROL_ENABLED, 
+        false, 
+        UART_BAUDRATE_BAUDRATE_Baud38400
+    }; 
+
+    APP_UART_FIFO_INIT(&comm_params, 
+                       UART_RX_BUF_SIZE, 
+                       UART_TX_BUF_SIZE, 
+                       uart_error_handle, 
+                       APP_IRQ_PRIORITY_LOW,
+                       err_code);
+
     APP_ERROR_CHECK(err_code);
 }
 
@@ -115,26 +147,7 @@ int main(void)
 
     clock_initialization();
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
-    APP_GPIOTE_INIT(1);
-
-    const app_uart_comm_params_t comm_params =  
-    {
-        RX_PIN_NUMBER, 
-        TX_PIN_NUMBER, 
-        RTS_PIN_NUMBER, 
-        CTS_PIN_NUMBER, 
-        APP_UART_FLOW_CONTROL_ENABLED, 
-        false, 
-        UART_BAUDRATE_BAUDRATE_Baud38400
-    }; 
-        
-    APP_UART_FIFO_INIT(&comm_params, 
-                       UART_RX_BUF_SIZE, 
-                       UART_TX_BUF_SIZE, 
-                       uart_error_handle, 
-                       APP_IRQ_PRIORITY_LOW,
-                       err_code);
-    APP_ERROR_CHECK(err_code);
+    uart_init();
     bsp_configuration();
 
     err_code = bsp_indication_text_set(actual_state,indications_list[actual_state]);

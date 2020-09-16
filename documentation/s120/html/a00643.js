@@ -1,5 +1,5 @@
 var a00643 =
 [
-    [ "GAP Central", "a00648.html", null ],
-    [ "GAP Peripheral", "a00649.html", null ]
+    [ "Clock HAL", "a00625.html", "a00625" ],
+    [ "Clock driver", "a00644.html", "a00644" ]
 ];

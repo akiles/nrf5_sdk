@@ -1,6 +1,5 @@
 var a00374 =
 [
-    [ "flags", "a00374.html#a6410a73c4b824cd8411f93f4e801c2e2", null ],
-    [ "len", "a00374.html#a584d9c286a840f2aa29cf3f6e76362d4", null ],
-    [ "p_data", "a00374.html#acbcb29305bde09573e35ed7f4c214641", null ]
+    [ "common_opt", "a00374.html#a3becddeb5c692d603c116a348b69770a", null ],
+    [ "gap_opt", "a00374.html#a389cdb4378d2a7f989807dcf27145051", null ]
 ];

@@ -1,7 +1,9 @@
 var a00408 =
 [
-    [ "distance_us", "a00408.html#a34cb59c0e80b3698a3df265ab88b34b5", null ],
-    [ "hfclk", "a00408.html#a23b414675dc9b11671f55601075f541d", null ],
-    [ "length_us", "a00408.html#adf9603de0e582965d4bb1c0a42d8e88c", null ],
-    [ "priority", "a00408.html#a18cc5dd5dc34877572e42ee8102fcb82", null ]
+    [ "app_crc", "a00408.html#ad23c5de3d64733cea90d62aece2cf641", null ],
+    [ "app_size", "a00408.html#a5a3071d6e7b79e59aae9aa9022b462c1", null ],
+    [ "bl_size", "a00408.html#af34c4a8d41f65c0d8c1c431809417254", null ],
+    [ "sd_image_start", "a00408.html#aa68f84c4e5bd2283886d3dce05001262", null ],
+    [ "sd_size", "a00408.html#a92316af9b2c88f35230d266ee6f632d5", null ],
+    [ "status_code", "a00408.html#ac8f74ba3fe25a5db401c156ad55360b1", null ]
 ];

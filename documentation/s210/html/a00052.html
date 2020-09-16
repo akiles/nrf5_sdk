@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: UART Example</title>
+<title>nRF51 SDK - S210 SoftDevice: Temperature Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,24 +97,15 @@ $(document).ready(function(){initNavTree('a00052.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">UART Example </div>  </div>
+<div class="title">Temperature Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The UART Example demonstrates basic UART usage for communicating with a PC terminal. It transmits and receives data through the configured pins as a serial device. The configured pins must be redirected to a COM port. Terminal programs (for example PUTTY) can listen to this COM port through a terminal session.</p>
-<p>When the application starts, it transmits "START: " through the serial device. This will be output on the terminal. If you type characters on the terminal, they are transmitted to the application through <a class="el" href="a00310.html#gacddb5b7b711ef104f9eb181a13bc4503">app_uart_get</a>. If you type an exit character 'q' or 'Q', the program transmits "EXIT!" on a new line and ends into an infinite loop.</p>
-<p>This example can be used for any UART connection, not only COM ports. COM port redirection is used for visual verification.</p>
-<dl class="section note"><dt>Note</dt><dd>If you set the define ENABLE_LOOPBACK_TEST, the application will assume that the TX_PIN_NUMBER is connected to RX_PIN_NUMBER and RTS_PIN_NUMBER is connected to CTS_PIN_NUMBER, used to test in loopback. In this case, no COM port can be used because the data flows from TX to RX. If data is lost, ERROR_PIN is set high.</dd>
-<dd>
-Settings:<ul>
-<li>Baud: 38400</li>
-<li>Data bits: 8</li>
-<li>Stop bits: 1</li>
-</ul>
-</dd></dl>
-<p>The name of the example is <b>uart_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\example\peripheral\uart</code> </p>
-<h1><a class="anchor" id="uart_example_testing"></a>
+<div class="textblock"><p>The Temperature Example shows how to use a temperature sensor and print the measurement.</p>
+<p>The application starts with configuring the temperature module and app_uart. The main loop reads the temperature sensor and prints measurement every 500 milliseconds.</p>
+<p>The name of the example is <b>temperature_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\peripheral\temperature</code> </p>
+<h1><a class="anchor" id="temperature_example_testing"></a>
 Testing</h1>
-<p>Test the UART Example application by performing the following steps:</p>
+<p>Test the Temperature Example application by performing the following steps:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
 <li>Start a COM listener like PUTTY and connect to the used COM port with the following UART settings:<ul>
@@ -130,16 +121,15 @@ No parity</li>
 HW flow control: RTS/CTS</li>
 </ul>
 </li>
-<li>Observe that the text "Start:" appears at the top of the terminal.</li>
-<li>Type 'Q' or 'q' in the terminal. The response should be 'Exit!'. </li>
+<li>Observe that a temperature value is printed every 500 milliseconds. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00027.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00032.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

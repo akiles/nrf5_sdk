@@ -19,6 +19,7 @@
 #include "nordic_common.h"
 #include "nrf_sdm.h"
 #include "ble.h"
+#include "ble_hci.h"
 #include "ble_db_discovery.h"
 #include "softdevice_handler.h"
 #include "app_util.h"
@@ -32,8 +33,8 @@
 #include "ble_bas_c.h"
 #include "app_util.h"
 #include "app_timer.h"
-#include "app_gpiote.h"
 #include "bsp.h"
+#include "bsp_btn_ble.h"
 
 #define UART_TX_BUF_SIZE           256                                /**< UART TX buffer size. */
 #define UART_RX_BUF_SIZE           1                                  /**< UART RX buffer size. */
@@ -87,7 +88,7 @@ typedef enum
     BLE_NO_SCAN,                                                     /**< No advertising running. */
     BLE_WHITELIST_SCAN,                                              /**< Advertising with whitelist. */
     BLE_FAST_SCAN,                                                   /**< Fast advertising running. */
-} ble_advertising_mode_t;
+} ble_scan_mode_t;
 
 static ble_db_discovery_t           m_ble_db_discovery;                  /**< Structure used to identify the DB Discovery module. */
 static ble_hrs_c_t                  m_ble_hrs_c;                         /**< Structure used to identify the heart rate client module. */
@@ -96,7 +97,9 @@ static ble_gap_scan_params_t        m_scan_param;                        /**< Sc
 static dm_application_instance_t    m_dm_app_id;                         /**< Application identifier. */
 static dm_handle_t                  m_dm_device_handle;                  /**< Device Identifier identifier. */
 static uint8_t                      m_peer_count = 0;                    /**< Number of peer's connected. */
-static uint8_t                      m_scan_mode;                         /**< Scan mode used by application. */
+static ble_scan_mode_t              m_scan_mode = BLE_FAST_SCAN;         /**< Scan mode used by application. */
+static uint16_t                     m_conn_handle;                       /**< Current connection handle. */
+static volatile bool                m_whitelist_temporarily_disabled = false; /**< True if whitelist has been temporarily disabled. */
 
 static bool                         m_memory_access_in_progress = false; /**< Flag to keep track of ongoing operations on persistent memory. */
 
@@ -114,22 +117,6 @@ static const ble_gap_conn_params_t m_connection_param =
 static void scan_start(void);
 
 #define APPL_LOG                        app_trace_log             /**< Debug logger macro that will be used in this file to do logging of debug information over UART. */
-
-// WARNING: The following macro MUST be un-defined (by commenting out the definition) if the user
-// does not have a nRF6350 Display unit. If this is not done, the application will not work.
-//#define APPL_LCD_PRINT_ENABLE                                     /**< In case you do not have a functional display unit, disable this flag and observe trace on UART. */
-
-#ifdef APPL_LCD_PRINT_ENABLE
-
-#define APPL_LCD_CLEAR                  nrf6350_lcd_clear         /**< Macro to clear the LCD display.*/
-#define APPL_LCD_WRITE                  nrf6350_lcd_write_string  /**< Macro to write a string to the LCD display.*/
-
-#else // APPL_LCD_PRINT_ENABLE
-
-#define APPL_LCD_WRITE(...)             true                      /**< Macro to clear the LCD display defined to do nothing when @ref APPL_LCD_PRINT_ENABLE is not defined.*/
-#define APPL_LCD_CLEAR(...)             true                      /**< Macro to write a string to the LCD display defined to do nothing when @ref APPL_LCD_PRINT_ENABLE is not defined.*/
-
-#endif // APPL_LCD_PRINT_ENABLE
 
 
 /**@brief Function for asserts in the SoftDevice.
@@ -190,6 +177,8 @@ static ret_code_t device_manager_event_handler(const dm_handle_t    * p_handle,
             
             err_code = bsp_indication_set(BSP_INDICATE_CONNECTED);
             APP_ERROR_CHECK(err_code);
+
+            m_conn_handle = p_event->event_param.p_gap_param->conn_handle;
 
             m_dm_device_handle = (*p_handle);
 
@@ -313,6 +302,25 @@ static uint32_t adv_report_parse(uint8_t type, data_t * p_advdata, data_t * p_ty
 }
 
 
+/**@brief Function for putting the chip into sleep mode.
+ *
+ * @note This function will not return.
+ */
+static void sleep_mode_enter(void)
+{
+    uint32_t err_code = bsp_indication_set(BSP_INDICATE_IDLE);
+    APP_ERROR_CHECK(err_code);
+
+    // Prepare wakeup buttons.
+    err_code = bsp_btn_ble_sleep_mode_prepare();
+    APP_ERROR_CHECK(err_code);
+
+    // Go to system-off mode (this function will not return; wakeup will cause a reset).
+    err_code = sd_power_system_off();
+    APP_ERROR_CHECK(err_code);
+}
+
+
 /**@brief Function for handling the Application's BLE Stack events.
  *
  * @param[in]   p_ble_evt   Bluetooth stack event.
@@ -372,10 +380,11 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
                         m_scan_param.selective = 0; 
 
                         // Initiate connection.
-                        err_code = sd_ble_gap_connect(&p_gap_evt->params.adv_report.\
-                                                       peer_addr,
-                                                       &m_scan_param,
-                                                       &m_connection_param);
+                        err_code = sd_ble_gap_connect(&p_gap_evt->params.adv_report.peer_addr,
+                                                      &m_scan_param,
+                                                      &m_connection_param);
+
+                        m_whitelist_temporarily_disabled = false;
 
                         if (err_code != NRF_SUCCESS)
                         {
@@ -392,13 +401,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             if (p_gap_evt->params.timeout.src == BLE_GAP_TIMEOUT_SRC_SCAN)
             {
                 APPL_LOG("[APPL]: Scan timed out.\r\n");
-                if (m_scan_mode ==  BLE_WHITELIST_SCAN)
-                {
-                    m_scan_mode = BLE_FAST_SCAN;
-
-                    // Start non selective scanning.
-                    scan_start();
-                }
+                scan_start();
             }
             else if (p_gap_evt->params.timeout.src == BLE_GAP_TIMEOUT_SRC_CONN)
             {
@@ -458,6 +461,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
     ble_db_discovery_on_ble_evt(&m_ble_db_discovery, p_ble_evt);
     ble_hrs_c_on_ble_evt(&m_ble_hrs_c, p_ble_evt);
     ble_bas_c_on_ble_evt(&m_ble_bas_c, p_ble_evt);
+    bsp_btn_ble_on_ble_evt(p_ble_evt);
     on_ble_evt(p_ble_evt);
 }
 
@@ -490,9 +494,13 @@ static void ble_stack_init(void)
     // Enable BLE stack.
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
-
+#ifdef S130
+    ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
+#endif
     ble_enable_params.gatts_enable_params.service_changed = false;
+#ifdef S120
     ble_enable_params.gap_enable_params.role              = BLE_GAP_ROLE_CENTRAL;
+#endif
 
     err_code = sd_ble_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
@@ -507,57 +515,99 @@ static void ble_stack_init(void)
 }
 
 
-/**@brief Function for initializing the Device Manager.
+/**@brief Function for the Device Manager initialization.
  *
- * @details Device manager is initialized here.
+ * @param[in] erase_bonds  Indicates whether bonding information should be cleared from
+ *                         persistent storage during initialization of the Device Manager.
  */
-static void device_manager_init(void)
+static void device_manager_init(bool erase_bonds)
 {
-    dm_application_param_t param;
-    dm_init_param_t        init_param;
-
     uint32_t               err_code;
+    dm_init_param_t        init_param = {.clear_persistent_data = erase_bonds};
+    dm_application_param_t register_param;
 
     err_code = pstorage_init();
-    APP_ERROR_CHECK(err_code);
-
-    // Clear all bonded devices if user requests to.
-    err_code = bsp_button_is_pressed(BOND_DELETE_ALL_BUTTON_ID,&(init_param.clear_persistent_data));
     APP_ERROR_CHECK(err_code);
 
     err_code = dm_init(&init_param);
     APP_ERROR_CHECK(err_code);
 
-    memset(&param.sec_param, 0, sizeof (ble_gap_sec_params_t));
+    memset(&register_param.sec_param, 0, sizeof (ble_gap_sec_params_t));
 
     // Event handler to be registered with the module.
-    param.evt_handler            = device_manager_event_handler;
+    register_param.evt_handler            = device_manager_event_handler;
 
     // Service or protocol context for device manager to load, store and apply on behalf of application.
     // Here set to client as application is a GATT client.
-    param.service_type           = DM_PROTOCOL_CNTXT_GATT_CLI_ID;
+    register_param.service_type           = DM_PROTOCOL_CNTXT_GATT_CLI_ID;
 
     // Secuirty parameters to be used for security procedures.
-    param.sec_param.bond         = SEC_PARAM_BOND;
-    param.sec_param.mitm         = SEC_PARAM_MITM;
-    param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
-    param.sec_param.oob          = SEC_PARAM_OOB;
-    param.sec_param.min_key_size = SEC_PARAM_MIN_KEY_SIZE;
-    param.sec_param.max_key_size = SEC_PARAM_MAX_KEY_SIZE;
-    param.sec_param.kdist_periph.enc = 1;
-    param.sec_param.kdist_periph.id  = 1;
+    register_param.sec_param.bond         = SEC_PARAM_BOND;
+    register_param.sec_param.mitm         = SEC_PARAM_MITM;
+    register_param.sec_param.io_caps      = SEC_PARAM_IO_CAPABILITIES;
+    register_param.sec_param.oob          = SEC_PARAM_OOB;
+    register_param.sec_param.min_key_size = SEC_PARAM_MIN_KEY_SIZE;
+    register_param.sec_param.max_key_size = SEC_PARAM_MAX_KEY_SIZE;
+    register_param.sec_param.kdist_periph.enc = 1;
+    register_param.sec_param.kdist_periph.id  = 1;
 
-    err_code = dm_register(&m_dm_app_id, &param);
+    err_code = dm_register(&m_dm_app_id, &register_param);
     APP_ERROR_CHECK(err_code);
 }
 
-/** @brief Function for the Power manager.
- */
-static void power_manage(void)
-{
-    uint32_t err_code = sd_app_evt_wait();
 
-    APP_ERROR_CHECK(err_code);
+/**@brief Function for disabling the use of whitelist for scanning.
+ */
+static void whitelist_disable(void)
+{
+    uint32_t err_code;
+
+    if ((m_scan_mode == BLE_WHITELIST_SCAN) && !m_whitelist_temporarily_disabled)
+    {
+        m_whitelist_temporarily_disabled = true;
+
+        err_code = sd_ble_gap_scan_stop();
+        if (err_code == NRF_SUCCESS)
+        {
+            scan_start();
+        }
+        else if (err_code != NRF_ERROR_INVALID_STATE)
+        {
+            APP_ERROR_CHECK(err_code);
+        }
+    }
+    m_whitelist_temporarily_disabled = true;
+}
+
+
+/**@brief Function for handling events from the BSP module.
+ *
+ * @param[in]   event   Event generated by button press.
+ */
+void bsp_event_handler(bsp_event_t event)
+{
+    uint32_t err_code;
+    switch (event)
+    {
+        case BSP_EVENT_SLEEP:
+            sleep_mode_enter();
+            break;
+
+        case BSP_EVENT_DISCONNECT:
+            err_code = sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+            if (err_code != NRF_ERROR_INVALID_STATE)
+            {
+                APP_ERROR_CHECK(err_code);
+            }
+            break;
+
+        case BSP_EVENT_WHITELIST_OFF:
+            whitelist_disable();
+            break;
+
+        default:
+            break;
+    }
 }
 
 
@@ -680,7 +730,7 @@ static void db_discovery_init(void)
 }
 
 
-/**@breif Function to start scanning.
+/**@brief Function to start scanning.
  */
 static void scan_start(void)
 {
@@ -712,7 +762,8 @@ static void scan_start(void)
     APP_ERROR_CHECK(err_code);
 
     if (((whitelist.addr_count == 0) && (whitelist.irk_count == 0)) ||
-         (m_scan_mode != BLE_WHITELIST_SCAN))
+        (m_scan_mode != BLE_WHITELIST_SCAN)                        ||
+        (m_whitelist_temporarily_disabled))
     {
         // No devices in whitelist, hence non selective performed.
         m_scan_param.active       = 0;            // Active scanning set.
@@ -731,9 +782,6 @@ static void scan_start(void)
         m_scan_param.window       = SCAN_WINDOW;  // Scan window.
         m_scan_param.p_whitelist  = &whitelist;   // Provide whitelist.
         m_scan_param.timeout      = 0x001E;       // 30 seconds timeout.
-
-        // Set whitelist scanning state.
-        m_scan_mode = BLE_WHITELIST_SCAN;
     }
 
     err_code = sd_ble_gap_scan_start(&m_scan_param);
@@ -744,9 +792,10 @@ static void scan_start(void)
 }
 
 
-int main(void)
+/**@brief Function for initializing the UART.
+ */
+static void uart_init(void)
 {
-    // Initialization of various modules.
     uint32_t err_code;
 
     const app_uart_comm_params_t comm_params =
@@ -768,15 +817,52 @@ int main(void)
                           err_code);
 
     APP_ERROR_CHECK(err_code);
+
     app_trace_init();
-    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
-    APP_GPIOTE_INIT(1);
-    err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),NULL);
+}
+
+
+/**@brief Function for initializing buttons and leds.
+ *
+ * @param[out] p_erase_bonds  Will be true if the clear bonding button was pressed to wake the application up.
+ */
+static void buttons_leds_init(bool * p_erase_bonds)
+{
+    bsp_event_t startup_event;
+
+    uint32_t err_code = bsp_init(BSP_INIT_LED | BSP_INIT_BUTTONS,
+                                 APP_TIMER_TICKS(100, APP_TIMER_PRESCALER),
+                                 bsp_event_handler);
     APP_ERROR_CHECK(err_code);
 
+    err_code = bsp_btn_ble_init(NULL, &startup_event);
+    APP_ERROR_CHECK(err_code);
+
+    *p_erase_bonds = (startup_event == BSP_EVENT_CLEAR_BONDING_DATA);
+}
+
+
+/** @brief Function for the Power manager.
+ */
+static void power_manage(void)
+{
+    uint32_t err_code = sd_app_evt_wait();
+
+    APP_ERROR_CHECK(err_code);
+}
+
+
+int main(void)
+{
+    bool erase_bonds;
+
+    // Initialize.
+    APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, NULL);
+    buttons_leds_init(&erase_bonds);
+    uart_init();
     printf("Heart rate collector example\r\n");
     ble_stack_init();
-    device_manager_init();
+    device_manager_init(erase_bonds);
     db_discovery_init();
     hrs_c_init();
     bas_c_init();

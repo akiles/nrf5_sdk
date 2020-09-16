@@ -67,8 +67,6 @@
 #define APP_TIMER_MAX_TIMERS            3                                                       /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE         4                                                       /**< Size of timer operation queues. */
 
-#define BUTTON_DETECTION_DELAY          APP_TIMER_TICKS(50, APP_TIMER_PRESCALER)                /**< Delay from a GPIOTE event until a button is reported as pushed (in number of timer ticks). */
-
 #define SCHED_MAX_EVENT_DATA_SIZE       MAX(APP_TIMER_SCHED_EVT_SIZE, 0)                        /**< Maximum size of scheduler events. */
 
 #define SCHED_QUEUE_SIZE                20                                                      /**< Maximum number of events in the scheduler queue. */
@@ -160,6 +158,11 @@ static void ble_stack_init(bool init_softdevice)
     // Enable BLE stack 
     ble_enable_params_t ble_enable_params;
     memset(&ble_enable_params, 0, sizeof(ble_enable_params));
+    
+    // Below code line is needed for s130. For s110 is inrrelevant - but executable
+    // can run with both s130 and s110.
+    ble_enable_params.gatts_enable_params.attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT;
+
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
     err_code = sd_ble_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);

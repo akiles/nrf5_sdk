@@ -1,5 +1,5 @@
 var a00160 =
 [
-    [ "handle", "a00160.html#af1b50c1fd1d5be05d0d0cf25e0925fd0", null ],
-    [ "p_value", "a00160.html#a6e842e1c975c50acf7eec947baa405e8", null ]
+    [ "ediv", "a00160.html#a221a26308f709715e866c3111992ae9a", null ],
+    [ "rand", "a00160.html#a5eed4e9e5a810616535ae08c4e860302", null ]
 ];

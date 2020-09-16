@@ -1,6 +1,6 @@
 var a00099 =
 [
-    [ "dst", "a00099.html#ae8afbb5ddb539bf7d5aa63102313210a", null ],
-    [ "len", "a00099.html#a36ada23cb97fb5ec6873d262689cbfdb", null ],
-    [ "src", "a00099.html#a7fab268f5a8db5b0ccc3a4b85d47c0b7", null ]
+    [ "instance_id", "a00099.html#a61b4050ee0b3f2965d3bd416470c5c52", null ],
+    [ "irq", "a00099.html#abf670983e25f646c20f0b28361751060", null ],
+    [ "p_reg", "a00099.html#a29e3857215c45152367af939fdc3d7ad", null ]
 ];

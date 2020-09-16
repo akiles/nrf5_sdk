@@ -1,6 +1,6 @@
 var a00413 =
 [
-    [ "len", "a00413.html#ae7fb48410ecb00dec1dca60d45cbc606", null ],
-    [ "ptr1", "a00413.html#a03e88994f8127e877c2fd08800e64768", null ],
-    [ "ptr2", "a00413.html#a3f670b76c31a7b6badf0bfadd1dc08b0", null ]
+    [ "event_id", "a00413.html#a2a75f3476e816a31085bef063855687e", null ],
+    [ "event_param", "a00413.html#a2dbb0e734ebc009dcc98b7c5055d7112", null ],
+    [ "event_paramlen", "a00413.html#a44a56d892899cd9a146cc4aaddd0d772", null ]
 ];

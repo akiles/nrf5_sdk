@@ -1,10 +1,8 @@
 var a00219 =
 [
-    [ "channel_mask", "a00219.html#ac7c7cd95220c033adf1288d095a5f1f7", null ],
-    [ "fp", "a00219.html#a9e2d44610c896a2d1466eb293688f226", null ],
-    [ "interval", "a00219.html#a289b288f81c56920fea9a6373697c7f3", null ],
-    [ "p_peer_addr", "a00219.html#ae87243568d5b9a272a15df0cd4673cdb", null ],
-    [ "p_whitelist", "a00219.html#afd7f1f2a29e883a60a17363bccc24dca", null ],
-    [ "timeout", "a00219.html#a81b240f5be7e508a84467b7ac2ff6d15", null ],
-    [ "type", "a00219.html#aece8d919208244b8085f64b613708427", null ]
+    [ "conn_handle", "a00219.html#ad7c997d8d0c6e0d3d24de3ecad426645", null ],
+    [ "params", "a00219.html#aa1bd5d9383036225f08d3dd0a9e62557", null ],
+    [ "tx_complete", "a00219.html#a0550e7a2c8b61ab27ea5a691b3f1fac4", null ],
+    [ "user_mem_release", "a00219.html#a21a25a889c763bceb2891d506331f484", null ],
+    [ "user_mem_request", "a00219.html#a4d36c1c20a1ff24a62abba8ea73c74c8", null ]
 ];

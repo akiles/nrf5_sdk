@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S120 SoftDevice: ble_error_log_data_t Struct Reference</title>
+<title>nRF51 SDK - S120 SoftDevice: UART RAW protocol</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,9 +45,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Home</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>API&#160;Reference</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -64,13 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -103,107 +96,79 @@ $(document).ready(function(){initNavTree('a00095.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_error_log_data_t Struct Reference<div class="ingroups"><a class="el" href="a00683.html">Error Log Module</a></div></div>  </div>
+<div class="title">UART RAW protocol </div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Error Log Data structure.  
- <a href="a00095.html#details">More...</a></p>
-
-<p><code>#include &lt;ble_error_log.h&gt;</code></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a0cf6e103864e7945f14c1505b813e6d0"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00095.html#a0cf6e103864e7945f14c1505b813e6d0">failure</a></td></tr>
-<tr class="separator:a0cf6e103864e7945f14c1505b813e6d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d8a550dba94f817123c14d6ca401156"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00095.html#a9d8a550dba94f817123c14d6ca401156">line_number</a></td></tr>
-<tr class="separator:a9d8a550dba94f817123c14d6ca401156"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7399b78d2931ca67335028b94e40fd05"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00095.html#a7399b78d2931ca67335028b94e40fd05">err_code</a></td></tr>
-<tr class="separator:a7399b78d2931ca67335028b94e40fd05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa3ce88fed3cd597fbd326d647c1b6f8"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00095.html#aaa3ce88fed3cd597fbd326d647c1b6f8">message</a> [128]</td></tr>
-<tr class="separator:aaa3ce88fed3cd597fbd326d647c1b6f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4355c5cefad7e512433098a13cbcb706"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00095.html#a4355c5cefad7e512433098a13cbcb706">stack_info</a> [256/4]</td></tr>
-<tr class="separator:a4355c5cefad7e512433098a13cbcb706"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Error Log Data structure. </p>
-<p>The structure contains the error, message/filename, line number as well as the current stack, at the time where an error occured. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a7399b78d2931ca67335028b94e40fd05"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_error_log_data_t::err_code</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Error code when failure occurred. </p>
-
-</div>
-</div>
-<a class="anchor" id="a0cf6e103864e7945f14c1505b813e6d0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_error_log_data_t::failure</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Indication that a major failure has occurred during last execution of the application. </p>
-
-</div>
-</div>
-<a class="anchor" id="a9d8a550dba94f817123c14d6ca401156"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t ble_error_log_data_t::line_number</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Line number indicating at which line the failure occurred. </p>
-
-</div>
-</div>
-<a class="anchor" id="aaa3ce88fed3cd597fbd326d647c1b6f8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t ble_error_log_data_t::message[128]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Will just use the first 128 bytes of filename to store for debugging purposes. </p>
-
-</div>
-</div>
-<a class="anchor" id="a4355c5cefad7e512433098a13cbcb706"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t ble_error_log_data_t::stack_info[256/4]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Will contain stack information, can be manually unwinded for debug purposes. </p>
-
-</div>
-</div>
-</div><!-- contents -->
+<div class="textblock"><h1><a class="anchor" id="UART_RAW_PROTOCOL"></a>
+UART RAW protocol</h1>
+<p><b>UART RAW</b> protocol implements <a class="el" href="a00079.html">Serialization PHY</a> API using <b>UART</b> interface.<br/>
+</p>
+<p><b>UART RAW</b> for serialization uses 4 standard UART lines (<b>RX</b>, <b>TX</b>, <b>/CTS</b>, <b>/RTS</b>). Hardware flow control is enabled. The protocol supports full duplex communication.<br/>
+ Every packet consists of 2-byte header followed by payload. Packet header contains number of bytes of the payload. Header is transmitted least significant byte first.<br/>
+</p>
+<h1><a class="anchor" id="UART_RAW_PACKET"></a>
+UART RAW packet</h1>
+<p>Packets are transmitted in the following format :<br/>
+</p>
+<p><b>TX_RAW_PACKET = [TX_HEADER][TX_PAYLOAD]</b><br/>
+</p>
+<div class="image">
+<img src="UART_460800_medium.png" alt="UART_460800_medium.png"/>
+<div class="caption">
+Figure 1: Reception and transmission of a packet</div></div>
+<p> Firstly, on <b>RX</b> line length is received as a header: <b>[RX_HEADER]=[0x0004]</b> It is then followed by payload <b>[RX_PAYLOAD]=[0x00 0x78 0x41 0x03]</b> <br/>
+ After the reception of a packet, transmission starts on <b>TX</b> line. Packet format is the same as during reception: <b>[TX_HEADER]=[0x0006]</b>, <b>[TX_PAYLOAD]=[0x01 0x78 0x00 0x00 0x00 0x00]</b><br/>
+</p>
+<h1><a class="anchor" id="UART_RAW_DRIVER"></a>
+UART driver</h1>
+<p><b>UART RAW</b> protocol for serialization is implemented in 'ser_phy_nrf51_uart.c' file. It uses 'app_uart.c' as a low-level UART driver.<br/>
+</p>
+<p>The implementation is event-driven. Events from the low-level driver are handled in static 'ser_phy_uart_evt_callback()' function. Three types of <a class="el" href="a00113.html">app_uart_evt_t</a><br/>
+ events are processed: <a class="el" href="a00663.html#gga9346b21b144fd9499e24853bbf781e17a6ee822a8a07d1be09ac336495a5238d8">APP_UART_COMMUNICATION_ERROR</a>, <a class="el" href="a00663.html#gga9346b21b144fd9499e24853bbf781e17a9fa032c57eadcef66e102eb78a04c2d1">APP_UART_TX_EMPTY</a>, <a class="el" href="a00663.html#gga9346b21b144fd9499e24853bbf781e17a5b4c2503e1e658ff28dcaad17eff6ac4">APP_UART_DATA</a>.<br/>
+</p>
+<ul>
+<li>In case of <a class="el" href="a00663.html#gga9346b21b144fd9499e24853bbf781e17a6ee822a8a07d1be09ac336495a5238d8">APP_UART_COMMUNICATION_ERROR</a> event, error source (taken from <a class="el" href="a00113.html">app_uart_evt_t</a> structure) is checked. If the source is parity or overrun error,<br/>
+ then upper layer is notified with <a class="el" href="a00847.html#ggaef62df8feedfbe682684c6f1ea704061afad1fa7a81b1ed34ede87c0751125c4e">SER_PHY_EVT_HW_ERROR</a>. Error source is passed in error_code member of a <a class="el" href="a00284.html">ser_phy_evt_hw_error_params_t</a> structure.<br/>
+</li>
+<li><a class="el" href="a00663.html#gga9346b21b144fd9499e24853bbf781e17a9fa032c57eadcef66e102eb78a04c2d1">APP_UART_TX_EMPTY</a> indicates a TXDRDY interrupt. In such case a static function for transmission is called: 'ser_phy_uart_tx()'<br/>
+ Note: when transmission of a packet begins 'ser_phy_uart_tx()' function is called for the first time in <a class="el" href="a00847.html#gaee7a0ca264b8eba6753fda021854fc4b" title="A function for transmitting a packet.">ser_phy_tx_pkt_send()</a> function. Later it is only called in<br/>
+ <a class="el" href="a00113.html">app_uart_evt_t</a> event callback.<br/>
+</li>
+<li><a class="el" href="a00663.html#gga9346b21b144fd9499e24853bbf781e17a5b4c2503e1e658ff28dcaad17eff6ac4">APP_UART_DATA</a> indicates a RXDRDY interrupt. In such case a static function for reception: 'ser_phy_uart_rx()' is called with received byte as a parameter. Received byte<br/>
+ is taken from <a class="el" href="a00113.html">app_uart_evt_t</a> structure.<br/>
+</li>
+</ul>
+<p>Following <a class="el" href="a00287.html">ser_phy_evt_t</a> events are send to upper layer:<br/>
+</p>
+<ul>
+<li><a class="el" href="a00847.html#ggaef62df8feedfbe682684c6f1ea704061afad1fa7a81b1ed34ede87c0751125c4e">SER_PHY_EVT_HW_ERROR</a> when a hardware error is reported by low-level driver<br/>
+</li>
+<li><a class="el" href="a00847.html#ggaef62df8feedfbe682684c6f1ea704061a6586d0863748060b1f669ed34a0a0a77">SER_PHY_EVT_RX_BUF_REQUEST</a> when a header is received and therefore the payload length is known. From this point reception is paused until<br/>
+ <a class="el" href="a00847.html#ga796b1fcdba5fbc0a38e32d20b14f21dd" title="A function for setting an RX buffer and enabling reception of data (the PHY flow).">ser_phy_rx_buf_set()</a> function is called by the upper layer, indicating whether a receive buffer has been allocated or not. Subsequently the packet payload is<br/>
+ received or dropped.<br/>
+</li>
+<li><a class="el" href="a00847.html#ggaef62df8feedfbe682684c6f1ea704061ab7c2a10cee66d30f6f2502376857b387">SER_PHY_EVT_RX_PKT_RECEIVED</a> when all bytes have been received. This event indicates how many bytes have been received to which memory address.<br/>
+</li>
+<li><a class="el" href="a00847.html#ggaef62df8feedfbe682684c6f1ea704061aea7698e3e5ecece789c5e24963180cca">SER_PHY_EVT_RX_PKT_DROPPED</a> when all bytes are clocked in, but the packet is discarded because no receive buffer was allocated by upper layers.<br/>
+</li>
+<li><a class="el" href="a00847.html#ggaef62df8feedfbe682684c6f1ea704061aabf6bc1f9441d6955ab6651435c4ba1f">SER_PHY_EVT_TX_PKT_SENT</a> when all bytes are transmitted.<br/>
+</li>
+</ul>
+<p>Function <a class="el" href="a00847.html#ga8c29df24b03fb3809588033581bedbbd">ser_phy_open()</a> initializes UART using <a class="el" href="a00663.html#gab37ec15202892ba42f454daacaa38b7f">APP_UART_INIT</a> macro with configuration structure of type <a class="el" href="a00112.html">app_uart_comm_params_t</a> as input. It also registers<br/>
+ <b>SER_PHY</b> event callback.</p>
+<p>Function <a class="el" href="a00847.html#ga98a80424c3b4fdadc38f88360fc669ef">ser_phy_close()</a> closes UART using <a class="el" href="a00663.html#ga8b5b23229363aefa52be33360dfb5fde">app_uart_close()</a> function. It also de-registers <b>SER_PHY</b> event callback.<br/>
+</p>
+<p>Note: During initialization of UART, pin connected to the RX line is configured as pull-down until first byte is received. This is done to avoid false byte detection due to<br/>
+ glitches on the line when the other side is turned off or starting up.<br/>
+ </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00095.html">ble_error_log_data_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:01 for nRF51 SDK - S120 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00076.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00079.html">Serialization PHY</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:45 for nRF51 SDK - S120 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

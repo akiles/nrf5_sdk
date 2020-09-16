@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_gap_evt_connected_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_cts_c_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,93 +106,93 @@ $(document).ready(function(){initNavTree('a00231.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_gap_evt_connected_t Struct Reference<div class="ingroups"><a class="el" href="a01044.html">Structures</a></div></div>  </div>
+<div class="title">ble_cts_c_s Struct Reference<div class="ingroups"><a class="el" href="a01247.html">Current Time Service client</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Event structure for <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefaa0b4789724d202a13a5e7eab85c52957">BLE_GAP_EVT_CONNECTED</a>.  
+<p>Current Time Service client structure. This structure contains status information for the client.  
  <a href="a00231.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_gap.h&gt;</code></p>
+<p><code>#include &lt;ble_cts_c.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a2107b9536488cbcb75ca3f059e5ab72e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html">ble_gap_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a2107b9536488cbcb75ca3f059e5ab72e">peer_addr</a></td></tr>
-<tr class="separator:a2107b9536488cbcb75ca3f059e5ab72e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe43eb1ef406537f10a3173f851852bf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00217.html">ble_gap_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#abe43eb1ef406537f10a3173f851852bf">own_addr</a></td></tr>
-<tr class="separator:abe43eb1ef406537f10a3173f851852bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade7ff1956c46e2832bf82c95711a408f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#ade7ff1956c46e2832bf82c95711a408f">irk_match</a>:1</td></tr>
-<tr class="separator:ade7ff1956c46e2832bf82c95711a408f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40ac77b4be795c7085f8eece5adc9d73"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a40ac77b4be795c7085f8eece5adc9d73">irk_match_idx</a>:7</td></tr>
-<tr class="separator:a40ac77b4be795c7085f8eece5adc9d73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b48983984c9a6eca0b81380f8af8a05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00220.html">ble_gap_conn_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a0b48983984c9a6eca0b81380f8af8a05">conn_params</a></td></tr>
-<tr class="separator:a0b48983984c9a6eca0b81380f8af8a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a046c1b0b4fe1c7e83680b9654963b156"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01247.html#ga5f5e1a6e6316965ea9301ede5b1f3c04">ble_cts_c_evt_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a046c1b0b4fe1c7e83680b9654963b156">evt_handler</a></td></tr>
+<tr class="separator:a046c1b0b4fe1c7e83680b9654963b156"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4032c144fac9fbf1ae0d84ef377caf5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a01212.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#aa4032c144fac9fbf1ae0d84ef377caf5">error_handler</a></td></tr>
+<tr class="separator:aa4032c144fac9fbf1ae0d84ef377caf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0866b1353b97df6deece0172c0cc3dd"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#aa0866b1353b97df6deece0172c0cc3dd">current_time_handle</a></td></tr>
+<tr class="separator:aa0866b1353b97df6deece0172c0cc3dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14d458eaa378edf691dec5bbb5c6e453"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#a14d458eaa378edf691dec5bbb5c6e453">cts_cccd_handle</a></td></tr>
+<tr class="separator:a14d458eaa378edf691dec5bbb5c6e453"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeef0bb9260018febc5b92af0d5359e9b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00231.html#aeef0bb9260018febc5b92af0d5359e9b">conn_handle</a></td></tr>
+<tr class="separator:aeef0bb9260018febc5b92af0d5359e9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event structure for <a class="el" href="a01042.html#ggada486dd3c0cce897b23a887bed284fefaa0b4789724d202a13a5e7eab85c52957">BLE_GAP_EVT_CONNECTED</a>. </p>
+<div class="textblock"><p>Current Time Service client structure. This structure contains status information for the client. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a0b48983984c9a6eca0b81380f8af8a05"></a>
+<a class="anchor" id="aeef0bb9260018febc5b92af0d5359e9b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00220.html">ble_gap_conn_params_t</a> ble_gap_evt_connected_t::conn_params</td>
+          <td class="memname">uint16_t ble_cts_c_s::conn_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>GAP Connection Parameters. </p>
+<p>Handle of the current connection. BLE_CONN_HANDLE_INVALID if not in a connection. </p>
 
 </div>
 </div>
-<a class="anchor" id="ade7ff1956c46e2832bf82c95711a408f"></a>
+<a class="anchor" id="a14d458eaa378edf691dec5bbb5c6e453"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_evt_connected_t::irk_match</td>
+          <td class="memname">uint16_t ble_cts_c_s::cts_cccd_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>If 1, peer device's address resolved using an IRK. </p>
+<p>Handle of the CCCD of the Current Time Characteristic at the peer. </p>
 
 </div>
 </div>
-<a class="anchor" id="a40ac77b4be795c7085f8eece5adc9d73"></a>
+<a class="anchor" id="aa0866b1353b97df6deece0172c0cc3dd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_gap_evt_connected_t::irk_match_idx</td>
+          <td class="memname">uint16_t ble_cts_c_s::current_time_handle</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Index in IRK list where the address was matched. </p>
+<p>Handle of Current Time Characteristic at the peer (handles are provided by the BLE stack through the DB Discovery module). </p>
 
 </div>
 </div>
-<a class="anchor" id="abe43eb1ef406537f10a3173f851852bf"></a>
+<a class="anchor" id="aa4032c144fac9fbf1ae0d84ef377caf5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00217.html">ble_gap_addr_t</a> ble_gap_evt_connected_t::own_addr</td>
+          <td class="memname"><a class="el" href="a01212.html#gac10076d39c0ddcfe333252fe8810a1f1">ble_srv_error_handler_t</a> ble_cts_c_s::error_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Bluetooth address of the local device used during connection setup. </p>
+<p>Function to be called if an error occurs. </p>
 
 </div>
 </div>
-<a class="anchor" id="a2107b9536488cbcb75ca3f059e5ab72e"></a>
+<a class="anchor" id="a046c1b0b4fe1c7e83680b9654963b156"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00217.html">ble_gap_addr_t</a> ble_gap_evt_connected_t::peer_addr</td>
+          <td class="memname"><a class="el" href="a01247.html#ga5f5e1a6e6316965ea9301ede5b1f3c04">ble_cts_c_evt_handler_t</a> ble_cts_c_s::evt_handler</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Bluetooth address of the peer device. </p>
+<p>Event handler to be called for handling events from the Current Time Service client. </p>
 
 </div>
 </div>
@@ -201,8 +201,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00231.html">ble_gap_evt_connected_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00231.html">ble_cts_c_s</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:39 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

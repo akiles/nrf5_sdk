@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Device Manager Sequence Charts</title>
+<title>nRF51 SDK - S110 SoftDevice: GAP Advertising types</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,28 +97,83 @@ $(document).ready(function(){initNavTree('a01015.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">Device Manager Sequence Charts<div class="ingroups"><a class="el" href="a00976.html">Device Manager</a></div></div>  </div>
+<div class="title">GAP Advertising types<div class="ingroups"><a class="el" href="a01286.html">Defines</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a01016"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01016.html">Security Set-Up &amp; Status Related</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01019"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01019.html">Device Manager Context Management MSCs</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01021"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01021.html">Initialization and Setup</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga6cc0db53453977ee0a31e59f07de2b86"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01015.html#ga6cc0db53453977ee0a31e59f07de2b86">BLE_GAP_ADV_TYPE_ADV_IND</a>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga6cc0db53453977ee0a31e59f07de2b86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafefde83f6b598e7fb14868e0610bdf43"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01015.html#gafefde83f6b598e7fb14868e0610bdf43">BLE_GAP_ADV_TYPE_ADV_DIRECT_IND</a>&#160;&#160;&#160;0x01</td></tr>
+<tr class="separator:gafefde83f6b598e7fb14868e0610bdf43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga594ca8490efef1702e8ccb6a28d2a1de"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01015.html#ga594ca8490efef1702e8ccb6a28d2a1de">BLE_GAP_ADV_TYPE_ADV_SCAN_IND</a>&#160;&#160;&#160;0x02</td></tr>
+<tr class="separator:ga594ca8490efef1702e8ccb6a28d2a1de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c86ca45ebffc3938fd97f9556daa49c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01015.html#ga8c86ca45ebffc3938fd97f9556daa49c">BLE_GAP_ADV_TYPE_ADV_NONCONN_IND</a>&#160;&#160;&#160;0x03</td></tr>
+<tr class="separator:ga8c86ca45ebffc3938fd97f9556daa49c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gafefde83f6b598e7fb14868e0610bdf43"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADV_TYPE_ADV_DIRECT_IND&#160;&#160;&#160;0x01</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Connectable directed. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga6cc0db53453977ee0a31e59f07de2b86"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADV_TYPE_ADV_IND&#160;&#160;&#160;0x00</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Connectable undirected. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga8c86ca45ebffc3938fd97f9556daa49c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADV_TYPE_ADV_NONCONN_IND&#160;&#160;&#160;0x03</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Non connectable undirected. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga594ca8490efef1702e8ccb6a28d2a1de"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BLE_GAP_ADV_TYPE_ADV_SCAN_IND&#160;&#160;&#160;0x02</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Scannable undirected. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:48 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:29 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

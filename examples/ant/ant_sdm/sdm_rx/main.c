@@ -28,7 +28,6 @@
 #include "nrf_gpio.h"
 #include "app_error.h"
 #include "app_timer.h"
-#include "app_gpiote.h"
 #include "bsp.h"
 #include "nordic_common.h"
 #if defined(TRACE_UART)
@@ -42,8 +41,6 @@
 #define APP_TIMER_PRESCALER           0                        /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_MAX_TIMERS          BSP_APP_TIMERS_NUMBER    /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE       2u                       /**< Size of timer operation queues. */
-
-#define APP_GPIOTE_MAX_USERS          1u                       /**< Maximum number of users of the GPIOTE handler. */
 
 // Channel configuration.
 #define CHANNEL_0                     0x00                     /**< ANT Channel 0. */
@@ -264,9 +261,6 @@ int main(void)
 #if defined(TRACE_GPIO)
     // Initialize timer module.
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, false);
-
-    // Initialize GPIOTE module.
-    APP_GPIOTE_INIT(APP_GPIOTE_MAX_USERS);
 
     err_code = bsp_init(BSP_INIT_LED, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
     APP_ERROR_CHECK(err_code);

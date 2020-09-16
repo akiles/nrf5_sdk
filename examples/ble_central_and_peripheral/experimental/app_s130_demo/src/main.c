@@ -52,6 +52,7 @@
 #include "app_uart.h"
 #include "rtc1.h"
 #include "bsp.h"
+#include "app_error.h"
 
 /* Addresses of peer peripherals that are expeted to run Heart Rate Service. */
 #define NUMBER_OF_PERIPHERALS                   3
@@ -630,7 +631,7 @@ uint32_t event_handle(uint8_t expected_event, uint32_t timeout_ms, uint8_t *p_ev
                     gs_tx_buffer = TX_BUFFER_READY;
                     break;
                 case BLE_GATTS_EVT_SYS_ATTR_MISSING:
-                    sd_ble_gatts_sys_attr_set(p_ble_evt->evt.gatts_evt.conn_handle, NULL, 0);
+                    sd_ble_gatts_sys_attr_set(p_ble_evt->evt.gatts_evt.conn_handle, NULL, 0, 0); //need to check the "flags" parameter
                     break;
                 case BLE_GATTC_EVT_HVX:
                     /*Handled in main loop - in do_work()*/
@@ -1181,7 +1182,7 @@ static void do_work(void)
 
         if (!nrf_gpio_pin_read(BUTTON_1)&&!nrf_gpio_pin_read(BUTTON_2))
         {
-            LOG_INFO("Button 0 and button 1 pressed simultaneously.");
+            LOG_INFO("Button 1 and button 2 pressed simultaneously.");
             rtc1_timeout_set_ms(1000);
             while (!rtc1_timeout()) {};
             LOG_INFO("Calling system reset...");
@@ -1259,7 +1260,14 @@ int main(void)
         APP_ASSERT (false);
     }
 
-    ble_enable_params_t ble_enable_params = {.gatts_enable_params = {.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT}};
+    ble_enable_params_t ble_enable_params = 
+    {
+        .gatts_enable_params = 
+        {
+            .service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT,
+            .attr_tab_size   = BLE_GATTS_ATTR_TAB_SIZE_DEFAULT
+        }
+    };
     if (NRF_SUCCESS != sd_ble_enable(&ble_enable_params))
     {
         APP_ASSERT (false);
@@ -1313,9 +1321,9 @@ void app_assert_callback(uint32_t line_num, const uint8_t *file_name)
 /**@brief BLE Stack event interrupt
  *                Triggered whenever an event is ready to be pulled
  */
-void SD_EVT_IRQHandler(void)
-{
-}
+//void SD_EVT_IRQHandler(void)
+//{
+//}
 
 
 /**@brief Function for initializing the UART.

@@ -33,7 +33,7 @@
 /**@brief LPCOMP event handler function type.
  * @param[in] event  LPCOMP event.
  */
-typedef void (* lpcomp_events_handler_t)(nrf_lpcomp_events_t event);
+typedef void (* lpcomp_events_handler_t)(nrf_lpcomp_event_t event);
 
 /**@brief LPCOMP configuration.
  */

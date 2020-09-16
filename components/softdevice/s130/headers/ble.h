@@ -65,7 +65,7 @@ enum BLE_COMMON_SVCS
 {
   SD_BLE_ENABLE = BLE_SVC_BASE,         /**< Enable and initialize the BLE stack */
   SD_BLE_EVT_GET,                       /**< Get an event from the pending events queue. */
-  SD_BLE_TX_BUFFER_COUNT_GET,           /**< Get the total number of available application transmission buffers from the stack. */
+  SD_BLE_TX_BUFFER_COUNT_GET,           /**< Get the total number of available application transmission buffers from the BLE stack. */
   SD_BLE_UUID_VS_ADD,                   /**< Add a Vendor Specific UUID. */
   SD_BLE_UUID_DECODE,                   /**< Decode UUID bytes. */
   SD_BLE_UUID_ENCODE,                   /**< Encode UUID bytes. */
@@ -80,9 +80,9 @@ enum BLE_COMMON_SVCS
  */
 enum BLE_COMMON_EVTS
 {
-  BLE_EVT_TX_COMPLETE  = BLE_EVT_BASE,  /**< Transmission Complete. */
-  BLE_EVT_USER_MEM_REQUEST,             /**< User Memory request. */
-  BLE_EVT_USER_MEM_RELEASE              /**< User Memory release. */
+  BLE_EVT_TX_COMPLETE  = BLE_EVT_BASE,  /**< Transmission Complete. @ref ble_evt_tx_complete_t */
+  BLE_EVT_USER_MEM_REQUEST,             /**< User Memory request. @ref ble_evt_user_mem_request_t */
+  BLE_EVT_USER_MEM_RELEASE              /**< User Memory release. @ref ble_evt_user_mem_release_t */
 };
 
 /**@brief Common Option IDs.
@@ -124,20 +124,20 @@ typedef struct
 } ble_user_mem_block_t;
 
 /**
- * @brief TX complete event.
+ * @brief Event structure for @ref BLE_EVT_TX_COMPLETE.
  */
 typedef struct
 {
   uint8_t count;                        /**< Number of packets transmitted. */
 } ble_evt_tx_complete_t;
 
-/**@brief Event structure for BLE_EVT_USER_MEM_REQUEST. */
+/**@brief Event structure for @ref BLE_EVT_USER_MEM_REQUEST. */
 typedef struct
 {
   uint8_t                     type;     /**< User memory type, see @ref BLE_USER_MEM_TYPES. */
 } ble_evt_user_mem_request_t;
 
-/**@brief Event structure for BLE_EVT_USER_MEM_RELEASE. */
+/**@brief Event structure for @ref BLE_EVT_USER_MEM_RELEASE. */
 typedef struct
 {
   uint8_t                     type;       /**< User memory type, see @ref BLE_USER_MEM_TYPES. */
@@ -230,7 +230,7 @@ typedef union
  */
 typedef struct
 {
-  ble_gatts_enable_params_t  gatts_enable_params; /**< GATTS init options @ref ble_gatts_enable_params_t. */  
+  ble_gatts_enable_params_t  gatts_enable_params; /**< GATTS init options @ref ble_gatts_enable_params_t. */
 } ble_enable_params_t;
 
 /** @} */
@@ -238,14 +238,18 @@ typedef struct
 /** @addtogroup BLE_COMMON_FUNCTIONS Functions
  * @{ */
 
-/**@brief Enable the bluetooth stack
+/**@brief Enable the BLE stack
  *
  * @param[in] p_ble_enable_params Pointer to ble_enable_params_t
  *
- * @details This call initializes the bluetooth stack, no other BLE related call can be called before this one has been executed.
+ * @details This call initializes the BLE stack, no other BLE related function can be called before this one.
  *
- * @return @ref NRF_SUCCESS BLE stack has been initialized successfully
+ * @return @ref NRF_SUCCESS BLE the BLE stack has been initialized successfully
+ * @retval @ref NRF_ERROR_INVALID_STATE the BLE stack had already been initialized and cannot be reinitialized.
  * @return @ref NRF_ERROR_INVALID_ADDR Invalid or not sufficiently aligned pointer supplied.
+ * @return @ref NRF_ERROR_INVALID_LENGTH The specified Attribute Table size is either too small or not a multiple of 4.
+ *                                       The minimum acceptable size is defined by @ref BLE_GATTS_ATTR_TAB_SIZE_MIN.
+ * @return @ref NRF_ERROR_NO_MEM         The Attribute Table size is too large. Decrease size in @ref ble_gatts_enable_params_t.
  */
 SVCALL(SD_BLE_ENABLE, uint32_t, sd_ble_enable(ble_enable_params_t * p_ble_enable_params));
 
@@ -255,10 +259,10 @@ SVCALL(SD_BLE_ENABLE, uint32_t, sd_ble_enable(ble_enable_params_t * p_ble_enable
  * @param[in, out] p_len Pointer the length of the buffer, on return it is filled with the event length.
  *
  * @details This call allows the application to pull a BLE event from the BLE stack. The application is signalled that an event is 
- * available from the BLE Stack by the triggering of the SD_EVT_IRQn interrupt (mapped to IRQ 22).
+ * available from the BLE stack by the triggering of the SD_EVT_IRQn interrupt.
  * The application is free to choose whether to call this function from thread mode (main context) or directly from the Interrupt Service Routine
  * that maps to SD_EVT_IRQn. In any case however, and because the BLE stack runs at a higher priority than the application, this function should be called
- * in a loop (until @ref NRF_ERROR_NOT_FOUND is returned) every time SD_EVT_IRQn is raised to ensure that all available events are pulled from the stack. 
+ * in a loop (until @ref NRF_ERROR_NOT_FOUND is returned) every time SD_EVT_IRQn is raised to ensure that all available events are pulled from the BLE stack. 
  * Failure to do so could potentially leave events in the internal queue without the application being aware of this fact.
  * Sizing the p_dest buffer is equally important, since the application needs to provide all the memory necessary for the event to be copied into
  * application memory. If the buffer provided is not large enough to fit the entire contents of the event, @ref NRF_ERROR_DATA_SIZE will be returned
@@ -387,7 +391,7 @@ SVCALL(SD_BLE_UUID_ENCODE, uint32_t, sd_ble_uuid_encode(ble_uuid_t const *p_uuid
  *
  * @retval ::NRF_SUCCESS  Version information stored successfully.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
- * @retval ::NRF_ERROR_BUSY The stack is busy (typically doing a locally-initiated disconnection procedure).
+ * @retval ::NRF_ERROR_BUSY The BLE stack is busy (typically doing a locally-initiated disconnection procedure).
  */
 SVCALL(SD_BLE_VERSION_GET, uint32_t, sd_ble_version_get(ble_version_t *p_version));
 
@@ -402,7 +406,7 @@ SVCALL(SD_BLE_VERSION_GET, uint32_t, sd_ble_version_get(ble_version_t *p_version
  * @retval ::NRF_SUCCESS Successfully queued a response to the peer.
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
  * @retval ::NRF_ERROR_INVALID_STATE Invalid Connection state or no execute write request pending.
- * @retval ::NRF_ERROR_BUSY The stack is busy. Retry at later time.
+ * @retval ::NRF_ERROR_BUSY The BLE stack is busy. Retry at later time.
  */
 SVCALL(SD_BLE_USER_MEM_REPLY, uint32_t, sd_ble_user_mem_reply(uint16_t conn_handle, ble_user_mem_block_t const *p_block));
 
@@ -418,7 +422,7 @@ SVCALL(SD_BLE_USER_MEM_REPLY, uint32_t, sd_ble_user_mem_reply(uint16_t conn_hand
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied, check parameter limits and constraints.
  * @retval ::NRF_ERROR_INVALID_STATE Unable to set the parameter at this time.
- * @retval ::NRF_ERROR_BUSY The stack is busy or the previous procedure has not completed.
+ * @retval ::NRF_ERROR_BUSY The BLE stack is busy or the previous procedure has not completed.
  */
 SVCALL(SD_BLE_OPT_SET, uint32_t, sd_ble_opt_set(uint32_t opt_id, ble_opt_t const *p_opt));
 
@@ -435,7 +439,7 @@ SVCALL(SD_BLE_OPT_SET, uint32_t, sd_ble_opt_set(uint32_t opt_id, ble_opt_t const
  * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid Connection Handle.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied, check parameter limits and constraints.
  * @retval ::NRF_ERROR_INVALID_STATE Unable to retrieve the parameter at this time.
- * @retval ::NRF_ERROR_BUSY The stack is busy or the previous procedure has not completed.
+ * @retval ::NRF_ERROR_BUSY The BLE stack is busy or the previous procedure has not completed.
  * @retval ::NRF_ERROR_NOT_SUPPORTED This option is not supported.
  *
  */

@@ -1,8 +1,7 @@
 var a00293 =
 [
-    [ "handle", "a00293.html#a1a0552b266c588f67d3a6abc712bbfd6", null ],
-    [ "offset", "a00293.html#a07033f6e0e63974b67627ae84bc12fc9", null ],
-    [ "p_data", "a00293.html#a68325153be760c7742d1bec69da625cf", null ],
-    [ "p_len", "a00293.html#a8b0b2dadb3128b0838c71235661f8174", null ],
-    [ "type", "a00293.html#a2971c791821bea067f3bc2bbc35b9193", null ]
+    [ "addr_count", "a00293.html#a8f7d372587ed29005dbfd515103fa6fd", null ],
+    [ "irk_count", "a00293.html#a21922578ee2df66befd41e968f8d5af1", null ],
+    [ "pp_addrs", "a00293.html#a9316d95519c47512389b4696376556d0", null ],
+    [ "pp_irks", "a00293.html#ab78ecf15e25742a5ea56377cef1a8603", null ]
 ];

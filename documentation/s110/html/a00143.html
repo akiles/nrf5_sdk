@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: HCI transport library</title>
+<title>nRF51 SDK - S110 SoftDevice: BLE libraries</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,57 +97,26 @@ $(document).ready(function(){initNavTree('a00143.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">HCI transport library </div>  </div>
+<div class="title">BLE libraries </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This module implements certain specific features from the three-wire UART transport layer, defined by the <em>Bluetooth</em> specification version 4.0 [Vol 4] part D.</p>
-<dl class="section user"><dt>Features supported</dt><dd><ul>
-<li>Transmission and reception of Vendor Specific HCI packet type application packets.</li>
-<li>Transmission and reception of reliable packets: defined by chapter 6 of the specification.</li>
-</ul>
-</dd></dl>
-<dl class="section user"><dt>Features not supported</dt><dd><ul>
-<li>Link establishment procedure: defined by chapter 8 of the specification.</li>
-<li>Low power: defined by chapter 9 of the specification.</li>
-</ul>
-</dd></dl>
-<dl class="section user"><dt>Implementation specific behaviour</dt><dd><ul>
-<li>As Link establishment procedure is not supported following static link configuration parameters are used:</li>
-<li>TX window size is 1.</li>
-<li>16 bit CCITT-CRC must be used.</li>
-<li>Out of frame software flow control not supported.</li>
-<li>Parameters specific for resending reliable packets are compile time configurable (clarifed later in this document).</li>
-<li>Acknowledgement packet transmissions are not timeout driven , meaning they are delivered for transmission within same context which the corresponding application packet was received.</li>
-</ul>
-</dd></dl>
-<dl class="section user"><dt>Implementation specific limitations</dt><dd>Current implementation has the following limitations which will have impact to system wide behaviour:<ul>
-<li>Delayed acknowledgement scheduling not implemented: There exists a possibility that acknowledgement TX packet and application TX packet will collide in the TX pipeline having the end result that acknowledgement packet will be excluded from the TX pipeline which will trigger the retransmission algorithm within the peer protocol entity.</li>
-<li>Delayed retransmission scheduling not implemented: There exists a possibility that retransmitted application TX packet and acknowledgement TX packet will collide in the TX pipeline having the end result that retransmitted application TX packet will be excluded from the TX pipeline.</li>
-<li>Processing of the acknowledgement number from RX application packets: Acknowledgement number is not pocessed from the RX application packets having the end result that unnecessary application packet retransmissions can occur.</li>
-</ul>
-</dd></dl>
-<p>The application TX packet processing flow is illustrated by the statemachine below.</p>
-<div class="image">
-<img src="hci_transport_tx_sm.png" alt="hci_transport_tx_sm.png"/>
-<div class="caption">
-TX - application packet statemachine</div></div>
- <dl class="section user"><dt>Component specific configuration options</dt><dd></dd></dl>
-<p>The following compile time configuration options are available, and used to configure the application TX packet retransmission interval, in order to suite various application specific implementations:</p>
-<ul>
-<li>MAC_PACKET_SIZE_IN_BITS Maximum size of a single application packet in bits.</li>
-<li>USED_BAUD_RATE Used uart baudrate.</li>
-</ul>
-<p>The following compile time configuration option is available to configure module specific behaviour:</p>
-<ul>
-<li>MAX_RETRY_COUNT Max retransmission retry count for applicaton packets. </li>
-</ul>
+<div class="textblock"><p><a class="el" href="a00145.html">Advertising Data Encoder</a></p>
+<p><a class="el" href="a00146.html">Debug Assert Handler</a></p>
+<p><a class="el" href="a00152.html">BLE Device Manager</a></p>
+<p><a class="el" href="a00022.html">Advertising Module</a></p>
+<p><a class="el" href="a00147.html">Connection Parameters Negotiation</a></p>
+<p><a class="el" href="a00148.html">DTM - Direct Test Mode</a></p>
+<p><a class="el" href="a00149.html">Error Log</a></p>
+<p><a class="el" href="a00150.html">Record Access Control Point</a></p>
+<p><a class="el" href="a00151.html">Radio Notification Event Handler</a></p>
+<p><a class="el" href="a00175.html">BSP BLE Button Module</a> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00142.html">Transport Services</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

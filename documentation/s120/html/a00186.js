@@ -1,7 +1,7 @@
 var a00186 =
 [
-    [ "conn_handle", "a00186.html#ab8700a2ae7c425ac15d6622e66967f74", null ],
-    [ "evt_handler", "a00186.html#ad1c46431c0465c0d35c17aef3e184a07", null ],
-    [ "hrm_cccd_handle", "a00186.html#aa39c35324a4a66fc088ca76085d2a932", null ],
-    [ "hrm_handle", "a00186.html#a77ef344286d863fa38ebd60dc06e5e62", null ]
+    [ "data", "a00186.html#adaf3ed862b2c96947da60d9b576b31c9", null ],
+    [ "handle", "a00186.html#a54644f05780b15248eba975decdd4e48", null ],
+    [ "len", "a00186.html#a5131e80ad4da52f707a84aed7240f2ee", null ],
+    [ "offset", "a00186.html#a1ed66c83e153fd6471056d19b10fac67", null ]
 ];

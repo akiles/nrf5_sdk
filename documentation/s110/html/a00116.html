@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: BLE Services</title>
+<title>nRF51 SDK - S110 SoftDevice: BLE S110 Events</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,30 +97,117 @@ $(document).ready(function(){initNavTree('a00116.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">BLE Services </div>  </div>
+<div class="title">BLE S110 Events </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="el" href="a00125.html">Alert Notification Service Client</a></p>
-<p><a class="el" href="a00126.html">Battery Service</a></p>
-<p><a class="el" href="a00127.html">Blood Pressure Service</a></p>
-<p><a class="el" href="a00128.html">Cycling Speed and Cadence Service</a></p>
-<p><a class="el" href="a00129.html">Device Information Service</a></p>
-<p><a class="el" href="a00130.html">Glucose Service</a></p>
-<p><a class="el" href="a00131.html">Health Thermometer Service</a></p>
-<p><a class="el" href="a00132.html">Heart Rate Service</a></p>
-<p><a class="el" href="a00133.html">Human Interface Device Service</a></p>
-<p><a class="el" href="a00134.html">Human Immediate Alert Service</a></p>
-<p><a class="el" href="a00135.html">Human Immediate Alert Service Client</a></p>
-<p><a class="el" href="a00136.html">Link Loss Service</a></p>
-<p><a class="el" href="a00137.html">Running Speed and Cadence Service</a></p>
-<p><a class="el" href="a00138.html">TX Power Service</a> </p>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#nrf51_evt_tx_complete_encoding">0x01 - BLE_EVT_TX_COMPLETE</a><ul><li class="level2"><a href="#nrf51_evt_tx_complete_encoding_sec">Event encoding</a></li>
+<li class="level2"><a href="#nrf51_evt_tx_complete_encoding_sub_a">Packet layout</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#nrf51_evt_user_mem_request_encoding">0x02 - BLE_EVT_USER_MEM_REQUEST</a><ul><li class="level2"><a href="#nrf51_evt_user_mem_request_encoding_sec">Event encoding</a></li>
+<li class="level2"><a href="#nrf51_evt_user_mem_request_encoding_sub_a">Packet layout</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#nrf51_evt_user_mem_release_encoding">0x03 - BLE_EVT_USER_MEM_RELEASE</a><ul><li class="level2"><a href="#nrf51_evt_user_mem_release_encoding_sec">Event encoding</a></li>
+<li class="level2"><a href="#nrf51_evt_user_mem_release_encoding_sub_a">Packet layout</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="textblock"><h1><a class="anchor" id="nrf51_evt_tx_complete_encoding"></a>
+0x01 - BLE_EVT_TX_COMPLETE</h1>
+<h2><a class="anchor" id="nrf51_evt_tx_complete_encoding_sec"></a>
+Event encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a01281.html#ggaa55e423bfea45f03764a636f2cec7a8ba408a77f131a2d314fbf477cdb2d1e0f6">BLE_EVT_TX_COMPLETE</a> packet.</p>
+<p>Event ID = 0x01 for BLE_EVT_TX_COMPLETE</p>
+<p>All BLE events, <a class="el" href="a00248.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00247.html">ble_evt_hdr_t</a> first, containing only the Event ID followed by the event. The Event Length will not be encoded, because the size of the event could differ depending on the decoder architecture.</p>
+<p>The event contains a connection handle. For the BLE TX complete, the <a class="el" href="a00249.html">ble_evt_tx_complete_t</a> is encoded after the connection handle, as seen in Figure 1.</p>
+<p>The order of the encoding is:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>See <a class="el" href="a00219.html#ad7c997d8d0c6e0d3d24de3ecad426645">ble_common_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Count </td><td>See <a class="el" href="a00249.html">ble_evt_tx_complete_t</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_evt_tx_complete_encoding_sub_a"></a>
+Packet layout</h2>
+<div class="image">
+<img src="event_tx_complete.png" alt="event_tx_complete.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE_EVT_TX_COMPLETE event.</div></div>
+<p> <br/>
+</p>
+<h1><a class="anchor" id="nrf51_evt_user_mem_request_encoding"></a>
+0x02 - BLE_EVT_USER_MEM_REQUEST</h1>
+<h2><a class="anchor" id="nrf51_evt_user_mem_request_encoding_sec"></a>
+Event encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a01281.html#ggaa55e423bfea45f03764a636f2cec7a8ba3b9d0631bda508c2657f746ffaa6ed97">BLE_EVT_USER_MEM_REQUEST</a> packet.</p>
+<p>Event ID = 0x02 for BLE_EVT_USER_MEM_REQUEST</p>
+<p>All BLE events, <a class="el" href="a00248.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00247.html">ble_evt_hdr_t</a> first, containing only the Event ID followed by the event. The Event Length will not be encoded, because the size of the event could differ depending on the decoder architecture.</p>
+<p>The event contains a connection handle. For the BLE USER MEM request, the <a class="el" href="a00251.html">ble_evt_user_mem_request_t</a> is encoded after the connection handle, as seen in Figure 1.</p>
+<p>The order of the encoding is:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>See <a class="el" href="a00219.html#ad7c997d8d0c6e0d3d24de3ecad426645">ble_common_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Type </td><td>User Memory Type, see <a class="el" href="a00251.html#ac0a51b3ce3131df1dcc57a440f5a816c">ble_evt_user_mem_request_t::type</a> </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_evt_user_mem_request_encoding_sub_a"></a>
+Packet layout</h2>
+<div class="image">
+<img src="event_user_mem_request.png" alt="event_user_mem_request.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE_EVT_USER_MEM_REQUEST event.</div></div>
+<p> <br/>
+</p>
+<h1><a class="anchor" id="nrf51_evt_user_mem_release_encoding"></a>
+0x03 - BLE_EVT_USER_MEM_RELEASE</h1>
+<h2><a class="anchor" id="nrf51_evt_user_mem_release_encoding_sec"></a>
+Event encoding</h2>
+<p>Frame format encoding of the <a class="el" href="a01281.html#ggaa55e423bfea45f03764a636f2cec7a8ba7bbd162727156bd112cc471f8f9c8dea">BLE_EVT_USER_MEM_RELEASE</a> packet.</p>
+<p>Event ID = 0x03 for BLE_EVT_USER_MEM_RELEASE</p>
+<p>All BLE events, <a class="el" href="a00248.html">ble_evt_t</a>, are encoded with the header <a class="el" href="a00247.html">ble_evt_hdr_t</a> first, containing only the Event ID followed by the event. The Event Length will not be encoded, because the size of the event could differ depending on the decoder architecture.</p>
+<p>The event contains a connection handle. For the BLE USER MEM release, the <a class="el" href="a00250.html">ble_evt_user_mem_release_t</a> is encoded after the connection handle, as seen in Figure 1.</p>
+<p>The order of the encoding is:</p>
+<table class="doxtable">
+<tr>
+<th>Length </th><th>Parameter </th><th>Value</th></tr>
+<tr>
+<td>2 bytes </td><td>Connection Handle </td><td>See <a class="el" href="a00219.html#ad7c997d8d0c6e0d3d24de3ecad426645">ble_common_evt_t::conn_handle</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Type </td><td>User Memory Type, see <a class="el" href="a00250.html#a597b8f59bf2ab45d0d5ccf9329b50d13">ble_evt_user_mem_release_t::type</a> </td></tr>
+<tr>
+<td>2 bytes </td><td>Length </td><td>User Memory Block Length, see <a class="el" href="a00392.html#a14ab9ae8747f2add25b332c15d20647e">ble_user_mem_block_t::len</a> </td></tr>
+<tr>
+<td>1 byte </td><td>Memory Block Present</td><td>0x00 - not present, 0x01 - present </td></tr>
+</table>
+<p><br/>
+</p>
+<h2><a class="anchor" id="nrf51_evt_user_mem_release_encoding_sub_a"></a>
+Packet layout</h2>
+<div class="image">
+<img src="event_user_mem_release.png" alt="event_user_mem_release.png"/>
+<div class="caption">
+Figure 1: Encoding of BLE_EVT_USER_MEM_RELEASE event.</div></div>
+<p> <br/>
+ </p>
+<dl class="section note"><dt>Note</dt><dd>When <a class="el" href="a01281.html#ggaa55e423bfea45f03764a636f2cec7a8ba7bbd162727156bd112cc471f8f9c8dea">BLE_EVT_USER_MEM_RELEASE</a> is received from the SoftDevice, the User Memory Context is no longer needed. It is released using the <a class="el" href="a01137.html#ga69af3edd625767426c7a6f54801f3904">app_ble_user_mem_context_destroy</a> and <a class="el" href="a01167.html#ga069ba9bebfbabf0dd2df28a7c1172c38">conn_ble_user_mem_context_destroy</a> functions. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li><li class="navelem"><a class="el" href="a00109.html">BLE Serialization</a></li><li class="navelem"><a class="el" href="a00111.html">Serialization Codecs</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

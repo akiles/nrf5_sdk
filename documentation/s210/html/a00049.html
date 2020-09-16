@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Simple Timer Example</title>
+<title>nRF51 SDK - S210 SoftDevice: SPI Master Loopback Example</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,37 +97,36 @@ $(document).ready(function(){initNavTree('a00049.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Simple Timer Example </div>  </div>
+<div class="title">SPI Master Loopback Example </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Simple Timer Example demonstrates the usage of the <a class="el" href="a00022.html">Simple timer</a>. It demonstrates the two modes of the module (single shot mode and repeated mode) to blink two LEDs.</p>
-<p>When the application starts, the GPIO pins are configured as outputs to drive the LEDs. The application then uses the simple timer driver library and alternates between the two timer modes. During startup, both LEDs are lit for one second. Then the application enters single shot mode for 2 seconds before repeated timer mode is started. After 2 seconds, both LEDs are lit again and the application loops.</p>
-<p>See the following illustration for details.</p>
-<div class="image">
-<img src="timer_example_sm.png" alt="timer_example_sm.png"/>
-<div class="caption">
-Simple timer example state machine</div></div>
-<p>The name of the example is <b>simple_timer_example_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\peripheral\simple_timer_example</code> </p>
-<h1><a class="anchor" id="nrf_dev_simple_timer_example_testing"></a>
+<div class="textblock"><p>The SPI Master Loopback Example demonstrates how to use a loopback for verifying the SPI master. To complete the loopback, the MOSI and MISO pins of the SPI master must be wired together.</p>
+<p>TX_RX_MSG_LENGTH number of bytes are transmitted through the master. The received bytes are verified to be the same as the bytes transmitted. If there is an error, <a class="el" href="a00060.html#BSP_INDICATE_FATAL_ERROR">BSP_INDICATE_FATAL_ERROR</a> is indicated.</p>
+<p>The application starts with configuring the <a class="el" href="a00380.html">Board Support Package</a>. Both SPI_MASTER_0 and SPI_MASTER_1 are tested, first with shifting LSB first, then by shifting MSB first.</p>
+<h1><a class="anchor" id="spi_master_loopback_setup"></a>
+Setup</h1>
+<p>The name of the example is <b>spi_master_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\peripheral\spi_master</code> </p>
+<p>Configuration:<br/>
+</p>
+<ul>
+<li>MOSI0 should be connected to MISO0.</li>
+<li>MOSI1 should be connected to MISO1.</li>
+</ul>
+<h1><a class="anchor" id="spi_master_example_testing"></a>
 Testing</h1>
-<p>Test the Simple Timer Example application by performing the following steps:</p>
+<p>Test the SPI Master Loopback Example application by performing the following steps:</p>
 <ol type="1">
 <li>Compile and program the application.</li>
-<li>Observe that the LED state is changed as expected:<ol type="a">
-<li>Both LEDs are lit for one second.</li>
-<li>LED 1 blinks for 2 seconds.</li>
-<li>LED 2 blinks for 2 seconds.</li>
-<li>The application loops. </li>
-</ol>
-</li>
+<li>Observe that <a class="el" href="a00060.html#BSP_INDICATE_RCV_OK">BSP_INDICATE_RCV_OK</a> is indicated every second.</li>
+<li><a class="el" href="a00060.html#BSP_INDICATE_FATAL_ERROR">BSP_INDICATE_FATAL_ERROR</a> is indicated if an error occurred. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00027.html">Hardware Peripheral Examples</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00032.html">Hardware Peripheral Examples</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

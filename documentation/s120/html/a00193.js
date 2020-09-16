@@ -1,5 +1,5 @@
 var a00193 =
 [
-    [ "read_perm", "a00193.html#ac08fb7f662817574a3792609f0d92637", null ],
-    [ "write_perm", "a00193.html#aca8d641cf8e5b5811aa2a2c68035c395", null ]
+    [ "handle", "a00193.html#ab1f14809099e66b0dc7a4a70cb3dc124", null ],
+    [ "included_srvc", "a00193.html#a3342baabc3197898f17ce875e7a5ba80", null ]
 ];

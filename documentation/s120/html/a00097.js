@@ -1,10 +1,18 @@
 var a00097 =
 [
-    [ "common_evt", "a00097.html#a65014fa31bf6c86c113ef47dc929a755", null ],
-    [ "evt", "a00097.html#aef8699c52739460f3052387e62eeacc8", null ],
-    [ "gap_evt", "a00097.html#a67ca1f9db570d1c2f196c0a316151af5", null ],
-    [ "gattc_evt", "a00097.html#a2bdcb3c197239b4e5957d89bb0f26161", null ],
-    [ "gatts_evt", "a00097.html#aea997556a147ad5541998f13699e27c1", null ],
-    [ "header", "a00097.html#a31f5fb5f33b8020c1b91639d048a6efa", null ],
-    [ "l2cap_evt", "a00097.html#a615ab3df54ef7363a90f915d6440ce1a", null ]
+    [ "Debug Assert Handler", "a00098.html", null ],
+    [ "BLE Device Manager", "a00102.html", [
+      [ "Initialization", "a00102.html#lib_device_manaegerit", [
+        [ "Associated Events", "a00102.html#lib_device_manager_init_evt", null ],
+        [ "Associated Configuration Parameters", "a00102.html#lib_device_manager_init_cnfg_param", null ]
+      ] ],
+      [ "Registration", "a00102.html#lib_device_manager_register", [
+        [ "Associated Events", "a00102.html#lib_cnxn_register_evt", null ],
+        [ "Associated Configuration Parameters", "a00102.html#lib_cnxn_register_cnfg_param", null ]
+      ] ]
+    ] ],
+    [ "DTM - Direct Test Mode", "a00099.html", null ],
+    [ "Error Log", "a00100.html", null ],
+    [ "Radio Notification Event Handler", "a00101.html", null ],
+    [ "BSP BLE Button Module", "a00103.html", null ]
 ];

@@ -1,43 +1,51 @@
 var a00968 =
 [
-    [ "ble_rscs_evt_t", "a00342.html", [
-      [ "evt_type", "a00342.html#a71e160dc65fed82339dfbec7a0f3f78a", null ]
+    [ "app_uart_comm_params_t", "a00185.html", [
+      [ "baud_rate", "a00185.html#aed401d2ee067394f8996bd5c0f4ff894", null ],
+      [ "cts_pin_no", "a00185.html#afd55bb9fe47cfd5eff8b468083b2dfed", null ],
+      [ "flow_control", "a00185.html#a0f003e30e3587f068bf45fad9f99bbc4", null ],
+      [ "rts_pin_no", "a00185.html#a836f131cb64d3cdf9831c0354483a65f", null ],
+      [ "rx_pin_no", "a00185.html#a30ae0cdf9181248fa08411af42a938a9", null ],
+      [ "tx_pin_no", "a00185.html#a7153a5ce2ab2d164224a7a17d5b1c56c", null ],
+      [ "use_parity", "a00185.html#a0851da050a073c86c13d0734e78f9d97", null ]
     ] ],
-    [ "ble_rscs_init_t", "a00343.html", [
-      [ "evt_handler", "a00343.html#ac8b3f40aba291bb2528c6e3d278e66bd", null ],
-      [ "feature", "a00343.html#afea901cdde73cddc72eb4cfe2f337c78", null ],
-      [ "rsc_feature_attr_md", "a00343.html#ada9c9294592f640a27a344965b22bc76", null ],
-      [ "rsc_meas_attr_md", "a00343.html#a4f33f2c4256a25ac20cdbb2b8fbc8538", null ]
+    [ "app_uart_buffers_t", "a00184.html", [
+      [ "rx_buf", "a00184.html#ab5c77995614a78b4a7baf6f5ab59bb5c", null ],
+      [ "rx_buf_size", "a00184.html#a42c5f8c78ee123d84c7de5da43f703e0", null ],
+      [ "tx_buf", "a00184.html#a1073bbd41b6d0ddc55e7ec432cf517dd", null ],
+      [ "tx_buf_size", "a00184.html#a8a0ff8a830eadfc972a4d44e1340e392", null ]
     ] ],
-    [ "ble_rscs_s", "a00345.html", [
-      [ "conn_handle", "a00345.html#aa54416b00fd0d29dbf8c4ce28324a644", null ],
-      [ "evt_handler", "a00345.html#ad91d85a84b9d6728223af53cebf8bbf4", null ],
-      [ "feature", "a00345.html#aeaba73d58a013e5aab5a1f79583d414e", null ],
-      [ "feature_handles", "a00345.html#a9ca692ca7b98730826f4e7bebfa07a72", null ],
-      [ "meas_handles", "a00345.html#a5963b22a3c9a202db1248b6a2c3af6fd", null ],
-      [ "service_handle", "a00345.html#aefd6488d6d70f2a4d85c98504eb876d1", null ]
+    [ "app_uart_evt_t", "a00186.html", [
+      [ "data", "a00186.html#ae56c2b716e2c87405f89d31aa1b46b06", null ],
+      [ "error_code", "a00186.html#ab2aeea864de0050ec22790a186a4e9b1", null ],
+      [ "error_communication", "a00186.html#ae2f48256edd4052e8273d098bb8249c4", null ],
+      [ "evt_type", "a00186.html#ae89e1d236d49d18fa5be6fa32ba3c0d8", null ],
+      [ "value", "a00186.html#a9e34eabccc01fe3eeff1c7392d737d84", null ]
     ] ],
-    [ "ble_rscs_meas_s", "a00344.html", [
-      [ "inst_cadence", "a00344.html#ae0184379a72ca968be31624693859296", null ],
-      [ "inst_speed", "a00344.html#a2c67fcdf6c045252f8f2c19410ce93ce", null ],
-      [ "inst_stride_length", "a00344.html#a80d5e5ebfb6d4e01cf5a3716af83bf6f", null ],
-      [ "is_inst_stride_len_present", "a00344.html#ae051edb606a9de9cebc7ab7a6eef2ae0", null ],
-      [ "is_running", "a00344.html#a1b8f312b31cdc3a4b06f092ce7e2bd8e", null ],
-      [ "is_total_distance_present", "a00344.html#abd1ef1791fd6291c82c5b2f5d9bd289f", null ],
-      [ "total_distance", "a00344.html#a446576bd70deec710453a5e09ff1f7c2", null ]
+    [ "APP_UART_FIFO_INIT", "a00968.html#ga25b7b23e541732b945b5992b5519a10f", null ],
+    [ "APP_UART_INIT", "a00968.html#gab37ec15202892ba42f454daacaa38b7f", null ],
+    [ "UART_PIN_DISCONNECTED", "a00968.html#gaa790ff39126a00c4308f30f1139f4efa", null ],
+    [ "app_uart_event_handler_t", "a00968.html#gae903f13e59955f64c03db53d9b74ba2e", null ],
+    [ "app_uart_connection_state_t", "a00968.html#ga683d8281c00679b243c06fd9b7815557", [
+      [ "APP_UART_DISCONNECTED", "a00968.html#gga683d8281c00679b243c06fd9b7815557acb220f64509a4882b0b79f1a4620398c", null ],
+      [ "APP_UART_CONNECTED", "a00968.html#gga683d8281c00679b243c06fd9b7815557a026c1999c42fd293cc7ead39f6de1cf2", null ]
     ] ],
-    [ "BLE_RSCS_FEATURE_CALIBRATION_PROCEDURE_BIT", "a00968.html#ga7699ff99de0293fa8183117ba09259c9", null ],
-    [ "BLE_RSCS_FEATURE_INSTANT_STRIDE_LEN_BIT", "a00968.html#gab7a0af47e661440ca6845c1f4a73ad87", null ],
-    [ "BLE_RSCS_FEATURE_MULTIPLE_SENSORS_BIT", "a00968.html#ga069fdb89d733f4bcffc62f9a42a19ffb", null ],
-    [ "BLE_RSCS_FEATURE_TOTAL_DISTANCE_BIT", "a00968.html#gaca7e41a2844d7508da269b933aba0edc", null ],
-    [ "BLE_RSCS_FEATURE_WALKING_OR_RUNNING_STATUS_BIT", "a00968.html#ga032860d4209d0f07f27cd7fb1b6643c3", null ],
-    [ "ble_rscs_evt_handler_t", "a00968.html#ga04b6f149d88df65ebffd5b8297bd657f", null ],
-    [ "ble_rscs_meas_t", "a00968.html#ga1b8b0a0d95abb5145cca3e5fb23a6352", null ],
-    [ "ble_rscs_evt_type_t", "a00968.html#gaed8352fbaf5d37687a3aa5751f4d23bd", [
-      [ "BLE_RSCS_EVT_NOTIFICATION_ENABLED", "a00968.html#ggaed8352fbaf5d37687a3aa5751f4d23bda4e8e3e5e00758024939ee56a4d2d2418", null ],
-      [ "BLE_RSCS_EVT_NOTIFICATION_DISABLED", "a00968.html#ggaed8352fbaf5d37687a3aa5751f4d23bda36486aa0ec7024c5b29d2b6c2cbb89cd", null ]
+    [ "app_uart_evt_type_t", "a00968.html#ga9346b21b144fd9499e24853bbf781e17", [
+      [ "APP_UART_DATA_READY", "a00968.html#gga9346b21b144fd9499e24853bbf781e17ad0c6e0d9cef6b81de23e2f2583013ef1", null ],
+      [ "APP_UART_FIFO_ERROR", "a00968.html#gga9346b21b144fd9499e24853bbf781e17ac4e8a2753ab64a36a3bd0e723a3f26ea", null ],
+      [ "APP_UART_COMMUNICATION_ERROR", "a00968.html#gga9346b21b144fd9499e24853bbf781e17a6ee822a8a07d1be09ac336495a5238d8", null ],
+      [ "APP_UART_TX_EMPTY", "a00968.html#gga9346b21b144fd9499e24853bbf781e17a9fa032c57eadcef66e102eb78a04c2d1", null ],
+      [ "APP_UART_DATA", "a00968.html#gga9346b21b144fd9499e24853bbf781e17a5b4c2503e1e658ff28dcaad17eff6ac4", null ]
     ] ],
-    [ "ble_rscs_init", "a00968.html#gafd5591aad290232ba97ac0bc7aec8f7b", null ],
-    [ "ble_rscs_measurement_send", "a00968.html#ga16080f0b2880066d0e1f88fbe960079b", null ],
-    [ "ble_rscs_on_ble_evt", "a00968.html#ga23555a37f7903b50d65a818f32c362ec", null ]
+    [ "app_uart_flow_control_t", "a00968.html#gad0b0f33b12902ce08681e06f304f0cba", [
+      [ "APP_UART_FLOW_CONTROL_DISABLED", "a00968.html#ggad0b0f33b12902ce08681e06f304f0cbaae7fd58fef6c10140a659be29f0b81b8b", null ],
+      [ "APP_UART_FLOW_CONTROL_ENABLED", "a00968.html#ggad0b0f33b12902ce08681e06f304f0cbaa76123f43769a3f237d5a670844c6d235", null ],
+      [ "APP_UART_FLOW_CONTROL_LOW_POWER", "a00968.html#ggad0b0f33b12902ce08681e06f304f0cbaa26a16d7573f75722e220954fa4fbf27f", null ]
+    ] ],
+    [ "app_uart_close", "a00968.html#ga8b5b23229363aefa52be33360dfb5fde", null ],
+    [ "app_uart_flush", "a00968.html#ga2b867b8dfc7209b87e2e8f0da0741105", null ],
+    [ "app_uart_get", "a00968.html#gacddb5b7b711ef104f9eb181a13bc4503", null ],
+    [ "app_uart_get_connection_state", "a00968.html#ga4360a21365ae56f22344f84c20933d64", null ],
+    [ "app_uart_init", "a00968.html#gae650b57bf30da0f26ae409782de9fcbd", null ],
+    [ "app_uart_put", "a00968.html#ga2e4c8407274a151e72ed5a226529dc36", null ]
 ];

@@ -1,5 +1,7 @@
 var a00106 =
 [
-    [ "encr_key_size", "a00106.html#abca3beb1304d60fd03f5ae098495dd6f", null ],
-    [ "sec_mode", "a00106.html#ada618e26f99059e7ccbe5be9f5d1049d", null ]
+    [ "buf_size_mask", "a00106.html#a03c6c7fcf087b5c1e0cfd5ce09661870", null ],
+    [ "p_buf", "a00106.html#a64eafd180a65260208be3b845f6acbf5", null ],
+    [ "read_pos", "a00106.html#aabcc538faf2ea4a374702c9896ae52d6", null ],
+    [ "write_pos", "a00106.html#a12631a6575aae2c98f1cca4034b38eaf", null ]
 ];

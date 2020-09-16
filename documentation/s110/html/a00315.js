@@ -1,6 +1,9 @@
 var a00315 =
 [
-    [ "evt_type", "a00315.html#ab349bf82213ea8f4ae3b547b2a3a4f5f", null ],
-    [ "hrm", "a00315.html#abbddddc557dc3729730e6ccd02041fa9", null ],
-    [ "params", "a00315.html#a3bc3734c98a487e13baac2d52d0b1ed9", null ]
+    [ "rd_auth", "a00315.html#a0d2f2743a556d382513a43607a08c057", null ],
+    [ "read_perm", "a00315.html#a61a4ef92eba3a3b2b3f616557f6b74aa", null ],
+    [ "vlen", "a00315.html#a921e414734cd784e0c3b7309d3a14f39", null ],
+    [ "vloc", "a00315.html#abbd6b9b2d75565fc6fd66074a47308c7", null ],
+    [ "wr_auth", "a00315.html#affcd971025cbaa9525c2ed9ff95d913c", null ],
+    [ "write_perm", "a00315.html#af04a8d72352f3c02dbef021b360f477f", null ]
 ];

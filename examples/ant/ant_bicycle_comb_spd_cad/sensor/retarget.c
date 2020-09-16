@@ -28,7 +28,7 @@ int fputc(int ch, FILE * p_file)
     UNUSED_VARIABLE(err_code);
 #endif // TRACE_UART
 
-    return 0;
+    return ch;
 }
 
 

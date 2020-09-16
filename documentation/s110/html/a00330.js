@@ -1,7 +1,7 @@
 var a00330 =
 [
-    [ "alert_level_handles", "a00330.html#a67d6395f4804c00de308270dddf15b7e", null ],
-    [ "conn_handle", "a00330.html#a9bd3acaad1b3accf09eb6d179225204d", null ],
-    [ "evt_handler", "a00330.html#a6304bcdac9c7d2758f64aa1dd5844959", null ],
-    [ "service_handle", "a00330.html#afa6a28eec3f1b9b4f7ea596af7ee2c29", null ]
+    [ "params", "a00330.html#ac364488294f0c0ad5c857e56935ca602", null ],
+    [ "read", "a00330.html#a7d0c5d0586fa2a048d724a7ededf5e18", null ],
+    [ "type", "a00330.html#a70efda4990b7c7e43bc7c0b1ae75c05e", null ],
+    [ "write", "a00330.html#aa536efc6b3a866b5ae2d4c6cd9b2aafa", null ]
 ];

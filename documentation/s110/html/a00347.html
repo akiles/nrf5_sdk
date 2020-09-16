@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: ble_sc_ctrlpt_resp_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: ble_hids_rep_map_init_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,63 +106,93 @@ $(document).ready(function(){initNavTree('a00347.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">ble_sc_ctrlpt_resp_t Struct Reference<div class="ingroups"><a class="el" href="a00969.html">Speed and Cadence Control Point</a></div></div>  </div>
+<div class="title">ble_hids_rep_map_init_t Struct Reference<div class="ingroups"><a class="el" href="a01203.html">Human Interface Device Service</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Speed and Cadence Control Point response indication structure.  
+<p>HID Service Report Map characteristic init structure. This contains all options and data needed for initialization of the Report Map characteristic.  
  <a href="a00347.html#details">More...</a></p>
 
-<p><code>#include &lt;ble_sc_ctrlpt.h&gt;</code></p>
+<p><code>#include &lt;ble_hids.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a978ed1543a79395ebdefc4f92233dfb7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00969.html#ga1c8be45ba4b09ec30229b4cfb4fd2d88">ble_scpt_response_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00347.html#a978ed1543a79395ebdefc4f92233dfb7">status</a></td></tr>
-<tr class="separator:a978ed1543a79395ebdefc4f92233dfb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb2e07899dd914805f45b9da0694e0af"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00347.html#afb2e07899dd914805f45b9da0694e0af">len</a></td></tr>
-<tr class="separator:afb2e07899dd914805f45b9da0694e0af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf17b1a0cd599ca5bd71dba42e318e06"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00347.html#adf17b1a0cd599ca5bd71dba42e318e06">encoded_ctrl_rsp</a> [19]</td></tr>
-<tr class="separator:adf17b1a0cd599ca5bd71dba42e318e06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac68f34bc812fb78bd16a11acf3931297"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00347.html#ac68f34bc812fb78bd16a11acf3931297">p_data</a></td></tr>
+<tr class="separator:ac68f34bc812fb78bd16a11acf3931297"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad37a58093ba29da8205f825d524fde10"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00347.html#ad37a58093ba29da8205f825d524fde10">data_len</a></td></tr>
+<tr class="separator:ad37a58093ba29da8205f825d524fde10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dfff543d60774b7fe5bd69f23547e86"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00347.html#a9dfff543d60774b7fe5bd69f23547e86">ext_rep_ref_num</a></td></tr>
+<tr class="separator:a9dfff543d60774b7fe5bd69f23547e86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a460e7c6bc062f9bd31fd72b4b696c2aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00394.html">ble_uuid_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00347.html#a460e7c6bc062f9bd31fd72b4b696c2aa">p_ext_rep_ref</a></td></tr>
+<tr class="separator:a460e7c6bc062f9bd31fd72b4b696c2aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcb39f07b266acfe8539c7ed9ed13532"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00388.html">ble_srv_security_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00347.html#adcb39f07b266acfe8539c7ed9ed13532">security_mode</a></td></tr>
+<tr class="separator:adcb39f07b266acfe8539c7ed9ed13532"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Speed and Cadence Control Point response indication structure. </p>
+<div class="textblock"><p>HID Service Report Map characteristic init structure. This contains all options and data needed for initialization of the Report Map characteristic. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="adf17b1a0cd599ca5bd71dba42e318e06"></a>
+<a class="anchor" id="ad37a58093ba29da8205f825d524fde10"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_sc_ctrlpt_resp_t::encoded_ctrl_rsp[19]</td>
+          <td class="memname">uint16_t ble_hids_rep_map_init_t::data_len</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>control point encoded response. </p>
+<p>Length of report map data. </p>
 
 </div>
 </div>
-<a class="anchor" id="afb2e07899dd914805f45b9da0694e0af"></a>
+<a class="anchor" id="a9dfff543d60774b7fe5bd69f23547e86"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t ble_sc_ctrlpt_resp_t::len</td>
+          <td class="memname">uint8_t ble_hids_rep_map_init_t::ext_rep_ref_num</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>control point response length . </p>
+<p>Number of Optional External Report Reference descriptors. </p>
 
 </div>
 </div>
-<a class="anchor" id="a978ed1543a79395ebdefc4f92233dfb7"></a>
+<a class="anchor" id="ac68f34bc812fb78bd16a11acf3931297"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00969.html#ga1c8be45ba4b09ec30229b4cfb4fd2d88">ble_scpt_response_t</a> ble_sc_ctrlpt_resp_t::status</td>
+          <td class="memname">uint8_t* ble_hids_rep_map_init_t::p_data</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>control point response status . </p>
+<p>Report map data. </p>
+
+</div>
+</div>
+<a class="anchor" id="a460e7c6bc062f9bd31fd72b4b696c2aa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00394.html">ble_uuid_t</a>* ble_hids_rep_map_init_t::p_ext_rep_ref</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Optional External Report Reference descriptor (will be added if != NULL). </p>
+
+</div>
+</div>
+<a class="anchor" id="adcb39f07b266acfe8539c7ed9ed13532"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00388.html">ble_srv_security_mode_t</a> ble_hids_rep_map_init_t::security_mode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Security mode for the HID Service Report Map characteristic. </p>
 
 </div>
 </div>
@@ -171,8 +201,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00347.html">ble_sc_ctrlpt_resp_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00347.html">ble_hids_rep_map_init_t</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

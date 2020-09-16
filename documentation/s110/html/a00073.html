@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: Proximity Application</title>
+<title>nRF51 SDK - S110 SoftDevice: HID Keyboard Application</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,87 +97,91 @@ $(document).ready(function(){initNavTree('a00073.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Proximity Application </div>  </div>
+<div class="title">HID Keyboard Application </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The Proximity Application is an example that implements the Proximity profile using the hardware delivered in the nRF51 Development Kit. The Proximity profile alerts the user when connected devices are too far apart.</p>
-<p>The application includes all three services in the Proximity profile:</p>
+<div class="textblock"><p>The HID Keyboard Application is an example that implements the HID over GATT profile for keyboard using the hardware delivered in the nRF51 Development Kit.</p>
+<p>The application includes the three mandatory services needed for the HID over GATT profile:</p>
 <ul>
-<li><a class="el" href="a00967.html">Link Loss Service</a></li>
-<li><a class="el" href="a00965.html">Immediate Alert Service</a></li>
-<li><a class="el" href="a00975.html">TX Power Service</a></li>
+<li><a class="el" href="a01203.html">Human Interface Device Service</a></li>
+<li><a class="el" href="a01199.html">Device Information Service</a></li>
+<li><a class="el" href="a01194.html">Battery Service</a></li>
 </ul>
-<p>In addition, use of the <a class="el" href="a00953.html">Battery Service</a> and <a class="el" href="a00976.html">Device Manager</a> are also demonstrated.</p>
-<p>At each power up and disconnect, the Proximity Application will do 20 seconds of fast advertising with whitelist followed by 40 seconds of fast advertising without whitelist. It will then switch to slow advertising mode, and the state <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING_WHITELIST">BSP_INDICATE_ADVERTISING_WHITELIST</a> is indicated. When the link is lost, or when an alert is signaled using the <a class="el" href="a00965.html">Immediate Alert Service</a>, an alert is indicated using the state <a class="el" href="a00057.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> or <a class="el" href="a00057.html#BSP_INDICATE_ALERT_1">BSP_INDICATE_ALERT_1</a>, depending on the value of the Alert Level characteristic.</p>
-<p>The example uses the ADC peripheral to measure the battery level every 2 minutes. If there is a change in the battery level, the application sends the current level as notification.</p>
-<dl class="section note"><dt>Note</dt><dd>This application is not power optimized!</dd>
+<dl class="section note"><dt>Note</dt><dd>This application is not power optimized! </dd>
 <dd>
-<ul>
-<li>The device must be in bonded state to change any characteristic in this application. </li>
-<li>The TX Power Level characteristic is not writable. </li>
-<li>The application will stop advertising and go to system-off mode after 3 minutes and 30 seconds (if no advertising with whitelist was done) or after 4 minutes (if advertising with whitelist was done). Push button 1 to restart advertising, or push and hold button 1 for 5 seconds to erase all bonds and restart advertising. </li>
-<li>Upon disconnecting a bonded connection, the application will advertise with whitelist for ADV_INTERVAL_FAST_PERIOD seconds. After this time-out, the application will be able to bond to a new central.</li>
-</ul>
-</dd></dl>
-<h1><a class="anchor" id="project_proximity_setup"></a>
+The application will stop advertising and go to system-off mode after 3 minutes and 30 seconds (if no advertising with whitelist was done) or after 4 minutes (if advertising with whitelist was done). Push the button 1 to restart advertising.</dd></dl>
+<h1><a class="anchor" id="project_hids_keyboard_setup"></a>
 Setup</h1>
-<p>The name of the example is <b>ble_app_proximity_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_proximity</code> </p>
-<p>Button assignments:</p>
+<p>The name of the example is <b>ble_app_hids_keyboard_s110_pca10028</b>. If you are not using the Keil Pack Installer, you can find the source code and project file of the example in the following folder: <code>&lt;InstallFolder&gt;\examples\ble_peripheral\ble_app_hids_keyboard</code> </p>
+<p><b>Button assignments</b> - in addition to those defined in <a class="el" href="a00062.html#examples_ble_button_functionality">BSP BLE Button Assignments</a><span>:</span></p>
 <ul>
-<li>Button 1: Wake up from system-off and restart advertising. In connected state, this button is used to raise/clear High Alert to the central, which has an Immediate Alert Service instance.</li>
-<li>Button 2: Hold for 5 seconds to wake up from system-off, erase all bonds, and restart advertising.</li>
-</ul>
-<h1><a class="anchor" id="project_proximity_test"></a>
-Testing</h1>
-<p>Test the Proximity Application with the nRF Toolbox app, which is available on both iOS (Apple Store) and Android (Google Play).</p>
-<p>You can also test the application with the Master Control Panel by performing the following steps:</p>
-<ol type="1">
-<li>Compile and program the application. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
-<li>Connect to the device from Master Control Panel (the device will be advertising as 'Nordic_Prox'), then bond and perform service discovery. Observe that the <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
-<li>Set the AlertLevel characteristic in <a class="el" href="a00965.html">Immediate Alert Service</a> to 1 (click the 'hex' radio button, enter '01' in the text box, and click the 'Write' button), and observe the Mild alert (<a class="el" href="a00057.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a>).</li>
-<li>Change the AlertLevel value to 2 and observe the High alert (<a class="el" href="a00057.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a>).</li>
-<li>Change the AlertLevel value to 0 and observe <a class="el" href="a00057.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a>.</li>
-<li>Set the AlertLevel characteristic in <a class="el" href="a00967.html">Link Loss Service</a> to 1.</li>
-<li>Simulate a link loss situation (for example by shielding the Master Emulator) and observe that both <a class="el" href="a00057.html#BSP_INDICATE_ALERT_0">BSP_INDICATE_ALERT_0</a> and <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> are indicated.</li>
-<li>Reconnect and observe that only the <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
-<li>Set the AlertLevel characteristic in <a class="el" href="a00967.html">Link Loss Service</a> to 2.</li>
-<li>Simulate a link loss situation, for example by disconnecting the Master Emulator, and observe that the <a class="el" href="a00057.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a> and <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> are indicated.</li>
-<li>Reconnect and observe that only the <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
-<li>Select the TxPowerLevel characteristic in <a class="el" href="a00975.html">TX Power Service</a>, click the 'Read' button, and verify that it was successfully read.</li>
-<li>Click the 'Enable services' button to start notification of Battery Level and observe that the battery level is notified periodically (if there is a change).</li>
-<li>Disconnect from the Master Control Panel and observe that <a class="el" href="a00057.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> is indicated.</li>
-<li>Wait until the application goes to system-off (<a class="el" href="a00057.html#BSP_INDICATE_IDLE">BSP_INDICATE_IDLE</a>).</li>
-<li>Press button 1 and connect to the Master Control Panel. Observe that <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> is indicated and that the battery level is notified periodically (if there is a change).</li>
-<li>Disconnect from the Master Control Panel.</li>
-<li>Connect with a different central and bond and disconnect.</li>
-<li>Wait until the application goes to system-off (<a class="el" href="a00057.html#BSP_INDICATE_IDLE">BSP_INDICATE_IDLE</a>).</li>
-<li>Press button 1 and reconnect to the first Master Control Panel. Observe that <a class="el" href="a00057.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> is indicated and that the battery level is notified periodically (if there is a change).</li>
-<li>Disconnect from the Master Control Panel.</li>
-<li>Connect with the second central and observe that the link encryption is on and that the battery level is not notified.</li>
-<li>Disconnect from the second central and wait for the application to go to system-off.</li>
-<li>Press and hold button 2 (erase bonds) for 5 seconds and connect with the first Master Control Panel. Observe that the link encryption is OFF and that no notifications are received.</li>
-<li>Disconnect from Master Control Panel.</li>
-</ol>
-<p>Test the Find Me locater (Immediate Alert Service Client) functionality by performing the following steps:</p>
-<ol type="1">
-<li>In the Master Control Panel, create the Immediate Alert Service (IAS) server by performing the following steps:<ul>
-<li>Click File -&gt; Server Setup. In the window that is displayed, click File -&gt; Load setup.</li>
-<li>In the resulting window, navigate to the <code>&lt;InstallFolder&gt;\Nordic\nrf51\examples\ble_peripheral\ble_app_proximity</code> folder. If you are using Keil packs, this folder is located at <code>&lt;KeilFolder&gt;\ARM\Pack\NordicSemiconductor\nRF_Examples\&lt;version&gt;\ble_peripheral\ble_app_proximity</code>. Load the file <code>findMeMasterServer.bin</code>.</li>
-<li>Click the 'Stop Server' button and then 'Start Server'. This restarts the server with Immediate Alert Service configured.</li>
-<li>You must keep the 'Server Setup' window opened.</li>
+<li>During Connection:<ul>
+<li>Button 1: Send sample text to the computer</li>
+<li>Button 2: Simulates the Shift key</li>
 </ul>
 </li>
-<li>Go to the Master Control Panel main window and connect to the device.</li>
-<li>Press button 1 and observe that the AlertLevel value at the 'Server setup' window of the Master Control Panel changes to 02. This indicates that the device was able to signal a High Alert to the central.</li>
-<li>Press button 1 again and observe that the AlertLevel value changes to 00. This indicates that the device was able to clear the High Alert previously signalled to the central. </li>
+</ul>
+<h1><a class="anchor" id="project_hid_keyboard_test"></a>
+Testing</h1>
+<p>Test the HID Keyboard Application with a Microsoft Windows 8 computer with a <em>Bluetooth</em> radio:</p>
+<ol type="1">
+<li>Compile and program the application. Observe that the <a class="el" href="a00062.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>On the Windows 8 computer, search for <em>Bluetooth</em> devices, and connect to the device named 'Nordic_Keyboard'. Observe that the <a class="el" href="a00062.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Open a text editing application (for example Notepad).</li>
+<li>Press Button 1 on the board. This will send one character of the test message 'hello' (the test message includes a carriage return) to the computer, and this will be displayed in the text editor.</li>
+<li>Press Button 1 while keeping the Button 2 pressed. Observe that the same 'hello' text will appear in capital letters. This is because Button 2 simulates the Shift key.</li>
+<li>Turn Caps Lock on on the computer. Observe that:<ul>
+<li><a class="el" href="a00062.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a> is indicated.</li>
+<li>The text 'CAPSON' will be seen on the text editor window on the computer. This verifies that output report characteristic has been written successfully on the HID device.</li>
+</ul>
+</li>
+<li>Turn Caps Lock off on the computer. This should result in two events:<ul>
+<li><a class="el" href="a00062.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a> is indicated.</li>
+<li>The text 'capsof' will be seen on the editor window.</li>
+</ul>
+</li>
+<li>Disconnect the computer from the device by removing the device from the computer's devices list. Observe that for the first period, the <a class="el" href="a00062.html#BSP_INDICATE_ADVERTISING_DIRECTED">BSP_INDICATE_ADVERTISING_DIRECTED</a> state is indicated, then it switches to <a class="el" href="a00062.html#BSP_INDICATE_ADVERTISING_WHITELIST">BSP_INDICATE_ADVERTISING_WHITELIST</a>, then to <a class="el" href="a00062.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a>, then to <a class="el" href="a00062.html#BSP_INDICATE_ADVERTISING_SLOW">BSP_INDICATE_ADVERTISING_SLOW</a>, and then all off.</li>
+<li>Reset the device while pressing Button 2 to erase bond info. Repeat step 2, and check if the device can send messages to the computer.</li>
+<li>Disconnect the device from Windows 8, thereby removing the bond info from the computer. Start a search for <em>Bluetooth</em> devices and observe that while the device is advertising with Whitelist, Windows 8 is not able to discover the device.</li>
+<li>The device should be discoverable again after it switches to advertising mode.</li>
+</ol>
+<p>You can also test the application with the Master Control Panel by performing the following steps:</p>
+<ol type="1">
+<li>Compile and program the application. Observe that <a class="el" href="a00062.html#BSP_INDICATE_ADVERTISING">BSP_INDICATE_ADVERTISING</a> state is indicated.</li>
+<li>Connect to the device from Master Control Panel (the device will be advertising as 'Nordic_Keyboard'), then bond and perform service discovery. Observe that <a class="el" href="a00062.html#BSP_INDICATE_CONNECTED">BSP_INDICATE_CONNECTED</a> state is indicated.</li>
+<li>Click the 'Enable services' button on Master Control Panel, and observe that Battery Level notifications are being received every two seconds.</li>
+<li>Push Button 1 on the board. Observe that 2 notifications on one of the HID Report characteristics are received; two notifications (press and release) each for one character of the test message. The first one has the value '00000B0000000000', the second has the value '0000000000000000'. This corresponds to press and release of character 'h'. Similarly, further press and release events will result in press and release notifications of subsequent characters of the test string. Therefore, pushing Button 1 again will result in notification of press and release reports for character 'e'.</li>
+<li>Simulate Shift key:<ul>
+<li>Keeping Button 2 pressed, push the Button 1 on the board.</li>
+<li>Observe that 2 notifications on one of the HID Report characteristics are received; two notifications (press and release) each for one character of the test message. The first one has the value '02000F0000000000', the second has the value '0200000000000000'. This corresponds to press and release of character 'l' with the Shift key pressed.</li>
+</ul>
+</li>
+<li>Simulate Caps Lock ON:<ul>
+<li>On the Master Control Panel, select the HID Report, which has the properties Read, WriteWithoutResponse, and Write (the Output Report) and UUID: 0x2A4D.</li>
+<li>Click the 'hex' radio button.</li>
+<li>Enter '02' in the text box.</li>
+<li>Click the 'Write' button.</li>
+<li>Observe that <a class="el" href="a00062.html#BSP_INDICATE_ALERT_3">BSP_INDICATE_ALERT_3</a> is indicated and that 7 notifications on the other HID Report characteristic (the Input Report) are received. The first one has the value '0000060413161211', the second has the value '0000000413161211', third has the value '0000000013161211', and so on until release event for all characters is sent as the 7th one as '0000000000000000'.</li>
+</ul>
+</li>
+<li>Simulate Caps Lock OFF:<ul>
+<li>On the Master Control Panel, select the HID Report, which has the properties Read, WriteWithoutResponse, and Write (the Output Report).</li>
+<li>Click the 'hex' radio button.</li>
+<li>Enter '00' in the text box.</li>
+<li>Click the 'Write' button.</li>
+<li>Observe that <a class="el" href="a00062.html#BSP_INDICATE_ALERT_OFF">BSP_INDICATE_ALERT_OFF</a> is indicated and that two notifications on the other HID Report characteristic are received. The first one has the value '0000060413161209', the second has the value '0000000413161209', third has the value '0000000013161209', and so on until release event for all characters is sent as the 7th one as '0000000000000000'.</li>
+</ul>
+</li>
+<li>Click on the Disconnect button in Master Control Panel. Observe that no new notifications are received and the device is advertising with Whitelist.</li>
+<li>As bond info is preserved by Master Control Panel, it should be possible to immediately reconnect to the device by clicking on the Connect button again. Observe that Battery Level notifications are being received every two seconds. </li>
 </ol>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00058.html">BLE Peripheral</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:41 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00004.html">Examples</a></li><li class="navelem"><a class="el" href="a00064.html">BLE Peripheral</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:28 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

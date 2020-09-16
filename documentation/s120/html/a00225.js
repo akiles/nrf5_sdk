@@ -1,6 +1,5 @@
 var a00225 =
 [
-    [ "instance_id", "a00225.html#ad3d35b697eb00153c57c93bcc7878a22", null ],
-    [ "irq", "a00225.html#a0da7a46f813f94e2499cf3d2f38498fb", null ],
-    [ "p_reg", "a00225.html#a485c160d231915b3ea3155106b07826f", null ]
+    [ "read_perm", "a00225.html#ac08fb7f662817574a3792609f0d92637", null ],
+    [ "write_perm", "a00225.html#aca8d641cf8e5b5811aa2a2c68035c395", null ]
 ];

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: Using the SDK with other boards</title>
+<title>nRF51 SDK - S210 SoftDevice: Memory Manager</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,100 +97,151 @@ $(document).ready(function(){initNavTree('a00026.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Using the SDK with other boards </div>  </div>
+<div class="title">Memory Manager </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#supported_board">Supported boards</a></li>
-<li class="level1"><a href="#bsp_location">Enabling support for a board</a></li>
-<li class="level1"><a href="#custom_board_support">Adding support for a custom board</a></li>
-</ul>
-</div>
-<div class="textblock"><p>The nrf51 SDK supports the current Nordic Semiconductor development board. You can also enable support for another board by selecting a specific supported Nordic Semiconductor board or by defining a custom board. In this way, you can run the SDK examples on any target board.</p>
-<h1><a class="anchor" id="supported_board"></a>
-Supported boards</h1>
-<p>By default, the SDK project files must be used with specific Nordic Semiconductor boards, usually the most current board. However, the SDK provides support for other boards as well.</p>
-<p>The following boards are supported: </p>
+<div class="textblock"><p>The <a class="el" href="a00359.html">Memory Manager</a> for nRF51 manages static buffers of fixed sizes in RAM. These buffers can be requested for usage, and freed when the application no longer needs them.</p>
+<h1><a class="anchor" id="MEM_MANAGER"></a>
+Overview</h1>
+<p>The Memory Manager allocates memory of different sizes. The application that requests the memory does not need to have knowledge of how the memory allocation is handled internally.</p>
+<p>The Memory Manager defines three pools of buffer sizes, small, medium, and large. The size of each buffer in the pool and the number of available buffers can be configured based on the application needs. The default configurations are:</p>
 <table class="doxtable">
 <tr>
-<th>Board </th><th>#define</th></tr>
+<th>Parameter </th><th>Default value </th></tr>
 <tr>
-<td>nRF6310 (part of nRFgo Starter Kit) </td><td>BOARD_NRF6310 </td></tr>
+<td>MEMORY_MANAGER_SMALL_BLOCK_SIZE </td><td>128 </td></tr>
 <tr>
-<td>PCA10000 (nRF51822 USB dongle) </td><td>BOARD_PCA10000 </td></tr>
+<td>MEMORY_MANAGER_SMALL_BLOCK_COUNT </td><td>4 </td></tr>
 <tr>
-<td>PCA10001 (part of nRF51822 Evaluation Kit) </td><td>BOARD_PCA10001 </td></tr>
+<td>MEMORY_MANAGER_MEDIUM_BLOCK_SIZE </td><td>512 </td></tr>
 <tr>
-<td>PCA10002 (nRF51422 USB dongle) </td><td>BOARD_PCA10002 </td></tr>
+<td>MEMORY_MANAGER_MEDIUM_BLOCK_COUNT </td><td>3 </td></tr>
 <tr>
-<td>PCA10003 (part of nRF51422 Evaluation Kit, BLE + ANT) </td><td>BOARD_PCA10003 </td></tr>
+<td>MEMORY_MANAGER_LARGE_BLOCK_COUNT </td><td>2056 </td></tr>
 <tr>
-<td>PCA10028 (part of nRF51422 Evaluation Kit, Arduino form factor) </td><td>BOARD_PCA10028 </td></tr>
-<tr>
-<td>PCA10031 (nRF51422 USB dongle) </td><td>BOARD_PCA10031 </td></tr>
-<tr>
-<td>PCA20006 (nRF51822 Beacon board) </td><td>BOARD_PCA20006 </td></tr>
-<tr>
-<td>WT51822 (Wavetek shield) </td><td>BOARD_WT51822 </td></tr>
-<tr>
-<td>Custom board (definition in custom_board.h) </td><td>BOARD_CUSTOM </td></tr>
+<td>MEMORY_MANAGER_LARGE_BLOCK_SIZE </td><td>1 </td></tr>
 </table>
-<h1><a class="anchor" id="bsp_location"></a>
-Enabling support for a board</h1>
-<p>To enable support for an older Nordic Semiconductor board or a custom board, you must include a define statement for the board that you want to use before you compile the code.</p>
-<p>According to the define statement, the suitable board support file is selected. The board support file defines the peripherals, thus the location of LEDs and buttons, for the selected platform. The header files for supported boards are located in the directory <code>nrf51\examples\bsp</code>. The actual selection of the file according to the define statement is done in boards.h.</p>
-<p>Depending on the device on the legacy board, you might need to change the memory layout. PCA10028 and PCA10031 have 32 kB RAM, so if you want to use older boards with 16 kB RAM, you must decrease the size of IRAM1 by 16 kB (0x4000 in hex). In Keil, click <b>Project &gt; Options for Target '...'</b> and modify the values for "Read/Write Memory Area". For GCC, change the linked *.ld file in the Makefile.</p>
-<h1><a class="anchor" id="custom_board_support"></a>
-Adding support for a custom board</h1>
-<p>To add support for a custom board, you must create a custom board support file with the name custom_board.h. This file must be located in a directory in the Include path. You can then select to use the custom board by adding the define statement <code>#define</code> <code>BOARD_CUSTOM</code>.</p>
-<p>The easiest way to create the custom_board.h file is to start with an existing platform definition file and adapt it to your needs.</p>
-<p>A platform example definition looks as follows:</p>
-<div class="fragment"><div class="line"><span class="comment">// Defines the number of LEDs. In this example, there is a single RGB LED.</span></div>
-<div class="line"><span class="preprocessor">#define LEDS_NUMBER    3</span></div>
-<div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="comment">// Defines which PIOs control the color of the LED.</span></div>
-<div class="line"><span class="preprocessor">#define LED_START      21</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define LED_RGB_RED    21</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define LED_RGB_GREEN  22</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define LED_RGB_BLUE   23</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define LED_STOP       23</span></div>
-<div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="comment">// Defines an RGB LED as 3 single LEDs.</span></div>
-<div class="line"><span class="preprocessor">#define BSP_LED_0 LED_RGB_RED</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define BSP_LED_1 LED_RGB_GREEN</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define BSP_LED_2 LED_RGB_BLUE</span></div>
-<div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor">#define LED_RGB_RED_MASK    (1&lt;&lt;LED_RGB_RED)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define LED_RGB_GREEN_MASK  (1&lt;&lt;LED_RGB_GREEN)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define LED_RGB_BLUE_MASK   (1&lt;&lt;LED_RGB_BLUE)</span></div>
-<div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor">#define BSP_LED_0_MASK    (1&lt;&lt;BSP_LED_0)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define BSP_LED_1_MASK    (1&lt;&lt;BSP_LED_1)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define BSP_LED_2_MASK    (1&lt;&lt;BSP_LED_2)</span></div>
-<div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor">#define LEDS_MASK      (BSP_LED_0_MASK | BSP_LED_1_MASK | BSP_LED_2_MASK)</span></div>
-<div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="comment">// Defines which LEDs are lit when the signal is low. In this example,</span></div>
-<div class="line"><span class="comment">// all LEDs are lit.</span></div>
-<div class="line"><span class="preprocessor">#define LEDS_INV_MASK  LEDS_MASK</span></div>
-<div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="comment">// Defines the user buttons. In this example, there are no user buttons.</span></div>
-<div class="line"><span class="preprocessor">#define BUTTONS_NUMBER 0</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define BUTTONS_MASK   0x00000000</span></div>
-<div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="comment">// Defines the UART connection with J-Link.</span></div>
-<div class="line"><span class="preprocessor">#define RX_PIN_NUMBER  11</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define TX_PIN_NUMBER  9</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define CTS_PIN_NUMBER 10</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define RTS_PIN_NUMBER 8</span></div>
-<div class="line"><span class="preprocessor">#define HWFC           true</span></div>
-</div><!-- fragment --> </div></div><!-- contents -->
+<p>You can disable any of the pools by setting the buffer count for that pool category to zero. For example, if your application does not need large buffers, define <a class="el" href="a00026.html#MEMORY_MANAGER_LARGE_BLOCK_COUNT">MEMORY_MANAGER_LARGE_BLOCK_COUNT</a> to 0.</p>
+<p>The application does not need to be aware of which pool was used to allocate the requested memory. The requested memory can be of any size; the application does not need to request a buffer that is equal to the size of one of the pool block sizes. For example, if the Memory Manager uses the default configuration specified above and the application requests a memory buffer of size 480, the Memory Manager determines which pool is most suitable for this size of memory. In this example, the medium block is best suited. However, if no buffers in the medium buffer pool are available, the Memory Manager will attempt to provide the buffer from the next block pool. Therefore, in this example, the application would be assigned a buffer from the large buffer pool.</p>
+<p>See the flow chart below for the buffer allocation algorithm that is used. The function that is used to allocate a buffer is called <a class="el" href="a00359.html#gae56ae5e5fbdc399e4e53f80162d6c849">nrf51_sdk_mem_alloc</a></p>
+<div class="image">
+<img src="memory_manager_allocation_algorithm.png" alt="memory_manager_allocation_algorithm.png"/>
+<div class="caption">
+Figure 1. Memory Manager Allocation Algorithm.</div></div>
+ <h1><a class="anchor" id="MEM_MANAGER_CONF"></a>
+Configuration parameters</h1>
+<p>The following configuration parameters should be defined in <code>sdk_config.h</code>.</p>
+<h2><a class="anchor" id="MEM_MANAGER_DISABLE_LOGS"></a>
+MEM_MANAGER_DISABLE_LOGS</h2>
+<p>Disables debug tracing in the module. To enable tracing, this flag must be set to 0 and ENABLE_DEBUG_LOG_SUPPORT must be set to 1. </p>
+<table class="doxtable">
+<tr>
+<th>Description </th><th>Value </th></tr>
+<tr>
+<td>Enable debug trace </td><td>0 </td></tr>
+<tr>
+<td>Disable debug trace </td><td>1 </td></tr>
+<tr>
+<td>Dependencies </td><td>ENABLE_DEBUG_LOG_SUPPORT </td></tr>
+</table>
+<h2><a class="anchor" id="MEM_MANAGER_DISABLE_API_PARAM_CHECK"></a>
+MEM_MANAGER_DISABLE_API_PARAM_CHECK</h2>
+<p>Disables API parameter checks in the module. Set this define to 1 to disable checks on API parameters in the module. API parameter checks are added to ensure that the correct parameters are passed to the module. These checks are useful during development phase, but they might be redundant when the application is finalized. Disabling these checks might improve performance. </p>
+<table class="doxtable">
+<tr>
+<th>Description </th><th>Value </th></tr>
+<tr>
+<td>Enable API parameters check </td><td>0 </td></tr>
+<tr>
+<td>Disable API parameters check </td><td>1 </td></tr>
+<tr>
+<td>Dependencies </td><td>None </td></tr>
+</table>
+<h2><a class="anchor" id="MEMORY_MANAGER_SMALL_BLOCK_COUNT"></a>
+MEMORY_MANAGER_SMALL_BLOCK_COUNT</h2>
+<p>Maximum number of memory blocks identified as <em>small</em> blocks. </p>
+<table class="doxtable">
+<tr>
+<th>Restriction </th><th>Value </th></tr>
+<tr>
+<td>Minimum value </td><td>0 </td></tr>
+<tr>
+<td>Maximum value </td><td>255 </td></tr>
+<tr>
+<td>Dependencies </td><td>None </td></tr>
+</table>
+<h2><a class="anchor" id="MEMORY_MANAGER_MEDIUM_BLOCK_COUNT"></a>
+MEMORY_MANAGER_MEDIUM_BLOCK_COUNT</h2>
+<p>Maximum number of memory blocks identified as <em>medium</em> blocks. </p>
+<table class="doxtable">
+<tr>
+<th>Restriction </th><th>Value </th></tr>
+<tr>
+<td>Minimum value </td><td>0 </td></tr>
+<tr>
+<td>Maximum value </td><td>255 </td></tr>
+<tr>
+<td>Dependencies </td><td>None </td></tr>
+</table>
+<h2><a class="anchor" id="MEMORY_MANAGER_LARGE_BLOCK_COUNT"></a>
+MEMORY_MANAGER_LARGE_BLOCK_COUNT</h2>
+<p>Maximum number of memory blocks identified as <em>large</em> blocks. </p>
+<table class="doxtable">
+<tr>
+<th>Restriction </th><th>Value </th></tr>
+<tr>
+<td>Minimum value </td><td>0 </td></tr>
+<tr>
+<td>Maximum value </td><td>255 </td></tr>
+<tr>
+<td>Dependencies </td><td>None </td></tr>
+</table>
+<h2><a class="anchor" id="MEMORY_MANAGER_SMALL_BLOCK_SIZE"></a>
+MEMORY_MANAGER_SMALL_BLOCK_SIZE</h2>
+<p>The size of each memory block identified as <em>small</em> block. The size should be a multiple of the word size. </p>
+<table class="doxtable">
+<tr>
+<th>Restriction </th><th>Value </th></tr>
+<tr>
+<td>Minimum value </td><td>32 </td></tr>
+<tr>
+<td>Maximum value </td><td>MEMORY_MANAGER_MEDIUM_BLOCK_SIZE - 1 </td></tr>
+<tr>
+<td>Dependencies </td><td>MEMORY_MANAGER_MEDIUM_BLOCK_SIZE </td></tr>
+</table>
+<h2><a class="anchor" id="MEMORY_MANAGER_MEDIUM_BLOCK_SIZE"></a>
+MEMORY_MANAGER_MEDIUM_BLOCK_SIZE</h2>
+<p>Size of each memory block identified as <em>medium</em> block. The size should be a multiple of the word size. </p>
+<table class="doxtable">
+<tr>
+<th>Restriction </th><th>Value </th></tr>
+<tr>
+<td>Minimum value </td><td>MEMORY_MANAGER_SMALL_BLOCK_SIZE + 1 </td></tr>
+<tr>
+<td>Maximum value </td><td>MEMORY_MANAGER_LARGE_BLOCK_SIZE - 1 </td></tr>
+<tr>
+<td>Dependencies </td><td>MEMORY_MANAGER_LARGE_BLOCK_SIZE, MEMORY_MANAGER_SMALL_BLOCK_SIZE </td></tr>
+</table>
+<h2><a class="anchor" id="MEMORY_MANAGER_LARGE_BLOCK_SIZE"></a>
+MEMORY_MANAGER_LARGE_BLOCK_SIZE</h2>
+<p>The size of each memory block identified as <em>large</em> block. The size should be a multiple of the word size. </p>
+<table class="doxtable">
+<tr>
+<th>Restriction </th><th>Value </th></tr>
+<tr>
+<td>Minimum value </td><td>MEMORY_MANAGER_MEDIUM_BLOCK_SIZE + 1 </td></tr>
+<tr>
+<td>Maximum value </td><td>Any value based on availability of RAM. </td></tr>
+<tr>
+<td>Dependencies </td><td>MEMORY_MANAGER_LARGE_BLOCK_SIZE </td></tr>
+</table>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00001.html">Getting Started</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
+    <li class="navelem"><a class="el" href="a00003.html">Libraries</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:37:17 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

@@ -40,13 +40,13 @@
 
 /* NVMC */
 /* The register ERASEPROTECTEDPAGE is called ERASEPCR0 in the documentation. */
-#define ERASEPCR0   ERASEPROTECTEDPAGE
-/* The register ERASEPAGE is also called ERASEPCR1 in the documentation. */
-#define ERASEPCR1   ERASEPAGE
+#define ERASEPROTECTEDPAGE   ERASEPCR0
+
  
 /* LPCOMP */
 /* The interrupt ISR was renamed. Adding old name to the macros. */
 #define LPCOMP_COMP_IRQHandler      LPCOMP_IRQHandler
+#define LPCOMP_COMP_IRQn            LPCOMP_IRQn
  
  
 /* MPU */

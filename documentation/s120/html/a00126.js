@@ -1,5 +1,5 @@
 var a00126 =
 [
-    [ "id_addr_info", "a00126.html#a1bd1659b09527f11f048c6e26cc7dfbe", null ],
-    [ "id_info", "a00126.html#afacb110ee8e9be828954f516a04008ad", null ]
+    [ "gap_enable_params", "a00126.html#ac14566b7abd979db7845a24bf6b11ee4", null ],
+    [ "gatts_enable_params", "a00126.html#ad2de18bc975930cadc754c5e3468c870", null ]
 ];

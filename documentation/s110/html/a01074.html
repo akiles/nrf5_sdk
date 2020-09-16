@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: S110 (BLE peripheral)</title>
+<title>nRF51 SDK - S110 SoftDevice: GAP Peripheral Encryption Establishment using stored keys</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -96,58 +96,20 @@ $(document).ready(function(){initNavTree('a01074.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#groups">Modules</a>  </div>
   <div class="headertitle">
-<div class="title">S110 (BLE peripheral)</div>  </div>
+<div class="title">GAP Peripheral Encryption Establishment using stored keys<div class="ingroups"><a class="el" href="a01063.html">Message Sequence Charts</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Application Programming Interface for S110 SoftDevice.  
-<a href="#details">More...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00814"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00814.html">BLE SoftDevice Common</a></td></tr>
-<tr class="memdesc:a00814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type definitions, macros, error codes, SVC and event number subranges etc. common to all S110 SoftDevice modules. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00877"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00877.html">Generic Access Profile (GAP)</a></td></tr>
-<tr class="memdesc:a00877"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definitions and prototypes for the GAP interface. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00897"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00897.html">Generic Attribute Profile (GATT) Client</a></td></tr>
-<tr class="memdesc:a00897"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definitions and prototypes for the GATT Client interface. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01046"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01046.html">Generic Attribute Profile (GATT) Common</a></td></tr>
-<tr class="memdesc:a01046"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common definitions and prototypes for the GATT interfaces. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00910"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00910.html">Generic Attribute Profile (GATT) Server</a></td></tr>
-<tr class="memdesc:a00910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definitions and prototypes for the GATTS interface. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00930"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00930.html">Logical Link Control and Adaptation Protocol (L2CAP)</a></td></tr>
-<tr class="memdesc:a00930"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definitions and prototypes for the L2CAP interface. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00868"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00868.html">SoftDevice Manager API</a></td></tr>
-<tr class="memdesc:a00868"><td class="mdescLeft">&#160;</td><td class="mdescRight">APIs for SoftDevice management. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00866"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00866.html">SoftDevice Global Error Codes</a></td></tr>
-<tr class="memdesc:a00866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Global Error definitions. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00870"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00870.html">SoC Library API</a></td></tr>
-<tr class="memdesc:a00870"><td class="mdescLeft">&#160;</td><td class="mdescRight">APIs for the SoC library. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00872"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00872.html">Master Boot Record API</a></td></tr>
-<tr class="memdesc:a00872"><td class="mdescLeft">&#160;</td><td class="mdescRight">APIs for updating SoftDevice and BootLoader. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Application Programming Interface for S110 SoftDevice. </p>
-<p>For more information about the S110 SoftDevice, please see the <em>S110 nRF51822 SoftDevice Specification</em> or the <em>Introduction to the S110 SoftDevice</em> which is located in the Documentation folder of this installation. For more information about <em>Bluetooth</em><sup>&reg;</sup> low energy, please visit <a href="http://developer.bluetooth.org/">http://developer.bluetooth.org/</a>. </p>
-</div><!-- contents -->
+<div align="center">
+<img src="msc_inline_mscgraph_14.png" alt="msc_inline_mscgraph_14" border="0" usemap="#msc_inline_mscgraph_14.map"/>
+<map name="msc_inline_mscgraph_14.map" id="msc_inline_mscgraph_14.map"></map>
+</div>
+ </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:49 for nRF51 SDK - S110 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:36:31 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

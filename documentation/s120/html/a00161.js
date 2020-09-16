@@ -1,5 +1,5 @@
 var a00161 =
 [
-    [ "handle", "a00161.html#ab1f14809099e66b0dc7a4a70cb3dc124", null ],
-    [ "included_srvc", "a00161.html#a3342baabc3197898f17ce875e7a5ba80", null ]
+    [ "ch_map", "a00161.html#a71bb5ea1d8eecc86f819a1f5a3807818", null ],
+    [ "conn_handle", "a00161.html#adbf93719ab5531a19758504bdeb6c469", null ]
 ];

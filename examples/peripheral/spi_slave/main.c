@@ -23,7 +23,6 @@
 #include "nordic_common.h"
 #include "app_error.h"
 #include "app_timer.h"
-#include "app_gpiote.h"
 #include "bsp.h"
 #include <stdint.h>
 

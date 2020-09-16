@@ -40,7 +40,6 @@ C_SOURCE_FILES += \
 ../../../../../../components/libraries/button/app_button.c \
 ../../../../../../components/libraries/util/app_error.c \
 ../../../../../../components/libraries/fifo/app_fifo.c \
-../../../../../../components/libraries/gpiote/app_gpiote.c \
 ../../../../../../components/libraries/timer/app_timer.c \
 ../../../../../../components/libraries/trace/app_trace.c \
 ../../../../../../components/libraries/util/nrf_assert.c \
@@ -48,8 +47,11 @@ C_SOURCE_FILES += \
 ../../../../../../components/libraries/sensorsim/sensorsim.c \
 ../../../../../../components/drivers_nrf/uart/app_uart_fifo.c \
 ../../../../../../components/drivers_nrf/hal/nrf_delay.c \
+../../../../../../components/drivers_nrf/common/nrf_drv_common.c \
+../../../../../../components/drivers_nrf/gpiote/nrf_drv_gpiote.c \
 ../../../../../../components/drivers_nrf/pstorage/pstorage.c \
 ../../../../../bsp/bsp.c \
+../../../../../bsp/bsp_btn_ble.c \
 ../../../main.c \
 ../../../../../../components/ble/common/ble_advdata.c \
 ../../../../../../components/ble/ble_advertising/ble_advertising.c \
@@ -71,20 +73,22 @@ INC_PATHS += -I../../../../../../components/ble/ble_services/ble_hts
 INC_PATHS += -I../../../../../bsp
 INC_PATHS += -I../../../../../../components/libraries/fifo
 INC_PATHS += -I../../../../../../components/libraries/util
-INC_PATHS += -I../../../../../../components/ble/device_manager
+INC_PATHS += -I../../../../../../components/drivers_nrf/pstorage
 INC_PATHS += -I../../../../../../components/drivers_nrf/uart
 INC_PATHS += -I../../../../../../components/ble/common
 INC_PATHS += -I../../../../../../components/libraries/sensorsim
-INC_PATHS += -I../../../../../../components/drivers_nrf/pstorage
+INC_PATHS += -I../../../../../../components/ble/device_manager
 INC_PATHS += -I../../../../../../components/ble/ble_services/ble_dis
 INC_PATHS += -I../../../../../../components/device
 INC_PATHS += -I../../../../../../components/libraries/button
 INC_PATHS += -I../../../../../../components/libraries/timer
-INC_PATHS += -I../../../../../../components/libraries/gpiote
+INC_PATHS += -I../../../../../../components/drivers_nrf/config
 INC_PATHS += -I../../../../../../components/softdevice/s110/headers
+INC_PATHS += -I../../../../../../components/drivers_nrf/gpiote
 INC_PATHS += -I../../../../../../components/drivers_nrf/hal
 INC_PATHS += -I../../../../../../components/toolchain/gcc
 INC_PATHS += -I../../../../../../components/toolchain
+INC_PATHS += -I../../../../../../components/drivers_nrf/common
 INC_PATHS += -I../../../../../../components/ble/ble_advertising
 INC_PATHS += -I../../../../../../components/libraries/trace
 INC_PATHS += -I../../../../../../components/ble/ble_services/ble_bas
@@ -98,18 +102,19 @@ OUTPUT_BINARY_DIRECTORY = $(OBJECT_DIRECTORY)
 BUILD_DIRECTORIES := $(sort $(OBJECT_DIRECTORY) $(OUTPUT_BINARY_DIRECTORY) $(LISTING_DIRECTORY) )
 
 #flags common to all targets
-CFLAGS  = -DSOFTDEVICE_PRESENT
+CFLAGS  = -DBOARD_PCA10028
+CFLAGS += -DSOFTDEVICE_PRESENT
 CFLAGS += -DNRF51
 CFLAGS += -DS110
-CFLAGS += -DBOARD_PCA10028
 CFLAGS += -DBLE_STACK_SUPPORT_REQD
+CFLAGS += -DSWI_DISABLE0
 CFLAGS += -mcpu=cortex-m0
 CFLAGS += -mthumb -mabi=aapcs --std=gnu99
 CFLAGS += -Wall -Werror -O3
 CFLAGS += -mfloat-abi=soft
 # keep every function in separate section. This will allow linker to dump unused functions
 CFLAGS += -ffunction-sections -fdata-sections -fno-strict-aliasing
-CFLAGS += -flto -fno-builtin
+CFLAGS += -fno-builtin --short-enums
 
 # keep every function in separate section. This will allow linker to dump unused functions
 LDFLAGS += -Xlinker -Map=$(LISTING_DIRECTORY)/$(OUTPUT_FILENAME).map
@@ -122,11 +127,12 @@ LDFLAGS += --specs=nano.specs -lc -lnosys
 
 # Assembler flags
 ASMFLAGS += -x assembler-with-cpp
+ASMFLAGS += -DBOARD_PCA10028
 ASMFLAGS += -DSOFTDEVICE_PRESENT
 ASMFLAGS += -DNRF51
 ASMFLAGS += -DS110
-ASMFLAGS += -DBOARD_PCA10028
 ASMFLAGS += -DBLE_STACK_SUPPORT_REQD
+ASMFLAGS += -DSWI_DISABLE0
 #default target - first one defined
 default: clean nrf51422_xxac_s110
 

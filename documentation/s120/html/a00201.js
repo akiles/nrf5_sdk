@@ -1,6 +1,8 @@
 var a00201 =
 [
-    [ "flags", "a00201.html#a6410a73c4b824cd8411f93f4e801c2e2", null ],
-    [ "len", "a00201.html#a584d9c286a840f2aa29cf3f6e76362d4", null ],
-    [ "p_data", "a00201.html#acbcb29305bde09573e35ed7f4c214641", null ]
+    [ "desc", "a00201.html#a9133fc1220787c07ac21291dab7b8b22", null ],
+    [ "exponent", "a00201.html#a931b1bdd89be7d3aaa1d1522d20c7dd5", null ],
+    [ "format", "a00201.html#a9a79d570aa8f758c81ddddbf345b289e", null ],
+    [ "name_space", "a00201.html#a279e1e8de47b628414382aed4cec3c68", null ],
+    [ "unit", "a00201.html#ab28e4dc2a48e6329df85b3f974cf4466", null ]
 ];

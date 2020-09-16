@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S210 SoftDevice: TWI</title>
+<title>nRF51 SDK - S210 SoftDevice: SWI</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -97,164 +97,75 @@ $(document).ready(function(){initNavTree('a00013.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">TWI </div>  </div>
+<div class="title">SWI </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Software/Hardware controlled TWI Master driver.</p>
-<dl class="section user"><dt>Features supported</dt><dd><ul>
-<li>Repeated start</li>
-<li>No multi-master</li>
-<li>Only 7-bit addressing</li>
-<li>Supports clock stretching (with optional SMBus style slave timeout using software driver)</li>
-<li>Tries to handle slaves stuck in the middle of transfer</li>
-</ul>
-</dd></dl>
-<dl class="section user"><dt>Documentation specific to HW controlled TWI master driver.</dt><dd></dd></dl>
-<p>Code snippet below illustrates the write sequence of the HW controlled TWI master driver. </p>
-<div class="fragment"><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div>
+<div class="textblock"><p>The SWI driver provides functions to manage software interrupts (SWI). It allows users to allocate SWIs and pass extra flags to interrupt handler functions.</p>
+<h1><a class="anchor" id="swi_usage"></a>
+Usage</h1>
+<p>Software interrupts are allocated from the available SWI pool. By default, there are six interrupts available: SWI0 to SWI5. Note that this number is decreased if you use a SoftDevice or the Gazell or ESB protocol. For more information about resource usage for a specific protocol library, see the appropriate specification.</p>
+<h2><a class="anchor" id="swi_usage_init"></a>
+Initialization</h2>
+<p>You must initialize the driver by calling the <a class="el" href="a00355.html#ga1f1d64b1f9abf3476683733c0845a2ef">nrf_drv_swi_init</a> function. If initialization is successful, the function returns <a class="el" href="a00385.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a>.</p>
+<h2><a class="anchor" id="swi_usage_alloc"></a>
+Allocation</h2>
+<p>To allocate an interrupt, call the <a class="el" href="a00355.html#ga9707c5cfc723ed10f67c5a73810753bf">nrf_drv_swi_alloc</a> function. As input, you must provide a pointer to the <a class="el" href="a00355.html#gaf4d75a31a62ec35d2667efcbb3421f64">nrf_swi_t</a> variable, an event handler function, and a value that indicates the interrupt priority. If allocation is successful, the function returns <a class="el" href="a00385.html#ga7e6367efeaac363d8cf024940b4ec123">NRF_SUCCESS</a>, and the provided pointer variable is set.</p>
+<h2><a class="anchor" id="swi_usage_event"></a>
+Event handler and flags</h2>
+<p>When allocating the driver, you must provide a callback function (see <a class="el" href="a00355.html#ga2ad0fc3331fbcf6398d751f16858c228">nrf_swi_handler_t</a>). The arguments for this function are the <a class="el" href="a00355.html#gaf4d75a31a62ec35d2667efcbb3421f64">SWI</a> and some <a class="el" href="a00355.html#ga3958c1f57afcdee82f1d22cc966e7509">user flags</a>. The user flags are represented as bit mask.</p>
+<p>To trigger the interrupt, call <a class="el" href="a00355.html#ga31366f910bb2a52eca033847bed37ed6">nrf_drv_swi_trigger</a> with a specific flag number. When an SWI is triggered, the corresponding callback function is called with all specified flags (represented as a bit mask). The flags can be used, for example, for interrupt source tracking, or they can be ignored if not needed. Note that the callback function might be invoked with more than one flag set if the SWI is triggered more than once with different flag numbers from a same or higher priority interrupt handler.</p>
+<h2><a class="anchor" id="swi_special_options"></a>
+Special options</h2>
+<p>To disable specific SWIs from the pool, add a global define during compilation (SWI_DISABLE0 to SWI_DISABLE5). Any disabled SWI will not be allocated and will therefore not be available to the user.</p>
+<h1><a class="anchor" id="swi_usage_example"></a>
+Example</h1>
+<p>See the following code for a usage example. Note that this example is not power optimized.</p>
+<div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code" href="a00355.html#gaf4d75a31a62ec35d2667efcbb3421f64" title="SWI channel (unsigned integer).">nrf_swi_t</a> my_swi;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> swi_event_handler(<a class="code" href="a00355.html#gaf4d75a31a62ec35d2667efcbb3421f64" title="SWI channel (unsigned integer).">nrf_swi_t</a> swi, <a class="code" href="a00355.html#ga3958c1f57afcdee82f1d22cc966e7509" title="SWI user flags (unsigned integer).">nrf_swi_flags_t</a> flags)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">/* If &quot;my_swi&quot; was triggered and flag #3 is present... */</span></div>
+<div class="line">    <span class="keywordflow">if</span> ((swi == my_swi) &amp;&amp; (flags &amp; (1 &lt;&lt; 3)))</div>
 <div class="line">    {</div>
-<div class="line">        <span class="keywordflow">while</span> (NRF_TWI1-&gt;EVENTS_TXDSENT == 0 &amp;&amp; NRF_TWI1-&gt;EVENTS_ERROR == 0 &amp;&amp; (--timeout))</div>
-<div class="line">        {</div>
-<div class="line">            <span class="comment">// Do nothing.</span></div>
-<div class="line">        }</div>
-<div class="line"></div>
-<div class="line">        <span class="keywordflow">if</span> (timeout == 0 || NRF_TWI1-&gt;EVENTS_ERROR != 0)</div>
-<div class="line">        {</div>
-<div class="line">            <span class="comment">// Recover the peripheral as indicated by PAN 56: &quot;TWI: TWI module lock-up.&quot; found at</span></div>
-<div class="line">            <span class="comment">// Product Anomaly Notification document found at </span></div>
-<div class="line">            <span class="comment">// https://www.nordicsemi.com/eng/Products/Bluetooth-R-low-energy/nRF51822/#Downloads</span></div>
-<div class="line">            NRF_TWI1-&gt;EVENTS_ERROR = 0;</div>
-<div class="line">            NRF_TWI1-&gt;ENABLE       = TWI_ENABLE_ENABLE_Disabled &lt;&lt; TWI_ENABLE_ENABLE_Pos; </div>
-<div class="line">            NRF_TWI1-&gt;POWER        = 0;</div>
-<div class="line">            nrf_delay_us(5);</div>
-<div class="line">            NRF_TWI1-&gt;POWER        = 1;</div>
-<div class="line">            NRF_TWI1-&gt;ENABLE       = TWI_ENABLE_ENABLE_Enabled &lt;&lt; TWI_ENABLE_ENABLE_Pos;</div>
-<div class="line"></div>
-<div class="line">            (void)<a class="code" href="a00309.html#ga148f1dd10bc0248c6c6c5336ce07a540" title="Function for initializing TWI bus IO pins and checks if the bus is operational.">twi_master_init</a>();</div>
-<div class="line"></div>
-<div class="line">            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line">        }</div>
-<div class="line">        NRF_TWI1-&gt;EVENTS_TXDSENT = 0;</div>
-<div class="line">        <span class="keywordflow">if</span> (--data_length == 0)</div>
-<div class="line">        {</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        }</div>
-<div class="line"></div>
-<div class="line">        NRF_TWI1-&gt;TXD = *data++;</div>
+<div class="line">        <span class="comment">/* Do something. */</span></div>
 <div class="line">    }</div>
-</div><!-- fragment --><p> Code snippet below illustrates the read sequence of the HW controlled TWI master driver. </p>
-<div class="fragment"><div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>)</div>
-<div class="line">    {</div>
-<div class="line">        <span class="keywordflow">while</span> (NRF_TWI1-&gt;EVENTS_RXDREADY == 0 &amp;&amp; NRF_TWI1-&gt;EVENTS_ERROR == 0 &amp;&amp; (--timeout))</div>
-<div class="line">        {</div>
-<div class="line">            <span class="comment">// Do nothing.</span></div>
-<div class="line">        }</div>
-<div class="line">        NRF_TWI1-&gt;EVENTS_RXDREADY = 0;</div>
+<div class="line">    <span class="keywordflow">return</span>;</div>
+<div class="line">}</div>
 <div class="line"></div>
-<div class="line">        <span class="keywordflow">if</span> (timeout == 0 || NRF_TWI1-&gt;EVENTS_ERROR != 0)</div>
-<div class="line">        {</div>
-<div class="line">            <span class="comment">// Recover the peripheral as indicated by PAN 56: &quot;TWI: TWI module lock-up.&quot; found at</span></div>
-<div class="line">            <span class="comment">// Product Anomaly Notification document found at</span></div>
-<div class="line">            <span class="comment">// https://www.nordicsemi.com/eng/Products/Bluetooth-R-low-energy/nRF51822/#Downloads</span></div>
-<div class="line">            NRF_TWI1-&gt;EVENTS_ERROR = 0;</div>
-<div class="line">            NRF_TWI1-&gt;ENABLE       = TWI_ENABLE_ENABLE_Disabled &lt;&lt; TWI_ENABLE_ENABLE_Pos;</div>
-<div class="line">            NRF_TWI1-&gt;POWER        = 0;</div>
-<div class="line">            nrf_delay_us(5);</div>
-<div class="line">            NRF_TWI1-&gt;POWER        = 1;</div>
-<div class="line">            NRF_TWI1-&gt;ENABLE       = TWI_ENABLE_ENABLE_Enabled &lt;&lt; TWI_ENABLE_ENABLE_Pos;</div>
+<div class="line"><span class="comment">/*</span></div>
+<div class="line"><span class="comment">    ....</span></div>
+<div class="line"><span class="comment"> */</span></div>
 <div class="line"></div>
-<div class="line">            (void)<a class="code" href="a00309.html#ga148f1dd10bc0248c6c6c5336ce07a540" title="Function for initializing TWI bus IO pins and checks if the bus is operational.">twi_master_init</a>();</div>
+<div class="line"><a class="code" href="a00374.html#gaf6c20fb483036617204f12e99e0b997b" title="API Result.">ret_code_t</a> err_code;</div>
+<div class="line"><a class="code" href="a00355.html#gaf4d75a31a62ec35d2667efcbb3421f64" title="SWI channel (unsigned integer).">nrf_swi_t</a> my_swi;</div>
 <div class="line"></div>
-<div class="line">            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line">        }</div>
+<div class="line"><span class="comment">/* Initialize the library. */</span></div>
+<div class="line">err_code = <a class="code" href="a00355.html#ga1f1d64b1f9abf3476683733c0845a2ef" title="Function for initializing the SWI module.">nrf_drv_swi_init</a>();</div>
+<div class="line"><a class="code" href="a00371.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
 <div class="line"></div>
-<div class="line">        *data++ = NRF_TWI1-&gt;RXD;</div>
+<div class="line"><span class="comment">/* Allocate and setup one SWI. */</span></div>
+<div class="line">err_code = <a class="code" href="a00355.html#ga9707c5cfc723ed10f67c5a73810753bf" title="Function for allocating a first unused SWI instance and setting a handler.">nrf_drv_swi_alloc</a>(&amp;my_swi, swi_event_handler, APP_IRQ_PRIORITY_LOW);</div>
+<div class="line"><a class="code" href="a00371.html#ga82d00a810dcea7dcc6af469461fb254c" title="Macro for calling error handler function if supplied error code any other than NRF_SUCCESS.">APP_ERROR_CHECK</a>(err_code);</div>
 <div class="line"></div>
-<div class="line">        <span class="comment">/* Configure PPI to stop TWI master before we get last BB event */</span></div>
-<div class="line">        <span class="keywordflow">if</span> (--data_length == 1)</div>
-<div class="line">        {</div>
-<div class="line">            NRF_PPI-&gt;CH[0].TEP = (uint32_t)&amp;NRF_TWI1-&gt;TASKS_STOP;</div>
-<div class="line">        }</div>
-<div class="line"></div>
-<div class="line">        <span class="keywordflow">if</span> (data_length == 0)</div>
-<div class="line">        {</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        }</div>
-<div class="line"></div>
-<div class="line">        <span class="comment">// Recover the peripheral as indicated by PAN 56: &quot;TWI: TWI module lock-up.&quot; found at</span></div>
-<div class="line">        <span class="comment">// Product Anomaly Notification document found at</span></div>
-<div class="line">        <span class="comment">// https://www.nordicsemi.com/eng/Products/Bluetooth-R-low-energy/nRF51822/#Downloads</span></div>
-<div class="line">        nrf_delay_us(20);</div>
-<div class="line">        NRF_TWI1-&gt;TASKS_RESUME = 1;</div>
-<div class="line">    }</div>
-</div><!-- fragment --> <dl class="section user"><dt>Documentation specific to SW controlled TWI master driver.</dt><dd></dd></dl>
-<p>Code snippet below illustrates the write sequence of the SW controlled TWI master driver. </p>
-<div class="fragment"><div class="line">    <span class="comment">// Make sure SDA is an output</span></div>
-<div class="line">    <a class="code" href="a00309.html#gaa6c311f207bff59456fb22648965c53b">TWI_SDA_OUTPUT</a>();</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// MSB first</span></div>
-<div class="line">    <span class="keywordflow">for</span> (uint_fast8_t i = 0x80; i != 0; i &gt;&gt;= 1)</div>
-<div class="line">    {</div>
-<div class="line">        <a class="code" href="a00309.html#gafef260a0ebd7d5669cd2731d2c20f55d">TWI_SCL_LOW</a>();</div>
-<div class="line">        <a class="code" href="a00309.html#ga0bdffa7178084c5e1b2e11d3a95c5e85">TWI_DELAY</a>();</div>
-<div class="line"></div>
-<div class="line">        <span class="keywordflow">if</span> (databyte &amp; i)</div>
-<div class="line">        {</div>
-<div class="line">            <a class="code" href="a00309.html#ga112251118224f5623c20423efce89ae8">TWI_SDA_HIGH</a>();</div>
-<div class="line">        }</div>
-<div class="line">        <span class="keywordflow">else</span></div>
-<div class="line">        {</div>
-<div class="line">            <a class="code" href="a00309.html#ga6b884c7770898bf063884f3f1893d492">TWI_SDA_LOW</a>();</div>
-<div class="line">        }</div>
-<div class="line"></div>
-<div class="line">        <span class="keywordflow">if</span> (!twi_master_wait_while_scl_low())</div>
-<div class="line">        {</div>
-<div class="line">            transfer_succeeded = <span class="keyword">false</span>; <span class="comment">// Timeout</span></div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        }</div>
-<div class="line">    }</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Finish last data bit by pulling SCL low</span></div>
-<div class="line">    <a class="code" href="a00309.html#gafef260a0ebd7d5669cd2731d2c20f55d">TWI_SCL_LOW</a>();</div>
-<div class="line">    <a class="code" href="a00309.html#ga0bdffa7178084c5e1b2e11d3a95c5e85">TWI_DELAY</a>();</div>
-<div class="line"></div>
-</div><!-- fragment --><p> Code snippet below illustrates the read sequence of the SW controlled TWI master driver. </p>
-<div class="fragment"><div class="line">    <span class="comment">// Make sure SDA is an input</span></div>
-<div class="line">    <a class="code" href="a00309.html#ga63ae25f476902e9df0c31b057e2bb527">TWI_SDA_INPUT</a>();</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// SCL state is guaranteed to be high here</span></div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// MSB first</span></div>
-<div class="line">    <span class="keywordflow">for</span> (uint_fast8_t i = 0x80; i != 0; i &gt;&gt;= 1)</div>
-<div class="line">    {</div>
-<div class="line">        <span class="keywordflow">if</span> (!twi_master_wait_while_scl_low())</div>
-<div class="line">        {</div>
-<div class="line">            transfer_succeeded = <span class="keyword">false</span>;</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        }</div>
-<div class="line"></div>
-<div class="line">        <span class="keywordflow">if</span> (<a class="code" href="a00309.html#ga0a7e559c3bceb5b50ff3e51cabb21f73">TWI_SDA_READ</a>())</div>
-<div class="line">        {</div>
-<div class="line">            byte_read |= i;</div>
-<div class="line">        }</div>
-<div class="line">        <span class="keywordflow">else</span></div>
-<div class="line">        {</div>
-<div class="line">            <span class="comment">// No need to do anything</span></div>
-<div class="line">        }</div>
-<div class="line"></div>
-<div class="line">        <a class="code" href="a00309.html#gafef260a0ebd7d5669cd2731d2c20f55d">TWI_SCL_LOW</a>();</div>
-<div class="line">        <a class="code" href="a00309.html#ga0bdffa7178084c5e1b2e11d3a95c5e85">TWI_DELAY</a>();</div>
-<div class="line">    }</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">// Make sure SDA is an output before we exit the function</span></div>
-<div class="line">    <a class="code" href="a00309.html#gaa6c311f207bff59456fb22648965c53b">TWI_SDA_OUTPUT</a>();</div>
-</div><!-- fragment --></div></div><!-- contents -->
+<div class="line"><span class="keywordflow">while</span> (<span class="keyword">true</span>)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">/* Trigger SWI with flag #3. */</span></div>
+<div class="line">    <a class="code" href="a00355.html#ga31366f910bb2a52eca033847bed37ed6" title="Function for triggering the SWI.">nrf_drv_swi_trigger</a>(my_swi, 3);</div>
+<div class="line">    </div>
+<div class="line">    <span class="comment">/* Wait for a second. */</span></div>
+<div class="line">    nrf_delay_ms(1000);</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="swi_with_sd"></a>
+Usage with a SoftDevice</h1>
+<p>The library can be used with a SoftDevice. However, the amount of interrupts that are available to the user will be limited in this case. See the SoftDevice specification for more information about the resource usage.</p>
+<p>Be careful when specifying APP_IRQ_PRIORITY_HIGH as SWI priority. Long interrupt routines with high priority might affect the proper operation of the SoftDevice. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="a00002.html">Hardware Drivers</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:32:04 for nRF51 SDK - S210 SoftDevice by
+    <li class="footer">Generated on Thu May 7 2015 14:37:16 for nRF51 SDK - S210 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>

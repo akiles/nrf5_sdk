@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>nRF51 SDK - S110 SoftDevice: sd_mbr_command_copy_bl_t Struct Reference</title>
+<title>nRF51 SDK - S110 SoftDevice: dm_id_key Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -106,59 +106,48 @@ $(document).ready(function(){initNavTree('a00414.html','');});
   <div class="summary">
 <a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">sd_mbr_command_copy_bl_t Struct Reference<div class="ingroups"><a class="el" href="a01065.html">Types</a></div></div>  </div>
+<div class="title">dm_id_key Struct Reference<div class="ingroups"><a class="el" href="a01223.html">Device Manager Data Types</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This command copies a new BootLoader. With this command, destination of BootLoader is always the address written in NRF_UICR-&gt;BOOTADDR.  
+<p>Device Manager identity and address information.  
  <a href="a00414.html#details">More...</a></p>
 
-<p><code>#include &lt;nrf_mbr.h&gt;</code></p>
+<p><code>#include &lt;device_manager.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a504481143eb43e52488288d7de70a6f1"><td class="memItemLeft" align="right" valign="top">uint32_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00414.html#a504481143eb43e52488288d7de70a6f1">bl_src</a></td></tr>
-<tr class="separator:a504481143eb43e52488288d7de70a6f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a197755f22bcc92adc7c8288f48bd9ef8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00414.html#a197755f22bcc92adc7c8288f48bd9ef8">bl_len</a></td></tr>
-<tr class="separator:a197755f22bcc92adc7c8288f48bd9ef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a76b44b4742836f0dffd4ce52418faf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00277.html">ble_gap_irk_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00414.html#a7a76b44b4742836f0dffd4ce52418faf">id_info</a></td></tr>
+<tr class="separator:a7a76b44b4742836f0dffd4ce52418faf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dace1f70260c67a952b35558abe1848"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00252.html">ble_gap_addr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00414.html#a5dace1f70260c67a952b35558abe1848">id_addr_info</a></td></tr>
+<tr class="separator:a5dace1f70260c67a952b35558abe1848"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This command copies a new BootLoader. With this command, destination of BootLoader is always the address written in NRF_UICR-&gt;BOOTADDR. </p>
-<p>Destination is erased by this function. If (destination+bl_len) is in the middle of a flash page, that whole flash page will be erased.</p>
-<p>This function will use PROTENSET to protect the flash that is not intended to be written.</p>
-<p>On Success, this function will not return. It will start the new BootLoader from reset-vector as normal.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00866.html#gadf8b0c33ea15352808e5ac7f69c2be8a" title="Internal Error.">NRF_ERROR_INTERNAL</a></td><td>indicates an internal error that should not happen. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00866.html#ga85125dae5d7e9d4b9964acbc13f641b3" title="Forbidden Operation.">NRF_ERROR_FORBIDDEN</a></td><td>if NRF_UICR-&gt;BOOTADDR is not set. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00866.html#ga59fe2a8fe184005aefa0835c7ff400fd" title="Invalid Length.">NRF_ERROR_INVALID_LENGTH</a></td><td>if parameters attempts to read or write outside flash area. </td></tr>
-  </table>
-  </dd>
-</dl>
+<div class="textblock"><p>Device Manager identity and address information. </p>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a197755f22bcc92adc7c8288f48bd9ef8"></a>
+<a class="anchor" id="a5dace1f70260c67a952b35558abe1848"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t sd_mbr_command_copy_bl_t::bl_len</td>
+          <td class="memname"><a class="el" href="a00252.html">ble_gap_addr_t</a> dm_id_key::id_addr_info</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Number of 32 bit words to copy for BootLoader. </p>
+<p>Identity address information. </p>
 
 </div>
 </div>
-<a class="anchor" id="a504481143eb43e52488288d7de70a6f1"></a>
+<a class="anchor" id="a7a76b44b4742836f0dffd4ce52418faf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t* sd_mbr_command_copy_bl_t::bl_src</td>
+          <td class="memname"><a class="el" href="a00277.html">ble_gap_irk_t</a> dm_id_key::id_info</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to the source of the Bootloader to be be copied. </p>
+<p>Identity information. </p>
 
 </div>
 </div>
@@ -167,8 +156,8 @@ Data Fields</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="a00414.html">sd_mbr_command_copy_bl_t</a></li>
-    <li class="footer">Generated on Fri Mar 6 2015 14:31:50 for nRF51 SDK - S110 SoftDevice by
+    <li class="navelem"><a class="el" href="a00414.html">dm_id_key</a></li>
+    <li class="footer">Generated on Thu May 7 2015 14:36:40 for nRF51 SDK - S110 SoftDevice by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.3.1 </li>
   </ul>
